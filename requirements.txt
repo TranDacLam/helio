@@ -1,0 +1,9 @@
+Django==1.10.5
+mysql-python
+django-modeltranslation
+Pillow
+django-rest-auth
+django-rest-auth[with_social]
+djangorestframework-jwt
+
+#-e git+git://github.com/mvpdev/django-eav.git#egg=django-eav

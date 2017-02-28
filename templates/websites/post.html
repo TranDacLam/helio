@@ -1,0 +1,14 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl" {% endif %} xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+
+</head>
+<body id="">
+<br>
+{% get_current_language as LANGUAGE_CODE %}
+Current language {{LANGUAGE_CODE}}
+
+<h1>{{name}}</h1>
+</body>
+</html>
