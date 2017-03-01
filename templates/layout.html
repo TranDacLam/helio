@@ -1,0 +1,52 @@
+<!DOCTYPE html> 
+{% load i18n %} 
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
+
+
+<html lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl" {% endif %}>
+
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+    <meta name="description" content="{% block meta_description %}{% endblock %}"> 
+
+    <link href="{{ STATIC_URL }}assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <script src = "{{ STATIC_URL }}assets/js/jquery.min.js"></script>
+    <script src = "{{ STATIC_URL }}assets/js/bootstrap.min.js"></script>
+  
+
+    <script type="text/javascript">
+        var STATIC_URL = '{{ STATIC_URL }}';
+    </script>
+    {% block metacontent %}{% endblock %}
+    {% block meta_title_home %}
+      <title>{% block meta_title %}{% endblock %}</title>
+    {% endblock %}
+    
+    
+    {% block extrastylesheet %}{% endblock %}
+    
+    {% block extrascript %}{% endblock %}
+
+</head>
+
+<body id="{% block body_id %}body{% endblock %}">
+
+    <section id="main" >
+        <div id="container" class="container">  
+            {% block main_content %} {% endblock %}
+        </div>
+    </section>
+    <!-- #main -fluid-->
+    <!-- Footer -->
+    <footer class="footer">
+        
+       
+    </footer>
+</body>
+
+</html>

@@ -1,29 +1,100 @@
-{% load i18n %}
-<!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl" {% endif %} xmlns:fb="http://ogp.me/ns/fb#">
-<head>
+{% extends "layout.html" %}
+{% block main_content %}  
+    Current language {{LANGUAGE_CODE}}
+    <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        <input name="next" type="hidden" value="{% url 'home' switch_lang='true' %}" />
+        <select name="language">
+           
+            {% for language in languages %}
+                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                    {{ language.name_local }} ({{ language.code }})
+                </option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Go" />
+    </form>
+    <div>
+       <fieldset>
+          <legend>What's hot?</legend>
+          <div class="text-center">    
+                <div class="row">
+                    <div class="col-sm-2 col-md-offset-1">
+                        <img src="{{ STATIC_URL }}assets/images/img1.png" class="img-responsive" style="width:100%" alt="Image">
+                    </div>
+                    <div class="col-sm-2"> 
+                        <img src="{{ STATIC_URL }}assets/images/img1.png" class="img-responsive" style="width:100%" alt="Image">
+                    </div>
+                    <div class="col-sm-2"> 
+                        <img src="{{ STATIC_URL }}assets/images/img1.png" class="img-responsive" style="width:100%" alt="Image">
+                    </div>
+                    <div class="col-sm-2">
+                        <img src="{{ STATIC_URL }}assets/images/img1.png" class="img-responsive" style="width:100%" alt="Image">
+                    </div>
+                    <div class="col-sm-2"> 
+                        <img src="{{ STATIC_URL }}assets/images/img1.png" class="img-responsive" style="width:100%" alt="Image">
+                    </div>
+                </div>
+            </div>
+       </fieldset>
+    </div>
+    <div class="row" style="padding-top: 25px;">
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="{{ STATIC_URL }}assets/images/img1.png" class="img-responsive" style="width:100%" alt="Image">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="{{ STATIC_URL }}assets/images/img1.png" class="img-responsive" style="width:100%" alt="Image">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="{{ STATIC_URL }}assets/images/img1.png" class="img-responsive" style="width:100%" alt="Image">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="{{ STATIC_URL }}assets/images/img1.png" class="img-responsive" style="width:100%" alt="Image">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="{{ STATIC_URL }}assets/images/img1.png" class="img-responsive" style="width:100%" alt="Image">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="{{ STATIC_URL }}assets/images/img1.png" class="img-responsive" style="width:100%" alt="Image">
+            </div>
+        </div>
+    </div>
 
-</head>
-<body id="form-Main">
-{% get_current_language as LANGUAGE_CODE %}
-Current language {{LANGUAGE_CODE}}
+    <div style="padding-top: 25px;">
+       <fieldset>
+          <legend>Visitor's Expenrience</legend>
+          <div class="text-center">    
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img src="{{ STATIC_URL }}assets/images/img1.png" class="img-responsive" style="width:100%" alt="Image">
+                    </div>
+                    <div class="col-sm-4">
+                        <h3><i>Customer's ......</i></h3>
+                        <p style="text-align: left;">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id </p>
+                    </div>
+                    <div class="col-sm-4">
+                        <img src="{{ STATIC_URL }}assets/images/img1.png" class="img-responsive" style="width:100%" alt="Image">
+                    </div>
+                </div>
+            </div>
+       </fieldset>
+    </div>
+{% endblock %}
 
-<h1>Hello Site Multi Language</h1>
 
-<form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-    <input name="next" type="hidden" value="{% url 'home' switch_lang='true' %}" />
-    <select name="language">
-        {% get_current_language as LANGUAGE_CODE %}
-        {% get_available_languages as LANGUAGES %}
-        {% get_language_info_list for LANGUAGES as languages %}
-        {% for language in languages %}
-            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                {{ language.name_local }} ({{ language.code }})
-            </option>
-        {% endfor %}
-    </select>
-    <input type="submit" value="Go" />
-</form>
 
-</body>
-</html>
+
+
+
+  
+

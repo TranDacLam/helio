@@ -44,7 +44,7 @@ class Game(models.Model):
     game_filter = models.ManyToManyField(
         'Game_Filter', related_name='game_filter_rel')
     game_type = models.ForeignKey('Game_Type', related_name='game_type_rel', on_delete=models.CASCADE)
-    category = models.ForeignKey('Category', related_name='category_rel', on_delete=models.CASCADE)
+    category = models.ForeignKey('Category', related_name='game_category_rel', on_delete=models.CASCADE)
 
 class Game_Filter(models.Model):
     name = models.CharField(max_length=1000)
@@ -67,7 +67,7 @@ class Entertainments(models.Model):
     entertainments_filter = models.ManyToManyField(
         'Entertainments_Filter', related_name='entertainments_filter_rel')
     entertainments_type = models.ForeignKey('Entertainments_Type', related_name='entertainments_type_rel', on_delete=models.CASCADE)
-    category = models.ForeignKey('Category', related_name='category_rel', on_delete=models.CASCADE)
+    category = models.ForeignKey('Category', related_name='entertainments_category_rel', on_delete=models.CASCADE)
 
 class Entertainments_Filter(models.Model):
     name = models.CharField(max_length=1000)
