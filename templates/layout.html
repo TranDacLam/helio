@@ -14,99 +14,45 @@
     <meta name="description" content="{% block meta_description %}{% endblock %}"> 
 
     <link href="{{ STATIC_URL }}assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}assets/css/parallax.css" rel="stylesheet" type="text/css" />
+    
 
-    <script src = "{{ STATIC_URL }}assets/js/jquery.min.js"></script>
-    <script src = "{{ STATIC_URL }}assets/js/bootstrap.min.js"></script>
-  
-
-    <script type="text/javascript">
-        var STATIC_URL = '{{ STATIC_URL }}';
-    </script>
     {% block metacontent %}{% endblock %}
     {% block meta_title_home %}
       <title>{% block meta_title %}{% endblock %}</title>
     {% endblock %}
-    
-    
     {% block extrastylesheet %}{% endblock %}
-    
-    {% block extrascript %}{% endblock %}
+
+    <script type="text/javascript">
+        var STATIC_URL = '{{ STATIC_URL }}';
+    </script>
 
 </head>
 
 <body id="{% block body_id %}body{% endblock %}">
+<div class="h-layout cd-main-content">
+    <!-- Start Header -->
+    {% include 'header.html' %}
+    <!-- End Header -->
 
-    <section id="main" >
-        <div id="container" class="container">  
+    <!-- Start Body -->
+    <div class="h-body-wrap">
+        <div class="container">  
             {% block main_content %} {% endblock %}
         </div>
-    </section>
-    <!-- #main -fluid-->
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <hr>
-            <div class="row">
-                <div class="col-sm-4">
-                    <fieldset>
-                        <legend>Reach Us</legend>
-                        <div class="footer-contact"> 
-                            <p>Trung tâm giải trí phức hợp Helio Center</p> 
-                            <p>Khu công viên Đông Nam Đài tưởng niệm, Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu, TP Đà Nẵng</p> 
-                            <p><span>Tel</span>(0236) 3 630 888</p> 
-                            <p><span>Email</span><a href="mailto:contact@helio.vn">contact@helio.vn</a> </p> 
-                        </div>
-                    </fieldset>
-                </div>
-                <div class="col-sm-3">
-                    <fieldset>
-                        <legend>Find Us</legend>
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3834.562563375484!2d108.22225385096235!3d16.03627114452417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314219e8cb37e161%3A0xb2f5c4a784d34c60!2zVHJ1bmcgdMOibSBHaeG6o2kgdHLDrSBQaOG7qWMgaOG7o3AgSGVsaW8gQ2VudGVy!5e0!3m2!1sen!2s!4v1488335913354" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
-                    </fieldset>
-                </div>
-                <div class="col-sm-5">
-                    <fieldset>
-                        <legend>Contact us</legend>
-                        <div class="footer-contact"> 
-                            <p>Trung tâm giải trí phức hợp Helio Center</p> 
-                            <p>Khu công viên Đông Nam Đài tưởng niệm, Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu, TP Đà Nẵng</p> 
-                            <p><span>Tel</span>(0236) 3 630 888</p> 
-                            <p><span>Email</span><a href="mailto:contact@helio.vn">contact@helio.vn</a> </p> 
-                        </div>
-                    </fieldset>
-                </div>
-            </div>
+    </div>
+    <!-- End Body -->
 
-            <hr>
-            <div class="h-wrap-992"> 
-                <div class="col-md-3"> 
-                    <div class="footer-text"> 
-                        <p>© Helio Center, All Rights Reserved.</p> 
-                    </div>
-                </div> 
-                <div class="col-md-4 col-md-5"> 
-                    <div class="footer-text"> 
-                        <a href="#">Agreement</a> 
-                        <a href="#">About Us</a> 
-                        <a href="#">Philosophy</a> 
-                        <a href="#">Career</a> 
-                    </div> 
-                </div> 
-                <div class="col-md-4"> 
-                    <div class="footer-text footer-right"> 
-                        <p class="pull-right">Powered by <a target="_blank" href="http://tuyensonsport.vn/" class="brand-company">KhoiPhat Ltd., Co.</a></p> 
-                    </div> 
-                </div> 
-            </div>
-
-
-
-
-
-
-        </div>
-
-    </footer>
+    <!-- Start Footer -->
+    {% include 'footer.html' %}
+    <!-- End Footer -->
+</div>
 </body>
-
+<footer>
+    <script src = "{{ STATIC_URL }}assets/js/jquery.min.js"></script>
+    <script src = "{{ STATIC_URL }}assets/js/bootstrap.min.js"></script>
+    <script src = "{{ STATIC_URL }}assets/js/jquery.parallax.min.js"></script> 
+    <script src = "{{ STATIC_URL }}assets/js/parallax.min.js"></script> 
+    {% block extrascript %}{% endblock %}
+</footer>
 </html>

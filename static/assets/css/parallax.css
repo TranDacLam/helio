@@ -1,0 +1,200 @@
+.container .logo-cate {
+    background-size: 120px 90px;
+    width: 120px;
+    height: 90px;
+}
+.logo {
+	background: url(../images/logo.png) no-repeat;
+}
+
+
+footer {
+    width: 100%;
+    background: #fff;
+    position: relative;
+    float: left;
+}
+/*
+ * Row with equal height columns
+ * --------------------------------------------------
+ */
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+}
+fieldset {
+    height: 100%;
+}
+
+
+.layer, .scene {
+    display: block;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+/*footer-parallax*/
+.footer-parallax
+{
+	width:100%;
+	min-height:260px;
+	margin-top:30px;
+	position:relative;
+}
+.footer-parallax-wrap
+{
+	min-height: 260px;
+	position: absolute;
+	overflow: hidden;
+	display: table;
+	height: 100%;
+	width: 100%;
+	left: 0;
+	top: 0;
+}
+.footer-scene
+{
+	min-height: 260px;
+	position: relative;
+}
+.footer-bg
+{
+	width: 100%;
+	height: 120px;
+	background: url(../images/footer.png) no-repeat;
+	position: absolute;
+	background-size: 100% 100%;
+	bottom:-5%;
+}
+.color
+{
+	width: 100%;
+	min-width: 1200px;
+	height: auto;
+	position: absolute;
+	top:30px;
+	left:-30%;
+}
+.color img
+{
+	width: 100%;
+}
+
+.h-body-wrap {
+    width: 100%;
+    display: block;
+}
+
+.h-layout {
+    width: 100%;
+    overflow: hidden;
+}
+
+.cd-main-content {
+    min-height: 100%;
+    position: relative;
+    background-color: #fff;
+    z-index: 2;
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    transition-property: transform;
+    -webkit-transition-duration: .4s;
+    -moz-transition-duration: .4s;
+    transition-duration: .4s;
+}
+
+ul {
+    list-style: none;
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+
+@media all and (min-width: 768px) {
+	.five-column {
+		width: 20%;
+	}
+	.footer-parallax
+	{
+		min-height:330px;
+	}
+	.footer-parallax-wrap
+	{
+		min-height: 330px;
+	}
+	.footer-scene
+	{
+		min-height: 330px;
+		position: relative;
+	}
+	.footer-bg
+	{
+		height: 180px;
+	}
+	.color
+	{
+		left:-10%;
+	}
+}
+
+
+@media all and (min-width: 1200px) {
+
+	.footer-parallax
+	{
+		min-height:380px;
+	}
+	.footer-parallax-wrap
+	{
+		min-height: 380px;
+	}
+	.footer-scene
+	{
+		min-height: 380px;
+		position: relative;
+	}
+	.footer-bg
+	{
+		height: 200px;
+	}
+	.color
+	{
+		left:-20px;
+	}
+}
+
+@media all and (min-width: 1600px) {
+	.footer-scene
+	{
+		min-height: 450px;
+		position: relative;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.navbar-nav {
+    margin: 7.5px 0px;
+    margin-top: 12px !important;
+}
+.navbar-nav > li > a {
+    font-size: 20px;
+}
