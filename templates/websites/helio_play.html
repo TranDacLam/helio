@@ -1,43 +1,27 @@
 {% extends "layout.html" %}
 {% block extrastylesheet %}
-
+<link href="{{ STATIC_URL }}assets/websites/css/helio_custom.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
-    .tabs-left .nav-tabs {
-        float: left;
-        border-bottom: 0px;
-        margin-top: 27px;
-        width: 100px;
-    }
-
-    .tabs-left .nav-tabs li {
-        float: none;
-        margin-bottom: 0px;
-        margin-right: -4px;
-    }
-  
-    .tabs-left .nav-tabs > li.active > a, 
-    .tabs-left .nav-tabs > li.active > a:focus, 
-    .tabs-left .nav-tabs > li.active > a:hover {
-        border-right-color: transparent;
-        border-bottom-color: #ddd;
-    }
-
-    .tabs-left .tab-pane {
-        border: 1px solid #ddd;
-        margin-left: 100px;
-    }
-
     .game-group-content {
         border: 1px solid #ddd;
     }
     .group-games {
         margin-top: 18px;
     }
+    .game-thumbnail {
+        padding: 0px;
+    }
 </style>
 
 
 
 {% endblock %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item"><a href="#">Library</a></li>
+    <li class="breadcrumb-item active">Data</li>
+{% endblock %}
+
 {% block main_content %}
     <div id="helio-page" class="tabs-left" style="padding-top: 150px; padding-bottom: 150px;">
         <ul class="nav nav-tabs">
@@ -47,8 +31,8 @@
         <div class="tab-content">
             <div class="row tab-pane active" id="play">
                 <div class="col-md-12" style="padding-bottom: 15px;">
-                    <h2>HELIO PLAY</h2>
-                    <hr>
+                    <h2 class="title">Helio Plays</h2>
+                    <hr class="line">
                     <fieldset>
                         <legend>Filter</legend>
                         <div class="col-md-12">
@@ -85,19 +69,19 @@
                         <div class="col-md-12">
                             <div class="row game-group-content">
                                 <div class="group-games">
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 game-thumbnail">
                                         <div class="thumbnail">
                                             <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
                                         </div>
                                     </div>
                                     <div class="col-md-10">
-                                        <h3 style="margin-top: 0px"> Games Name 1 </h3>
+                                        <h3 class="name"> Games Name 1 </h3>
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <p style="font-weight: bold;">Description: </p>
                                             </div>
                                             <div class="col-md-9">
-                                                <p>Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center</p>
+                                                <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave.</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -112,22 +96,22 @@
                                 </div>
                                
                             </div>
-                            <hr class="row">
+                            <hr class="line row">
                             <div class="row game-group-content">
                                 <div class="group-games">
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 game-thumbnail">
                                         <div class="thumbnail">
                                             <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
                                         </div>
                                     </div>
                                     <div class="col-md-10">
-                                        <h3 style="margin-top: 0px"> Games Name 1 </h3>
+                                        <h3 class="name"> Games Name 1 </h3>
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <p style="font-weight: bold;">Description: </p>
                                             </div>
                                             <div class="col-md-9">
-                                                <p>Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center</p>
+                                                <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave.</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -145,24 +129,24 @@
                         </div>
                     </fieldset>
 
-                     <fieldset>
+                    <fieldset>
                         <legend>Attraction Games</legend>
                         <div class="col-md-12">
                             <div class="row game-group-content">
                                 <div class="group-games">
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 game-thumbnail">
                                         <div class="thumbnail">
                                             <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
                                         </div>
                                     </div>
                                     <div class="col-md-10">
-                                        <h3 style="margin-top: 0px"> Games Name 1 </h3>
+                                        <h3 class="name"> Games Name 1 </h3>
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <p style="font-weight: bold;">Description: </p>
                                             </div>
                                             <div class="col-md-9">
-                                                <p>Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center</p>
+                                                <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave.</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -177,22 +161,22 @@
                                 </div>
                                
                             </div>
-                            <hr class="row">
+                            <hr class="line row">
                             <div class="row game-group-content">
                                 <div class="group-games">
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 game-thumbnail">
                                         <div class="thumbnail">
                                             <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
                                         </div>
                                     </div>
                                     <div class="col-md-10">
-                                        <h3 style="margin-top: 0px"> Games Name 1 </h3>
+                                        <h3 class="name"> Games Name 1 </h3>
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <p style="font-weight: bold;">Description: </p>
                                             </div>
                                             <div class="col-md-9">
-                                                <p>Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center</p>
+                                                <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave.</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -214,7 +198,7 @@
             <div class="row tab-pane" id="kids">
                 <div class="col-md-12">
                     <h2>HELIO KIDS</h2>
-                    <hr>
+                    <hr class="line">
                     <fieldset>
                         <legend>What's hot?</legend>
                             <div class="footer-contact"> 

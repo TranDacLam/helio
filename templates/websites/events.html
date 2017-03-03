@@ -1,35 +1,6 @@
 {% extends "layout.html" %}
 {% block extrastylesheet %}
-
-<style type="text/css">
-    .tabs-left .nav-tabs {
-        float: left;
-        border-bottom: 0px;
-        margin-top: 27px;
-        width: 150px;
-    }
-
-    .tabs-left .nav-tabs li {
-        float: none;
-        margin-bottom: 0px;
-        margin-right: -4px;
-    }
-  
-    .tabs-left .nav-tabs > li.active > a, 
-    .tabs-left .nav-tabs > li.active > a:focus, 
-    .tabs-left .nav-tabs > li.active > a:hover {
-        border-right-color: transparent;
-        border-bottom-color: #ddd;
-    }
-
-    .tabs-left .tab-pane {
-        border: 1px solid #ddd;
-        margin-left: 150px;
-    }
-</style>
-
-
-
+    <link href="{{ STATIC_URL }}assets/websites/css/helio_custom.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block main_content %}
     <div id="helio-page" class="tabs-left" style="padding-top: 150px; padding-bottom: 150px;">
@@ -40,14 +11,14 @@
         <div class="tab-content">
             <div class="row tab-pane active" id="events">
                 <div class="col-md-12" style="padding-bottom: 15px;">
-                    <h2>EVENTS</h2>
-                    <hr>
+                    <h2 class="title">EVENTS</h2>
+                    <hr class="line">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="thumbnail">
                                 <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
                                 <div class="caption">
-                                    <h3>Thumbnail label</h3>
+                                    <h3 class="name">Event Name 1</h3>
                                     <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                                 </div>
                             </div>
@@ -56,7 +27,7 @@
                             <div class="thumbnail">
                                 <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
                                 <div class="caption">
-                                    <h3>Thumbnail label</h3>
+                                    <h3 class="name">Event Name 1</h3>
                                     <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                                 </div>
                             </div>
@@ -65,7 +36,7 @@
                             <div class="thumbnail">
                                 <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
                                 <div class="caption">
-                                    <h3>Thumbnail label</h3>
+                                    <h3 class="name">Event Name 1</h3>
                                     <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                                 </div>
                             </div>
@@ -74,7 +45,7 @@
                             <div class="thumbnail">
                                 <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
                                 <div class="caption">
-                                    <h3>Thumbnail label</h3>
+                                    <h3 class="name">Event Name 1</h3>
                                     <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                                 </div>
                             </div>
@@ -84,8 +55,8 @@
             </div>
             <div class="row tab-pane" id="event-calendar">
                 <div class="col-md-12">
-                    <h2>EVENT CALENDAR</h2>
-                    <hr>
+                    <h2 class="title">EVENT CALENDAR</h2>
+                    <hr class="line">
                    
                 </div>
             </div>
