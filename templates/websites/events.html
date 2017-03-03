@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% block extrastylesheet %}
+
+<style type="text/css">
+    .tabs-left .nav-tabs {
+        float: left;
+        border-bottom: 0px;
+        margin-top: 27px;
+        width: 150px;
+    }
+
+    .tabs-left .nav-tabs li {
+        float: none;
+        margin-bottom: 0px;
+        margin-right: -4px;
+    }
+  
+    .tabs-left .nav-tabs > li.active > a, 
+    .tabs-left .nav-tabs > li.active > a:focus, 
+    .tabs-left .nav-tabs > li.active > a:hover {
+        border-right-color: transparent;
+        border-bottom-color: #ddd;
+    }
+
+    .tabs-left .tab-pane {
+        border: 1px solid #ddd;
+        margin-left: 150px;
+    }
+</style>
+
+
+
+{% endblock %}
+{% block main_content %}
+    <div id="helio-page" class="tabs-left" style="padding-top: 150px; padding-bottom: 150px;">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#events" data-toggle="tab">Events</a></li>
+            <li><a href="#event-calendar" data-toggle="tab">Event Calendar</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="row tab-pane active" id="events">
+                <div class="col-md-12" style="padding-bottom: 15px;">
+                    <h2>EVENTS</h2>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="thumbnail">
+                                <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="thumbnail">
+                                <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="thumbnail">
+                                <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="thumbnail">
+                                <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row tab-pane" id="event-calendar">
+                <div class="col-md-12">
+                    <h2>EVENT CALENDAR</h2>
+                    <hr>
+                   
+                </div>
+            </div>
+            
+        </div>
+    </div>
+{% endblock %}

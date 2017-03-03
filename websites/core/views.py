@@ -19,4 +19,10 @@ def helio_play(request):
     print "***START HELIO PLAY PAGE***"
     
     return render(request, 'websites/helio_play.html')
+
+
+def events(request):
+    print "***START EVENTS PAGE***"
+    
+    return render(request, 'websites/events.html')
     

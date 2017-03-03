@@ -2,31 +2,37 @@
 {% block extrastylesheet %}
 
 <style type="text/css">
-    #helio-page .nav-tabs {
+    .tabs-left .nav-tabs {
         float: left;
         border-bottom: 0px;
-        border-right: 1px solid #ddd;
         margin-top: 27px;
+        width: 100px;
     }
 
-    #helio-page .nav-tabs li {
+    .tabs-left .nav-tabs li {
         float: none;
         margin-bottom: 0px;
         margin-right: -4px;
     }
   
-    #helio-page .nav-tabs > li.active > a, 
-    #helio-page .nav-tabs > li.active > a:focus, 
-    #helio-page .nav-tabs > li.active > a:hover {
+    .tabs-left .nav-tabs > li.active > a, 
+    .tabs-left .nav-tabs > li.active > a:focus, 
+    .tabs-left .nav-tabs > li.active > a:hover {
         border-right-color: transparent;
         border-bottom-color: #ddd;
     }
 
-    #helio-page .tab-pane {
+    .tabs-left .tab-pane {
         border: 1px solid #ddd;
-        margin-left: 93px;
+        margin-left: 100px;
     }
 
+    .game-group-content {
+        border: 1px solid #ddd;
+    }
+    .group-games {
+        margin-top: 18px;
+    }
 </style>
 
 
@@ -40,25 +46,167 @@
         </ul>
         <div class="tab-content">
             <div class="row tab-pane active" id="play">
-                <div class="col-md-12">
+                <div class="col-md-12" style="padding-bottom: 15px;">
                     <h2>HELIO PLAY</h2>
                     <hr>
                     <fieldset>
-                        <legend>What's hot?</legend>
-                            <div class="footer-contact"> 
-                            <p>Trung tâm giải trí phức hợp Helio Center</p> 
-                            <p>Khu công viên Đông Nam Đài tưởng niệm, Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu, TP Đà Nẵng</p> 
-                            <p><span>Tel</span>(0236) 3 630 888</p> 
-                            <p><span>Email: </span><a href="mailto:contact@helio.vn">contact@helio.vn</a> </p> 
+                        <legend>Filter</legend>
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <input type="checkbox" name="vehicle" value="Bike">I have a bike
+                            </div>
+                            <div class="col-md-3">
+                                <input type="checkbox" name="vehicle" value="Bike">I have a bike
+                            </div>
+                            <div class="col-md-3">
+                                <input type="checkbox" name="vehicle" value="Bike">I have a bike
+                            </div>
+                            <div class="col-md-3">
+                                <input type="checkbox" name="vehicle" value="Bike">I have a bike
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <input type="checkbox" name="vehicle" value="Bike">I have a bike
+                            </div>
+                            <div class="col-md-3">
+                                <input type="checkbox" name="vehicle" value="Bike">I have a bike
+                            </div>
+                            <div class="col-md-3">
+                                <input type="checkbox" name="vehicle" value="Bike">I have a bike
+                            </div>
+                            <div class="col-md-3">
+                                <input type="checkbox" name="vehicle" value="Bike">I have a bike
+                            </div>
                         </div>
                     </fieldset>
                     <fieldset>
-                        <legend>What's hot?</legend>
-                            <div class="footer-contact"> 
-                            <p>Trung tâm giải trí phức hợp Helio Center</p> 
-                            <p>Khu công viên Đông Nam Đài tưởng niệm, Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu, TP Đà Nẵng</p> 
-                            <p><span>Tel</span>(0236) 3 630 888</p> 
-                            <p><span>Email: </span><a href="mailto:contact@helio.vn">contact@helio.vn</a> </p> 
+                        <legend>Attraction Games</legend>
+                        <div class="col-md-12">
+                            <div class="row game-group-content">
+                                <div class="group-games">
+                                    <div class="col-md-2">
+                                        <div class="thumbnail">
+                                            <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h3 style="margin-top: 0px"> Games Name 1 </h3>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <p style="font-weight: bold;">Description: </p>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <p>Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <p style="font-weight: bold;">Appropriate for: </p>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <p>Trung tâm giải trí phức hợp Helio Center</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <hr class="row">
+                            <div class="row game-group-content">
+                                <div class="group-games">
+                                    <div class="col-md-2">
+                                        <div class="thumbnail">
+                                            <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h3 style="margin-top: 0px"> Games Name 1 </h3>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <p style="font-weight: bold;">Description: </p>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <p>Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <p style="font-weight: bold;">Appropriate for: </p>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <p>Trung tâm giải trí phức hợp Helio Center</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </fieldset>
+
+                     <fieldset>
+                        <legend>Attraction Games</legend>
+                        <div class="col-md-12">
+                            <div class="row game-group-content">
+                                <div class="group-games">
+                                    <div class="col-md-2">
+                                        <div class="thumbnail">
+                                            <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h3 style="margin-top: 0px"> Games Name 1 </h3>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <p style="font-weight: bold;">Description: </p>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <p>Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <p style="font-weight: bold;">Appropriate for: </p>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <p>Trung tâm giải trí phức hợp Helio Center</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <hr class="row">
+                            <div class="row game-group-content">
+                                <div class="group-games">
+                                    <div class="col-md-2">
+                                        <div class="thumbnail">
+                                            <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h3 style="margin-top: 0px"> Games Name 1 </h3>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <p style="font-weight: bold;">Description: </p>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <p>Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center. Trung tâm giải trí phức hợp Helio Center</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <p style="font-weight: bold;">Appropriate for: </p>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <p>Trung tâm giải trí phức hợp Helio Center</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </div>
                         </div>
                     </fieldset>
                 </div>
