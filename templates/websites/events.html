@@ -2,6 +2,10 @@
 {% block extrastylesheet %}
     <link href="{{ STATIC_URL }}assets/websites/css/helio_custom.css" rel="stylesheet" type="text/css" />
 {% endblock %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'events' %}">Events</a></li>
+{% endblock %}
 {% block main_content %}
     <div id="helio-page" class="tabs-left" style="padding-top: 150px; padding-bottom: 150px;">
         <ul class="nav nav-tabs">
