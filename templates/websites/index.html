@@ -1,4 +1,7 @@
 {% extends "layout.html" %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+{% endblock %}
 {% block main_content %}  
    <!--  Current language {{LANGUAGE_CODE}}
     <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
