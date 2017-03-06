@@ -25,4 +25,18 @@ def events(request):
     print "***START EVENTS PAGE***"
     
     return render(request, 'websites/events.html')
-    
+
+def FAQ(request):
+    print "***START FAQs PAGE***"
+
+    return render(request, 'websites/FAQ.html')
+
+def power_card(request):
+    print "***START Power Card Introduction PAGE***"
+
+    return render(request, 'websites/power_card.html')
+
+def membership(request):
+    print "***START Membership Introduction PAGE***"
+
+    return render(request, 'websites/membership.html')
