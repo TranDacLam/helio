@@ -40,3 +40,9 @@ def membership(request):
     print "***START Membership Introduction PAGE***"
 
     return render(request, 'websites/membership.html')
+
+
+def news(request):
+    print "***START News PAGE***"
+
+    return render(request, 'websites/news.html')

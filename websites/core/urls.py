@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'faq/$', views.FAQ, name='FAQ'),
     url(r'power-card/$', views.power_card, name='power_card'),
     url(r'membership/$', views.membership, name='pmembership'),
+    # url(r'news/$', views.news, name='pmembership'),
 ]
