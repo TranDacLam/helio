@@ -26,6 +26,11 @@ def events(request):
     
     return render(request, 'websites/events.html')
 
+def event_content(request):
+    print "***START EVENT CONTENT PAGE***"
+    
+    return render(request, 'websites/event_content.html')
+
 def FAQ(request):
     print "***START FAQs PAGE***"
 
