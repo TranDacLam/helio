@@ -6,5 +6,6 @@ django-rest-auth
 django-rest-auth[with_social]
 djangorestframework-jwt
 django-tinymce
+django-suit
 
 #-e git+git://github.com/mvpdev/django-eav.git#egg=django-eav

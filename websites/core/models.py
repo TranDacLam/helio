@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from tinymce.widgets import TinyMCE
 from tinymce.models import HTMLField
 
 
@@ -40,7 +41,7 @@ class Event_Filter(models.Model):
 class Game(models.Model):
     name = models.CharField(max_length=2000)
     short_description = models.TextField()
-    content = models.TextField()
+    content = HTMLField()
     image = models.ImageField(max_length=1000, null=True, blank=True)
     game_filter = models.ManyToManyField(
         'Game_Filter', related_name='game_filter_rel')

@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'modeltranslation',
+    'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,11 +71,13 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'main.urls'
 
 TINYMCE_DEFAULT_CONFIG = {
-    'plugins': "table,spellchecker,paste,searchreplace",
+    'mode' : "textareas",
+    'plugins': "fullscreen, table,spellchecker,paste,searchreplace",
     'theme': "advanced",
-    'cleanup_on_startup': True,
-    'custom_undo_redo_levels': 10,
+    'theme_advanced_buttons3_add_before' : "tablecontrols,separator"
+
 }
+
 
 TEMPLATES = [
     {
