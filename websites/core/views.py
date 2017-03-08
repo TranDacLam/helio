@@ -8,6 +8,8 @@ from django.core.serializers.json import DjangoJSONEncoder
 def get_posts(request):
     print 'call request'
     lst_post = Posts.objects.all()
+
+    print lst_post
     data = serializers.serialize("json", lst_post) 
     # print "Data With Current Language ",lst_post[0].name
     # print "list item ",data
