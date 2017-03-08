@@ -56,3 +56,8 @@ def combo_product(request):
     print "***START HELIO PLAY PAGE***"
     
     return render(request, 'websites/combo_product.html')
+
+def game_detail(request):
+    print "***START EVENT CONTENT PAGE***"
+    
+    return render(request, 'websites/game_detail.html')
