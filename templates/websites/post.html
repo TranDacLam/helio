@@ -10,5 +10,17 @@
 Current language {{LANGUAGE_CODE}}
 
 <h1>{{name}}</h1>
+
+
+{% if posts %}
+
+	{% for post in posts %}
+
+		{{post.name}}
+
+		{{post.content | safe}}
+
+	{% endfor %}
+{% endif %}
 </body>
 </html>

@@ -22,6 +22,8 @@ from rest_framework_jwt.views import obtain_jwt_token
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^tinymce/', include('tinymce.urls')),
+    url(r'^redactor/', include('redactor.urls')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
