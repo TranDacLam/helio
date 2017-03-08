@@ -53,3 +53,8 @@ def news(request):
     print "***START News PAGE***"
 
     return render(request, 'websites/news.html')
+
+def combo_product(request):
+    print "***START HELIO PLAY PAGE***"
+    
+    return render(request, 'websites/combo_product.html')
