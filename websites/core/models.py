@@ -1,8 +1,6 @@
 from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
-from tinymce.widgets import TinyMCE
-from tinymce.models import HTMLField
 
 
 # Create your models here.
@@ -10,7 +8,7 @@ class Posts(models.Model):
     name = models.CharField(max_length=2000)
     image = models.ImageField(max_length=1000, null=True, blank=True)
     short_description = models.TextField()
-    content = HTMLField()
+    content = models.TextField()
     date_created = models.DateTimeField(_('Date Created'), auto_now_add=True,
                                         editable=False)
     post_type = models.ForeignKey('Post_Type', related_name='posts_type_rel', on_delete=models.CASCADE, null=True,
@@ -41,7 +39,7 @@ class Event_Filter(models.Model):
 class Game(models.Model):
     name = models.CharField(max_length=2000)
     short_description = models.TextField()
-    content = HTMLField()
+    content = models.TextField()
     image = models.ImageField(max_length=1000, null=True, blank=True)
     game_filter = models.ManyToManyField(
         'Game_Filter', related_name='game_filter_rel')
