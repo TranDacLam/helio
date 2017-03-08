@@ -74,6 +74,8 @@ TINYMCE_DEFAULT_CONFIG = {
     'mode' : "textareas",
     'plugins': "fullscreen, table,spellchecker,paste,searchreplace",
     'theme': "advanced",
+    'height': "500",
+    'width': "100%",
     'theme_advanced_buttons3_add_before' : "tablecontrols,separator"
 
 }
