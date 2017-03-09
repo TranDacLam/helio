@@ -63,3 +63,8 @@ def game_detail(request):
     print "***START EVENT CONTENT PAGE***"
     
     return render(request, 'websites/game_detail.html')
+
+def helio_night_life(request):
+    print "***START EVENT CONTENT PAGE***"
+    
+    return render(request, 'websites/helio_night_life.html')

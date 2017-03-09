@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'events/event-content/$', views.event_content, name='event_content'),
     url(r'faq/$', views.FAQ, name='FAQ'),
     url(r'power-card/$', views.power_card, name='power_card'),
-    url(r'membership/$', views.membership, name='pmembership'),
-    # url(r'news/$', views.news, name='pmembership'),
+    url(r'membership/$', views.membership, name='membership'),
+    url(r'helio-night-life/$', views.helio_night_life, name='helio_night_life'),
+    # url(r'news/$', views.news, name='news'),
 ]
