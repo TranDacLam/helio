@@ -18,6 +18,8 @@ class Posts(models.Model):
 class Post_Type(models.Model):
     name = models.CharField(max_length=500)
     description = models.TextField(null=True, blank=True)
+    def __str__(self):
+        return '%s' % (self.name)
 
 
 class Events(models.Model):
@@ -35,6 +37,8 @@ class Events(models.Model):
 class Event_Filter(models.Model):
     name = models.CharField(max_length=1000)
     description = models.TextField(null=True, blank=True)
+    def __str__(self):
+        return '%s' % (self.name)
 
 class Game(models.Model):
     name = models.CharField(max_length=2000)
@@ -54,6 +58,8 @@ class Game_Filter(models.Model):
 
 class Game_Type(models.Model):
     name = models.CharField(max_length=1000)
+    def __str__(self):
+        return '%s' % (self.name)
 
 class Category(models.Model):
     name = models.CharField(max_length=1000)
@@ -76,9 +82,13 @@ class Entertainments(models.Model):
 class Entertainments_Filter(models.Model):
     name = models.CharField(max_length=1000)
     description = models.TextField(null=True, blank=True)
+    def __str__(self):
+        return '%s' % (self.name)
 
 class Entertainments_Type(models.Model):
     name = models.CharField(max_length=1000)
+    def __str__(self):
+        return '%s' % (self.name)
 
 class Hots(models.Model):
     sub_url = models.CharField(max_length=1000)
