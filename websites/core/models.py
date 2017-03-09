@@ -49,6 +49,8 @@ class Game(models.Model):
 class Game_Filter(models.Model):
     name = models.CharField(max_length=1000)
     description = models.TextField(null=True, blank=True)
+    def __str__(self):
+        return '%s' % (self.name)
 
 class Game_Type(models.Model):
     name = models.CharField(max_length=1000)
@@ -56,6 +58,8 @@ class Game_Type(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=1000)
     description = models.TextField(null=True, blank=True)
+    def __str__(self):
+        return '%s' % (self.name)
 
 class Entertainments(models.Model):
     name = models.CharField(max_length=2000)
