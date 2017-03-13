@@ -1,13 +1,82 @@
 from modeltranslation.translator import translator, TranslationOptions
-from models import Posts, Post_Type, Game
+from models import *
+
+class CategoryTranslationOptions(TranslationOptions):
+    fields = ('name', )
+
+translator.register(Category, CategoryTranslationOptions)
+
+# Posts
+class PostTypeTranslationOptions(TranslationOptions):
+    fields = ('name', )
+
+translator.register(Post_Type, PostTypeTranslationOptions)
 
 class PostsTranslationOptions(TranslationOptions):
     fields = ('name', 'short_description', 'content', )
 
 translator.register(Posts, PostsTranslationOptions)
 
+# Events
+class EventFilterTranslationOptions(TranslationOptions):
+    fields = ('name', )
+
+translator.register(Event_Filter, EventFilterTranslationOptions)
+
+class EventsTranslationOptions(TranslationOptions):
+    fields = ('name', 'content', )
+
+translator.register(Events, EventsTranslationOptions)
+
+# Games
+class GameTypeTranslationOptions(TranslationOptions):
+    fields = ('name', )
+
+translator.register(Game_Type, GameTypeTranslationOptions)
+
+class GameFilterTranslationOptions(TranslationOptions):
+    fields = ('name', )
+
+translator.register(Game_Filter, GameFilterTranslationOptions)
 
 class GameTranslationOptions(TranslationOptions):
     fields = ('name', 'short_description', 'content', )
 
 translator.register(Game, GameTranslationOptions)
+
+
+# Entertainments
+class EntertainmentsTypeTranslationOptions(TranslationOptions):
+    fields = ('name', )
+
+translator.register(Entertainments_Type, EntertainmentsTypeTranslationOptions)
+
+class EntertainmentsFilterTranslationOptions(TranslationOptions):
+    fields = ('name', )
+
+translator.register(Entertainments_Filter, EntertainmentsFilterTranslationOptions)
+
+class EntertainmentsAdminTranslationOptions(TranslationOptions):
+    fields = ('name', 'short_description', 'content', )
+
+translator.register(Entertainments, EntertainmentsAdminTranslationOptions)
+
+
+# Contacts
+class ContactsTranslationOptions(TranslationOptions):
+    fields = ('address', )
+
+translator.register(Contacts, ContactsTranslationOptions)
+
+# FAQs
+class FAQsTranslationOptions(TranslationOptions):
+    fields = ('question', 'answer', )
+
+translator.register(FAQs, FAQsTranslationOptions)
+
+# Hots
+class HotsTranslationOptions(TranslationOptions):
+    fields = ( )
+    
+translator.register(Hots, HotsTranslationOptions)
+
