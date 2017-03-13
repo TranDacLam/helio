@@ -61,13 +61,6 @@ class EntertainmentsAdminTranslationOptions(TranslationOptions):
 
 translator.register(Entertainments, EntertainmentsAdminTranslationOptions)
 
-
-# Contacts
-class ContactsTranslationOptions(TranslationOptions):
-    fields = ('address', )
-
-translator.register(Contacts, ContactsTranslationOptions)
-
 # FAQs
 class FAQsTranslationOptions(TranslationOptions):
     fields = ('question', 'answer', )

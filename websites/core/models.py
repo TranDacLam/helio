@@ -13,7 +13,7 @@ class Posts(models.Model):
                                         editable=False)
     post_type = models.ForeignKey('Post_Type', related_name='posts_type_rel', on_delete=models.CASCADE, null=True,
                                   blank=True)
-    key_query = models..CharField(max_length=500, editable=False)
+    key_query = models.CharField(max_length=500, editable=False)
 
 
 class Post_Type(models.Model):

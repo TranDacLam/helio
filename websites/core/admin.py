@@ -8,11 +8,12 @@ class CategoryAdmin(TranslationAdmin):
     pass
 admin.site.register(Category, CategoryAdmin)
 
-# Posts
+# Register Posts Type Model to Admin Site
 class PostTypeAdmin(TranslationAdmin):
     pass
 admin.site.register(Post_Type, PostTypeAdmin)
 
+# Register Posts Model to Admin Site
 class PostsAdmin(TranslationAdmin):
     formfield_overrides = {
         models.TextField: {'widget': CKEditorUploadingWidget()},
@@ -27,7 +28,7 @@ admin.site.register(Event_Filter, EventFilterAdmin)
 
 class EventsAdmin(TranslationAdmin):
     formfield_overrides = {
-        models.TextField: {'widget': CKEditorWidget()},
+        models.TextField: {'widget': CKEditorUploadingWidget()},
     }
     pass
 admin.site.register(Events, EventsAdmin)
@@ -43,7 +44,7 @@ admin.site.register(Game_Filter, GameFilterAdmin)
 
 class GameAdmin(TranslationAdmin):
     formfield_overrides = {
-        models.TextField: {'widget': CKEditorWidget()},
+        models.TextField: {'widget': CKEditorUploadingWidget()},
     }
     pass
 admin.site.register(Game, GameAdmin)
@@ -59,15 +60,10 @@ admin.site.register(Entertainments_Filter, EntertainmentsFilterAdmin)
 
 class EntertainmentsAdmin(TranslationAdmin):
     formfield_overrides = {
-        models.TextField: {'widget': CKEditorWidget()},
+        models.TextField: {'widget': CKEditorUploadingWidget()},
     }
     pass
 admin.site.register(Entertainments, EntertainmentsAdmin)
-
-# Contacts
-class ContactsAdmin(TranslationAdmin):
-    pass
-admin.site.register(Contacts, ContactsAdmin)
 
 # FAQs
 class FAQsAdmin(TranslationAdmin):
