@@ -18,6 +18,9 @@ from django.contrib import admin
 import views
 from django.conf.urls.i18n import i18n_patterns
 from rest_framework_jwt.views import obtain_jwt_token
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 
 urlpatterns = [
@@ -32,10 +35,14 @@ urlpatterns = [
 
 ]
 
+if settings.DEBUG:
+    urlpatterns += urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 urlpatterns += i18n_patterns(
     url(r'^api/', include('api.urls')),
     url(r'^helio/', include('core.urls')),
     url(r'^$', views.home, name='home'),
     url(r'(?P<switch_lang>[\w-]+)/$', views.home, name='home'),
 )
+
 

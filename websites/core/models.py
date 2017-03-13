@@ -13,6 +13,7 @@ class Posts(models.Model):
                                         editable=False)
     post_type = models.ForeignKey('Post_Type', related_name='posts_type_rel', on_delete=models.CASCADE, null=True,
                                   blank=True)
+    key_query = models..CharField(max_length=500, editable=False)
 
 
 class Post_Type(models.Model):
@@ -79,12 +80,26 @@ class Entertainments_Type(models.Model):
 class Hots(models.Model):
     sub_url = models.CharField(max_length=1000)
     image = models.ImageField(max_length=1000)
+    is_show = models.BooleanField(default=False)
+    date_created = models.DateTimeField(_('Date Created'), auto_now_add=True,
+                                        editable=False)
+    # TODO: Validate is_show befor save and raise error when max 5 value true
 
-class Contacts(models.Model):
-    address = models.CharField(max_length=250)
-    email = models.EmailField()
-    office_phone = models.CharField(max_length=50)
-    service_phone = models.CharField(max_length=50)
+    # def save(self, *args, **kwargs):
+    #     try:
+    #         total_show = Hots.objects.filter(is_show=True).count()
+    #         if total_show < 5:
+    #             temp.is_the_chosen_one = False
+    #             temp.save()
+    #     except Character.DoesNotExist:
+    #         pass
+    #     super(Character, self).save(*args, **kwargs)
+
+# class Contacts(models.Model):
+#     address = models.CharField(max_length=250)
+#     email = models.EmailField()
+#     office_phone = models.CharField(max_length=50)
+#     service_phone = models.CharField(max_length=50)
 
 class FAQs(models.Model):
     question = models.CharField(max_length=1000)

@@ -2,13 +2,13 @@ from django.contrib import admin
 from models import Posts, Game
 from modeltranslation.admin import TranslationAdmin
 from django.db import models
-from ckeditor.widgets import CKEditorWidget
+from ckeditor_uploader.widgets import  CKEditorUploadingWidget
 
 
 
 class PostsAdmin(TranslationAdmin):
     formfield_overrides = {
-        models.TextField: {'widget': CKEditorWidget()},
+        models.TextField: {'widget': CKEditorUploadingWidget()},
     }
     pass
 

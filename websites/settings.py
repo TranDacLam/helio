@@ -186,11 +186,14 @@ CKEDITOR_CONFIGS = {
             [
                'codesnippetgeshi',
                'placeholder',
+               'dialog',
+               'dialogui'
             ]
         ),
     },
 }
-
+CKEDITOR_BROWSE_SHOW_DIRS = True
+CKEDITOR_IMAGE_BACKEND = "pillow"
 # CKEDITOR_CONFIGS = {
 #     'default': {
 #         'skin': 'moono',
