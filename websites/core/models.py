@@ -18,7 +18,7 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         self.key_query = "kq_" + self.key_query
-        super(Posts, self).save(*args, **kwargs)
+        super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -67,7 +67,7 @@ class Event_Filter(models.Model):
 class Game(models.Model):
 
     def limit_category_Games():
-        return {'name_en__iexact': 'Games'}
+        return {'name_en__in': ['Helio Play', 'Helio Kids']}
 
     name = models.CharField(max_length=2000)
     short_description = models.TextField()
@@ -116,7 +116,7 @@ class Category(models.Model):
 class Entertainment(models.Model):
 
     def limit_category_entertainments():
-        return {'name_en__iexact': 'Entertainments'}
+        return {'name_en__in': ['Entertainments', 'Kiosk', 'Store']}
 
     name = models.CharField(max_length=2000)
     image = models.ImageField(max_length=1000, null=True, blank=True)

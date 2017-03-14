@@ -5,6 +5,8 @@ from core.models import *
 from api.serializers import *
 from rest_framework.decorators import api_view
 from rest_framework import status
+from helper import *
+import ast
 
 class JSONResponse(HttpResponse):
     def __init__(self, data, **kwargs):
@@ -18,7 +20,7 @@ class JSONResponse(HttpResponse):
 @api_view(['GET'])
 def hots(request):
     try:
-        hot_list = Hots.objects.filter(is_show=True).order_by('date_created')[:5]
+        hot_list = Hot.objects.filter(is_show=True).order_by('date_created')[:5]
         serializer = HotsSerializer(hot_list, many=True)
         return JSONResponse(serializer.data)
     except Exception ,e :
@@ -46,8 +48,16 @@ def games(request):
     try:
         game_filter =  request.GET.get("game_filter")
         category_id =  request.GET.get("category_id")
-        print game_filter, category_id
+
+        error = checkIdValid(category_id)
+        if not isEmpty(error):
+            error = {"code" : 400, "message": "%s" % error, "fields": "category_id"}
+            return JSONResponse( error, status=400)
+
         game_list = Game.objects.filter(category_id=category_id)
+        if bool(game_filter):
+            lst =  ast.literal_eval(game_filter)
+            game_list = game_list.filter(game_filter__in=lst).distinct()
         serializer = GameSerializer(game_list, many=True)
         return JSONResponse(serializer.data)
     except Exception ,e :
@@ -76,7 +86,7 @@ def game_detail(request, game_id):
 @api_view(['GET'])
 def faqs(request):
     try:
-        faq_list = FAQs.objects.all()
+        faq_list = FAQ.objects.all()
         serializer = FAQsSerializer(faq_list, many=True)
         return JSONResponse(serializer.data)
     except Exception ,e :
@@ -91,7 +101,17 @@ def entertainments(request):
     try: 
         entertainments_filter =  request.GET.get("entertainments_filter")
         category_id =  request.GET.get("category_id")
-        entertainment_list = Entertainments.objects.all()
+        entertainment_list = Entertainment.objects.filter(category_id=category_id)
+
+        error = checkIdValid(category_id)
+        if not isEmpty(error):
+            error = {"code" : 400, "message": "%s" % error, "fields": "category_id"}
+            return JSONResponse( error, status=400)
+
+        if bool(entertainments_filter):
+            lst =  ast.literal_eval(entertainments_filter)
+            entertainment_list = entertainment_list.filter(entertainments_filter__in=lst).distinct()
+
         serializer = EntertainmentsSerializer(entertainment_list, many=True)
         return JSONResponse(serializer.data)
     except Exception ,e :
@@ -104,7 +124,7 @@ def entertainments(request):
 @api_view(['GET'])
 def entertainment_detail(request, entertainment_id):
     try:
-        entertainment_detail = Entertainments.objects.get(pk=entertainment_id)
+        entertainment_detail = Entertainment.objects.get(pk=entertainment_id)
         serializer = EntertainmentDetailSerializer(entertainment_detail, many=False)
         return JSONResponse(serializer.data)
     except Game.DoesNotExist, e:
@@ -135,7 +155,12 @@ def event_filter(request):
 def events(request):
     try:
         event_filter = request.GET.get("event_filter")
-        event_list = Event_Filter.objects.all()
+        event_list = Event.objects.all()
+
+        if bool(event_filter):
+            lst =  ast.literal_eval(event_filter)
+            event_list = event_list.filter(event_filter__in=lst).distinct()
+
         serializer = EventsSerializer(event_list, many=True)
         return JSONResponse(serializer.data)
     except Exception ,e :
@@ -150,8 +175,17 @@ def events(request):
 def posts(request):
     try:
         id_or_key_query = request.GET.get("id_or_key_query")
-        print id_or_key_query
-        post_list = Posts.objects.all()
+        
+        if isEmpty(id_or_key_query):
+            error = {"code" : 400, "message": "This field is required.", "fields": "id_or_key_query"}
+            return JSONResponse( error, status=400)
+
+        post_list = Post.objects.all()
+        if isInt(id_or_key_query):
+            post_list = post_list.filter(pk=id_or_key_query)
+        else:
+            post_list = post_list.filter(key_query=id_or_key_query)
+        
         serializer = PostsSerializer(post_list, many=True)
         return JSONResponse(serializer.data)
     except Exception ,e :
