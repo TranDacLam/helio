@@ -15,7 +15,7 @@ translator.register(Post_Type, PostTypeTranslationOptions)
 class PostsTranslationOptions(TranslationOptions):
     fields = ('name', 'short_description', 'content', )
 
-translator.register(Posts, PostsTranslationOptions)
+translator.register(Post, PostsTranslationOptions)
 
 # Events
 class EventFilterTranslationOptions(TranslationOptions):
@@ -26,7 +26,7 @@ translator.register(Event_Filter, EventFilterTranslationOptions)
 class EventsTranslationOptions(TranslationOptions):
     fields = ('name', 'content', )
 
-translator.register(Events, EventsTranslationOptions)
+translator.register(Event, EventsTranslationOptions)
 
 # Games
 class GameTypeTranslationOptions(TranslationOptions):
@@ -59,17 +59,17 @@ translator.register(Entertainments_Filter, EntertainmentsFilterTranslationOption
 class EntertainmentsAdminTranslationOptions(TranslationOptions):
     fields = ('name', 'short_description', 'content', )
 
-translator.register(Entertainments, EntertainmentsAdminTranslationOptions)
+translator.register(Entertainment, EntertainmentsAdminTranslationOptions)
 
 # FAQs
 class FAQsTranslationOptions(TranslationOptions):
     fields = ('question', 'answer', )
 
-translator.register(FAQs, FAQsTranslationOptions)
+translator.register(FAQ, FAQsTranslationOptions)
 
 # Hots
 class HotsTranslationOptions(TranslationOptions):
     fields = ( )
     
-translator.register(Hots, HotsTranslationOptions)
+translator.register(Hot, HotsTranslationOptions)
 

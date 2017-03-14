@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from models import Posts
+from models import Post
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 
@@ -7,7 +7,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 # Create your views here.
 def get_posts(request):
     print 'call request'
-    lst_post = Posts.objects.all()
+    lst_post = Post.objects.all()
 
     print lst_post
     data = serializers.serialize("json", lst_post) 
