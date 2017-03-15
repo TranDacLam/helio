@@ -7,6 +7,21 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from helper import *
 import ast
+from rest_framework.views import exception_handler
+
+def custom_exception_handler(exc, context):
+    # print "custom_exception_handler"
+    # to get the standard error response.
+    response = exception_handler(exc, context)
+    # Now add the HTTP status code to the response.
+    if response is not None:
+        response.data['code'] = response.status_code
+        response.data['message'] = str(exc)
+        response.data['fields'] = ""
+        del response.data['detail']
+
+    return response
+
 
 class JSONResponse(HttpResponse):
     def __init__(self, data, **kwargs):
@@ -20,7 +35,6 @@ class JSONResponse(HttpResponse):
 @api_view(['GET'])
 def hots(request):
     try:
-        print str(request.auth)
         hot_list = Hot.objects.filter(is_show=True).order_by('date_created')[:5]
         serializer = HotsSerializer(hot_list, many=True)
         return JSONResponse(serializer.data)
@@ -102,13 +116,13 @@ def entertainments(request):
     try: 
         entertainments_filter =  request.GET.get("entertainments_filter")
         category_id =  request.GET.get("category_id")
-        entertainment_list = Entertainment.objects.filter(category_id=category_id)
-
         error = checkIdValid(category_id)
+        print "Errors ", isInt(category_id)
         if not isEmpty(error):
             error = {"code" : 400, "message": "%s" % error, "fields": "category_id"}
             return JSONResponse( error, status=400)
 
+        entertainment_list = Entertainment.objects.filter(category_id=category_id)
         if bool(entertainments_filter):
             lst =  ast.literal_eval(entertainments_filter)
             entertainment_list = entertainment_list.filter(entertainments_filter__in=lst).distinct()

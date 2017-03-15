@@ -17,3 +17,5 @@ def checkIdValid(id):
         error = "This field is required"
     elif not isInt(id):
         error = "This value must be is integer."
+
+    return error
