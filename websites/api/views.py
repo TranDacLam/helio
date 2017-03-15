@@ -16,7 +16,7 @@ def custom_exception_handler(exc, context):
     # Now add the HTTP status code to the response.
     if response is not None:
         response.data['code'] = response.status_code
-        response.data['message'] = str(exc)
+        response.data['message'] = response.data['detail']
         response.data['fields'] = ""
         del response.data['detail']
 
@@ -117,7 +117,7 @@ def entertainments(request):
         entertainments_filter =  request.GET.get("entertainments_filter")
         category_id =  request.GET.get("category_id")
         error = checkIdValid(category_id)
-        print "Errors ", isInt(category_id)
+        # print "Errors ", isInt(category_id)
         if not isEmpty(error):
             error = {"code" : 400, "message": "%s" % error, "fields": "category_id"}
             return JSONResponse( error, status=400)
