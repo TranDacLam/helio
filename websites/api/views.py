@@ -20,6 +20,7 @@ class JSONResponse(HttpResponse):
 @api_view(['GET'])
 def hots(request):
     try:
+        print str(request.auth)
         hot_list = Hot.objects.filter(is_show=True).order_by('date_created')[:5]
         serializer = HotsSerializer(hot_list, many=True)
         return JSONResponse(serializer.data)
