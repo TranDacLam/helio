@@ -6,15 +6,15 @@ from django.core.exceptions import ValidationError
 
 # Create your models here.
 class Post(models.Model):
-    name = models.CharField(max_length=2000)
+    name = models.CharField(max_length=255, unique=True)
     image = models.ImageField(max_length=1000, null=True, blank=True)
-    short_description = models.TextField()
+    short_description = models.CharField(max_length=350)
     content = models.TextField()
     date_created = models.DateTimeField(_('Date Created'), auto_now_add=True,
                                         editable=False)
     post_type = models.ForeignKey('Post_Type', related_name='posts_type_rel', on_delete=models.CASCADE, null=True,
                                   blank=True)
-    key_query = models.CharField(max_length=500)
+    key_query = models.CharField(max_length=255, unique=True)
 
     def save(self, *args, **kwargs):
         self.key_query = "kq_" + self.key_query
@@ -25,7 +25,7 @@ class Post(models.Model):
 
 
 class Post_Type(models.Model):
-    name = models.CharField(max_length=500)
+    name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -37,9 +37,9 @@ class Post_Type(models.Model):
 
 
 class Event(models.Model):
-    name = models.CharField(max_length=1000)
+    name = models.CharField(max_length=255, unique=True)
     image = models.ImageField(max_length=1000, null=True, blank=True)
-    short_description = models.TextField()
+    short_description = models.CharField(max_length=350)
     content = models.TextField()
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
@@ -53,7 +53,7 @@ class Event(models.Model):
 
 
 class Event_Filter(models.Model):
-    name = models.CharField(max_length=1000)
+    name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -69,10 +69,11 @@ class Game(models.Model):
     def limit_category_Games():
         return {'name_en__in': ['Helio Play', 'Helio Kids']}
 
-    name = models.CharField(max_length=2000)
-    short_description = models.TextField()
+    name = models.CharField(max_length=255, unique=True)
+    short_description = models.CharField(max_length=350)
     content = models.TextField()
     image = models.ImageField(max_length=1000, null=True, blank=True)
+    appropriate = models.CharField(max_length=500)
     game_filter = models.ManyToManyField(
         'Game_Filter', related_name='game_filter_rel')
     game_type = models.ForeignKey(
@@ -84,7 +85,7 @@ class Game(models.Model):
         return '%s' % (self.name)
 
 class Game_Filter(models.Model):
-    name = models.CharField(max_length=1000)
+    name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -95,7 +96,7 @@ class Game_Filter(models.Model):
         verbose_name_plural = 'Game Filter'
 
 class Game_Type(models.Model):
-    name = models.CharField(max_length=1000)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -106,7 +107,7 @@ class Game_Type(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=1000)
+    name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -118,9 +119,9 @@ class Entertainment(models.Model):
     def limit_category_entertainments():
         return {'name_en__in': ['Entertainments', 'Kiosk', 'Store']}
 
-    name = models.CharField(max_length=2000)
+    name = models.CharField(max_length=255, unique=True)
     image = models.ImageField(max_length=1000, null=True, blank=True)
-    short_description = models.TextField()
+    short_description = models.CharField(max_length=350)
     content = models.TextField()
     location = models.CharField(max_length=250)
     appropriate = models.CharField(max_length=500)
@@ -136,7 +137,7 @@ class Entertainment(models.Model):
 
 
 class Entertainments_Filter(models.Model):
-    name = models.CharField(max_length=1000)
+    name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -148,7 +149,7 @@ class Entertainments_Filter(models.Model):
 
 
 class Entertainments_Type(models.Model):
-    name = models.CharField(max_length=1000)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -170,7 +171,7 @@ class Hot(models.Model):
 
 
 class FAQ(models.Model):
-    question = models.CharField(max_length=1000)
+    question = models.CharField(max_length=255, unique=True)
     answer = models.TextField()
 
     def __str__(self):
