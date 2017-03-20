@@ -13,14 +13,17 @@ Current language {{LANGUAGE_CODE}}
 
 
 {% if posts %}
-
+<table>
 	{% for post in posts %}
-
-		{{post.name}}
-
-		{{post.content | safe}}
-
+	<tr>
+		<td>{{post.name}}</td>
+		<td>{{post.content | safe}}</td>
+		
+	</tr>
 	{% endfor %}
 {% endif %}
+</table>
+<button id="get-post">Get Post</button>
+<button id="get-all">Get All Post</button>
 </body>
 </html>

@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from models import Post
+from models import *
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
+import ast
 
 
 # Create your views here.
@@ -19,8 +20,39 @@ def get_posts(request):
 
 def helio_play(request):
     print "***START HELIO PLAY PAGE***"
-    
-    return render(request, 'websites/helio_play.html')
+
+    game_filter_list = Game_Filter.objects.all()
+
+    game_list = Game.objects.filter(category_id=5)
+
+    if request.method == 'POST':
+        game_filter =  request.POST.get("game_filter")
+        game_filter_arr = ast.literal_eval(game_filter)
+        if game_filter_arr:
+            lst =  ast.literal_eval(game_filter)
+            game_list = game_list.filter(game_filter__in=lst).distinct()
+
+        #convert games to map by game type
+        games = {}
+            
+        if game_list:
+                for item in game_list:
+                    game_type = item.game_type.name
+                    if game_type not in games.keys():
+                        games[game_type] = []
+                    games[game_type].append(item)
+        return render(request, 'websites/ajax/play_content.html', {'games': games})
+
+    #convert games to map by game type
+    games = {}
+    if game_list:
+        for item in game_list:
+            game_type = item.game_type.name
+            if game_type not in games.keys():
+                games[game_type] = []
+            games[game_type].append(item)
+
+    return render(request, 'websites/helio_play.html', {'games': games, 'game_filters': game_filter_list})
 
 
 def events(request):
