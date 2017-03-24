@@ -5,13 +5,25 @@ from django.core.exceptions import ValidationError
 
 
 # Create your models here.
-class Post(models.Model):
+class DateTimeModel(models.Model):
+    """
+    Abstract model that is used for the model using created and modified fields
+    """
+    created = models.DateTimeField(_('Created Date'), auto_now_add=True,
+                                   editable=False)
+    modified = models.DateTimeField(_('Modified Date'), auto_now=True, editable=False)
+    
+    def __init__(self, *args, **kwargs):
+        super(DateTimeModel, self).__init__(*args, **kwargs)
+
+    class Meta:
+        abstract = True
+
+class Post(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
     image = models.ImageField(max_length=1000, null=True, blank=True)
     short_description = models.CharField(max_length=350)
     content = models.TextField()
-    date_created = models.DateTimeField(_('Date Created'), auto_now_add=True,
-                                        editable=False)
     post_type = models.ForeignKey('Post_Type', related_name='posts_type_rel', on_delete=models.CASCADE, null=True,
                                   blank=True)
     key_query = models.CharField(max_length=255, unique=True)
@@ -35,36 +47,25 @@ class Post_Type(models.Model):
         verbose_name = 'Post Type'
         verbose_name_plural = 'Post Type'
 
+class Post_Image(DateTimeModel):
+    image = models.ImageField(max_length=1000, null=True, blank=True)
+    post = models.ForeignKey('Post', related_name='posts_image', on_delete=models.CASCADE, null=True,
+                                  blank=True)
 
-class Event(models.Model):
+
+class Event(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
     image = models.ImageField(max_length=1000, null=True, blank=True)
     short_description = models.CharField(max_length=350)
     content = models.TextField()
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
-    date_created = models.DateTimeField(_('Date Created'), auto_now_add=True,
-                                        editable=False)
-    event_filter = models.ManyToManyField(
-        'Event_Filter', related_name='events_filter_rel')
 
     def __str__(self):
         return '%s' % (self.name)
 
 
-class Event_Filter(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    description = models.TextField(null=True, blank=True)
-
-    def __str__(self):
-        return '%s' % (self.name)
-
-    class Meta:
-        verbose_name = 'Event Filter'
-        verbose_name_plural = 'Event Filter'
-
-
-class Game(models.Model):
+class Game(DateTimeModel):
 
     def limit_category_Games():
         return {'name_en__in': ['Helio Play', 'Helio Kids']}
@@ -73,37 +74,24 @@ class Game(models.Model):
     short_description = models.CharField(max_length=350)
     content = models.TextField()
     image = models.ImageField(max_length=1000, null=True, blank=True)
-    appropriate = models.CharField(max_length=500)
-    game_filter = models.ManyToManyField(
-        'Game_Filter', related_name='game_filter_rel')
     game_type = models.ForeignKey(
-        'Game_Type', related_name='game_type_rel', on_delete=models.CASCADE)
+        'Type', related_name='game_type_rel', on_delete=models.CASCADE)
     category = models.ForeignKey('Category', related_name='game_category_rel',
                                  on_delete=models.CASCADE, limit_choices_to=limit_category_Games)
 
     def __str__(self):
         return '%s' % (self.name)
 
-class Game_Filter(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    description = models.TextField(null=True, blank=True)
 
-    def __str__(self):
-        return '%s' % (self.name)
-
-    class Meta:
-        verbose_name = 'Game Filter'
-        verbose_name_plural = 'Game Filter'
-
-class Game_Type(models.Model):
+class Type(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return '%s' % (self.name)
 
     class Meta:
-        verbose_name = 'Game Type'
-        verbose_name_plural = 'Game Type'
+        verbose_name = 'Type'
+        verbose_name_plural = 'Type'
 
 
 class Category(models.Model):
@@ -114,21 +102,20 @@ class Category(models.Model):
         return '%s' % (self.name)
 
 
-class Entertainment(models.Model):
+class Entertainment(DateTimeModel):
 
     def limit_category_entertainments():
         return {'name_en__in': ['Entertainments', 'Kiosk', 'Store']}
 
     name = models.CharField(max_length=255, unique=True)
-    image = models.ImageField(max_length=1000, null=True, blank=True)
     short_description = models.CharField(max_length=350)
     content = models.TextField()
-    location = models.CharField(max_length=250)
-    appropriate = models.CharField(max_length=500)
-    entertainments_filter = models.ManyToManyField(
-        'Entertainments_Filter', related_name='entertainments_filter_rel')
-    entertainments_type = models.ForeignKey(
-        'Entertainments_Type', related_name='entertainments_type_rel', on_delete=models.CASCADE)
+    image1 = models.ImageField(_('Image 1'), max_length=1000, null=True, blank=True)
+    image2 = models.ImageField(_('Image 2'), max_length=1000, null=True, blank=True)
+    image3 = models.ImageField(_('Image 3'), max_length=1000, null=True, blank=True)
+    image4 = models.ImageField(_('Image 4'), max_length=1000, null=True, blank=True)
+    image5 = models.ImageField(_('Image 5'), max_length=1000, null=True, blank=True)
+    image6 = models.ImageField(_('Image 6'), max_length=1000, null=True, blank=True)
     category = models.ForeignKey('Category', related_name='entertainments_category_rel',
                                  on_delete=models.CASCADE, limit_choices_to=limit_category_entertainments)
 
@@ -136,43 +123,59 @@ class Entertainment(models.Model):
         return '%s' % (self.name)
 
 
-class Entertainments_Filter(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    description = models.TextField(null=True, blank=True)
+class Promotion(DateTimeModel):
+    def limit_category_Promotion():
+        return {'name_en__in': ['Helio Play', 'Helio Kids']}
+
+    name  = models.CharField(max_length=255, unique=True)
+    image = models.ImageField(_('Image'), max_length=1000, null=True, blank=True)
+    short_description = models.CharField(max_length=350)
+    content = models.TextField()
+    promotion_type = models.ForeignKey(
+        'Type', related_name='romotion_type_rel', on_delete=models.CASCADE)
+    category = models.ForeignKey('Category', related_name='promotion_category_rel',
+                                 on_delete=models.CASCADE, limit_choices_to=limit_category_Promotion)
 
     def __str__(self):
         return '%s' % (self.name)
 
-    class Meta:
-        verbose_name = 'Entertainments Filter'
-        verbose_name_plural = 'Entertainments Filter'
 
+class FAQ(DateTimeModel):
+    def limit_category_Faq():
+        return {'name_en__in': ['Helio Play', 'Helio Kids']}
 
-class Entertainments_Type(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    question = models.CharField(max_length=255, unique=True)
+    answer = models.TextField()
+    category = models.ForeignKey('Category', related_name='faq_category_rel',
+                                 on_delete=models.CASCADE, limit_choices_to=limit_category_Faq)
 
     def __str__(self):
-        return '%s' % (self.name)
-
-    class Meta:
-        verbose_name = 'Entertainments Type'
-        verbose_name_plural = 'Entertainments Type'
+        return '%s' % (self.question)
 
 
-class Hot(models.Model):
+class Hot(DateTimeModel):
     sub_url = models.CharField(max_length=1000)
     image = models.ImageField(max_length=1000)
     is_show = models.BooleanField(default=False)
-    date_created = models.DateTimeField(_('Date Created'), auto_now_add=True,
-                                        editable=False)
 
     def __str__(self):
         return '%s' % (self.sub_url)
 
 
-class FAQ(models.Model):
-    question = models.CharField(max_length=255, unique=True)
-    answer = models.TextField()
-
+class Banner(DateTimeModel):
+    image = models.ImageField(max_length=1000)
+    sub_url = models.CharField(max_length=1000)
+    is_show = models.BooleanField(default=False)
+    position = models.IntegerField()
+    
     def __str__(self):
-        return '%s' % (self.question)
+        return '%s' % (self.sub_url)
+
+class Contact(DateTimeModel):
+    name  = models.CharField(max_length=500)
+    email  = models.CharField(max_length=500)
+    subject  = models.CharField(max_length=500)
+    message  = models.TextField()
+    
+    def __str__(self):
+        return '%s' % (self.sub_url)

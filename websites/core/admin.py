@@ -11,13 +11,22 @@ class CategoryAdmin(TranslationAdmin):
     pass
 admin.site.register(Category, CategoryAdmin)
 
+class TypeAdmin(TranslationAdmin):
+    pass
+admin.site.register(Type, TypeAdmin)
+
 # Register Posts Type Model to Admin Site
+class ImageImageInline(admin.TabularInline):
+    model = Post_Image
+    extra = 3
+
 class PostTypeAdmin(TranslationAdmin):
     pass
 admin.site.register(Post_Type, PostTypeAdmin)
 
 # Register Posts Model to Admin Site
 class PostAdmin(TranslationAdmin):
+    inlines = [ ImageImageInline, ]
     formfield_overrides = {
         models.TextField: {'widget': CKEditorUploadingWidget()},
     }
@@ -31,10 +40,6 @@ class PostAdmin(TranslationAdmin):
 admin.site.register(Post, PostAdmin)
 
 # Events
-class EventFilterAdmin(TranslationAdmin):
-    pass
-admin.site.register(Event_Filter, EventFilterAdmin)
-
 class EventAdmin(TranslationAdmin):
     formfield_overrides = {
         models.TextField: {'widget': CKEditorUploadingWidget()},
@@ -43,14 +48,6 @@ class EventAdmin(TranslationAdmin):
 admin.site.register(Event, EventAdmin)
 
 # Games
-class GameTypeAdmin(TranslationAdmin):
-    pass
-admin.site.register(Game_Type, GameTypeAdmin)
-
-class GameFilterAdmin(TranslationAdmin):
-    pass
-admin.site.register(Game_Filter, GameFilterAdmin)
-
 class GameAdmin(TranslationAdmin):
     formfield_overrides = {
         models.TextField: {'widget': CKEditorUploadingWidget()},
@@ -59,14 +56,6 @@ class GameAdmin(TranslationAdmin):
 admin.site.register(Game, GameAdmin)
 
 # Entertainments
-class EntertainmentsTypeAdmin(TranslationAdmin):
-    pass
-admin.site.register(Entertainments_Type, EntertainmentsTypeAdmin)
-
-class EntertainmentsFilterAdmin(TranslationAdmin):
-    pass
-admin.site.register(Entertainments_Filter, EntertainmentsFilterAdmin)
-
 class EntertainmentAdmin(TranslationAdmin):
     formfield_overrides = {
         models.TextField: {'widget': CKEditorUploadingWidget()},
@@ -78,6 +67,18 @@ admin.site.register(Entertainment, EntertainmentAdmin)
 class FAQsAdmin(TranslationAdmin):
     pass
 admin.site.register(FAQ, FAQsAdmin)
+
+class ContactAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Contact, ContactAdmin)
+
+class BannerAdmin(TranslationAdmin):
+    pass
+admin.site.register(Banner, BannerAdmin)
+
+class PromotionAdmin(TranslationAdmin):
+    pass
+admin.site.register(Promotion, PromotionAdmin)
 
 # Hots
 class HotForm(forms.ModelForm):
