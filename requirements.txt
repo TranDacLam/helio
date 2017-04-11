@@ -7,5 +7,6 @@ django-rest-auth[with_social]
 djangorestframework-jwt
 django-suit
 django-ckeditor
+django-mssql
 
 #-e git+git://github.com/mvpdev/django-eav.git#egg=django-eav
