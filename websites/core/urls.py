@@ -13,4 +13,7 @@ urlpatterns = [
     url(r'^membership/$', views.membership, name='membership'),
     url(r'^helio-night-life/$', views.helio_night_life, name='helio_night_life'),
     # url(r'news/$', views.news, name='news'),
+
+
+    url(r'^promotions/$', views.promotions, name='promotions'),
 ]

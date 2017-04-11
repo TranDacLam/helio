@@ -100,3 +100,9 @@ def helio_night_life(request):
     print "***START EVENT CONTENT PAGE***"
     
     return render(request, 'websites/helio_night_life.html')
+
+
+def promotions(request):
+    print "***START EVENT CONTENT PAGE***"
+    
+    return render(request, 'websites/promotions.html')
