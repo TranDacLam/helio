@@ -1,0 +1,181 @@
+{% extends "layout.html" %}
+{% block extrastylesheet %}
+<!-- <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/font-awesome/css/font-awesome.min.css"> -->
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/slide.css">
+
+<style type="text/css">
+  .cate-intro-img {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    position: relative;
+    margin-bottom: 60px;
+  }
+  .avatar {
+    width: 100%;
+    height: auto;
+    max-height: 700px;
+    overflow: hidden;
+    position: relative;
+  }
+  img {
+    display: block;
+    width: 100%;
+  }
+  .title-helio-play {
+    width: 100%;
+    position: absolute;
+    bottom: -40px;
+  }
+  .form-title {
+    width: 70%;
+    background-color: #fff;
+    border-style: 15px solid #000;
+  }
+  .text-description {
+    text-align: justify;
+    margin: 10px;
+  }
+
+  p {
+    color: #000;
+  }
+    .style-hr { 
+    border: 0; 
+    height: 3px; 
+    background-image: -webkit-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
+    background-image: -moz-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
+    background-image: -ms-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
+    background-image: -o-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0); 
+    /*margin-left: 100px;
+    margin-right: 100px;*/
+    margin: 50px 100px;
+  }
+  .corner-bottom-right-bevel {
+    height: 0;
+    border-top: 300px solid #f717e6;
+    border-left: 15px solid #f717e6;
+    border-right: 145px solid transparent;
+    padding-right: 20px;
+  }
+
+</style>
+{% endblock %}
+{% block extrascript %}
+<script type="text/javascript" src="{{ STATIC_URL }}assets/websites/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}assets/websites/js/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}assets/websites/js/jquery.carousel-1.1.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.carousel').carousel({
+    directionNav:true,  
+    shadow:false, 
+    description:true
+  });
+});
+</script>
+{% endblock %}
+{% block main_content %} 
+
+<div class="container">
+  <div class="cate-intro-img">
+    <div class="avatar">
+      <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
+    </div>
+    <div class="title-helio-play" align="center">
+      <div class="col-xs-12">
+        <fieldset class="form-title"><h1>HELIO PLAY TITLE INTRO</h1></fieldset>
+      </div>
+    </div>
+  </div>
+  <div align="center">
+    <div class="form-title">
+      <p class="text-description">To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+    </div>
+  </div>
+  <div class="row" align="center">
+    <div class="col-md-4"><button class="btn btn-default btn-lg btn-block">TRO CHOI DOI QUA</button></div>
+    <div class="col-md-4"><button class="btn btn-default btn-lg btn-block">VIDEO GAMES</button></div>
+    <div class="col-md-4"><button class="btn btn-default btn-lg btn-block">TRO CHOI VAN DONG</button></div>
+    
+    
+    
+  </div>
+  <div class="carousel">
+      <div class="slides"> <!-- BEGIN CAROUSEL -->
+        <div class="slideItem"> <!-- SLIDE ITEM -->
+            <a href="#">
+                <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" >
+            </a>
+        </div>
+
+        <div class="slideItem">
+            <a href="#">
+                <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+            </a>
+        </div>
+
+        <div class="slideItem">
+            <a href="#">
+                <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+            </a>
+        </div>
+        <div class="slideItem">
+            <a href="#">
+                <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+            </a>
+        </div>
+        <div class="slideItem">
+            <a href="#">
+                <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+            </a>
+        </div>
+    </div>
+    <div class="nextButton"><img src="{{ STATIC_URL }}assets/websites/images/next_button.png"></div>
+    <div class="prevButton"><img src="{{ STATIC_URL }}assets/websites/images/prev_button.png"></div>
+    <div class="description" style="position: relative; margin: 0 auto; width: 400px;"> <!-- BEGIN DESCRIPTION -->
+        <div> <!-- DESCRIPTION ITEM -->
+            <h2>Description 1</h2>
+            <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+            tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+            </p>
+        </div>
+
+        <div>
+            <h2>Description 2</h2>
+            <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+            tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+            </p>
+        </div>
+
+        <div>
+            <h2>Description 3</h2>
+            <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+            tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+            </p>
+        </div>
+
+        <div>
+            <h2>Description 4</h2>
+            <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+            tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+            </p>
+        </div>
+
+        <div>
+            <h2>Description 5</h2>
+            <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+            tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+            </p>
+        </div>
+    </div>
+  </div>
+  <hr class="style-hr">
+  <div class="row">
+    <div class="col-md-5 corner-bottom-right-bevel">
+    </div>
+    <div class="col-md-7"></div>
+  </div>
+</div>
+{% endblock %}

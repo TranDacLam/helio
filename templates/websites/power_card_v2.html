@@ -1,0 +1,250 @@
+{% extends "layout.html" %}
+{% block extrastylesheet %}
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/font-awesome/css/font-awesome.min.css">
+<style type="text/css">
+  .cate-intro-img {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    position: relative;
+    margin-bottom: 60px;
+  }
+  .avatar {
+    width: 100%;
+    height: auto;
+    max-height: 700px;
+    overflow: hidden;
+    position: relative;
+  }
+  img {
+    display: block;
+    width: 100%;
+  }
+  .title-power-card {
+    width: 100%;
+    position: absolute;
+    bottom: -40px;
+  }
+  .form-title {
+    width: 70%;
+    background-color: #fff;
+    border-style: 15px solid #000;
+  }
+  .text-description {
+    text-align: justify;
+    margin: 10px;
+  }
+  .blue-card {
+    background-color: #0066ff;
+  }
+  .blue-card-text {
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+  }
+  .pink-card {
+    background-color: #ff00ff;
+  }
+  .yellow-card {
+    background-color: #ff9933;
+  }
+  .image-card {
+    border: 3px solid black;
+  }
+  p {
+    color: #000;
+  }
+  .style-hr { 
+    border: 0; 
+    height: 3px; 
+    background-image: -webkit-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
+    background-image: -moz-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
+    background-image: -ms-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
+    background-image: -o-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0); 
+    /*margin-left: 100px;
+    margin-right: 100px;*/
+    margin: 50px 100px;
+  }
+  .faq_question {
+    margin: 0px;
+    padding: 0px 0px 5px 120px;
+    display: inline-block;
+    cursor: pointer;
+    font-weight: bold;
+  }
+ 
+  .faq_answer_container {
+    height: 0px;
+    overflow: hidden;
+    padding: 0px 0px 0px 120px;
+  }
+  .question-icon {
+    display: inline;
+  }
+  .question-tittle {
+    display: inline;
+  }
+  .style-hr-question { 
+    border: 0; 
+    height: 3px; 
+    background-image: -webkit-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
+    background-image: -moz-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
+    background-image: -ms-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
+    background-image: -o-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0); 
+    /*margin-left: 100px;
+    margin-right: 100px;*/
+    margin: 50px 120px;
+  }
+/*  #faqs dt, #faqs dd { 
+    padding: 0 0 0 50px; 
+  }
+  #faqs dt { 
+    font-size:1.5em;
+    color: #9d9d9d; 
+    cursor: pointer; 
+    height: 37px; 
+    line-height: 37px; 
+    margin: 0 0 15px 25px;
+  }
+  #faqs dd { 
+    font-size: 1em; 
+    margin: 0 0 20px 25px;
+  }
+  #faqs dt { 
+    background: url(http://www.designonslaught.com/files/2012/06/expand-icon.png) no-repeat left;
+  }
+  #faqs .expanded { 
+    background: url(http://www.designonslaught.com/files/2012/06/expanded-icon.png) no-repeat left;
+  }
+*/
+</style>
+{% endblock %}
+{% block extrascript %}
+<script type="text/javascript">
+  $(document).ready(function() {
+ 
+    $('.faq_question').click(function() {
+ 
+        if ($(this).parent().is('.open')){
+            $(this).closest('.faq').find('.faq_answer_container').animate({'height':'0'},500);
+            $(this).closest('.faq').removeClass('open');
+            $(".question-i").html('<span class="glyphicon glyphicon-plus-sign"></span>');
+            }
+          else{
+              var newHeight =$(this).closest('.faq').find('.faq_answer').height() +'px';
+              $(this).closest('.faq').find('.faq_answer_container').animate({'height':newHeight},500);
+              $(this).closest('.faq').addClass('open');
+              $(".question-icon").html('<span class="glyphicon glyphicon-minus-sign"></span>');
+            }
+    });
+  });
+  // $("#faqs dd").hide();
+  //   $("#faqs dt").click(function () {
+  //       $(this).next("#faqs dd").slideToggle(250);
+  //       $(this).toggleClass("expanded");
+  //   });
+</script>
+{% endblock %}
+{% block main_content %} 
+
+<div class="container">
+  <div class="cate-intro-img">
+    <div class="avatar">
+      <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
+    </div>
+    <div class="title-power-card" align="center">
+      <div class="col-xs-12">
+        <fieldset class="form-title"><h1>POWERCARD</h1></fieldset>
+      </div>
+    </div>
+  </div>
+  <div align="center">
+    <div class="form-title">
+      <p class="text-description">To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="item col-md-4">
+      <div class="blue-card">
+        <h4 class="blue-card-text">THE XANH</h4>
+        <span><a href="#"><img class="image-card" src="{{ STATIC_URL }}assets/websites/images/img1.jpg"></a></span>
+        <p>Here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+        <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. </p>
+        <p>The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+      </div>
+      
+    </div>
+    <div class="item col-md-4">
+      <div class="pink-card">
+      <h4 class="blue-card-text">THE HONG</h4>
+        <span><a href="#"><img class="image-card" src="{{ STATIC_URL }}assets/websites/images/img1.jpg"></a></span>
+        <p>Here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+        <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. </p>
+        <p>The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+      </div>
+      
+    </div>
+    <div class="item col-md-4">
+      <div class="yellow-card">
+      <h4 class="blue-card-text">THE VANG</h4>
+        <span><a href="#"><img class="image-card" src="{{ STATIC_URL }}assets/websites/images/img1.jpg"></a></span>
+        <p>Here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+        <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. </p>
+        <p>The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+      </div>
+      
+    </div>
+  </div>
+  <hr class="style-hr">
+  <div>
+    <div>
+      <h1 align="center">ASKED QUESTIONS</h1>
+    </div>
+    <div class="faq_container">
+      <div class="faq">
+        <div class="faq_question">
+          <div class="question-icon"><span class="glyphicon glyphicon-plus-sign"></span></div>
+            <h3 class="question-tittle">Mua the o dau?</h3>
+          </div>
+        <div class="faq_answer_container">
+          <div class="faq_answer">Answer goes here To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</div>
+        </div>        
+      </div>
+      <hr class="style-hr">
+      <div class="faq">
+        <div class="faq_question">
+          <div class="question-icon"><span class="glyphicon glyphicon-plus-sign"></span></div>
+            <h3 class="question-tittle">Lam the nao de nap tien vao the?</h3>
+          </div>
+        <div class="faq_answer_container">
+          <div class="faq_answer">Answer goes here
+          To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</div>
+        </div>
+        <hr class="style-hr-question">        
+      </div>
+      
+      <div class="faq">
+        <div class="faq_question">
+          <div class="question-icon"><span class="glyphicon glyphicon-plus-sign"></span></div>
+            <h3 class="question-tittle">Chinh sach the</h3>
+          </div>
+        <div class="faq_answer_container">
+          <div class="faq_answer">Answer goes here To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</div>
+        </div>        
+      </div>
+     </div>
+
+<!--      <dl id="faqs">
+      <dt>Mua the o dau?</dt>
+      <dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit orem ipsum dolor sit amet, consectetuer adipiscing elit</dd>
+     
+      <dt>Lam the nao de nap tien vao the?</dt>
+      <dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit orem ipsum dolor sit amet, consectetuer adipiscing elit</dd>
+     
+      <dt>Chinh sach the</dt>
+      <dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit orem ipsum dolor sit amet, consectetuer adipiscing elit</dd>
+    </dl> -->
+  </div>
+
+</div>
+{% endblock %}
