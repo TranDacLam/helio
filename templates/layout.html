@@ -14,7 +14,9 @@
     <meta name="description" content="{% block meta_description %}{% endblock %}"> 
 
     <link href="{{ STATIC_URL }}assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="{{ STATIC_URL }}assets/websites/css/global.css" rel="stylesheet" type="text/css" />
+    
     
 
     {% block metacontent %}{% endblock %}
@@ -61,11 +63,6 @@
                         </ul>
                     </div>
                 </nav>
-                <div class="row">
-                    <ol class="breadcrumb">
-                        {% block breadcrumb %}{% endblock %}
-                    </ol>
-                </div>
             </div>
         </div>
     </div>
@@ -73,10 +70,9 @@
 
     <!-- Start Body -->
     <div class="body-wrap">
-        {% block slide %} {% endblock %}
-        <div class="container">  
-            {% block main_content %} {% endblock %}
-        </div>
+
+        {% block main_content %} {% endblock %}
+
     </div>
     <!-- End Body -->
 
@@ -88,8 +84,6 @@
 <footer>
     <script src = "{{ STATIC_URL }}assets/js/jquery.min.js"></script>
     <script src = "{{ STATIC_URL }}assets/js/bootstrap.min.js"></script>
-    <script src = "{{ STATIC_URL }}assets/js/jquery.parallax.min.js"></script> 
-    <script src = "{{ STATIC_URL }}assets/js/parallax.min.js"></script> 
     <script src = "{{ STATIC_URL }}assets/websites/js/ajaxSetup.js"></script>
     {% block extrascript %}{% endblock %}
 </footer>
