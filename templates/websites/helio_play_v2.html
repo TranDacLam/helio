@@ -16,44 +16,30 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-    var w = $( window ).width();
 
-    var w2 = $(".container").width();
-    w2 =  w > 1650 ? w2 : (w2 * 80 /100);
+    function initCoursel() {
+        $('.carousel').html($('.carousel1').html());
+        var w = $( window ).width();
+        var w2 = $(".container").width();
+        w2 =  w > 1650 ? w2 : (w2 * 90 /100);
+        $('.carousel').carousel({
+            carouselWidth: w,
+            carouselHeight: 400,
+            directionNav:true,    
+            shadow:false, 
+            description:true,
+            frontWidth:w2,
+            frontHeight:400,
+            hMargin: 0.1,
+            vMargin: 0.8
 
-    $('.carousel').carousel({
-        carouselWidth: w,
-        carouselHeight: 400,
-        directionNav:true,    
-        shadow:false, 
-        description:true,
-        frontWidth:w2,
-        frontHeight:400,
-        hMargin: 0.1,
-        vMargin: 0.8
+        });
+    }
 
+    initCoursel();
+    $( window ).resize(function() {
+        initCoursel();
     });
-
-    // $( window ).resize(function() {
-    //     var w = $( window ).width();
-
-    //     var w2 = $(".container").width();
-    //     w2 =  w > 1650 ? w2 : (w2 * 80 /100);
-
-    //     $('.carousel').carousel({
-    //         carouselWidth: w,
-    //         carouselHeight: 400,
-    //         directionNav:true,    
-    //         shadow:false, 
-    //         description:true,
-    //         frontWidth:w2,
-    //         frontHeight:400,
-    //         hMargin: 0.1,
-    //         vMargin: 0.8
-
-    //     });
-    // console.log(w2);
-    // });
 
 });
 </script>
@@ -90,76 +76,89 @@ $(document).ready(function(){
             </li>
     </ul>
 </div>
-<!-- Games slider -->
-<div class="carousel" >
-    <div class="slides"> <!-- BEGIN CAROUSEL -->
-        <div class="slideItem"> <!-- SLIDE ITEM -->
-            <a href="#">
-                 <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" >
-            </a>
+
+
+<div class="tab-content" style="padding-top: 50px;">
+    <div role="tabpanel" class="tab-pane active" id="redemption-game">
+        <!-- Games slider -->
+        <div class="carousel" >
+            
+        </div>
+        <div class="description container" style="position: relative;"> <!-- BEGIN DESCRIPTION -->
+            <div> <!-- DESCRIPTION ITEM -->
+                <h2>Description 1</h2>
+                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+                </p>
+            </div>
+
+            <div>
+                <h2>Description 2</h2>
+                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+                </p>
+            </div>
+
+            <div>
+                <h2>Description 3</h2>
+                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+                </p>
+            </div>
+
+            <div>
+                <h2>Description 4</h2>
+                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+                </p>
+            </div>
+
+            <div>
+                <h2>Description 5</h2>
+                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+                </p>
+            </div>
         </div>
 
-        <div class="slideItem">
-            <a href="#">
-                <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
-            </a>
-        </div>
+        <div class="carousel1" hidden="true" >
+            <div class="slides"> <!-- BEGIN CAROUSEL -->
+                <div class="slideItem"> <!-- SLIDE ITEM -->
+                    <a href="#">
+                         <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" >
+                    </a>
+                </div>
 
-        <div class="slideItem">
-            <a href="#">
-                <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
-            </a>
-        </div>
-        <div class="slideItem">
-            <a href="#">
-                <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
-            </a>
-        </div>
-        <div class="slideItem">
-            <a href="#">
-                <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
-            </a>
+                <div class="slideItem">
+                    <a href="#">
+                        <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+                    </a>
+                </div>
+
+                <div class="slideItem">
+                    <a href="#">
+                        <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+                    </a>
+                </div>
+                <div class="slideItem">
+                    <a href="#">
+                        <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+                    </a>
+                </div>
+                <div class="slideItem">
+                    <a href="#">
+                        <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="nextButton"><img src="{{ STATIC_URL }}assets/websites/images/next_button.png"></div>
-    <div class="prevButton"><img src="{{ STATIC_URL }}assets/websites/images/prev_button.png"></div>
-    
+
+    <div role="tabpanel" class="tab-pane active" id="vidieo-game">
+    </div>
+
+    <div role="tabpanel" class="tab-pane active" id="ride-game">
+    </div>
 </div>
-<div class="description container" style="position: relative;"> <!-- BEGIN DESCRIPTION -->
-        <div> <!-- DESCRIPTION ITEM -->
-            <h2>Description 1</h2>
-            <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-            tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
-            </p>
-        </div>
-
-        <div>
-            <h2>Description 2</h2>
-            <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-            tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
-            </p>
-        </div>
-
-        <div>
-            <h2>Description 3</h2>
-            <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-            tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
-            </p>
-        </div>
-
-        <div>
-            <h2>Description 4</h2>
-            <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-            tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
-            </p>
-        </div>
-
-        <div>
-            <h2>Description 5</h2>
-            <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-            tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
-            </p>
-        </div>
-    </div>
     
 {% endblock %}
