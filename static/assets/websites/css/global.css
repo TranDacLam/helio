@@ -2,6 +2,29 @@ body {
 	background-color: #22194d;
 	color: #fff;
 }
+
+
+.page-title {
+    width: 100%;
+    position: absolute;
+    bottom: -40px;
+}
+.page-header-img {
+    position: relative;
+    margin-bottom: 60px;
+}
+.page-title-text {
+	color: #fff;
+	background: #c0f; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#1f194a, #c0f); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#1f194a, #c0f); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#1f194a, #c0f); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#1f194a, #c0f); /* Standard syntax (must be last) */
+    max-width: 700px;
+}
+
+
+
 .textwidget .fa {
 	margin-right: 10px;
 }

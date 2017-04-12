@@ -4,61 +4,9 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/slide.css">
 
 <style type="text/css">
-  .cate-intro-img {
-    width: 100%;
-    height: auto;
-    overflow: visible;
-    position: relative;
-    margin-bottom: 60px;
-  }
-  .avatar {
-    width: 100%;
-    height: auto;
-    max-height: 700px;
-    overflow: hidden;
-    position: relative;
-  }
-  img {
-    display: block;
-    width: 100%;
-  }
-  .title-helio-play {
-    width: 100%;
-    position: absolute;
-    bottom: -40px;
-  }
-  .form-title {
-    width: 70%;
-    background-color: #fff;
-    border-style: 15px solid #000;
-  }
-  .text-description {
-    text-align: justify;
-    margin: 10px;
-  }
+    
 
-  p {
-    color: #000;
-  }
-    .style-hr { 
-    border: 0; 
-    height: 3px; 
-    background-image: -webkit-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-    background-image: -moz-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-    background-image: -ms-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-    background-image: -o-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0); 
-    /*margin-left: 100px;
-    margin-right: 100px;*/
-    margin: 50px 100px;
-  }
-  .corner-bottom-right-bevel {
-    height: 0;
-    border-top: 300px solid #f717e6;
-    border-left: 15px solid #f717e6;
-    border-right: 145px solid transparent;
-    padding-right: 20px;
-  }
-
+    
 </style>
 {% endblock %}
 {% block extrascript %}
@@ -68,45 +16,86 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-  $('.carousel').carousel({
-    directionNav:true,  
-    shadow:false, 
-    description:true
-  });
+    var w = $( window ).width();
+
+    var w2 = $(".container").width();
+    w2 =  w > 1650 ? w2 : (w2 * 80 /100);
+
+    $('.carousel').carousel({
+        carouselWidth: w,
+        carouselHeight: 400,
+        directionNav:true,    
+        shadow:false, 
+        description:true,
+        frontWidth:w2,
+        frontHeight:400,
+        hMargin: 0.1,
+        vMargin: 0.8
+
+    });
+
+    // $( window ).resize(function() {
+    //     var w = $( window ).width();
+
+    //     var w2 = $(".container").width();
+    //     w2 =  w > 1650 ? w2 : (w2 * 80 /100);
+
+    //     $('.carousel').carousel({
+    //         carouselWidth: w,
+    //         carouselHeight: 400,
+    //         directionNav:true,    
+    //         shadow:false, 
+    //         description:true,
+    //         frontWidth:w2,
+    //         frontHeight:400,
+    //         hMargin: 0.1,
+    //         vMargin: 0.8
+
+    //     });
+    // console.log(w2);
+    // });
+
 });
 </script>
 {% endblock %}
 {% block main_content %} 
 
+<!-- Page Header -->
+<div class="page-header-img">
+    <div>
+        <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" width="100%">
+    </div>
+    <div class="page-title" align="center">
+        <div class="col-xs-12">
+            <fieldset class="page-title-text"><h1>HELIO PLAY TITLE INTRO</h1></fieldset>
+        </div>
+    </div>
+</div>
+<!-- Page description -->
 <div class="container">
-  <div class="cate-intro-img">
-    <div class="avatar">
-      <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
+    <div align="center">
+        <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
     </div>
-    <div class="title-helio-play" align="center">
-      <div class="col-xs-12">
-        <fieldset class="form-title"><h1>HELIO PLAY TITLE INTRO</h1></fieldset>
-      </div>
-    </div>
-  </div>
-  <div align="center">
-    <div class="form-title">
-      <p class="text-description">To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
-    </div>
-  </div>
-  <div class="row" align="center">
-    <div class="col-md-4"><button class="btn btn-default btn-lg btn-block">TRO CHOI DOI QUA</button></div>
-    <div class="col-md-4"><button class="btn btn-default btn-lg btn-block">VIDEO GAMES</button></div>
-    <div class="col-md-4"><button class="btn btn-default btn-lg btn-block">TRO CHOI VAN DONG</button></div>
-    
-    
-    
-  </div>
-  <div class="carousel">
-      <div class="slides"> <!-- BEGIN CAROUSEL -->
+
+    <!-- Nav tabs nav-pills-->
+    <ul class="row nav btn-custom-group">
+            <li role="nav-item" class="col-md-4 active">
+                <a href="#redemption-game" role="tab" data-toggle="tab">TRO CHOI DOI QUA</a>
+            </li>
+            <li role="nav-item" class="col-md-4">
+                <a href="#vidieo-game" role="tab" data-toggle="tab">VIDEO GAMES</a>
+            </li>
+            <li role="nav-item" class="col-md-4">
+                <a href="#ride-game" role="tab" data-toggle="tab">TRO CHOI VAN DONG</a>
+            </li>
+    </ul>
+</div>
+<!-- Games slider -->
+<div class="carousel" >
+    <div class="slides"> <!-- BEGIN CAROUSEL -->
         <div class="slideItem"> <!-- SLIDE ITEM -->
             <a href="#">
-                <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" >
+                 <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" >
             </a>
         </div>
 
@@ -134,7 +123,9 @@ $(document).ready(function(){
     </div>
     <div class="nextButton"><img src="{{ STATIC_URL }}assets/websites/images/next_button.png"></div>
     <div class="prevButton"><img src="{{ STATIC_URL }}assets/websites/images/prev_button.png"></div>
-    <div class="description" style="position: relative; margin: 0 auto; width: 400px;"> <!-- BEGIN DESCRIPTION -->
+    
+</div>
+<div class="description container" style="position: relative;"> <!-- BEGIN DESCRIPTION -->
         <div> <!-- DESCRIPTION ITEM -->
             <h2>Description 1</h2>
             <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
@@ -170,12 +161,5 @@ $(document).ready(function(){
             </p>
         </div>
     </div>
-  </div>
-  <hr class="style-hr">
-  <div class="row">
-    <div class="col-md-5 corner-bottom-right-bevel">
-    </div>
-    <div class="col-md-7"></div>
-  </div>
-</div>
+    
 {% endblock %}

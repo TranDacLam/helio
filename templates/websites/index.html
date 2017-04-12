@@ -115,42 +115,40 @@ ul.type-group li a span {
 
 </style>
 {% endblock %}
-{% block slide %} 
-    <div class="container-full text-center event-new">
-        <p><i class="fa fa-bell-o" aria-hidden="true"></i>EVENTTTTTTTTTTT TTTTTTTTTTTTTTT TTTTTTTTTTTT</p>
-    </div>
-    <div class="container">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-                <div class="item active">
-                    <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" alt="Chania">
-                </div>
-
-                <div class="item">
-                    <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" alt="Chania">
-                </div>
-            
-                <div class="item">
-                    <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" alt="Flower">
-                </div>
-
-                <div class="item">
-                    <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
-                </div>
+{% block main_content %}  
+<div class="container-full text-center event-new">
+    <p><i class="fa fa-bell-o" aria-hidden="true"></i>EVENTTTTTTTTTTT TTTTTTTTTTTTTTT TTTTTTTTTTTT</p>
+</div>
+<div class="container">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" alt="Chania">
             </div>
 
-            <ul class="nav nav-justified home-carousel">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"><a href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
-                <li data-target="#myCarousel" data-slide-to="1"><a href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
-                <li data-target="#myCarousel" data-slide-to="2"><a href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
-                <li data-target="#myCarousel" data-slide-to="3"><a href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
-            </ul>
+            <div class="item">
+                <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" alt="Chania">
+            </div>
+        
+            <div class="item">
+                <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" alt="Flower">
+            </div>
+
+            <div class="item">
+                <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
+            </div>
         </div>
+
+        <ul class="nav nav-justified home-carousel">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"><a href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
+            <li data-target="#myCarousel" data-slide-to="1"><a href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
+            <li data-target="#myCarousel" data-slide-to="2"><a href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
+            <li data-target="#myCarousel" data-slide-to="3"><a href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
+        </ul>
     </div>
-    
-{% endblock %}
-{% block main_content %}    
+</div>
+<div class="container">
     <div class="row" style="padding-top: 50px;">
         <div class="col-md-12 game-section-body">
             <div class="title-section">
@@ -373,9 +371,10 @@ ul.type-group li a span {
                 </div>
             </div>
             <hr>
-        </div>
-        
+        </div> 
     </div>
+</div>  
+    
         
 {% endblock %}
 
