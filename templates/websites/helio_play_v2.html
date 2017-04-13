@@ -4,101 +4,54 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/slide.css">
 
 <style type="text/css">
-
-  .cate-intro-img {
-    width: 100%;
-    height: auto;
-    overflow: visible;
-    position: relative;
-    margin-bottom: 60px;
-  }
-  .avatar {
-    width: 100%;
-    height: auto;
-    max-height: 700px;
-    overflow: hidden;
-    position: relative;
-  }
-  img {
-    display: block;
-    width: 100%;
-  }
-  .title-helio-play {
-    width: 100%;
-    position: absolute;
-    bottom: -40px;
-  }
-  .form-title {
-    width: 70%;
-    background-color: #fff;
-    border-style: 15px solid #000;
-  }
-  .text-description {
-    text-align: justify;
-    margin: 10px;
-  }
-
-  p {
-    color: #000;
-  }
-    .style-hr { 
-    border: 0; 
-    height: 3px; 
-    background-image: -webkit-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-    background-image: -moz-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-    background-image: -ms-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-    background-image: -o-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0); 
-    /*margin-left: 100px;
-    margin-right: 100px;*/
-    margin: 50px 100px;
-  }
-  .style-post {
-    margin-left: 100px;
-    display: inline;
-  }
-  .corner-bottom-right-bevel {
-    height: 0;
-    width: 500px;
-    padding-right: 20px;
-    z-index: 2;
-    position: absolute;
-    left: 180px;
-    display: block;
-    padding-bottom: 20px;
-  }
-  .style-img {
-    z-index: 1;
-    position: relative;
-    width: 75%;
-    left: 440px;
-    padding-bottom: 20px;
-  }
-  .style-img2 {
-    z-index: 1;
-    position: relative;
-    width: 75%;
-    left: 88px;
-    padding-bottom: 20px;
-  }
-  .corner-bottom-left-bevel {
-    height: 0;
-    width: 500px;
-    padding-right: 20px;
-    z-index: 2;
-    position: absolute;
-    left: 653px;
-    display: block;
-    padding-bottom: 20px;
-  }
-
-
+    .corner-bottom-right-bevel {
+        height: 0;
+        width: 500px;
+        padding-right: 20px;
+        z-index: 2;
+        position: absolute;
+        left: 135px;
+        display: block;
+        padding-bottom: 20px;
+    }
+    .style-img {
+        z-index: 1;
+        position: relative;
+        width: 75%;
+        left: 450px;
+        padding-bottom: 20px;
+    }
+    .style-img2 {
+        z-index: 1;
+        position: relative;
+        width: 75%;
+        left: 135px;
+        padding-bottom: 20px;
+    }
+    .corner-bottom-left-bevel {
+        height: 0;
+        width: 500px;
+        padding-right: 20px;
+        z-index: 2;
+        position: absolute;
+        left: 660px;
+        display: block;
+        padding-bottom: 20px;
+    }
+    .button-display {
+        width: 200px;
+        padding: 30px 0px;
+    }
+    .app-helio {
+        padding: 30px 135px;
+    }
     
 </style>
 {% endblock %}
 {% block extrascript %}
-<script type="text/javascript" src="{{ STATIC_URL }}assets/websites/js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}assets/websites/js/jquery.mousewheel.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}assets/websites/js/jquery.carousel-1.1.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.carousel-1.1.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -149,28 +102,6 @@ $(document).ready(function(){
         <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
     </div>
 
-  </div>
-  <!-- Nav tabs nav-pills-->
-    <ul class="row nav btn-custom-group">
-            <li role="nav-item" class="col-md-4 active">
-                <a href="#redemption-game" role="tab" data-toggle="tab">TRO CHOI DOI QUA</a>
-            </li>
-            <li role="nav-item" class="col-md-4">
-                <a href="#vidieo-game" role="tab" data-toggle="tab">VIDEO GAMES</a>
-            </li>
-            <li role="nav-item" class="col-md-4">
-                <a href="#ride-game" role="tab" data-toggle="tab">TRO CHOI VAN DONG</a>
-            </li>
-    </ul>
-  <div class="carousel">
-      <div class="slides"> <!-- BEGIN CAROUSEL -->
-        <div class="slideItem"> <!-- SLIDE ITEM -->
-            <a href="#">
-                <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" >
-            </a>
-        </div>
-
-
     <!-- Nav tabs nav-pills-->
     <ul class="row nav btn-custom-group">
             <li role="nav-item" class="col-md-4 active">
@@ -185,32 +116,6 @@ $(document).ready(function(){
     </ul>
 </div>
 
-        <div class="slideItem">
-            <a href="#">
-                <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
-            </a>
-        </div>
-        <div class="slideItem">
-            <a href="#">
-                <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
-            </a>
-        </div>
-        <div class="slideItem">
-            <a href="#">
-                <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
-            </a>
-        </div>
-    </div>
-    <div class="nextButton"><img src="{{ STATIC_URL }}assets/websites/images/next_button.png"></div>
-    <div class="prevButton"><img src="{{ STATIC_URL }}assets/websites/images/prev_button.png"></div>
-    <div class="description" style="position: relative; margin: 0 auto; width: 400px;"> <!-- BEGIN DESCRIPTION -->
-        <div> <!-- DESCRIPTION ITEM -->
-            <h2>Description 1</h2>
-            <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-            tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
-            </p>
-        </div>
-
 
 <div class="tab-content" style="padding-top: 50px;">
     <div role="tabpanel" class="tab-pane active" id="redemption-game">
@@ -221,36 +126,35 @@ $(document).ready(function(){
         <div class="description container" style="position: relative;"> <!-- BEGIN DESCRIPTION -->
             <div> <!-- DESCRIPTION ITEM -->
                 <h2>Description 1</h2>
-                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu,tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aen ean a commodo mi. Praesent augue lacus.
                 </p>
             </div>
 
             <div>
                 <h2>Description 2</h2>
                 <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aen ean a commodo mi. Praesent augue lacus.
                 </p>
             </div>
 
             <div>
                 <h2>Description 3</h2>
                 <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. A en ean a commodo mi. Praesent augue lacus.
                 </p>
             </div>
 
             <div>
                 <h2>Description 4</h2>
                 <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. A en ean a commodo mi. Praesent augue lacus.
                 </p>
             </div>
 
             <div>
                 <h2>Description 5</h2>
                 <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aenean a commodo mi. Praesent augue lacus.
+                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. A en ean a commodo mi. Praesent augue lacus.
                 </p>
             </div>
         </div>
@@ -286,41 +190,36 @@ $(document).ready(function(){
                 </div>
             </div>
         </div>
+        <div class="corner-bottom-right-bevel">
+          <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img2.png">
+        </div>
+        <div class="style-img"><img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
+        <div class="corner-bottom-left-bevel">
+          <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img3.png">
+        </div>
+        <div class="style-img2"><img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
+        
+        <div class="corner-bottom-right-bevel">
+          <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img2.png">
+        </div>
+        <div class="style-img"><img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
+        <div align="center">
+            <ul class="row nav btn-custom-group button-display">
+                <li role="nav-item">
+                    <a href="#" role="tab" data-toggle="tab">HIEN THI THEM ></a>
+                </li>
+            </ul>
+        </div>
     </div>
-
-  </div>
-  <hr class="style-hr">
-<!--   <div class="style-post"> -->
-    <div class="corner-bottom-right-bevel">
-      <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img2.png">
-    </div>
-    <!-- <div class="style-content-post">
-      <h4  style="text-decoration: underline;">KHUYEN MAI GAME</h4>
-      <h3>POWER TAPS<sup>TM</sup><br>CHI VOI 200 NGHIN</h3>
-      
-      <p class="post-p">To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave.</p>
-      <button class="button">TIM HIEU THEM   ></button>
-    </div> -->
-    <div class="style-img"><img style="width: 620px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
-
-    <div class="corner-bottom-left-bevel">
-      <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img3.png">
-    </div>
-    <div class="style-img2"><img style="width: 620px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
-    
-    <div class="corner-bottom-right-bevel">
-      <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img2.png">
-    </div>
-    <div class="style-img"><img style="width: 620px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
-<!--   </div> -->
-
 
     <div role="tabpanel" class="tab-pane active" id="vidieo-game">
     </div>
 
     <div role="tabpanel" class="tab-pane active" id="ride-game">
     </div>
-
+    <a href="#">
+        <img class="app-helio" src="{{ STATIC_URL }}assets/websites/images/app.png" height="300px" width="1300px">
+    </a>
 </div>
     
 {% endblock %}
