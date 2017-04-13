@@ -27,8 +27,6 @@
   }
   .form-title {
     width: 70%;
-    background-color: #fff;
-    border-style: 15px solid #000;
   }
   .text-description {
     text-align: justify;
@@ -50,9 +48,6 @@
   }
   .image-card {
     border: 3px solid black;
-  }
-  p {
-    color: #000;
   }
   .style-hr { 
     border: 0; 
@@ -95,28 +90,7 @@
     margin-right: 100px;*/
     margin: 50px 120px;
   }
-/*  #faqs dt, #faqs dd { 
-    padding: 0 0 0 50px; 
-  }
-  #faqs dt { 
-    font-size:1.5em;
-    color: #9d9d9d; 
-    cursor: pointer; 
-    height: 37px; 
-    line-height: 37px; 
-    margin: 0 0 15px 25px;
-  }
-  #faqs dd { 
-    font-size: 1em; 
-    margin: 0 0 20px 25px;
-  }
-  #faqs dt { 
-    background: url(http://www.designonslaught.com/files/2012/06/expand-icon.png) no-repeat left;
-  }
-  #faqs .expanded { 
-    background: url(http://www.designonslaught.com/files/2012/06/expanded-icon.png) no-repeat left;
-  }
-*/
+
 </style>
 {% endblock %}
 {% block extrascript %}
@@ -126,23 +100,28 @@
     $('.faq_question').click(function() {
  
         if ($(this).parent().is('.open')){
+            
             $(this).closest('.faq').find('.faq_answer_container').animate({'height':'0'},500);
             $(this).closest('.faq').removeClass('open');
-            $(".question-i").html('<span class="glyphicon glyphicon-plus-sign"></span>');
+            $(this).find(".question-icon").html('<span class="glyphicon glyphicon-plus-sign"></span>');
             }
           else{
               var newHeight =$(this).closest('.faq').find('.faq_answer').height() +'px';
               $(this).closest('.faq').find('.faq_answer_container').animate({'height':newHeight},500);
               $(this).closest('.faq').addClass('open');
-              $(".question-icon").html('<span class="glyphicon glyphicon-minus-sign"></span>');
+              $(this).find(".question-icon").html('<span class="glyphicon glyphicon-minus-sign"></span>');
             }
     });
   });
-  // $("#faqs dd").hide();
-  //   $("#faqs dt").click(function () {
-  //       $(this).next("#faqs dd").slideToggle(250);
-  //       $(this).toggleClass("expanded");
-  //   });
+  // function toggleIcon(e) {
+  //   $(e.target)
+  //       .prev('.faq-heading')
+  //       .find(".more-less")
+  //         .toggleClass('glyphicon-plus-sign glyphicon-minus-sign');
+  // }
+  // $('.faq-group').on('hidden.bs.collapse', toggleIcon);
+  // $('.faq-group').on('shown.bs.collapse', toggleIcon);
+
 </script>
 {% endblock %}
 {% block main_content %} 
@@ -154,8 +133,8 @@
     </div>
     <div class="title-power-card" align="center">
       <div class="col-xs-12">
-        <fieldset class="form-title"><h1>POWERCARD</h1></fieldset>
-      </div>
+            <fieldset class="page-title-text"><h1>POWERCARD</h1></fieldset>
+        </div>
     </div>
   </div>
   <div align="center">
@@ -197,53 +176,41 @@
   </div>
   <hr class="style-hr">
   <div>
-    <div>
-      <h1 align="center">ASKED QUESTIONS</h1>
-    </div>
-    <div class="faq_container">
-      <div class="faq">
-        <div class="faq_question">
-          <div class="question-icon"><span class="glyphicon glyphicon-plus-sign"></span></div>
-            <h3 class="question-tittle">Mua the o dau?</h3>
-          </div>
-        <div class="faq_answer_container">
-          <div class="faq_answer">Answer goes here To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</div>
-        </div>        
+      <div>
+        <h1 align="center">ASKED QUESTIONS</h1>
       </div>
-      <hr class="style-hr">
-      <div class="faq">
-        <div class="faq_question">
-          <div class="question-icon"><span class="glyphicon glyphicon-plus-sign"></span></div>
-            <h3 class="question-tittle">Lam the nao de nap tien vao the?</h3>
+      <div class="faq_container">
+          <div class="faq">
+              <div class="faq_question">
+                  <div class="question-icon"><span class="glyphicon glyphicon-plus-sign"></span></div>
+                  <h3 class="question-tittle">Mua the o dau?</h3>
+              </div>
+              <div class="faq_answer_container">
+                  <div class="faq_answer">Answer goes here To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</div>
+              </div>        
           </div>
-        <div class="faq_answer_container">
-          <div class="faq_answer">Answer goes here
-          To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</div>
-        </div>
-        <hr class="style-hr-question">        
-      </div>
-      
-      <div class="faq">
-        <div class="faq_question">
-          <div class="question-icon"><span class="glyphicon glyphicon-plus-sign"></span></div>
-            <h3 class="question-tittle">Chinh sach the</h3>
+          <hr class="style-hr">
+          <div class="faq">
+              <div class="faq_question">
+                  <div class="question-icon"><span class="glyphicon glyphicon-plus-sign"></span></div>
+                  <h3 class="question-tittle">Lam the nao de nap tien vao the?</h3>
+              </div>
+              <div class="faq_answer_container">
+                  <div class="faq_answer">Answer goes here To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</div>
+              </div>
+          <hr class="style-hr-question">        
           </div>
-        <div class="faq_answer_container">
-          <div class="faq_answer">Answer goes here To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</div>
-        </div>        
-      </div>
-     </div>
-
-<!--      <dl id="faqs">
-      <dt>Mua the o dau?</dt>
-      <dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit orem ipsum dolor sit amet, consectetuer adipiscing elit</dd>
-     
-      <dt>Lam the nao de nap tien vao the?</dt>
-      <dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit orem ipsum dolor sit amet, consectetuer adipiscing elit</dd>
-     
-      <dt>Chinh sach the</dt>
-      <dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit orem ipsum dolor sit amet, consectetuer adipiscing elit</dd>
-    </dl> -->
+          
+          <div class="faq">
+              <div class="faq_question">
+                  <div class="question-icon"><span class="glyphicon glyphicon-plus-sign"></span></div>
+                  <h3 class="question-tittle">Chinh sach the</h3>
+              </div>
+              <div class="faq_answer_container">
+                  <div class="faq_answer">Answer goes here To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</div>
+            </div>        
+          </div>
+       </div>
   </div>
 
 </div>
