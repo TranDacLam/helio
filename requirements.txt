@@ -8,5 +8,6 @@ djangorestframework-jwt
 django-suit
 django-ckeditor
 django-mssql
+django-pymssql
 
 #-e git+git://github.com/mvpdev/django-eav.git#egg=django-eav
