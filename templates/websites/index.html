@@ -7,17 +7,16 @@
             margin: auto;
     }
     .text-center.event-new {
-        background: #e700ff; /* For browsers that do not support gradients */    
-        background: -webkit-linear-gradient(left, #e700ff , #4a2145); /* For Safari 5.1 to 6.0 */
-        background: -o-linear-gradient(right, #e700ff, #4a2145); /* For Opera 11.1 to 12.0 */
-        background: -moz-linear-gradient(right, #e700ff, #4a2145); /* For Firefox 3.6 to 15 */
-        background: linear-gradient(to right, #e700ff , #4a2145); /* Standard syntax (must be last) */
+         background-image: linear-gradient(to right, #e436aa, #2c1b76);
     }
     .text-center.event-new p {
         padding: 10px;
         color: #fff;
-        height: 40px;
         margin-bottom: 0px;
+        font-family: "Cabin";
+        font-size: 20px;
+        font-weight: bold;
+        letter-spacing: 0.5px;
     }
     .home-carousel li a {
         background-color: #23328a !important;
@@ -45,78 +44,116 @@
 
 
 
-/*  bhoechie tab */
-div.game-section-menu{
-    padding-right: 0;
-    padding-left: 0;
-    padding-bottom: 0;
-}
-div.game-section-menu div.list-group{
-    margin-bottom: 0;
-}
-div.game-section-menu div.list-group>a{
-    margin-bottom: 10px;
-    margin-top: 10px;
-    height: 78px;
-    font-size: 24px;
-    line-height: 60px;
-    border-radius: 0px;
-    background-color: #22194d;
-    border: 0px;
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-}
+    /*  bhoechie tab */
+    div.game-section-menu{
+        padding-right: 0;
+        padding-left: 0;
+        padding-bottom: 0;
+    }
+    div.game-section-menu div.list-group{
+        margin-bottom: 0;
+    }
+    div.game-section-menu div.list-group>a{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        height: 78px;
+        font-size: 24px;
+        line-height: 60px;
+        border-radius: 0px;
+        background-color: #15062b;
+        border: 0px;
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+    }
 
-div.game-section-menu div.list-group>a.active,
-div.game-section-menu div.list-group>a.active .glyphicon,
-div.game-section-menu div.list-group>a.active .fa{
-    background-color: #1eb9f3;
-    background-image: #1eb9f3;
-    color: #ffffff;
-}
-div.game-section-menu div.list-group>a.active:after{
-    content: '';
-    position: absolute;
-    left: 100%;
-    top: 50%;
-    margin-top: -40px;
-    border-left: 0;
-    border-bottom: 41px solid transparent;
-    border-top: 41px solid transparent;
-    border-left: 20px solid #1eb9f3;
-}
+    div.game-section-menu div.list-group>a.active,
+    div.game-section-menu div.list-group>a.active .glyphicon,
+    div.game-section-menu div.list-group>a.active .fa{
+        background-color: #1eb9f3;
+        background-image: #1eb9f3;
+        color: #ffffff;
+    }
+    div.game-section-menu div.list-group>a.active:after{
+        content: '';
+        position: absolute;
+        left: 100%;
+        top: 50%;
+        margin-top: -40px;
+        border-left: 0;
+        border-bottom: 41px solid transparent;
+        border-top: 41px solid transparent;
+        border-left: 20px solid #1eb9f3;
+    }
 
-div.game-section-content{
-    background-color: #ffffff; 
-}
-div.game-section {
-    min-height: 362px;
-    padding: 0px;
-    background-color: #40284d;
-}
-div.game-section div.game-section-content:not(.active){
-  display: none;
-}
+    div.game-section-content{
+        background-color: #ffffff; 
+    }
+    div.game-section {
+        min-height: 362px;
+        padding: 0px;
+        background-color: #271a3a;
+    }
+    div.game-section div.game-section-content:not(.active){
+      display: none;
+    }
 
-div.game-section-detail {
-    padding: 0px;
-}
+    div.game-section-detail {
+        padding: 0px;
+    }
 
+    /*custom*/
+    ul.type-group li a {
+        position: relative;
+        text-align: left;
+    }
+    ul.type-group li a span {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+    .content-info {
+        padding: 34px 0px;
+        text-align: center;
+    }
 
-ul.type-group li a {
-    position: relative;
-    text-align: left;
-}
-ul.type-group li a span {
-    position: absolute;
-    right: 10px;
-    top: 13px;
-}
+    .name-title {
+        font-family: "Yanone Kaffeesatz";
+        font-size: 36px;
+        font-weight: bold;
+        letter-spacing: 1.5px;
+        display: inline;
+        padding-right: 50px;
+    }
+
+    .event-title {
+        font-family: "YanoneKaffeesatz";
+        font-size: 60px;
+        font-weight: bold;
+        line-height: 1.11;
+        letter-spacing: 3px;
+        color: #fec231;
+        padding-right: 0px;
+    }
+
+    .btn-custom-group a.btn-custom-style {
+        padding: 6px 15px;
+        max-width: 80%;
+        margin-top: 5px;
+    }
+
+    /* Small devices (tablets, 768px and up) */
+    @media (max-width: 768px) {
+        .btn-more {
+            display: block;
+            margin: 0 auto;
+        }
+    }
+
 
 </style>
 {% endblock %}
 {% block main_content %}  
-<div class="container-full text-center event-new">
+<div class="container-fluid text-center event-new">
     <p><i class="fa fa-bell-o" aria-hidden="true"></i>EVENTTTTTTTTTTT TTTTTTTTTTTTTTT TTTTTTTTTTTT</p>
 </div>
 <div class="container">
@@ -140,7 +177,7 @@ ul.type-group li a span {
             </div>
         </div>
 
-        <ul class="nav nav-justified home-carousel">
+        <ul class="nav nav-justified home-carousel hidden-xs">
             <li data-target="#myCarousel" data-slide-to="0" class="active"><a href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
             <li data-target="#myCarousel" data-slide-to="1"><a href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
             <li data-target="#myCarousel" data-slide-to="2"><a href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
@@ -151,11 +188,11 @@ ul.type-group li a span {
 <div class="container">
     <div class="row" style="padding-top: 50px;">
         <div class="col-md-12 game-section-body">
-            <div class="title-section">
-                <h1 class="text-center">HE THONG VUI CHOI GIAI TRAI</h1>
+            <div class="title-section" align="center">
+                <p class="name-title event-title">HỆ THỐNG VUI CHƠI &</p>
             </div>
             <div class="section-game">
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 game-section-menu">
+                <div class="col-lg-3 col-md-3 game-section-menu hidden-xs">
                     <div class="list-group">
                         <a href="#" class="list-group-item active text-center">
                             CHO DEM
@@ -171,7 +208,7 @@ ul.type-group li a span {
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 game-section">
+                <div class="col-lg-9 col-md-9 game-section">
                     <!-- cho dem section -->
                     <div class="game-section-content active">
                         <div class="game-section-detail">
@@ -185,15 +222,15 @@ ul.type-group li a span {
                                     <p>Một tấm gương lớn chạy dọc suốt phòng chơi cùng hệ thống đèn vàng ấm áp tại khu vui chơi.</p> 
                                     
                                     <!-- Games Type-->
-                                    <ul class="row nav btn-custom-group type-group">
-                                        <li class="col-md-8 active">
-                                            <a href="#">HELIO PLAY<span class="glyphicon glyphicon-chevron-right"></a>
+                                    <ul class="nav btn-custom-group type-group" style="margin-bottom: 30px;">
+                                        <li class="active">
+                                            <a class="btn-custom-style" href="#">HELIO PLAY<span class="glyphicon glyphicon-chevron-right"></a>
                                         </li>
-                                        <li class="col-md-8">
-                                            <a href="#">HELIO KIDS<span class="glyphicon glyphicon-chevron-right"></a>
+                                        <li>
+                                            <a class="btn-custom-style" href="#">HELIO KIDS<span class="glyphicon glyphicon-chevron-right"></a>
                                         </li>
-                                        <li class="col-md-8">
-                                            <a href="#">NIGHT LIFE<span class="glyphicon glyphicon-chevron-right"></a>
+                                        <li>
+                                            <a class="btn-custom-style"href="#">NIGHT LIFE<span class="glyphicon glyphicon-chevron-right"></a>
                                         </li>
                                     </ul>
                                     
@@ -203,122 +240,52 @@ ul.type-group li a span {
                             
                         </div>
                         <div class="col-xs-12 col-md-6 game-section-detail">
-                            <img src="http://helio.vn/uploads/4_Bai%20viet%20san%20pham/Helio%20Kids/Khu%20trong%20nha/Guong%20hoa%20trang/Guong_hoa_trang_01.jpg" alt="helio" width="100%" height="360">
+                            <img src="http://helio.vn/uploads/4_Bai%20viet%20san%20pham/Helio%20Kids/Khu%20trong%20nha/Guong%20hoa%20trang/Guong_hoa_trang_01.jpg" alt="helio" width="100%" height="400">
                         </div>
                     </div>
                     <!-- play section -->
                     <div class="game-section-content">
-                        <div class="game-section-detail">
-                            <div class="col-xs-12 col-md-6"> 
-                                <div>
-                                    <h2>TRO CHOI VAN DONG</h2>
-                                    <p>Một tấm gương lớn chạy dọc suốt phòng chơi cùng hệ thống đèn vàng ấm áp tại khu vui chơi.</p> 
-                                </div>
-                                <hr>
-                                <div>
-                                    <p>Một tấm gương lớn chạy dọc suốt phòng chơi cùng hệ thống đèn vàng ấm áp tại khu vui chơi.</p> 
-                                    <!-- Games Type-->
-                                    <ul class="row nav btn-custom-group type-group">
-                                        <li class="col-md-8 active">
-                                            <a href="#">HELIO PLAY<span class="glyphicon glyphicon-chevron-right"></a>
-                                        </li>
-                                        <li class="col-md-8">
-                                            <a href="#">HELIO KIDS<span class="glyphicon glyphicon-chevron-right"></a>
-                                        </li>
-                                        <li class="col-md-8">
-                                            <a href="#">NIGHT LIFE<span class="glyphicon glyphicon-chevron-right"></a>
-                                        </li>
-                                    </ul>
-                                    
-                                </div>
-                                
-                            </div>
-                            
-                        </div>
-                        <div class="col-xs-12 col-md-6 game-section-detail">
-                            <img src="http://helio.vn/uploads/4_Bai%20viet%20san%20pham/Helio%20Kids/Khu%20trong%20nha/Guong%20hoa%20trang/Guong_hoa_trang_01.jpg" alt="helio" width="100%" height="360">
-                        </div>
+                       
                     </div>
         
                     <!-- kids section -->
                     <div class="game-section-content">
-                        <div class="game-section-detail">
-                            <div class="col-xs-12 col-md-6"> 
-                                <div>
-                                    <h2>TRO CHOI VAN DONG</h2>
-                                    <p>Một tấm gương lớn chạy dọc suốt phòng chơi cùng hệ thống đèn vàng ấm áp tại khu vui chơi.</p> 
-                                </div>
-                                <hr>
-                                <div>
-                                    <p>Một tấm gương lớn chạy dọc suốt phòng chơi cùng hệ thống đèn vàng ấm áp tại khu vui chơi.</p> 
-                                    <!-- Games Type-->
-                                    <ul class="row nav btn-custom-group type-group">
-                                        <li class="col-md-8 active">
-                                            <a href="#">HELIO PLAY<span class="glyphicon glyphicon-chevron-right"></a>
-                                        </li>
-                                        <li class="col-md-8">
-                                            <a href="#">HELIO KIDS<span class="glyphicon glyphicon-chevron-right"></a>
-                                        </li>
-                                        <li class="col-md-8">
-                                            <a href="#">NIGHT LIFE<span class="glyphicon glyphicon-chevron-right"></a>
-                                        </li>
-                                    </ul>
-                                    
-                                </div>
-                                
-                            </div>
-                            
-                        </div>
-                        <div class="col-xs-12 col-md-6 game-section-detail">
-                            <img src="http://helio.vn/uploads/4_Bai%20viet%20san%20pham/Helio%20Kids/Khu%20trong%20nha/Guong%20hoa%20trang/Guong_hoa_trang_01.jpg" alt="helio" width="100%" height="360">
-                        </div>
+                        
                     </div>
                     <!-- coffee section -->
                     <div class="game-section-content">
-                        <div class="game-section-detail">
-                            <div class="col-xs-12 col-md-6"> 
-                                <div>
-                                    <h2>TRO CHOI VAN DONG</h2>
-                                    <p>Một tấm gương lớn chạy dọc suốt phòng chơi cùng hệ thống đèn vàng ấm áp tại khu vui chơi.</p> 
-                                </div>
-                                <hr>
-                                <div>
-                                    <p>Một tấm gương lớn chạy dọc suốt phòng chơi cùng hệ thống đèn vàng ấm áp tại khu vui chơi.</p> 
-                                    <!-- Games Type-->
-                                    <ul class="row nav btn-custom-group type-group">
-                                        <li class="col-md-8 active">
-                                            <a href="#">HELIO PLAY<span class="glyphicon glyphicon-chevron-right"></a>
-                                        </li>
-                                        <li class="col-md-8">
-                                            <a href="#">HELIO KIDS<span class="glyphicon glyphicon-chevron-right"></a>
-                                        </li>
-                                        <li class="col-md-8">
-                                            <a href="#">NIGHT LIFE<span class="glyphicon glyphicon-chevron-right"></a>
-                                        </li>
-                                    </ul>
-                                    
-                                </div>
-                                
-                            </div>
-                            
-                        </div>
-                        <div class="col-xs-12 col-md-6 game-section-detail">
-                            <img src="http://helio.vn/uploads/4_Bai%20viet%20san%20pham/Helio%20Kids/Khu%20trong%20nha/Guong%20hoa%20trang/Guong_hoa_trang_01.jpg" alt="helio" width="100%" height="360">
-                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <div class="col-md-12 border-dot" style="margin-top: 50px;">
+        <div class="row content-info">
+            <p class="name-title">TÌM HIỂU HỆ THỐNG ĐỔI QUA</p>
+            <a class="btn-custom-style btn-more" href="#" role="button" type="button">Tim hieu ngay</a>
+        </div>
+    </div>
+
+
+    <div class="col-md-12 border-dot" style="margin-top: 50px;">
+        <div class="row content-info">
+            <p class="name-title">TÌM HIỂU HỆ THỐNG ĐỔI QUA</p>
+            <a class="btn-custom-style btn-more" href="#" role="button" type="button">Tim hieu ngay</a>
+        </div>
+    </div>
         
-    <div class="row" style="padding-top: 50px;">
+    <div class="row">
         <div class="col-md-12 event-section-body">
-            <div class="row title-section">
+            <div class="row title-section event-title-section" style="margin-top: 20px;">
                 <div class="col-md-9">
-                    <h1 class="text-left">SU KIEN HELIO CENTER</h1>
+                    <!-- <h1 class="text-left">SU KIEN HELIO CENTER</h1> -->
+                    <p class="name-title event-title">SU KIEN HELIO CENTER</p>
                 </div> 
-                <div class="col-md-3">
-                    <a class="btn btn-primary btn-lg pull-right" href="#" role="button">Xem tat ca</a>
+                <div class="col-md-3" align="right">
+                    <a class="btn-custom-style" href="#" role="button">Xem tat ca</a>
                 </div>
                 
             </div>
