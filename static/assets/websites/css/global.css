@@ -7,16 +7,34 @@ body {
 	background-color: #15062b;
 	color: #fff;
 }
+/*HEADER*/
 .header {
     padding: 15px 0;
 }
-p {
-    font-family: "Cabin";
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.5px;
+.well.logo-div {
+    background-color: transparent;
+    padding: 0px;
+    border: none;
 }
-
+.well.logo-div img {
+    height: 100%;
+}
+.navbar.navbar-default{
+    margin-bottom: 0px;
+}
+.menu .col-sm-2, .menu .col-xs-2{
+    padding-right:0px !important;
+}  
+.menu .col-sm-10, .menu .col-xs-10{
+    padding-left:0px !important;
+}
+.row .well.logo-div {
+    margin: 0;
+    text-align: center;
+}
+.top_link{
+    padding: 15px;
+}
 .navbar-default {
     background: transparent;
     border: none;
@@ -33,10 +51,6 @@ p {
 .main-menu  .navbar-nav li {
     padding: 0 15px 0 0;
 }
-/*.nav>li>a:focus, 
-.nav>li>a:hover {
-    background: transparent;
-}*/
 .main-menu .navbar-nav li.active a,
 .main-menu .navbar-nav li a:focus, 
 .main-menu .navbar-nav li a:hover {
@@ -67,6 +81,21 @@ p {
   text-decoration: none;
 }
 
+@media (max-width:767px) {
+    .navbar-toggle.pull-left {
+        margin-left: 10px;
+    }
+    .menu-language {
+        margin-left: 0px;
+    }
+}
+/*END HEADER*/
+p {
+    font-family: "Cabin";
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+}
 
 .time-wrapper p {
     font-family: "Cabin";
