@@ -140,20 +140,20 @@ JWT_AUTH = {
 REST_USE_JWT = True
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
-# LANGUAGE_CODE = 'vi-vn'
+LANGUAGE_CODE = 'vi'
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
-print LOCALE_PATHS
-# config model translation
+
+# # config model translation
 gettext = lambda s: s
 LANGUAGES = (
     ('vi', gettext('Vietnamese')),
     ('en', gettext('English')),
 )
 
-MODELTRANSLATION_DEFAULT_LANGUAGE = 'vi'
+# MODELTRANSLATION_DEFAULT_LANGUAGE = 'vi'
 
 TIME_ZONE = 'UTC'
 
@@ -200,74 +200,6 @@ CKEDITOR_CONFIGS = {
 }
 CKEDITOR_BROWSE_SHOW_DIRS = True
 CKEDITOR_IMAGE_BACKEND = "pillow"
-# CKEDITOR_CONFIGS = {
-#     'default': {
-#         'skin': 'moono',
-#         # 'skin': 'office2013',
-#         'toolbar_Basic': [
-#             ['Source', '-', 'Bold', 'Italic']
-#         ],
-#         'toolbar_YourCustomToolbarConfig': [
-#             {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
-#             {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-#             {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
-#             {'name': 'forms',
-#              'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
-#                        'HiddenField']},
-#             '/',
-#             {'name': 'basicstyles',
-#              'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
-#             {'name': 'paragraph',
-#              'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
-#                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
-#                        'Language']},
-#             {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
-#             {'name': 'insert',
-#              'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
-#             '/',
-#             {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
-#             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
-#             {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
-#             {'name': 'about', 'items': ['About', 'codesnippet']},
-#             {'name': 'div', 'items': ['div']},
-            
-#             '/',  # put this to force next toolbar on new line
-#             {'name': 'yourcustomtools', 'items': [
-#                 # put the name of your editor.ui.addButton here
-#                 'Preview',
-#                 'Maximize',
-
-#             ]},
-#         ],
-#         'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
-#         # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
-#         # 'height': 291,
-#         # 'width': '100%',
-#         # 'filebrowserWindowHeight': 725,
-#         # 'filebrowserWindowWidth': 940,
-#         # 'toolbarCanCollapse': True,
-#         # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
-#         'tabSpaces': 4,
-#         'extraPlugins': ','.join(
-#             [
-#                 # your extra plugins here
-#                 'div',
-#                 'autolink',
-#                 'autoembed',
-#                 'embedsemantic',
-#                 'autogrow',
-#                 # 'devtools',
-#                 'widget',
-#                 'lineutils',
-#                 'clipboard',
-#                 'dialog',
-#                 'dialogui',
-#                 'elementspath',
-#                 'xml',
-#                 'codesnippet'
-#             ]),
-#     }
-# }
 
 try:
     if 'DEVELOPMENT' in os.environ and os.environ['DEVELOPMENT']:

@@ -6,14 +6,7 @@ from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 
 
-def home(request, switch_lang=None):
-    if not switch_lang:
-        user_language = 'vi'
-        translation.activate(user_language)
-        request.session[translation.LANGUAGE_SESSION_KEY] = user_language
-    elif switch_lang != 'true':
-        raise Http404
-
+def home(request):
     return render(request, 'websites/index.html')
 
 
