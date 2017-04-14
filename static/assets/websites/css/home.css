@@ -1,0 +1,184 @@
+.block-content-50 {
+        margin-top: 50px;
+    }
+    .block-content-20 {
+        margin-top: 20px;
+    }
+    .banner3 {
+        margin-bottom: 20px;
+    }
+    .carousel-inner > .item > img,
+    .carousel-inner > .item > a > img {
+            width: 100%;
+            margin: auto;
+    }
+    .text-center.event-new {
+         background-image: linear-gradient(to right, #e436aa, #2c1b76);
+    }
+    .text-center.event-new p {
+        padding: 10px;
+        color: #fff;
+        margin-bottom: 0px;
+        font-family: "Cabin";
+        font-size: 20px;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+    }
+    .home-carousel {
+        background: url("http://localhost:8000/static/assets/websites/images/bg_header.png") no-repeat;
+        background-size: 100% 100%;
+     
+    }
+    .home-carousel li {
+        height: 180px;
+
+    }
+    .home-carousel li a {
+        text-align: left;
+        color: #fff;
+        border-right: 0.5px solid #ccc;
+        border-left: 0.5px solid #ccc;
+    }
+    .home-carousel li a:hover, 
+    .home-carousel li a:focus {
+        background: none;
+    }
+    .home-carousel li.active a {
+        border: 0px;
+        transform: translateY(-50px);
+        background-color: #1eb9f3 !important;
+    }
+    .home-carousel li.prev a {
+        border-right: 0px;
+    }
+
+    .home-carousel li.active + li a {
+        border-left: 0px;
+    }
+    .fa.fa-bell-o {
+        transform: rotate(30deg);
+        margin-right: 10px;
+    }
+    /*  bhoechie tab */
+    div.game-section-menu{
+        padding-right: 0;
+        padding-left: 0;
+        padding-bottom: 0;
+    }
+    div.game-section-menu div.list-group{
+        margin-bottom: 0;
+    }
+    div.game-section-menu div.list-group>a{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        height: 78px;
+        font-size: 24px;
+        line-height: 60px;
+        border-radius: 0px;
+        background-color: #15062b;
+        border: 0px;
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+    }
+    div.game-section-menu div.list-group>a.active,
+    div.game-section-menu div.list-group>a.active .glyphicon,
+    div.game-section-menu div.list-group>a.active .fa{
+        background-color: #1eb9f3;
+        background-image: #1eb9f3;
+        color: #ffffff;
+    }
+    div.game-section-menu div.list-group>a.active:after{
+        content: '';
+        position: absolute;
+        left: 100%;
+        top: 50%;
+        margin-top: -40px;
+        border-left: 0;
+        border-bottom: 41px solid transparent;
+        border-top: 41px solid transparent;
+        border-left: 20px solid #1eb9f3;
+    }
+
+    div.game-section-content{
+        background-color: #ffffff; 
+    }
+    div.game-section {
+        min-height: 362px;
+        padding: 0px;
+        background-color: #271a3a;
+    }
+    div.game-section div.game-section-content:not(.active){
+      display: none;
+    }
+
+    div.game-section-detail {
+        padding: 0px;
+    }
+
+    /*custom*/
+    ul.type-group li a {
+        position: relative;
+        text-align: left;
+    }
+    ul.type-group li a span {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+    .content-info {
+        padding: 34px 0px;
+        text-align: center;
+    }
+    .event-title, 
+    .game-title, 
+    .game-type, 
+    .game-description {
+        color: #fec231;
+    }
+    .btn-custom-group a.btn-custom-style {
+        padding: 6px 15px;
+        max-width: 80%;
+        margin-bottom: 5px;
+    }
+    .vidieo-div {
+        background: url("http://localhost:8000/static/assets/websites/images/vidieo.png") no-repeat right;
+        background-size: 70% 80%;
+        height: 565px;
+    }
+    .vidieo-right {
+        background: url("http://localhost:8000/static/assets/websites/images/vidieo_right.png") no-repeat;
+        background-size: 100% 100%;
+        min-height: 565px;
+        /*width: 45%;*/
+    }
+    .vidieo-left {
+        min-height: 565px;
+        /*width: 45%;*/
+    }
+    .vidieo-left .btn-play-div  {
+        padding-top: 40%;
+        text-align: center;
+    }
+    .btn-link-more {
+        margin: 10px 15px;
+    }
+    /* Small devices (tablets, 768px and up) */
+    @media (max-width: 992px) {
+        .vidieo-div {
+            background: none;
+            height: auto;
+        }
+        .vidieo-right {
+            background: url("http://localhost:8000/static/assets/websites/images/m_vidieo_right.png") no-repeat;
+            background-size: 100% 100%;
+            height: auto;
+            min-height: 500px;
+            /*width: 100%;*/
+        }
+        .vidieo-left {
+            background: url("http://localhost:8000/static/assets/websites/images/vidieo.png") no-repeat;
+            background-size: 100% 100%;
+            height: 250px;
+            /*width: 100%;*/
+        }
+    }
