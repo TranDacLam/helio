@@ -7,7 +7,7 @@ class CategoryTranslationOptions(TranslationOptions):
 translator.register(Category, CategoryTranslationOptions)
 
 class TypeTranslationOptions(TranslationOptions):
-    fields = ('name', )
+    fields = ('name', 'description', )
 
 translator.register(Type, TypeTranslationOptions)
 
