@@ -42,9 +42,6 @@
         width: 200px;
         padding: 30px 0px;
     }
-    .app-helio {
-        padding: 30px 135px;
-    }
     
 </style>
 {% endblock %}
@@ -76,9 +73,9 @@ $(document).ready(function(){
     }
 
     initCoursel();
-    $( window ).resize(function() {
-        initCoursel();
-    });
+    // $( window ).resize(function() {
+    //     initCoursel();
+    // });
 
 });
 </script>
@@ -98,20 +95,20 @@ $(document).ready(function(){
 </div>
 <!-- Page description -->
 <div class="container">
-    <div align="center">
+    <div>
         <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
     </div>
 
     <!-- Nav tabs nav-pills-->
     <ul class="row nav btn-custom-group">
             <li role="nav-item" class="col-md-4 active">
-                <a href="#redemption-game" role="tab" data-toggle="tab">TRO CHOI DOI QUA</a>
+                <a href="#redemption-game" role="tab" data-toggle="tab" class="btn-custom-style">TRO CHOI DOI QUA</a>
             </li>
             <li role="nav-item" class="col-md-4">
-                <a href="#vidieo-game" role="tab" data-toggle="tab">VIDEO GAMES</a>
+                <a href="#vidieo-game" role="tab" data-toggle="tab" class="btn-custom-style">VIDEO GAMES</a>
             </li>
             <li role="nav-item" class="col-md-4">
-                <a href="#ride-game" role="tab" data-toggle="tab">TRO CHOI VAN DONG</a>
+                <a href="#ride-game" role="tab" data-toggle="tab" class="btn-custom-style">TRO CHOI VAN DONG</a>
             </li>
     </ul>
 </div>
@@ -190,26 +187,36 @@ $(document).ready(function(){
                 </div>
             </div>
         </div>
-        <div class="corner-bottom-right-bevel">
-          <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img2.png">
+
+        <div class="game-content container">
+            <div class="game-detail" style="position: relative;">
+                <div class="corner-bottom-right-bevel">
+                    <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img2.png">
+                </div>
+                <div class="style-img">
+                    <img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
+                </div>
+            </div>
+            
+            <!-- <div class="corner-bottom-left-bevel">
+                <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img3.png">
+            </div>
+            <div class="style-img2">
+                <img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
+            </div>
+            
+            <div class="corner-bottom-right-bevel">
+                <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img2.png">
+            </div>
+            <div class="style-img">
+                <img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
+            </div> -->
+            <div align="center">
+                <a class="btn-custom-style" href="#" role="button">Read More</a>
+            </div>
         </div>
-        <div class="style-img"><img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
-        <div class="corner-bottom-left-bevel">
-          <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img3.png">
-        </div>
-        <div class="style-img2"><img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
+
         
-        <div class="corner-bottom-right-bevel">
-          <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img2.png">
-        </div>
-        <div class="style-img"><img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
-        <div align="center">
-            <ul class="row nav btn-custom-group button-display">
-                <li role="nav-item">
-                    <a href="#" role="tab" data-toggle="tab">HIEN THI THEM ></a>
-                </li>
-            </ul>
-        </div>
     </div>
 
     <div role="tabpanel" class="tab-pane active" id="vidieo-game">
@@ -217,9 +224,11 @@ $(document).ready(function(){
 
     <div role="tabpanel" class="tab-pane active" id="ride-game">
     </div>
-    <a href="#">
-        <img class="app-helio" src="{{ STATIC_URL }}assets/websites/images/app.png" height="300px" width="1300px">
-    </a>
-</div>
     
+</div>
+
+<!-- Page description -->
+<div class="container" style="margin-top: 50px;">
+    <img src="{{ STATIC_URL }}assets/websites/images/app.png" height="300px" width="100%">
+</div>
 {% endblock %}
