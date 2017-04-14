@@ -7,9 +7,25 @@ body {
 	background-color: #15062b;
 	color: #fff;
 }
+
+p {
+    font-family: "Cabin";
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+}
+
+.big-font-size {
+    font-size: 72px;
+    font-family: "Cabin";
+    line-height: 80px;
+}
+
 /*HEADER*/
 .header {
     padding: 15px 0;
+    background: url("../images/bg_header.png") no-repeat;
+    background-size: 100% 100%;
 }
 .well.logo-div {
     background-color: transparent;
@@ -90,12 +106,6 @@ body {
     }
 }
 /*END HEADER*/
-p {
-    font-family: "Cabin";
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.5px;
-}
 
 .time-wrapper p {
     font-family: "Cabin";
@@ -153,7 +163,7 @@ a.btn-custom-style {
     border-width: 1px;
     border-image-source: linear-gradient(16deg, #e436aa, #2c1b76);
     border-image-slice: 1;
-    padding: 10px 15px;
+    padding: 6px 15px;
     text-decoration: none;
     text-transform: uppercase;
 }
@@ -167,10 +177,6 @@ a.btn-custom-style:hover {
     border-width: 1px;
     border-image-source: linear-gradient(16deg, #e436aa, #2c1b76);
     border-image-slice: 1;
-}
-
-.btn-custom-group a.btn-custom-style {
-    padding: 6px 5px;
 }
 
 .border-dot {
