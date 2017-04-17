@@ -70,6 +70,12 @@ def helio_play_v2(request):
     return render(request, 'websites/helio_play_v2.html')
 
 
+def helio_kids(request):
+    print "***START EVENTS PAGE***"
+    
+    return render(request, 'websites/helio_kids.html')
+
+
 def events(request):
     print "***START EVENTS PAGE***"
     

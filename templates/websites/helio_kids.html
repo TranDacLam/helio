@@ -1,0 +1,338 @@
+{% extends "layout.html" %}
+{% block extrastylesheet %}
+<!-- <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/font-awesome/css/font-awesome.min.css"> -->
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/slide.css">
+<style type="text/css">
+    .corner-bottom-right-bevel {
+        height: 0;
+        width: 40%;
+        /*padding-right: 20px;*/
+        z-index: 2;
+        position: absolute;
+        /*left: 135px;*/
+        display: block;
+        padding-bottom: 20px;
+        max-height: 300px;
+    }
+    .img-post {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+        overflow: hidden;
+        position: relative;
+        padding-bottom: 20px;
+    }
+
+    .img-app {
+        width: 100%;
+        height: auto;
+        max-height: 700px;
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 30px;
+    }
+
+    .button-display {
+        width: 200px;
+        padding: 30px 0px;
+    }
+    .list-group-horizontal .list-group-item {
+    display: inline-block;
+    }
+    .list-group-horizontal .list-group-item {
+        margin-bottom: 0;
+        margin-left:-4px;
+        margin-right: 0;
+    }
+    .list-group-horizontal .list-group-item:first-child {
+        border-top-right-radius:0;
+        border-bottom-left-radius:4px;
+    }
+    .list-group-horizontal .list-group-item:last-child {
+        border-top-right-radius:4px;
+        border-bottom-left-radius:0;
+    }
+
+    .table-custom {
+        background-color: #fff;
+        color: #000;
+        text-align: center;
+    }
+    .table-title-price {
+        font-size: 30px;
+        text-align: center;
+        color: #2c1cb7;
+    }
+    .th-style-card {
+        padding: 0px !important;
+    }
+    .table-blue-card {
+        text-align: center;
+        background-color: #0066ff;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        height: 40px;
+        padding-top: 10px;
+    }
+    .table-pink-card {
+        text-align: center;
+        background-color: #ff00ff;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        height: 40px;
+        padding-top: 10px;
+    }
+    .table-yellow-card {
+        text-align: center;
+        background-color: #ff9933;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        height: 40px;
+        padding-top: 10px;
+    }
+
+</style>
+{% endblock %}
+{% block extrascript %}
+<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.carousel-1.1.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+    function initCoursel() {
+        $('.carousel').html($('.carousel1').html());
+        var w = $( window ).width();
+        var w2 = $(".container").width();
+        w2 =  w > 1650 ? w2 : (w2 * 90 /100);
+        $('.carousel').carousel({
+            carouselWidth: w,
+            carouselHeight: 400,
+            directionNav:true,    
+            shadow:false, 
+            description:true,
+            frontWidth:w2,
+            frontHeight:400,
+            hMargin: 0.1,
+            vMargin: 0.8
+
+        });
+    }
+
+    initCoursel();
+    $( window ).resize(function() {
+        initCoursel();
+    });
+
+});
+</script>
+{% endblock %}
+{% block main_content %} 
+
+<!-- Page Header -->
+<div class="page-header-img">
+    <div>
+        <img src="{{ STATIC_URL }}assets/websites/images/slide1.png" width="100%">
+    </div>
+    <div class="page-title" align="center">
+        <div class="col-xs-12">
+            <fieldset class="page-title-text"><h1>HELIO KIDS</h1></fieldset>
+        </div>
+    </div>
+</div>
+<!-- Page description -->
+<div class="container">
+    <div>
+        <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+    </div>
+    <!-- Bang gia -->
+    <div>
+        <table class="table table-bordered table-custom">
+            <thead>
+                <tr>
+                    <th colspan="2" class="table-title-price">BANG GIA</th>
+                    <th class="th-style-card"><div class="table-blue-card">The Xanh</div></th>
+                    <th class="th-style-card"><div class="table-pink-card">The Hong</div></th>
+                    <th class="th-style-card"><div class="table-yellow-card">The Vang</div></th>
+                </tr>
+             </thead>
+             <tbody>
+                <tr>
+                    <td rowspan="2">Be cao < 90cm</td>
+                    <td>Thu 2 den thu 6</td>
+                    <td>40000</td>
+                    <td>40000</td>
+                    <td>30000</td>
+                </tr>
+                <tr>
+                    <td>Thu 7, chu nhat, ngay le</td>
+                    <td>40000</td>
+                    <td>40000</td>
+                    <td>30000</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">Be cao < 90cm</td>
+                    <td>Thu 2 den thu 6</td>
+                    <td>40000</td>
+                    <td>40000</td>
+                    <td>30000</td>
+                </tr>
+                <tr>
+                    <td>Thu 7, chu nhat, ngay le</td>
+                    <td>40000</td>
+                    <td>40000</td>
+                    <td>30000</td>
+                </tr>
+                <tr>
+                    <td>Nguoi di kem thu II</td>
+                    <td>Tat ca cac ngay trong tuan</td>
+                    <td colspan="3">25000</td>
+                </tr>
+             </tbody>
+        </table>
+    </div>
+
+    <!-- Nav tabs nav-pills-->
+    <ul class="row nav btn-custom-group-nav">
+            <li role="nav-item" class="col-md-6 active">
+                <a href="#phong-choi" role="tab" data-toggle="tab" class="btn-custom-style">PHONG CHOI</a>
+            </li>
+            <li role="nav-item" class="col-md-6">
+                <a href="#may-choi" role="tab" data-toggle="tab" class="btn-custom-style">MAY CHOI</a>
+            </li>
+    </ul>
+
+
+</div>
+
+
+<div class="tab-content" style="padding-top: 50px;">
+    <div role="tabpanel" class="tab-pane active" id="phong-choi">
+        <!-- Games slider -->
+        <div class="carousel" >
+            
+        </div>
+        <div class="description container" style="position: relative;"> <!-- BEGIN DESCRIPTION -->
+            <div> <!-- DESCRIPTION ITEM -->
+                <h2>Description 1</h2>
+                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu,tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aen ean a commodo mi. Praesent augue lacus.
+                </p>
+            </div>
+
+            <div>
+                <h2>Description 2</h2>
+                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aen ean a commodo mi. Praesent augue lacus.
+                </p>
+            </div>
+
+            <div>
+                <h2>Description 3</h2>
+                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. A en ean a commodo mi. Praesent augue lacus.
+                </p>
+            </div>
+
+            <div>
+                <h2>Description 4</h2>
+                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. A en ean a commodo mi. Praesent augue lacus.
+                </p>
+            </div>
+
+            <div>
+                <h2>Description 5</h2>
+                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. A en ean a commodo mi. Praesent augue lacus.
+                </p>
+            </div>
+        </div>
+
+        <div class="carousel1" hidden="true" >
+            <div class="slides"> <!-- BEGIN CAROUSEL -->
+                <div class="slideItem"> <!-- SLIDE ITEM -->
+                    <a href="#">
+                         <img src="{{ STATIC_URL }}assets/websites/images/slide1.png" >
+                    </a>
+                </div>
+
+                <div class="slideItem">
+                    <a href="#">
+                        <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+                    </a>
+                </div>
+
+                <div class="slideItem">
+                    <a href="#">
+                        <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+                    </a>
+                </div>
+                <div class="slideItem">
+                    <a href="#">
+                        <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+                    </a>
+                </div>
+                <div class="slideItem">
+                    <a href="#">
+                        <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="corner-bottom-right-bevel">
+              <img  class="img-post" src="{{ STATIC_URL }}assets/websites/images/img2.png">
+            </div>
+            <div><img  class="img-post" src="{{ STATIC_URL }}assets/websites/images/slide1.png"></div>
+        </div>
+
+
+       <!--  <div class="corner-bottom-left-bevel">
+          <img src="{{ STATIC_URL }}assets/websites/images/img3.png">
+        </div>
+        <div class="style-img2"><img src="{{ STATIC_URL }}assets/websites/images/slide1.png"></div>
+        
+        <div class="corner-bottom-right-bevel">
+          <img src="{{ STATIC_URL }}assets/websites/images/img2.png">
+        </div>
+        <div class="style-img"><img  src="{{ STATIC_URL }}assets/websites/images/slide1.png"></div> -->
+    
+       
+
+
+
+        <div class="game-content container">
+        
+            
+            <!-- <div class="corner-bottom-left-bevel">
+                <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img3.png">
+            </div>
+            <div class="style-img2">
+                <img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.png">
+            </div>
+            
+            <div class="corner-bottom-right-bevel">
+                <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img2.png">
+            </div>
+            <div class="style-img">
+                <img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.png">
+            </div> -->
+            <div align="center">
+                <a class="btn-custom-style" href="#" role="button">Read More</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane active" id="may-choi">
+    </div>
+
+</div>
+
+
+<!-- Page description -->
+<div class="container" style="margin-top: 50px;">
+    <img src="{{ STATIC_URL }}assets/websites/images/app.png" height="300px" width="100%">
+</div>
+{% endblock %}
