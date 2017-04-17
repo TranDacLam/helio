@@ -148,7 +148,7 @@
         </div>
         <div class="vidieo-left col-md-7">
             <div class="btn-play-div col-md-12">
-                <a class="btn btn-custom-style" href="#" role="button" data-toggle="modal" data-target="#vidieo_play"><i class="fa fa-play"></i></a>
+                <a class="btn btn-custom-style" href="#" role="button" data-toggle="modal" data-target="#vidieo_play_modal"><i class="fa fa-play"></i></a>
             </div>
         </div>
     </div>
@@ -240,13 +240,13 @@
 {% endif %}
 
 <!-- Modal -->
-<div id="vidieo_play" class="modal fade" role="dialog">
+<div id="vidieo_play_modal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-body">
-            <iframe width="100%" height="500px" src="https://www.youtube.com/embed/tGwuUvSuKLk" frameborder="0" allowfullscreen></iframe>
+            <iframe id="helio_vidieo" width="100%" height="500px" src="https://www.youtube.com/embed/tGwuUvSuKLk" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
 

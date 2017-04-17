@@ -5,10 +5,5 @@ from django.utils.translation import check_for_language, get_language
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 
-
-def home(request):
-    return render(request, 'websites/index.html')
-
-
 class FacebookLogin(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter
