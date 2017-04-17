@@ -2,50 +2,35 @@
 {% block extrastylesheet %}
 <!-- <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/font-awesome/css/font-awesome.min.css"> -->
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/slide.css">
-
-<style type="text/css">
+    <style type="text/css">
     .corner-bottom-right-bevel {
         height: 0;
-        width: 500px;
-        padding-right: 20px;
+        width: 40%;
+        /*padding-right: 20px;*/
         z-index: 2;
         position: absolute;
-        left: 135px;
+        /*left: 135px;*/
         display: block;
         padding-bottom: 20px;
+        max-height: 300px;
     }
-    .style-img {
-        z-index: 1;
+    .img-post {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+        overflow: hidden;
         position: relative;
-        width: 75%;
-        left: 450px;
         padding-bottom: 20px;
     }
-    .style-img2 {
-        z-index: 1;
+
+    .img-app {
+        width: 100%;
+        height: auto;
+        max-height: 700px;
+        overflow: hidden;
         position: relative;
-        width: 75%;
-        left: 135px;
-        padding-bottom: 20px;
+        margin-bottom: 30px;
     }
-    .corner-bottom-left-bevel {
-        height: 0;
-        width: 500px;
-        padding-right: 20px;
-        z-index: 2;
-        position: absolute;
-        left: 660px;
-        display: block;
-        padding-bottom: 20px;
-    }
-    .button-display {
-        width: 200px;
-        padding: 30px 0px;
-    }
-    .app-helio {
-        padding: 30px 135px;
-    }
-    
 </style>
 {% endblock %}
 {% block extrascript %}
@@ -190,26 +175,26 @@ $(document).ready(function(){
                 </div>
             </div>
         </div>
-        <div class="corner-bottom-right-bevel">
-          <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img2.png">
+        <div class="container">
+            <div class="corner-bottom-right-bevel">
+              <img  class="img-post" src="{{ STATIC_URL }}assets/websites/images/img2.png">
+            </div>
+            <div><img  class="img-post" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
         </div>
-        <div class="style-img"><img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
-        <div class="corner-bottom-left-bevel">
-          <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img3.png">
+
+
+       <!--  <div class="corner-bottom-left-bevel">
+          <img src="{{ STATIC_URL }}assets/websites/images/img3.png">
         </div>
-        <div class="style-img2"><img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
+        <div class="style-img2"><img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
         
         <div class="corner-bottom-right-bevel">
-          <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img2.png">
+          <img src="{{ STATIC_URL }}assets/websites/images/img2.png">
         </div>
-        <div class="style-img"><img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
-        <div align="center">
-            <ul class="row nav btn-custom-group button-display">
-                <li role="nav-item">
-                    <a href="#" role="tab" data-toggle="tab">HIEN THI THEM ></a>
-                </li>
-            </ul>
-        </div>
+        <div class="style-img"><img  src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div> -->
+    
+        <a href="#" role="tab" data-toggle="tab">HIEN THI THEM ></a>
+
     </div>
 
     <div role="tabpanel" class="tab-pane active" id="vidieo-game">
@@ -217,9 +202,14 @@ $(document).ready(function(){
 
     <div role="tabpanel" class="tab-pane active" id="ride-game">
     </div>
-    <a href="#">
-        <img class="app-helio" src="{{ STATIC_URL }}assets/websites/images/app.png" height="300px" width="1300px">
-    </a>
 </div>
-    
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <a href="#">
+                <img class="img-app" src="{{ STATIC_URL }}assets/websites/images/app.png">
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}

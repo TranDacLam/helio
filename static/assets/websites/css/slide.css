@@ -12,6 +12,7 @@ Version: 1.0
 
 .description div {
 	position: relative !important;
+	/*margin: 0px 60px;*/
 }
 
 
@@ -81,7 +82,7 @@ Version: 1.0
 {
 	position :absolute ;
 	right :10px;
-	top :133px;
+	top :170px;
 	width :35px;
 	height :35px;
 	background : url("../images/next_button.png") no-repeat center;
@@ -93,7 +94,7 @@ Version: 1.0
 {
 	position :absolute ;
 	left :10px;
-	top :133px;
+	top :170px;
 	width :35px;
 	height: 35px;		
 	background : url("../images/prev_button.png");

@@ -2,216 +2,245 @@
 {% block extrastylesheet %}
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/font-awesome/css/font-awesome.min.css">
 <style type="text/css">
-  .cate-intro-img {
-    width: 100%;
-    height: auto;
-    overflow: visible;
-    position: relative;
-    margin-bottom: 60px;
-  }
-  .avatar {
-    width: 100%;
-    height: auto;
-    max-height: 700px;
-    overflow: hidden;
-    position: relative;
-  }
-  img {
-    display: block;
-    width: 100%;
-  }
-  .title-power-card {
-    width: 100%;
-    position: absolute;
-    bottom: -40px;
-  }
-  .form-title {
-    width: 70%;
-  }
-  .text-description {
-    text-align: justify;
-    margin: 10px;
-  }
-  .blue-card {
-    background-color: #0066ff;
-  }
-  .blue-card-text {
-    color: white;
-    text-align: center;
-    padding-top: 10px;
-  }
-  .pink-card {
-    background-color: #ff00ff;
-  }
-  .yellow-card {
-    background-color: #ff9933;
-  }
-  .image-card {
-    border: 3px solid black;
-  }
-  .style-hr { 
-    border: 0; 
-    height: 3px; 
-    background-image: -webkit-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-    background-image: -moz-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-    background-image: -ms-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-    background-image: -o-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0); 
-    /*margin-left: 100px;
-    margin-right: 100px;*/
-    margin: 50px 100px;
-  }
-  .faq_question {
-    margin: 0px;
-    padding: 0px 0px 5px 120px;
-    display: inline-block;
-    cursor: pointer;
-    font-weight: bold;
-  }
- 
-  .faq_answer_container {
-    height: 0px;
-    overflow: hidden;
-    padding: 0px 0px 0px 120px;
-  }
-  .question-icon {
-    display: inline;
-  }
-  .question-tittle {
-    display: inline;
-  }
-  .style-hr-question { 
-    border: 0; 
-    height: 3px; 
-    background-image: -webkit-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-    background-image: -moz-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-    background-image: -ms-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-    background-image: -o-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0); 
-    /*margin-left: 100px;
-    margin-right: 100px;*/
-    margin: 50px 120px;
-  }
+    .cate-intro-img {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        position: relative;
+        margin-bottom: 60px;
+    }
+    .avatar {
+        width: 100%;
+        height: auto;
+        max-height: 700px;
+        overflow: hidden;
+        position: relative;
+    }
+    .title-power-card {
+        width: 100%;
+        position: absolute;
+        bottom: -25px;
+    }
+    .form-title {
+        width: 90%;
+    }
+    .text-description {
+        text-align: justify;
+        margin: 10px;
+    }
+    .powercard {
+      margin-bottom: 40px;
+    }
+    .blue-card {
+        background-color: #0066ff;
+    }
+    .card-text {
+        color: white;
+        text-align: center;
+        padding-top: 10px;
+    }
+    .pink-card {
+        background-color: #ff00ff;
+    }
+    .yellow-card {
+        background-color: #ff9933;
+    }
+    .image-card {
+        border: 3px solid black;
+        display: block;
+        width: 100%;
+    }
+    .style-hr { 
+        border: 0; 
+        height: 3px; 
+        background-image: -webkit-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
+        background-image: -moz-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
+        background-image: -ms-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
+        background-image: -o-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0); 
+        /*margin-left: 100px;
+        margin-right: 100px;*/
+        margin: 50px 50px;
+    }
+    .style-hr-question { 
+        background-color: #fff;
+        border-top: 2px dotted #22194d;
+        margin: 50px 50px;
+    }
+    .panel-group .panel {
+        /*margin-top: 0px !important;*/
+        border-radius: 0;
+        box-shadow: none;
+        border-color: #22194d;
+        border-top: 2px dotted #fff;
+        background-color: #22194d;
+    }
+
+    .panel-group .panel:last-child {
+        border-bottom: 2px dotted #fff;
+    }
+
+    .panel-default > .panel-heading {
+        padding: 0;
+        border-radius: 0;
+        color: #fff;
+        background-color: #22194d;
+        border-color: #22194d;
+    }
+
+    .panel-title > a {
+        display: block;
+        padding: 15px;
+        text-decoration: none;
+    }
+
+    .more-less {
+        float: right;
+        color: yellow;
+        margin-top: 25px;
+    }
+
+    .panel-default > .panel-heading + .panel-collapse > .panel-body {
+        border-top-color: #22194d;
+    }
 
 </style>
 {% endblock %}
 {% block extrascript %}
 <script type="text/javascript">
-  $(document).ready(function() {
- 
-    $('.faq_question').click(function() {
- 
-        if ($(this).parent().is('.open')){
-            
-            $(this).closest('.faq').find('.faq_answer_container').animate({'height':'0'},500);
-            $(this).closest('.faq').removeClass('open');
-            $(this).find(".question-icon").html('<span class="glyphicon glyphicon-plus-sign"></span>');
-            }
-          else{
-              var newHeight =$(this).closest('.faq').find('.faq_answer').height() +'px';
-              $(this).closest('.faq').find('.faq_answer_container').animate({'height':newHeight},500);
-              $(this).closest('.faq').addClass('open');
-              $(this).find(".question-icon").html('<span class="glyphicon glyphicon-minus-sign"></span>');
-            }
-    });
-  });
-  // function toggleIcon(e) {
-  //   $(e.target)
-  //       .prev('.faq-heading')
-  //       .find(".more-less")
-  //         .toggleClass('glyphicon-plus-sign glyphicon-minus-sign');
-  // }
-  // $('.faq-group').on('hidden.bs.collapse', toggleIcon);
-  // $('.faq-group').on('shown.bs.collapse', toggleIcon);
+
+function toggleIcon(e) {
+    $(e.target)
+        .prev('.panel-heading')
+        .find(".more-less")
+        .toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+}
+$('.panel-group').on('hidden.bs.collapse', toggleIcon);
+$('.panel-group').on('shown.bs.collapse', toggleIcon);
 
 </script>
 {% endblock %}
 {% block main_content %} 
 
 <div class="container">
-  <div class="cate-intro-img">
-    <div class="avatar">
-      <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
-    </div>
-    <div class="title-power-card" align="center">
-      <div class="col-xs-12">
-            <fieldset class="page-title-text"><h1>POWERCARD</h1></fieldset>
+    <div class="cate-intro-img">
+        <div class="avatar">
+            <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
+        </div>
+        <div class="title-power-card" align="center">
+            <div class="col-xs-12">
+                <fieldset class="page-title-text"><h1>POWERCARD</h1></fieldset>
+            </div>
         </div>
     </div>
-  </div>
-  <div align="center">
-    <div class="form-title">
-      <p class="text-description">To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+    <div align="center">
+        <div class="form-title">
+            <p class="text-description">To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="item col-md-4">
-      <div class="blue-card">
-        <h4 class="blue-card-text">THE XANH</h4>
-        <span><a href="#"><img class="image-card" src="{{ STATIC_URL }}assets/websites/images/img1.jpg"></a></span>
-        <p>Here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
-        <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. </p>
-        <p>The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
-      </div>
-      
-    </div>
-    <div class="item col-md-4">
-      <div class="pink-card">
-      <h4 class="blue-card-text">THE HONG</h4>
-        <span><a href="#"><img class="image-card" src="{{ STATIC_URL }}assets/websites/images/img1.jpg"></a></span>
-        <p>Here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
-        <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. </p>
-        <p>The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
-      </div>
-      
-    </div>
-    <div class="item col-md-4">
-      <div class="yellow-card">
-      <h4 class="blue-card-text">THE VANG</h4>
-        <span><a href="#"><img class="image-card" src="{{ STATIC_URL }}assets/websites/images/img1.jpg"></a></span>
-        <p>Here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
-        <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. </p>
-        <p>The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
-      </div>
-      
-    </div>
-  </div>
-  <hr class="style-hr">
-  <div>
-      <div>
-        <h1 align="center">ASKED QUESTIONS</h1>
-      </div>
-      <div class="faq_container">
-          <div class="faq">
-              <div class="faq_question">
-                  <div class="question-icon"><span class="glyphicon glyphicon-plus-sign"></span></div>
-                  <h3 class="question-tittle">Mua the o dau?</h3>
-              </div>
-              <div class="faq_answer_container">
-                  <div class="faq_answer">Answer goes here To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</div>
-              </div>        
-          </div>
-          <hr class="style-hr">
-          <div class="faq">
-              <div class="faq_question">
-                  <div class="question-icon"><span class="glyphicon glyphicon-plus-sign"></span></div>
-                  <h3 class="question-tittle">Lam the nao de nap tien vao the?</h3>
-              </div>
-              <div class="faq_answer_container">
-                  <div class="faq_answer">Answer goes here To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</div>
-              </div>
-          <hr class="style-hr-question">        
-          </div>
+    <div class="row powercard">
+        <div class="item col-md-4">
+            <div class="blue-card">
+                <h4 class="card-text">THE XANH</h4>
+                <span><a href="#"><img class="image-card" src="{{ STATIC_URL }}assets/websites/images/img1.jpg"></a></span>
+                <p>Here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+                <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. </p>
+                <p>The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+            </div>
           
-          <div class="faq">
-              <div class="faq_question">
-                  <div class="question-icon"><span class="glyphicon glyphicon-plus-sign"></span></div>
-                  <h3 class="question-tittle">Chinh sach the</h3>
-              </div>
-              <div class="faq_answer_container">
-                  <div class="faq_answer">Answer goes here To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</div>
-            </div>        
-          </div>
-       </div>
-  </div>
-
+        </div>
+        <div class="item col-md-4">
+            <div class="pink-card">
+                <h4 class="card-text">THE HONG</h4>
+                <span><a href="#"><img class="image-card" src="{{ STATIC_URL }}assets/websites/images/img1.jpg"></a></span>
+                <p>Here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+                <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. </p>
+                <p>The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+            </div>
+          
+        </div>
+        <div class="item col-md-4">
+            <div class="yellow-card">
+                <h4 class="card-text">THE VANG</h4>
+                <span><a href="#"><img class="image-card" src="{{ STATIC_URL }}assets/websites/images/img1.jpg"></a></span>
+                <p>Here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+                <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. </p>
+                <p>The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
+            </div>
+          
+        </div>
+    </div>
 </div>
+
+<div class="container demo">
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <i class="more-less glyphicon glyphicon-chevron-down"></i>
+                        <h3>Mua the o dau?</h3>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <i class="more-less glyphicon glyphicon-chevron-down"></i>
+                        <h3>Lam the nao de nap tien vao the?</h3>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingThree">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <i class="more-less glyphicon glyphicon-chevron-down"></i>
+                        <h3>Chinh sach the nhu the nao?</h3>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingFour">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        <i class="more-less glyphicon glyphicon-chevron-down"></i>
+                        <h3>Neu the bi mat hoac hong thi lam the nao?</h3>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                <div class="panel-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+            </div>
+        </div>
+
+    </div><!-- panel-group -->
+    
+    
+</div><!-- container -->
+
 {% endblock %}
