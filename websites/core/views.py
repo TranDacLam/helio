@@ -4,17 +4,12 @@ from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 import ast
 from django.http import JsonResponse
+from django.utils import translation
 
-from django.conf import settings
-
-from django.utils.translation import ugettext
 
 def home(request):
-
-    output = ugettext("My news")
-
-    print "OUt Put ", output
-
+    print 'translation.LANGUAGE_SESSION_KEY ',translation.LANGUAGE_SESSION_KEY
+    print "request.session ", request.session["_language"]
     result = {}
 
     # banners on home page

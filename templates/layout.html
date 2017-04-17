@@ -29,6 +29,7 @@
 
     <script type="text/javascript">
         var STATIC_URL = '{{ STATIC_URL }}';
+        var lang_code = '{{ LANGUAGE_CODE }}';
     </script>
 
 </head>
@@ -56,6 +57,7 @@
     <script src = "{{ STATIC_URL }}assets/js/jquery.min.js"></script>
     <script src = "{{ STATIC_URL }}assets/js/bootstrap.min.js"></script>
     <script src = "{{ STATIC_URL }}assets/websites/js/ajaxSetup.js"></script>
+    <script src = "{{ STATIC_URL }}assets/websites/js/main.js"></script>
     {% block extrascript %}{% endblock %}
 </footer>
 </html>
