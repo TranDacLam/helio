@@ -1,3 +1,4 @@
+{% load i18n %} 
 
 <div class="container">
     <div class="header">
@@ -40,12 +41,12 @@
 						    <!-- Collect the nav links, forms, and other content for toggling -->
 						    <div class="collapse navbar-collapse main-menu" id="main-nav" style="padding: 0px;">
 								<ul class="nav navbar-nav">
-			                        <li class="active"><a href="{% url 'home' %}">SẢN PHẨM</a></li>
-			                        <li class=""><a href="{% url 'home' %}">NIGHT LIFE</a></li>
-			                        <li class=""><a href="{% url 'home' %}">POWERCARD</a></li>
-			                        <li class=""><a href="{% url 'home' %}">SỰ KIỆN</a></li>
-			                        <li class=""><a href="{% url 'home' %}">KHUYẾN MÃI</a></li>
-			                        <li class=""><a href="{% url 'home' %}">HỎI ĐÁP</a></li>
+			                        <li class="active"><a href="{% url 'home' %}">{% trans "menu.product" %}</a></li>
+			                        <li class=""><a href="{% url 'home' %}">{% trans "menu.night_life" %}</a></li>
+			                        <li class=""><a href="{% url 'home' %}">{% trans "menu.powercard" %}</a></li>
+			                        <li class=""><a href="{% url 'home' %}">{% trans "menu.event" %}</a></li>
+			                        <li class=""><a href="{% url 'home' %}">{% trans "menu.promotion" %}</a></li>
+			                        <li class=""><a href="{% url 'home' %}">{% trans "menu.faq" %}</a></li>
 			                        
 			                    </ul>
 						    </div><!-- /.navbar-collapse -->

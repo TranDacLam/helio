@@ -1,3 +1,4 @@
+{% load i18n %} 
 <footer id="footer-wrapper">
     <div class="container">
         <div class="row">
@@ -9,7 +10,7 @@
                     <div class="textwidget">
                        <p><i class="fa fa-phone"></i>(0236) 3 630 888</p>
                        <p><i class="fa fa-envelope-o"></i>contact@helio.vn</p>
-                       <p><i class="fa fa-map-marker"></i>Khu công viên Đông Nam Đài tưởng niệm, Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu, TP Đà Nẵng</p>
+                       <p><i class="fa fa-map-marker"></i>{% trans "footer.contact.address" %}</p>
                     </div>
                 </div>
             </div>
@@ -17,7 +18,7 @@
                 <div class="row box_footer">
                     <div class="col-md-6 col-xs-6">
                         <div class="menuwidget">
-                            <p>TRANG CHU</p>
+                            <p>{% trans "footer.menu.home" %}</p>
                             <p>TRANG CHU</p>
                             <p>TRANG CHU</p>
                         </div>

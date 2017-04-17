@@ -5,6 +5,36 @@ from django.core.serializers.json import DjangoJSONEncoder
 import ast
 from django.http import JsonResponse
 
+from django.conf import settings
+
+from django.utils.translation import ugettext
+
+def home(request):
+
+    output = ugettext("My news")
+
+    print "OUt Put ", output
+
+    result = {}
+
+    # banners on home page
+    banners = Banner.objects.filter(is_show=True).order_by('position')
+    banners_map = {}
+    if banners:
+        for item in banners:
+            banners_map[item.position] = item
+    result["banners"] = banners_map
+
+    # hots
+    hots = Hot.objects.filter(is_show=True).order_by('modified')[:4]
+    result["hots"] = hots
+
+    # game categorys
+    game_categorys = Category.objects.all()
+    result["game_categorys"] = game_categorys
+
+
+    return render(request, 'websites/home.html', {"result":result})
 
 # Create your views here.
 def get_posts(request):

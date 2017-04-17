@@ -2,8 +2,14 @@ from django.conf.urls import url, include
 import views
 
 urlpatterns = [
+    url(r'^$', views.home, name='home'),
+
     url(r'^get-posts/$', views.get_posts, name='get_posts'),
     url(r'^helio-play/$', views.helio_play, name='helio_play'),
+
+
+
+    
     url(r'^helio-play-v2/$', views.helio_play_v2, name='helio_play_v2'),
     url(r'^helio-kids/$', views.helio_kids, name='helio_kids'),
     url(r'^helio-play/game-detail$', views.game_detail, name='game_detail'),

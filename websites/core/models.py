@@ -68,7 +68,7 @@ class Event(DateTimeModel):
 class Game(DateTimeModel):
 
     def limit_category_Games():
-        return {'name_en__in': ['Helio Play', 'Helio Kids']}
+        return {'name_en__in': ['PLAY', 'KIDS']}
 
     name = models.CharField(max_length=255, unique=True)
     short_description = models.CharField(max_length=350)
@@ -111,7 +111,7 @@ class Entertainment(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
     short_description = models.CharField(max_length=350)
     content = models.TextField()
-    key_query = models.CharField(max_length=255, unique=True)
+    key_query = models.CharField(max_length=255, unique=True, null=True, blank=True)
     image1 = models.ImageField(_('Image 1'), max_length=1000, null=True, blank=True)
     image2 = models.ImageField(_('Image 2'), max_length=1000, null=True, blank=True)
     image3 = models.ImageField(_('Image 3'), max_length=1000, null=True, blank=True)
