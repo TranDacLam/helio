@@ -17,14 +17,57 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-#: main/models.py:12
-msgid "Date Created"
-msgstr "Ngay Tao"
 
-#: settings.py:121
-msgid "Vietnamese"
-msgstr ""
 
-#: settings.py:122
-msgid "English"
-msgstr ""
+# START MAIN MENU
+msgid "menu.product"
+msgstr "SẢN PHẨM"
+
+msgid "menu.night_life"
+msgstr "CHỢ ĐÊM"
+
+msgid "menu.powercard"
+msgstr "POWERCARD"
+
+msgid "menu.event"
+msgstr "SỰ KIỆN"
+
+msgid "menu.promotion"
+msgstr "KHUYẾN MÃI"
+
+msgid "menu.faq"
+msgstr "HỎI ĐÁP"
+# END MAIN MENU
+
+# START BUTTON
+msgid "btn.click_now"
+msgstr "Tìm hiểu ngay"
+
+msgid "btn.view_all"
+msgstr "Xem tất cả"
+# END BUTTON
+
+# START HOME PAGE
+msgid "homepage.title.section.game"
+msgstr "HỆ THỐNG VUI CHƠI & GIẢI TRÍ"
+
+msgid "homepage.title.section.redemption_store"
+msgstr "TÌM HIỂU HỆ THỐNG ĐỔI QUÀ TẠI REDEMPTION STORE"
+
+msgid "homepage.title.section.powercard"
+msgstr "THẺ POWERCARD SỬ DỤNG TẠI HELIO CENTER NHƯ THẾ NÀO? "
+
+msgid "homepage.title.section.event"
+msgstr "SỰ KIỆN HELIO CENTER"
+
+msgid "homepage.title.section.entertaiment"
+msgstr "TRUNG TÂM VUI CHƠI GIẢI TRÍ TẠI ĐÀ NẴNG"
+# END HOME PAGE
+
+#START FOOTER
+msgid "footer.contact.address"
+msgstr "Khu công viên Đông Nam Đài tưởng niệm, Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu, TP Đà Nẵng"
+
+msgid "footer.menu.home"
+msgstr "TRANG CHỦ"
+#END FOOTER

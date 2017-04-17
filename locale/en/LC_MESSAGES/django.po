@@ -16,15 +16,58 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
-#: main/models.py:12
-msgid "Date Created"
-msgstr "Date Created"
 
-#: settings.py:121
-msgid "Vietnamese"
-msgstr ""
+# START MAIN MENU
+msgid "menu.product"
+msgstr "PRODUCT"
 
-#: settings.py:122
-msgid "English"
-msgstr ""
+msgid "menu.night_life"
+msgstr "NIGHT LIFE"
+
+msgid "menu.powercard"
+msgstr "POWERCARD"
+
+msgid "menu.event"
+msgstr "EVENT"
+
+msgid "menu.promotion"
+msgstr "PROMOTION"
+
+msgid "menu.faq"
+msgstr "FAQs"
+# END MAIN MENU
+
+# START BUTTON
+msgid "btn.click_now"
+msgstr "Click now"
+
+msgid "btn.view_all"
+msgstr "View all"
+# END BUTTON
+
+# START HOME PAGE
+msgid "homepage.title.section.game"
+msgstr "ENTERTAINMENT SYSTEM"
+
+msgid "homepage.title.section.redemption_store"
+msgstr "REDEMPTION STORE"
+
+msgid "homepage.title.section.powercard"
+msgstr "POWERCARD"
+
+msgid "homepage.title.section.event"
+msgstr "HELIO CENTER EVENT"
+
+msgid "homepage.title.section.entertaiment"
+msgstr "TRUNG TÂM VUI CHƠI GIẢI TRÍ TẠI ĐÀ NẴNG"
+# END HOME PAGE
+
+#START FOOTER
+msgid "footer.contact.address"
+msgstr "2/9 str, Hoa Cuong Bac Ward, Hai Chau Dist, Da Nang City, Viet Nam"
+
+msgid "footer.menu.home"
+msgstr "HOME"
+#END FOOTER

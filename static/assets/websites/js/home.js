@@ -1,4 +1,6 @@
 $(document).ready( function() {
+    $(".carousel-inner .item:first").addClass("active");
+
     $('#myCarousel').carousel({
         interval:   4000
     });
