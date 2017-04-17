@@ -29,7 +29,7 @@ class Post(DateTimeModel):
     key_query = models.CharField(max_length=255, unique=True)
 
     def save(self, *args, **kwargs):
-        self.key_query = "kq_" + self.key_query
+        self.key_query = "kq_" + self.key_query.replace(" ", "_")
         super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -85,6 +85,7 @@ class Game(DateTimeModel):
 
 class Type(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -110,6 +111,7 @@ class Entertainment(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
     short_description = models.CharField(max_length=350)
     content = models.TextField()
+    key_query = models.CharField(max_length=255, unique=True)
     image1 = models.ImageField(_('Image 1'), max_length=1000, null=True, blank=True)
     image2 = models.ImageField(_('Image 2'), max_length=1000, null=True, blank=True)
     image3 = models.ImageField(_('Image 3'), max_length=1000, null=True, blank=True)
@@ -118,6 +120,10 @@ class Entertainment(DateTimeModel):
     image6 = models.ImageField(_('Image 6'), max_length=1000, null=True, blank=True)
     category = models.ForeignKey('Category', related_name='entertainments_category_rel',
                                  on_delete=models.CASCADE, limit_choices_to=limit_category_entertainments)
+
+    def save(self, *args, **kwargs):
+        self.key_query = "kq_" + self.key_query.replace(" ", "_")
+        super(Entertainment, self).save(*args, **kwargs)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -142,7 +148,7 @@ class Promotion(DateTimeModel):
 
 class FAQ(DateTimeModel):
     def limit_category_Faq():
-        return {'name_en__in': ['Helio Play', 'Helio Kids']}
+        return {'name_en__in': ['FAQs']}
 
     question = models.CharField(max_length=255, unique=True)
     answer = models.TextField()

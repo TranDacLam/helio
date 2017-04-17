@@ -42,7 +42,8 @@ urlpatterns += i18n_patterns(
     url(r'^api/', include('api.urls')),
     url(r'^helio/', include('core.urls')),
     url(r'^$', views.home, name='home'),
-    url(r'(?P<switch_lang>[\w-]+)/$', views.home, name='home'),
+
+    # prefix_default_language=False
 )
 
 
