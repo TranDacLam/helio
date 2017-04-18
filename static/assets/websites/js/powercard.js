@@ -8,7 +8,8 @@ $(document).ready( function() {
 	$('.panel-group').on('hidden.bs.collapse', toggleIcon);
 	$('.panel-group').on('shown.bs.collapse', toggleIcon);
 	$( ".powercard-content" ).each(function(  ) {
-	  	if ( $(this ).height() > 400 ) {
+		console.log($(this ).height())
+	  	if ( $(this ).height() > 401 ) {
 	  		$( this ).addClass("height-limit")
 	  		$( this ).parent().find(".card-div-bottom").removeClass("hidden");
 	  	}
