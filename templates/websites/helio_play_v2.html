@@ -2,41 +2,36 @@
 {% block extrastylesheet %}
 <!-- <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/font-awesome/css/font-awesome.min.css"> -->
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/slide.css">
-    <style type="text/css">
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/helio_play.css">
+<style type="text/css">
     .corner-bottom-right-bevel {
-        height: 0;
-        width: 40%;
-        /*padding-right: 20px;*/
-        z-index: 2;
-        position: absolute;
-        /*left: 135px;*/
-        display: block;
-        padding-bottom: 20px;
-        max-height: 300px;
-    }
-    .img-post {
-        width: 100%;
-        height: auto;
-        max-height: 300px;
-        overflow: hidden;
-        position: relative;
-        padding-bottom: 20px;
-    }
+    height: 0;
+    width: 40%;
+    /*padding-right: 20px;*/
+    z-index: 2;
+    position: absolute;
+    /*left: 135px;*/
+    display: block;
+    padding-bottom: 20px;
+    max-height: 300px;
+}
+.img-post {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 20px;
+}
 
-    .img-app {
-        width: 100%;
-        height: auto;
-        max-height: 700px;
-        overflow: hidden;
-        position: relative;
-        margin-bottom: 30px;
-    }
-
-    .button-display {
-        width: 200px;
-        padding: 30px 0px;
-    }
-    
+.img-app {
+    width: 100%;
+    height: auto;
+    max-height: 700px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 30px;
+}
 </style>
 {% endblock %}
 {% block extrascript %}
@@ -67,9 +62,9 @@ $(document).ready(function(){
     }
 
     initCoursel();
-    // $( window ).resize(function() {
-    //     initCoursel();
-    // });
+    $( window ).resize(function() {
+        initCoursel();
+    });
 
 });
 </script>
@@ -79,7 +74,7 @@ $(document).ready(function(){
 <!-- Page Header -->
 <div class="page-header-img">
     <div>
-        <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" width="100%">
+        <img src="{{ STATIC_URL }}assets/websites/images/slide1.png" width="100%">
     </div>
     <div class="page-title" align="center">
         <div class="col-xs-12">
@@ -89,7 +84,7 @@ $(document).ready(function(){
 </div>
 <!-- Page description -->
 <div class="container">
-    <div>
+    <div align="center">
         <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
     </div>
 
@@ -154,7 +149,7 @@ $(document).ready(function(){
             <div class="slides"> <!-- BEGIN CAROUSEL -->
                 <div class="slideItem"> <!-- SLIDE ITEM -->
                     <a href="#">
-                         <img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg" >
+                         <img src="{{ STATIC_URL }}assets/websites/images/slide1.png" >
                     </a>
                 </div>
 
@@ -181,49 +176,26 @@ $(document).ready(function(){
                 </div>
             </div>
         </div>
-
+        <div class="container">
+            <div class="corner-bottom-right-bevel">
+              <img  class="img-post" src="{{ STATIC_URL }}assets/websites/images/img2.png">
+            </div>
+            <div><img  class="img-post" src="{{ STATIC_URL }}assets/websites/images/slide1.png"></div>
+        </div>
 
 
        <!--  <div class="corner-bottom-left-bevel">
           <img src="{{ STATIC_URL }}assets/websites/images/img3.png">
         </div>
-        <div class="style-img2"><img src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div>
+        <div class="style-img2"><img src="{{ STATIC_URL }}assets/websites/images/slide1.png"></div>
         
         <div class="corner-bottom-right-bevel">
           <img src="{{ STATIC_URL }}assets/websites/images/img2.png">
         </div>
-        <div class="style-img"><img  src="{{ STATIC_URL }}assets/websites/images/slide1.jpg"></div> -->
+        <div class="style-img"><img  src="{{ STATIC_URL }}assets/websites/images/slide1.png"></div> -->
     
-       
-
-
-
-        <div class="game-content container">
-            <div class="game-detail" style="position: relative;">
-                <div class="corner-bottom-right-bevel">
-                    <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img2.png">
-                </div>
-                <div class="style-img">
-                    <img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
-                </div>
-            </div>
-            
-            <!-- <div class="corner-bottom-left-bevel">
-                <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img3.png">
-            </div>
-            <div class="style-img2">
-                <img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
-            </div>
-            
-            <div class="corner-bottom-right-bevel">
-                <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img2.png">
-            </div>
-            <div class="style-img">
-                <img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.jpg">
-            </div> -->
-            <div align="center">
-                <a class="btn-custom-style" href="#" role="button">Read More</a>
-            </div>
+        <div align="center">
+            <a class="btn-custom-style" href="#" role="button">Read More</a>
         </div>
 
     </div>
@@ -233,12 +205,14 @@ $(document).ready(function(){
 
     <div role="tabpanel" class="tab-pane active" id="ride-game">
     </div>
-
 </div>
-
-
-<!-- Page description -->
-<div class="container" style="margin-top: 50px;">
-    <img src="{{ STATIC_URL }}assets/websites/images/app.png" height="300px" width="100%">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <a href="#">
+                <img class="img-app" src="{{ STATIC_URL }}assets/websites/images/app.png">
+            </a>
+        </div>
+    </div>
 </div>
 {% endblock %}

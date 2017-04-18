@@ -53,9 +53,13 @@
         border-bottom-left-radius:0;
     }
 
-    .table-custom {
+    .table-custom-around {
         background-color: #fff;
         color: #000;
+        padding: 20px;
+        margin: 20px;
+    }
+    .table-custom {
         text-align: center;
     }
     .table-title-price {
@@ -66,31 +70,58 @@
     .th-style-card {
         padding: 0px !important;
     }
+    table.borderless th,table.borderless {
+        border: none !important;
+    }
     .table-blue-card {
         text-align: center;
         background-color: #0066ff;
         border-top-right-radius: 10px;
         border-top-left-radius: 10px;
-        height: 40px;
+        height: 50px;
         padding-top: 10px;
+        color: #fff;
+        vertical-align: middle;
     }
+    .table-content-blue-card {
+        color: #0066ff; 
+        font-weight: bold;
+    }    
     .table-pink-card {
         text-align: center;
         background-color: #ff00ff;
         border-top-right-radius: 10px;
         border-top-left-radius: 10px;
-        height: 40px;
+        height: 50px;
         padding-top: 10px;
+        color: #fff;
+    }
+    .table-content-pink-card {
+        color: #ff00ff; 
+        font-weight: bold;
     }
     .table-yellow-card {
         text-align: center;
         background-color: #ff9933;
         border-top-right-radius: 10px;
         border-top-left-radius: 10px;
-        height: 40px;
+        height: 50px;
         padding-top: 10px;
+        color: #fff;
     }
-
+    .table-content-yellow-card {
+        color: #ff9933; 
+        font-weight: bold;
+    }
+    .note {
+        color: #ff00ff;
+    }
+    .table-active {
+        background-color: rgba(0,0,0,.075);
+    }
+    .style-hr {
+        color: #e436aa;
+    }
 </style>
 {% endblock %}
 {% block extrascript %}
@@ -147,50 +178,51 @@ $(document).ready(function(){
         <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
     </div>
     <!-- Bang gia -->
-    <div>
-        <table class="table table-bordered table-custom">
+    <div class="table-custom-around">
+        <table class="table table-bordered table-custom borderless">
             <thead>
                 <tr>
                     <th colspan="2" class="table-title-price">BANG GIA</th>
-                    <th class="th-style-card"><div class="table-blue-card">The Xanh</div></th>
-                    <th class="th-style-card"><div class="table-pink-card">The Hong</div></th>
-                    <th class="th-style-card"><div class="table-yellow-card">The Vang</div></th>
+                    <th class="th-style-card"><div class="table-blue-card">THE XANH</div></th>
+                    <th class="th-style-card"><div class="table-pink-card">THE HONG</div></th>
+                    <th class="th-style-card"><div class="table-yellow-card">THE VANG</div></th>
                 </tr>
              </thead>
              <tbody>
                 <tr>
                     <td rowspan="2">Be cao < 90cm</td>
                     <td>Thu 2 den thu 6</td>
-                    <td>40000</td>
-                    <td>40000</td>
-                    <td>30000</td>
+                    <td class="table-content-blue-card">40,000</td>
+                    <td class="table-content-pink-card">40,000</td>
+                    <td class="table-content-yellow-card">30,000</td>
                 </tr>
-                <tr>
-                    <td>Thu 7, chu nhat, ngay le</td>
-                    <td>40000</td>
-                    <td>40000</td>
-                    <td>30000</td>
+                <tr class="table-active">
+                    <td>Thu 7, CN, Ngay le <span class="note">*</span></td>
+                    <td class="table-content-blue-card">40,000</td>
+                    <td class="table-content-pink-card">40,000</td>
+                    <td class="table-content-yellow-card">30,000</td>
                 </tr>
                 <tr>
                     <td rowspan="2">Be cao < 90cm</td>
                     <td>Thu 2 den thu 6</td>
-                    <td>40000</td>
-                    <td>40000</td>
-                    <td>30000</td>
+                    <td class="table-content-blue-card">40,000</td>
+                    <td class="table-content-pink-card">40,000</td>
+                    <td class="table-content-yellow-card">30,000</td>
                 </tr>
-                <tr>
-                    <td>Thu 7, chu nhat, ngay le</td>
-                    <td>40000</td>
-                    <td>40000</td>
-                    <td>30000</td>
+                <tr class="table-active">
+                    <td>Thu 7, CN, Ngay le <span class="note">*</span></td>
+                    <td class="table-content-blue-card">40,000</td>
+                    <td class="table-content-pink-card">40,000</td>
+                    <td class="table-content-yellow-card">30,000</td>
                 </tr>
                 <tr>
                     <td>Nguoi di kem thu II</td>
                     <td>Tat ca cac ngay trong tuan</td>
-                    <td colspan="3">25000</td>
+                    <td colspan="3">25,000</td>
                 </tr>
              </tbody>
         </table>
+        <span class="note">* Cac ngay nghi le theo quy dinh cua Nha nuoc.</span>
     </div>
 
     <!-- Nav tabs nav-pills-->
@@ -280,7 +312,9 @@ $(document).ready(function(){
                 </div>
             </div>
         </div>
+
         <div class="container">
+            <hr class="style-hr">
             <div class="corner-bottom-right-bevel">
               <img  class="img-post" src="{{ STATIC_URL }}assets/websites/images/img2.png">
             </div>
