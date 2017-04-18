@@ -205,11 +205,18 @@ a.btn-custom-style:hover {
 
 @media (max-width: 992px) {
     .page-title {
-        position: block;
+        position: static;
+        margin-top: 50px;
     }
     p.page-title-text {
         font-size: 72px;
         letter-spacing: 3px;
     }
+    div.page-header-text {
+        padding-top: 0px;
+    }
+    .page-header-img {
+        margin-bottom: 0px;
+    } 
 }
 
