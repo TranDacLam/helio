@@ -7,15 +7,14 @@ $(document).ready( function() {
 	}
 	$('.panel-group').on('hidden.bs.collapse', toggleIcon);
 	$('.panel-group').on('shown.bs.collapse', toggleIcon);
-	$( ".powercard-content" ).each(function(  ) {
-		console.log($(this ).height())
-	  	if ( $(this ).height() > 401 ) {
+	$( ".card-description" ).each(function(  ) {
+	  	if ( $(this ).height() > 200 ) {
 	  		$( this ).addClass("height-limit")
-	  		$( this ).parent().find(".card-div-bottom").removeClass("hidden");
+	  		$( this ).parent().parent().find(".card-div-bottom").removeClass("hidden");
 	  	}
 	});
 	$(".view-full").click(function(){
-		var powercard_content = $(this).parent().parent().find(".powercard-content");
+		var powercard_content = $(this).parent().parent().find(".card-description");
 		if($(powercard_content).hasClass("height-limit")) {
 			$(powercard_content).removeClass("height-limit");
 			$(this).html('THU GỌN <br> <i class="glyphicon glyphicon-chevron-up">');

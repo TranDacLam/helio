@@ -22,6 +22,11 @@
 	padding-bottom: 50px;
 }
 
+.card-info-section .panel-default .card-description {
+	overflow: hidden;
+	min-height: 200px;
+}
+
 .powercard .panel-default>.panel-heading.card-header,
 .powercard .panel-default .card-div-bottom  button {
 	background-color: #23194f;
@@ -64,7 +69,7 @@
 	padding-top: 8px;
 }
 .height-limit {
-	max-height: 442px;
+	max-height: 216px;
 	overflow: hidden;
 }
 
