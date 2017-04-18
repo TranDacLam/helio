@@ -1,61 +1,143 @@
 {% extends "layout.html" %}
-
 {% block extrastylesheet %}
-<style type="text/css">
-
-	hr.style14 { 
-	  border: 0; 
-	  height: 3px; 
-	  background-image: -webkit-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-	  background-image: -moz-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-	  background-image: -ms-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0);
-	  background-image: -o-linear-gradient(left, #f0f0f0, #1d1c1c, #f0f0f0); 
-	}
-	.li {
-		font-size: 25px;
-		font-weight: : bold;
-	}
-	ul.breadcrumb {
-    padding: 10px 16px;
-    list-style: none;
-    background-color: #fff;
-    font-size: 17px;
-	}
-	ul.breadcrumb li {display: inline;}
-	ul.breadcrumb li+li:before {
-	    padding: 8px;
-	    color: black;
-	    content: ">";
-	}
-	ul.breadcrumb li a {
-	    color: #0275d8;
-	    text-decoration: none;
-	}
-	ul.breadcrumb li a:hover {
-	    color: #01447e;
-	    text-decoration: underline;
-	}
-</style>
+	<link href="{{ STATIC_URL }}assets/websites/css/powercard.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block extrascript %}
+	<script src = "{{ STATIC_URL }}assets/websites/js/powercard.js"></script>
 {% endblock %}
 {% block main_content %} 
-<div style="padding-left: 150px;">
-	<ul class="breadcrumb">
-	  <li><a href="#">Home</a></li>
-	  <li><a href="#">Member & Pricing</a></li>
-	  <li class="active">Power Card</li>
-	</ul>
-</div>
-<div class="row">
-	<div class="col-md-12" >
-		<h1>Helio Power Card System</h1>
-		<hr class="style14">
-		<div style="padding-top: 50px;">
-			<p>Bootstrap includes a powerful mobile-first flexbox grid system for building layouts of all shapes and sizes. It’s based on a 12 column layout and has multiple tiers, one for each media query range. You can use it with Sass mixins or our predefined classes.</p>
-			<p>Bootstrap includes a powerful mobile-first flexbox grid system for building layouts of all shapes and sizes. It’s based on a 12 column layout and has multiple tiers, one for each media query range. You can use it with Sass mixins or our predefined classes.</p>
-			<p>Bootstrap includes a powerful mobile-first flexbox grid system for building layouts of all shapes and sizes. It’s based on a 12 column layout and has multiple tiers, one for each media query range. You can use it with Sass mixins or our predefined classes.</p>
-			<p>Bootstrap includes a powerful mobile-first flexbox grid system for building layouts of all shapes and sizes. It’s based on a 12 column layout and has multiple tiers, one for each media query range. You can use it with Sass mixins or our predefined classes.</p>
+
+<div class="container">
+	<!-- CARD PAGE DESCRIPTION -->
+	<div class="page-top">
+		<div class="page-header-img">
+		    <div>
+		        <img src="{{ STATIC_URL }}assets/websites/images/power_card_header.png" width="100%">
+		    </div>
+		    <div class="page-title" align="center">
+		        <div class="col-md-12">
+		            <p class="page-title-text">POWERCARD</p>
+		        </div>
+		    </div>
 		</div>
-	</ol>
+	    <div align="center" class="page-header-text">
+	        <div class="form-title">
+	            <p class="text-description">Đến Helio Center, bạn được trải nghiệm một hình thức thanh toán hoàn toàn mới, không cần tiền mặt, không cần xu, chỉ cần quẹt thẻ Power Card và trải nghiệm cuộc vui. Thật dễ dàng đúng không !!! Chưa hết, toàn bộ thông tin tài khoản thẻ Helio Power Card của bạn: số dư, số ticket, khuyến mãi và nhiều tiện ích khác đều có thể dễ dàng tra cứu được. Quá tiện!</p>
+	        </div>
+	    </div>
 	</div>
+    
+
+    <!-- CARD INFORMATION -->
+    <div class="row card-info-section">
+        <div class="powercard item col-md-4">
+        	<div class="panel panel-default">
+				<div class="panel-heading card-header">THE XANH</div>
+				<div class="panel-body">
+	                <div class="powercard-content">
+	                	<img src="{{ STATIC_URL }}assets/websites/images/powercard.png" width="100%">
+	                	<div class="card-description">
+	                        <p class="powercard-name">Power Card Normal – Thẻ thường</h3>
+	                        <p>- Thẻ màu Xanh đậm.</p>
+	                        <p>- Được phát hành miễn phí cho tất cả các khách hàng đến vui chơi ở Helio Center.</p>
+	                    </div>
+	                </div>
+	                <div class="row card-div-bottom hidden">
+	                	<button class="view-full card-close">
+	                		XEM ĐẦY ĐỦ <br> <i class="glyphicon glyphicon-chevron-down"></i>
+	                	</button>
+	                </div>
+				</div>
+			</div>
+        </div>
+        <div class="member-card item col-md-4">
+        	<div class="panel panel-default">
+				<div class="panel-heading card-header">MEMBER - THẺ HỒNG</div>
+				<div class="panel-body">
+	                <div class="powercard-content">
+	                	<img src="{{ STATIC_URL }}assets/websites/images/member_card.png" width="100%">
+	                	<div class="card-description">
+	                        <p class="powercard-name">Power Card Normal – Thẻ thường</h3>
+	                        <p>- Thẻ màu Hồng tươi.</p>
+	                        <p>- Dành cho khách hàng đã đăng ký thông tin cá nhân để trở thành thành viên của Helio Center. Với điều kiện là thẻ đã có 3 lần giao dịch (*) vào 3 ngày khác nhau tại Helio Center. (*) Lần giao dịch = Lần nạp tiền hoặc quẹt thẻ chơi game.</p>
+	                        <p>- Giảm 20% cho tất cả các dịch vụ tại Helio Center (ngoại trừ dịch vụ ăn uống).</p>
+	                    </div>
+	                </div>
+	                <div class="row card-div-bottom hidden">
+	                	<button class="view-full card-close">
+	                		XEM ĐẦY ĐỦ <br> <i class="glyphicon glyphicon-chevron-down"></i>
+	                	</button>
+	                </div>
+				</div>
+			</div>
+        </div>
+        <div class="gold-card item col-md-4">
+        	<div class="panel panel-default">
+				<div class="panel-heading card-header">GOLD - THẺ VÀNG</div>
+				<div class="panel-body">
+	                <div class="powercard-content">
+	                	<img src="{{ STATIC_URL }}assets/websites/images/gold_card.png" width="100%">
+	                	<div class="card-description">
+	                        <p class="powercard-name">GOLD Card – Thẻ VÀNG</h3>
+	                        <p>- Thẻ màu Vàng tươi.</p> 
+	                        <p>- Dành cho các khách hàng đặc biệt thân thiết của Helio Center, có chi tiêu tích lũy bằng thẻ Thành viên trên 3.000.000 đ/năm.</p>
+	                        <p>- Giảm 20% cho tất cả các dịch vụ tại Helio Center (ngoại trừ dịch vụ ăn uống). - Giảm tối thiểu 5% khi đặt tiệc tại Helio Center (ngoại trừ dịch vụ ăn uống).</p>
+	                        <p>- Nhận ưu đãi cho các chương trình đặc biệt tại Helio Center.</p>
+	                        <p>- Nhận quà từ Helio Center trong ngày sinh nhật.</p>
+	                        <p>- Để duy trì Thẻ Vàng, khách hàng phải có chi tiêu tích lũy bằng thẻ trong 01 năm kể từ ngày nâng hạng thẻ là 3.000.000 đồng. Nếu trong khoảng thời gian 01 năm, khách hàng không đáp ứng được điều kiện trên, Helio Center có quyền thu hồi lại Thẻ Vàng kèm các ưu đãi khác từ thẻ.</p>
+	                        <p>- Mỗi năm có 2 đợt nâng cấp lên Thẻ Vàng vào tháng 6 và tháng 12.</p>
+	                    </div>
+	                </div>
+	                <div class="row card-div-bottom hidden">
+	                	<button class="view-full card-close">
+	                		XEM ĐẦY ĐỦ <br> <i class="glyphicon glyphicon-chevron-down"></i>
+	                	</button>
+	                </div>
+				</div>
+			</div>
+        </div>
+    </div>
+
+    <!-- FAQs -->
+    <div class="faqs-section">
+    	<div class="faqs-title" align="center">
+    		<p class="big-font-size">NHỮNG CÂU HỎI LIÊN QUAN ĐẾN POWERCARD</p>
+    	</div>
+    	<div class="faqs-content">
+    		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		        <div class="panel panel-default">
+		            <div class="panel-heading" role="tab" id="heading1">
+		                <h4 class="panel-title">
+		                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="true" aria-controls="collapse1">
+		                        <i class="more-less fa fa-chevron-circle-down"></i>
+		                    </a>
+		                    <p>Mua thẻ ở đâu?</p>
+		                </h4>
+		            </div>
+		            <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
+		                <div class="panel-body">
+							<p>Nếu đây là lần đầu bạn đến Helio Center, hãy đến ngay bất kỳ quầy lễ tân nào, bạn sẽ được nhận 01 thẻ Power Card hoàn toàn miễn phí. Việc của bạn chỉ là nạp tiền vào thẻ ngay tại lễ tân hoặc tại các máy nạp tiền tự động, sau đó là trải nghiệm tất cả các trò chơi ở Helio Center bằng cách quẹt thẻ ở mỗi máy game.</p>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="panel panel-default">
+		            <div class="panel-heading" role="tab" id="heading2">
+		                <h4 class="panel-title">
+		                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse2" >
+		                        <i class="more-less fa fa-chevron-circle-down"></i>
+		                    </a>
+		                    <p>Làm thế nào để nộp tiền vào thẻ ?</p>
+		                </h4>
+		            </div>
+		            <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
+		                <div class="panel-body">
+							<p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</p>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+    	</div>
+    </div>
 </div>
+
 {% endblock %}

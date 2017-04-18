@@ -133,23 +133,22 @@ p {
 .page-title {
     width: 100%;
     position: absolute;
-    bottom: -40px;
+    bottom: -110px;
+    
 }
 .page-header-img {
     position: relative;
     margin-bottom: 60px;
 }
-.page-title-text {
-	color: #fff;
-	background: #c0f; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(#1f194a, #c0f); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#1f194a, #c0f); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#1f194a, #c0f); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#1f194a, #c0f); /* Standard syntax (must be last) */
-    max-width: 700px;
+p.page-title-text {
+    font-family: "Yanone Kaffeesatz";
+	font-size: 176px;
+    font-weight: bold;
+    line-height: 1.11;
+    letter-spacing: 8.8px;
+    text-align: center;
+    color: #ffffff;
 }
-
-
 
 .textwidget .fa {
 	margin-right: 10px;
@@ -161,6 +160,10 @@ p {
     background-image: linear-gradient(347deg, #07487b, #3c0034);
 }
 
+.footer-contact {
+    margin-bottom: 35px;
+}
+
 .box_footer {
 	padding-top: 25px;
 }
@@ -170,7 +173,7 @@ a.btn-custom-style {
     text-align: center;
     font-size: 24px;
     letter-spacing: 2px;
-    font-family: "YanoneKaffeesatz";
+    font-family: "Yanone Kaffeesatz";
     font-weight: bold;
     border-style: solid;
     color: #fff;
@@ -198,5 +201,15 @@ a.btn-custom-style:hover {
     border-bottom: 3px;
     border-top: 3px;
     border-style: dotted;
+}
+
+@media (max-width: 992px) {
+    .page-title {
+        position: block;
+    }
+    p.page-title-text {
+        font-size: 72px;
+        letter-spacing: 3px;
+    }
 }
 
