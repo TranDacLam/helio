@@ -97,14 +97,18 @@ p {
     padding: 5px 15px;
 }
 
-.menu-language a.active, 
-.menu-language a.btn-custom-header:focus, 
-.menu-language a.btn-custom-header:hover {
+.menu-language a.active {
   border-style: solid;
   border-width: 1px;
   border-image-source: linear-gradient(10deg, #e436aa, #2c1b76);
   border-image-slice: 1;
   text-decoration: none;
+}
+
+.menu-language a.btn-custom-header:focus, 
+.menu-language a.btn-custom-header:hover {
+  text-decoration: none;
+  color: #e436aa;
 }
 
 @media (max-width:767px) {

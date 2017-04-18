@@ -21,9 +21,24 @@
 		                        <span class="icon-bar"></span>
 		                        <span class="icon-bar"></span>
 		                    </button>
+
+							<form id="language_form" action="{% url 'set_language' %}" method="post" class="hidden">
+							    {% csrf_token %}
+							    <select id="choose_language" name="language">
+							        {% for language in languages %}
+							            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+							                {{ language.name_local }} ({{ language.code }})
+							            </option>
+							        {% endfor %}
+							    </select>
+							</form>
+
+
 		                    <div class="btn-group menu-language navbar-brand row">
-							    <a class="btn-custom-header active" href="#">Tieng Viet</a>
-							    <a class="btn-custom-header " href="#">Tieng Viet</a>
+		                    	{% for language in languages %} 
+						            <a class="btn-custom-header {% if LANGUAGE_CODE ==  language.code %} active {% endif %}" href="#" tmp="{{ language.code }}">{{ language.name_local }}</a>
+						        {% endfor %}
+						        
 							    <a href="#" class="hidden-xs"><span class="glyphicon glyphicon-search"></span></a>
 							</div>
 							<div class="right-nav pull-right hidden-xs"> 
@@ -42,11 +57,11 @@
 						    <div class="collapse navbar-collapse main-menu" id="main-nav" style="padding: 0px;">
 								<ul class="nav navbar-nav">
 			                        <li class="active"><a href="{% url 'home' %}">{% trans "menu.product" %}</a></li>
-			                        <li class=""><a href="{% url 'home' %}">{% trans "menu.night_life" %}</a></li>
-			                        <li class=""><a href="{% url 'home' %}">{% trans "menu.powercard" %}</a></li>
-			                        <li class=""><a href="{% url 'home' %}">{% trans "menu.event" %}</a></li>
-			                        <li class=""><a href="{% url 'home' %}">{% trans "menu.promotion" %}</a></li>
-			                        <li class=""><a href="{% url 'home' %}">{% trans "menu.faq" %}</a></li>
+			                        <li class=""><a href="{% url 'helio_night_life' %}">{% trans "menu.night_life" %}</a></li>
+			                        <li class=""><a href="{% url 'power_card' %}">{% trans "menu.powercard" %}</a></li>
+			                        <li class=""><a href="{% url 'events' %}">{% trans "menu.event" %}</a></li>
+			                        <li class=""><a href="{% url 'promotions' %}">{% trans "menu.promotion" %}</a></li>
+			                        <li class=""><a href="{% url 'FAQ' %}">{% trans "menu.faq" %}</a></li>
 			                        
 			                    </ul>
 						    </div><!-- /.navbar-collapse -->

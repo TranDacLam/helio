@@ -40,8 +40,7 @@ if settings.DEBUG:
 
 urlpatterns += i18n_patterns(
     url(r'^api/', include('api.urls')),
-    url(r'^helio/', include('core.urls')),
-    url(r'^$', views.home, name='home'),
+    url(r'', include('core.urls')),
 
     # prefix_default_language=False
 )

@@ -35,4 +35,8 @@ $(document).ready( function() {
         $("div.game-section>div.game-section-content").removeClass("active");
         $("div.game-section>div.game-section-content").eq(index).addClass("active");
     });
+
+    $("#vidieo_play_modal").on("hidden.bs.modal", function () {
+        $('#helio_vidieo').attr('src', $('#helio_vidieo').attr('src'));
+    });
 });

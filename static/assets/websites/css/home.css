@@ -81,6 +81,8 @@ div.game-section-menu div.list-group>a{
     border-bottom: 3px solid #271a3a;
     padding-top: 30px;
     color: #fff;
+    padding-right: 0px;
+    padding-left: 0px;
 }
 div.game-section-menu div.list-group>a.active,
 div.game-section-menu div.list-group>a.active .glyphicon,
