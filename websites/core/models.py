@@ -151,6 +151,7 @@ class FAQ(DateTimeModel):
 
 
 class Hot(DateTimeModel):
+    name = models.CharField(max_length=255, unique=True)
     sub_url = models.CharField(max_length=1000)
     image = models.ImageField(max_length=1000)
     is_show = models.BooleanField(default=False)
