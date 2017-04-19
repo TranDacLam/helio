@@ -3,17 +3,7 @@
 <!-- <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/font-awesome/css/font-awesome.min.css"> -->
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/slide.css">
 <style type="text/css">
-    .corner-bottom-right-bevel {
-        height: 0;
-        width: 40%;
-        /*padding-right: 20px;*/
-        z-index: 2;
-        position: absolute;
-        /*left: 135px;*/
-        display: block;
-        padding-bottom: 20px;
-        max-height: 300px;
-    }
+    
     .img-post {
         width: 100%;
         height: auto;
@@ -31,33 +21,23 @@
         position: relative;
         margin-bottom: 30px;
     }
-
+    .description-title {
+        padding-bottom: 20px;
+    }
     .button-display {
         width: 200px;
         padding: 30px 0px;
     }
-    .list-group-horizontal .list-group-item {
-    display: inline-block;
-    }
-    .list-group-horizontal .list-group-item {
-        margin-bottom: 0;
-        margin-left:-4px;
-        margin-right: 0;
-    }
-    .list-group-horizontal .list-group-item:first-child {
-        border-top-right-radius:0;
-        border-bottom-left-radius:4px;
-    }
-    .list-group-horizontal .list-group-item:last-child {
-        border-top-right-radius:4px;
-        border-bottom-left-radius:0;
+    .page-title-text {
+        font-family: "Yanone Kaffeesatz";
+        font-size: 72px;
     }
 
     .table-custom-around {
         background-color: #fff;
         color: #000;
         padding: 20px;
-        margin: 20px;
+        margin-bottom: 20px;
     }
     .table-custom {
         text-align: center;
@@ -120,7 +100,174 @@
         background-color: rgba(0,0,0,.075);
     }
     .style-hr {
-        color: #e436aa;
+        border: 1px solid #e436aa;
+        margin: 10px 10px 30px 0px;
+    }
+    .description-slide {
+        position: relative;
+        left: 5px;
+    }
+    .btn-custom {
+        background-color: #b39253;
+        color: #fff;
+    }
+    .btn-custom.active:after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        z-index: 1000;
+        border-top: 20px solid #FDAD14;
+        border-left: 285px solid transparent;
+        border-right: 285px solid transparent;
+        left: 0%;
+        display: none;
+    }
+    .btn-custom:hover {
+        display: block;
+    }
+    button.btn-custom.active {
+        background-color: #FDAD14;
+        position: relative;
+    }
+    .image-div {
+        background: url("http://localhost:8000/static/assets/websites/images/img1.jpg") no-repeat right;
+        background-size: 100% 100%;
+        height: 565px;
+        margin: 20px;
+    }
+    .image-right {
+        background: url("http://localhost:8000/static/assets/websites/images/bg_kids_left.png") no-repeat;
+        background-size: 100% 100%;
+        min-height: 565px;
+        /*width: 45%;*/
+    }
+    .image-left {
+        min-height: 565px;
+        /*width: 45%;*/
+    }
+    .image-left .btn-play-div  {
+        padding-top: 40%;
+        text-align: center;
+    }
+    @media (max-width: 992px) {
+        .image-div {
+            background: none;
+            height: auto;
+        }
+        .image-right {
+            background: url("http://localhost:8000/static/assets/websites/images/m_kids_right.png") no-repeat;
+            background-size: 100% 100%;
+            height: auto;
+            min-height: 500px;
+            /*width: 100%;*/
+        }
+        .image-left {
+            background: url("http://localhost:8000/static/assets/websites/images/img1.jpg") no-repeat;
+            background-size: 100% 100%;
+            height: 250px;
+            /*width: 100%;*/
+        }
+    }
+    .image-text-head {
+        background-color: #f0f0f0;
+        color: #000;
+        padding-left: 30px;
+        margin-left: -30px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        word-spacing: 1px;
+        letter-spacing: 1px;
+        width: 100%;
+    }
+    .image-text-head:after {
+        content: "";
+        position: absolute;
+        z-index: 1000;
+        border-left: 10px solid #f0f0f0;
+        border-bottom: 21px solid transparent;
+            /* border-top: 21px solid rgba(255, 188, 74, 0); */
+        left: 87%;
+    }
+    .img-font-size {
+        font-size: 40px;
+        font-family: "Yanone Kaffeesatz";
+        line-height: 60px;
+        letter-spacing: 4px;
+        font-weight: bold;
+    }
+    @media (max-width: 992px) {
+        .image-text-head {
+            background-color: #f0f0f0;
+            color: #000;
+            padding-left: 30px;
+            margin-left: -30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 
+            /*word-spacing: 1px;
+            letter-spacing: 1px;*/
+            width: 100%;
+        }
+        .image-text-head:after {
+            content: "";
+            position: absolute;
+            z-index: 1000;
+            border-left: 20px solid #f0f0f0;
+            border-bottom: 42px solid #ffbc4a;
+            left: 78%;
+            top: 0%;
+        }
+    }
+    .img-text-description {
+        padding: 10px 0px 30px;
+    }
+    .btn-read-more {
+        margin: 30px 0px 10px 0px;
+    }
+    a.btn-custom-style-kids {
+        border-radius: 0px;
+        text-align: center;
+        font-size: 24px;
+        letter-spacing: 2px;
+        font-family: "YanoneKaffeesatz";
+        font-weight: bold;
+        border-style: solid;
+        color: #fff;
+        border-width: 1px;
+        border-image-source: linear-gradient(16deg, #f4963a, #fff);
+        border-image-slice: 1;
+        padding: 6px 15px;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+    a.btn-custom-style-kids:focus, 
+    a.btn-custom-style-kids:hover {
+        color: #f4963a;
+        text-decoration: none;
+        background-color: #fff;
+        border-style: solid;
+        border-width: 1px;
+        border-image-source: linear-gradient(16deg, #f4963a, #fff);
+        border-image-slice: 1;
+    }
+    @media (max-width: 992px) {
+        a.btn-custom-style-kids {
+            border-radius: 0px;
+            text-align: center;
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-family: "YanoneKaffeesatz";
+            font-weight: bold;
+            border-style: solid;
+            color: #fff;
+            border-width: 1px;
+            border-image-source: linear-gradient(16deg, #f4963a, #fff);
+            border-image-slice: 1;
+            margin: 6px 15px;
+            text-decoration: none;
+            text-transform: uppercase;
+            width: 85%;
+        }
     }
 </style>
 {% endblock %}
@@ -136,7 +283,7 @@ $(document).ready(function(){
         $('.carousel').html($('.carousel1').html());
         var w = $( window ).width();
         var w2 = $(".container").width();
-        w2 =  w > 1650 ? w2 : (w2 * 90 /100);
+        w2 =  w > 1650 ? w2 : (w2 * 80 /100);
         $('.carousel').carousel({
             carouselWidth: w,
             carouselHeight: 400,
@@ -163,18 +310,18 @@ $(document).ready(function(){
 
 <!-- Page Header -->
 <div class="page-header-img">
-    <div>
+    <div class="container">
         <img src="{{ STATIC_URL }}assets/websites/images/slide1.png" width="100%">
     </div>
     <div class="page-title" align="center">
         <div class="col-xs-12">
-            <fieldset class="page-title-text"><h1>HELIO KIDS</h1></fieldset>
+            <fieldset><h1 class="page-title-text">HELIO KIDS</h1></fieldset>
         </div>
     </div>
 </div>
 <!-- Page description -->
 <div class="container">
-    <div>
+    <div class="description-title">
         <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
     </div>
     <!-- Bang gia -->
@@ -226,14 +373,22 @@ $(document).ready(function(){
     </div>
 
     <!-- Nav tabs nav-pills-->
-    <ul class="row nav btn-custom-group-nav">
+    <!-- <ul class="row nav btn-custom-group-nav">
             <li role="nav-item" class="col-md-6 active">
                 <a href="#phong-choi" role="tab" data-toggle="tab" class="btn-custom-style">PHONG CHOI</a>
             </li>
             <li role="nav-item" class="col-md-6">
                 <a href="#may-choi" role="tab" data-toggle="tab" class="btn-custom-style">MAY CHOI</a>
             </li>
-    </ul>
+    </ul> -->
+    <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+        <div class="btn-group btn-custom-group" role="group">
+            <button href="#phong-choi" role="tab" data-toggle="tab" type="button" class="btn btn-custom active">PHONG CHOI</button>
+        </div>
+        <div class="btn-group" role="group">
+            <button href="#may-choi" role="tab" data-toggle="tab" type="button" class="btn btn-custom">MAY CHOI</button>
+        </div>
+    </div>
 
 
 </div>
@@ -245,7 +400,7 @@ $(document).ready(function(){
         <div class="carousel" >
             
         </div>
-        <div class="description container" style="position: relative;"> <!-- BEGIN DESCRIPTION -->
+        <div class="description container description-slide"> <!-- BEGIN DESCRIPTION -->
             <div> <!-- DESCRIPTION ITEM -->
                 <h2>Description 1</h2>
                 <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu,tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aen ean a commodo mi. Praesent augue lacus.
@@ -313,14 +468,43 @@ $(document).ready(function(){
             </div>
         </div>
 
-        <div class="container">
+        <!-- <div class="container">
             <hr class="style-hr">
             <div class="corner-bottom-right-bevel">
               <img  class="img-post" src="{{ STATIC_URL }}assets/websites/images/img2.png">
             </div>
             <div><img  class="img-post" src="{{ STATIC_URL }}assets/websites/images/slide1.png"></div>
+        </div> -->
+        <div class="container block-content-20">
+            <div class="image-div">
+                <div class="image-right col-md-5">
+                    <div class="col-md-10 image-text">
+                        <div class="image-text-head">
+                            MOT MUA HE THAT NHIEU MAU SAC <span class="glyphicon glyphicon-play"></span>
+                        </div>
+                        <p class="img-font-size">HE SAC MAU CUNG HELIO KIDS</p>
+                        <p class="img-text-description">To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave.</p>
+                        <a class="btn btn-custom-style-kids" href="#" role="button">TÌM HIỂU NGAY ></a>
+                    </div>
+                </div>
+                <div class="image-left col-md-7">
+                </div>
+            </div>
+            <div class="image-div">
+                <div class="image-right col-md-5">
+                    <div class="col-md-10 image-text">
+                        <div class="image-text-head">
+                            MOT MUA HE THAT NHIEU MAU SAC <span class="glyphicon glyphicon-play"></span>
+                        </div>
+                        <p class="img-font-size">HE SAC MAU CUNG HELIO KIDS</p>
+                        <p class="img-text-description">To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave.</p>
+                        <a class="btn btn-custom-style-kids" href="#" role="button">TÌM HIỂU NGAY ></a>
+                    </div>
+                </div>
+                <div class="image-left col-md-7">
+                </div>
+            </div>
         </div>
-
 
        <!--  <div class="corner-bottom-left-bevel">
           <img src="{{ STATIC_URL }}assets/websites/images/img3.png">
@@ -352,7 +536,7 @@ $(document).ready(function(){
             <div class="style-img">
                 <img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.png">
             </div> -->
-            <div align="center">
+            <div class="btn-read-more" align="center">
                 <a class="btn-custom-style" href="#" role="button">Read More</a>
             </div>
         </div>

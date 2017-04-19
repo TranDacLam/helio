@@ -140,7 +140,7 @@ def FAQ(request):
 def power_card(request):
     print "***START Power Card Introduction PAGE***"
 
-    return render(request, 'websites/power_card_v2.html')
+    return render(request, 'websites/power_card.html')
 
 def membership(request):
     print "***START Membership Introduction PAGE***"
