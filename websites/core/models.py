@@ -66,18 +66,12 @@ class Event(DateTimeModel):
 
 
 class Game(DateTimeModel):
-
-    def limit_category_Games():
-        return {'name_en__in': ['PLAY', 'KIDS']}
-
     name = models.CharField(max_length=255, unique=True)
     short_description = models.CharField(max_length=350)
     content = models.TextField()
     image = models.ImageField(max_length=1000, null=True, blank=True)
     game_type = models.ForeignKey(
         'Type', related_name='game_type_rel', on_delete=models.CASCADE)
-    category = models.ForeignKey('Category', related_name='game_category_rel',
-                                 on_delete=models.CASCADE, limit_choices_to=limit_category_Games)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -86,6 +80,8 @@ class Game(DateTimeModel):
 class Type(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
+    category = models.ForeignKey('Category', related_name='game_category_rel',
+                                 on_delete=models.CASCADE)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -130,17 +126,12 @@ class Entertainment(DateTimeModel):
 
 
 class Promotion(DateTimeModel):
-    def limit_category_Promotion():
-        return {'name_en__in': ['Helio Play', 'Helio Kids']}
-
     name  = models.CharField(max_length=255, unique=True)
     image = models.ImageField(_('Image'), max_length=1000, null=True, blank=True)
     short_description = models.CharField(max_length=350)
     content = models.TextField()
     promotion_type = models.ForeignKey(
         'Type', related_name='romotion_type_rel', on_delete=models.CASCADE)
-    category = models.ForeignKey('Category', related_name='promotion_category_rel',
-                                 on_delete=models.CASCADE, limit_choices_to=limit_category_Promotion)
 
     def __str__(self):
         return '%s' % (self.name)
