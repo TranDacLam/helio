@@ -5,12 +5,12 @@ from core.models import *
 from api.serializers import *
 from rest_framework.decorators import api_view
 from rest_framework import status
-from helper import *
+import helper
 import ast
 from rest_framework.views import exception_handler
+from rest_framework.response import Response
 
 def custom_exception_handler(exc, context):
-    # print "custom_exception_handler"
     # to get the standard error response.
     response = exception_handler(exc, context)
     # Now add the HTTP status code to the response.
@@ -23,11 +23,11 @@ def custom_exception_handler(exc, context):
     return response
 
 
-class JSONResponse(HttpResponse):
-    def __init__(self, data, **kwargs):
-        content = JSONRenderer().render(data)
-        kwargs['content_type'] = 'application/json'
-        super(JSONResponse, self).__init__(content, **kwargs)
+# class JSONResponse(HttpResponse):
+#     def __init__(self, data, **kwargs):
+#         content = JSONRenderer().render(data)
+#         kwargs['content_type'] = 'application/json'
+#         super(JSONResponse, self).__init__(content, **kwargs)
 
 """
     Get Hots List to show in Homepage
@@ -35,38 +35,25 @@ class JSONResponse(HttpResponse):
 @api_view(['GET'])
 def hots(request):
     try:
-        hot_list = Hot.objects.filter(is_show=True).order_by('date_created')[:5]
+        hot_list = Hot.objects.filter(is_show=True).order_by('created')[:5]
         serializer = HotsSerializer(hot_list, many=True)
-        return JSONResponse(serializer.data)
+        return Response(serializer.data)
     except Exception ,e :
         error = {"code" : 500, "message": "%s" % e, "fields": ""}
-        return JSONResponse( error, status=500)
+        return Response( error, status=500)
 
-"""
-    Get All Game Filter
-"""
-@api_view(['GET'])
-def game_filter(request):
-    try:
-        game_filter_list = Game_Filter.objects.all()
-        serializer = GameFilterSerializer(game_filter_list, many=True)
-        return JSONResponse(serializer.data)
-    except Exception ,e :
-        error = {"code" : 500, "message": "%s" % e, "fields": ""}
-        return JSONResponse( error, status=500)
     
 """
-    Get All Game Play by Filter
+    Get All Game Play by Type ID
 """
 @api_view(['GET'])
 def games(request):
     try:
-        game_filter =  request.GET.get("game_filter")
-        category_id =  request.GET.get("category_id")
+        game_type_id =  request.GET.get("type_id")
 
-        error = checkIdValid(category_id)
+        error = helper.checkIdValid(game_type_id)
         if not isEmpty(error):
-            error = {"code" : 400, "message": "%s" % error, "fields": "category_id"}
+            error = {"code" : 400, "message": "%s" % error, "fields": "game_type_id"}
             return JSONResponse( error, status=400)
 
         game_list = Game.objects.filter(category_id=category_id)

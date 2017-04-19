@@ -5,7 +5,6 @@ from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token
 
 urlpatterns = [
     url(r'^hots/$', views.hots),
-    url(r'^game/filter/$', views.game_filter),
     url(r'^games/$', views.games),
     url(r'^game/(?P<game_id>[0-9]+)/detail/$', views.game_detail),
     url(r'^faqs/$', views.faqs),
