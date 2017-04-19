@@ -1,4 +1,11 @@
 *.DS_Store
-public/*
-!public/media/hots
+
 *.pyc
+
+!public/
+public/*
+
+!public/media/
+public/media/*
+
+!public/media/hots/
