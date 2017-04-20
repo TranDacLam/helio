@@ -4,12 +4,9 @@ from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 import ast
 from django.http import JsonResponse
-from django.utils import translation
 
 
 def home(request):
-    print 'translation.LANGUAGE_SESSION_KEY ',translation.LANGUAGE_SESSION_KEY
-    print "request.session ", request.session["_language"]
     result = {}
 
     # banners on home page
@@ -25,8 +22,24 @@ def home(request):
     result["hots"] = hots
 
     # game categorys
-    game_categorys = Category.objects.all()
-    result["game_categorys"] = game_categorys
+    categorys = Category.objects.all().order_by('id')
+    categorys_map = {}
+    for category in categorys:
+        types = Type.objects.filter(category_id=int(category.id))
+        # types_map = {}
+        # for item_type in types:
+        #     game = Game.objects.filter(game_type_id=int(item_type.id))[:1]
+        #     types_map[item_type.name] = game
+
+        categorys_map[category.name] = types
+        print category.name
+
+    result["categorys"] = categorys_map
+    print categorys_map
+
+    # game categorys
+    events = Event.objects.all()[:2]
+    result["events"] = events
 
 
     return render(request, 'websites/home.html', {"result":result})
