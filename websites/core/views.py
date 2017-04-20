@@ -90,15 +90,20 @@ def helio_play(request):
    # return render(request, 'websites/helio_play.html', {'games': games, 'game_filters': game_filter_list})
 
 def helio_play_v2(request):
-    print "***START EVENTS PAGE***"
+    print "***START HELIO PLAY PAGE***"
     
     return render(request, 'websites/helio_play_v2.html')
 
 
 def helio_kids(request):
-    print "***START EVENTS PAGE***"
+    print "***START HELIO KIDS PAGE***"
     
     return render(request, 'websites/helio_kids.html')
+
+def helio_about(request):
+    print "***START HELIO ABOUT PAGE***"
+    
+    return render(request, 'websites/helio_about.html')
 
 
 def events(request):
