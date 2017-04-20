@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block extrastylesheet %}
+	<link href="{{ STATIC_URL }}assets/websites/css/faqs_section.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block main_content %} 
+<div class="container">
+	<!-- FAQs PAGE DESCRIPTION -->
+	<div class="page-top">
+		<div class="page-header-img">
+		    <div>
+		        <img src="{{ STATIC_URL }}assets/websites/images/faqs_header.png" width="100%">
+		    </div>
+		    <div class="page-title" align="center">
+		        <div class="col-md-12">
+		            <p class="page-title-text">NHỮNG CÂU HỎI THƯỜNG GẶP</p>
+		        </div>
+		    </div>
+		</div>
+	    <div align="center" class="page-header-text">
+	        <div class="form-title">
+	            <p class="text-description">Những câu hỏi thường gặp sẽ giúp bạn có những trải nghiệm tốt hơn khi đến Helio Center</p>
+	        </div>
+	    </div>
+	</div>
+
+	<!-- FAQs -->
+    {% if result.faqs %}
+    <div class="faqs-section">
+    	{% include 'websites/sections/faqs_section.html' %}
+    	<div class="game-content">
+    		<div align="center">BAN VAN MUON HO TRO THEM</div>
+            <div class="btn-read-more" align="center">
+                <a class="btn-custom-style" href="#" role="button">Read More</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- DOWNLOAD APP BANNER -->
+    <div class="app-banner">
+	    <a href="#"><img src="{{ STATIC_URL }}assets/websites/images/download-app_banner.png" width="100%"></a>
+	</div>
+</div>
+{% endblock %}

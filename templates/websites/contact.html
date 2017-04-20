@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block extrastylesheet %}
 
-<style type="text/css">  
+ <style type="text/css">  
 	.center-div {
 		margin: 50px auto;
 		width: 50%;
@@ -48,20 +48,27 @@
   </script>
 {% endblock %}
 {% block main_content %} 
-<div>
-	<div class="row">
-		<div class="col-md-12"><h1>LIEN HE</h1></div>
+<div class="container">
+	<!-- FAQs PAGE DESCRIPTION -->
+	<div class="page-top">
+		<div class="page-header-img">
+		    <div>
+		        <img src="{{ STATIC_URL }}assets/websites/images/faqs_header.png" width="100%">
+		    </div>
+		    <div class="page-title" align="center">
+		        <div class="col-md-12">
+		            <p class="page-title-text"> LIÊN HỆ VỚI CHÚNG TÔI</p>
+		        </div>
+		    </div>
+		</div>
+	    <div align="center" class="page-header-text">
+	        <div class="form-title">
+	            <p class="text-description">Những câu hỏi thường gặp sẽ giúp bạn có những trải nghiệm tốt hơn khi đến Helio Center.Những câu hỏi thường gặp sẽ giúp bạn có những trải nghiệm tốt hơn khi đến Helio Center</p>
+	        </div>
+	    </div>
 	</div>
-  	<div class="row">
-  		<div class="item col-md-4 col-sm-4 col-xs-6">
-	      	<p>Noi dung bai viet Noi dung bai viet. Noi dung bai viet Noi dung bai viet Noi dung bai viet. Noi dung bai viet Noi dung bai viet Noi dung bai viet Noi dung bai viet. Noi dung bai viet Noi dung bai viet. Noi dung bai viet</p>
-	    </div>    
-	    <div class="item col-md-8 col-sm-8 col-xs-6">
-	      
-	      <p>Noi dung bai viet Noi dung bai viet. Noi dung bai viet Noi dung bai viet Noi dung bai viet. Noi dung bai viet Noi dung bai viet Noi dung bai viet Noi dung bai viet. Noi dung bai viet Noi dung bai viet. Noi dung bai viet Noi dung bai viet Noi dung bai viet. Noi dung bai viet Noi dung bai viet Noi dung bai viet Noi dung bai viet Noi dung bai viet Noi dung bai viet. Noi dung bai viet Noi dung bai viet Noi dung bai viet. Noi dung bai viet Noi dung bai viet Noi dung bai viet Noi dung bai viet</p>
-	    </div> 
-  	</div>
 
+	<!-- CONTACT FORM #TO DO CUSTOM-->
 	<div class="center-div form-group" align="center">
 		<form id="form_contact" class="form-contact">
 			<input class="form-control input-contact" type="text" name="name" placeholder="Nhap ho ten*" required>
@@ -71,10 +78,6 @@
 			<button type="submit" class="btn btn-default button-contact">GUI</button>
 		</form>
 	</div>
-	<div class="row">
-		<div class="col-md-12">
-	    	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3834.562563375484!2d108.22225385096235!3d16.03627114452417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314219e8cb37e161%3A0xb2f5c4a784d34c60!2zVHJ1bmcgdMOibSBHaeG6o2kgdHLDrSBQaOG7qWMgaOG7o3AgSGVsaW8gQ2VudGVy!5e0!3m2!1sen!2s!4v1488335913354" width="100%" frameborder="0"></iframe>
-		</div>
-	</div>
 </div>
+	
 {% endblock %}

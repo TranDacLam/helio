@@ -2,6 +2,7 @@ Django==1.10.5
 mysql-python
 django-modeltranslation
 Pillow
+django-allauth
 django-rest-auth
 django-rest-auth[with_social]
 djangorestframework-jwt
@@ -9,5 +10,5 @@ django-suit
 django-ckeditor
 django-mssql
 django-pymssql
-
+uwsgi
 #-e git+git://github.com/mvpdev/django-eav.git#egg=django-eav
