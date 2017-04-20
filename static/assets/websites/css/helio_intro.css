@@ -1,0 +1,170 @@
+li.col-md-4-custom {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.content-section {
+	font-family: "Yanone Kaffeesatz";
+}
+
+.button-custom {
+	padding-top: 50px;
+}
+
+a.button-custom-style {
+    border-radius: 0px;
+    text-align: center;
+    font-size: 24px;
+    letter-spacing: 2px;
+    font-family: "Yanone Kaffeesatz";
+    font-weight: bold;
+    border-style: solid;
+    color: #fff;
+    border-width: 1px;
+    border-image-source: linear-gradient(16deg, #e436aa, #2c1b76);
+    border-image-slice: 1;
+    padding: 6px 15px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.active>a.button-custom-style,
+a.button-custom-style:focus, 
+a.button-custom-style:hover {
+	color: #fff;
+    text-decoration: none;
+    border-style: solid;
+    border-width: 1px;
+    border-image-slice: 1;
+}
+
+/*HELIO ABOUT*/
+
+.content-section .panel-default,
+.content-section .panel-default>.panel-heading,
+.content-section .panel-default>.panel-heading+.panel-body {
+	background: none;
+	border: none;
+	color: #fff;
+}
+
+.content-section .panel-default>.helio-chudao {
+	border-bottom: 1px solid #fec231;
+}
+
+.content-section .panel-default>.helio-vuinhon {
+	border-bottom: 1px solid #35bdeb;
+}
+
+.content-section .panel-default>.helio-sangtao {
+	border-bottom: 1px solid #e436aa;
+}
+
+.content-section .panel-default>.panel-heading .panel-title,
+.content-section .panel-default>.panel-heading .panel-title p {
+	font-family: "Yanone Kaffeesatz";
+	font-size: 45px;
+	font-weight: bold;
+	line-height: 1.11;
+	letter-spacing: 1.8px;
+	text-align: left;
+}
+
+.content-section .panel-default>.panel-heading {
+	padding: 35px 0px 20px 0px;
+}
+
+.media-img-custom {
+	padding: 30px;
+}
+
+.media-body-custom {
+	padding-left: 15px;
+}
+
+.helio-chudao {
+	color: #fec231;
+}
+
+.helio-vuinhon {
+	color: #35bdeb;
+}
+
+.helio-sangtao {
+	color: #e436aa;
+}
+
+.textwrap {
+	float: left;
+	width: 50%;
+	margin: 35px 30px;
+}
+
+.description-helio-about {
+	padding-top: 15px;
+}
+
+.content-image-section {
+	height: 180px;
+	width: 100%;
+	display: block;
+	position: relative;
+	margin: 80px 0px 150px;
+}
+
+.image-section {
+	position: absolute;
+    left: 50%;
+    margin-left: -130px;
+}
+
+
+
+/*HELIO PHILOSOPHY*/
+
+.title-philosophy {
+	padding: 10px;
+}
+
+.title-philosophy h1 {
+	font-size: 65px;
+	color: #fec231;
+	font-weight: bold;
+	letter-spacing: 3px;
+	text-align: center;
+	line-height: 1.4;
+}
+
+.imgage-philosophy {
+	padding: 30px 0px;
+}
+
+
+
+/*HELIO OVERVIEW*/
+
+.overview-description {
+	padding-top: 20px;
+}
+
+.imgage-overview {
+	padding: 30px 0px;
+}
+
+.images-inline {
+	display: inline;
+}
+
+
+
+
+
+
+.image-section img {
+	width: 250px;
+}
+
+.app-banner {
+	margin-top: 50px;
+	margin-bottom: 80px;
+}
