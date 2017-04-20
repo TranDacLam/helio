@@ -30,6 +30,6 @@ urlpatterns = [
     url(r'^lien-he/$', views.lienhe, name='lienhe'),
     url(r'^helio-night-life/$', views.helio_night_life, name='helio_night_life'),
     # url(r'news/$', views.news, name='news'),
-    url(r'^helio-about/$', views.helio_about, name='helio_about'),
+    url(r'^helio-intro/$', views.helio_intro, name='helio_intro'),
 
 ]
