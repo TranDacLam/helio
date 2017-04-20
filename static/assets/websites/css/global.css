@@ -26,14 +26,13 @@ p {
     font-family: "Yanone Kaffeesatz";
     font-size: 36px;
     font-weight: bold;
-    letter-spacing: 1.5px;
-    line-height: 50px;
+    letter-spacing: 1.8;
+    line-height: 40px;
 }
 
 /*HEADER*/
 .header {
     padding: 15px 0;
-    background: url("../images/bg_header.png") no-repeat;
     background-size: 100% 100%;
 }
 .well.logo-div {
@@ -73,13 +72,14 @@ p {
     padding-left: 0px;
     padding-right: 0px;
 }
-.main-menu  .navbar-nav li {
+.main-menu  .navbar-nav>li {
     padding: 0 30px 0 0;
 }
-.main-menu .navbar-nav li.active a,
-.main-menu .navbar-nav li.active a:hover,
-.main-menu .navbar-nav li a:focus, 
-.main-menu .navbar-nav li a:hover {
+.main-menu .navbar-nav>li.active>a,
+.main-menu .navbar-nav>li.active>a:hover,
+.main-menu .navbar-nav>li>a:focus, 
+.main-menu .navbar-nav>li>a:hover, 
+.navbar-default .main-menu .navbar-nav>.open>a:focus {
     color: #da139a;
     border-bottom: 3px solid;
     border-image-slice: 1;
@@ -87,6 +87,22 @@ p {
     cursor: pointer;
     text-decoration: none;
     background-color: transparent;
+}
+.navbar-default .main-menu ul.dropdown-menu {
+    padding: 0px;
+}
+.navbar-default .main-menu .dropdown-menu>li>a:hover,
+.navbar-default .main-menu .dropdown-menu>li>a:focus {
+    background-color: #15062b;
+    color: #fff;
+}
+.navbar-default .main-menu .dropdown-menu>li>a {
+    color: #15062b;
+    padding-left: 15px;
+}
+
+.navbar-default .main-menu .dropdown-menu>li>a {
+    color: #15062b;
 }
 
 .menu-language a.btn-custom-header {
@@ -202,7 +218,12 @@ a.btn-custom-style:hover {
     border-top: 3px;
     border-style: dotted;
 }
-
+.page-header-text {
+    width: 80%;
+    padding-top: 30px;
+    margin: auto;
+    text-align: justify;
+}
 @media (max-width: 992px) {
     .page-title {
         position: static;

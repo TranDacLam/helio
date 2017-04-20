@@ -17,16 +17,17 @@
         <div class="carousel-inner" role="listbox">
             {% for hot in result.hots %}
             <div class="item">
-                <img src="{{ MEDIA_URL }}{{hot.image}}">
+                <img src="{{ MEDIA_URL }}{{hot.image}}" width="100%">
             </div>
             {% endfor %}
         </div>
 
         <ul class="nav nav-justified home-carousel hidden-xs">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"><a class="title-content" href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
-            <li data-target="#myCarousel" data-slide-to="1"><a class="title-content" href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
-            <li data-target="#myCarousel" data-slide-to="2"><a class="title-content" href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
-            <li data-target="#myCarousel" data-slide-to="3"><a class="title-content" href="#">CUOC THI ANH KHOANH KHAC YEU THUONG</a></li>
+            {% for hot in result.hots %}
+            <li data-target="#myCarousel">
+                <a class="title-content" href="#">{{hot.name}}</a>
+            </li>
+            {% endfor %}
         </ul>
     </div>
 </div>
@@ -39,6 +40,7 @@
 {% endif %}
 
 <!-- GAME SECTION -->
+{% if result.categorys %}
 <div class="container block-content-50" >
     <div class="row">
         <div class="col-md-12 game-section-body">
@@ -48,75 +50,63 @@
             <div class="section-game">
                 <div class="col-lg-3 col-md-3 game-section-menu hidden-xs">
                     <div class="list-group">
-                        <a href="#" class="list-group-item active text-center">
-                            CHO DEM
-                        </a>
+                        {% for category_name in result.categorys %}
                         <a href="#" class="list-group-item text-center">
-                            PLAY
+                            {{category_name}}
                         </a>
-                        <a href="#" class="list-group-item text-center">
-                            KIDS
-                        </a>
-                        <a href="#" class="list-group-item text-center">
-                            COFFEE
-                        </a>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 game-section">
                     <!-- cho dem section -->
-                    <div class="game-section-content active">
+                    {% for category_name, types in result.categorys.items %}
+                    <div class="game-section-content">
                         <div class="game-section-detail">
                             <div class="col-xs-12 col-md-6 game-left"> 
-                                <div class="game-type-content">
-                                    <p class="title-content game-type">TRÒ CHƠI VẬN ĐỘNG</p>
-                                    <p>Hệ thống các trò chơi vận động mới lạ, hấp dẫn, hứa hẹn sẽ mang lại cho bạn những giây phút vui chơi tuyệt vời sảng khoái.</p> 
-                                </div>
-                                <hr>
-                                <div>
-                                    <p class="game-description ">Cùng khám phá những dòng game siêu đỉnh, được liên tục bổ sung cùng các trò chơi cảm giác mạnh độc quyền tại Helio Center.</p> 
-                                    
+                                {% if types %}
+                                    {% for type in types %}
+                                    <div class="game-type-slide">
+                                        <div class="game-type-content">
+                                            <p class="title-content game-type">{{type.name}}</p>
+                                            <p>{{type.description}}</p> 
+                                        </div>
+                                        <hr>
+                                        <p class="game-description ">{{type.description_1}}</p> 
+                                    </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="type-group">
                                     <!-- Games Type-->
+                                    {% if types %}
                                     <ul class="nav btn-custom-group type-group">
-                                        <li class="active">
-                                            <a class="btn-custom-style" href="#">HELIO PLAY<span class="glyphicon glyphicon-chevron-right"></a>
-                                        </li>
+                                        {% for type in types %}
                                         <li>
-                                            <a class="btn-custom-style" href="#">HELIO KIDS<span class="glyphicon glyphicon-chevron-right"></a>
+                                            <a class="btn-custom-style" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
                                         </li>
-                                        <li>
-                                            <a class="btn-custom-style"href="#">NIGHT LIFE<span class="glyphicon glyphicon-chevron-right"></a>
-                                        </li>
+                                        {% endfor %}
                                     </ul>
-                                    
+                                    {% endif %}
                                 </div>
-                                
                             </div>
-                            
                         </div>
                         <div class="col-xs-12 col-md-6 game-section-detail">
-                            <img src="{{ STATIC_URL }}assets/websites/images/game.png" alt="helio" width="100%" height="550">
+                            {% if types %}
+                                {% for type in types %}
+                                <div class="game-right">
+                                    <img src="{{ MEDIA_URL }}{{type.image}}" alt="helio" width="100%" height="550">
+                                </div>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
-                    <!-- play section -->
-                    <div class="game-section-content">
-                       
-                    </div>
-        
-                    <!-- kids section -->
-                    <div class="game-section-content">
-                        
-                    </div>
-                    <!-- coffee section -->
-                    <div class="game-section-content">
-                        
-                    </div>
+                    {% endfor %}
+                   
                 </div>
             </div>
         </div>
     </div>
 </div>  
-
-
+{% endif %}
 
 <div class="container">
     <div class="col-md-12 border-dot block-content-20">
@@ -165,13 +155,14 @@
         <div class="row content-info">
             <p class="title-content">
                 {% trans "homepage.title.section.powercard" %}
-                <a class="btn btn-custom-style btn-link-more" href="#" role="button">{% trans "btn.click_now" %}</a>
+                <a class="btn btn-custom-style btn-link-more" href="{% url 'power_card' %}" role="button">{% trans "btn.click_now" %}</a>
             </p>
         </div>
     </div>
 </div>
 
 <!-- EVENT SECTION -->
+{% if result.events%}
 <div class="container block-content-50">
     <div class="row">
         <div class="col-md-12 event-section-body">
@@ -180,11 +171,12 @@
                     <p class="big-font-size event-title">{% trans "homepage.title.section.event" %}</p>
                 </div> 
                 <div class="col-md-3" align="right">
-                    <a class="btn btn-custom-style" href="#" role="button">{% trans "btn.view_all" %}</a>
+                    <a class="btn btn-custom-style" href="{% url 'events' %}" role="button">{% trans "btn.view_all" %}</a>
                 </div>
                 
             </div>
             <hr>
+            {% for event in result.events %}
             <div class="row">
                 <div class="event-detail">
                     <div class="col-md-2">
@@ -195,47 +187,25 @@
                     </div>
                     <div class="col-md-8">
                         <div class="caption">
-                            <p class="event-name">THỬ THÁCH WII MÙA VALENTINE 2017 TẠI HELIO</p>
+                            <p class="event-name">{{event.name}}</p>
                             <p class="event-time"><i class="fa fa-clock-o" aria-hidden="true"></i>17:30 - 22:0 | 14.02.2017 - 15.02.2017</p>
-                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                            <p>{{event.short_description}}</p>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="event-img">
-                            <img src="http://helio.vn/uploads/4_Bai%20viet%20san%20pham/Helio%20Kids/Khu%20trong%20nha/Guong%20hoa%20trang/Guong_hoa_trang_01.jpg" alt="helio" width="100%">
+                            <img src="{{ MEDIA_URL }}{{event.image}}" alt="helio" width="100%">
                         </div>
                         
                     </div>
                 </div>
             </div>
             <hr>
-            <div class="row">
-                <div class="event-detail">
-                    <div class="col-md-2">
-                        <center>
-                            <p class="event-date">14</p>
-                            <p class="event-month">Thang 2</p>
-                        </center>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="caption">
-                            <p class="event-name">THỬ THÁCH WII MÙA VALENTINE 2017 TẠI HELIO</p>
-                            <p class="event-time"><i class="fa fa-clock-o" aria-hidden="true"></i>17:30 - 22:0 | 14.02.2017 - 15.02.2017</p>
-                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="event-img">
-                            <img src="http://helio.vn/uploads/4_Bai%20viet%20san%20pham/Helio%20Kids/Khu%20trong%20nha/Guong%20hoa%20trang/Guong_hoa_trang_01.jpg" alt="helio" width="100%">
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <hr>
+            {% endfor %}
         </div> 
     </div>
 </div>
+{% endif %}
     
 <!-- BANNER 3 SECTION -->
 {% if result.banners and result.banners.3 %}

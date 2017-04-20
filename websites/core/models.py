@@ -82,6 +82,9 @@ class Type(models.Model):
     description = models.TextField(null=True, blank=True)
     category = models.ForeignKey('Category', related_name='game_category_rel',
                                  on_delete=models.CASCADE)
+    image = models.ImageField(max_length=1000, null=True, blank=True, upload_to="types")
+    sub_url = models.CharField(max_length=1000)
+    description_1 = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return '%s' % (self.name)

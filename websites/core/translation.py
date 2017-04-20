@@ -2,12 +2,12 @@ from modeltranslation.translator import translator, TranslationOptions
 from models import *
 
 class CategoryTranslationOptions(TranslationOptions):
-    fields = ('name', )
+    fields = ('name', 'description', )
 
 translator.register(Category, CategoryTranslationOptions)
 
 class TypeTranslationOptions(TranslationOptions):
-    fields = ('name', 'description', )
+    fields = ('name', 'description', 'description_1')
 
 translator.register(Type, TypeTranslationOptions)
 
@@ -24,7 +24,7 @@ translator.register(Post, PostsTranslationOptions)
 
 # Events
 class EventsTranslationOptions(TranslationOptions):
-    fields = ('name', 'content', )
+    fields = ('name', 'short_description', 'content', )
 
 translator.register(Event, EventsTranslationOptions)
 
@@ -50,7 +50,7 @@ translator.register(FAQ, FAQsTranslationOptions)
 
 # Hots
 class HotTranslationOptions(TranslationOptions):
-    fields = ( )
+    fields = ('name', )
     
 translator.register(Hot, HotTranslationOptions)
 

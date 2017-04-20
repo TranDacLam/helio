@@ -3,6 +3,57 @@
 <!-- <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/font-awesome/css/font-awesome.min.css"> -->
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/slide.css">
 <style type="text/css">
+
+    .image-div {
+        background: url("http://localhost:8000/static/assets/websites/images/game_1.png") no-repeat;
+        background-size: 70% 100%;
+        height: 450px;
+        margin-top: 20px;
+    }
+
+    .description-slide, 
+    .pricing-btn-section {
+        position: relative;
+        width: 85%;
+        margin: auto;
+    }
+
+    .content-pull-right .image-right {
+        background: url("http://localhost:8000/static/assets/websites/images/bg_kids_left.png") no-repeat;
+        background-size: 100% 100%;
+        min-height: 450px;
+    }
+    .content-pull-right .image-left {
+        min-height: 450px;
+    }
+    .content-pull-right.image-div {
+        background-position: right;
+    }
+
+
+    .content-pull-left .image-right {
+        background: url("http://localhost:8000/static/assets/websites/images/bg_kids_right.png") no-repeat;
+        background-size: 100% 100%;
+        min-height: 450px;
+    }
+    .content-pull-left .image-left {
+        min-height: 450px;
+    }
+
+    .content-pull-left .image-text-head {
+        transition: background 0.2s;
+        transform: skew(-15deg);
+        margin-left: -22px !important;
+    }
+    .content-pull-left .image-text-head p {
+        transform: skew(15deg);
+    }
+    .content-pull-left.image-div {
+        background-position: left;
+    }
+
+
+
     
     .img-post {
         width: 100%;
@@ -103,10 +154,7 @@
         border: 1px solid #e436aa;
         margin: 10px 10px 30px 0px;
     }
-    .description-slide {
-        position: relative;
-        left: 5px;
-    }
+    
     .btn-custom {
         background-color: #b39253;
         color: #fff;
@@ -129,26 +177,8 @@
         background-color: #FDAD14;
         position: relative;
     }
-    .image-div {
-        background: url("http://localhost:8000/static/assets/websites/images/img1.jpg") no-repeat right;
-        background-size: 100% 100%;
-        height: 565px;
-        margin: 20px;
-    }
-    .image-right {
-        background: url("http://localhost:8000/static/assets/websites/images/bg_kids_left.png") no-repeat;
-        background-size: 100% 100%;
-        min-height: 565px;
-        /*width: 45%;*/
-    }
-    .image-left {
-        min-height: 565px;
-        /*width: 45%;*/
-    }
-    .image-left .btn-play-div  {
-        padding-top: 40%;
-        text-align: center;
-    }
+    
+    
     @media (max-width: 992px) {
         .image-div {
             background: none;
@@ -269,6 +299,14 @@
             width: 85%;
         }
     }
+
+
+
+
+
+
+
+
 </style>
 {% endblock %}
 {% block extrascript %}
@@ -281,11 +319,10 @@ $(document).ready(function(){
 
     function initCoursel() {
         $('.carousel').html($('.carousel1').html());
-        var w = $( window ).width();
-        var w2 = $(".container").width();
-        w2 =  w > 1650 ? w2 : (w2 * 80 /100);
+        var content_width = $(".container").width()
+        var w2 = content_width * 0.85;
         $('.carousel').carousel({
-            carouselWidth: w,
+            carouselWidth: content_width,
             carouselHeight: 400,
             directionNav:true,    
             shadow:false, 
@@ -299,9 +336,9 @@ $(document).ready(function(){
     }
 
     initCoursel();
-    $( window ).resize(function() {
-        initCoursel();
-    });
+    // $( window ).resize(function() {
+    //     initCoursel();
+    // });
 
 });
 </script>
@@ -309,243 +346,222 @@ $(document).ready(function(){
 {% block main_content %} 
 
 <!-- Page Header -->
-<div class="page-header-img">
-    <div class="container">
-        <img src="{{ STATIC_URL }}assets/websites/images/slide1.png" width="100%">
-    </div>
-    <div class="page-title" align="center">
-        <div class="col-xs-12">
-            <fieldset><h1 class="page-title-text">HELIO KIDS</h1></fieldset>
+<div class="container">
+    <!-- CARD PAGE DESCRIPTION -->
+    <div class="page-top">
+        <div class="page-header-img">
+            <div>
+                <img src="{{ STATIC_URL }}assets/websites/images/power_card_header.png" width="100%">
+            </div>
+            <div class="page-title" align="center">
+                <div class="col-md-12">
+                    <p class="page-title-text">HELIO KIDS</p>
+                </div>
+            </div>
+        </div>
+        <div align="center" class="page-header-text">
+            <div class="form-title">
+                <p class="text-description">Đến Helio Center, bạn được trải nghiệm một hình thức thanh toán hoàn toàn mới, không cần tiền mặt, không cần xu, chỉ cần quẹt thẻ Power Card và trải nghiệm cuộc vui. Thật dễ dàng đúng không !!! Chưa hết, toàn bộ thông tin tài khoản thẻ Helio Power Card của bạn: số dư, số ticket, khuyến mãi và nhiều tiện ích khác đều có thể dễ dàng tra cứu được. Quá tiện!</p>
+            </div>
         </div>
     </div>
-</div>
-<!-- Page description -->
-<div class="container">
-    <div class="description-title">
-        <p>To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. The following example shows how to get a three equal-width columns starting at tablets and scaling to large desktops. On mobile phones, the columns will automatically stack.</p>
-    </div>
-    <!-- Bang gia -->
-    <div class="table-custom-around">
-        <table class="table table-bordered table-custom borderless">
-            <thead>
-                <tr>
-                    <th colspan="2" class="table-title-price">BANG GIA</th>
-                    <th class="th-style-card"><div class="table-blue-card">THE XANH</div></th>
-                    <th class="th-style-card"><div class="table-pink-card">THE HONG</div></th>
-                    <th class="th-style-card"><div class="table-yellow-card">THE VANG</div></th>
-                </tr>
-             </thead>
-             <tbody>
-                <tr>
-                    <td rowspan="2">Be cao < 90cm</td>
-                    <td>Thu 2 den thu 6</td>
-                    <td class="table-content-blue-card">40,000</td>
-                    <td class="table-content-pink-card">40,000</td>
-                    <td class="table-content-yellow-card">30,000</td>
-                </tr>
-                <tr class="table-active">
-                    <td>Thu 7, CN, Ngay le <span class="note">*</span></td>
-                    <td class="table-content-blue-card">40,000</td>
-                    <td class="table-content-pink-card">40,000</td>
-                    <td class="table-content-yellow-card">30,000</td>
-                </tr>
-                <tr>
-                    <td rowspan="2">Be cao < 90cm</td>
-                    <td>Thu 2 den thu 6</td>
-                    <td class="table-content-blue-card">40,000</td>
-                    <td class="table-content-pink-card">40,000</td>
-                    <td class="table-content-yellow-card">30,000</td>
-                </tr>
-                <tr class="table-active">
-                    <td>Thu 7, CN, Ngay le <span class="note">*</span></td>
-                    <td class="table-content-blue-card">40,000</td>
-                    <td class="table-content-pink-card">40,000</td>
-                    <td class="table-content-yellow-card">30,000</td>
-                </tr>
-                <tr>
-                    <td>Nguoi di kem thu II</td>
-                    <td>Tat ca cac ngay trong tuan</td>
-                    <td colspan="3">25,000</td>
-                </tr>
-             </tbody>
-        </table>
-        <span class="note">* Cac ngay nghi le theo quy dinh cua Nha nuoc.</span>
-    </div>
 
-    <!-- Nav tabs nav-pills-->
-    <!-- <ul class="row nav btn-custom-group-nav">
-            <li role="nav-item" class="col-md-6 active">
+    
+    <div class="pricing-btn-section">
+        <!-- PRICING -->
+        <div class="table-custom-around">
+            <table class="table table-bordered table-custom borderless">
+                <thead>
+                    <tr>
+                        <th colspan="2" class="table-title-price">BANG GIA</th>
+                        <th class="th-style-card"><div class="table-blue-card">THE XANH</div></th>
+                        <th class="th-style-card"><div class="table-pink-card">THE HONG</div></th>
+                        <th class="th-style-card"><div class="table-yellow-card">THE VANG</div></th>
+                    </tr>
+                 </thead>
+                 <tbody>
+                    <tr>
+                        <td rowspan="2">Be cao < 90cm</td>
+                        <td>Thu 2 den thu 6</td>
+                        <td class="table-content-blue-card">40,000</td>
+                        <td class="table-content-pink-card">40,000</td>
+                        <td class="table-content-yellow-card">30,000</td>
+                    </tr>
+                    <tr class="table-active">
+                        <td>Thu 7, CN, Ngay le <span class="note">*</span></td>
+                        <td class="table-content-blue-card">40,000</td>
+                        <td class="table-content-pink-card">40,000</td>
+                        <td class="table-content-yellow-card">30,000</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">Be cao < 90cm</td>
+                        <td>Thu 2 den thu 6</td>
+                        <td class="table-content-blue-card">40,000</td>
+                        <td class="table-content-pink-card">40,000</td>
+                        <td class="table-content-yellow-card">30,000</td>
+                    </tr>
+                    <tr class="table-active">
+                        <td>Thu 7, CN, Ngay le <span class="note">*</span></td>
+                        <td class="table-content-blue-card">40,000</td>
+                        <td class="table-content-pink-card">40,000</td>
+                        <td class="table-content-yellow-card">30,000</td>
+                    </tr>
+                    <tr>
+                        <td>Nguoi di kem thu II</td>
+                        <td>Tat ca cac ngay trong tuan</td>
+                        <td colspan="3">25,000</td>
+                    </tr>
+                 </tbody>
+            </table>
+            <span class="note">* Cac ngay nghi le theo quy dinh cua Nha nuoc.</span>
+        </div>
+
+        <!-- BUTTON GROUP -->
+        <ul class="nav nav-pills nav-justified">
+            <li class="active">
                 <a href="#phong-choi" role="tab" data-toggle="tab" class="btn-custom-style">PHONG CHOI</a>
             </li>
-            <li role="nav-item" class="col-md-6">
+            <li>
                 <a href="#may-choi" role="tab" data-toggle="tab" class="btn-custom-style">MAY CHOI</a>
             </li>
-    </ul> -->
-    <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-        <div class="btn-group btn-custom-group" role="group">
-            <button href="#phong-choi" role="tab" data-toggle="tab" type="button" class="btn btn-custom active">PHONG CHOI</button>
-        </div>
-        <div class="btn-group" role="group">
-            <button href="#may-choi" role="tab" data-toggle="tab" type="button" class="btn btn-custom">MAY CHOI</button>
-        </div>
+        </ul>
     </div>
 
-
-</div>
-
-
-<div class="tab-content" style="padding-top: 50px;">
-    <div role="tabpanel" class="tab-pane active" id="phong-choi">
-        <!-- Games slider -->
-        <div class="carousel" >
-            
-        </div>
-        <div class="description container description-slide"> <!-- BEGIN DESCRIPTION -->
-            <div> <!-- DESCRIPTION ITEM -->
-                <h2>Description 1</h2>
-                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu,tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aen ean a commodo mi. Praesent augue lacus.
-                </p>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="phong-choi">
+            <!-- Games slider -->
+            <div class="carousel" >
+                
             </div>
-
-            <div>
-                <h2>Description 2</h2>
-                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aen ean a commodo mi. Praesent augue lacus.
-                </p>
-            </div>
-
-            <div>
-                <h2>Description 3</h2>
-                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. A en ean a commodo mi. Praesent augue lacus.
-                </p>
-            </div>
-
-            <div>
-                <h2>Description 4</h2>
-                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. A en ean a commodo mi. Praesent augue lacus.
-                </p>
-            </div>
-
-            <div>
-                <h2>Description 5</h2>
-                <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-                tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. A en ean a commodo mi. Praesent augue lacus.
-                </p>
-            </div>
-        </div>
-
-        <div class="carousel1" hidden="true" >
-            <div class="slides"> <!-- BEGIN CAROUSEL -->
-                <div class="slideItem"> <!-- SLIDE ITEM -->
-                    <a href="#">
-                         <img src="{{ STATIC_URL }}assets/websites/images/slide1.png" >
-                    </a>
+            <div class="description description-slide"> <!-- BEGIN DESCRIPTION -->
+                <div> <!-- DESCRIPTION ITEM -->
+                    <h2>Description 1</h2>
+                    <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu,tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aen ean a commodo mi. Praesent augue lacus.
+                    </p>
                 </div>
 
-                <div class="slideItem">
-                    <a href="#">
-                        <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
-                    </a>
+                <div>
+                    <h2>Description 2</h2>
+                    <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+                    tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. Aen ean a commodo mi. Praesent augue lacus.
+                    </p>
                 </div>
 
-                <div class="slideItem">
-                    <a href="#">
-                        <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
-                    </a>
+                <div>
+                    <h2>Description 3</h2>
+                    <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+                    tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. A en ean a commodo mi. Praesent augue lacus.
+                    </p>
                 </div>
-                <div class="slideItem">
-                    <a href="#">
-                        <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
-                    </a>
-                </div>
-                <div class="slideItem">
-                    <a href="#">
-                        <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
-                    </a>
-                </div>
-            </div>
-        </div>
 
-        <!-- <div class="container">
-            <hr class="style-hr">
-            <div class="corner-bottom-right-bevel">
-              <img  class="img-post" src="{{ STATIC_URL }}assets/websites/images/img2.png">
+                <div>
+                    <h2>Description 4</h2>
+                    <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+                    tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. A en ean a commodo mi. Praesent augue lacus.
+                    </p>
+                </div>
+
+                <div>
+                    <h2>Description 5</h2>
+                    <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
+                    tristique sed odio. Praesent ut interdum elit. Sed in sem mauris. A en ean a commodo mi. Praesent augue lacus.
+                    </p>
+                </div>
             </div>
-            <div><img  class="img-post" src="{{ STATIC_URL }}assets/websites/images/slide1.png"></div>
-        </div> -->
-        <div class="container block-content-20">
-            <div class="image-div">
-                <div class="image-right col-md-5">
-                    <div class="col-md-10 image-text">
-                        <div class="image-text-head">
-                            MOT MUA HE THAT NHIEU MAU SAC <span class="glyphicon glyphicon-play"></span>
-                        </div>
-                        <p class="img-font-size">HE SAC MAU CUNG HELIO KIDS</p>
-                        <p class="img-text-description">To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave.</p>
-                        <a class="btn btn-custom-style-kids" href="#" role="button">TÌM HIỂU NGAY ></a>
+
+            <div class="carousel1" hidden="true" >
+                <div class="slides"> <!-- BEGIN CAROUSEL -->
+                    <div class="slideItem"> <!-- SLIDE ITEM -->
+                        <a href="#">
+                            <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+                        </a>
+                    </div>
+
+                    <div class="slideItem">
+                        <a href="#">
+                            <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+                        </a>
+                    </div>
+
+                    <div class="slideItem">
+                        <a href="#">
+                            <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+                        </a>
+                    </div>
+                    <div class="slideItem">
+                        <a href="#">
+                            <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+                        </a>
+                    </div>
+                    <div class="slideItem">
+                        <a href="#">
+                            <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+                        </a>
                     </div>
                 </div>
-                <div class="image-left col-md-7">
-                </div>
             </div>
-            <div class="image-div">
-                <div class="image-right col-md-5">
-                    <div class="col-md-10 image-text">
-                        <div class="image-text-head">
-                            MOT MUA HE THAT NHIEU MAU SAC <span class="glyphicon glyphicon-play"></span>
+
+           <!--  KID GAME CONTENT -->
+            <div class="kids-game-content">
+                <div class="image-div content-pull-right">
+                    <div class="image-right col-md-5">
+                        <div class="col-md-9 image-text">
+                            <div class="image-text-head">
+                                Chuong trinh he <span class="glyphicon glyphicon-play"></span>
+                            </div>
+                            <p class="img-font-size">HE SAC MAU CUNG HELIO KIDS</p>
+                            <p class="img-text-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <a class="btn btn-custom-style-kids" href="#" role="button">TÌM HIỂU NGAY <span class="glyphicon glyphicon-menu-right"></span></a>
                         </div>
-                        <p class="img-font-size">HE SAC MAU CUNG HELIO KIDS</p>
-                        <p class="img-text-description">To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave. To make your trip to Singapore as enjoyable as possible, here is some general information to take note of before you leave.</p>
-                        <a class="btn btn-custom-style-kids" href="#" role="button">TÌM HIỂU NGAY ></a>
+                    </div>
+                    <div class="image-left col-md-7">
                     </div>
                 </div>
-                <div class="image-left col-md-7">
+
+                <div class="image-div content-pull-left">
+                    <div class="image-left col-md-7">
+                    </div>
+                    <div class="image-right col-md-5">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9 image-text">
+                            <div class="image-text-head">
+                                <p>Chuong trinh he <span class="glyphicon glyphicon-play"></span></p>
+                            </div>
+                            <p class="img-font-size">HE SAC MAU CUNG HELIO KIDS</p>
+                            <p class="img-text-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <a class="btn btn-custom-style-kids" href="#" role="button">TÌM HIỂU NGAY <span class="glyphicon glyphicon-menu-right"></span></a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="image-div content-pull-right">
+                    <div class="image-right col-md-5">
+                        <div class="col-md-9 image-text">
+                            <div class="image-text-head">
+                                Chuong trinh he <span class="glyphicon glyphicon-play"></span>
+                            </div>
+                            <p class="img-font-size">HE SAC MAU CUNG HELIO KIDS</p>
+                            <p class="img-text-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <a class="btn btn-custom-style-kids" href="#" role="button">TÌM HIỂU NGAY <span class="glyphicon glyphicon-menu-right"></span></a>
+                        </div>
+                    </div>
+                    <div class="image-left col-md-7">
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-content container">
+                <div class="btn-read-more" align="center">
+                    <a class="btn-custom-style" href="#" role="button">Read More</a>
                 </div>
             </div>
         </div>
 
-       <!--  <div class="corner-bottom-left-bevel">
-          <img src="{{ STATIC_URL }}assets/websites/images/img3.png">
-        </div>
-        <div class="style-img2"><img src="{{ STATIC_URL }}assets/websites/images/slide1.png"></div>
-        
-        <div class="corner-bottom-right-bevel">
-          <img src="{{ STATIC_URL }}assets/websites/images/img2.png">
-        </div>
-        <div class="style-img"><img  src="{{ STATIC_URL }}assets/websites/images/slide1.png"></div> -->
-    
-       
-
-
-
-        <div class="game-content container">
-        
-            
-            <!-- <div class="corner-bottom-left-bevel">
-                <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img3.png">
-            </div>
-            <div class="style-img2">
-                <img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.png">
-            </div>
-            
-            <div class="corner-bottom-right-bevel">
-                <img style="width: 500px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/img2.png">
-            </div>
-            <div class="style-img">
-                <img style="width: 710px; height: 360px;" src="{{ STATIC_URL }}assets/websites/images/slide1.png">
-            </div> -->
-            <div class="btn-read-more" align="center">
-                <a class="btn-custom-style" href="#" role="button">Read More</a>
-            </div>
+        <div role="tabpanel" class="tab-pane active" id="may-choi">
         </div>
 
     </div>
-
-    <div role="tabpanel" class="tab-pane active" id="may-choi">
-    </div>
-
 </div>
 
 
