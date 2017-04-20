@@ -70,4 +70,25 @@ msgstr "Khu công viên Đông Nam Đài tưởng niệm, Đường 2/9, Phườ
 
 msgid "footer.menu.home"
 msgstr "TRANG CHỦ"
+
+msgid "footer.menu.about"
+msgstr "GIỚI THIỆU"
+
+msgid "footer.menu.career"
+msgstr "TUYỂN DỤNG"
+
+msgid "footer.menu.contact"
+msgstr "LIÊN HỆ"
+
+msgid "footer.menu.news"
+msgstr "TIN TỨC"
+
+msgid "footer.menu.experience"
+msgstr "TRẢI NGHIỆM"
+
+msgid "footer.menu.policy"
+msgstr "CHÍNH SÁCH"
+
+msgid "footer.menu.terms_of_use"
+msgstr "ĐIỀU KHOẢN SỬ DỤNG"   
 #END FOOTER

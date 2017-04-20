@@ -127,14 +127,6 @@ p {
   color: #e436aa;
 }
 
-@media (max-width:767px) {
-    .navbar-toggle.pull-left {
-        margin-left: 10px;
-    }
-    .menu-language {
-        margin-left: 0px;
-    }
-}
 /*END HEADER*/
 
 .time-wrapper p {
@@ -219,12 +211,38 @@ a.btn-custom-style:hover {
     border-style: dotted;
 }
 .page-header-text {
-    width: 80%;
+    width: 70%;
     padding-top: 30px;
     margin: auto;
-    text-align: justify;
+    text-align: center;
 }
+
+.app-banner {
+    margin-top: 50px;
+    margin-bottom: 80px;
+}
+
+/*FOOTER*/
+.menuwidget.nav li {
+    width: 100%;
+} 
+.menuwidget.nav li a {
+    font-size: 18px;
+    font-family: "Yanone Kaffeesatz";
+    color: #fff;
+}
+.menuwidget.nav li a:hover {
+    background: transparent;
+}
+
 @media (max-width: 992px) {
+    .navbar-toggle.pull-left {
+        margin-left: 10px;
+    }
+    .menu-language {
+        margin-left: 0px;
+    }
+
     .page-title {
         position: static;
         margin-top: 50px;
@@ -239,4 +257,5 @@ a.btn-custom-style:hover {
     .page-header-img {
         margin-bottom: 0px;
     } 
+
 }

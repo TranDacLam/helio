@@ -3,7 +3,6 @@
 	text-align: left;
 	padding-top: 15px;
 }
-
 .card-description .powercard-name {
 	font-size: 18px;
 	font-weight: bold;
@@ -21,22 +20,20 @@
 	min-height: 400px;
 	padding-bottom: 50px;
 }
-
 .card-info-section .panel-default .card-description {
 	overflow: hidden;
 	min-height: 200px;
 }
-
-.powercard .panel-default>.panel-heading.card-header,
-.powercard .panel-default .card-div-bottom  button {
+.kq_kq_kq_power_card .panel-default>.panel-heading.card-header,
+.kq_kq_kq_power_card .panel-default .card-div-bottom  button {
 	background-color: #23194f;
 }
-.member-card .panel-default>.panel-heading.card-header, 
-.member-card .panel-default .card-div-bottom button {
+.kq_member_card .panel-default>.panel-heading.card-header, 
+.kq_member_card .panel-default .card-div-bottom button {
 	background-color: #e436aa;
 }
-.gold-card .panel-default>.panel-heading.card-header,
-.gold-card .panel-default .card-div-bottom button {
+.kq_gold_card .panel-default>.panel-heading.card-header,
+.kq_gold_card .panel-default .card-div-bottom button {
 	background-color: #fec231;
 }
 
@@ -48,7 +45,6 @@
 	text-align: center;
 	color: #fff;
 }
-
 .card-div-bottom {
 	margin-bottom: -15px; 
 }
@@ -72,48 +68,6 @@
 	max-height: 216px;
 	overflow: hidden;
 }
-
-.faqs-section {
-	margin-top: 40px;
-}
-.faqs-title p.big-font-size {
-	color: #fec231;
-}
-
-.more-less {
-    float: right;
-    color: #fec231;
-}
-.faqs-section .panel-default,
-.faqs-section .panel-default>.panel-heading,
-.faqs-section .panel-default>.panel-heading+.panel-collapse>.panel-body {
-	background: none;
-	border: none;
-	color: #fff;
-}
-
-.faqs-section .panel-default>.panel-heading .panel-title,
-.faqs-section .panel-default>.panel-heading .panel-title p {
-	font-size: 36px;
-	font-weight: bold;
-	line-height: 1.11;
-	letter-spacing: 1.8px;
-	text-align: left;
-	color: #ffffff;
-}
-.faqs-section .panel-default,
-.faqs-section .faqs-title {
-	border-bottom: 3px dotted #fff;
-}
-.faqs-section .panel-default>.panel-heading {
-	padding: 35px 0px 20px 0px;
-}
-.faqs-section .panel-default .panel-body {
-	padding-top: 0px;
-	width: 90%;
-	margin: auto;
-}
-
 .app-banner {
 	margin-top: 50px;
 	margin-bottom: 80px;
