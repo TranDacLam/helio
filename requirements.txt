@@ -9,5 +9,5 @@ django-suit
 django-ckeditor
 django-mssql
 django-pymssql
-
+uwsgi
 #-e git+git://github.com/mvpdev/django-eav.git#egg=django-eav
