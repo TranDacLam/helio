@@ -7,7 +7,7 @@ class CategoryTranslationOptions(TranslationOptions):
 translator.register(Category, CategoryTranslationOptions)
 
 class TypeTranslationOptions(TranslationOptions):
-    fields = ('name', 'description', 'description_1')
+    fields = ('name', 'description', 'description_game')
 
 translator.register(Type, TypeTranslationOptions)
 
@@ -62,4 +62,9 @@ translator.register(Banner, BannerTranslationOptions)
 class PromotionTranslationOptions(TranslationOptions):
     fields = ('name', 'short_description', 'content' )
     
-translator.register(Promotion, BannerTranslationOptions)
+translator.register(Promotion, PromotionTranslationOptions)
+
+class TransactionTypeTranslationOptions(TranslationOptions):
+    fields = ('name', )
+    
+translator.register(Transaction_Type, TransactionTypeTranslationOptions)

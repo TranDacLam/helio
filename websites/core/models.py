@@ -11,17 +11,20 @@ class DateTimeModel(models.Model):
     """
     created = models.DateTimeField(_('Created Date'), auto_now_add=True,
                                    editable=False)
-    modified = models.DateTimeField(_('Modified Date'), auto_now=True, editable=False)
-    
+    modified = models.DateTimeField(
+        _('Modified Date'), auto_now=True, editable=False)
+
     def __init__(self, *args, **kwargs):
         super(DateTimeModel, self).__init__(*args, **kwargs)
 
     class Meta:
         abstract = True
 
+
 class Post(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
-    image = models.ImageField(max_length=1000, null=True, blank=True, upload_to="posts")
+    image = models.ImageField(
+        max_length=1000, null=True, blank=True, upload_to="posts")
     short_description = models.CharField(max_length=350)
     content = models.TextField()
     post_type = models.ForeignKey('Post_Type', related_name='posts_type_rel', on_delete=models.CASCADE, null=True,
@@ -47,19 +50,24 @@ class Post_Type(models.Model):
         verbose_name = 'Post Type'
         verbose_name_plural = 'Post Type'
 
+
 class Post_Image(DateTimeModel):
-    image = models.ImageField(max_length=1000, null=True, blank=True, upload_to="posts")
+    image = models.ImageField(
+        max_length=1000, null=True, blank=True, upload_to="posts")
     post = models.ForeignKey('Post', related_name='posts_image', on_delete=models.CASCADE, null=True,
-                                  blank=True)
+                             blank=True)
 
 
 class Event(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
-    image = models.ImageField(max_length=1000, null=True, blank=True, upload_to="events")
+    image = models.ImageField(
+        max_length=1000, null=True, blank=True, upload_to="events")
     short_description = models.CharField(max_length=350)
     content = models.TextField()
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
+    start_time = models.IntegerField(null=True, blank=True)
+    end_time = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -69,7 +77,8 @@ class Game(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
     short_description = models.CharField(max_length=350)
     content = models.TextField()
-    image = models.ImageField(max_length=1000, null=True, blank=True, upload_to="games")
+    image = models.ImageField(
+        max_length=1000, null=True, blank=True, upload_to="games")
     game_type = models.ForeignKey(
         'Type', related_name='game_type_rel', on_delete=models.CASCADE)
 
@@ -82,9 +91,10 @@ class Type(models.Model):
     description = models.TextField(null=True, blank=True)
     category = models.ForeignKey('Category', related_name='game_category_rel',
                                  on_delete=models.CASCADE)
-    image = models.ImageField(max_length=1000, null=True, blank=True, upload_to="types")
+    image = models.ImageField(
+        max_length=1000, null=True, blank=True, upload_to="types")
     sub_url = models.CharField(max_length=1000)
-    description_1 = models.TextField(null=True, blank=True)
+    description_game = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -110,13 +120,20 @@ class Entertainment(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
     short_description = models.CharField(max_length=350)
     content = models.TextField()
-    key_query = models.CharField(max_length=255, unique=True, null=True, blank=True)
-    image1 = models.ImageField(_('Image 1'), max_length=1000, null=True, blank=True, upload_to="entertainments")
-    image2 = models.ImageField(_('Image 2'), max_length=1000, null=True, blank=True, upload_to="entertainments")
-    image3 = models.ImageField(_('Image 3'), max_length=1000, null=True, blank=True, upload_to="entertainments")
-    image4 = models.ImageField(_('Image 4'), max_length=1000, null=True, blank=True, upload_to="entertainments")
-    image5 = models.ImageField(_('Image 5'), max_length=1000, null=True, blank=True, upload_to="entertainments")
-    image6 = models.ImageField(_('Image 6'), max_length=1000, null=True, blank=True, upload_to="entertainments")
+    key_query = models.CharField(
+        max_length=255, unique=True, null=True, blank=True)
+    image1 = models.ImageField(
+        _('Image 1'), max_length=1000, null=True, blank=True, upload_to="entertainments")
+    image2 = models.ImageField(
+        _('Image 2'), max_length=1000, null=True, blank=True, upload_to="entertainments")
+    image3 = models.ImageField(
+        _('Image 3'), max_length=1000, null=True, blank=True, upload_to="entertainments")
+    image4 = models.ImageField(
+        _('Image 4'), max_length=1000, null=True, blank=True, upload_to="entertainments")
+    image5 = models.ImageField(
+        _('Image 5'), max_length=1000, null=True, blank=True, upload_to="entertainments")
+    image6 = models.ImageField(
+        _('Image 6'), max_length=1000, null=True, blank=True, upload_to="entertainments")
     category = models.ForeignKey('Category', related_name='entertainments_category_rel',
                                  on_delete=models.CASCADE, limit_choices_to=limit_category_entertainments)
 
@@ -129,8 +146,9 @@ class Entertainment(DateTimeModel):
 
 
 class Promotion(DateTimeModel):
-    name  = models.CharField(max_length=255, unique=True)
-    image = models.ImageField(_('Image'), max_length=1000, null=True, blank=True, upload_to="promotions")
+    name = models.CharField(max_length=255, unique=True)
+    image = models.ImageField(
+        _('Image'), max_length=1000, null=True, blank=True, upload_to="promotions")
     short_description = models.CharField(max_length=350)
     content = models.TextField()
     promotion_type = models.ForeignKey(
@@ -141,6 +159,7 @@ class Promotion(DateTimeModel):
 
 
 class FAQ(DateTimeModel):
+
     def limit_category_Faq():
         return {'name_en__in': ['FAQs']}
 
@@ -168,15 +187,23 @@ class Banner(DateTimeModel):
     sub_url = models.CharField(max_length=1000)
     is_show = models.BooleanField(default=False)
     position = models.IntegerField()
-    
+
     def __str__(self):
         return '%s' % (self.sub_url)
 
+
 class Contact(DateTimeModel):
-    name  = models.CharField(max_length=500)
-    email  = models.CharField(max_length=500)
-    subject  = models.CharField(max_length=500)
-    message  = models.TextField()
-    
+    name = models.CharField(max_length=500)
+    email = models.CharField(max_length=500)
+    subject = models.CharField(max_length=500)
+    message = models.TextField()
+
+    def __str__(self):
+        return '%s' % (self.name)
+
+
+class Transaction_Type(DateTimeModel):
+    name = models.CharField(max_length=255, unique=True)
+
     def __str__(self):
         return '%s' % (self.name)
