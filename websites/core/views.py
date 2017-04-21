@@ -22,13 +22,9 @@ def home(request):
     hots = Hot.objects.filter(is_show=True).order_by('modified')[:4]
     result["hots"] = hots
 
-    # game categorys
-    categorys = Category.objects.filter(id__in=(1, 2, 3, 4)).order_by('id')
-    categorys_map = {}
-    for category in categorys:
-        types = Type.objects.filter(category_id=int(category.id))
-        categorys_map[category.name] = types
-    result["categorys"] = categorys_map
+    # game section
+    result["PLAY"] = Type.objects.filter(category_id=constant.HELIO_PLAY_CATEGORY)
+    result["KIDS"] = Type.objects.filter(category_id=constant.HELIO_KIDS_CATEGORY)
 
     # game categorys
     events = Event.objects.all()[:2]
@@ -39,9 +35,12 @@ def home(request):
 def power_card(request):
     print "***START Power Card Introduction PAGE***"
     result = {}
+
+    # Powercard info
     powercard_type = Post_Type.objects.get(pk=constant.POWERCARD_TYPE_ID)
     result["powercard_type"] = powercard_type
 
+    # Powercard list
     powercards = Post.objects.filter(post_type_id=constant.POWERCARD_TYPE_ID)
     result["powercards"] = powercards
 
@@ -53,7 +52,7 @@ def power_card(request):
 def faqs(request):
     print "***START FAQs PAGE***"
     result = {}
-
+    # FAWs list
     faqs = FAQ.objects.all()
     result["faqs"] = faqs
     
@@ -63,6 +62,12 @@ def contact(request):
     print "***START CONTACT CONTENT PAGE***"
     
     return render(request, 'websites/contact.html')
+
+
+def helio_kids(request):
+    print "***START HELIO KIDS PAGE***"
+    
+    return render(request, 'websites/helio_kids.html')
 
 def night_life(request):
     print "***START NIGHT LIFE CONTENT PAGE***"
@@ -133,12 +138,9 @@ def helio_play_v2(request):
     return render(request, 'websites/helio_play_v2.html')
 
 
-def helio_kids(request):
-    print "***START HELIO KIDS PAGE***"
-    
-    return render(request, 'websites/helio_kids.html')
 
 def helio_introduction(request):
+
     print "***START HELIO ABOUT PAGE***"
     
     return render(request, 'websites/helio_introduction.html')
