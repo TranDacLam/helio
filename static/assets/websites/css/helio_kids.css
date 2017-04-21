@@ -155,8 +155,9 @@ a.btn-custom-style.btn-custom-style-kids:hover {
         background: url("../images/m_kids_text.png") no-repeat;
         background-size: 100% 100%;
         height: auto;
-        min-height: 400px;
+        /*min-height: 400px;*/
         /*width: 100%;*/
+        padding-bottom: 35px;
     }
     .content-pull-left .kids-content-image,
     .content-pull-right .kids-content-image {
