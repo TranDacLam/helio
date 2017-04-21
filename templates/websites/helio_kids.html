@@ -1,193 +1,9 @@
 {% extends "layout.html" %}
+{% load i18n %} 
 {% block extrastylesheet %}
-<!-- <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/font-awesome/css/font-awesome.min.css"> -->
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/slide.css">
-<style type="text/css">
-    /*GAME COTENT CSS*/
-    .image-div {
-        background: url("http://localhost:8000/static/assets/websites/images/game_1.png") no-repeat;
-        background-size: 70% 100%;
-        height: 450px;
-        margin-top: 20px;
-    }
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/helio_kids.css">
 
-    .image-text-head {
-        background-color: #f0f0f0;
-        color: #000;
-        padding-left: 30px;
-        margin-left: -30px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        word-spacing: 1px;
-        letter-spacing: 1px;
-        width: 100%;
-    }
-    .image-text-head p {
-        position: relative;
-    }
-    .content-pull-right .image-text-head p:after {
-        content: "";
-        position: absolute;
-        z-index: 1000;
-        border-left: 10px solid #f0f0f0;
-        border-bottom: 24px solid transparent;
-        right: -10px;
-    }
-    .img-font-size {
-        font-size: 40px;
-        font-family: "Yanone Kaffeesatz";
-        line-height: 60px;
-        letter-spacing: 4px;
-        font-weight: bold;
-    }
-
-    .description-slide, 
-    .pricing-btn-section {
-        position: relative;
-        width: 85%;
-        margin: auto;
-    }
-
-    .content-pull-right .kids-content-text {
-        background: url("http://localhost:8000/static/assets/websites/images/bg_kids_left.png") no-repeat;
-        background-size: 100% 100%;
-        min-height: 450px;
-    }
-    .content-pull-right .kids-content-image {
-        min-height: 450px;
-    }
-    .content-pull-right.image-div {
-        background-position: right;
-    }
-
-
-    .content-pull-left .kids-content-text {
-        background: url("http://localhost:8000/static/assets/websites/images/bg_kids_right.png") no-repeat;
-        background-size: 100% 100%;
-        min-height: 450px;
-    }
-    .content-pull-left .kids-content-image {
-        min-height: 450px;
-    }
-
-    .content-pull-left .image-text-head {
-        transition: background 0.2s;
-        transform: skew(-15deg);
-        margin-left: -33px;
-    }
-    .content-pull-left .image-text-head p {
-        transform: skew(15deg);
-    }
-    .content-pull-left.image-div {
-        background-position: left;
-    }
-    a.btn-custom-style.btn-custom-style-kids {
-        border-image-source: linear-gradient(16deg, #f4963a, #fff);
-    }
-    .active a.btn-custom-style.btn-custom-style-kids:focus,
-    a.btn-custom-style.btn-custom-style-kids:focus, 
-    a.btn-custom-style.btn-custom-style-kids:hover {
-        color: #f4963a;
-        background-color: #fff;
-        border-image-source: linear-gradient(16deg, #f4963a, #fff);
-        background-image: none;
-    }
-    /*END GAME CONTENT CSS*/
-
-    .pricing-div {
-        margin-bottom: 50px;
-        margin-top: 50px;
-    }
-
-
-    .description-slide .title-content.game-name {
-        color: #fec231;
-    }
-
-    .description-slide {
-        margin-bottom: 50px;
-        min-height: 100px;
-    }
-
-
-    .kids-content-text .image-text {
-        padding-top: 40px;
-    }
-
-
-    .kid-btn-group li a.btn-custom-style:hover,
-    .kid-btn-group li a.btn-custom-style:focus,
-    .kid-btn-group li a {
-        border: none;
-        background-color: #8a642e;
-        border-radius: 0px;
-        background-image: none;
-    }
-    
-    .kid-btn-group li.active a.btn-custom-style {
-        background-image: none;
-        background-color: #fec231;
-        border: none;
-    }
-
-    .kid-btn-group li.active a.btn-custom-style:after {
-        content: "";
-        position: absolute;
-        bottom: -20px;
-        left: 0;
-        width: 0;
-        height: 0;
-        border-width: 20px 245px 0 245px;
-        border-style: solid;
-        border-color: #fec231 transparent transparent transparent;
-    }
-
-
-    @media (max-width: 992px) {
-        .image-div {
-            background: none;
-            height: auto;
-        }
-        .content-pull-left .kids-content-text,
-        .content-pull-right .kids-content-text
-        {
-            background: url("http://localhost:8000/static/assets/websites/images/m_kids_text.png") no-repeat;
-            background-size: 100% 100%;
-            height: auto;
-            min-height: 400px;
-            /*width: 100%;*/
-        }
-        .content-pull-left .kids-content-image,
-        .content-pull-right .kids-content-image {
-            background: url("http://localhost:8000/static/assets/websites/images/game_1.png") no-repeat;
-            background-size: 100% 100%;
-            height: 250px;
-            /*width: 100%;*/
-        }
-
-        .content-pull-left .kids-content-text {
-            float: right;
-        }
-
-        .content-pull-left .image-text-head p:after {
-            content: "";
-            position: absolute;
-            z-index: 1000;
-            border-left: 10px solid #f0f0f0;
-            border-bottom: 24px solid transparent;
-            right: -10px;
-        }
-        .content-pull-left .image-text-head {
-            transition: background 0.2s;
-            transform: skew(0deg);
-            margin-left: -30px;
-        }
-        .content-pull-left .image-text-head p {
-            transform: skew(0deg);
-        }
-    }
-
-</style>
 {% endblock %}
 {% block extrascript %}
 <script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.mousewheel.min.js"></script>
@@ -197,17 +13,16 @@
 $(document).ready(function(){
 
     function initCoursel() {
-        // $('.carousel').html($('.carousel1').html());
         var content_width = $(".container").width()
         var w2 = content_width * 0.85;
         $('.carousel').carousel({
             carouselWidth: content_width,
-            carouselHeight: 400,
+            carouselHeight: 500,
             directionNav:true,    
             shadow:false, 
             description:true,
             frontWidth:w2,
-            frontHeight:400,
+            frontHeight:500,
             hMargin: 0.1,
             vMargin: 0.8
 
@@ -215,10 +30,6 @@ $(document).ready(function(){
     }
 
     initCoursel();
-    // $( window ).resize(function() {
-    //     initCoursel();
-    // });
-
 });
 </script>
 {% endblock %}
@@ -342,7 +153,7 @@ $(document).ready(function(){
                             </div>
                             <p class="img-font-size">HE SAC MAU CUNG HELIO KIDS</p>
                             <p class="img-text-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">TÌM HIỂU NGAY <span class="glyphicon glyphicon-menu-right"></span></a>
+                            <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
                         </div>
                     </div>
                     <div class="kids-content-image col-md-7">
@@ -360,7 +171,7 @@ $(document).ready(function(){
                             </div>
                             <p class="img-font-size">HE SAC MAU CUNG HELIO KIDS</p>
                             <p class="img-text-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">TÌM HIỂU NGAY <span class="glyphicon glyphicon-menu-right"></span></a>
+                            <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
                         </div>
                     </div>
                 </div>
@@ -375,7 +186,7 @@ $(document).ready(function(){
         </div>
 
         <!-- MAY CHOI SECTION -->
-        <div role="tabpanel" class="tab-pane active" id="may-choi">
+        <div role="tabpanel" class="tab-pane" id="may-choi">
         </div>
     </div>
 

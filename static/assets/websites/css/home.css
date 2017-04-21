@@ -81,13 +81,16 @@ div.game-section-menu div.list-group>a{
     padding-right: 0px;
     padding-left: 0px;
 }
+
 div.game-section-menu div.list-group>a.active,
 div.game-section-menu div.list-group>a.active .glyphicon,
-div.game-section-menu div.list-group>a.active .fa{
+div.game-section-menu div.list-group>a.active .fa {
     background-color: #1eb9f3;
     background-image: #1eb9f3;
     color: #ffffff;
+    border: none;
 }
+
 div.game-section-menu div.list-group>a.active:after{
     content: '';
     position: absolute;
@@ -98,6 +101,22 @@ div.game-section-menu div.list-group>a.active:after{
     border-bottom: 48px solid transparent;
     border-top: 48px solid transparent;
     border-left: 20px solid #1eb9f3;
+}
+
+div.game-section-menu div.list-group>a.night-life.active{
+    background-color: #25bcab;
+    background-image: #25bcab;
+}
+div.game-section-menu div.list-group>a.night-life.active:after {
+    border-left: 20px solid #25bcab;
+}
+
+div.game-section-menu div.list-group>a.kids.active{
+    background-color: #fec231;
+    background-image: #fec231;
+}
+div.game-section-menu div.list-group>a.kids.active:after {
+    border-left: 20px solid #fec231;
 }
 
 div.game-section-content{

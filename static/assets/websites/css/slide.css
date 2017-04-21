@@ -21,7 +21,7 @@ Version: 1.0
 	position :relative ;
 	margin :30px auto;
 	
-	height :400px;
+	height :500px;
 	border :none;
 	overflow : visible ;
 }
@@ -82,7 +82,7 @@ Version: 1.0
 {
 	position :absolute ;
 	right :10px;
-	top :170px;
+	top :235px;
 	width :35px;
 	height :35px;
 	background : url("../images/next_button.png") no-repeat center;
@@ -94,7 +94,7 @@ Version: 1.0
 {
 	position :absolute ;
 	left :10px;
-	top :170px;
+	top :235px;
 	width :35px;
 	height: 35px;		
 	background : url("../images/prev_button.png");

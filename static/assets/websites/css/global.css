@@ -188,7 +188,7 @@ a.btn-custom-style {
     border-width: 1px;
     border-image-source: linear-gradient(16deg, #e436aa, #2c1b76);
     border-image-slice: 1;
-    padding: 6px 15px;
+    padding: 9px 15px 3px 15px;
     text-decoration: none;
     text-transform: uppercase;
 }

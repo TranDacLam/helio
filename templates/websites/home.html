@@ -40,7 +40,6 @@
 {% endif %}
 
 <!-- GAME SECTION -->
-{% if result.categorys %}
 <div class="container block-content-50" >
     <div class="row">
         <div class="col-md-12 game-section-body">
@@ -50,63 +49,144 @@
             <div class="section-game">
                 <div class="col-lg-3 col-md-3 game-section-menu hidden-xs">
                     <div class="list-group">
-                        {% for category_name in result.categorys %}
-                        <a href="#" class="list-group-item text-center">
-                            {{category_name}}
+                        <a href="#" class="list-group-item text-center night-life">
+                            {% trans "homepage.text.night_life" %}
                         </a>
-                        {% endfor %}
+                        <a href="#" class="list-group-item text-center play">
+                            {% trans "homepage.text.play" %}
+                        </a>
+                        <a href="#" class="list-group-item text-center kids">
+                            {% trans "homepage.text.kids" %}
+                        </a>
+                        <a href="#" class="list-group-item text-center coffee">
+                            {% trans "homepage.text.coffee" %}
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 game-section">
-                    <!-- cho dem section -->
-                    {% for category_name, types in result.categorys.items %}
+                    <!-- NIGHT LIFT section -->
                     <div class="game-section-content">
                         <div class="game-section-detail">
-                            <div class="col-xs-12 col-md-6 game-left"> 
-                                {% if types %}
-                                    {% for type in types %}
-                                    <div class="game-type-slide">
-                                        <div class="game-type-content">
-                                            <p class="title-content game-type">{{type.name}}</p>
-                                            <p>{{type.description}}</p> 
-                                        </div>
-                                        <hr>
-                                        <p class="game-description ">{{type.description_1}}</p> 
+                            <div class="col-xs-12 col-md-6 game-left">
+                                <div class="game-type-slide">
+                                    <div class="game-type-content">
+                                        <p class="title-content game-type">CHO DEM</p>
+                                        <p>Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p> 
                                     </div>
-                                    {% endfor %}
-                                {% endif %}
+                                    <hr>
+                                    <p class="game-description ">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p> 
+                                </div>
+                            
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 game-section-detail">
+                            <div class="game-right">
+                                <img src="{{ STATIC_URL }}assets/websites/images/home_game_section_right.png" alt="helio" width="100%" height="550">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PLAY section -->
+                    <div class="game-section-content">
+                        {% if result.PLAY %}
+                        <div class="game-section-detail">
+                            <div class="col-xs-12 col-md-6 game-left"> 
+                                {% for type in result.PLAY %}
+                                <div class="game-type-slide">
+                                    <div class="game-type-content">
+                                        <p class="title-content game-type">{{type.name}}</p>
+                                        <p>{{type.description}}</p> 
+                                    </div>
+                                    <hr>
+                                    <p class="game-description ">{{type.description_1}}</p> 
+                                </div>
+                                {% endfor %}
                                 <div class="type-group">
                                     <!-- Games Type-->
-                                    {% if types %}
                                     <ul class="nav btn-custom-group type-group">
-                                        {% for type in types %}
+                                        {% for type in result.PLAY %}
                                         <li>
                                             <a class="btn-custom-style" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
                                         </li>
                                         {% endfor %}
                                     </ul>
-                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-6 game-section-detail">
-                            {% if types %}
-                                {% for type in types %}
-                                <div class="game-right">
-                                    <img src="{{ MEDIA_URL }}{{type.image}}" alt="helio" width="100%" height="550">
+                            {% for type in result.PLAY %}
+                            <div class="game-right">
+                                <img src="{{ MEDIA_URL }}{{type.image}}" alt="helio" width="100%" height="550">
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- KIDS section -->
+                    <div class="game-section-content">
+                        {% if result.KIDS %}
+                        <div class="game-section-detail">
+                            <div class="col-xs-12 col-md-6 game-left"> 
+                                {% for type in result.KIDS %}
+                                <div class="game-type-slide">
+                                    <div class="game-type-content">
+                                        <p class="title-content game-type">{{type.name}}</p>
+                                        <p>{{type.description}}</p> 
+                                    </div>
+                                    <hr>
+                                    <p class="game-description ">{{type.description_1}}</p> 
                                 </div>
                                 {% endfor %}
-                            {% endif %}
+                                <div class="type-group">
+                                    <!-- Games Type-->
+                                    <ul class="nav btn-custom-group type-group">
+                                        {% for type in result.KIDS %}
+                                        <li>
+                                            <a class="btn-custom-style" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 game-section-detail">
+                            {% for type in result.KIDS %}
+                            <div class="game-right">
+                                <img src="{{ MEDIA_URL }}{{type.image}}" alt="helio" width="100%" height="550">
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- COFFEE section -->
+                    <div class="game-section-content">
+                        <div class="game-section-detail">
+                            <div class="col-xs-12 col-md-6 game-left">
+                                <div class="game-type-slide">
+                                    <div class="game-type-content">
+                                        <p class="title-content game-type">COFFEE</p>
+                                        <p>Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p> 
+                                    </div>
+                                    <hr>
+                                    <p class="game-description ">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p> 
+                                </div>
+                            
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 game-section-detail">
+                            <div class="game-right">
+                                <img src="{{ STATIC_URL }}assets/websites/images/home_game_section_right.png" alt="helio" width="100%" height="550">
+                            </div>
                         </div>
                     </div>
-                    {% endfor %}
                    
                 </div>
             </div>
         </div>
     </div>
 </div>  
-{% endif %}
 
 <div class="container">
     <div class="col-md-12 border-dot block-content-20">
