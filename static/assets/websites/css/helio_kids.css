@@ -134,6 +134,10 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     color: #fec231;
     text-transform: uppercase;
 }
+.image-hidden-sm-up {
+    display: none;
+}
+
 @media (max-width: 1199px) { 
     .kid-btn-group li.active a.btn-custom-style:after {
         content: none;
@@ -142,7 +146,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
 
 @media (max-width: 992px) {
     .image-div {
-        background: none;
+        background: none !important;
         height: auto;
     }
     .content-pull-left .kids-content-text,
@@ -156,14 +160,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     }
     .content-pull-left .kids-content-image,
     .content-pull-right .kids-content-image {
-        background: url("../images/game_1.png") no-repeat !important;
-        background-size: 100% 100%;
-        height: 250px;
-        /*width: 100%;*/
-    }
-
-    .content-pull-left .kids-content-text {
-        float: right;
+        min-height: auto;
     }
 
     .content-pull-left .image-text-head p:after {
@@ -181,5 +178,8 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     }
     .content-pull-left .image-text-head p {
         transform: skew(0deg);
+    }
+    .image-hidden-sm-up {
+        display: block;
     }
 }

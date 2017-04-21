@@ -42,6 +42,10 @@ p {
     font-weight: bold;
     letter-spacing: 0.5px;
 }
+.fa.fa-bell-o {
+    transform: rotate(30deg);
+    margin-right: 10px;
+}
 
 /*HEADER*/
 .header {

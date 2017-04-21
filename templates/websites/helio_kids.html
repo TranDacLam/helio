@@ -95,73 +95,83 @@ $(document).ready(function(){
         </ul>
     </div>
 
-    <div class="tab-content">
-        <!-- MAY CHOI SECTION -->
-        {% for type, games in result.kids_types.items %}
-        <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-kids/#' }}" id="{{ type.sub_url|cut:'/helio-kids/#' }}">
-            <!-- Games slider -->
-            <div class="carousel" >
-            </div>
-            {% if games %}
-            <div class="carousel-tmp hidden">
-                <div class="slides"> <!-- BEGIN CAROUSEL -->
+    <div class="tab-content row">
+        <div class="col-md-12">
+            {% for type, games in result.kids_types.items %}
+            <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-kids/#' }}" id="{{ type.sub_url|cut:'/helio-kids/#' }}">
+                <!-- Games slider -->
+                <div class="carousel" >
+                </div>
+                {% if games %}
+                <div class="carousel-tmp hidden">
+                    <div class="slides"> <!-- BEGIN CAROUSEL -->
+                        {% for game in games %}
+                        <div class="slideItem"> <!-- SLIDE ITEM -->
+                            <a href="#">
+                                <img src="{{ MEDIA_URL }}{{game.image}}">
+                            </a>
+                            <div class="short-description">
+                                <p class="title-content game-name">{{game.name}}</p>
+                                <p>{{game.short_description}}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- line -->
+                <hr>
+
+                <!--  KID GAME CONTENT -->
+                <div class="kids-game-content">
                     {% for game in games %}
-                    <div class="slideItem"> <!-- SLIDE ITEM -->
-                        <a href="#">
-                            <img src="{{ MEDIA_URL }}{{game.image}}">
-                        </a>
-                        <div class="short-description">
-                            <p class="title-content game-name">{{game.name}}</p>
-                            <p>{{game.short_description}}</p>
+                    {% if forloop.counter|divisibleby:2 %}
+                    <div class="image-div content-pull-right col-md-12"" style="background: url('{{ MEDIA_URL }}{{game.image}}');">
+                        <div class="row">
+                            <div class="kids-content-text col-md-5">
+                                <div class="col-md-9 image-text">
+                                    <div class="image-text-head">
+                                        <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
+                                    </div>
+                                    <p class="img-font-size">{{game.name}}</p>
+                                    <p class="img-text-description">{{game.short_description}}</p>
+                                    <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                                </div>
+                            </div>
+                            <div class="kids-content-image col-md-7">
+                                <div class="image-hidden-sm-up row"><img src="{{ MEDIA_URL }}{{game.image}}" width="100%"></div>
+                            </div>
                         </div>
                     </div>
+                    {% else %}
+                    <div class="image-div content-pull-left col-md-12" style="background: url('{{ MEDIA_URL }}{{game.image}}');">
+                        <div class="row">
+                            <div class="kids-content-image col-md-7">
+                                
+                            </div>
+                            <div class="kids-content-text col-md-5">
+                                <div class="col-md-9 image-text pull-right">
+                                    <div class="image-text-head">
+                                        <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
+                                    </div>
+                                    <p class="img-font-size">{{game.name}}</p>
+                                    <p class="img-text-description">{{game.short_description}}</p>
+                                    <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                                </div>
+                            </div>
+
+                            <div class="image-hidden-sm-up col-md-7">
+                                <div class="row"><img src="{{ MEDIA_URL }}{{game.image}}" width="100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
                     {% endfor %}
                 </div>
-            </div>
-
-            <!-- line -->
-            <hr>
-
-            <!--  KID GAME CONTENT -->
-            <div class="kids-game-content">
-                {% for game in games %}
-                {% if forloop.counter|divisibleby:2 %}
-                <div class="image-div content-pull-right" style="background: url('{{ MEDIA_URL }}{{game.image}}');">
-                    <div class="kids-content-text col-md-5">
-                        <div class="col-md-9 image-text">
-                            <div class="image-text-head">
-                                <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
-                            </div>
-                            <p class="img-font-size">{{game.name}}</p>
-                            <p class="img-text-description">{{game.short_description}}</p>
-                            <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
-                        </div>
-                    </div>
-                    <div class="kids-content-image col-md-7">
-                    </div>
-                </div>
-                {% else %}
-                <div class="image-div content-pull-left" style="background: url('{{ MEDIA_URL }}{{game.image}}');">
-                    <div class="kids-content-image col-md-7">
-                    </div>
-                    <div class="kids-content-text col-md-5">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-9 image-text">
-                            <div class="image-text-head">
-                                <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
-                            </div>
-                            <p class="img-font-size">{{game.name}}</p>
-                            <p class="img-text-description">{{game.short_description}}</p>
-                            <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
-                        </div>
-                    </div>
-                </div>
                 {% endif %}
-                {% endfor %}
             </div>
-            {% endif %}
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
     {% endif %}
 

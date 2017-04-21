@@ -40,10 +40,6 @@
 .home-carousel li.active + li a {
     border-left: 0px;
 }
-.fa.fa-bell-o {
-    transform: rotate(30deg);
-    margin-right: 10px;
-}
 /*  bhoechie tab */
 div.game-section-menu{
     padding: 0px;
