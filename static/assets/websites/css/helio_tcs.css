@@ -1,0 +1,35 @@
+.navbar-default .nav-custom ul {
+    float: none;
+    display: block;
+}
+.sidebar-nav .navbar-custom li {
+    float: none;
+    display: block;
+}
+.sidebar-nav .navbar-custom li:after {
+    background-color: #15062b;
+    color: #fff;
+}
+
+.navbar-default .nav-custom {
+    border: none;
+}
+
+.nav-custom {
+    text-align: right;
+    padding: 70px 15px 20px;
+}
+.nav-custom .navbar-nav>.active>a, 
+.nav-custom .navbar-nav>.active>a:focus, 
+.nav-custom .navbar-nav>.active>a:hover {
+    color: #fff;
+    background-color: #15062b;
+}
+
+.panel-custom-content {
+    padding: 75px 15px 20px;
+}
+
+.panel-custom-content p {
+    padding: 10px 0px;
+}

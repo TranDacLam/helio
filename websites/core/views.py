@@ -149,10 +149,18 @@ def helio_play_v2(request):
     return render(request, 'websites/helio_play_v2.html')
 
 
-def helio_intro(request):
+
+def helio_introduction(request):
+
     print "***START HELIO ABOUT PAGE***"
     
-    return render(request, 'websites/helio_intro.html')
+    return render(request, 'websites/helio_introduction.html')
+
+
+def helio_tcs(request):
+    print "***START HELIO ABOUT PAGE***"
+    
+    return render(request, 'websites/helio_tcs.html')
 
 
 def events(request):
