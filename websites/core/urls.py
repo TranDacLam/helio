@@ -30,6 +30,6 @@ urlpatterns = [
     url(r'^khuyen-mai/chi-tiet/$', views.km_chi_tiet, name='chi_tiet'),
 
     url(r'^helio-introduction/$', views.helio_introduction, name='helio_introduction'),
-    url(r'^helio-tcs/$', views.helio_tcs, name='helio_tcs'),
+    url(r'^helio-term-condition/$', views.helio_term_condition, name='helio_term_condition'),
 
 ]
