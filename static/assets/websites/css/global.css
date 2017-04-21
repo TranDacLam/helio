@@ -29,6 +29,23 @@ p {
     letter-spacing: 1.8;
     line-height: 40px;
 }
+/*Event notification*/
+.text-center.event-new {
+     background-image: linear-gradient(to right, #e436aa, #2c1b76);
+}
+.text-center.event-new p {
+    padding: 10px;
+    color: #fff;
+    margin-bottom: 0px;
+    font-family: "Cabin";
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+.fa.fa-bell-o {
+    transform: rotate(30deg);
+    margin-right: 10px;
+}
 
 /*HEADER*/
 .header {

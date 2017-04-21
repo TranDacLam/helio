@@ -4,11 +4,6 @@
     <link href="{{ STATIC_URL }}assets/websites/css/home.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block main_content %}  
-
-
-<div class="container-fluid text-center event-new">
-    <p><i class="fa fa-bell-o" aria-hidden="true"></i>CHƯƠNG TRÌNH GIẢM GIÁ BÁNH TẠI BAKERY - SẮP DIỄN RA LÚC 17:30</p>
-</div>
 <!-- SLIDE SECTION -->
 {% if result.hots %}
 <div class="container">
@@ -88,10 +83,10 @@
 
                     <!-- PLAY section -->
                     <div class="game-section-content">
-                        {% if result.PLAY %}
+                        {% if result.play_types %}
                         <div class="game-section-detail">
                             <div class="col-xs-12 col-md-6 game-left"> 
-                                {% for type in result.PLAY %}
+                                {% for type in result.play_types %}
                                 <div class="game-type-slide">
                                     <div class="game-type-content">
                                         <p class="title-content game-type">{{type.name}}</p>
@@ -104,7 +99,7 @@
                                 <div class="type-group">
                                     <!-- Games Type-->
                                     <ul class="nav btn-custom-group type-group">
-                                        {% for type in result.PLAY %}
+                                        {% for type in result.play_types %}
                                         <li>
                                             <a class="btn-custom-style" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
                                         </li>
@@ -114,7 +109,7 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-6 game-section-detail">
-                            {% for type in result.PLAY %}
+                            {% for type in result.play_types %}
                             <div class="game-right">
                                 <img src="{{ MEDIA_URL }}{{type.image}}" alt="helio" width="100%" height="550">
                             </div>
@@ -125,10 +120,10 @@
 
                     <!-- KIDS section -->
                     <div class="game-section-content">
-                        {% if result.KIDS %}
+                        {% if result.kids_types %}
                         <div class="game-section-detail">
                             <div class="col-xs-12 col-md-6 game-left"> 
-                                {% for type in result.KIDS %}
+                                {% for type in result.kids_types %}
                                 <div class="game-type-slide">
                                     <div class="game-type-content">
                                         <p class="title-content game-type">{{type.name}}</p>
@@ -141,7 +136,7 @@
                                 <div class="type-group">
                                     <!-- Games Type-->
                                     <ul class="nav btn-custom-group type-group">
-                                        {% for type in result.KIDS %}
+                                        {% for type in result.kids_types %}
                                         <li>
                                             <a class="btn-custom-style" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
                                         </li>
@@ -151,7 +146,7 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-6 game-section-detail">
-                            {% for type in result.KIDS %}
+                            {% for type in result.kids_types %}
                             <div class="game-right">
                                 <img src="{{ MEDIA_URL }}{{type.image}}" alt="helio" width="100%" height="550">
                             </div>

@@ -6,30 +6,52 @@
 
 {% endblock %}
 {% block extrascript %}
+<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.mousewheel.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.carousel-1.1.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
+    var url = window.location.href;
+    var section_active = url.substring(url.lastIndexOf('/') + 2);
+    $(".kid-btn-group li:first").addClass("active");
+    $(".tab-content .tab-pane:first").addClass("active");
 
-    function initCoursel() {
-        var content_width = $(".container").width()
+    $(".tab-content .tab-pane").each(function(){
+        var id = $(this).attr("id");
+        if(id === section_active) {
+            $(".kid-btn-group li").removeClass("active");
+            $(".tab-content .tab-pane").removeClass("active");
+            $(".tab-content ."+id).addClass("active");
+            $(".kid-btn-group ."+id).parent().addClass("active");
+        }
+    });
+
+    function initCoursel(element) {
+        $(element).html($(element).parent().find('.carousel-tmp').html());
+        var content_width = $(".container").width();
         var w2 = content_width * 0.85;
-        $('.carousel').carousel({
+        $(element).carousel({
             carouselWidth: content_width,
             carouselHeight: 500,
             directionNav:true,    
             shadow:false, 
-            description:true,
             frontWidth:w2,
             frontHeight:500,
             hMargin: 0.1,
-            vMargin: 0.8
-
+            vMargin: 0.8,
+            short_description: true
         });
     }
 
-    initCoursel();
+    $(".tab-content .tab-pane").each(function(){
+        initCoursel($(this).find('.carousel'));
+    });
+    $( window ).resize(function() {
+        $(".tab-content .tab-pane").each(function(){
+            initCoursel($(this).find('.carousel'));
+        });
+    });
 });
 </script>
 {% endblock %}
@@ -55,6 +77,7 @@ $(document).ready(function(){
         </div>
     </div>
 
+    {% if result.kids_types %}
     
     <div class="pricing-btn-section">
         <!-- PRICING -->
@@ -64,131 +87,92 @@ $(document).ready(function(){
 
         <!-- BUTTON GROUP -->
         <ul class="nav nav-pills nav-justified kid-btn-group">
-            <li class="active">
-                <a href="#phong-choi" role="tab" data-toggle="tab" class="btn-custom-style">PHONG CHOI</a>
-            </li>
+            {% for type in result.kids_types %}
             <li>
-                <a href="#may-choi" role="tab" data-toggle="tab" class="btn-custom-style">MAY CHOI</a>
+                <a href="#{{ type.sub_url|cut:'/helio-kids/#' }}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-kids/#' }}">{{type.name}}</a>
             </li>
+            {% endfor %}
         </ul>
     </div>
 
     <div class="tab-content">
-        <!-- MAY CHOI SECTION -->
-        <div role="tabpanel" class="tab-pane active" id="phong-choi">
+        {% for type, games in result.kids_types.items %}
+        <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-kids/#' }}" id="{{ type.sub_url|cut:'/helio-kids/#' }}">
             <!-- Games slider -->
             <div class="carousel" >
+            </div>
+            {% if games %}
+            <div class="carousel-tmp hidden">
                 <div class="slides"> <!-- BEGIN CAROUSEL -->
+                    {% for game in games %}
                     <div class="slideItem"> <!-- SLIDE ITEM -->
                         <a href="#">
-                            <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
+                            <img src="{{ MEDIA_URL }}{{game.image}}">
                         </a>
+                        <div class="short-description">
+                            <p class="title-content game-name">{{game.name}}</p>
+                            <p>{{game.short_description}}</p>
+                        </div>
                     </div>
-                    <div class="slideItem">
-                        <a href="#">
-                            <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
-                        </a>
-                    </div>
-                    <div class="slideItem">
-                        <a href="#">
-                            <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
-                        </a>
-                    </div>
-                    <div class="slideItem">
-                        <a href="#">
-                            <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
-                        </a>
-                    </div>
-                    <div class="slideItem">
-                        <a href="#">
-                            <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg">
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Game Description -->
-            <div class="description description-slide">
-                <div>
-                    <p class="title-content game-name">GAME 1</p>
-                    <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci.
-                    </p>
-                </div>
-                <div>
-                    <p class="title-content game-name">GAME 2</p>
-                    <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-                    tristique sed odio. Praesent ut interdum elit. Sed in sem mauris.
-                    </p>
-                </div>
-                <div>
-                    <p class="title-content game-name">GAME 3</p>
-                    <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-                    tristique sed odio. Praesent ut interdum elit.
-                    </p>
-                </div>
-                <div>
-                    <p class="title-content game-name">GAME 4</p>
-                    <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-                    tristique sed odio. Praesent ut interdum elit. Sed in sem mauris.
-                    </p>
-                </div>
-                <div>
-                    <p class="title-content game-name">GAME 5</p>
-                    <p>Maecenas eget eros lorem, nec pellentesque lacus. Aenean dui orci, rhoncus sit amet tristique eu, 
-                    tristique sed odio. Praesent ut interdum elit.
-                    </p>
+                    {% endfor %}
                 </div>
             </div>
 
             <!-- line -->
             <hr>
-
-           <!--  KID GAME CONTENT -->
-            <div class="kids-game-content">
-                <div class="image-div content-pull-right">
-                    <div class="kids-content-text col-md-5">
-                        <div class="col-md-9 image-text">
-                            <div class="image-text-head">
-                                <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
+            <div class="row">
+            <!--  KID GAME CONTENT -->
+                <div class="kids-game-content col-md-12">
+                    {% for game in games %}
+                    {% if forloop.counter|divisibleby:2 %}
+                    <div class="image-div content-pull-right col-md-12"" style="background: url('{{ MEDIA_URL }}{{game.image}}');">
+                        <div class="row">
+                            <div class="kids-content-text col-md-5">
+                                <div class="col-md-9 image-text">
+                                    <div class="image-text-head">
+                                        <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
+                                    </div>
+                                    <p class="img-font-size">{{game.name}}</p>
+                                    <p class="img-text-description">{{game.short_description}}</p>
+                                    <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                                </div>
                             </div>
-                            <p class="img-font-size">HE SAC MAU CUNG HELIO KIDS</p>
-                            <p class="img-text-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                            <div class="kids-content-image col-md-7">
+                                <div class="image-hidden-sm-up row"><img src="{{ MEDIA_URL }}{{game.image}}" width="100%"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="kids-content-image col-md-7">
-                    </div>
-                </div>
-
-                <div class="image-div content-pull-left">
-                    <div class="kids-content-image col-md-7">
-                    </div>
-                    <div class="kids-content-text col-md-5">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-9 image-text">
-                            <div class="image-text-head">
-                                <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
+                    {% else %}
+                    <div class="image-div content-pull-left col-md-12" style="background: url('{{ MEDIA_URL }}{{game.image}}');">
+                        <div class="row">
+                            <div class="kids-content-image col-md-7">
+                                
                             </div>
-                            <p class="img-font-size">HE SAC MAU CUNG HELIO KIDS</p>
-                            <p class="img-text-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                            <div class="kids-content-text col-md-5">
+                                <div class="col-md-9 image-text pull-right">
+                                    <div class="image-text-head">
+                                        <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
+                                    </div>
+                                    <p class="img-font-size">{{game.name}}</p>
+                                    <p class="img-text-description">{{game.short_description}}</p>
+                                    <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                                </div>
+                            </div>
+
+                            <div class="image-hidden-sm-up col-md-7">
+                                <div class="row"><img src="{{ MEDIA_URL }}{{game.image}}" width="100%"></div>
+                            </div>
                         </div>
                     </div>
+                    {% endif %}
+                    {% endfor %}
                 </div>
-
             </div>
-
-            <!-- <div class="game-content container">
-                <div class="btn-read-more" align="center">
-                    <a class="btn-custom-style" href="#" role="button">Read More</a>
-                </div>
-            </div> -->
+            {% endif %}
         </div>
-
-        <!-- MAY CHOI SECTION -->
-        <div role="tabpanel" class="tab-pane" id="may-choi">
-        </div>
+        {% endfor %}
     </div>
+    {% endif %}
 
     <!-- DOWNLOAD APP BANNER -->
     <div class="app-banner">

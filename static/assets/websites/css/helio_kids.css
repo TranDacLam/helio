@@ -1,7 +1,6 @@
 /*GAME COTENT CSS*/
 .image-div {
-    background: url("http://localhost:8000/static/assets/websites/images/game_1.png") no-repeat;
-    background-size: 70% 100%;
+    background-size: 70% 100% !important;
     height: 450px;
     margin-top: 20px;
 }
@@ -44,7 +43,7 @@
 }
 
 .content-pull-right .kids-content-text {
-    background: url("http://localhost:8000/static/assets/websites/images/bg_kids_left.png") no-repeat;
+    background: url("../images/bg_kids_left.png") no-repeat;
     background-size: 100% 100%;
     min-height: 450px;
 }
@@ -52,12 +51,12 @@
     min-height: 450px;
 }
 .content-pull-right.image-div {
-    background-position: right;
+    background-position: right !important;
 }
 
 
 .content-pull-left .kids-content-text {
-    background: url("http://localhost:8000/static/assets/websites/images/bg_kids_right.png") no-repeat;
+    background: url("../images/bg_kids_right.png") no-repeat;
     background-size: 100% 100%;
     min-height: 450px;
 }
@@ -97,16 +96,6 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     margin-bottom: 50px;
 }
 
-.description-slide .title-content.game-name {
-    color: #fec231;
-}
-
-.description-slide {
-    margin-bottom: 50px;
-    min-height: 100px;
-}
-
-
 .kids-content-text .image-text {
     padding-top: 40px;
 }
@@ -134,10 +123,21 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     left: 0;
     width: 0;
     height: 0;
-    border-width: 20px 245px 0 245px;
+    border-width: 20px 234px 0 234px;
     border-style: solid;
     border-color: #fec231 transparent transparent transparent;
 }
+.short-description {
+    margin-top: 50px;
+}
+.short-description .title-content.game-name {
+    color: #fec231;
+    text-transform: uppercase;
+}
+.image-hidden-sm-up {
+    display: none;
+}
+
 @media (max-width: 1199px) { 
     .kid-btn-group li.active a.btn-custom-style:after {
         content: none;
@@ -146,28 +146,22 @@ a.btn-custom-style.btn-custom-style-kids:hover {
 
 @media (max-width: 992px) {
     .image-div {
-        background: none;
+        background: none !important;
         height: auto;
     }
     .content-pull-left .kids-content-text,
     .content-pull-right .kids-content-text
     {
-        background: url("http://localhost:8000/static/assets/websites/images/m_kids_text.png") no-repeat;
+        background: url("../images/m_kids_text.png") no-repeat;
         background-size: 100% 100%;
         height: auto;
-        min-height: 400px;
+        /*min-height: 400px;*/
         /*width: 100%;*/
+        padding-bottom: 35px;
     }
     .content-pull-left .kids-content-image,
     .content-pull-right .kids-content-image {
-        background: url("http://localhost:8000/static/assets/websites/images/game_1.png") no-repeat;
-        background-size: 100% 100%;
-        height: 250px;
-        /*width: 100%;*/
-    }
-
-    .content-pull-left .kids-content-text {
-        float: right;
+        min-height: auto;
     }
 
     .content-pull-left .image-text-head p:after {
@@ -185,5 +179,8 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     }
     .content-pull-left .image-text-head p {
         transform: skew(0deg);
+    }
+    .image-hidden-sm-up {
+        display: block;
     }
 }
