@@ -12,18 +12,6 @@
         width: 100%;
         margin: auto;
 }
-.text-center.event-new {
-     background-image: linear-gradient(to right, #e436aa, #2c1b76);
-}
-.text-center.event-new p {
-    padding: 10px;
-    color: #fff;
-    margin-bottom: 0px;
-    font-family: "Cabin";
-    font-size: 20px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-}
 .home-carousel li {
     height: 193px;
 
