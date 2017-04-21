@@ -28,13 +28,7 @@ urlpatterns = [
     url(r'^trai-nghiem/$', views.trainghiem, name='trainghiem'),
     url(r'^trai-nghiem/chi-tiet/$', views.tn_chi_tiet, name='chi_tiet'),
     url(r'^khuyen-mai/chi-tiet/$', views.km_chi_tiet, name='chi_tiet'),
-<<<<<<< HEAD
-    url(r'^lien-he/$', views.lienhe, name='lienhe'),
-    url(r'^helio-night-life/$', views.helio_night_life, name='helio_night_life'),
-    # url(r'news/$', views.news, name='news'),
+
     url(r'^helio-intro/$', views.helio_intro, name='helio_intro'),
-=======
-   
->>>>>>> ede66c2614f8a57816e64c98d7f0fb990e932b64
 
 ]

@@ -114,6 +114,35 @@
         padding-top: 40px;
     }
 
+
+    .kid-btn-group li a.btn-custom-style:hover,
+    .kid-btn-group li a.btn-custom-style:focus,
+    .kid-btn-group li a {
+        border: none;
+        background-color: #8a642e;
+        border-radius: 0px;
+        background-image: none;
+    }
+    
+    .kid-btn-group li.active a.btn-custom-style {
+        background-image: none;
+        background-color: #fec231;
+        border: none;
+    }
+
+    .kid-btn-group li.active a.btn-custom-style:after {
+        content: "";
+        position: absolute;
+        bottom: -20px;
+        left: 0;
+        width: 0;
+        height: 0;
+        border-width: 20px 245px 0 245px;
+        border-style: solid;
+        border-color: #fec231 transparent transparent transparent;
+    }
+
+
     @media (max-width: 992px) {
         .image-div {
             background: none;
@@ -157,6 +186,7 @@
             transform: skew(0deg);
         }
     }
+
 </style>
 {% endblock %}
 {% block extrascript %}
@@ -193,7 +223,6 @@ $(document).ready(function(){
 </script>
 {% endblock %}
 {% block main_content %} 
-
 <!-- Page Header -->
 <div class="container">
     <!-- CARD PAGE DESCRIPTION -->
@@ -218,59 +247,12 @@ $(document).ready(function(){
     
     <div class="pricing-btn-section">
         <!-- PRICING -->
-        <!-- <div class="table-custom-around">
-            <table class="table table-bordered table-custom borderless">
-                <thead>
-                    <tr>
-                        <th colspan="2" class="table-title-price">BANG GIA</th>
-                        <th class="th-style-card"><div class="table-blue-card">THE XANH</div></th>
-                        <th class="th-style-card"><div class="table-pink-card">THE HONG</div></th>
-                        <th class="th-style-card"><div class="table-yellow-card">THE VANG</div></th>
-                    </tr>
-                 </thead>
-                 <tbody>
-                    <tr>
-                        <td rowspan="2">Be cao < 90cm</td>
-                        <td>Thu 2 den thu 6</td>
-                        <td class="table-content-blue-card">40,000</td>
-                        <td class="table-content-pink-card">40,000</td>
-                        <td class="table-content-yellow-card">30,000</td>
-                    </tr>
-                    <tr class="table-active">
-                        <td>Thu 7, CN, Ngay le <span class="note">*</span></td>
-                        <td class="table-content-blue-card">40,000</td>
-                        <td class="table-content-pink-card">40,000</td>
-                        <td class="table-content-yellow-card">30,000</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">Be cao < 90cm</td>
-                        <td>Thu 2 den thu 6</td>
-                        <td class="table-content-blue-card">40,000</td>
-                        <td class="table-content-pink-card">40,000</td>
-                        <td class="table-content-yellow-card">30,000</td>
-                    </tr>
-                    <tr class="table-active">
-                        <td>Thu 7, CN, Ngay le <span class="note">*</span></td>
-                        <td class="table-content-blue-card">40,000</td>
-                        <td class="table-content-pink-card">40,000</td>
-                        <td class="table-content-yellow-card">30,000</td>
-                    </tr>
-                    <tr>
-                        <td>Nguoi di kem thu II</td>
-                        <td>Tat ca cac ngay trong tuan</td>
-                        <td colspan="3">25,000</td>
-                    </tr>
-                 </tbody>
-            </table>
-            <span class="note">* Cac ngay nghi le theo quy dinh cua Nha nuoc.</span>
-        </div> -->
-
         <div class="pricing-div">
             <img src="{{ STATIC_URL }}assets/websites/images/kids_pricing.png" width="100%">
         </div>
 
         <!-- BUTTON GROUP -->
-        <ul class="nav nav-pills nav-justified">
+        <ul class="nav nav-pills nav-justified kid-btn-group">
             <li class="active">
                 <a href="#phong-choi" role="tab" data-toggle="tab" class="btn-custom-style">PHONG CHOI</a>
             </li>

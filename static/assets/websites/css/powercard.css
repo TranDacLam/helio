@@ -24,8 +24,8 @@
 	overflow: hidden;
 	min-height: 200px;
 }
-.kq_kq_kq_power_card .panel-default>.panel-heading.card-header,
-.kq_kq_kq_power_card .panel-default .card-div-bottom  button {
+.kq_power_card .panel-default>.panel-heading.card-header,
+.kq_power_card .panel-default .card-div-bottom  button {
 	background-color: #23194f;
 }
 .kq_member_card .panel-default>.panel-heading.card-header, 
