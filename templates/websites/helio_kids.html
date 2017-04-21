@@ -95,35 +95,34 @@ $(document).ready(function(){
         </ul>
     </div>
 
-    <div class="tab-content row">
-        <div class="col-md-12">
-            {% for type, games in result.kids_types.items %}
-            <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-kids/#' }}" id="{{ type.sub_url|cut:'/helio-kids/#' }}">
-                <!-- Games slider -->
-                <div class="carousel" >
-                </div>
-                {% if games %}
-                <div class="carousel-tmp hidden">
-                    <div class="slides"> <!-- BEGIN CAROUSEL -->
-                        {% for game in games %}
-                        <div class="slideItem"> <!-- SLIDE ITEM -->
-                            <a href="#">
-                                <img src="{{ MEDIA_URL }}{{game.image}}">
-                            </a>
-                            <div class="short-description">
-                                <p class="title-content game-name">{{game.name}}</p>
-                                <p>{{game.short_description}}</p>
-                            </div>
+    <div class="tab-content">
+        {% for type, games in result.kids_types.items %}
+        <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-kids/#' }}" id="{{ type.sub_url|cut:'/helio-kids/#' }}">
+            <!-- Games slider -->
+            <div class="carousel" >
+            </div>
+            {% if games %}
+            <div class="carousel-tmp hidden">
+                <div class="slides"> <!-- BEGIN CAROUSEL -->
+                    {% for game in games %}
+                    <div class="slideItem"> <!-- SLIDE ITEM -->
+                        <a href="#">
+                            <img src="{{ MEDIA_URL }}{{game.image}}">
+                        </a>
+                        <div class="short-description">
+                            <p class="title-content game-name">{{game.name}}</p>
+                            <p>{{game.short_description}}</p>
                         </div>
-                        {% endfor %}
                     </div>
+                    {% endfor %}
                 </div>
+            </div>
 
-                <!-- line -->
-                <hr>
-
-                <!--  KID GAME CONTENT -->
-                <div class="kids-game-content">
+            <!-- line -->
+            <hr>
+            <div class="row">
+            <!--  KID GAME CONTENT -->
+                <div class="kids-game-content col-md-12">
                     {% for game in games %}
                     {% if forloop.counter|divisibleby:2 %}
                     <div class="image-div content-pull-right col-md-12"" style="background: url('{{ MEDIA_URL }}{{game.image}}');">
@@ -168,10 +167,10 @@ $(document).ready(function(){
                     {% endif %}
                     {% endfor %}
                 </div>
-                {% endif %}
             </div>
-            {% endfor %}
+            {% endif %}
         </div>
+        {% endfor %}
     </div>
     {% endif %}
 
