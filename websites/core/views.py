@@ -23,8 +23,8 @@ def home(request):
     result["hots"] = hots
 
     # game section
-    result["PLAY"] = Type.objects.filter(category_id=constant.HELIO_PLAY_CATEGORY)
-    result["KIDS"] = Type.objects.filter(category_id=constant.HELIO_KIDS_CATEGORY)
+    result["play_types"] = Type.objects.filter(category_id=constant.HELIO_PLAY_CATEGORY)
+    result["kids_types"] = Type.objects.filter(category_id=constant.HELIO_KIDS_CATEGORY)
 
     # game categorys
     events = Event.objects.all()[:2]
@@ -66,8 +66,19 @@ def contact(request):
 
 def helio_kids(request):
     print "***START HELIO KIDS PAGE***"
-    
-    return render(request, 'websites/helio_kids.html')
+    result = {}
+    # Game type
+    kids_types = Type.objects.filter(category_id=constant.HELIO_KIDS_CATEGORY)
+  
+    games = {}
+    if kids_types:
+        for item in kids_types:
+            games[item] = Game.objects.filter(game_type_id=item.id)
+
+    result["kids_types"] = games
+    print games
+
+    return render(request, 'websites/helio_kids.html', {"result": result})
 
 def night_life(request):
     print "***START NIGHT LIFE CONTENT PAGE***"
