@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block extrastylesheet %}
-    <link href="{{ STATIC_URL }}assets/websites/css/helio_intro.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}assets/websites/css/helio_introduction.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block extrascript %}
    <!--  <script src = "{{ STATIC_URL }}assets/websites/js/powercard.js"></script> -->
@@ -22,15 +22,15 @@
         </div>
     </div>
     <!-- button -->
-    <ul class="nav btn-custom-group button-custom">
-        <li role="nav-item" class="col-md-4 col-md-4-custom active">
+    <ul class="nav nav-pills nav-justified intro-btn-group button-custom">
+        <li class="active">
             <a href="#helio-about" role="tab" data-toggle="tab" class="btn-custom-style">VE HELIO</a>
         </li>
-        <li role="nav-item" class="col-md-4 col-md-4-custom">
+        <li>
             <a href="#helio_philosophy" role="tab" data-toggle="tab" class="btn-custom-style">TRIET LY HELIO</a>
         </li>
-        <li role="nav-item" class="col-md-4 col-md-4-custom">
-            <a href="#overview" role="tab" data-toggle="tab" class="btn-custom-style">TONG QUAN</a>
+        <li>
+            <a href="#helio-overview" role="tab" data-toggle="tab" class="btn-custom-style">TONG QUAN</a>
         </li>
     </ul>
     
@@ -141,7 +141,7 @@
                     <p class="content-philosophy">Đó cũng chính là tôn chỉ hoạt động của chúng tôi!</p>
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="overview">
+            <div role="tabpanel" class="tab-pane" id="helio-overview">
                 <div class="overview-description">
                     <!-- INTRODUCE HELIO -->
                     <div>

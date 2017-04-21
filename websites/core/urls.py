@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^trai-nghiem/chi-tiet/$', views.tn_chi_tiet, name='chi_tiet'),
     url(r'^khuyen-mai/chi-tiet/$', views.km_chi_tiet, name='chi_tiet'),
 
-    url(r'^helio-intro/$', views.helio_intro, name='helio_intro'),
+    url(r'^helio-introduction/$', views.helio_introduction, name='helio_introduction'),
+    url(r'^helio-tcs/$', views.helio_tcs, name='helio_tcs'),
 
 ]
