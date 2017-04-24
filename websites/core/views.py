@@ -157,10 +157,10 @@ def helio_introduction(request):
     return render(request, 'websites/helio_introduction.html')
 
 
-def helio_tcs(request):
+def helio_term_condition(request):
     print "***START HELIO ABOUT PAGE***"
     
-    return render(request, 'websites/helio_tcs.html')
+    return render(request, 'websites/helio_term_condition.html')
 
 
 def events(request):
