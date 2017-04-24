@@ -86,13 +86,22 @@ $(document).ready(function(){
         </div>
 
         <!-- BUTTON GROUP -->
-        <ul class="nav nav-pills nav-justified kid-btn-group">
+
+        <ul class="nav btn-custom-group kid-btn-group">
+            {% for type in result.kids_types %}
+            <li  class="col-md-6 row">
+                <a href="#{{ type.sub_url|cut:'/helio-kids/#' }}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-kids/#' }}">{{type.name}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <!-- <ul class="nav nav-pills nav-justified kid-btn-group">
             {% for type in result.kids_types %}
             <li>
                 <a href="#{{ type.sub_url|cut:'/helio-kids/#' }}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-kids/#' }}">{{type.name}}</a>
             </li>
             {% endfor %}
-        </ul>
+        </ul> -->
     </div>
 
     <div class="tab-content">

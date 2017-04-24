@@ -109,7 +109,9 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     border-radius: 0px;
     background-image: none;
 }
-
+.kid-btn-group li {
+    padding-bottom: 10px;
+}
 .kid-btn-group li.active a.btn-custom-style {
     background-image: none;
     background-color: #fec231;
@@ -123,7 +125,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     left: 0;
     width: 0;
     height: 0;
-    border-width: 20px 234px 0 234px;
+    border-width: 20px 227px 0 227px;
     border-style: solid;
     border-color: #fec231 transparent transparent transparent;
 }
