@@ -1,151 +1,105 @@
 {% extends "layout.html" %}
+{% load i18n %} 
 {% block extrastylesheet %}
-<link href="{{ STATIC_URL }}assets/websites/css/helio_custom.css" rel="stylesheet" type="text/css" />
-<style type="text/css">
-    .game-group-content {
-        border: 1px solid #ddd;
-    }
-    .group-games {
-        margin-top: 18px;
-    }
-    .game-thumbnail {
-        padding: 0px;
-    }
-</style>
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/slide.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/helio_play.css">
+
 {% endblock %}
 {% block extrascript %}
+<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.carousel-1.1.min.js"></script>
+
 <script type="text/javascript">
-var HelioPlayFunction = (function ($) {
-    var helio_play = function () {
-        var _self = this;
-        this.initHelioPlayEvent = function () {
-            $('.game_filter').click(function() {
-                _self.helioPlayFilter();
-            });
+$(document).ready(function(){
+    var url = window.location.href;
+    var section_active = url.substring(url.lastIndexOf('/') + 2);
+    $(".play-btn-group li:first").addClass("active");
+    $(".tab-content .tab-pane:first").addClass("active");
+
+    $(".tab-content .tab-pane").each(function(){
+        var id = $(this).attr("id");
+        if(id === section_active) {
+            $(".play-btn-group li").removeClass("active");
+            $(".tab-content .tab-pane").removeClass("active");
+            $(".tab-content ."+id).addClass("active");
+            $(".play-btn-group ."+id).parent().addClass("active");
         }
-
-        this.helioPlayFilter = function () {
-            var selected = [];
-            $('input[type=checkbox]').each(function() {
-               if ($(this).is(":checked")) {
-                   selected.push($(this).attr('value'));
-               }
-            });
-            console.log(JSON.stringify(selected))
-            var param = {
-                game_filter: JSON.stringify(selected)
-            }
-            $.ajax({
-                type: 'POST',
-                url: '/vi/helio/helio-play/',
-                data: param,
-                success: function (data) {
-                    $("#play_content").html(data); 
-                },
-                error: function(err) {
-                    console.log(err)
-                
-                }
-            });
-        }
-    }
-    return helio_play;
-})(jQuery);
-
-(function (helio_play, $) {
-    $(document).ready(function(){
-        helio_play.initHelioPlayEvent();
-
     });
-})(new HelioPlayFunction(), jQuery);
-    
+
+    function initCoursel(element) {
+        $(element).html($(element).parent().find('.carousel-tmp').html());
+        var content_width = $(".container").width();
+        var w2 = content_width * 0.85;
+        $(element).carousel({
+            carouselWidth: content_width,
+            carouselHeight: 500,
+            directionNav:true,    
+            shadow:false, 
+            frontWidth:w2,
+            frontHeight:500,
+            hMargin: 0.1,
+            vMargin: 0.8,
+            short_description: true
+        });
+    }
+
+    $(".tab-content .tab-pane").each(function(){
+        initCoursel($(this).find('.carousel'));
+    });
+    $( window ).resize(function() {
+        $(".tab-content .tab-pane").each(function(){
+            initCoursel($(this).find('.carousel'));
+        });
+    });
+});
 </script>
-    
-
 {% endblock %}
-{% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'helio_play' %}">Helio Play</a></li>
-{% endblock %}
-
-{% block main_content %}
-    <div id="helio-page" class="tabs-left" style="padding-top: 150px; padding-bottom: 150px;">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#play" data-toggle="tab">Helio Play</a></li>
-            <li><a href="#play_map" data-toggle="tab">Helio Play Map</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="row tab-pane active" id="play">
-                <div class="col-md-12" style="padding-bottom: 15px;">
-                    <h2 class="title">Helio Play</h2>
-                    <hr class="line">
-                    <fieldset>
-                        <legend>Filter</legend>
-                        <div class="col-md-12">
-                            {% if game_filters %}
-                                {% for game_filter in game_filters %}
-                                <div class="col-md-3">
-                                    <input type="checkbox" class="game_filter" name="game_filter" value="{{game_filter.id}}">{{game_filter.name}}
-                                </div>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </fieldset>
-                    <div id="play_content">
-                    {% if games %}
-                        {% for game_type, game_group in games.items %}
-                        <fieldset>
-                            <legend>{{game_type}}</legend>
-                            <div class="col-md-12">
-                            {% for game in game_group %}
-                            <div class="row game-group-content">
-                                <div class="group-games">
-                                    <div class="col-md-2 game-thumbnail">
-                                        <div class="thumbnail">
-                                            <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-10">
-                                        <h3 class="name">{{game.name}} </h3>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <p style="font-weight: bold;">Description: </p>
-                                            </div>
-                                            <div class="col-md-9">
-                                                {{game.short_description | safe}}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <p style="font-weight: bold;">Appropriate for: </p>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <p>Trung tâm giải trí phức hợp Helio Center</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="line row">
-                            {% endfor %}
-                            </div>
-                        </fieldset>
-                        {% endfor %}
-                    {% endif %}   
-                    </div>
-                    
-                </div>
+{% block main_content %} 
+<!-- Page Header -->
+<div class="container">
+    <!-- CARD PAGE DESCRIPTION -->
+    <div class="page-top">
+        <div class="page-header-img">
+            <div>
+                <img src="{{ STATIC_URL }}assets/websites/images/helio-play-header.png" width="100%">
             </div>
-            <div class="row tab-pane" id="play_map">
+            <div class="page-title" align="center">
                 <div class="col-md-12">
-                    <h2>Helio Play Map</h2>
-                    <hr class="line">
-                    <div>
-                        <img src="{{ STATIC_URL }}assets/images/img1.jpg" class="img-responsive" style="width:100%" alt="Image">
-                    </div>
+                    <p class="page-title-text">HELIO KIDS</p>
                 </div>
             </div>
-            
+        </div>
+        <div align="center" class="page-header-text">
+            <div class="form-title">
+                <p class="text-description">Đến Helio Center, bạn được trải nghiệm một hình thức thanh toán hoàn toàn mới, không cần tiền mặt, không cần xu, chỉ cần quẹt thẻ Power Card và trải nghiệm cuộc vui. Thật dễ dàng đúng không !!! Chưa hết, toàn bộ thông tin tài khoản thẻ Helio Power Card của bạn: số dư, số ticket, khuyến mãi và nhiều tiện ích khác đều có thể dễ dàng tra cứu được. Quá tiện!</p>
+            </div>
         </div>
     </div>
+
+        <!-- BUTTON GROUP -->
+    <div class="play-btn-section">
+        <ul class="nav nav-pills nav-justified play-btn-group button-custom">
+            <li class="active">
+                <a href="#redemption" role="tab" data-toggle="tab" class="btn-custom-style">REDEMPTION GAME</a>
+            </li>
+            <li>
+                <a href="#video" role="tab" data-toggle="tab" class="btn-custom-style">VIDEO GAME</a>
+            </li>
+            <li>
+                <a href="#ride" role="tab" data-toggle="tab" class="btn-custom-style">RIDE GAME</a>
+            </li>
+        </ul>
+    </div>
+
+    
+        
+
+    
+    <!-- DOWNLOAD APP BANNER -->
+    <div class="app-banner">
+        <a href="#"><img src="{{ STATIC_URL }}assets/websites/images/download-app_banner.png" width="100%"></a>
+    </div>
+</div>
+
 {% endblock %}

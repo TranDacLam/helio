@@ -102,15 +102,18 @@ def get_posts(request):
     # return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type="application/json")
 
 
-def helio_play(request):
-    print "***START HELIO PLAY PAGE***"
+# def helio_play(request):
+#     print "***START HELIO PLAY PAGE***"
 
     #game_filter_list = Game_Filter.objects.all()
 
     #game_list = Game.objects.filter(category_id=5)
 
-    if request.method == 'POST':
-        print "request Data : ", request.POST["name"]
+
+    # if request.method == 'POST':
+    #     print "request Data : ", request.POST["name"]
+
+
         # game_filter =  request.POST.get("game_filter")
         # game_filter_arr = ast.literal_eval(game_filter)
         # if game_filter_arr:
@@ -127,10 +130,12 @@ def helio_play(request):
         #                 games[game_type] = []
         #             games[game_type].append(item)
 
-        if request.is_ajax():
-            return JsonResponse({'result':'You Have Call Success Post Action '})
 
-    return render(request, 'websites/ajax/play_content.html')
+    #     if request.is_ajax():
+    #         return JsonResponse({'result':'You Have Call Success Post Action '})
+
+    # return render(request, 'websites/ajax/play_content.html')
+
 
     #convert games to map by game type
     #games = {}
@@ -143,10 +148,10 @@ def helio_play(request):
 
    # return render(request, 'websites/helio_play.html', {'games': games, 'game_filters': game_filter_list})
 
-def helio_play_v2(request):
+def helio_play(request):
     print "***START HELIO PLAY PAGE***"
     
-    return render(request, 'websites/helio_play_v2.html')
+    return render(request, 'websites/helio_play.html')
 
 
 
