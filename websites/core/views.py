@@ -74,11 +74,16 @@ def helio_kids(request):
     # Game type
     kids_types = Type.objects.filter(category_id=constant.HELIO_KIDS_CATEGORY)
   
-    games = {}
+    datas = {}
+    promotions = {}
     if kids_types:
         for item in kids_types:
-            games[item] = Game.objects.filter(game_type_id=item.id)
-    result["kids_types"] = games
+            data = {}
+            data["games"] = Game.objects.filter(game_type_id=item.id)
+            data["promotions"] = Promotion.objects.filter(promotion_type_id=item.id)
+            datas[item] = data
+    result["datas"] = datas
+
 
     return render(request, 'websites/helio_kids.html', {"result": result})
 
@@ -114,11 +119,15 @@ def helio_play(request):
     # Game type
     play_types = Type.objects.filter(category_id=constant.HELIO_PLAY_CATEGORY)
   
-    games = {}
+    datas = {}
+    promotions = {}
     if play_types:
         for item in play_types:
-            games[item] = Game.objects.filter(game_type_id=item.id)
-    result["play_types"] = games
+            data = {}
+            data["games"] = Game.objects.filter(game_type_id=item.id)
+            data["promotions"] = Promotion.objects.filter(promotion_type_id=item.id)
+            datas[item] = data
+    result["datas"] = datas
 
     return render(request, 'websites/helio_play.html', {"result": result})
 
