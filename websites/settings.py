@@ -105,6 +105,8 @@ DATABASES = {
     }
 }
 
+# Custom User Model
+AUTH_USER_MODEL = 'core.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -139,6 +141,7 @@ JWT_AUTH = {
     # 'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=1700),
     'JWT_AUTH_HEADER_PREFIX':'Bearer'
 }
+JWT_VERIFY_EXPIRATION = False
 REST_USE_JWT = True
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/

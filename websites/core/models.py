@@ -2,9 +2,13 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.core.exceptions import ValidationError
-
+from django.utils.encoding import python_2_unicode_compatible
+from django.contrib.auth.models import AbstractUser
+import custom_models
 
 # Create your models here.
+
+
 class DateTimeModel(models.Model):
     """
     Abstract model that is used for the model using created and modified fields
@@ -21,6 +25,7 @@ class DateTimeModel(models.Model):
         abstract = True
 
 
+@python_2_unicode_compatible
 class Post(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
     image = models.ImageField(
@@ -39,6 +44,7 @@ class Post(DateTimeModel):
         return '%s' % (self.name)
 
 
+@python_2_unicode_compatible
 class Post_Type(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
@@ -58,6 +64,7 @@ class Post_Image(DateTimeModel):
                              blank=True)
 
 
+@python_2_unicode_compatible
 class Event(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
     image = models.ImageField(
@@ -66,13 +73,14 @@ class Event(DateTimeModel):
     content = models.TextField()
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
-    start_time = models.IntegerField(null=True, blank=True)
-    end_time = models.IntegerField(null=True, blank=True)
+    start_time = models.TimeField(null=True, blank=True)
+    end_time = models.TimeField(null=True, blank=True)
 
     def __str__(self):
         return '%s' % (self.name)
 
 
+@python_2_unicode_compatible
 class Game(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
     short_description = models.CharField(max_length=350)
@@ -86,6 +94,7 @@ class Game(DateTimeModel):
         return '%s' % (self.name)
 
 
+@python_2_unicode_compatible
 class Type(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
@@ -104,6 +113,7 @@ class Type(models.Model):
         verbose_name_plural = 'Type'
 
 
+@python_2_unicode_compatible
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
@@ -112,6 +122,7 @@ class Category(models.Model):
         return '%s' % (self.name)
 
 
+@python_2_unicode_compatible
 class Entertainment(DateTimeModel):
 
     def limit_category_entertainments():
@@ -145,6 +156,7 @@ class Entertainment(DateTimeModel):
         return '%s' % (self.name)
 
 
+@python_2_unicode_compatible
 class Promotion(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
     image = models.ImageField(
@@ -158,6 +170,7 @@ class Promotion(DateTimeModel):
         return '%s' % (self.name)
 
 
+@python_2_unicode_compatible
 class FAQ(DateTimeModel):
 
     def limit_category_Faq():
@@ -172,6 +185,7 @@ class FAQ(DateTimeModel):
         return '%s' % (self.question)
 
 
+@python_2_unicode_compatible
 class Hot(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
     sub_url = models.CharField(max_length=1000)
@@ -182,6 +196,7 @@ class Hot(DateTimeModel):
         return '%s' % (self.name)
 
 
+@python_2_unicode_compatible
 class Banner(DateTimeModel):
     image = models.ImageField(max_length=1000, upload_to="banners")
     sub_url = models.CharField(max_length=1000)
@@ -192,6 +207,7 @@ class Banner(DateTimeModel):
         return '%s' % (self.sub_url)
 
 
+@python_2_unicode_compatible
 class Contact(DateTimeModel):
     name = models.CharField(max_length=500)
     email = models.CharField(max_length=500)
@@ -202,8 +218,19 @@ class Contact(DateTimeModel):
         return '%s' % (self.name)
 
 
+@python_2_unicode_compatible
 class Transaction_Type(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return '%s' % (self.name)
+
+
+@python_2_unicode_compatible
+class Gift(DateTimeModel):
+    user = models.ForeignKey(custom_models.User)
+    promotion = models.ForeignKey(Promotion)
+    is_used = models.BooleanField('Used', default=False)
+
+    def __str__(self):
+        return '%s' % (self.user.name)
