@@ -9,6 +9,7 @@
 <script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.mousewheel.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.carousel-1.1.min.js"></script>
+<script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/helio_play.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -66,7 +67,7 @@ $(document).ready(function(){
             </div>
             <div class="page-title" align="center">
                 <div class="col-md-12">
-                    <p class="page-title-text">HELIO KIDS</p>
+                    <p class="page-title-text">HELIO PLAY</p>
                 </div>
             </div>
         </div>
@@ -77,22 +78,49 @@ $(document).ready(function(){
         </div>
     </div>
 
-        <!-- BUTTON GROUP -->
+    <!-- BUTTON GROUP -->
     <div class="play-btn-section">
         <ul class="nav nav-pills nav-justified play-btn-group button-custom">
-            <li class="active">
-                <a href="#redemption" role="tab" data-toggle="tab" class="btn-custom-style">REDEMPTION GAME</a>
+            {% for type in result.play_types %}
+            <li class="col-md-4">
+                <a href="#{{ type.sub_url|cut:'/helio-play/#' }}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-play/#' }}">{{type.name}}</a>
             </li>
-            <li>
-                <a href="#video" role="tab" data-toggle="tab" class="btn-custom-style">VIDEO GAME</a>
-            </li>
-            <li>
-                <a href="#ride" role="tab" data-toggle="tab" class="btn-custom-style">RIDE GAME</a>
-            </li>
+            {% endfor %}
         </ul>
     </div>
 
-    
+    <div class="tab-content">
+        {% for type, games in result.play_types.items %}
+        <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-play/#' }}" id="{{ type.sub_url|cut:'/helio-play/#' }}">
+            <!-- Games slider -->
+            <div class="carousel" >
+            </div>
+            {% if games %}
+            <div class="carousel-tmp hidden">
+                <div class="slides"> <!-- BEGIN CAROUSEL -->
+                    {% for game in games %}
+                    <div class="slideItem"> <!-- SLIDE ITEM -->
+                        <a href="#">
+                            <img src="{{ MEDIA_URL }}{{game.image}}">
+                        </a>
+                        <div class="short-description">
+                            <p class="title-content game-name">{{game.name}}</p>
+                            <p>{{game.short_description}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- line -->
+            <hr>
+
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+
+
         
 
     

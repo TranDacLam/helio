@@ -1,13 +1,16 @@
 
+/*Button*/
+
 .play-btn-section {
     width: 85%;
     position: relative;
     margin: auto;
 }
 
-.play-btn-group {
-    margin-bottom: 50px;
-    margin-top: 50px;
+.play-btn-group li {
+    padding-bottom: 50px;
+    padding-right: 2px;
+    padding-left: 2px;
 }
 
 .play-btn-group li a.btn-custom-style:hover,
@@ -48,4 +51,18 @@
 
 .content-section {
     font-family: "Yanone Kaffeesatz";
+}
+
+
+/*END BUTTON*/
+
+/*SLIDE*/
+
+.short-description {
+    margin-top: 50px;
+}
+
+.short-description .title-content.game-name {
+    color: #fec231;
+    text-transform: uppercase;
 }

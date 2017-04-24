@@ -15,8 +15,6 @@ urlpatterns = [
 
 
     url(r'^get-posts/$', views.get_posts, name='get_posts'),
-
-
     
     url(r'^helio-play/game-detail$', views.game_detail, name='game_detail'),
     url(r'^combo-product/$', views.combo_product, name='combo_product'),
