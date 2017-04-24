@@ -11,3 +11,8 @@ public/*
 public/media/*
 
 !public/media/hots/
+!public/media/banners/
+!public/media/events/
+!public/media/games/
+!public/media/posts/
+!public/media/types/
