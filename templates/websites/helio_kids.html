@@ -15,6 +15,7 @@
 <!-- Page Header -->
 <div class="container">
     <!-- CARD PAGE DESCRIPTION -->
+    {% if result.page_info %}
     <div class="page-top">
         <div class="page-header-img">
             <div>
@@ -22,16 +23,17 @@
             </div>
             <div class="page-title" align="center">
                 <div class="col-md-12">
-                    <p class="page-title-text">HELIO KIDS</p>
+                    <p class="page-title-text">{{result.page_info.name}}</p>
                 </div>
             </div>
         </div>
         <div align="center" class="page-header-text">
             <div class="form-title">
-                <p class="text-description">Đến Helio Center, bạn được trải nghiệm một hình thức thanh toán hoàn toàn mới, không cần tiền mặt, không cần xu, chỉ cần quẹt thẻ Power Card và trải nghiệm cuộc vui. Thật dễ dàng đúng không !!! Chưa hết, toàn bộ thông tin tài khoản thẻ Helio Power Card của bạn: số dư, số ticket, khuyến mãi và nhiều tiện ích khác đều có thể dễ dàng tra cứu được. Quá tiện!</p>
+                <p class="text-description">{{result.page_info.description}}</p>
             </div>
         </div>
     </div>
+    {% endif %}
 
     {% if result.kids_types %}
     

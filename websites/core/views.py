@@ -67,6 +67,10 @@ def contact(request):
 def helio_kids(request):
     print "***START HELIO KIDS PAGE***"
     result = {}
+    #Get page info
+    page_info = Category.objects.get(pk=constant.HELIO_KIDS_CATEGORY)
+    result["page_info"] = page_info
+
     # Game type
     kids_types = Type.objects.filter(category_id=constant.HELIO_KIDS_CATEGORY)
   
@@ -103,6 +107,10 @@ def get_posts(request):
 def helio_play(request):
     print "***START HELIO PLAY PAGE***"
     result = {}
+    #Get page info
+    page_info = Category.objects.get(pk=constant.HELIO_PLAY_CATEGORY)
+    result["page_info"] = page_info
+    
     # Game type
     play_types = Type.objects.filter(category_id=constant.HELIO_PLAY_CATEGORY)
   
