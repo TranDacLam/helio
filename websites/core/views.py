@@ -74,9 +74,7 @@ def helio_kids(request):
     if kids_types:
         for item in kids_types:
             games[item] = Game.objects.filter(game_type_id=item.id)
-
     result["kids_types"] = games
-    print games
 
     return render(request, 'websites/helio_kids.html', {"result": result})
 
@@ -104,50 +102,17 @@ def get_posts(request):
 
 def helio_play(request):
     print "***START HELIO PLAY PAGE***"
+    result = {}
+    # Game type
+    play_types = Type.objects.filter(category_id=constant.HELIO_PLAY_CATEGORY)
+  
+    games = {}
+    if play_types:
+        for item in play_types:
+            games[item] = Game.objects.filter(game_type_id=item.id)
+    result["play_types"] = games
 
-    #game_filter_list = Game_Filter.objects.all()
-
-    #game_list = Game.objects.filter(category_id=5)
-
-    if request.method == 'POST':
-        print "request Data : ", request.POST["name"]
-        # game_filter =  request.POST.get("game_filter")
-        # game_filter_arr = ast.literal_eval(game_filter)
-        # if game_filter_arr:
-        #     lst =  ast.literal_eval(game_filter)
-        #     game_list = game_list.filter(game_filter__in=lst).distinct()
-
-        # #convert games to map by game type
-        # games = {}
-            
-        # if game_list:
-        #         for item in game_list:
-        #             game_type = item.game_type.name
-        #             if game_type not in games.keys():
-        #                 games[game_type] = []
-        #             games[game_type].append(item)
-
-        if request.is_ajax():
-            return JsonResponse({'result':'You Have Call Success Post Action '})
-
-    return render(request, 'websites/ajax/play_content.html')
-
-    #convert games to map by game type
-    #games = {}
-    # if game_list:
-    #     for item in game_list:
-    #         game_type = item.game_type.name
-    #         if game_type not in games.keys():
-    #             games[game_type] = []
-    #         games[game_type].append(item)
-
-   # return render(request, 'websites/helio_play.html', {'games': games, 'game_filters': game_filter_list})
-
-def helio_play_v2(request):
-    print "***START HELIO PLAY PAGE***"
-    
-    return render(request, 'websites/helio_play_v2.html')
-
+    return render(request, 'websites/helio_play.html', {"result": result})
 
 
 def helio_introduction(request):
