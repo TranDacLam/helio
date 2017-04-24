@@ -43,7 +43,6 @@ var KidsFunction = (function ($) {
             var content_width = $(".container").width();
             var w = content_width * 0.85;
             var h = content_width > 1100 ? 500 : 400;
-            console.log(content_width);
             $(element).carousel({
                 carouselWidth: content_width,
                 carouselHeight: 500,
