@@ -9,51 +9,7 @@
 <script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.mousewheel.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.carousel-1.1.min.js"></script>
-
-<script type="text/javascript">
-$(document).ready(function(){
-    var url = window.location.href;
-    var section_active = url.substring(url.lastIndexOf('/') + 2);
-    $(".kid-btn-group li:first").addClass("active");
-    $(".tab-content .tab-pane:first").addClass("active");
-
-    $(".tab-content .tab-pane").each(function(){
-        var id = $(this).attr("id");
-        if(id === section_active) {
-            $(".kid-btn-group li").removeClass("active");
-            $(".tab-content .tab-pane").removeClass("active");
-            $(".tab-content ."+id).addClass("active");
-            $(".kid-btn-group ."+id).parent().addClass("active");
-        }
-    });
-
-    function initCoursel(element) {
-        $(element).html($(element).parent().find('.carousel-tmp').html());
-        var content_width = $(".container").width();
-        var w2 = content_width * 0.85;
-        $(element).carousel({
-            carouselWidth: content_width,
-            carouselHeight: 500,
-            directionNav:true,    
-            shadow:false, 
-            frontWidth:w2,
-            frontHeight:500,
-            hMargin: 0.1,
-            vMargin: 0.8,
-            short_description: true
-        });
-    }
-
-    $(".tab-content .tab-pane").each(function(){
-        initCoursel($(this).find('.carousel'));
-    });
-    $( window ).resize(function() {
-        $(".tab-content .tab-pane").each(function(){
-            initCoursel($(this).find('.carousel'));
-        });
-    });
-});
-</script>
+<script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/helio_kids.js"></script>
 {% endblock %}
 {% block main_content %} 
 <!-- Page Header -->
@@ -86,22 +42,13 @@ $(document).ready(function(){
         </div>
 
         <!-- BUTTON GROUP -->
-
         <ul class="nav btn-custom-group kid-btn-group">
             {% for type in result.kids_types %}
-            <li  class="col-md-6 row">
+            <li  class="col-md-6">
                 <a href="#{{ type.sub_url|cut:'/helio-kids/#' }}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-kids/#' }}">{{type.name}}</a>
             </li>
             {% endfor %}
         </ul>
-
-        <!-- <ul class="nav nav-pills nav-justified kid-btn-group">
-            {% for type in result.kids_types %}
-            <li>
-                <a href="#{{ type.sub_url|cut:'/helio-kids/#' }}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-kids/#' }}">{{type.name}}</a>
-            </li>
-            {% endfor %}
-        </ul> -->
     </div>
 
     <div class="tab-content">
@@ -129,12 +76,12 @@ $(document).ready(function(){
 
             <!-- line -->
             <hr>
-            <div class="row">
-            <!--  KID GAME CONTENT -->
+            <div class="row view-more-div">
+                <!--  KID GAME CONTENT -->
                 <div class="kids-game-content col-md-12">
                     {% for game in games %}
-                    {% if forloop.counter|divisibleby:2 %}
-                    <div class="image-div content-pull-right col-md-12"" style="background: url('{{ MEDIA_URL }}{{game.image}}');">
+                    {% if forloop.counter|divisibleby:2 %} 
+                    <div class="image-div content-pull-right col-md-12" style="background: url('{{ MEDIA_URL }}{{game.image}}'); display: none;">
                         <div class="row">
                             <div class="kids-content-text col-md-5">
                                 <div class="col-md-9 image-text">
@@ -152,7 +99,7 @@ $(document).ready(function(){
                         </div>
                     </div>
                     {% else %}
-                    <div class="image-div content-pull-left col-md-12" style="background: url('{{ MEDIA_URL }}{{game.image}}');">
+                    <div class="image-div content-pull-left col-md-12" style="background: url('{{ MEDIA_URL }}{{game.image}}'); display: none;">
                         <div class="row">
                             <div class="kids-content-image col-md-7">
                                 
@@ -175,6 +122,9 @@ $(document).ready(function(){
                     </div>
                     {% endif %}
                     {% endfor %}
+                </div>
+                <div class="btn-read-more btn-view-more col-md-12" align="center">
+                    <a class="btn-custom-style btn-custom-style-kids" role="button">{% trans "btn.view_more" %}</a>
                 </div>
             </div>
             {% endif %}

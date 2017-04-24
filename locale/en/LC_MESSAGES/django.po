@@ -45,6 +45,9 @@ msgstr "Click now"
 
 msgid "btn.view_all"
 msgstr "View all"
+
+msgid "btn.view_more"
+msgstr "View more"
 # END BUTTON
 
 # START HOME PAGE

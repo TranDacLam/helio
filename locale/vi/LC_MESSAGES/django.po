@@ -45,6 +45,9 @@ msgstr "Tìm hiểu ngay"
 
 msgid "btn.view_all"
 msgstr "Xem tất cả"
+
+msgid "btn.view_more"
+msgstr "Hiển thị thêm"
 # END BUTTON
 
 # START HOME PAGE
