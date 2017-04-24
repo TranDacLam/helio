@@ -110,7 +110,7 @@ def helio_play(request):
     #Get page info
     page_info = Category.objects.get(pk=constant.HELIO_PLAY_CATEGORY)
     result["page_info"] = page_info
-    
+
     # Game type
     play_types = Type.objects.filter(category_id=constant.HELIO_PLAY_CATEGORY)
   
@@ -186,5 +186,16 @@ def game_detail(request):
 
 def promotions(request):
     print "***START EVENT CONTENT PAGE***"
-    
-    return render(request, 'websites/promotions.html')
+    result = {}
+
+    # Promotion type
+    promotion_types = Category.objects.filter(pk__in=[constant.HELIO_PLAY_CATEGORY, constant.HELIO_KIDS_CATEGORY, constant.NIGHT_LIFE_CATEGORY])
+
+  
+    promotion = {}
+    if promotion_types:
+        for item in promotion_types:
+            promotion[item] = Promotion.objects.filter(promotion_type_id=item.id)
+    result["promotion_types"] = promotion
+
+    return render(request, 'websites/promotions.html', {"result": result})
