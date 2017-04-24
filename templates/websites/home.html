@@ -256,8 +256,8 @@
                 <div class="event-detail">
                     <div class="col-md-2">
                         <center>
-                            <p class="event-date">14</p>
-                            <p class="event-month">Thang 2</p>
+                            <p class="event-date">{{ event.start_date | date:"d" }}</p>
+                            <p class="event-month">{{ event.start_date | date:"M" }}</p>
                         </center>
                     </div>
                     <div class="col-md-8">
