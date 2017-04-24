@@ -4,6 +4,7 @@ from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 import ast
 from django.http import JsonResponse
+import constant
 
 
 def home(request):
@@ -21,28 +22,68 @@ def home(request):
     hots = Hot.objects.filter(is_show=True).order_by('modified')[:4]
     result["hots"] = hots
 
-    # game categorys
-    categorys = Category.objects.all().order_by('id')
-    categorys_map = {}
-    for category in categorys:
-        types = Type.objects.filter(category_id=int(category.id))
-        # types_map = {}
-        # for item_type in types:
-        #     game = Game.objects.filter(game_type_id=int(item_type.id))[:1]
-        #     types_map[item_type.name] = game
-
-        categorys_map[category.name] = types
-        print category.name
-
-    result["categorys"] = categorys_map
-    print categorys_map
+    # game section
+    result["play_types"] = Type.objects.filter(category_id=constant.HELIO_PLAY_CATEGORY)
+    result["kids_types"] = Type.objects.filter(category_id=constant.HELIO_KIDS_CATEGORY)
 
     # game categorys
     events = Event.objects.all()[:2]
     result["events"] = events
 
-
     return render(request, 'websites/home.html', {"result":result})
+
+def power_card(request):
+    print "***START Power Card Introduction PAGE***"
+    result = {}
+
+    # Powercard info
+    powercard_type = Post_Type.objects.get(pk=constant.POWERCARD_TYPE_ID)
+    result["powercard_type"] = powercard_type
+
+    # Powercard list
+    powercards = Post.objects.filter(post_type_id=constant.POWERCARD_TYPE_ID)
+    result["powercards"] = powercards
+
+    faqs = FAQ.objects.filter(category_id=constant.POWERCARD_FAQS_CATEGORY)[:4]
+    result["faqs"] = faqs
+
+    return render(request, 'websites/power_card.html', {"result":result})
+
+def faqs(request):
+    print "***START FAQs PAGE***"
+    result = {}
+    # FAWs list
+    faqs = FAQ.objects.all()
+    result["faqs"] = faqs
+    
+    return render(request, 'websites/faqs.html', {"result":result})
+
+def contact(request):
+    print "***START CONTACT CONTENT PAGE***"
+    
+    return render(request, 'websites/contact.html')
+
+
+def helio_kids(request):
+    print "***START HELIO KIDS PAGE***"
+    result = {}
+    # Game type
+    kids_types = Type.objects.filter(category_id=constant.HELIO_KIDS_CATEGORY)
+  
+    games = {}
+    if kids_types:
+        for item in kids_types:
+            games[item] = Game.objects.filter(game_type_id=item.id)
+
+    result["kids_types"] = games
+    print games
+
+    return render(request, 'websites/helio_kids.html', {"result": result})
+
+def night_life(request):
+    print "***START NIGHT LIFE CONTENT PAGE***"
+    
+    return render(request, 'websites/night_life.html')
 
 # Create your views here.
 def get_posts(request):
@@ -108,15 +149,18 @@ def helio_play_v2(request):
     return render(request, 'websites/helio_play_v2.html')
 
 
-def helio_kids(request):
-    print "***START HELIO KIDS PAGE***"
-    
-    return render(request, 'websites/helio_kids.html')
 
-def helio_about(request):
+def helio_introduction(request):
+
     print "***START HELIO ABOUT PAGE***"
     
-    return render(request, 'websites/helio_about.html')
+    return render(request, 'websites/helio_introduction.html')
+
+
+def helio_term_condition(request):
+    print "***START HELIO ABOUT PAGE***"
+    
+    return render(request, 'websites/helio_term_condition.html')
 
 
 def events(request):
@@ -145,21 +189,6 @@ def km_chi_tiet(request):
     
     return render(request, 'websites/km_chi_tiet.html')
 
-def lienhe(request):
-    print "***START lien he CONTENT PAGE***"
-    
-    return render(request, 'websites/lienhe.html')
-
-def FAQ(request):
-    print "***START FAQs PAGE***"
-
-    return render(request, 'websites/FAQ.html')
-
-def power_card(request):
-    print "***START Power Card Introduction PAGE***"
-
-    return render(request, 'websites/power_card.html')
-
 def membership(request):
     print "***START Membership Introduction PAGE***"
 
@@ -180,11 +209,6 @@ def game_detail(request):
     print "***START EVENT CONTENT PAGE***"
     
     return render(request, 'websites/game_detail.html')
-
-def helio_night_life(request):
-    print "***START EVENT CONTENT PAGE***"
-    
-    return render(request, 'websites/helio_night_life.html')
 
 
 def promotions(request):

@@ -62,6 +62,18 @@ msgstr "HELIO CENTER EVENT"
 
 msgid "homepage.title.section.entertaiment"
 msgstr "TRUNG TÂM VUI CHƠI GIẢI TRÍ TẠI ĐÀ NẴNG"
+
+msgid "homepage.text.night_life"
+msgstr "NIGHT LIFE"
+
+msgid "homepage.text.play"
+msgstr "PLAY"
+
+msgid "homepage.text.kids"
+msgstr "KIDS"
+
+msgid "homepage.text.coffee"
+msgstr "COFFEE"
 # END HOME PAGE
 
 #START FOOTER
@@ -70,4 +82,25 @@ msgstr "2/9 str, Hoa Cuong Bac Ward, Hai Chau Dist, Da Nang City, Viet Nam"
 
 msgid "footer.menu.home"
 msgstr "HOME"
+
+msgid "footer.menu.about"
+msgstr "ABOUTS"
+
+msgid "footer.menu.career"
+msgstr "CAREER"
+
+msgid "footer.menu.contact"
+msgstr "CONTACT"
+
+msgid "footer.menu.news"
+msgstr "NEWS"
+
+msgid "footer.menu.experience"
+msgstr "TRAI NGHIEM"
+
+msgid "footer.menu.policy"
+msgstr "CHINH SACH"
+
+msgid "footer.menu.terms_of_use"
+msgstr "DIEU KHOAN SU DUNG"   
 #END FOOTER

@@ -174,7 +174,7 @@ class Promotion(DateTimeModel):
 class FAQ(DateTimeModel):
 
     def limit_category_Faq():
-        return {'name_en__in': ['FAQs']}
+        return {'name_en__in': ['POWERCARD']}
 
     question = models.CharField(max_length=255, unique=True)
     answer = models.TextField()

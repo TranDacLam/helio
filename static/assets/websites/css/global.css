@@ -29,6 +29,23 @@ p {
     letter-spacing: 1.8;
     line-height: 40px;
 }
+/*Event notification*/
+.text-center.event-new {
+     background-image: linear-gradient(to right, #e436aa, #2c1b76);
+}
+.text-center.event-new p {
+    padding: 10px;
+    color: #fff;
+    margin-bottom: 0px;
+    font-family: "Cabin";
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+.fa.fa-bell-o {
+    transform: rotate(30deg);
+    margin-right: 10px;
+}
 
 /*HEADER*/
 .header {
@@ -127,14 +144,6 @@ p {
   color: #e436aa;
 }
 
-@media (max-width:767px) {
-    .navbar-toggle.pull-left {
-        margin-left: 10px;
-    }
-    .menu-language {
-        margin-left: 0px;
-    }
-}
 /*END HEADER*/
 
 .time-wrapper p {
@@ -196,7 +205,7 @@ a.btn-custom-style {
     border-width: 1px;
     border-image-source: linear-gradient(16deg, #e436aa, #2c1b76);
     border-image-slice: 1;
-    padding: 6px 15px;
+    padding: 9px 15px 3px 15px;
     text-decoration: none;
     text-transform: uppercase;
 }
@@ -219,12 +228,38 @@ a.btn-custom-style:hover {
     border-style: dotted;
 }
 .page-header-text {
-    width: 80%;
+    width: 70%;
     padding-top: 30px;
     margin: auto;
-    text-align: justify;
+    text-align: center;
 }
+
+.app-banner {
+    margin-top: 50px;
+    margin-bottom: 80px;
+}
+
+/*FOOTER*/
+.menuwidget.nav li {
+    width: 100%;
+} 
+.menuwidget.nav li a {
+    font-size: 18px;
+    font-family: "Yanone Kaffeesatz";
+    color: #fff;
+}
+.menuwidget.nav li a:hover {
+    background: transparent;
+}
+
 @media (max-width: 992px) {
+    .navbar-toggle.pull-left {
+        margin-left: 10px;
+    }
+    .menu-language {
+        margin-left: 0px;
+    }
+
     .page-title {
         position: static;
         margin-top: 50px;
@@ -239,4 +274,5 @@ a.btn-custom-style:hover {
     .page-header-img {
         margin-bottom: 0px;
     } 
+
 }
