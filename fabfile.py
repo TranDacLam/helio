@@ -51,8 +51,7 @@ VERBOSITY = ('', '') if DEBUG else ('-q', '-v 0')
 def restart_app_server():
     """ Restarts remote nginx and uwsgi.
     """
-    sudo("su -s /bin/bash www-data")
-    sudo("uwsgi --reload /tmp/helio_report.pid")
+    sudo("uwsgi --reload /tmp/helio_web.pid")
 
 def deploy():
     with cd(PROJECT_PATH):
@@ -66,14 +65,14 @@ def deploy():
             with prefix(env.activate):
                 run('pip install -r ../requirements.txt')
                 sudo('python manage.py collectstatic --noinput')
-                restart_app_server()
+                sudo('su -s /bin/bash www-data -c "%s;%s" '%(env.activate,"uwsgi --reload /tmp/helio_web.pid"))
 
         
 
 def su(pwd, user, command):
     with settings(
         password= "%s" % pwd,
-        sudo_prefix="su %s -c " % user,
+        sudo_prefix="su %s -c " % user
         sudo_prompt="Password:"
         ):
         sudo(command)
