@@ -226,7 +226,7 @@ def promotions(request):
         category_all.id = 0
         datas[category_all] = promotions_all
 
-    result["datas"] = datas
+    result["datas"] = "AAAAAAAAAAAAAAAA"
 
     print "Promotions: ", datas
 
