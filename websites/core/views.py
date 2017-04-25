@@ -202,18 +202,26 @@ def promotions(request):
 
     datas = {}
     if promotion_category:
+        promotions_all = []
         for category in promotion_category:
             datas[category] = []
+            promotions = []
             types = category.game_category_rel.all()
             if types:
                 for promotion_type in types:
-                    promotions = promotion_type.promotion_type_rel.all().values()
+                    promotions = promotion_type.promotion_type_rel.all().order_by('name')
                     print promotions
 
-                    for x in promotions:
-                        datas[category].append(x)
+                    for promotion in promotions:
+                        datas[category].append(promotion)
+                        promotions_all.append(promotion)
                     #     pass
                     # datas[category].append(promotions)
+
+        category_all = Category();
+        category_all.name = "ALL"
+        category_all.id = 0
+        datas[category_all] = promotions_all
 
     result["datas"] = datas
     # print datas

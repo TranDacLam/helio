@@ -75,23 +75,18 @@
 .content-pull-left.image-div {
     background-position: left;
 }
-a.btn-custom-style.btn-custom-style-kids {
+a.btn-custom-style.btn-custom-style-promotion {
     border-image-source: linear-gradient(16deg, #f4963a, #fff);
 }
-.active a.btn-custom-style.btn-custom-style-kids:focus,
-a.btn-custom-style.btn-custom-style-kids:focus, 
-a.btn-custom-style.btn-custom-style-kids:hover {
+.active a.btn-custom-style.btn-custom-style-promotion:focus,
+a.btn-custom-style.btn-custom-style-promotion:focus, 
+a.btn-custom-style.btn-custom-style-promotion:hover {
     color: #f4963a;
     background-color: #fff;
     border-image-source: linear-gradient(16deg, #f4963a, #fff);
     background-image: none;
 }
 /*END GAME CONTENT CSS*/
-
-.pricing-div {
-    margin-bottom: 50px;
-    margin-top: 50px;
-}
 .promotion-btn-group {
     margin-right: -2px;
     margin-left: -2px;
@@ -111,7 +106,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     background-image: none;
 }
 .promotion-btn-group li {
-    padding-bottom: 50px;
+    padding-bottom: 25px;
     padding-right: 2px;
     padding-left: 2px;
 }
@@ -128,7 +123,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     left: 0;
     width: 0;
     height: 0;
-    border-width: 20px 189px 0 189px;
+    border-width: 20px 141px 0 141px;
     border-style: solid;
     border-color: #ed3aa7 transparent transparent transparent;
 }
@@ -143,7 +138,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     display: none;
 }
 
-.btn-view-more {
+.div-view-more {
     margin-top: 50px;
 }
 

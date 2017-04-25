@@ -6,9 +6,6 @@
 
 {% endblock %}
 {% block extrascript %}
-<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.mousewheel.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.carousel-1.1.min.js"></script>
 <script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/promotions.js"></script>
 {% endblock %}
 {% block main_content %} 
@@ -29,7 +26,7 @@
         <!-- BUTTON GROUP -->
         <ul class="nav btn-custom-group promotion-btn-group">
             {% for category in result.datas %}
-            <li  class="col-md-4">
+            <li  class="col-md-3">
                 <a href="#promotion{{ category.id }}" role="tab" data-toggle="tab" class="btn-custom-style">{{category.name}}</a>
             </li>
             {% endfor %}
@@ -56,12 +53,12 @@
                                     </div>
                                     <p class="img-font-size">{{promotion.name}}</p>
                                     <p class="img-text-description">{{promotion.short_description}}</p>
-                                    <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                                    <a class="btn btn-custom-style btn-custom-style-promotion" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
                                 </div>
                             </div>
 
                             <div class="image-hidden-sm-up col-md-7">
-                                <div class="row"><img src="{{ MEDIA_URL }}{{game.image}}" width="100%"></div>
+                                <div class="row"><img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%"></div>
                             </div>
                         </div>
                     </div>
@@ -75,7 +72,7 @@
                                     </div>
                                     <p class="img-font-size">{{promotion.name}}</p>
                                     <p class="img-text-description">{{promotion.short_description}}</p>
-                                    <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                                    <a class="btn btn-custom-style btn-custom-style-promotion" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
                                 </div>
                             </div>
                             <div class="kids-content-image col-md-7">
@@ -86,8 +83,8 @@
                     {% endif %}
                     {% endfor %}
                 </div>
-                <div class="btn-read-more btn-view-more col-md-12" align="center">
-                    <a class="btn-custom-style btn-custom-style-kids" role="button">{% trans "btn.view_more" %}</a>
+                <div class="btn-read-more div-view-more col-md-12" align="center">
+                    <a class="btn-view-more btn-custom-style btn-custom-style-promotion" role="button">{% trans "btn.view_more" %}</a>
                 </div>
             </div>
             

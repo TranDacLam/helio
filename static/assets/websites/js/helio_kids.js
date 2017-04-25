@@ -24,10 +24,11 @@ var KidsFunction = (function ($) {
                 _self.viewMore($(this).find(".view-more-div"));
             });
             $(".btn-view-more").click(function() {
-                var size_list = $(this).parent().find(".image-div").size();
-                var id = $(this).parent().parent().attr("id");
+                var div_parent = $(this).parent().parent();
+                var size_list = $(div_parent).find(".image-div").size();
+                var id = $(div_parent).parent().attr("id");
                 show_num[id] += view_more;
-                _self.viewMore($(this).parent());
+                _self.viewMore(div_parent);
             });
             $(".tab-content .tab-pane").each(function(){
                 _self.initCoursel($(this).find('.carousel'));

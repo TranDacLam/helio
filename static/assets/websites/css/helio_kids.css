@@ -112,7 +112,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     background-image: none;
 }
 .kid-btn-group li {
-    padding-bottom: 50px;
+    padding-bottom: 25px;
     padding-right: 2px;
     padding-left: 2px;
 }
@@ -144,7 +144,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     display: none;
 }
 
-.btn-view-more {
+.div-view-more {
     margin-top: 50px;
 }
 
