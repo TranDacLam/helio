@@ -37,14 +37,14 @@ def power_card(request):
     result = {}
 
     # Powercard info
-    powercard_type = Post_Type.objects.get(pk=constant.POWERCARD_TYPE_ID)
+    powercard_type = Post_Type.objects.get(pk=constant.POWERCARD_POST_TYPE_ID)
     result["powercard_type"] = powercard_type
 
     # Powercard list
-    powercards = Post.objects.filter(post_type_id=constant.POWERCARD_TYPE_ID)
+    powercards = Post.objects.filter(post_type_id=constant.POWERCARD_POST_TYPE_ID)
     result["powercards"] = powercards
 
-    faqs = FAQ.objects.filter(category_id=constant.POWERCARD_FAQS_CATEGORY)[:4]
+    faqs = FAQ.objects.filter(category_id=constant.POWERCARD_FAQS_CATEGORY)
     result["faqs"] = faqs
 
     return render(request, 'websites/power_card.html', {"result":result})
@@ -227,5 +227,21 @@ def promotions(request):
         datas[category_all] = promotions_all
 
     result["datas"] = datas
-    # print datas
+
+    # print "Promotions: ", datas
+
     return render(request, 'websites/promotions.html', {"result": result})
+
+def careers(request):
+    print "***START CARRER CONTENT PAGE***"
+    result = {}
+
+    # Careers info
+    careers_type = Post_Type.objects.get(pk=constant.CAREERS_POST_TYPE_ID)
+    result["careers_type"] = careers_type
+
+    # Careers list
+    careers = Post.objects.filter(post_type_id=constant.CAREERS_POST_TYPE_ID)
+    result["careers"] = careers
+
+    return render(request, 'websites/careers.html', {"result": result})
