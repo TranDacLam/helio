@@ -228,12 +228,20 @@ def promotions(request):
 
     result["datas"] = datas
 
-    print "Promotions: ", datas
+    # print "Promotions: ", datas
 
     return render(request, 'websites/promotions.html', {"result": result})
 
-def career(request):
+def careers(request):
     print "***START CARRER CONTENT PAGE***"
     result = {}
 
-    return render(request, 'websites/career.html', {"result": result})
+    # Careers info
+    careers_type = Post_Type.objects.get(pk=constant.CAREERS_POST_TYPE_ID)
+    result["careers_type"] = careers_type
+
+    # Careers list
+    careers = Post.objects.filter(post_type_id=constant.CAREERS_POST_TYPE_ID)
+    result["careers"] = careers
+
+    return render(request, 'websites/careers.html', {"result": result})
