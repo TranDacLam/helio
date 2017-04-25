@@ -164,7 +164,7 @@ class Promotion(DateTimeModel):
     short_description = models.CharField(max_length=350)
     content = models.TextField()
     promotion_type = models.ForeignKey(
-        'Type', related_name='romotion_type_rel', on_delete=models.CASCADE)
+        'Type', related_name='promotion_type_rel', on_delete=models.CASCADE)
 
     def __str__(self):
         return '%s' % (self.name)
