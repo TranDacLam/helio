@@ -227,5 +227,7 @@ def promotions(request):
         datas[category_all] = promotions_all
 
     result["datas"] = datas
-    # print datas
+
+    print "Promotions: ", datas
+
     return render(request, 'websites/promotions.html', {"result": result})
