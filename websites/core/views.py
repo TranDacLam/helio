@@ -201,17 +201,6 @@ def promotions(request):
     result = {}
 
     # Promotion type
-<<<<<<< HEAD
-    promotion_types = Category.objects.filter(pk__in=[constant.HELIO_PLAY_CATEGORY, constant.HELIO_KIDS_CATEGORY, constant.NIGHT_LIFE_CATEGORY])
-
-  
-    promotion = {}
-    if promotion_types:
-        for item in promotion_types:
-            promotion[item] = Promotion.objects.filter(promotion_type_id=item.id)
-    result["promotion_types"] = promotion
-
-=======
     promotion_category = Category.objects.filter(pk__in=[constant.HELIO_PLAY_CATEGORY, constant.HELIO_KIDS_CATEGORY, constant.NIGHT_LIFE_CATEGORY])
 
     datas = {}
@@ -231,5 +220,4 @@ def promotions(request):
 
     result["datas"] = datas
     # print datas
->>>>>>> 613072b2a0585cb2f6cfc55d700719e46974cd0a
     return render(request, 'websites/promotions.html', {"result": result})
