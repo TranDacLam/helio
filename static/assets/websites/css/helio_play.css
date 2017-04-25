@@ -1,18 +1,15 @@
 
 /*Button*/
-
 .play-btn-section {
     width: 85%;
     position: relative;
     margin: auto;
 }
-
-.play-btn-group li {
-    padding-bottom: 50px;
-    padding-right: 2px;
-    padding-left: 2px;
+.play-btn-group {
+    margin-bottom: 50px;
+    margin-right: -2px;
+    margin-left: -2px;
 }
-
 .play-btn-group li a.btn-custom-style:hover,
 .play-btn-group li a.btn-custom-style:focus,
 .play-btn-group li a {
@@ -21,13 +18,16 @@
     border-radius: 0px;
     background-image: none;
 }
-
+.play-btn-group li {
+    padding-bottom: 50px;
+    padding-right: 2px;
+    padding-left: 2px;
+}
 .play-btn-group li.active a.btn-custom-style {
     background-image: none;
     background-color: #36bdeb;
     border: 1px solid #000;
 }
-
 .play-btn-group li.active a.btn-custom-style:after {
     content: "";
     position: absolute;
@@ -35,25 +35,13 @@
     left: 0;
     width: 0;
     height: 0;
-    border-width: 20px 150px 0;
+    border-width: 20px 160px 0;
     border-style: solid;
     border-color: #36bdeb transparent transparent transparent;
-}
-
-@media (max-width: 992px) {
-    .play-btn-group li.active a.btn-custom-style:after {
-        background-image: none;
-        background-color: #36bdeb;
-        border: none;
-    }
-}
-    
-
+}  
 .content-section {
     font-family: "Yanone Kaffeesatz";
 }
-
-
 /*END BUTTON*/
 
 /*SLIDE*/
@@ -66,3 +54,120 @@
     color: #fec231;
     text-transform: uppercase;
 }
+.short-description {
+    margin-top: 50px;
+}
+.short-description .title-content.game-name {
+    color: #fec231;
+    text-transform: uppercase;
+}
+.image-hidden-sm-up {
+    display: none;
+}
+
+.btn-view-more {
+    margin-top: 50px;
+}
+/*END SLIDE*/
+
+/*GAME CONTENT CSS*/
+
+.image-div {
+    background-size: 70% 100% !important;
+    height: 450px;
+    margin-top: 20px;
+}
+
+.image-text-head {
+    background-color: #f0f0f0;
+    color: #000;
+    padding-left: 30px;
+    margin-left: -30px;
+    margin-top: 50px;
+    margin-bottom: 10px;
+    word-spacing: 1px;
+    letter-spacing: 1px;
+    width: 100%;
+}
+.image-text-head p {
+    position: relative;
+}
+.content-pull-right .image-text-head p:after {
+    content: "";
+    position: absolute;
+    z-index: 1000;
+    border-left: 10px solid #f0f0f0;
+    border-bottom: 24px solid transparent;
+    right: -10px;
+}
+.img-font-size {
+    font-size: 40px;
+    font-family: "Yanone Kaffeesatz";
+    line-height: 60px;
+    letter-spacing: 4px;
+    font-weight: bold;
+}
+
+.description-slide, 
+.pricing-btn-section {
+    position: relative;
+    width: 85%;
+    margin: auto;
+}
+
+.content-pull-right .play-content-text {
+    background: url("../images/bg_play_left.png") no-repeat;
+    background-size: 100% 100%;
+    min-height: 450px;
+}
+.content-pull-right .play-content-image {
+    min-height: 450px;
+}
+.content-pull-right.image-div {
+    background-position: right !important;
+}
+
+
+.content-pull-left .play-content-text {
+    background: url("../images/bg_play_right.png") no-repeat;
+    background-size: 100% 100%;
+    min-height: 450px;
+}
+.content-pull-left .play-content-image {
+    min-height: 450px;
+}
+
+.content-pull-left .image-text-head {
+    transition: background 0.2s;
+    transform: skew(-15deg);
+    margin-left: -33px;
+}
+.content-pull-left .image-text-head p {
+    transform: skew(15deg);
+}
+.content-pull-left.image-div {
+    background-position: left;
+}
+a.btn-custom-style.btn-custom-style-play {
+    border-image-source: linear-gradient(16deg, #f4963a, #fff);
+}
+.active a.btn-custom-style.btn-custom-style-play:focus,
+a.btn-custom-style.btn-custom-style-play:focus, 
+a.btn-custom-style.btn-custom-style-play:hover {
+    color: #f4963a;
+    background-color: #fff;
+    border-image-source: linear-gradient(16deg, #f4963a, #fff);
+    background-image: none;
+}
+/*END GAME CONTENT CSS*/
+
+/*MEDIA FOR BUTTON*/
+@media (max-width: 1199px) { 
+    .kid-btn-group li.active a.btn-custom-style:after {
+        content: none;
+    }
+    .carousel .prevButton,
+    .carousel .nextButton {
+        top: 178px;
+    }
+} 

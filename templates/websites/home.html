@@ -256,14 +256,14 @@
                 <div class="event-detail">
                     <div class="col-md-2">
                         <center>
-                            <p class="event-date">14</p>
-                            <p class="event-month">Thang 2</p>
+                            <p class="event-date">{{ event.start_date | date:"d" }}</p>
+                            <p class="event-month">{{ event.start_date | date:"M" }}</p>
                         </center>
                     </div>
                     <div class="col-md-8">
                         <div class="caption">
                             <p class="event-name">{{event.name}}</p>
-                            <p class="event-time"><i class="fa fa-clock-o" aria-hidden="true"></i>17:30 - 22:0 | 14.02.2017 - 15.02.2017</p>
+                            <p class="event-time"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ event.start_time | date:"H:i" }} - {{ event.end_time | date:"H:i" }} | {{ event.start_date | date:"d.m.Y" }} - {{ event.end_date | date:"d.m.Y" }}</p>
                             <p>{{event.short_description}}</p>
                         </div>
                     </div>

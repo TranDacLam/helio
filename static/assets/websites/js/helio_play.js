@@ -1,11 +1,11 @@
-var KidsFunction = (function ($) {
-    var helio_kids = function () {
+var PlayFunction = (function ($) {
+    var helio_play = function () {
         var _self = this;
         var show_num = {};
         var first_show = 2,
             view_more = 5;
         this.initElementPage = function() {
-            $(".kid-btn-group li:first").addClass("active");
+            $(".play-btn-group li:first").addClass("active");
             $(".tab-content .tab-pane:first").addClass("active");
         }
 
@@ -15,10 +15,10 @@ var KidsFunction = (function ($) {
             $(".tab-content .tab-pane").each(function(){
                 var id = $(this).attr("id");
                 if(id === section_active) {
-                    $(".kid-btn-group li").removeClass("active");
+                    $(".play-btn-group li").removeClass("active");
                     $(".tab-content .tab-pane").removeClass("active");
                     $(".tab-content ."+id).addClass("active");
-                    $(".kid-btn-group ."+id).parent().addClass("active");
+                    $(".play-btn-group ."+id).parent().addClass("active");
                 }
                 show_num[id] = first_show;
                 _self.viewMore($(this).find(".view-more-div"));
@@ -66,12 +66,12 @@ var KidsFunction = (function ($) {
             show_num[id] = show_lengh;
         }
     }
-    return helio_kids;
+    return helio_play;
 })(jQuery);
 
-(function (kids, $) {
+(function (play, $) {
     $(document).ready(function(){
-        kids.initElementPage()
-        kids.initEventPage();
+        play.initElementPage()
+        play.initEventPage();
     });
-})(new KidsFunction(), jQuery);
+})(new PlayFunction(), jQuery);

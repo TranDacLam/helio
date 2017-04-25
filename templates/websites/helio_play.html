@@ -11,55 +11,12 @@
 <script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.carousel-1.1.min.js"></script>
 <script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/helio_play.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){
-    var url = window.location.href;
-    var section_active = url.substring(url.lastIndexOf('/') + 2);
-    $(".play-btn-group li:first").addClass("active");
-    $(".tab-content .tab-pane:first").addClass("active");
-
-    $(".tab-content .tab-pane").each(function(){
-        var id = $(this).attr("id");
-        if(id === section_active) {
-            $(".play-btn-group li").removeClass("active");
-            $(".tab-content .tab-pane").removeClass("active");
-            $(".tab-content ."+id).addClass("active");
-            $(".play-btn-group ."+id).parent().addClass("active");
-        }
-    });
-
-    function initCoursel(element) {
-        $(element).html($(element).parent().find('.carousel-tmp').html());
-        var content_width = $(".container").width();
-        var w2 = content_width * 0.85;
-        $(element).carousel({
-            carouselWidth: content_width,
-            carouselHeight: 500,
-            directionNav:true,    
-            shadow:false, 
-            frontWidth:w2,
-            frontHeight:500,
-            hMargin: 0.1,
-            vMargin: 0.8,
-            short_description: true
-        });
-    }
-
-    $(".tab-content .tab-pane").each(function(){
-        initCoursel($(this).find('.carousel'));
-    });
-    $( window ).resize(function() {
-        $(".tab-content .tab-pane").each(function(){
-            initCoursel($(this).find('.carousel'));
-        });
-    });
-});
-</script>
 {% endblock %}
 {% block main_content %} 
 <!-- Page Header -->
 <div class="container">
-    <!-- CARD PAGE DESCRIPTION -->
+    <!-- HELIO PLAY PAGE DESCRIPTION -->
+    {% if result.page_info %}
     <div class="page-top">
         <div class="page-header-img">
             <div>
@@ -67,21 +24,25 @@ $(document).ready(function(){
             </div>
             <div class="page-title" align="center">
                 <div class="col-md-12">
-                    <p class="page-title-text">HELIO PLAY</p>
+                    <p class="page-title-text">{{result.page_info.name}}</p>
                 </div>
             </div>
         </div>
         <div align="center" class="page-header-text">
             <div class="form-title">
-                <p class="text-description">Đến Helio Center, bạn được trải nghiệm một hình thức thanh toán hoàn toàn mới, không cần tiền mặt, không cần xu, chỉ cần quẹt thẻ Power Card và trải nghiệm cuộc vui. Thật dễ dàng đúng không !!! Chưa hết, toàn bộ thông tin tài khoản thẻ Helio Power Card của bạn: số dư, số ticket, khuyến mãi và nhiều tiện ích khác đều có thể dễ dàng tra cứu được. Quá tiện!</p>
+                <p class="text-description">{{result.page_info.description}}</p>
             </div>
         </div>
     </div>
+    {% endif %}
+
+
+    {% if result.datas %}
 
     <!-- BUTTON GROUP -->
     <div class="play-btn-section">
-        <ul class="nav nav-pills nav-justified play-btn-group button-custom">
-            {% for type in result.play_types %}
+        <ul class="nav play-btn-group">
+            {% for type in result.datas %}
             <li class="col-md-4">
                 <a href="#{{ type.sub_url|cut:'/helio-play/#' }}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-play/#' }}">{{type.name}}</a>
             </li>
@@ -90,15 +51,15 @@ $(document).ready(function(){
     </div>
 
     <div class="tab-content">
-        {% for type, games in result.play_types.items %}
+        {% for type, datas in result.datas.items %}
         <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-play/#' }}" id="{{ type.sub_url|cut:'/helio-play/#' }}">
             <!-- Games slider -->
             <div class="carousel" >
             </div>
-            {% if games %}
+            {% if datas.games %}
             <div class="carousel-tmp hidden">
                 <div class="slides"> <!-- BEGIN CAROUSEL -->
-                    {% for game in games %}
+                    {% for game in datas.games %}
                     <div class="slideItem"> <!-- SLIDE ITEM -->
                         <a href="#">
                             <img src="{{ MEDIA_URL }}{{game.image}}">
@@ -111,13 +72,65 @@ $(document).ready(function(){
                     {% endfor %}
                 </div>
             </div>
+            {% endif %}
             <!-- line -->
             <hr>
+            <div class="row view-more-div">
+                <!--  PLAY GAME CONTENT -->
+                <div class="kids-game-content col-md-12">
+                    {% for promotion in datas.promotions %}
+                    {% if forloop.counter|divisibleby:2 %} 
+                    <div class="image-div content-pull-right col-md-12" style="background: url('{{ MEDIA_URL }}{{promotion.image}}'); display: none;">
+                        <div class="row">
+                            <div class="play-content-text col-md-5">
+                                <div class="col-md-9 image-text">
+                                    <div class="image-text-head">
+                                        <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
+                                    </div>
+                                    <p class="img-font-size">{{promotion.name}}</p>
+                                    <p class="img-text-description">{{promotion.short_description}}</p>
+                                    <a class="btn btn-custom-style btn-custom-style-play" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                                </div>
+                            </div>
+                            <div class="play-content-image col-md-7">
+                                <div class="image-hidden-sm-up row"><img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="image-div content-pull-left col-md-12" style="background: url('{{ MEDIA_URL }}{{promotion.image}}'); display: none;">
+                        <div class="row">
+                            <div class="play-content-image col-md-7">
+                                
+                            </div>
+                            <div class="play-content-text col-md-5">
+                                <div class="col-md-9 image-text pull-right">
+                                    <div class="image-text-head">
+                                        <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
+                                    </div>
+                                    <p class="img-font-size">{{promotion.name}}</p>
+                                    <p class="img-text-description">{{promotion.short_description}}</p>
+                                    <a class="btn btn-custom-style btn-custom-style-play" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                                </div>
+                            </div>
 
-            {% endif %}
+                            <div class="image-hidden-sm-up col-md-7">
+                                <div class="row"><img src="{{ MEDIA_URL }}{{game.image}}" width="100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="btn-read-more btn-view-more col-md-12" align="center">
+                    <a class="btn-custom-style btn-custom-style-play" role="button">{% trans "btn.view_more" %}</a>
+                </div>
+            </div>
+            
         </div>
         {% endfor %}
     </div>
+    {% endif %}
 
 
 

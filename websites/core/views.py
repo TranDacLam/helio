@@ -67,14 +67,23 @@ def contact(request):
 def helio_kids(request):
     print "***START HELIO KIDS PAGE***"
     result = {}
+    #Get page info
+    page_info = Category.objects.get(pk=constant.HELIO_KIDS_CATEGORY)
+    result["page_info"] = page_info
+
     # Game type
     kids_types = Type.objects.filter(category_id=constant.HELIO_KIDS_CATEGORY)
   
-    games = {}
+    datas = {}
+    promotions = {}
     if kids_types:
         for item in kids_types:
-            games[item] = Game.objects.filter(game_type_id=item.id)
-    result["kids_types"] = games
+            data = {}
+            data["games"] = Game.objects.filter(game_type_id=item.id)
+            data["promotions"] = Promotion.objects.filter(promotion_type_id=item.id)
+            datas[item] = data
+    result["datas"] = datas
+
 
     return render(request, 'websites/helio_kids.html', {"result": result})
 
@@ -103,14 +112,22 @@ def get_posts(request):
 def helio_play(request):
     print "***START HELIO PLAY PAGE***"
     result = {}
+    #Get page info
+    page_info = Category.objects.get(pk=constant.HELIO_PLAY_CATEGORY)
+    result["page_info"] = page_info
+
     # Game type
     play_types = Type.objects.filter(category_id=constant.HELIO_PLAY_CATEGORY)
   
-    games = {}
+    datas = {}
+    promotions = {}
     if play_types:
         for item in play_types:
-            games[item] = Game.objects.filter(game_type_id=item.id)
-    result["play_types"] = games
+            data = {}
+            data["games"] = Game.objects.filter(game_type_id=item.id)
+            data["promotions"] = Promotion.objects.filter(promotion_type_id=item.id)
+            datas[item] = data
+    result["datas"] = datas
 
     return render(request, 'websites/helio_play.html', {"result": result})
 
@@ -178,5 +195,16 @@ def game_detail(request):
 
 def promotions(request):
     print "***START EVENT CONTENT PAGE***"
-    
-    return render(request, 'websites/promotions.html')
+    result = {}
+
+    # Promotion type
+    promotion_types = Category.objects.filter(pk__in=[constant.HELIO_PLAY_CATEGORY, constant.HELIO_KIDS_CATEGORY, constant.NIGHT_LIFE_CATEGORY])
+
+  
+    promotion = {}
+    if promotion_types:
+        for item in promotion_types:
+            promotion[item] = Promotion.objects.filter(promotion_type_id=item.id)
+    result["promotion_types"] = promotion
+
+    return render(request, 'websites/promotions.html', {"result": result})

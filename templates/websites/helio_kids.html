@@ -15,6 +15,7 @@
 <!-- Page Header -->
 <div class="container">
     <!-- CARD PAGE DESCRIPTION -->
+    {% if result.page_info %}
     <div class="page-top">
         <div class="page-header-img">
             <div>
@@ -22,18 +23,19 @@
             </div>
             <div class="page-title" align="center">
                 <div class="col-md-12">
-                    <p class="page-title-text">HELIO KIDS</p>
+                    <p class="page-title-text">{{result.page_info.name}}</p>
                 </div>
             </div>
         </div>
         <div align="center" class="page-header-text">
             <div class="form-title">
-                <p class="text-description">Đến Helio Center, bạn được trải nghiệm một hình thức thanh toán hoàn toàn mới, không cần tiền mặt, không cần xu, chỉ cần quẹt thẻ Power Card và trải nghiệm cuộc vui. Thật dễ dàng đúng không !!! Chưa hết, toàn bộ thông tin tài khoản thẻ Helio Power Card của bạn: số dư, số ticket, khuyến mãi và nhiều tiện ích khác đều có thể dễ dàng tra cứu được. Quá tiện!</p>
+                <p class="text-description">{{result.page_info.description}}</p>
             </div>
         </div>
     </div>
+    {% endif %}
 
-    {% if result.kids_types %}
+    {% if result.datas %}
     
     <div class="pricing-btn-section">
         <!-- PRICING -->
@@ -43,7 +45,7 @@
 
         <!-- BUTTON GROUP -->
         <ul class="nav btn-custom-group kid-btn-group">
-            {% for type in result.kids_types %}
+            {% for type in result.datas %}
             <li  class="col-md-6">
                 <a href="#{{ type.sub_url|cut:'/helio-kids/#' }}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-kids/#' }}">{{type.name}}</a>
             </li>
@@ -52,15 +54,15 @@
     </div>
 
     <div class="tab-content">
-        {% for type, games in result.kids_types.items %}
+        {% for type, datas in result.datas.items %}
         <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-kids/#' }}" id="{{ type.sub_url|cut:'/helio-kids/#' }}">
             <!-- Games slider -->
             <div class="carousel" >
             </div>
-            {% if games %}
+            {% if datas.games %}
             <div class="carousel-tmp hidden">
                 <div class="slides"> <!-- BEGIN CAROUSEL -->
-                    {% for game in games %}
+                    {% for game in datas.games %}
                     <div class="slideItem"> <!-- SLIDE ITEM -->
                         <a href="#">
                             <img src="{{ MEDIA_URL }}{{game.image}}">
@@ -73,33 +75,33 @@
                     {% endfor %}
                 </div>
             </div>
-
+            {% endif %}
             <!-- line -->
             <hr>
             <div class="row view-more-div">
                 <!--  KID GAME CONTENT -->
                 <div class="kids-game-content col-md-12">
-                    {% for game in games %}
+                    {% for promotion in datas.promotions %}
                     {% if forloop.counter|divisibleby:2 %} 
-                    <div class="image-div content-pull-right col-md-12" style="background: url('{{ MEDIA_URL }}{{game.image}}'); display: none;">
+                    <div class="image-div content-pull-right col-md-12" style="background: url('{{ MEDIA_URL }}{{promotion.image}}'); display: none;">
                         <div class="row">
                             <div class="kids-content-text col-md-5">
                                 <div class="col-md-9 image-text">
                                     <div class="image-text-head">
                                         <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
                                     </div>
-                                    <p class="img-font-size">{{game.name}}</p>
-                                    <p class="img-text-description">{{game.short_description}}</p>
+                                    <p class="img-font-size">{{promotion.name}}</p>
+                                    <p class="img-text-description">{{promotion.short_description}}</p>
                                     <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
                                 </div>
                             </div>
                             <div class="kids-content-image col-md-7">
-                                <div class="image-hidden-sm-up row"><img src="{{ MEDIA_URL }}{{game.image}}" width="100%"></div>
+                                <div class="image-hidden-sm-up row"><img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%"></div>
                             </div>
                         </div>
                     </div>
                     {% else %}
-                    <div class="image-div content-pull-left col-md-12" style="background: url('{{ MEDIA_URL }}{{game.image}}'); display: none;">
+                    <div class="image-div content-pull-left col-md-12" style="background: url('{{ MEDIA_URL }}{{promotion.image}}'); display: none;">
                         <div class="row">
                             <div class="kids-content-image col-md-7">
                                 
@@ -109,8 +111,8 @@
                                     <div class="image-text-head">
                                         <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
                                     </div>
-                                    <p class="img-font-size">{{game.name}}</p>
-                                    <p class="img-text-description">{{game.short_description}}</p>
+                                    <p class="img-font-size">{{promotion.name}}</p>
+                                    <p class="img-text-description">{{promotion.short_description}}</p>
                                     <a class="btn btn-custom-style btn-custom-style-kids" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
                                 </div>
                             </div>
@@ -127,7 +129,7 @@
                     <a class="btn-custom-style btn-custom-style-kids" role="button">{% trans "btn.view_more" %}</a>
                 </div>
             </div>
-            {% endif %}
+            
         </div>
         {% endfor %}
     </div>
