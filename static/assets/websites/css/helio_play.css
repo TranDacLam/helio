@@ -150,14 +150,14 @@
     background-position: left;
 }
 a.btn-custom-style.btn-custom-style-play {
-    border-image-source: linear-gradient(16deg, #f4963a, #fff);
+    border-image-source: linear-gradient(16deg, #0095bb, #fff);
 }
 .active a.btn-custom-style.btn-custom-style-play:focus,
 a.btn-custom-style.btn-custom-style-play:focus, 
 a.btn-custom-style.btn-custom-style-play:hover {
-    color: #f4963a;
+    color: #0095bb;
     background-color: #fff;
-    border-image-source: linear-gradient(16deg, #f4963a, #fff);
+    border-image-source: linear-gradient(16deg, #0095bb, #fff);
     background-image: none;
 }
 /*END GAME CONTENT CSS*/

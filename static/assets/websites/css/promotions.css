@@ -76,17 +76,19 @@
     background-position: left;
 }
 a.btn-custom-style.btn-custom-style-promotion {
-    border-image-source: linear-gradient(16deg, #f4963a, #fff);
+    border-image-source: linear-gradient(16deg, #fff, #fff);
 }
 .active a.btn-custom-style.btn-custom-style-promotion:focus,
 a.btn-custom-style.btn-custom-style-promotion:focus, 
 a.btn-custom-style.btn-custom-style-promotion:hover {
-    color: #f4963a;
+    color: #c61d82;
     background-color: #fff;
-    border-image-source: linear-gradient(16deg, #f4963a, #fff);
+    border-image-source: linear-gradient(16deg, #fff, #fff);
     background-image: none;
 }
 /*END GAME CONTENT CSS*/
+
+/*START BUTTON GROUP CSS*/
 .promotion-btn-group {
     margin-right: -2px;
     margin-left: -2px;
@@ -101,7 +103,7 @@ a.btn-custom-style.btn-custom-style-promotion:hover {
 .promotion-btn-group li a.btn-custom-style:focus,
 .promotion-btn-group li a {
     border: none;
-    background-color: #8a642e;
+    background-color: #7d1e6a;
     border-radius: 0px;
     background-image: none;
 }
@@ -127,20 +129,31 @@ a.btn-custom-style.btn-custom-style-promotion:hover {
     border-style: solid;
     border-color: #ed3aa7 transparent transparent transparent;
 }
-.short-description {
-    margin-top: 50px;
-}
-.short-description .title-content.game-name {
-    color: #ed3aa7;
-    text-transform: uppercase;
-}
+/*END BUTTON GROUP CSS*/
+
 .image-hidden-sm-up {
     display: none;
 }
 
+/*START BUTTON VIEW MORE*/
+
 .div-view-more {
     margin-top: 50px;
 }
+
+a.btn-custom-style.btn-custom-style-promotion-view-more {
+    border-image-source: linear-gradient(16deg, #b82c8e, #c61d82);
+}
+.active a.btn-custom-style.btn-custom-style-promotion-view-more:focus,
+a.btn-custom-style.btn-custom-style-promotion-view-more:focus, 
+a.btn-custom-style.btn-custom-style-promotion-view-more:hover {
+    color: #c61d82;
+    background-color: #fff;
+    border-image-source: linear-gradient(16deg, #c61d82, #fff);
+    background-image: none;
+}
+
+/*END BUTTON VIEW MORE*/
 
 @media (max-width: 1199px) { 
     .promotion-btn-group li.active a.btn-custom-style:after {
