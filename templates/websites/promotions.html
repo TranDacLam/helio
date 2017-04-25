@@ -15,7 +15,33 @@
     <div class="page-top">
         <div class="page-header-img">
             <div>
-                <img src="{{ STATIC_URL }}assets/websites/images/power_card_header.png" width="100%">
+                <div id="promotionCarousel" class="carousel slide carousel-custom" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators carousel-indicators-custom">
+                        <li data-target="#promotionCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#promotionCarousel" data-slide-to="1"></li>
+                        <li data-target="#promotionCarousel" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+
+                        <div class="item active">
+                            <img src="{{ STATIC_URL }}assets/websites/images/power_card_header.png" alt="Helio">
+                        </div>
+
+                        <div class="item">
+                            <img src="{{ STATIC_URL }}assets/websites/images/power_card_header.png" alt="Helio">
+                        
+                        </div>
+                    
+                        <div class="item">
+                            <img src="{{ STATIC_URL }}assets/websites/images/power_card_header.png" alt="Helio">
+                        
+                        </div>
+                    </div>
+                  </div><!-- 
+                <img src="{{ STATIC_URL }}assets/websites/images/power_card_header.png" width="100%"> -->
             </div>
         </div>
     </div>

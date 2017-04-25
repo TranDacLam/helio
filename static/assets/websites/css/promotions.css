@@ -1,3 +1,37 @@
+/*START CAROUSEL*/
+/*ol.carousel-custom {
+    top: 80%;
+}*/
+
+.carousel-custom {
+    position: relative;
+    margin: 30px auto;
+    height: 80%;
+    border: none;
+    overflow: visible;
+}
+
+ol.carousel-indicators-custom .active {
+    width: 40px;
+    height: 4px;
+    margin: 0 5px;
+    background-color: #fff;
+    border-color: #fff;
+}
+ol.carousel-indicators-custom li {
+    display: inline-block;
+    width: 40px;
+    height: 4px;
+    margin: 0 5px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: #bd197c;
+    border-color: #bd197c;
+    border-radius: 0px;
+}
+
+/*END CAROUSEL*/
+
 /*GAME COTENT CSS*/
 .image-div {
     background-size: 70% 100% !important;
@@ -203,5 +237,24 @@ a.btn-custom-style.btn-custom-style-promotion-view-more:hover {
     }
     .image-hidden-sm-up {
         display: block;
+    }
+    /*CAROUSEL PHONE SCREEN*/
+    ol.carousel-indicators-custom .active {
+        width: 20px;
+        height: 3px;
+        margin: 0 5px;
+        background-color: #fff;
+        border-color: #fff;
+    }
+    ol.carousel-indicators-custom li {
+        display: inline-block;
+        width: 20px;
+        height: 3px;
+        margin: 0 5px;
+        text-indent: -999px;
+        cursor: pointer;
+        background-color: #bd197c;
+        border-color: #bd197c;
+        border-radius: 0px;
     }
 }
