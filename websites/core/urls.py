@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^night-life/$', views.night_life, name='night_life'),
     url(r'^contact/$', views.contact, name='contact'),
     url(r'news/$', views.news, name='news'),
+    url(r'career/$', views.career, name='career'),
 
 
     url(r'^get-posts/$', views.get_posts, name='get_posts'),
