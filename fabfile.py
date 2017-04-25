@@ -51,7 +51,7 @@ VERBOSITY = ('', '') if DEBUG else ('-q', '-v 0')
 def restart_app_server():
     """ Restarts remote nginx and uwsgi.
     """
-    sudo("su -s /bin/bash/ www-data")
+    sudo("su -s /bin/bash www-data")
     sudo("uwsgi --reload /tmp/helio_report.pid")
 
 def deploy():
