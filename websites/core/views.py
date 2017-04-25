@@ -87,6 +87,9 @@ def helio_kids(request):
 
     return render(request, 'websites/helio_kids.html', {"result": result})
 
+
+    return render(request, 'websites/helio_kids.html', {"result": result})
+
 def night_life(request):
     print "***START NIGHT LIFE CONTENT PAGE***"
     
