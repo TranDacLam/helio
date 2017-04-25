@@ -44,7 +44,7 @@ def power_card(request):
     powercards = Post.objects.filter(post_type_id=constant.POWERCARD_TYPE_ID)
     result["powercards"] = powercards
 
-    faqs = FAQ.objects.filter(category_id=constant.POWERCARD_FAQS_CATEGORY)[:4]
+    faqs = FAQ.objects.filter(category_id=constant.POWERCARD_FAQS_CATEGORY)
     result["faqs"] = faqs
 
     return render(request, 'websites/power_card.html', {"result":result})
