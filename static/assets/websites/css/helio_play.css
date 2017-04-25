@@ -7,6 +7,7 @@
 }
 .play-btn-group {
     margin-bottom: 50px;
+    margin-top: 50px;
     margin-right: -2px;
     margin-left: -2px;
 }
@@ -19,7 +20,7 @@
     background-image: none;
 }
 .play-btn-group li {
-    padding-bottom: 50px;
+    padding-bottom: 25px;
     padding-right: 2px;
     padding-left: 2px;
 }
@@ -163,7 +164,7 @@ a.btn-custom-style.btn-custom-style-play:hover {
 
 /*MEDIA FOR BUTTON*/
 @media (max-width: 1199px) { 
-    .kid-btn-group li.active a.btn-custom-style:after {
+    .play-btn-group li.active a.btn-custom-style:after {
         content: none;
     }
     .carousel .prevButton,

@@ -5,7 +5,7 @@ function viewMore() {
     var size_list = $(".faqs-section .faq-detail").length;
     $('.faqs-section .faq-detail:lt('+show_num+')').show();
     if(show_num >= size_list) {
-        $(".btn-view-more").hide();
+        $(".btn-view-more").parent().parent().hide();
     }
 }
 $(document).ready(function(){
