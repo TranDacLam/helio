@@ -37,11 +37,11 @@ def power_card(request):
     result = {}
 
     # Powercard info
-    powercard_type = Post_Type.objects.get(pk=constant.POWERCARD_TYPE_ID)
+    powercard_type = Post_Type.objects.get(pk=constant.POWERCARD_POST_TYPE_ID)
     result["powercard_type"] = powercard_type
 
     # Powercard list
-    powercards = Post.objects.filter(post_type_id=constant.POWERCARD_TYPE_ID)
+    powercards = Post.objects.filter(post_type_id=constant.POWERCARD_POST_TYPE_ID)
     result["powercards"] = powercards
 
     faqs = FAQ.objects.filter(category_id=constant.POWERCARD_FAQS_CATEGORY)
@@ -231,3 +231,9 @@ def promotions(request):
     print "Promotions: ", datas
 
     return render(request, 'websites/promotions.html', {"result": result})
+
+def career(request):
+    print "***START CARRER CONTENT PAGE***"
+    result = {}
+
+    return render(request, 'websites/career.html', {"result": result})

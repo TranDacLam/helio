@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block extrastylesheet %}
+<style type="text/css">
+
+</style>
+{% endblock %}
+{% block extrascript %}
+
+{% endblock %}
+{% block main_content %} 
+
+<div class="container">
+	<div class="page-top">
+        <div class="page-header-img">
+            <div>
+                <img src="{{ STATIC_URL }}assets/websites/images/power_card_header.png" width="100%">
+            </div>
+            <div class="page-title" align="center">
+                <div class="col-md-12">
+                    <p class="page-title-text">ĐỒNG HÀNH CÙNG HELIO CENTER</p>
+                </div>
+            </div>
+        </div>
+        <div align="center" class="page-header-text">
+            <div class="form-title">
+                <p class="text-description">Helio trước tiên là một lời chào - Hello. Khi chúng tôi nói “Helio chào mừng bạn”, điều đó cũng có nghĩa là “Hello, chào mừng bạn”.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="item col-md-4 col-sm-4 col-xs-6" style="background-color: #fff">
+			<span><a href="#" class="thumbnail title"><img src="{{ STATIC_URL }}assets/websites/images/img1.jpg"></a></span>
+			<h3><a href="#">THÔNG BÁO KẾT QUẢ 1</a></h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra. Donec sit amet enim a velit varius eleifend eget vitae eros. Nulla in vulputate justo. Suspendisse potenti.</p>
+        </div>
+    </div>
+  </div>
+<button id="show" class="btn btn-default center-block">HIEN THI THEM</button>
+</div>
+{% endblock %}
