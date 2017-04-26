@@ -69,10 +69,3 @@ def deploy():
 
         
 
-def su(pwd, user, command):
-    with settings(
-        password= "%s" % pwd,
-        sudo_prefix="su %s -c " % user
-        sudo_prompt="Password:"
-        ):
-        sudo(command)

@@ -1,28 +1,10 @@
 {% extends "layout.html" %}
 {% load i18n %}
 {% block extrastylesheet %}
-<style type="text/css">
-p.texxt:first-letter {
-    float: left;
-    padding: 0px 8px 0 0;
-    display: block;
-    color: #fec231;
-    font-size: 127px;
-    line-height: 96px;
-}
-</style>
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/night_life.css">
 {% endblock %}
-{% block extrascript %}
 
-<script>
-$(document).ready(function(){
-
-});
-</script>
-
-{% endblock %}
-{% block main_content %} 
-
+{% block main_content %}
 <div class="page-top">
     <div class="page-header-img">
         <div>
@@ -30,36 +12,124 @@ $(document).ready(function(){
         </div>
     </div>
 </div>
-<div class="section-top container">
-    <!-- TEXT 1 -->
+<div class="container first-section">
     <div class="row">
-        <div class="row col-md-10">
-            <div class="col-md-10 nightlife-page-title">
+        <div class="col-md-8">
+            <div class="nightlife-page-title">
                 <p class="big-font-size">NHỮNG TRẢI NGHIỆM TUYỆT VỜI CÙNG ẨM THỰC VÀ GIẢI TRÍ</p>
             </div>
-            <div class="col-md-12 nightlife-page-description">
+        </div>
+        <div class="col-md-10">
+            <div class="nightlife-page-description">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
             </div>
+        </div>
+     
+        <div class="col-md-8 col-md-offset-2 div-first-text-lg">
+            <p class="first-text-lg">Corem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
+        </div>
+    </div>
+    <div class="row nightlife-div">
+        <div class="col-md-8">
+            <div class="nightlife-page-title">
+                <p class="big-font-size nightlife-name">NHỮNG THỨC UỐNG ĐƯỢC PHA CHẾ</p>
+            </div>
+            
+        </div>
+        <div class="col-md-11">
+            <hr class="nightlife-hr">
         </div>
         <div class="col-md-8 col-md-offset-2">
             <p class="texxt">Corem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
         </div>
     </div>
+</div>
 
-    <!-- TEXT 2 -->
-    <div class="row">
-        <div class="row col-md-10">
-            <div class="col-md-10 nightlife-page-title">
-                <p class="big-font-size">NHỮNG TRẢI NGHIỆM TUYỆT VỜI CÙNG ẨM THỰC VÀ GIẢI TRÍ</p>
+<div class="comment-div">
+    <div id="comment_carousel" class="carousel slide carousel-custom row" data-ride="carousel">
+        <div class="col-md-3 comment_left">
+            <!-- Indicators -->
+            <ol class="carousel-indicators carousel-indicators-custom">
+                <li data-target="#comment_carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#comment_carousel" data-slide-to="1"></li>
+                <li data-target="#comment_carousel" data-slide-to="2"></li>
+            </ol>
+            <p>Những bình luận nhận xét nổi bật</p>
+        </div>
+        <div class="col-md-4">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <p>Corem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                </div>
+                <div class="item">
+                    <p>Corem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                </div>
+                <div class="item">
+                    <p>Corem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                </div>
             </div>
-            <div class="col-md-12 nightlife-page-description">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <p>Corem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row nightlife-div">
+        <div class="col-md-11">
+            <div class="nightlife-page-title">
+                <p class="big-font-size nightlife-name">TRONG KHÔNG KHÍ ÂM NHẠC ĐẦY SÔI ĐỘNG</p>
+            </div>
+        </div>
+        <div class="col-md-11">
+            <hr class="nightlife-hr">
         </div>
         <div class="col-md-8 col-md-offset-2">
             <p class="texxt">Corem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
         </div>
-        
+    </div>
+</div>
+
+<div class="comment-div">
+    <div id="comment_carousel1" class="carousel slide carousel-custom row" data-ride="carousel">
+        <div class="col-md-3 comment_left">
+            <!-- Indicators -->
+            <ol class="carousel-indicators carousel-indicators-custom">
+                <li data-target="#comment_carousel1" data-slide-to="0" class="active"></li>
+                <li data-target="#comment_carousel1" data-slide-to="1"></li>
+                <li data-target="#comment_carousel1" data-slide-to="2"></li>
+            </ol>
+            <p>Những bình luận nhận xét nổi bật</p>
+        </div>
+        <div class="col-md-4">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <p>Corem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                </div>
+                <div class="item">
+                    <p>Corem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                </div>
+                <div class="item">
+                    <p>Corem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <p class="texxt">Corem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
+        </div>
     </div>
 </div>
 
