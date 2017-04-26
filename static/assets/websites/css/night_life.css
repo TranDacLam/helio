@@ -15,7 +15,7 @@ hr.nightlife-hr {
 }
 
 .comment-div {
-    background: url(http://localhost:8000/static/assets/websites/images/night_life_1.png) no-repeat; 
+    background: url(../images/night_life_1.png) no-repeat; 
     background-size: 100% 100%; 
     background-position: right; 
     min-height: 500px;
