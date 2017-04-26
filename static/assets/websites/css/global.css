@@ -10,6 +10,13 @@ body {
 
 p {
     font-family: "Cabin";
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+}
+
+p.short_description {
+    font-family: "Cabin";
     font-size: 16px;
     line-height: 24px;
     letter-spacing: 0.5px;

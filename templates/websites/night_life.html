@@ -1,133 +1,72 @@
 {% extends "layout.html" %}
+{% load i18n %}
 {% block extrastylesheet %}
-<link href="{{ STATIC_URL }}assets/websites/css/helio_custom.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
-    .group-combo {
-        margin-top: 18px;
-    }
-    .combo-thumbnail {
-        padding: 0px;
-    }
-    .textwrap1 {
-        float: left;
-        width: 50%;
-        margin: 18px;
-    }
-    .textwrap2 {
-        float: right;
-        width: 50%;
-        margin : 18px;
-    }
-    .style-p {
-        padding-left: 10px;
-    }
+p.texxt:first-letter {
+    float: left;
+    padding: 0px 8px 0 0;
+    display: block;
+    color: #fec231;
+    font-size: 127px;
+    line-height: 96px;
+}
 </style>
+{% endblock %}
+{% block extrascript %}
 
+<script>
+$(document).ready(function(){
 
+});
+</script>
 
 {% endblock %}
-{% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Member & Pricing</a></li>
-    <li class="active">Product & Pricing</li>
-{% endblock %}
+{% block main_content %} 
 
-{% block main_content %}
-<div class="tabs-left" style="padding-top: 150px; padding-bottom: 150px;">
-    <h1>Helio Night Life</h1>
-    <hr class="line">
-    <ul class="nav nav-tabs">
-        <li><a href="#game_pricing" data-toggle="tab">Game Pricing</a></li>
-        <li><a href="#kids_pricing" data-toggle="tab">Kids Pricing</a></li>
-        <li><a href="#card_product" data-toggle="tab">Cards Product</a></li>
-        <li class="active"><a href="#combo_product" data-toggle="tab">Combo Product</a></li>
-    </ul>
-    <div class="tab-content">
-        <div class="row tab-pane active" id="combo_product">
-            <div>
-        <h2>Helio Night Life </h2>
-        <hr class="style14">
-        <p class="style-p">Diễn ra từ 16h đến 22h ngày 29,30/10, Phiên 4 của Ngày hội Ẩm thực hoang dại và ma mị với chủ đề “Bữa tiệc ma”. Bạn có thể đắm mình trong Khu đồng giá 20.000, quẹo lựa Khu tự do, khám phá điều kì bít tại Khu bói bài tarot, vẽ Henna và rảo bước dưới ánh sao của đêm ma quái đầy không khí. “Bữa tiệc ma” với sự tham gia của Foody và đêm nhạc Halloween cùng những món ăn đường phố mới toanh chắc chắn sẽ không làm bạn thất vọng</p>
-        <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg" class="textwrap1">
-        <p class="style-p">Diễn ra từ 16h đến 22h ngày 29,30/10, Phiên 4 của Ngày hội Ẩm thực hoang dại và ma mị với chủ đề “Bữa tiệc ma”. Bạn có thể đắm mình trong Khu đồng giá 20.000, quẹo lựa Khu tự do, khám phá điều kì bít tại Khu bói bài tarot, vẽ Henna và rảo bước dưới ánh sao của đêm ma quái đầy không khí. “Bữa tiệc ma” với sự tham gia của Foody và đêm nhạc Halloween cùng những món ăn đường phố mới toanh chắc chắn sẽ không làm bạn thất vọng</p>
-        <p class="style-p">THalloween này, đừng bở lỡ khu Go Kart race với “Đua xe cùng ma tốc độ”. Từ 21/10 đến 31/10, mỗi ngày trong các khung giờ 19h30, 20h15 và 21h, thử thách sẽ đặt ra cho những ai dám đua xe cùng Ma tốc độ, nếu thắng cuộc bạn sẽ nhận được những phần quà giá trị. Đặc biệt trong 2 đêm 29 và 30/10,  trước mỗi khung giờ diễn ra, nhân viên Go kart race sẽ trình diễn những màn drift xe đỉnh của đỉnh mãn nhãn.</p>
-        <p class="style-p">Sau khi trình diễn màn flashmob đêm hội, đoàn ma sẽ mở hội Đại náo Game Center tại Khu Gamezone 2. Tham gia chơi game cùng những nhân vật Cosplay này, bạn sẽ có cơ hội nhận được những phần quà hấp dẫn.</p>
-        <p class="style-p">Từ 19h00 đến 20h30 ngày 29,30/10, mỗi lượt nạp thẻ trị giá trên 500.000 tại Helio Center, quý khách sẽ nhận được một phiếu hóa trang mặt ma độc đáo và hấp dẫn. Bạn có thể tự biến mình thành công chúa, hoàng tử quỷ dự vũ hội, zombie, chú hề,… hay dành phần quà đó cho nhóc quỷ nhà mình.</p>
-        <img src="{{ STATIC_URL }}assets/websites/images/img1.jpg" class="textwrap2">
-        <p class="style-p">Sau khi trình diễn màn flashmob đêm hội, đoàn ma sẽ mở hội Đại náo Game Center tại Khu Gamezone 2. Tham gia chơi game cùng những nhân vật Cosplay này, bạn sẽ có cơ hội nhận được những phần quà hấp dẫn.</p>
-        <p class="style-p">Từ 19h00 đến 20h30 ngày 29,30/10, mỗi lượt nạp thẻ trị giá trên 500.000 tại Helio Center, quý khách sẽ nhận được một phiếu hóa trang mặt ma độc đáo và hấp dẫn. Bạn có thể tự biến mình thành công chúa, hoàng tử quỷ dự vũ hội, zombie, chú hề,… hay dành phần quà đó cho nhóc quỷ nhà mình.</p>
-        <p class="style-p">Không hóa trang xin kẹo thì không gọi là Halloween. Mùa Lễ hội quỷ này, Hellio Kids có nhiều chương trình hấp dẫn như “Cho kẹo hay bị ghẹo”, diễn kịch, game hoạt náo. Bố mẹ có thể ngắm nhìn bé vui chơi hoặc cùng tham gia trò vui cùng bé</p>
-        <p class="style-p">Bạn thấy đó, cả một lễ hội ma hoành tráng đang chờ bạn đến khám phá, chuẩn bị xinh đẹp và Helio thôi! </p>
+<div class="page-top">
+    <div class="page-header-img">
+        <div>
+            <img src="{{ STATIC_URL }}assets/websites/images/night-life-header.png" width="100%">
+        </div>
+    </div>
 </div>
-        </div>
-        <div class="row tab-pane" id="game_pricing">
-            <div class="col-md-12">
-                <h2>Game Pricing</h2>
-                <hr class="line">
-                <fieldset>
-                    <legend>What's hot?</legend>
-                
-                        <p>Helio Kids là mô hình edutainment thực sự dành cho trẻ em. Đây là mô hình mới trên thế giới, kết hợp giữa hai thuật ngữ “education” và “entertainment”, nghĩa là một khu vui chơi kết hợp giữa tính giải trí và giáo dục trong các trò chơi.</p>
-                        <p>Đến với Helio Kids, bạn và con trẻ sẽ được trải nghiệm những mô hình vui chơi hoàn toàn mới lạ với hàng trăm trò chơi hấp dẫn.Với tổng diện tích lên đến hơn 2.700 m2, gồm 42 khu vực chơi, có sức chứa gần 1.000 người; Helio Kids thực sự là một khu vui chơi trong nhà và ngoài trời có quy mô hoành tráng nhất hiện nay dành cho trẻ em từ 2 - 9 tuổi tại Đà Nẵng.</p> 
-                        
-                   
-                </fieldset>
-                <fieldset>
-                    <legend>What's hot?</legend>
-                        <div class="footer-contact"> 
-                        <p>Trung tâm giải trí phức hợp Helio Center</p> 
-                        <p>Khu công viên Đông Nam Đài tưởng niệm, Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu, TP Đà Nẵng</p> 
-                        <p><span>Tel</span>(0236) 3 630 888</p> 
-                        <p><span>Email: </span><a href="mailto:contact@helio.vn">contact@helio.vn</a> </p> 
-                    </div>
-                </fieldset>
+<div class="section-top container">
+    <!-- TEXT 1 -->
+    <div class="row">
+        <div class="row col-md-10">
+            <div class="col-md-10 nightlife-page-title">
+                <p class="big-font-size">NHỮNG TRẢI NGHIỆM TUYỆT VỜI CÙNG ẨM THỰC VÀ GIẢI TRÍ</p>
+            </div>
+            <div class="col-md-12 nightlife-page-description">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
             </div>
         </div>
-        <div class="row tab-pane" id="kids_pricing">
-            <div class="col-md-12">
-                <h2>Kids Pricing</h2>
-                <hr class="line">
-                <fieldset>
-                    <legend>What's hot?</legend>
-                
-                        <p>Helio Kids là mô hình edutainment thực sự dành cho trẻ em. Đây là mô hình mới trên thế giới, kết hợp giữa hai thuật ngữ “education” và “entertainment”, nghĩa là một khu vui chơi kết hợp giữa tính giải trí và giáo dục trong các trò chơi.</p>
-                        <p>Đến với Helio Kids, bạn và con trẻ sẽ được trải nghiệm những mô hình vui chơi hoàn toàn mới lạ với hàng trăm trò chơi hấp dẫn.Với tổng diện tích lên đến hơn 2.700 m2, gồm 42 khu vực chơi, có sức chứa gần 1.000 người; Helio Kids thực sự là một khu vui chơi trong nhà và ngoài trời có quy mô hoành tráng nhất hiện nay dành cho trẻ em từ 2 - 9 tuổi tại Đà Nẵng.</p> 
-                        
-                   
-                </fieldset>
-                 <fieldset>
-                    <legend>What's hot?</legend>
-                
-                        <p>Trung tâm giải trí phức hợp Helio Center</p> 
-                        
-                   
-                </fieldset>
+        <div class="col-md-8 col-md-offset-2">
+            <p class="texxt">Corem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
+        </div>
+    </div>
+
+    <!-- TEXT 2 -->
+    <div class="row">
+        <div class="row col-md-10">
+            <div class="col-md-10 nightlife-page-title">
+                <p class="big-font-size">NHỮNG TRẢI NGHIỆM TUYỆT VỜI CÙNG ẨM THỰC VÀ GIẢI TRÍ</p>
+            </div>
+            <div class="col-md-12 nightlife-page-description">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
             </div>
         </div>
-        <div class="row tab-pane" id="card_product">
-            <div class="col-md-12">
-                <h2>Cards Product</h2>
-                <hr class="line">
-                <fieldset>
-                    <legend>What's hot?</legend>
-                
-                        <p>Helio Kids là mô hình edutainment thực sự dành cho trẻ em. Đây là mô hình mới trên thế giới, kết hợp giữa hai thuật ngữ “education” và “entertainment”, nghĩa là một khu vui chơi kết hợp giữa tính giải trí và giáo dục trong các trò chơi.</p>
-                        <p>Đến với Helio Kids, bạn và con trẻ sẽ được trải nghiệm những mô hình vui chơi hoàn toàn mới lạ với hàng trăm trò chơi hấp dẫn.Với tổng diện tích lên đến hơn 2.700 m2, gồm 42 khu vực chơi, có sức chứa gần 1.000 người; Helio Kids thực sự là một khu vui chơi trong nhà và ngoài trời có quy mô hoành tráng nhất hiện nay dành cho trẻ em từ 2 - 9 tuổi tại Đà Nẵng.</p> 
-                        
-                   
-                </fieldset>
-                <fieldset>
-                    <legend>What's hot?</legend>
-                        <div class="footer-contact"> 
-                        <p>Trung tâm giải trí phức hợp Helio Center</p> 
-                        <p>Khu công viên Đông Nam Đài tưởng niệm, Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu, TP Đà Nẵng</p> 
-                        <p><span>Tel</span>(0236) 3 630 888</p> 
-                        <p><span>Email: </span><a href="mailto:contact@helio.vn">contact@helio.vn</a> </p> 
-                    </div>
-                </fieldset>
-            </div>
+        <div class="col-md-8 col-md-offset-2">
+            <p class="texxt">Corem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
         </div>
         
+    </div>
+</div>
+
+<div class="container">
+    <!-- DOWNLOAD APP BANNER -->
+    <div class="app-banner">
+        <a href="#"><img src="{{ STATIC_URL }}assets/websites/images/download-app_banner.png" width="100%"></a>
     </div>
 </div>
 {% endblock %}

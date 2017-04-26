@@ -1,32 +1,10 @@
 {% extends "layout.html" %}
+{% load i18n %}
 {% block extrastylesheet %}
-<style type="text/css">
-.career-div {
-	padding-top: 25px;
-}
-.carrer-item.thumbnail {
-	margin-bottom: 0px;
-	padding: 0px;
-	border-radius: 0px;
-	border: none;
-	background-color: #372f60;
-}
-
-.carrer-item.thumbnail .caption {
-	padding: 15px;
-}
-
-.carrer-item.thumbnail p {
-	color: #fff;
-}
-
-.carrer-item.thumbnail p.carrer-name {
-	font-size: 18px;
-}
-</style>
+	<link href="{{ STATIC_URL }}assets/websites/css/careers.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block extrascript %}
-
+	<script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/careers.js"></script>
 {% endblock %}
 {% block main_content %} 
 
@@ -49,7 +27,18 @@
         </div>
     </div>
 	{% if result.careers %}
-    <div class="row">
+	<div class="row careers-lg">
+		<div class="col-md-12">
+			<div class="thumbnail carrer-item">
+				<img src="{{ STATIC_URL }}assets/websites/images/career_1.png" alt="Lights" style="width:100%">
+				<div class="caption">
+					<p class="carrer-name">ĐỒNG HÀNH CÙNG HELIO CENTER</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="row careers-content">
     	{% for career in result.careers %}
 		<div class="col-md-6 career-div">
 			<div class="thumbnail carrer-item">
@@ -61,7 +50,11 @@
 			</div>
 		</div>
 		{% endfor %}
+		<div class="div-view-more col-md-12" align="center">
+			<a class="btn-view-more btn-custom-style btn-custom-style-faqs" role="button">{% trans "btn.view_more" %}</a>
+        </div>
 	</div>
+
 	{% endif %}
 
   	<!-- DOWNLOAD APP BANNER -->
