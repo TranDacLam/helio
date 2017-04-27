@@ -6,9 +6,10 @@ django-allauth
 django-rest-auth
 django-rest-auth[with_social]
 djangorestframework-jwt
-django-suit
+django-grappelli
 django-ckeditor
 django-mssql
 django-pymssql
 uwsgi
+
 #-e git+git://github.com/mvpdev/django-eav.git#egg=django-eav

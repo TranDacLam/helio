@@ -121,6 +121,10 @@ class Category(models.Model):
     def __str__(self):
         return '%s' % (self.name)
 
+    class Meta:
+        verbose_name = 'Categories'
+        verbose_name_plural = 'Categories'
+
 
 @python_2_unicode_compatible
 class Entertainment(DateTimeModel):
@@ -210,7 +214,7 @@ class Banner(DateTimeModel):
 @python_2_unicode_compatible
 class Contact(DateTimeModel):
     name = models.CharField(max_length=500)
-    email = models.CharField(max_length=500)
+    email = models.EmailField(max_length=500)
     subject = models.CharField(max_length=500)
     message = models.TextField()
 
