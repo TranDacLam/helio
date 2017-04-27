@@ -3,10 +3,8 @@ var show_num = 6,
 
 function viewMore() {
     var size_list = $(".careers-content .career-div").length;
-    console.log(size_list);
     $('.careers-content .career-div:lt('+show_num+')').show();
     if(show_num >= size_list) {
-    	console.log('2131313');
         $(".btn-view-more").parent().hide();
     }
 }

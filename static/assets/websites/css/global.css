@@ -16,10 +16,11 @@ p {
 }
 
 p.short_description {
-    font-family: "Cabin";
     font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.5px;
+}
+
+p.page_description {
+    font-size: 20px;
 }
 
 .big-font-size {
@@ -86,7 +87,7 @@ p.short_description {
 }
 
 .main-menu .navbar-nav li a {
-    font-size: 26px;
+    font-size: 30px;
     font-weight: bold;
     font-family: "Yanone Kaffeesatz";
     color: #fff;
@@ -120,13 +121,14 @@ p.short_description {
 .navbar-default .main-menu .dropdown-menu>li>a {
     color: #15062b;
     padding-left: 15px;
+    padding-right: 15px;
 }
 
-.navbar-default .main-menu .dropdown-menu>li>a {
-    color: #15062b;
-}
 .menu-content {
     padding-left: 4%;
+}
+.navbar.navbar-default.header-nav {
+    min-height: 0px;
 }
 .main-menu {
     padding: 0px;
@@ -262,6 +264,7 @@ a.btn-custom-style:hover {
     background: transparent;
 }
 
+/*Apply for mobile*/
 @media (max-width: 992px) {
     .big-font-size {
         font-size: 36px;
@@ -288,5 +291,21 @@ a.btn-custom-style:hover {
     .page-header-img {
         margin-bottom: 0px;
     } 
+
+
+    .main-menu .navbar-nav li a {
+        text-align: right;
+    }
+    .main-menu .navbar-nav>li.active>a,
+    .main-menu .navbar-nav>li.active>a:hover,
+    .main-menu .navbar-nav>li>a:focus, 
+    .main-menu .navbar-nav>li>a:hover, 
+    .navbar-default .main-menu .navbar-nav>.open>a:focus {
+        color: #da139a;
+        border-bottom: none;
+        cursor: pointer;
+        text-decoration: none;
+        background-color: transparent;
+    }
 
 }

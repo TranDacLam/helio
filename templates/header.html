@@ -4,12 +4,11 @@
     <div class="header">
     	<div class="row menu">
 			<div class="col-sm-2 col-xs-3">	
-			<div class="well logo-div">
-				<a href="{% url 'home' %}">
-	        		<img src="{{ STATIC_URL }}assets/images/logo.png" class="img-responsive" width="173px" height="104px" alt="Image">
-	        	</a>
-	        </div>
-			
+				<div class="well logo-div">
+					<a href="{% url 'home' %}">
+		        		<img src="{{ STATIC_URL }}assets/images/logo.png" class="img-responsive" width="173px" height="104px" alt="Image">
+		        	</a>
+		        </div>
 			</div>
 			<div class="col-sm-10 col-xs-9 menu-content">		
 				<div class="row">
@@ -50,9 +49,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="row hidden-xs" style="padding-top: 20px;">
+				<div class="row " style="padding-top: 20px;">
 					<div class="col-sm-12 col-xs-12">	
-						<nav class="navbar navbar-default">
+						<nav class="navbar navbar-default header-nav">
 						    <!-- Collect the nav links, forms, and other content for toggling -->
 						    <div class="collapse navbar-collapse main-menu" id="main-nav" >
 								<ul class="nav navbar-nav">
@@ -61,8 +60,8 @@
 										<ul class="dropdown-menu">
 											<li><a href="{% url 'helio_play' %}">HELIO PLAY</a></li>
 											<li><a href="{% url 'helio_kids' %}">HELIO KIDS</a></li>
-											<li><a href="#!">CHO DEM</a></li>
-											<li><a href="#!">CAFFEE & BANH</a></li>
+											<li><a href="{% url 'night_life' %}">{% trans "homepage.text.night_life" %}</a></li>
+											<li><a href="{% url 'helio_coffee' %}">CAFFEE & BANH</a></li>
 											<li><a href="#!">SAN PHAM KHAC</a></li>
 										</ul>
 									</li>
