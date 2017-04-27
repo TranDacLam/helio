@@ -73,9 +73,6 @@ p.short_description {
 .menu .col-sm-2, .menu .col-xs-2{
     padding-right:0px !important;
 }  
-.menu .col-sm-10, .menu .col-xs-10{
-    padding-left:0px !important;
-}
 .row .well.logo-div {
     margin: 0;
     text-align: center;
@@ -127,6 +124,12 @@ p.short_description {
 
 .navbar-default .main-menu .dropdown-menu>li>a {
     color: #15062b;
+}
+.menu-content {
+    padding-left: 4%;
+}
+.main-menu {
+    padding: 0px;
 }
 
 .menu-language a.btn-custom-header {

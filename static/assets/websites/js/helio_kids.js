@@ -3,7 +3,7 @@ var KidsFunction = (function ($) {
         var _self = this;
         var show_num = {};
         var first_show = 2,
-            view_more = 5;
+            view_more = 2;
         this.initElementPage = function() {
             $(".kid-btn-group li:first").addClass("active");
             $(".tab-content .tab-pane:first").addClass("active");
