@@ -55,7 +55,7 @@
     padding-bottom: 25%;
 }
 
-.boxInner {
+.box-inner {
     position: absolute;
     left: 2px;
     right: 2px;
@@ -63,7 +63,7 @@
     bottom: 2px;
     overflow: hidden;
 }
- .boxInner img { 
+ .box-inner img { 
  	width: 100%;
  	height: 100%;
 }

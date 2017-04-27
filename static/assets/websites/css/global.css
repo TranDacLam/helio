@@ -121,11 +121,9 @@ p.page_description {
 .navbar-default .main-menu .dropdown-menu>li>a {
     color: #15062b;
     padding-left: 15px;
+    padding-right: 15px;
 }
 
-.navbar-default .main-menu .dropdown-menu>li>a {
-    color: #15062b;
-}
 .menu-content {
     padding-left: 4%;
 }
