@@ -16,10 +16,11 @@ p {
 }
 
 p.short_description {
-    font-family: "Cabin";
     font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.5px;
+}
+
+p.page_description {
+    font-size: 20px;
 }
 
 .big-font-size {
@@ -86,7 +87,7 @@ p.short_description {
 }
 
 .main-menu .navbar-nav li a {
-    font-size: 26px;
+    font-size: 30px;
     font-weight: bold;
     font-family: "Yanone Kaffeesatz";
     color: #fff;

@@ -62,11 +62,12 @@ ol.carousel-indicators-custom li {
     right: -10px;
 }
 .img-font-size {
-    font-size: 40px;
+    font-size: 36px;
     font-family: "Yanone Kaffeesatz";
-    line-height: 60px;
+    line-height: 45px;
     letter-spacing: 4px;
     font-weight: bold;
+    text-transform: uppercase;
 }
 
 .description-slide, 
@@ -140,6 +141,7 @@ a.btn-custom-style.btn-custom-style-promotion:hover {
     background-color: #7d1e6a;
     border-radius: 0px;
     background-image: none;
+    font-size: 36px;
 }
 .promotion-btn-group li {
     padding-bottom: 25px;
