@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block extrastylesheet %}
+    <link href="{{ STATIC_URL }}assets/websites/css/helio_coffee.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block extrascript %}
+
+{% endblock %}
+{% block main_content %} 
+
+<div class="container">
+    <!-- COFFEE PAGE DESCRIPTION -->
+    <div class="page-top">
+        <div class="page-header-img">
+            <div>
+                <img src="{{ STATIC_URL }}assets/websites/images/helio_coffee_header.png" width="100%">
+            </div>
+            <div class="page-title" align="center">
+                <div class="col-md-12">
+                    <p class="page-title-text">CAFE & BÁNH</p>
+                </div>
+            </div>
+        </div>
+        <div align="center" class="page-header-text">
+            <div class="form-title">
+                <p class="text-description page_description">Helio Coffee - Một không gian nghỉ ngơi thoải mái, thoáng đãng cho khách hàng sau khi cháy hết mình với những trò chơi tại Helio Center. Helio Bakery - Thế giới dành riêng cho các tín đồ bánh ngọt với các kiểu bánh đặc sắc, một không gian ấm áp, ghế ngồi êm ái và mùi bánh thơm phảng phất trong không khí.</p>
+            </div>
+        </div>
+    </div>
+    <!-- CONTENT -->
+    <div class="wrap">
+        <div class="box">
+            <div class="box-inner">
+                <img src="{{ STATIC_URL }}assets/websites/images/helio_coffee_01.png">
+            </div>
+        </div>
+        <div class="box2">
+            <div class="box-inner">
+                <img src="{{ STATIC_URL }}assets/websites/images/helio_coffee_02.png">
+            </div>
+        </div>
+        <div class="box3">
+            <div class="box-inner">
+                <img src="{{ STATIC_URL }}assets/websites/images/helio_coffee_03.png">
+            </div>
+        </div>
+        <div class="box4">
+            <div class="box-inner">
+                <img src="{{ STATIC_URL }}assets/websites/images/helio_coffee_04.png">
+            </div>
+        </div>
+        <div class="box5">
+            <div class="box-inner">
+                <img src="{{ STATIC_URL }}assets/websites/images/helio_coffee_05.png">
+            </div>
+        </div>
+        <div class="box6">
+            <div class="box-inner">
+                <img src="{{ STATIC_URL }}assets/websites/images/helio_coffee_07.png">
+            </div>
+        </div>
+        <div class="box7">
+            <div class="box-inner">
+                <img src="{{ STATIC_URL }}assets/websites/images/helio_coffee_06.png">
+            </div>
+        </div>
+    </div>
+    <!-- DOWNLOAD APP BANNER -->
+    <div class="app-banner">
+        <a href="#"><img src="{{ STATIC_URL }}assets/websites/images/download-app_banner.png" width="100%"></a>
+    </div>
+</div>
+
+{% endblock %}

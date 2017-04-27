@@ -28,11 +28,24 @@
     right: -10px;
 }
 .img-font-size {
-    font-size: 40px;
+    font-size: 36px;
     font-family: "Yanone Kaffeesatz";
-    line-height: 60px;
+    line-height: 45px;
     letter-spacing: 4px;
     font-weight: bold;
+    text-transform: uppercase;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.img-text-description.short_description {
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .description-slide, 
@@ -110,6 +123,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     background-color: #8a642e;
     border-radius: 0px;
     background-image: none;
+    font-size: 36px;
 }
 .kid-btn-group li {
     padding-bottom: 25px;

@@ -1,3 +1,37 @@
+/*START CAROUSEL*/
+/*ol.carousel-custom {
+    top: 80%;
+}*/
+
+.carousel-custom {
+    position: relative;
+    margin: 30px auto;
+    height: 80%;
+    border: none;
+    overflow: visible;
+}
+
+ol.carousel-indicators-custom .active {
+    width: 40px;
+    height: 4px;
+    margin: 0 5px;
+    background-color: #fff;
+    border-color: #fff;
+}
+ol.carousel-indicators-custom li {
+    display: inline-block;
+    width: 40px;
+    height: 4px;
+    margin: 0 5px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: #bd197c;
+    border-color: #bd197c;
+    border-radius: 0px;
+}
+
+/*END CAROUSEL*/
+
 /*GAME COTENT CSS*/
 .image-div {
     background-size: 70% 100% !important;
@@ -28,11 +62,24 @@
     right: -10px;
 }
 .img-font-size {
-    font-size: 40px;
+    font-size: 36px;
     font-family: "Yanone Kaffeesatz";
-    line-height: 60px;
+    line-height: 45px;
     letter-spacing: 4px;
     font-weight: bold;
+    text-transform: uppercase;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.img-text-description.short_description {
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .description-slide, 
@@ -106,6 +153,7 @@ a.btn-custom-style.btn-custom-style-promotion:hover {
     background-color: #7d1e6a;
     border-radius: 0px;
     background-image: none;
+    font-size: 36px;
 }
 .promotion-btn-group li {
     padding-bottom: 25px;
@@ -203,5 +251,24 @@ a.btn-custom-style.btn-custom-style-promotion-view-more:hover {
     }
     .image-hidden-sm-up {
         display: block;
+    }
+    /*CAROUSEL PHONE SCREEN*/
+    ol.carousel-indicators-custom .active {
+        width: 20px;
+        height: 3px;
+        margin: 0 5px;
+        background-color: #fff;
+        border-color: #fff;
+    }
+    ol.carousel-indicators-custom li {
+        display: inline-block;
+        width: 20px;
+        height: 3px;
+        margin: 0 5px;
+        text-indent: -999px;
+        cursor: pointer;
+        background-color: #bd197c;
+        border-color: #bd197c;
+        border-radius: 0px;
     }
 }

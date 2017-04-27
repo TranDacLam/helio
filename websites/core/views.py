@@ -87,9 +87,6 @@ def helio_kids(request):
 
     return render(request, 'websites/helio_kids.html', {"result": result})
 
-
-    return render(request, 'websites/helio_kids.html', {"result": result})
-
 def night_life(request):
     print "***START NIGHT LIFE CONTENT PAGE***"
     
@@ -159,10 +156,18 @@ def event_content(request):
     return render(request, 'websites/event_content.html')
 
     
-def trainghiem(request):
-    print "***START trai nghiem CONTENT PAGE***"
+def experience(request):
+    print "***START EXPERIENCE CONTENT PAGE***"
+    result = {}
+    # Experience info
+    experience_type = Post_Type.objects.get(pk=constant.EXPERIENCE_POST_TYPE_ID)
+    result["experience_type"] = experience_type
+
+    # Experience list
+    experiences = Post.objects.filter(post_type_id=constant.EXPERIENCE_POST_TYPE_ID)
+    result["experiences"] = experiences
     
-    return render(request, 'websites/trainghiem.html')
+    return render(request, 'websites/experience.html')
 
 def tn_chi_tiet(request):
     print "***START trai nghiem chi tiet CONTENT PAGE***"
@@ -194,6 +199,12 @@ def game_detail(request):
     print "***START EVENT CONTENT PAGE***"
     
     return render(request, 'websites/game_detail.html')
+
+
+def helio_coffee(request):
+    print "***START HELIO COFFEE CONTENT PAGE***"
+    
+    return render(request, 'websites/helio_coffee.html')
 
 
 def promotions(request):

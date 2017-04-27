@@ -1,0 +1,91 @@
+p.first-text-lg:first-letter {
+    float: left;
+    padding: 0px 8px 0 0;
+    display: block;
+    color: #fec231;
+    font-size: 127px;
+    line-height: 96px;
+}
+.nightlife-name {
+    color: #fec231;
+    font-family: "Cabin";
+}
+hr.nightlife-hr {
+    border-top-color: #fec231;
+}
+
+.comment-div {
+    background: url(../images/night_life_1.png) no-repeat; 
+    background-size: 100% 100%; 
+    background-position: right; 
+    min-height: 500px;
+    display: table;
+}
+/*START CAROUSEL*/
+#comment_carousel, 
+#comment_carousel1 {
+    vertical-align: middle;
+    display: table-cell;
+}
+ol.carousel-indicators-custom {
+    position: relative;
+    left: 0px;
+    margin-left: -0px;
+    text-align: left; 
+    bottom: 0px;
+}
+
+ol.carousel-indicators-custom .active {
+    width: 40px;
+    height: 4px;
+    margin: 0 5px;
+    background-color: #fff;
+    border-color: #fff;
+}
+ol.carousel-indicators-custom li {
+    display: inline-block;
+    width: 40px;
+    height: 4px;
+    margin: 0 5px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: #bd197c;
+    border-color: #bd197c;
+    border-radius: 0px;
+}
+/*END CAROUSEL*/
+.comment_left {
+    border-right: 1px solid #fff;
+}
+
+.comment_left p {
+    font-size: 36px;
+    line-height: 40px;
+}
+
+.first-section {
+    margin-top: -235px;
+}
+.div-first-text-lg {
+    margin-top: 50px;
+}
+.nightlife-div {
+    margin-top: 50px;
+}
+.comment-div {
+    max-width: 1400px;
+    margin: 50px auto;
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 1600px) {
+    .comment_left {
+        margin-left: -95px;
+        width: 30%;
+    }
+}
+/* Small devices (tablets, 768px and up) */
+@media (max-width: 992px) {
+    .first-section {
+        margin-top: 30px;
+    }
+}

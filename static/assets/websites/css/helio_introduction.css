@@ -1,11 +1,4 @@
-li.col-md-4-custom {
-	padding-left: 0px;
-	padding-right: 0px;
-}
-
-.intro-btn-group {
-
-}
+/*START BUTTON*/
 
 .intro-btn-group li a.btn-custom-style:hover,
 .intro-btn-group li a.btn-custom-style:focus,
@@ -52,15 +45,7 @@ li.col-md-4-custom {
 }
 
 
-.active>a.button-custom-style,
-a.button-custom-style:focus, 
-a.button-custom-style:hover {
-	color: #fff;
-    text-decoration: none;
-    border-style: solid;
-    border-width: 1px;
-    border-image-slice: 1;
-}
+/*END BUTTON*/
 
 /*HELIO ABOUT*/
 

@@ -1,0 +1,41 @@
+/*LIST CAREERS ITEM */
+.career-div {
+	padding-top: 25px;
+}
+.carrer-item.thumbnail {
+	margin-bottom: 0px;
+	padding: 0px;
+	border-radius: 0px;
+	border: none;
+	background-color: #372f60;
+}
+
+.carrer-item.thumbnail .caption {
+	padding: 15px;
+}
+
+.carrer-item.thumbnail p {
+	color: #fff;
+}
+
+.carrer-item.thumbnail p.carrer-name {
+	font-size: 18px;
+}
+.div-view-more {
+	margin-top: 50px;
+}
+
+/*ITEM LG HEADER*/
+.careers-lg {
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+.careers-lg .carrer-item.thumbnail {
+	position: relative;
+}
+
+.careers-lg .carrer-item.thumbnail .caption {
+	position: absolute;
+	bottom: 0px;
+	background-color: #372f60;
+}

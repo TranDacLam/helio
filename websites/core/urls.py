@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^contact/$', views.contact, name='contact'),
     url(r'news/$', views.news, name='news'),
     url(r'careers/$', views.careers, name='careers'),
-
+    url(r'^experience/$', views.experience, name='experience'),
 
     url(r'^get-posts/$', views.get_posts, name='get_posts'),
     
@@ -23,11 +23,12 @@ urlpatterns = [
     
     url(r'^power-card/$', views.power_card, name='power_card'),
     url(r'^membership/$', views.membership, name='membership'),
-    url(r'^trai-nghiem/$', views.trainghiem, name='trainghiem'),
+    
     url(r'^trai-nghiem/chi-tiet/$', views.tn_chi_tiet, name='chi_tiet'),
     url(r'^khuyen-mai/chi-tiet/$', views.km_chi_tiet, name='chi_tiet'),
 
     url(r'^helio-introduction/$', views.helio_introduction, name='helio_introduction'),
     url(r'^helio-term-condition/$', views.helio_term_condition, name='helio_term_condition'),
+    url(r'^helio-coffee/$', views.helio_coffee, name='helio_coffee'),
 
 ]
