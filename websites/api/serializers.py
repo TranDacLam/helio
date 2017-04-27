@@ -73,7 +73,7 @@ class EventsSerializer(serializers.Serializer):
 class PostTypeSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField(max_length=255)
-    description = models.TextField()
+    description = serializers.CharField()
 
 
 class PostImageSerializer(serializers.Serializer):

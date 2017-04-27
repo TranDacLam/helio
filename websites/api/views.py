@@ -73,7 +73,7 @@ def game_detail(request, game_id):
         error = helper.checkIdValid(game_id)
         if error:
             errors = {"code": 400, "message": "%s" %
-                      error, "fields": "event_id"}
+                      error, "fields": "game_id"}
             return Response(errors, status=400)
 
         game_detail = Game.objects.get(pk=game_id)
@@ -180,10 +180,11 @@ def posts(request):
         error = helper.checkIdValid(type_id)
         if error:
             errors = {"code": 400, "message": "%s" %
-                      error, "fields": "event_id"}
+                      error, "fields": "type_id"}
             return Response(errors, status=400)
 
         post_list = Post.objects.filter(post_type_id=type_id)
+        print "description type ", post_list[0].post_type.description
         serializer = PostsSerializer(post_list, many=True)
         return Response(serializer.data)
     except Exception, e:
@@ -230,7 +231,7 @@ def promotions(request):
         error = helper.checkIdValid(type_id)
         if error:
             errors = {"code": 400, "message": "%s" %
-                      error, "fields": "event_id"}
+                      error, "fields": "type_id"}
             return Response(errors, status=400)
 
         lst_item = Promotion.objects.filter(promotion_type_id=type_id)
@@ -287,7 +288,7 @@ def faqs(request):
         error = helper.checkIdValid(category_id)
         if error:
             errors = {"code": 400, "message": "%s" %
-                      error, "fields": "event_id"}
+                      error, "fields": "category_id"}
             return Response(errors, status=400)
 
         faq_list = FAQ.objects.filter(category_id=category_id)
