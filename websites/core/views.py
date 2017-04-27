@@ -207,6 +207,16 @@ def helio_coffee(request):
     return render(request, 'websites/helio_coffee.html')
 
 
+def helio_redemption_store(request):
+    print "***START HELIO COFFEE CONTENT PAGE***"
+    result = {}
+    # FAWs list
+    faqs = FAQ.objects.all()
+    result["faqs"] = faqs
+    
+    return render(request, 'websites/helio_redemption_store.html', {"result":result})
+
+
 def promotions(request):
     print "***START EVENT CONTENT PAGE***"
     result = {}

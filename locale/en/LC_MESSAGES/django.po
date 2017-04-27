@@ -79,6 +79,11 @@ msgid "homepage.text.coffee"
 msgstr "COFFEE"
 # END HOME PAGE
 
+# START FAQs REDEMPTION STORE
+msgid "redemption_store.title.section.faq"
+msgstr "QUESTIONS RELATED TO REDEEM THE GIFT"
+# END FAQs REDEMPTION STORE
+
 #START FOOTER
 msgid "footer.contact.address"
 msgstr "2/9 str, Hoa Cuong Bac Ward, Hai Chau Dist, Da Nang City, Viet Nam"

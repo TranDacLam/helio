@@ -79,6 +79,11 @@ msgid "homepage.text.coffee"
 msgstr "COFFEE"
 # END HOME PAGE
 
+# START FAQs REDEMPTION STORE
+msgid "redemption_store.title.section.faq"
+msgstr "NHỮNG CÂU HỎI LIÊN QUAN ĐẾN ĐỔI QUÀ"
+# END FAQs REDEMPTION STORE
+
 #START FOOTER
 msgid "footer.contact.address"
 msgstr "Khu công viên Đông Nam Đài tưởng niệm, Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu, TP Đà Nẵng"
