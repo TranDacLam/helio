@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^helio-play/game-detail$', views.game_detail, name='game_detail'),
     url(r'^combo-product/$', views.combo_product, name='combo_product'),
     url(r'^events/event-content/$', views.event_content, name='event_content'),
+    url(r'^events/event-detail/$', views.event_detail, name='event_detail'),
     
     url(r'^power-card/$', views.power_card, name='power_card'),
     url(r'^membership/$', views.membership, name='membership'),
@@ -32,4 +33,6 @@ urlpatterns = [
     url(r'^helio-coffee/$', views.helio_coffee, name='helio_coffee'),
     url(r'^helio-redemption-store/$', views.helio_redemption_store, name='helio_redemption_store'),
 
+
+    
 ]
