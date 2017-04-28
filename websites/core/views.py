@@ -201,6 +201,12 @@ def game_detail(request):
     return render(request, 'websites/game_detail.html')
 
 
+def event_detail(request):
+    print "***START EVENT CONTENT PAGE***"
+    
+    return render(request, 'websites/event_detail.html')
+
+
 def helio_coffee(request):
     print "***START HELIO COFFEE CONTENT PAGE***"
     
