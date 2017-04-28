@@ -35,9 +35,11 @@ class Post(DateTimeModel):
     post_type = models.ForeignKey('Post_Type', related_name='posts_type_rel', on_delete=models.CASCADE, null=True,
                                   blank=True)
     key_query = models.CharField(max_length=255, unique=True)
+    pin_to_top = models.BooleanField("Pin to Top",default=False)
 
     def save(self, *args, **kwargs):
-        self.key_query = "kq_" + self.key_query.replace(" ", "_")
+        if not self.pk:
+            self.key_query = "kq_" + self.key_query.replace(" ", "_")
         super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -153,7 +155,8 @@ class Entertainment(DateTimeModel):
                                  on_delete=models.CASCADE, limit_choices_to=limit_category_entertainments)
 
     def save(self, *args, **kwargs):
-        self.key_query = "kq_" + self.key_query.replace(" ", "_")
+        if not self.pk:
+            self.key_query = "kq_" + self.key_query.replace(" ", "_")
         super(Entertainment, self).save(*args, **kwargs)
 
     def __str__(self):
