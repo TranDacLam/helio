@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 
 class MyUserManager(BaseUserManager):
@@ -30,7 +31,8 @@ class MyUserManager(BaseUserManager):
             password=password
         )
         # user.username = email
-        user.is_admin = True
+        user.is_staffing = True
+        user.is_superuser = True
         user.save(using=self._db)
         return user
 
@@ -48,8 +50,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
+    date_joined = models.DateTimeField(_('Date Joined'), auto_now_add=True,
+                                   editable=False)
+    modified = models.DateTimeField(
+        _('Modified Date'), auto_now=True, editable=False)
 
+    is_staffing = models.BooleanField(
+        _('staff status'),
+        default=False,
+        help_text=_('Designates whether the user can log into this admin site.'),
+    )
     objects = MyUserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -62,21 +72,20 @@ class User(AbstractBaseUser, PermissionsMixin):
         # The user is identified by their email address
         return self.email
 
-    def __str__(self):              # __unicode__ on Python 2
-        return self.email
-
     def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
-        # Simplest possible answer: Yes, always
-        return True
+        return super(User, self).has_perm(perm, obj)
 
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
-        return True
+        print "Check Permistion ",self.is_active, self.is_superuser
+        return super(User, self).has_module_perms(app_label)
+
+    def __str__(self):              # __unicode__ on Python 2
+        return self.email
 
     @property
     def is_staff(self):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
-        return self.is_admin
+        return self.is_staffing

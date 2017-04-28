@@ -8,13 +8,15 @@ from django import forms
 import custom_models
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+# from django.contrib.admin import SimpleListFilter
 
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    password2 = forms.CharField(
+        label='Password confirmation', widget=forms.PasswordInput)
 
     class Meta:
         model = custom_models.User
@@ -46,7 +48,8 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = custom_models.User
-        fields = ('email', 'password', 'birth_date', 'phone', 'personal_id', 'country', 'address', 'city', 'is_active', 'is_admin')
+        fields = ('email', 'password', 'birth_date', 'phone', 'personal_id',
+                  'country', 'address', 'city', 'is_active', 'is_staffing', 'is_superuser', 'groups')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -63,12 +66,13 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'country', 'is_admin')
-    list_filter = ('is_admin',)
+    list_display = ('email', 'country', 'is_staffing')
+    list_filter = ('is_staffing', 'is_superuser', )
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('birth_date', 'phone', 'personal_id', 'country', 'address', 'city',)}),
-        ('Permissions', {'fields': ('is_admin',)}),
+        ('Personal info', {'fields': ('birth_date', 'phone',
+                                      'personal_id', 'country', 'address', 'city',)}),
+        ('Permissions', {'fields': ('is_staffing', 'is_superuser', 'groups', )}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
@@ -76,7 +80,7 @@ class UserAdmin(BaseUserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': ('email', 'password1', 'password2')}
-        ),
+         ),
     )
     search_fields = ('email',)
     ordering = ('email',)
@@ -99,9 +103,32 @@ admin.site.register(Type, TypeAdmin)
 # Register Posts Type Model to Admin Site
 
 
-class ImageImageInline(admin.TabularInline):
+class PostImageInline(admin.TabularInline):
     model = Post_Image
     extra = 3
+
+# Add Filter Post Type
+
+
+# class PostTypeFilter(SimpleListFilter):
+#     title = 'Type'  # or use _('country') for translated title
+#     parameter_name = 'post_type'
+
+#     def lookups(self, request, model_admin):
+#         # You can also use hardcoded model name like "Post_Type" instead of
+#         # "model_admin.model" if this is not direct foreign key filter
+
+#         post_types = set(
+#             [c.post_type for c in model_admin.model.objects.all()])
+#         result = [(pt.id, pt.name) for pt in post_types if pt != None]
+        
+#         return result
+
+#     def queryset(self, request, queryset):
+#         if self.value():
+#             return queryset.filter(post_type__id__exact=self.value())
+#         else:
+#             return queryset
 
 
 class PostTypeAdmin(TranslationAdmin):
@@ -110,9 +137,18 @@ admin.site.register(Post_Type, PostTypeAdmin)
 
 # Register Posts Model to Admin Site
 
+def custom_titled_filter(title):
+    class Wrapper(admin.FieldListFilter):
+        def __new__(cls, *args, **kwargs):
+            instance = admin.FieldListFilter.create(*args, **kwargs)
+            instance.title = title
+            return instance
+    return Wrapper
 
 class PostAdmin(TranslationAdmin):
-    inlines = [ImageImageInline, ]
+    list_filter = (('post_type__name', custom_titled_filter('Post Type')), )
+    # list_filter = (PostTypeFilter, )
+    inlines = [PostImageInline, ]
     formfield_overrides = {
         models.TextField: {'widget': CKEditorUploadingWidget()},
     }
