@@ -54,6 +54,9 @@ msgstr "Coffee & Bakery"
 
 msgid "menu.submenu.ortherproduct"
 msgstr "Other Product"
+
+msgid "menu.submenu.redemption_store"
+msgstr "Redemption Store"
 # END SUB MENU
 
 # START BUTTON
@@ -98,8 +101,13 @@ msgstr "COFFEE"
 
 # START FAQs REDEMPTION STORE
 msgid "redemption_store.title.section.faq"
-msgstr "QUESTIONS RELATED TO REDEEM THE GIFT"
+msgstr "FREQUENTLY ASKED QUESTION"
 # END FAQs REDEMPTION STORE
+
+# START FAQs POWERCARD
+msgid "powercard.title.section.faq"
+msgstr "FREQUENTLY ASKED QUESTION"
+# END FAQs POWERCARD
 
 #START FOOTER
 msgid "footer.contact.address"

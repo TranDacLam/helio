@@ -54,6 +54,9 @@ msgstr "Cà phê & Bánh"
 
 msgid "menu.submenu.ortherproduct"
 msgstr "Sản phẩm khác"
+
+msgid "menu.submenu.redemption_store"
+msgstr "Quầy đổi quà"
 # END SUB MENU
 
 # START BUTTON
@@ -98,8 +101,13 @@ msgstr "COFFEE"
 
 # START FAQs REDEMPTION STORE
 msgid "redemption_store.title.section.faq"
-msgstr "NHỮNG CÂU HỎI LIÊN QUAN ĐẾN ĐỔI QUÀ"
+msgstr "NHỮNG CÂU HỎI THƯỜNG GẶP"
 # END FAQs REDEMPTION STORE
+
+# START FAQs POWERCARD
+msgid "powercard.title.section.faq"
+msgstr "NHỮNG CÂU HỎI THƯỜNG GẶP"
+# END FAQs POWERCARD
 
 #START FOOTER
 msgid "footer.contact.address"
