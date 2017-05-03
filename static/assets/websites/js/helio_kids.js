@@ -42,8 +42,8 @@ var KidsFunction = (function ($) {
         this.initCoursel = function (element) {
             $(element).html($(element).parent().find('.carousel-tmp').html());
             var content_width = $(".container").width();
-            var w = content_width * 0.85;
-            var h = content_width > 1100 ? 500 : 400;
+            var w = content_width * 0.675;
+            var h = content_width > 1100 ? 500 : 350;
             $(element).carousel({
                 carouselWidth: content_width,
                 carouselHeight: 500,
@@ -51,7 +51,7 @@ var KidsFunction = (function ($) {
                 shadow:false, 
                 frontWidth:w,
                 frontHeight:h,
-                hMargin: 0.1,
+                hMargin: 0.3,
                 vMargin: 0.8,
                 short_description: true
             });

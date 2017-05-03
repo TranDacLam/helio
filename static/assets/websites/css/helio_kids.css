@@ -51,7 +51,7 @@
 .description-slide, 
 .pricing-btn-section {
     position: relative;
-    width: 85%;
+    width: 67.5%;
     margin: auto;
 }
 
@@ -143,9 +143,11 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     left: 0;
     width: 0;
     height: 0;
-    border-width: 20px 242px 0 242px;
+    border-width: 20px 191px 0;
     border-style: solid;
     border-color: #fec231 transparent transparent transparent;
+    padding-right: 0px;
+    padding-left: 0px;
 }
 .short-description {
     margin-top: 50px;

@@ -1,7 +1,7 @@
 
 /*Button*/
 .play-btn-section {
-    width: 85%;
+    width: 67.5%;
     position: relative;
     margin: auto;
 }
@@ -29,6 +29,8 @@
     background-image: none;
     background-color: #36bdeb;
     border: 1px solid #000;
+    padding-right: 0px;
+    padding-left: 0px;
 }
 .play-btn-group li.active a.btn-custom-style:after {
     content: "";
@@ -37,7 +39,7 @@
     left: 0;
     width: 0;
     height: 0;
-    border-width: 20px 160px 0;
+    border-width: 20px 127px 0;
     border-style: solid;
     border-color: #36bdeb transparent transparent transparent;
 }  
