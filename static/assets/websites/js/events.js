@@ -5,7 +5,6 @@ var KidsFunction = (function ($) {
         var first_show = 5,
             view_more = 5;
         this.initElementPage = function() {
-            $(".promotion-btn-group li:first").addClass("active");
             $(".tab-content .tab-pane:first").addClass("active");
         }
 

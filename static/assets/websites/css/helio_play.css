@@ -1,4 +1,3 @@
-
 /*Button*/
 .play-btn-section {
     width: 67.5%;
@@ -77,95 +76,14 @@
 /*END SLIDE*/
 
 /*GAME CONTENT CSS*/
-
-.image-div {
-    background-size: 70% 100% !important;
-    height: 450px;
-    margin-top: 20px;
-}
-
-.image-text-head {
-    background-color: #f0f0f0;
-    color: #000;
-    padding-left: 30px;
-    margin-left: -30px;
-    margin-top: 50px;
-    margin-bottom: 10px;
-    word-spacing: 1px;
-    letter-spacing: 1px;
-    width: 100%;
-}
-.image-text-head p {
-    position: relative;
-}
-.content-pull-right .image-text-head p:after {
-    content: "";
-    position: absolute;
-    z-index: 1000;
-    border-left: 10px solid #f0f0f0;
-    border-bottom: 24px solid transparent;
-    right: -10px;
-}
-.img-font-size {
-    font-size: 36px;
-    font-family: "Yanone Kaffeesatz";
-    line-height: 45px;
-    letter-spacing: 4px;
-    font-weight: bold;
-    text-transform: uppercase;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.img-text-description.short_description {
-    display: -webkit-box;
-    -webkit-line-clamp: 7;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.description-slide, 
-.pricing-btn-section {
-    position: relative;
-    width: 85%;
-    margin: auto;
-}
-
-.content-pull-right .play-content-text {
+.content-pull-right .item-content-text {
     background: url("../images/bg_play_left.png") no-repeat;
     background-size: 100% 100%;
-    min-height: 450px;
-}
-.content-pull-right .play-content-image {
-    min-height: 450px;
-}
-.content-pull-right.image-div {
-    background-position: right !important;
 }
 
-
-.content-pull-left .play-content-text {
+.content-pull-left .item-content-text {
     background: url("../images/bg_play_right.png") no-repeat;
     background-size: 100% 100%;
-    min-height: 450px;
-}
-.content-pull-left .play-content-image {
-    min-height: 450px;
-}
-
-.content-pull-left .image-text-head {
-    transition: background 0.2s;
-    transform: skew(-15deg);
-    margin-left: -33px;
-}
-.content-pull-left .image-text-head p {
-    transform: skew(15deg);
-}
-.content-pull-left.image-div {
-    background-position: left;
 }
 a.btn-custom-style.btn-custom-style-play {
     border-image-source: linear-gradient(16deg, #0095bb, #fff);
@@ -190,3 +108,12 @@ a.btn-custom-style.btn-custom-style-play:hover {
         top: 178px;
     }
 } 
+
+@media (max-width: 767px) {
+    .content-pull-left .item-content-text,
+    .content-pull-right .item-content-text
+    {
+        background: url("../images/m_kids_text.png") no-repeat;
+        background-size: 100% 100%;
+    }
+}

@@ -149,8 +149,12 @@ def term_condition(request):
 
 def events(request):
     print "***START EVENTS PAGE***"
-    
-    return render(request, 'websites/events.html')
+    result = {}
+
+    events = Event.objects.all()
+    result["events"] = events
+
+    return render(request, 'websites/events.html', {"result": result})
 
 def event_content(request):
     print "***START EVENT CONTENT PAGE***"
