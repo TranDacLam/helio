@@ -228,8 +228,8 @@ ul.type-group li a span {
     text-align: left;
     color: #ffffff;
 }
-/* Small devices (tablets, 768px and up) */
-@media (max-width: 992px) {
+
+@media (max-width: 767px) {
     .vidieo-div {
         background: none;
         height: auto;

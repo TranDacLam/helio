@@ -213,7 +213,7 @@ a.btn-custom-style.btn-custom-style-promotion-view-more:hover {
     }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 767px) {
     .image-div {
         background: none !important;
         height: auto;
