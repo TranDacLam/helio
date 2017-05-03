@@ -1,4 +1,10 @@
 /*GAME COTENT CSS*/
+.description-slide, 
+.pricing-btn-section {
+    position: relative;
+    width: 67.5%;
+    margin: auto;
+}
 .content-pull-right .item-content-text {
     background: url("../images/bg_kids_left.png") no-repeat;
     background-size: 100% 100%;
