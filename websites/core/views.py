@@ -89,8 +89,10 @@ def helio_kids(request):
 
 def night_life(request):
     print "***START NIGHT LIFE CONTENT PAGE***"
-    
-    return render(request, 'websites/night_life.html')
+    result = {}
+    night_life = Post.objects.get(key_query=constant.NIGHT_LIFE_KEY_QUERY)
+    result["night_life"] = night_life
+    return render(request, 'websites/night_life.html', {"result": result})
 
 # Create your views here.
 def get_posts(request):
@@ -209,8 +211,17 @@ def game_detail(request):
 
 def helio_coffee(request):
     print "***START HELIO COFFEE CONTENT PAGE***"
+    result = {}
+
+    coffee_page = Post.objects.get(key_query=constant.COFFEE_KEY_QUERY)
+    result["page_info"] = coffee_page
     
-    return render(request, 'websites/helio_coffee.html')
+    list_images = {}
+    if coffee_page:
+        list_images = coffee_page.posts_image.all()
+
+    result["list_images"] = list_images
+    return render(request, 'websites/helio_coffee.html', {"result":result})
 
 
 def helio_redemption_store(request):
