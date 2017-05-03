@@ -25,12 +25,14 @@
     padding-right: 2px;
     padding-left: 2px;
 }
+.play-btn-group li a.btn-custom-style {
+    padding-right: 0px;
+    padding-left: 0px;
+}
 .play-btn-group li.active a.btn-custom-style {
     background-image: none;
     background-color: #36bdeb;
     border: 1px solid #000;
-    padding-right: 0px;
-    padding-left: 0px;
 }
 .play-btn-group li.active a.btn-custom-style:after {
     content: "";

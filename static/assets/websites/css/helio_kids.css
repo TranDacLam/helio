@@ -135,7 +135,10 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     background-color: #fec231;
     border: none;
 }
-
+.kid-btn-group li a.btn-custom-style {
+    padding-right: 0px;
+    padding-left: 0px;
+}
 .kid-btn-group li.active a.btn-custom-style:after {
     content: "";
     position: absolute;
@@ -146,8 +149,6 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     border-width: 20px 191px 0;
     border-style: solid;
     border-color: #fec231 transparent transparent transparent;
-    padding-right: 0px;
-    padding-left: 0px;
 }
 .short-description {
     margin-top: 50px;
