@@ -171,6 +171,12 @@ def experience(request):
     
     return render(request, 'websites/experience.html')
 
+def experience_detail(request):
+    print "***START EVENT CONTENT PAGE***"
+    
+    return render(request, 'websites/experience_detail.html')
+
+
 def tn_chi_tiet(request):
     print "***START trai nghiem chi tiet CONTENT PAGE***"
     
@@ -201,12 +207,6 @@ def game_detail(request):
     print "***START EVENT CONTENT PAGE***"
     
     return render(request, 'websites/game_detail.html')
-
-
-def event_detail(request):
-    print "***START EVENT CONTENT PAGE***"
-    
-    return render(request, 'websites/event_detail.html')
 
 
 def helio_coffee(request):
