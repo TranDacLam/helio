@@ -39,6 +39,23 @@ msgid "menu.faq"
 msgstr "HỎI ĐÁP"
 # END MAIN MENU
 
+# START SUB MENU
+msgid "menu.submenu.play"
+msgstr "Helio Play"
+
+msgid "menu.submenu.kids"
+msgstr "Helio Kids"
+
+msgid "menu.submenu.night_life"
+msgstr "Chợ Đêm"
+
+msgid "menu.submenu.coffee"
+msgstr "Cà phê & Bánh"
+
+msgid "menu.submenu.ortherproduct"
+msgstr "Sản phẩm khác"
+# END SUB MENU
+
 # START BUTTON
 msgid "btn.click_now"
 msgstr "Tìm hiểu ngay"
