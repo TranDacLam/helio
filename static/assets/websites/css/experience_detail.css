@@ -1,14 +1,13 @@
 /*START HEADER EVENT DETAIL CSS*/
+.page-header-img-full {
+	margin-bottom: 60px;
+	position: relative;
+}
 .page-title-detail {
 	width: 70%;
     position: absolute;
-    top: 50%;
-    left: 10%;
+    bottom: 10%;
 }
-.form-title {
-	width: 70%;
-}
-
 .custom-icons {
 	padding-top: 15px;
 }

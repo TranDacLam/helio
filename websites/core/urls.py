@@ -14,13 +14,13 @@ urlpatterns = [
     url(r'news/$', views.news, name='news'),
     url(r'careers/$', views.careers, name='careers'),
     url(r'^experience/$', views.experience, name='experience'),
+    url(r'^experience/experience-detail/$', views.experience_detail, name='experience_detail'),
 
     url(r'^get-posts/$', views.get_posts, name='get_posts'),
     
     url(r'^helio-play/game-detail$', views.game_detail, name='game_detail'),
     url(r'^combo-product/$', views.combo_product, name='combo_product'),
     url(r'^events/event-content/$', views.event_content, name='event_content'),
-    url(r'^events/event-detail/$', views.event_detail, name='event_detail'),
     
     url(r'^power-card/$', views.power_card, name='power_card'),
     url(r'^membership/$', views.membership, name='membership'),
