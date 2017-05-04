@@ -5,6 +5,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 import ast
 from django.http import JsonResponse
 import constant
+import time
 
 
 def home(request):
@@ -137,6 +138,15 @@ def events(request):
 
     events = Event.objects.all()
     result["events"] = events
+    events_map = {}
+    if events:
+        for event in events:
+            key = event.start_date.strftime('%m/%Y')
+            if key not in events_map.keys():
+                events_map[key] = []
+            events_map[key].append(event)
+
+    print "MAP", events_map
 
     return render(request, 'websites/events.html', {"result": result})
 
@@ -179,7 +189,7 @@ def coffee_bakery(request):
     
     list_images = {}
     if coffee_page:
-        list_images = coffee_page.posts_image.all()
+        list_images = coffee_page.posts_image.all()[:6]
 
     result["list_images"] = list_images
     return render(request, 'websites/coffee_bakery.html', {"result":result})
@@ -193,7 +203,7 @@ def redemption_store(request):
 
     list_images = {}
     if redemption_page:
-        list_images = redemption_page.posts_image.all()
+        list_images = redemption_page.posts_image.all()[:6]
 
     result["list_images"] = list_images
 
@@ -234,7 +244,7 @@ def promotions(request):
         category_all.name_vi = "ALL"
         category_all.id = 0
         datas[category_all] = promotions_all
-        
+
 
     result["datas"] = datas
 
