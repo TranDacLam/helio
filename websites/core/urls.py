@@ -11,8 +11,8 @@ urlpatterns = [
     url(r'^helio-kids/$', views.helio_kids, name='helio_kids'),
     url(r'^night-life/$', views.night_life, name='night_life'),
     url(r'^contact/$', views.contact, name='contact'),
-    url(r'news/$', views.news, name='news'),
-    url(r'careers/$', views.careers, name='careers'),
+    url(r'^news/$', views.news, name='news'),
+    url(r'^careers/$', views.careers, name='careers'),
     url(r'^experience/$', views.experience, name='experience'),
     url(r'^experience/experience-detail/$', views.experience_detail, name='experience_detail'),
    
