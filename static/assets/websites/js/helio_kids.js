@@ -25,7 +25,7 @@ var KidsFunction = (function ($) {
             });
             $(".btn-view-more").click(function() {
                 var div_parent = $(this).parent().parent();
-                var size_list = $(div_parent).find(".image-div").size();
+                var size_list = $(div_parent).find(".item-line").size();
                 var id = $(div_parent).parent().attr("id");
                 show_num[id] += view_more;
                 _self.viewMore(div_parent);
@@ -42,8 +42,8 @@ var KidsFunction = (function ($) {
         this.initCoursel = function (element) {
             $(element).html($(element).parent().find('.carousel-tmp').html());
             var content_width = $(".container").width();
-            var w = content_width * 0.85;
-            var h = content_width > 1100 ? 500 : 400;
+            var w = content_width * 0.675;
+            var h = content_width > 1100 ? 500 : 350;
             $(element).carousel({
                 carouselWidth: content_width,
                 carouselHeight: 500,
@@ -51,16 +51,16 @@ var KidsFunction = (function ($) {
                 shadow:false, 
                 frontWidth:w,
                 frontHeight:h,
-                hMargin: 0.1,
+                hMargin: 0.3,
                 vMargin: 0.8,
                 short_description: true
             });
         }
         this.viewMore = function (element) {
             var id = $(element).parent().attr("id");
-            var size_list = $(element).find(".image-div").size();
+            var size_list = $(element).find(".item-line").size();
             var show_lengh =  show_num[id];
-            $(element).find('.image-div:lt('+show_lengh+')').show();
+            $(element).find('.item-line:lt('+show_lengh+')').show();
             if(show_lengh >= size_list) {
                 $(element).find(".btn-view-more").hide();
             }

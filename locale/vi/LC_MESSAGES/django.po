@@ -39,6 +39,26 @@ msgid "menu.faq"
 msgstr "HỎI ĐÁP"
 # END MAIN MENU
 
+# START SUB MENU
+msgid "menu.submenu.play"
+msgstr "Helio Play"
+
+msgid "menu.submenu.kids"
+msgstr "Helio Kids"
+
+msgid "menu.submenu.night_life"
+msgstr "Chợ Đêm"
+
+msgid "menu.submenu.coffee"
+msgstr "Cà phê & Bánh"
+
+msgid "menu.submenu.ortherproduct"
+msgstr "Sản phẩm khác"
+
+msgid "menu.submenu.redemption_store"
+msgstr "Quầy đổi quà"
+# END SUB MENU
+
 # START BUTTON
 msgid "btn.click_now"
 msgstr "Tìm hiểu ngay"
@@ -81,8 +101,13 @@ msgstr "COFFEE"
 
 # START FAQs REDEMPTION STORE
 msgid "redemption_store.title.section.faq"
-msgstr "NHỮNG CÂU HỎI LIÊN QUAN ĐẾN ĐỔI QUÀ"
+msgstr "NHỮNG CÂU HỎI THƯỜNG GẶP"
 # END FAQs REDEMPTION STORE
+
+# START FAQs POWERCARD
+msgid "powercard.title.section.faq"
+msgstr "NHỮNG CÂU HỎI THƯỜNG GẶP"
+# END FAQs POWERCARD
 
 #START FOOTER
 msgid "footer.contact.address"

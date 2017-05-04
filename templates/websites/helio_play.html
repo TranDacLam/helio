@@ -2,6 +2,7 @@
 {% load i18n %} 
 {% block extrastylesheet %}
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/slide.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/helio_item.css">
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/helio_play.css">
 
 {% endblock %}
@@ -80,42 +81,40 @@
                 <div class="kids-game-content col-md-12">
                     {% for promotion in datas.promotions %}
                     {% if forloop.counter|divisibleby:2 %} 
-                    <div class="image-div content-pull-left col-md-12" style="background: url('{{ MEDIA_URL }}{{promotion.image}}'); display: none;">
+                    <div class="item-line content-pull-left col-md-12" style="display: none;">
                         <div class="row">
-                            <div class="play-content-image col-md-7">
-                                
-                            </div>
-                            <div class="play-content-text col-md-5">
+                            <div class="item-content-text col-md-5 pull-right">
                                 <div class="col-md-9 image-text pull-right">
                                     <div class="image-text-head">
                                         <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
                                     </div>
-                                    <p class="img-font-size">{{promotion.name}}</p>
-                                    <p class="img-text-description short_description">{{promotion.short_description}}</p>
+                                    <p class="item-name">{{promotion.name}}</p>
+                                    <p class="item-description short_description">{{promotion.short_description}}</p>
                                     <a class="btn btn-custom-style btn-custom-style-play" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
                                 </div>
                             </div>
-
-                            <div class="image-hidden-sm-up col-md-7">
-                                <div class="row"><img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%"></div>
+                            <div class="item-content-image col-md-9">
+                                <div class="row"><img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%" height="100%"></div>
                             </div>
                         </div>
                     </div>
                     {% else %}
-                    <div class="image-div content-pull-right col-md-12" style="background: url('{{ MEDIA_URL }}{{promotion.image}}'); display: none;">
+                    <div class="item-line content-pull-right col-md-12" style="display: none;">
                         <div class="row">
-                            <div class="play-content-text col-md-5">
+                            <div class="item-content-text col-md-5">
                                 <div class="col-md-9 image-text">
                                     <div class="image-text-head">
                                         <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
                                     </div>
-                                    <p class="img-font-size">{{promotion.name}}</p>
-                                    <p class="img-text-description short_description">{{promotion.short_description}}</p>
+                                    <p class="item-name">{{promotion.name}}</p>
+                                    <p class="item-description short_description">{{promotion.short_description}}</p>
                                     <a class="btn btn-custom-style btn-custom-style-play" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
                                 </div>
                             </div>
-                            <div class="play-content-image col-md-7">
-                                <div class="image-hidden-sm-up row"><img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%"></div>
+                            <div class="item-content-image col-md-9 ">
+                                <div class="row">
+                                    <img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%" height="100%">
+                                </div>
                             </div>
                         </div>
                     </div>

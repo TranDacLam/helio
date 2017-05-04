@@ -29,9 +29,9 @@ urlpatterns = [
     url(r'^khuyen-mai/chi-tiet/$', views.km_chi_tiet, name='chi_tiet'),
 
     url(r'^helio-introduction/$', views.helio_introduction, name='helio_introduction'),
-    url(r'^helio-term-condition/$', views.helio_term_condition, name='helio_term_condition'),
-    url(r'^helio-coffee/$', views.helio_coffee, name='helio_coffee'),
-    url(r'^helio-redemption-store/$', views.helio_redemption_store, name='helio_redemption_store'),
+    url(r'^term-condition/$', views.term_condition, name='term_condition'),
+    url(r'^coffee_bakery/$', views.coffee_bakery, name='coffee_bakery'),
+    url(r'^redemption-store/$', views.redemption_store, name='redemption_store'),
 
 
     

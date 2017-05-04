@@ -141,16 +141,20 @@ def helio_introduction(request):
     return render(request, 'websites/helio_introduction.html')
 
 
-def helio_term_condition(request):
+def term_condition(request):
     print "***START HELIO ABOUT PAGE***"
     
-    return render(request, 'websites/helio_term_condition.html')
+    return render(request, 'websites/term_condition.html')
 
 
 def events(request):
     print "***START EVENTS PAGE***"
-    
-    return render(request, 'websites/events.html')
+    result = {}
+
+    events = Event.objects.all()
+    result["events"] = events
+
+    return render(request, 'websites/events.html', {"result": result})
 
 def event_content(request):
     print "***START EVENT CONTENT PAGE***"
@@ -209,7 +213,7 @@ def game_detail(request):
     return render(request, 'websites/game_detail.html')
 
 
-def helio_coffee(request):
+def coffee_bakery(request):
     print "***START HELIO COFFEE CONTENT PAGE***"
     result = {}
 
@@ -221,17 +225,26 @@ def helio_coffee(request):
         list_images = coffee_page.posts_image.all()
 
     result["list_images"] = list_images
-    return render(request, 'websites/helio_coffee.html', {"result":result})
+    return render(request, 'websites/coffee_bakery.html', {"result":result})
 
 
-def helio_redemption_store(request):
+def redemption_store(request):
     print "***START HELIO COFFEE CONTENT PAGE***"
     result = {}
-    # FAWs list
-    faqs = FAQ.objects.all()
+    redemption_page = Post.objects.get(key_query=constant.REDEMPTION_STORE_KEY_QUERY)
+    result["page_info"] = redemption_page
+
+    list_images = {}
+    if redemption_page:
+        list_images = redemption_page.posts_image.all()
+
+    result["list_images"] = list_images
+
+    # FAQs list
+    faqs = FAQ.objects.filter(category_id=constant.REDEMPTION_STORE_CATEGORY)
     result["faqs"] = faqs
     
-    return render(request, 'websites/helio_redemption_store.html', {"result":result})
+    return render(request, 'websites/redemption_store.html', {"result":result})
 
 
 def promotions(request):
@@ -261,6 +274,7 @@ def promotions(request):
 
         category_all = Category();
         category_all.name = "ALL"
+        category_all.name_vi = "ALL"
         category_all.id = 0
         datas[category_all] = promotions_all
 

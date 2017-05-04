@@ -39,6 +39,26 @@ msgid "menu.faq"
 msgstr "FAQs"
 # END MAIN MENU
 
+# START SUB MENU
+msgid "menu.submenu.play"
+msgstr "Helio Play"
+
+msgid "menu.submenu.kids"
+msgstr "Helio Kids"
+
+msgid "menu.submenu.night_life"
+msgstr "Night Life"
+
+msgid "menu.submenu.coffee"
+msgstr "Coffee & Bakery"
+
+msgid "menu.submenu.ortherproduct"
+msgstr "Other Product"
+
+msgid "menu.submenu.redemption_store"
+msgstr "Redemption Store"
+# END SUB MENU
+
 # START BUTTON
 msgid "btn.click_now"
 msgstr "Click now"
@@ -81,8 +101,13 @@ msgstr "COFFEE"
 
 # START FAQs REDEMPTION STORE
 msgid "redemption_store.title.section.faq"
-msgstr "QUESTIONS RELATED TO REDEEM THE GIFT"
+msgstr "FREQUENTLY ASKED QUESTION"
 # END FAQs REDEMPTION STORE
+
+# START FAQs POWERCARD
+msgid "powercard.title.section.faq"
+msgstr "FREQUENTLY ASKED QUESTION"
+# END FAQs POWERCARD
 
 #START FOOTER
 msgid "footer.contact.address"
@@ -104,11 +129,11 @@ msgid "footer.menu.news"
 msgstr "NEWS"
 
 msgid "footer.menu.experience"
-msgstr "TRAI NGHIEM"
+msgstr "EXPERIENCE"
 
 msgid "footer.menu.policy"
-msgstr "CHINH SACH"
+msgstr "POLICY"
 
 msgid "footer.menu.terms_of_use"
-msgstr "DIEU KHOAN SU DUNG"   
+msgstr "TERM & CONDITION"   
 #END FOOTER

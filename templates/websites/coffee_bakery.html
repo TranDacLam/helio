@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block extrastylesheet %}
-    <link href="{{ STATIC_URL }}assets/websites/css/helio_coffee.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}assets/websites/css/coffee_bakery.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block extrascript %}
 
@@ -32,13 +32,11 @@
     <!-- CONTENT -->
     <div class="wrap">
         {% for item in result.list_images %}
-        {% if forloop.counter|divisibleby:2 %} 
         <div class="box{{forloop.counter}}">
             <div class="box-inner">
                 <img src="{{ MEDIA_URL }}{{item.image}}">
             </div>
         </div>
-        {% endif %}
         {% endfor %}
     </div>
     {% endif %}
