@@ -95,28 +95,50 @@ a.btn-custom-style.btn-custom-style-kids:hover {
 }
 /*END BUTTON ALL CSS*/
 .thumbnail-custom {
-	background-color: transparent;
-	border: none;
-	padding: 0px;
+    background-color: transparent;
+    border: none;
+    padding: 0px;
 }
 .style-post a{
-	color: #fff;
-	text-decoration: none;
-	font-size: 20px;
-	font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+.style-post .title-post:focus,
+.style-post .title-post:hover{
+    color: #fec231;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
 }
 .style-post p {
-	padding-top: 10px;
+    padding-top: 10px;
 }
-.style-post p > a {
-	color: #f332a4;
-	font-size: 18px;
+.style-post a.view-detail {
+    color: #f332a4;
+    font-size: 18px;
 }
 .custom-other-exp {
-	padding: 10px 0px 80px;
+    padding: 10px 0px 80px;
+}
+.btn-custom {
+    background-color: transparent;
+}
+.text-limit-rows {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   max-height: 80px;      
+   -webkit-line-clamp: 3; 
+   -webkit-box-orient: vertical;
+}
+.text-limit-rows > a {
+    display: inline-block;
 }
 
 
+/*MEDIA*/
 @media (max-width: 767px) {
 	.form-title {
 		width: 100%;

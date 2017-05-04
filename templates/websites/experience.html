@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% load i18n %}
 {% block extrastylesheet %}
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/slide.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/helio_item.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/experience.css">
+
 <style type="text/css">
 .experience-div {
 	padding-top: 25px;
@@ -39,24 +43,58 @@ $(document).ready(function(){
 {% block main_content %} 
 
 <div class="container">
-	<div class="page-top">
+	<!-- CARD PAGE DESCRIPTION -->
+    <div class="page-top">
         <div class="page-header-img">
-            <div>
-                <img src="{{ STATIC_URL }}assets/websites/images/career-header.png" width="100%">
-            </div>
-            <div class="page-title" align="center">
-                <div class="col-md-12">
-                    <p class="page-title-text">ĐỒNG HÀNH CÙNG HELIO CENTER</p>
+            <div id="promotionCarousel" class="carousel slide carousel-custom" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators carousel-indicators-custom">
+                    <li data-target="#promotionCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#promotionCarousel" data-slide-to="1"></li>
+                    <li data-target="#promotionCarousel" data-slide-to="2"></li>
+                    <li data-target="#promotionCarousel" data-slide-to="3"></li>
+                    <li data-target="#promotionCarousel" data-slide-to="4"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img src="{{ STATIC_URL }}assets/websites/images/event_detail_header.png" alt="Helio">
+                        <div class="carousel-caption carousel-caption-custom">
+				          	<p class="big-font-size">8 TRẢI NGHIỆM TUYỆT VỜI KHI ĐẾN ĐÀ NẴNG</p>
+				        </div>
+                    </div>
+                    <div class="item">
+                        <img src="{{ STATIC_URL }}assets/websites/images/event_detail_header.png" alt="Helio">
+                        <div class="carousel-caption carousel-caption-custom">
+				          	<p class="big-font-size">NGẮM CÁC "SIÊU CẦU" NỔI TIẾNG TRONG VÀ NGOÀI NƯỚC</p>
+				        </div>
+                    </div>
+                    <div class="item">
+                        <img src="{{ STATIC_URL }}assets/websites/images/event_detail_header.png" alt="Helio">
+                        <div class="carousel-caption carousel-caption-custom">
+				          	<p class="big-font-size">8 TRẢI NGHIỆM TUYỆT VỜI KHI ĐẾN ĐÀ NẴNG</p>
+				        </div>
+                    </div>
+                    <div class="item">
+                        <img src="{{ STATIC_URL }}assets/websites/images/event_detail_header.png" alt="Helio">
+                        <div class="carousel-caption carousel-caption-custom">
+				          	<p class="big-font-size">NGẮM CÁC "SIÊU CẦU" NỔI TIẾNG TRONG VÀ NGOÀI NƯỚC</p>
+				        </div>
+                    </div>
+                    <div class="item">
+                        <img src="{{ STATIC_URL }}assets/websites/images/event_detail_header.png" alt="Helio">
+                        <div class="carousel-caption carousel-caption-custom">
+				          	<p class="big-font-size">8 TRẢI NGHIỆM TUYỆT VỜI KHI ĐẾN ĐÀ NẴNG</p>
+				        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div align="center" class="page-header-text">
-            <div class="form-title">
-                <p class="text-description page_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
-            </div>
-        </div>
     </div>
-	{% if result.experiences %}
+
+    <!-- Wrapper for slides -->
+<!-- 	{% if result.experiences %}
     <div class="row" id="page-selection">
     	{% for experience in result.experiences %}
 		<div class="col-md-6 experience-div">
@@ -73,7 +111,74 @@ $(document).ready(function(){
             <a class="btn-view-more btn-custom-style" role="button">{% trans "btn.view_more" %}</a>
         </div>
 	</div>
-	{% endif %}
+	{% endif %} -->
+
+	<!-- CONTENT -->
+	<div class="row">
+      	<div class="item col-md-4 col-xs-12 custom-experience">
+        	<div class="style-post">
+          		<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ STATIC_URL }}assets/websites/images/event_detail_1.png" width="100%"></a></span>
+          		<a class="title-post" href="#">VÒNG QUAY SUNWHELL</a>
+          		<p class="text-limit-rows">Sunwhell - Một trong 10 đu quay cao nhất thế giới được đặt tại Đà Nẵng đã vô cùng nổi tiếng vs thu hút cực nhiều du khách tham quan </p> <a class="view-detail" href="#">Xem chi tiết</a>
+        	</div>
+      	</div>
+      	<div class="item col-md-4 col-xs-12 custom-experience">
+	        <div class="style-post">
+	          	<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ STATIC_URL }}assets/websites/images/event_detail_2.png" width="100%"></a></span>
+	          	<a class="title-post" href="#">SKY BAR CAO NHẤT VIỆT NAM</a>
+	          	<p class="text-limit-rows">Đây là quán bar được công nhận là cao nhất Việt Nam khi nào ở độ cao 166m. Nơi này cực kỳ thích hợp để ngắm toàn cảnh Đà Nẵng vào buổi đêm </p><a class="view-detail" href="#">Xem chi tiết</a>
+	        </div>
+      	</div>
+      	<div class="item col-md-4 col-xs-12 custom-experience">
+	        <div class="style-post">
+	          	<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ STATIC_URL }}assets/websites/images/event_detail_3.png" width="100%"></a></span>
+	          	<a class="title-post" href="#">A LA CARTE HOLTEL</a>
+	          	<p class="text-limit-rows">Nội thất tinh tế kiểu Tây với gam màu trắng chủ đạomàu trắng chủ đạo. DDaqcj biệt là hồ bơi tràn biển với góc nhìn trực tiếp ra bãi biển cát trắng đẹp bãi biển cát trắng đẹp đến ngỡ ngàng </p><a class="view-detail" href="#">Xem chi tiết</a>
+	        </div>
+      	</div>
+      	<div class="item col-md-4 col-xs-12 custom-experience">
+        	<div class="style-post">
+          		<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ STATIC_URL }}assets/websites/images/event_detail_1.png" width="100%"></a></span>
+          		<a class="title-post" href="#">VÒNG QUAY SUNWHELL</a>
+          		<p class="text-limit-rows">Sunwhell - Một trong 10 đu quay cao nhất 10 đu quay cao nhất thế giới được đặt tại Đà Nẵng đã vô cùng nổi tiếng vs thu hút cực nhiều du khách tham quan </p><a class="view-detail" href="#">Xem chi tiết</a>
+        	</div>
+      	</div>
+      	<div class="item col-md-4 col-xs-12 custom-experience">
+	        <div class="style-post">
+	          	<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ STATIC_URL }}assets/websites/images/event_detail_2.png" width="100%"></a></span>
+	          	<a class="title-post" href="#">SKY BAR CAO NHẤT VIỆT NAM</a>
+	          	<p class="text-limit-rows">Đây là quán bar được công nhận là cao nhất Việt Nam khi nào ở độ cao 166m. Nơi này cực kỳ thích hợp để ngắm toàn cảnh Đà Nẵng vào buổi đêm vào buổi đêm </p><a class="view-detail" href="#">Xem chi tiết</a>
+	        </div>
+      	</div>
+      	<div class="item col-md-4 col-xs-12 custom-experience">
+	        <div class="style-post">
+	          	<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ STATIC_URL }}assets/websites/images/event_detail_3.png" width="100%"></a></span>
+	          	<a class="title-post" href="#">A LA CARTE HOLTEL</a>
+	          	<p class="text-limit-rows">Nội thất tinh tế kiểu Tây với gam màu trắng chủ đạo. DDaqcj biệt là hồ bơi tràn biển với góc nhìn trực tiếp ra bãi biển cát trắng đẹp trắng đẹp đến ngỡ ngàng </p><a class="view-detail" href="#">Xem chi tiết</a>
+	        </div>
+      	</div>
+      	<div class="item col-md-4 col-xs-12 custom-experience">
+        	<div class="style-post">
+          		<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ STATIC_URL }}assets/websites/images/event_detail_1.png" width="100%"></a></span>
+          		<a class="title-post" href="#">VÒNG QUAY SUNWHELL</a>
+          		<p class="text-limit-rows">Sunwhell - Một trong 10 đu quay cao nhất 10 đu quay cao nhất thế giới được đặt tại Đà Nẵng đã vô cùng nổi tiếng vs thu hút cực nhiều du khách tham quan </p><a class="view-detail" href="#">Xem chi tiết</a>
+        	</div>
+      	</div>
+      	<div class="item col-md-4 col-xs-12 custom-experience">
+	        <div class="style-post">
+	          	<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ STATIC_URL }}assets/websites/images/event_detail_2.png" width="100%"></a></span>
+	          	<a class="title-post" href="#">SKY BAR CAO NHẤT VIỆT NAM</a>
+	          	<p class="text-limit-rows">Đây là quán bar được công nhận là cao nhất Việt Nam khi nào ở độ cao 166m. Nơi này cực kỳ thích hợp để ngắm toàn cảnh Đà Nẵng vào buổi đêm vào buổi đêm </p><a class="view-detail" href="#">Xem chi tiết</a>
+	        </div>
+      	</div>
+      	<div class="item col-md-4 col-xs-12 custom-experience">
+	        <div class="style-post">
+	          	<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ STATIC_URL }}assets/websites/images/event_detail_3.png" width="100%"></a></span>
+	          	<a class="title-post" href="#">A LA CARTE HOLTEL</a>
+	          	<p class="text-limit-rows">Nội thất tinh tế kiểu Tây với gam màu trắng chủ đạo. DDaqcj biệt là hồ bơi tràn biển với góc nhìn trực tiếp ra bãi biển cát trắng đẹp trắng đẹp đến ngỡ ngàng </p><a class="view-detail" href="#">Xem chi tiết</a>
+	        </div>
+      	</div>
+    </div>
 
   	<!-- DOWNLOAD APP BANNER -->
     <div class="app-banner">
