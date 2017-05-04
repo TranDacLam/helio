@@ -94,22 +94,6 @@ def night_life(request):
     result["night_life"] = night_life
     return render(request, 'websites/night_life.html', {"result": result})
 
-# Create your views here.
-def get_posts(request):
-    print 'call request'
-    # lst_post = Post.objects.all()
-    if request.method == 'PUT':
-        print 'hello call delete ', request.is_ajax()
-    # print lst_post
-    # data = serializers.serialize("json", lst_post) 
-    # # print "Data With Current Language ",lst_post[0].name
-    # # print "list item ",data
-        if request.is_ajax():
-            print "request PARAM ", request.body
-            return JsonResponse({'foo':'value data'})
-    return render(request, 'websites/post.html')
-    # return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type="application/json")
-
 
 def helio_play(request):
     print "***START HELIO PLAY PAGE***"
@@ -180,37 +164,10 @@ def experience_detail(request):
     
     return render(request, 'websites/experience_detail.html')
 
-
-def tn_chi_tiet(request):
-    print "***START trai nghiem chi tiet CONTENT PAGE***"
-    
-    return render(request, 'websites/trai_nghiem_chi_tiet.html')
-
-def km_chi_tiet(request):
-    print "***START khuyen mai chi tiet CONTENT PAGE***"
-    
-    return render(request, 'websites/km_chi_tiet.html')
-
-def membership(request):
-    print "***START Membership Introduction PAGE***"
-
-    return render(request, 'websites/membership.html')
-
-
 def news(request):
     print "***START News PAGE***"
 
     return render(request, 'websites/news.html')
-
-def combo_product(request):
-    print "***START HELIO PLAY PAGE***"
-    
-    return render(request, 'websites/combo_product.html')
-
-def game_detail(request):
-    print "***START EVENT CONTENT PAGE***"
-    
-    return render(request, 'websites/game_detail.html')
 
 
 def coffee_bakery(request):

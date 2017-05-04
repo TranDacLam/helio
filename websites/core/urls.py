@@ -15,18 +15,8 @@ urlpatterns = [
     url(r'careers/$', views.careers, name='careers'),
     url(r'^experience/$', views.experience, name='experience'),
     url(r'^experience/experience-detail/$', views.experience_detail, name='experience_detail'),
-
-    url(r'^get-posts/$', views.get_posts, name='get_posts'),
-    
-    url(r'^helio-play/game-detail$', views.game_detail, name='game_detail'),
-    url(r'^combo-product/$', views.combo_product, name='combo_product'),
-    url(r'^events/event-content/$', views.event_content, name='event_content'),
-    
+   
     url(r'^power-card/$', views.power_card, name='power_card'),
-    url(r'^membership/$', views.membership, name='membership'),
-    
-    url(r'^trai-nghiem/chi-tiet/$', views.tn_chi_tiet, name='chi_tiet'),
-    url(r'^khuyen-mai/chi-tiet/$', views.km_chi_tiet, name='chi_tiet'),
 
     url(r'^helio-introduction/$', views.helio_introduction, name='helio_introduction'),
     url(r'^term-condition/$', views.term_condition, name='term_condition'),
