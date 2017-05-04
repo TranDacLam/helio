@@ -129,7 +129,7 @@ a.btn-custom-style.btn-custom-style-promotion-view-more:hover {
     .content-pull-left .item-content-text,
     .content-pull-right .item-content-text
     {
-        background: url("../images/m_kids_text.png") no-repeat;
+        background-image: linear-gradient(to top, #7d1e6a, #ed3aa7);
         background-size: 100% 100%;
     }
     /*CAROUSEL PHONE SCREEN*/

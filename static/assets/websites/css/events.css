@@ -70,8 +70,7 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     .content-pull-left .item-content-text,
     .content-pull-right .item-content-text
     {
-        background: url("../images/m_kids_text.png") no-repeat;
-        background-size: 100% 100%;
+        background: #23194f;
     }
 }
 
