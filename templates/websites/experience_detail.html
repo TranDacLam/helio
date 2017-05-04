@@ -4,32 +4,20 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/experience_detail.css">
 {% endblock %}
 {% block main_content %} 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+
 <div class="page-top">
     <div class="page-header-img-full">
 	    <img src="{{ STATIC_URL }}assets/websites/images/event_detail_header.png" width="100%">
 		<div class="container">
-			<div class="page-title-detail container">
-		        <div class="col-md-12">
-		            <p class="big-font-size">NGẮM CÁC SIÊU CẦU NỔI TIẾNG TRONG VÀ NGOÀI NƯỚC</p>
+			<div class="page-title-detail row">
+		        <div class="col-md-12" align="center">
+		            <p class="big-font-size">NGẮM CÁC "SIÊU CẦU" NỔI TIẾNG TRONG VÀ NGOÀI NƯỚC</p>
 		        </div>
 		        <div class="col-md-12">
-		        	<div class="form-title">
-		        		<p class="text-description page_description">Các cây cầu ở Đà Nẵng được đánh giá rất cao và vẻ đẹp cho đến việc đầu tư, ý tưởng. Đã được nhiều tổ chức trong nước và thế giới công nhận và vinh danh.</p>
-		        	</div>
-		        </div>
-		        <div class="col-md-12">
-			        <div class="custom-icons">
-			        	<a href="#" class="style-icon"><i class="glyphicon glyphicon-heart" aria-hidden="true"></i> Like</a>
-			        	<a href="#" class="style-icon"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</a>	
-						<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div>
+			        <div class="custom-icons" align="center">
+			        	<a href="#" class="style-icon"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
+			        	<a href="#" class="style-icon"><span class="fa fa-share-alt circle-icon" aria-hidden="true"></span> Share</a>	
+						<!-- <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div> -->
 			        </div>
 		        </div>
 		    </div>
@@ -40,7 +28,7 @@
 	
 <div class="container">
 
-	<div class="event-content">
+	<div class="event-content" align="center">
 		<p class="event-content-p">Các cây cầu ở Đà Nẵng được đánh giá rất cao và vẻ đẹp cho đến việc đầu tư, ý tưởng. Đã được nhiều tổ chức trong nước và thế giới công nhận và vinh danh. Đà Nẵng là thành phố nổi tiếng với những cây cầu đặc biệt, là điểm nhấn du lịch của thành phố. Nếu như cầu sông Hàn là cầu quay duy nhất ở Việt Nam tính đến thời điểm hiện tại thì cầu Rồng lại là cầu phun lửa đầu tiên.</p>
 		<div>
 			<img class="img-event-content" src="{{ STATIC_URL }}assets/websites/images/event_detail_header.png" width="100%">
@@ -70,21 +58,21 @@
 	        	<div class="style-post">
 	          		<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ STATIC_URL }}assets/websites/images/event_detail_1.png"></a></span>
 	          		<a href="#">VÒNG QUAY SUNWHELL</a>
-	          		<p>Sunwhell - Một trong 10 đu quay cao nhất thế giới được đặt tại Đà Nẵng đã vô cùng nổi tiếng vs thu hút cực nhiều du khách tham quan.</p>
+	          		<p>Sunwhell - Một trong 10 đu quay cao nhất thế giới được đặt tại Đà Nẵng đã vô cùng nổi tiếng vs thu hút cực nhiều du khách tham quan... <a href="#">Xem chi tiết</a></p>
 	        	</div>
 	      	</div>
 	      	<div class="item col-md-4 col-xs-12">
 		        <div class="style-post">
 		          	<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ STATIC_URL }}assets/websites/images/event_detail_2.png"></a></span>
 		          	<a href="#">SKY BAR CAO NHẤT VIỆT NAM</a>
-		          	<p>Đây là quán bar được công nhận là cao nhất Việt Nam khi nào ở độ cao 166m. Nơi này cực kỳ thích hợp để ngắm toàn cảnh Đà Nẵng vào buổi đêm</p>
+		          	<p>Đây là quán bar được công nhận là cao nhất Việt Nam khi nào ở độ cao 166m. Nơi này cực kỳ thích hợp để ngắm toàn cảnh Đà Nẵng vào buổi đêm... <a href="#">Xem chi tiết</a></p>
 		        </div>
 	      	</div>
 	      	<div class="item col-md-4 col-xs-12	">
 		        <div class="style-post">
 		          	<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ STATIC_URL }}assets/websites/images/event_detail_3.png"></a></span>
 		          	<a href="#">A LA CARTE HOLTEL</a>
-		          	<p>Nội thất tinh tế kiểu Tây với gam màu trắng chủ đạo. DDaqcj biệt là hồ bơi tràn biển với góc nhìn trực tiếp ra bãi biển cát trắng đẹp đến ngỡ ngàng</p>
+		          	<p>Nội thất tinh tế kiểu Tây với gam màu trắng chủ đạo. DDaqcj biệt là hồ bơi tràn biển với góc nhìn trực tiếp ra bãi biển cát trắng đẹp đến ngỡ ngàng... <a href="#">Xem chi tiết</a></p>
 		        </div>
 	      	</div>
 	    </div>

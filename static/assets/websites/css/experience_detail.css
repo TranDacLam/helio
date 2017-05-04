@@ -4,12 +4,19 @@
 	position: relative;
 }
 .page-title-detail {
-	width: 70%;
-    position: absolute;
-    bottom: 10%;
+    width: 75%;
+    text-align: center;
+    margin: -420px auto;
+}
+/*END HEADER EVENT DETAIL CSS*/
+
+/*START LIKE SHARE ICON CSS*/
+._3jn- .inlineBlock {
+	background-image: url('../images/heart-button.png');
+	background-size: cover;
 }
 .custom-icons {
-	padding-top: 15px;
+	padding-top: 20px;
 }
 .custom-icons a {
 	color: #fff;
@@ -18,14 +25,24 @@
 	font-size: 22px;
 }
 
+.circle-icon {
+    background: #f332a4;
+    padding: 9px 10px;
+    border-radius: 50%;
+    text-align: center;
+}
+
 .style-icon i {
 	padding-right: 10px;
 }
-/*END HEADER EVENT DETAIL CSS*/
+/*END LIKE SHARE ICON CSS*/
 
 /*START EVENT CONTENT CSS*/
 .event-content {
-	padding-top: 20PX;
+	padding-top: 20px;
+	width: 85%;
+	text-align: left;
+	margin: 0 auto;
 }
 
 .img-event-content {
@@ -91,6 +108,10 @@ a.btn-custom-style.btn-custom-style-kids:hover {
 .style-post p {
 	padding-top: 10px;
 }
+.style-post p > a {
+	color: #f332a4;
+	font-size: 18px;
+}
 .custom-other-exp {
 	padding: 10px 0px 80px;
 }
@@ -102,7 +123,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
 	}
 	.page-title-detail {
         position: static;
-        margin-top: 50px;
+        margin: 50px auto 0;
         width: 100%;
     }
     .button-all {
