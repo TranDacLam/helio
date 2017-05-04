@@ -113,7 +113,7 @@ a.btn-custom-style.btn-custom-style-play:hover {
     .content-pull-left .item-content-text,
     .content-pull-right .item-content-text
     {
-        background: url("../images/m_kids_text.png") no-repeat;
+        background-image: linear-gradient(to top, #25618a, #36bdeb);
         background-size: 100% 100%;
     }
 }

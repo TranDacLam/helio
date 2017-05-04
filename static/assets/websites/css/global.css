@@ -39,7 +39,7 @@ p.page_description {
 }
 /*Event notification*/
 .text-center.event-new {
-     background-image: linear-gradient(to right, #e436aa, #2c1b76);
+    background-image: linear-gradient(to right, #e436aa, #2c1b76);
 }
 .text-center.event-new p {
     padding: 10px;

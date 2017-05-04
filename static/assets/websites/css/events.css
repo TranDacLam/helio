@@ -1,7 +1,7 @@
 /*START CAROUSEL*/
 .carousel-custom {
     position: relative;
-    margin: 30px auto;
+    margin: 0px auto;
     height: 80%;
     border: none;
     overflow: visible;
@@ -43,7 +43,7 @@ a.btn-custom-style.btn-custom-style-events {
 .active a.btn-custom-style.btn-custom-style-events:focus,
 a.btn-custom-style.btn-custom-style-events:focus, 
 a.btn-custom-style.btn-custom-style-events:hover {
-    color: #c61d82;
+    color: #23194f;
     background-color: #fff;
     border-image-source: linear-gradient(16deg, #fff, #fff);
     background-image: none;
@@ -55,14 +55,14 @@ a.btn-custom-style.btn-custom-style-events:hover {
     margin-top: 50px;
 }
 a.btn-custom-style.btn-custom-style-events-view-more {
-    border-image-source: linear-gradient(16deg, #b82c8e, #c61d82);
+    border-image-source: linear-gradient(16deg, #322cb8, #23194f);
 }
 .active a.btn-custom-style.btn-custom-style-events-view-more:focus,
 a.btn-custom-style.btn-custom-style-events-view-more:focus, 
 a.btn-custom-style.btn-custom-style-events-view-more:hover {
-    color: #c61d82;
+    color: #23194f;
     background-color: #fff;
-    border-image-source: linear-gradient(16deg, #c61d82, #fff);
+    border-image-source: linear-gradient(16deg, #23194f, #fff);
     background-image: none;
 }
 /*END BUTTON VIEW MORE*/
@@ -70,8 +70,7 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     .content-pull-left .item-content-text,
     .content-pull-right .item-content-text
     {
-        background: url("../images/m_kids_text.png") no-repeat;
-        background-size: 100% 100%;
+        background: #23194f;
     }
 }
 

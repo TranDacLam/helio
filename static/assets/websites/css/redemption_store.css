@@ -38,7 +38,7 @@
     float: left;
     position: relative;
     width: 25%;
-    padding-bottom: 25%;
+    padding-bottom: 50%;
     
 }
 .box6 {
@@ -47,12 +47,6 @@
     width: 75%;
     padding-bottom: 50%;
     
-}
-.box7 {
-    float: left;
-    position: relative;
-    width: 25%;
-    padding-bottom: 25%;
 }
 
 .box-inner {
