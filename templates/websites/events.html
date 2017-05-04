@@ -36,9 +36,23 @@
             </div>
         </div>
     </div>
+    {% if result.events_map %}
+    <div class="events-list" class="carousel slide" data-ride="carousel">
+        {% for key, values in result.events_map.items %}
+            <div class="events-list-by-month col-md-6">
+                {{key}}
+                <!-- {% for event in values %}
+                <div>
+                    {{event.name}}
+                </div>
+                {% endfor %} -->
+            </div>
+            
+        {% endfor %}
+    </div>
+    {% endif %}
 
     {% if result.events %}
-
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane" id="events_content">
             <div class="row view-more-div">

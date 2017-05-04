@@ -267,6 +267,9 @@ a.btn-custom-style:hover {
 .menuwidget.nav li a:hover {
     background: transparent;
 }
+.helio-footer-info p {
+    font-size: 14px;
+}
 
 /*Apply for mobile*/
 @media (max-width: 767px) {
