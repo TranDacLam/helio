@@ -70,7 +70,7 @@ p.page_description {
 }
 .header .top-menu, 
 .header .navbar.header-nav {
-    padding-left: 180px;
+    margin-left: 180px;
 }
 
 .header .well.logo-div {
@@ -267,6 +267,15 @@ a.btn-custom-style:hover {
 .menuwidget.nav li a:hover {
     background: transparent;
 }
+.helio-footer-info p, 
+.contact-text p {
+    font-size: 14px;
+}
+.search-btn {
+    left: 15px;
+    top: 5px;
+    color: #fff;
+}
 
 /*Apply for mobile*/
 @media (max-width: 767px) {
@@ -304,7 +313,7 @@ a.btn-custom-style:hover {
         width: 95px;
     }
     .header .top-menu {
-        padding-left: 95px;
+        margin-left: 95px;
     }
     .header .navbar.header-nav {
         padding-left: 0px;

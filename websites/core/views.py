@@ -147,6 +147,7 @@ def events(request):
             events_map[key].append(event)
 
     print "MAP", events_map
+    result["events_map"] = events_map
 
     return render(request, 'websites/events.html', {"result": result})
 
