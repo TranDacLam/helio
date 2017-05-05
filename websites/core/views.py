@@ -262,6 +262,10 @@ def careers(request):
     careers_type = Post_Type.objects.get(pk=constant.CAREERS_POST_TYPE_ID)
     result["careers_type"] = careers_type
 
+    # Careers pin to top
+    careers_pin_top = Post.objects.filter(pin_to_top=True).first()
+    result["careers_pin_top"] = careers_pin_top
+
     # Careers list
     careers = Post.objects.filter(post_type_id=constant.CAREERS_POST_TYPE_ID)
     result["careers"] = careers
