@@ -29,7 +29,17 @@
 .div-view-more {
 	margin-top: 50px;
 }
-
+a.btn-custom-style.btn-custom-style-career {
+    border-image-source: linear-gradient(16deg, #0095bb, #0095bb);
+}
+.active a.btn-custom-style.btn-custom-style-career:focus,
+a.btn-custom-style.btn-custom-style-career:focus, 
+a.btn-custom-style.btn-custom-style-career:hover {
+    color: #0095bb;
+    background-color: #fff;
+    border-image-source: linear-gradient(16deg, #15062b, #15062b);
+    background-image: none;
+}
 /*ITEM LG HEADER*/
 .careers-lg {
 	margin-top: 50px;

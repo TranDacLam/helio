@@ -285,6 +285,12 @@ input.input-search {
     width: 350px;
     outline: 0;
 }
+.glyphicon-custom {
+    top: 0px;
+    left: 8px;
+    font-weight: normal;
+    font-size: 18px;
+}
 /*Apply for mobile*/
 @media (max-width: 767px) {
     .big-font-size {
