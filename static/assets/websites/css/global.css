@@ -272,11 +272,19 @@ a.btn-custom-style:hover {
     font-size: 14px;
 }
 .search-btn {
-    left: 15px;
-    top: 5px;
     color: #fff;
 }
+.search-btn .glyphicon-search {
+    top: 5px;
+}
 
+input.input-search {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    width: 350px;
+    outline: 0;
+}
 /*Apply for mobile*/
 @media (max-width: 767px) {
     .big-font-size {

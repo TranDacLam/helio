@@ -167,8 +167,9 @@ def experience(request):
     # Experience list
     experiences = Post.objects.filter(post_type_id=constant.EXPERIENCE_POST_TYPE_ID)
     result["experiences"] = experiences
+    print experiences
     
-    return render(request, 'websites/experience.html')
+    return render(request, 'websites/experience.html', {"result": result})
 
 def experience_detail(request):
     print "***START EVENT CONTENT PAGE***"

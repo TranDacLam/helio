@@ -36,20 +36,92 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".event-month:first").addClass("active");
+            $(".events-list-by-month:first").addClass("active");
+
+            $(".event-item:first").addClass("active");
+            $('.events-list-by-month').each(function() {
+                $(this).find(".event-item:first").addClass("active");
+            });
+
+            $('.month-carousel').carousel({
+                interval: false
+            });
+            // $('.events-courcel').carousel({
+            //     interval: false
+            // });
+            $('.month-carousel').on('slide.bs.carousel', function (e) {
+                var indexFrom = $('.month-carousel>.carousel-inner>.item.active').index();
+                var indexTo = $(e.relatedTarget).index();
+                $('.event-month').eq(indexFrom).hide()
+                $('.event-month').eq(indexTo).show();
+            });
+        });
+    </script>
+    <style type="text/css">
+        .event-month:not(.active) {
+            display: none;
+        }
+        /*.event-item:not(.active) {
+            display: none;
+        }*/
+    </style>
     {% if result.events_map %}
-    <div class="events-list" class="carousel slide" data-ride="carousel">
+    <div class="row">
+        <div class="col-md-6">
+            {% for key, values in result.events_map.items %}
+                <h4 class="event-month">{{key}}</h4>
+            {% endfor %}
+        </div>
+        <div class="col-md-6">
+            <div class="pull-right">
+                <!-- <button class="month-btn-prev"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                <button class="month-btn-next"><i class="fa fa-arrow-right" aria-hidden="true"></i></button> -->
+                <button class="month-btn-prev" href="#month_coursel" data-slide="prev"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                <button class="month-btn-next" href="#month_coursel" data-slide="next"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="row events-list">
+        <div class="carousel slide month-carousel" id="month_coursel">
+            <div class="carousel-inner">
+            {% for key, values in result.events_map.items %}
+                <div class="item events-list-by-month">
+                    <div class="events-courcel" id="event_coursel_{{forloop.counter}}">
+                        <div>
+                            {% for event in values %}
+                            <div class="item event-item col-xs-2">
+                                <a href="#"><img src="{{MEDIA_URL}}{{event.image}}" alt="Image" class="img-responsive"></a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <!-- <div align="center">
+                            <button class="month-btn-prev" href="#event_coursel_{{forloop.counter}}" data-slide="prev"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                            <button class="month-btn-next" href="#event_coursel_{{forloop.counter}}" data-slide="next"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                        </div> -->
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- <div class="row events-list" class="carousel slide" data-ride="carousel">
         {% for key, values in result.events_map.items %}
-            <div class="events-list-by-month col-md-6">
-                {{key}}
-                <!-- {% for event in values %}
-                <div>
+            <div class="events-list-by-month">
+                {% for event in values %}
+                <div class="col-md-2">
                     {{event.name}}
                 </div>
-                {% endfor %} -->
+                {% endfor %}
             </div>
             
         {% endfor %}
-    </div>
+    </div> -->
     {% endif %}
 
     {% if result.events %}

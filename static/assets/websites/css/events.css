@@ -66,6 +66,16 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     background-image: none;
 }
 /*END BUTTON VIEW MORE*/
+
+
+
+.month-btn-prev,
+.month-btn-next {
+    border: 2px solid #fff;
+    color: #fff;
+    background: transparent;
+}
+
 @media (max-width: 767px) {
     .content-pull-left .item-content-text,
     .content-pull-right .item-content-text
