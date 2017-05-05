@@ -12,43 +12,105 @@
 	<!-- FAQs PAGE DESCRIPTION -->
 	<div class="page-top">
 		<div class="page-header-img">
-		    <div>
-		        <img src="{{ STATIC_URL }}assets/websites/images/faqs_header.png" width="100%">
-		    </div>
-		    <div class="page-title" align="center">
-		        <div class="col-md-12">
-		            <p class="page-title-text">NHỮNG CÂU HỎI THƯỜNG GẶP</p>
-		        </div>
-		    </div>
+			<div>
+				<img src="{{ STATIC_URL }}assets/websites/images/faqs_header.png" width="100%">
+			</div>
+			<div class="page-title" align="center">
+				<div class="col-md-12">
+					<p class="page-title-text">NHỮNG CÂU HỎI THƯỜNG GẶP</p>
+				</div>
+			</div>
 		</div>
-	    <div align="center" class="page-header-text">
-	        <div class="form-title">
-	            <p class="text-description page_description">Những câu hỏi thường gặp sẽ giúp bạn có những trải nghiệm tốt hơn khi đến Helio Center</p>
-	        </div>
-	    </div>
-	</div>
+		<div align="center" class="page-header-text">
+			<div class="form-title">
+				<p class="text-description page_description">Những câu hỏi thường gặp sẽ giúp bạn có những trải nghiệm tốt hơn khi đến Helio Center</p>
+			</div>
+		</div>
+		<hr class="hr-custom">
+	</div>    
 
 	<!-- FAQs -->
-    {% if result.faqs %}
-    <div class="faqs-section">
-    	{% include 'websites/sections/faqs_section.html' %}
+	
+	<div class="col-xs-12 col-md-3">
+		<div class="sidebar-nav">
+			<div class="navbar navbar-default " role="navigation">
+				<div class="navbar-collapse nav-custom sidebar-navbar-collapse">
+				  <ul class="nav navbar-nav navbar-custom">
+					<li class="active">
+						<a class="list-custom-style" role="tab" data-toggle="tab" href="#powercard">
+							POWERCARD
+						</a>
+					</li>
+					<li>
+						<a class="list-custom-style" role="tab" data-toggle="tab" href="#helio_play">
+							HELIO PLAY
+						</a>
+					</li>
+					<li>
+						<a class="list-custom-style" role="tab" data-toggle="tab" href="#helio_kids">
+							HELIO KIDS 
+						</a>
+					</li>
+					<li>
+						<a class="list-custom-style" role="tab" data-toggle="tab" href="#redemption_store">
+							QUẦY ĐỔI QÙA
+						</a>
+					</li>
+					<li>
+						<a class="list-custom-style" role="tab" data-toggle="tab" href="#other_product">
+							SẢN PHẨM KHÁC
+						</a>
+					</li>
+				  </ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-md-9">
+		<div class="content-section">
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="powercard">
+					{% if result.faqs %}
+					<div class="faqs-section">
+						{% include 'websites/sections/faqs_section.html' %}
 
+						<div class="div-view-more" align="center">
+							<div class="view-more">
+								<a class="btn-view-more btn-custom-style btn-custom-style-faqs" role="button">{% trans "btn.view_more" %}<span class="glyphicon glyphicon-chevron-down glyphicon-custom"></span></a>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+				<div role="tabpanel" class="tab-pane" id="helio_play">
+					HELIO PLAY
+				</div>
+				<div role="tabpanel" class="tab-pane" id="helio_kids">
+					HELIO KIDS 
+				</div>
+				<div role="tabpanel" class="tab-pane" id="redemption_store">
+					QUẦY ĐỔI QÙA
+				</div>
+				<div role="tabpanel" class="tab-pane" id="other_product">
+					SẢN PHẨM KHÁC
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12 col-xs-12 suport-more" align="center">
+	<hr class="hr-custom">
+		<div class="view-more-desc">
+			BẠN VẪN MUỐN HỖ TRỢ THÊM?
+		</div>
+		<div class="view-more">
+			<a href="#" class="btn-custom-style btn-custom-style-faqs" role="button">LIÊN HỆ VỚI CHÚNG TÔI
+			<span class="glyphicon glyphicon glyphicon-menu-right"></span></a>
+		</div>
+	</div>
 
-    	<div class="div-view-more" align="center">
-    		<div class="view-more-desc">
-    			BẠN VẪN MUỐN HỖ TRỢ THÊM?
-    		</div>
-    		<div class="view-more">
-    			<a class="btn-view-more btn-custom-style btn-custom-style-faqs" role="button">{% trans "btn.view_more" %}<span class="glyphicon glyphicon-chevron-down glyphicon-custom"></span></a>
-    		</div>
-        </div>
-    	
-    </div>
-    {% endif %}
-
-    <!-- DOWNLOAD APP BANNER -->
-    <div class="app-banner">
-	    <a href="#"><img src="{{ STATIC_URL }}assets/websites/images/download-app_banner.png" width="100%"></a>
+	<!-- DOWNLOAD APP BANNER -->
+	<div class="app-banner">
+		<a href="#"><img src="{{ STATIC_URL }}assets/websites/images/download-app_banner.png" width="100%"></a>
 	</div>
 </div>
 {% endblock %}
