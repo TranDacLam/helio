@@ -297,6 +297,10 @@ input.input-search {
         font-size: 36px;
         line-height: 40px;
     }
+
+}
+
+@media (max-width: 767px) {
     .navbar-toggle.pull-left {
         margin-left: 10px;
     }
@@ -318,8 +322,6 @@ input.input-search {
     .page-header-img {
         margin-bottom: 0px;
     } 
-
-
     .header {
         min-height: 110px;
     }
@@ -380,5 +382,4 @@ input.input-search {
         text-decoration: none;
         background-color: transparent;
     }
-
 }
