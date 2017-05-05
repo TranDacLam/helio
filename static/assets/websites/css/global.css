@@ -292,7 +292,7 @@ input.input-search {
     font-size: 18px;
 }
 /*Apply for mobile*/
-@media (max-width: 767px) {
+@media (max-width: 991px) {
     .big-font-size {
         font-size: 36px;
         line-height: 40px;

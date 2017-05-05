@@ -57,7 +57,7 @@
     background-position: left;
 }
 
-@media (min-width: 768px) { 
+@media (min-width: 992px) { 
     .item-line {
         position: relative;
     }
@@ -76,7 +76,7 @@
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {
     .item-line {
         background: none !important;
         height: auto;

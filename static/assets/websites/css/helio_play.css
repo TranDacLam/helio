@@ -109,7 +109,7 @@ a.btn-custom-style.btn-custom-style-play:hover {
     }
 } 
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {
     .content-pull-left .item-content-text,
     .content-pull-right .item-content-text
     {
