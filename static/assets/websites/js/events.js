@@ -1,9 +1,9 @@
-var KidsFunction = (function ($) {
-    var helio_kids = function () {
+var EventsFunction = (function ($) {
+    var helio_events = function () {
         var _self = this;
         var show_num = {};
-        var first_show = 5,
-            view_more = 5;
+        var first_show = 4,
+            view_more = 4;
         this.initElementPage = function() {
             $(".tab-content .tab-pane:first").addClass("active");
         }
@@ -31,13 +31,37 @@ var KidsFunction = (function ($) {
             }
             show_num[id] = show_lengh;
         }
+        this.eventsCoursel = function() {
+            $(".event-month:last").addClass("active");
+            $(".events-list-by-month:last").addClass("active");
+            
+            $('.events-list-by-month').each(function() {
+                $(this).find(".event-item:last").addClass("active");
+            });
+
+            $('.month-carousel').carousel({
+                interval: false
+            });
+            $('.events-courcel').carousel({
+                interval: false
+            });
+            $('.month-carousel').on('slide.bs.carousel', function (e) {
+                if($(e.relatedTarget).attr('class') === 'item events-list-by-month') {
+                    var indexFrom = $('.month-carousel>.carousel-inner>.item.active').index();
+                    var indexTo = $(e.relatedTarget).index();
+                    $('.event-month').eq(indexFrom).hide()
+                    $('.event-month').eq(indexTo).show();
+                }
+            });
+        }
     }
-    return helio_kids;
+    return helio_events;
 })(jQuery);
 
-(function (kids, $) {
+(function (events, $) {
     $(document).ready(function(){
-        kids.initElementPage()
-        kids.initEventPage();
+        events.initElementPage()
+        events.initEventPage();
+        events.eventsCoursel();
     });
-})(new KidsFunction(), jQuery);
+})(new EventsFunction(), jQuery);

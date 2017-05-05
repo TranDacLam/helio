@@ -36,40 +36,8 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $(".event-month:first").addClass("active");
-            $(".events-list-by-month:first").addClass("active");
-
-            $(".event-item:first").addClass("active");
-            $('.events-list-by-month').each(function() {
-                $(this).find(".event-item:first").addClass("active");
-            });
-
-            $('.month-carousel').carousel({
-                interval: false
-            });
-            // $('.events-courcel').carousel({
-            //     interval: false
-            // });
-            $('.month-carousel').on('slide.bs.carousel', function (e) {
-                var indexFrom = $('.month-carousel>.carousel-inner>.item.active').index();
-                var indexTo = $(e.relatedTarget).index();
-                $('.event-month').eq(indexFrom).hide()
-                $('.event-month').eq(indexTo).show();
-            });
-        });
-    </script>
-    <style type="text/css">
-        .event-month:not(.active) {
-            display: none;
-        }
-        /*.event-item:not(.active) {
-            display: none;
-        }*/
-    </style>
     {% if result.events_map %}
-    <div class="row">
+    <div class="row layer-coursel-btn">
         <div class="col-md-6">
             {% for key, values in result.events_map.items %}
                 <h4 class="event-month">{{key}}</h4>
@@ -77,30 +45,40 @@
         </div>
         <div class="col-md-6">
             <div class="pull-right">
-                <!-- <button class="month-btn-prev"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-                <button class="month-btn-next"><i class="fa fa-arrow-right" aria-hidden="true"></i></button> -->
                 <button class="month-btn-prev" href="#month_coursel" data-slide="prev"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
                 <button class="month-btn-next" href="#month_coursel" data-slide="next"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
             </div>
         </div>
     </div>
-    <div class="row events-list">
-        <div class="carousel slide month-carousel" id="month_coursel">
+    <div class="row events-list layer-coursel-item">
+        <div class="carousel slide month-carousel carousel-fade" id="month_coursel">
             <div class="carousel-inner">
             {% for key, values in result.events_map.items %}
                 <div class="item events-list-by-month">
-                    <div class="events-courcel" id="event_coursel_{{forloop.counter}}">
-                        <div>
-                            {% for event in values %}
-                            <div class="item event-item col-xs-2">
-                                <a href="#"><img src="{{MEDIA_URL}}{{event.image}}" alt="Image" class="img-responsive"></a>
-                            </div>
+                    <div class="carousel slide events-courcel" id="event_coursel_{{forloop.counter}}">
+                        <div class="carousel-inner">
+                            {% for x, datas in values.items %}
+                                <div class="item event-item col-xs-12">
+                                {% for event in datas %}
+                                    <div class="col-7 col-xs-2">
+                                        <div class="events-name-div">
+                                            <p class="events-name">{{event.name}}</p>
+                                        </div>
+                                        <div class="events-date-div">
+                                            <p class="events-date">
+                                                {{ event.start_date | date:"d/m" }} - 
+                                                {{ event.start_date | date:"l" }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                </div>
                             {% endfor %}
                         </div>
-                        <!-- <div align="center">
-                            <button class="month-btn-prev" href="#event_coursel_{{forloop.counter}}" data-slide="prev"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-                            <button class="month-btn-next" href="#event_coursel_{{forloop.counter}}" data-slide="next"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-                        </div> -->
+                        <div align="center" class="col-md-12 event-coursel-btn-group">
+                            <button class="event-btn-prev" href="#event_coursel_{{forloop.counter}}" data-slide="prev"><i class="fa fa-caret-left" aria-hidden="true"></i>Trước</button>
+                            <button class="event-btn-next" href="#event_coursel_{{forloop.counter}}" data-slide="next">Sau <i class="fa fa-caret-right" aria-hidden="true"></i></button>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
@@ -108,20 +86,6 @@
 
         </div>
     </div>
-
-
-    <!-- <div class="row events-list" class="carousel slide" data-ride="carousel">
-        {% for key, values in result.events_map.items %}
-            <div class="events-list-by-month">
-                {% for event in values %}
-                <div class="col-md-2">
-                    {{event.name}}
-                </div>
-                {% endfor %}
-            </div>
-            
-        {% endfor %}
-    </div> -->
     {% endif %}
 
     {% if result.events %}

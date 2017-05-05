@@ -6,6 +6,7 @@ import ast
 from django.http import JsonResponse
 import constant
 import time
+from django.core.paginator import Paginator
 
 
 def home(request):
@@ -136,9 +137,11 @@ def events(request):
     print "***START EVENTS PAGE***"
     result = {}
 
-    events = Event.objects.all()
+    events = Event.objects.all().order_by('start_date')
+
     result["events"] = events
     events_map = {}
+    events_map_pg = {}
     if events:
         for event in events:
             key = event.start_date.strftime('%m/%Y')
@@ -146,8 +149,15 @@ def events(request):
                 events_map[key] = []
             events_map[key].append(event)
 
-    print "MAP", events_map
-    result["events_map"] = events_map
+        for key, values in events_map.items():
+            p =  Paginator(values, 7)
+            datas = {}
+            for x in range(0, p.num_pages):
+                datas[x] = p.page(x+1)
+            events_map_pg[key] = datas
+
+    result["events_map"] = events_map_pg
+    result["events_map_pg"] = events_map_pg
 
     return render(request, 'websites/events.html', {"result": result})
 

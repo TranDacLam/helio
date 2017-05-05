@@ -76,15 +76,13 @@ ol.carousel-indicators-custom li {
     max-width: 1400px;
     margin: 50px auto;
 }
-/* Small devices (tablets, 768px and up) */
 @media (min-width: 1600px) {
     .comment_left {
         margin-left: -95px;
         width: 30%;
     }
 }
-/* Small devices (tablets, 768px and up) */
-@media (max-width: 767px) {
+@media (max-width: 991px) {
     .first-section {
         margin-top: 30px;
     }

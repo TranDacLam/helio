@@ -139,7 +139,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
 
 
 /*MEDIA*/
-@media (max-width: 767px) {
+@media (max-width: 991px) {
 	.form-title {
 		width: 100%;
 	}

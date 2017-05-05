@@ -99,7 +99,7 @@ a.btn-custom-style.btn-custom-style-experiences:hover {
     background-image: none;
 }
 /*END BUTTON VIEW MORE CSS*/
-@media (max-width: 767px) {
+@media (max-width: 991px) {
     /*CAROUSEL PHONE SCREEN*/
     ol.carousel-indicators-custom .active {
         width: 20px;
