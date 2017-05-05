@@ -83,6 +83,29 @@ div.carousel-caption-custom > .big-font-size {
 }
 /*END EXPERIENCES CSS*/
 
+/*START BUTTON VIEW MORE CSS*/
+.div-view-more {
+    padding-top: 30px;
+}
+a.btn-custom-style.btn-custom-style-faqs {
+    border-image-source: linear-gradient(16deg, #0095bb, #0095bb);
+}
+.active a.btn-custom-style.btn-custom-style-faqs:focus,
+a.btn-custom-style.btn-custom-style-faqs:focus, 
+a.btn-custom-style.btn-custom-style-faqs:hover {
+    color: #0095bb;
+    background-color: #fff;
+    border-image-source: linear-gradient(16deg, #15062b, #15062b);
+    background-image: none;
+}
+.glyphicon-custom {
+    top: 0px;
+    left: 8px;
+    font-weight: normal;
+    font-size: 18px;
+}
+/*END BUTTON VIEW MORE CSS*/
+
 
 @media (max-width: 767px) {
     /*CAROUSEL PHONE SCREEN*/
