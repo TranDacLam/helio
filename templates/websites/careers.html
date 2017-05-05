@@ -9,6 +9,7 @@
 {% block main_content %} 
 
 <div class="container">
+	{% if result.careers_type %}
 	<div class="page-top">
         <div class="page-header-img">
             <div>
@@ -16,39 +17,46 @@
             </div>
             <div class="page-title" align="center">
                 <div class="col-md-12">
-                    <p class="page-title-text">ĐỒNG HÀNH CÙNG HELIO CENTER</p>
+                    <p class="page-title-text">{{result.careers_type.name}}</p>
                 </div>
             </div>
         </div>
         <div align="center" class="page-header-text">
             <div class="form-title">
-                <p class="text-description page_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
+                <p class="text-description page_description">{{result.careers_type.description}}</p>
             </div>
         </div>
     </div>
-	{% if result.careers %}
+    {% endif %}
+
+    {{result.careers_pin_top.0}}
+    {% if result.careers_pin_top %}
 	<div class="row careers-lg">
 		<div class="col-md-12">
 			<div class="thumbnail carrer-item">
-				<img src="{{ STATIC_URL }}assets/websites/images/career_1.png" alt="Lights" style="width:100%">
+				<img src="{{ MEDIA_URL }}{{result.careers_pin_top.image}}" alt="Lights" style="width:100%">
 				<div class="caption">
-					<p class="carrer-name">ĐỒNG HÀNH CÙNG HELIO CENTER</p>
-					<p class="short_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra.</p>
+					<p class="carrer-name">{{result.careers_pin_top.name}}</p>
+					<p class="short_description">{{result.careers_pin_top.short_description}}</p>
 				</div>
 			</div>
 		</div>
 	</div>
+	{% endif %}
+	{% if result.careers %}
     <div class="row careers-content">
     	{% for career in result.careers %}
-		<div class="col-md-6 career-div">
-			<div class="thumbnail carrer-item">
-				<img src="{{ MEDIA_URL }}{{career.image}}" alt="Lights" style="width:100%">
-				<div class="caption">
-					<p class="carrer-name">{{career.name}}</p>
-					<p class="short_description">{{career.short_description}}</p>
+    		{% if not result.careers_pin_top.id or career.id != result.careers_pin_top.id %}
+			<div class="col-md-6 career-div">
+				<div class="thumbnail carrer-item">
+					<img src="{{ MEDIA_URL }}{{career.image}}" alt="Lights" style="width:100%">
+					<div class="caption">
+						<p class="carrer-name">{{career.name}}</p>
+						<p class="short_description">{{career.short_description}}</p>
+					</div>
 				</div>
 			</div>
-		</div>
+			{% endif %}
 		{% endfor %}
 		<div class="div-view-more col-md-12" align="center">
 			<a class="btn-view-more btn-custom-style btn-custom-style-career" role="button">{% trans "btn.view_more" %} <span class="glyphicon glyphicon-chevron-down glyphicon-custom"></span></a>
