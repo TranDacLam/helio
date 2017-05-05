@@ -19,7 +19,12 @@
 }
 
 .carrer-item.thumbnail p.carrer-name {
-	font-size: 18px;
+	cursor: default;
+	font-size: 24px;
+	font-family: "Yanone Kaffeesatz"
+}
+.carrer-item.thumbnail p.carrer-name:hover {
+	color: #fec231;
 }
 .div-view-more {
 	margin-top: 50px;
