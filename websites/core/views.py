@@ -8,6 +8,7 @@ import constant as const
 import time
 from django.core.paginator import Paginator
 
+# TOTO FIX : try catch all fucntion
 
 def home(request):
     result = {}
@@ -43,6 +44,7 @@ def power_card(request):
     result["powercard_type"] = powercard_type
 
     # Powercard list
+    # TODO FIX : post_type = powercard_type
     powercards = Post.objects.filter(post_type_id=const.POWERCARD_POST_TYPE_ID)
     result["powercards"] = powercards
 
