@@ -184,6 +184,8 @@ def experience(request):
     # Experience list
     experiences = Post.objects.filter(post_type_id=const.EXPERIENCE_POST_TYPE_ID)
     result["experiences"] = experiences
+
+    result["experiences_hots"] = experiences[:5]
     print experiences
     
     return render(request, 'websites/experience.html', {"result": result})

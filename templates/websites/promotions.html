@@ -17,11 +17,11 @@
     {% if result.promotions_hots %}
     <div class="page-top">
         <div class="page-header-img">
-            <div id="promotionCarousel" class="carousel slide carousel-custom" data-ride="carousel">
+            <div id="promotion_carousel" class="carousel slide carousel-custom" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators carousel-indicators-custom">
                     {% for promotion in result.promotions_hots %}
-                    <li data-target="#promotionCarousel" data-slide-to="{{forloop.counter0}}" class="{% if forloop.counter0 == 0 %} active {% endif %}"></li>
+                    <li data-target="#promotion_carousel" data-slide-to="{{forloop.counter0}}" class="{% if forloop.counter0 == 0 %} active {% endif %}"></li>
                     {% endfor %}
                 </ol>
 
