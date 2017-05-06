@@ -139,9 +139,10 @@ REST_FRAMEWORK = {
 }
 JWT_AUTH = {
     # 'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=1700),
-    'JWT_AUTH_HEADER_PREFIX':'Bearer'
+    'JWT_AUTH_HEADER_PREFIX':'Bearer',
+    'JWT_VERIFY_EXPIRATION': False
 }
-JWT_VERIFY_EXPIRATION = False
+
 REST_USE_JWT = True
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
