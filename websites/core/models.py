@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import AbstractUser
 import custom_models
+import constant as const
 
 # Create your models here.
 
@@ -181,7 +182,7 @@ class Promotion(DateTimeModel):
 class FAQ(DateTimeModel):
 
     def limit_category_Faq():
-        return {'name_en__in': ['POWERCARD', 'REDEMPTION STORE']}
+        return {'id__in': [const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY, const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY]}
 
     question = models.CharField(max_length=255, unique=True)
     answer = models.TextField()

@@ -4,7 +4,7 @@ from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 import ast
 from django.http import JsonResponse
-import constant
+import constant as const
 import time
 from django.core.paginator import Paginator
 
@@ -25,8 +25,8 @@ def home(request):
     result["hots"] = hots
 
     # game section
-    result["play_types"] = Type.objects.filter(category_id=constant.HELIO_PLAY_CATEGORY)
-    result["kids_types"] = Type.objects.filter(category_id=constant.HELIO_KIDS_CATEGORY)
+    result["play_types"] = Type.objects.filter(category_id=const.HELIO_PLAY_CATEGORY)
+    result["kids_types"] = Type.objects.filter(category_id=const.HELIO_KIDS_CATEGORY)
 
     # game categorys
     events = Event.objects.all()[:2]
@@ -39,14 +39,14 @@ def power_card(request):
     result = {}
 
     # Powercard info
-    powercard_type = Post_Type.objects.get(pk=constant.POWERCARD_POST_TYPE_ID)
+    powercard_type = Post_Type.objects.get(pk=const.POWERCARD_POST_TYPE_ID)
     result["powercard_type"] = powercard_type
 
     # Powercard list
-    powercards = Post.objects.filter(post_type_id=constant.POWERCARD_POST_TYPE_ID)
+    powercards = Post.objects.filter(post_type_id=const.POWERCARD_POST_TYPE_ID)
     result["powercards"] = powercards
 
-    faqs = FAQ.objects.filter(category_id=constant.POWERCARD_FAQS_CATEGORY)
+    faqs = FAQ.objects.filter(category_id=const.POWERCARD_CATEGORY)
     result["faqs"] = faqs
 
     return render(request, 'websites/power_card.html', {"result":result})
@@ -54,9 +54,16 @@ def power_card(request):
 def faqs(request):
     print "***START FAQs PAGE***"
     result = {}
-    # FAWs list
-    faqs = FAQ.objects.all()
-    result["faqs"] = faqs
+
+    faqs_categorys = Category.objects.filter(pk__in=(const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY, const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY))
+
+    datas = {}
+    if faqs_categorys:
+        for faqs_category in faqs_categorys:
+            datas[faqs_category] = faqs_category.faq_category_rel.all()
+
+    result["datas"] = datas
+    print datas
     
     return render(request, 'websites/faqs.html', {"result":result})
 
@@ -70,7 +77,7 @@ def helio_kids(request):
     print "***START HELIO KIDS PAGE***"
     result = {}
     #Get page info
-    page_info = Category.objects.get(pk=constant.HELIO_KIDS_CATEGORY)
+    page_info = Category.objects.get(pk=const.HELIO_KIDS_CATEGORY)
     result["page_info"] = page_info
 
     # Game type
@@ -92,7 +99,7 @@ def helio_kids(request):
 def night_life(request):
     print "***START NIGHT LIFE CONTENT PAGE***"
     result = {}
-    night_life = Post.objects.get(key_query=constant.NIGHT_LIFE_KEY_QUERY)
+    night_life = Post.objects.get(key_query=const.NIGHT_LIFE_KEY_QUERY)
     result["night_life"] = night_life
     return render(request, 'websites/night_life.html', {"result": result})
 
@@ -101,7 +108,7 @@ def helio_play(request):
     print "***START HELIO PLAY PAGE***"
     result = {}
     #Get page info
-    page_info = Category.objects.get(pk=constant.HELIO_PLAY_CATEGORY)
+    page_info = Category.objects.get(pk=const.HELIO_PLAY_CATEGORY)
     result["page_info"] = page_info
 
     # Game type
@@ -171,11 +178,11 @@ def experience(request):
     print "***START EXPERIENCE CONTENT PAGE***"
     result = {}
     # Experience info
-    experience_type = Post_Type.objects.get(pk=constant.EXPERIENCE_POST_TYPE_ID)
+    experience_type = Post_Type.objects.get(pk=const.EXPERIENCE_POST_TYPE_ID)
     result["experience_type"] = experience_type
 
     # Experience list
-    experiences = Post.objects.filter(post_type_id=constant.EXPERIENCE_POST_TYPE_ID)
+    experiences = Post.objects.filter(post_type_id=const.EXPERIENCE_POST_TYPE_ID)
     result["experiences"] = experiences
     print experiences
     
@@ -196,7 +203,7 @@ def coffee_bakery(request):
     print "***START HELIO COFFEE CONTENT PAGE***"
     result = {}
 
-    coffee_page = Post.objects.get(key_query=constant.COFFEE_KEY_QUERY)
+    coffee_page = Post.objects.get(key_query=const.COFFEE_KEY_QUERY)
     result["page_info"] = coffee_page
     
     list_images = {}
@@ -210,7 +217,7 @@ def coffee_bakery(request):
 def redemption_store(request):
     print "***START HELIO COFFEE CONTENT PAGE***"
     result = {}
-    redemption_page = Post.objects.get(key_query=constant.REDEMPTION_STORE_KEY_QUERY)
+    redemption_page = Post.objects.get(key_query=const.REDEMPTION_STORE_KEY_QUERY)
     result["page_info"] = redemption_page
 
     list_images = {}
@@ -220,7 +227,7 @@ def redemption_store(request):
     result["list_images"] = list_images
 
     # FAQs list
-    faqs = FAQ.objects.filter(category_id=constant.REDEMPTION_STORE_CATEGORY)
+    faqs = FAQ.objects.filter(category_id=const.REDEMPTION_STORE_CATEGORY)
     result["faqs"] = faqs
     
     return render(request, 'websites/redemption_store.html', {"result":result})
@@ -231,7 +238,7 @@ def promotions(request):
     result = {}
 
     # Promotion type
-    promotion_category = Category.objects.filter(pk__in=[constant.HELIO_PLAY_CATEGORY, constant.HELIO_KIDS_CATEGORY, constant.NIGHT_LIFE_CATEGORY])
+    promotion_category = Category.objects.filter(pk__in=[const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.NIGHT_LIFE_CATEGORY])
 
     datas = {}
     if promotion_category:
@@ -269,7 +276,7 @@ def careers(request):
     result = {}
 
     # Careers info
-    careers_type = Post_Type.objects.get(pk=constant.CAREERS_POST_TYPE_ID)
+    careers_type = Post_Type.objects.get(pk=const.CAREERS_POST_TYPE_ID)
     result["careers_type"] = careers_type
 
     # Careers pin to top
@@ -277,7 +284,7 @@ def careers(request):
     result["careers_pin_top"] = careers_pin_top
 
     # Careers list
-    careers = Post.objects.filter(post_type_id=constant.CAREERS_POST_TYPE_ID)
+    careers = Post.objects.filter(post_type_id=const.CAREERS_POST_TYPE_ID)
     result["careers"] = careers
 
     return render(request, 'websites/careers.html', {"result": result})

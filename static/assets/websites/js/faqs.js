@@ -1,30 +1,43 @@
-var show_num =8,
+var show_num = {},
+    first_show =8,
     view_more = 8;
 
-function viewMore() {
-    var size_list = $(".faqs-section .faq-detail").length;
-    $('.faqs-section .faq-detail:lt('+show_num+')').show();
-    if(show_num >= size_list) {
-        $(".btn-view-more").parent().parent().hide();
+function viewMore (element) {
+    var id = $(element).parent().attr("id");
+    var size_list = $(element).find(".faq-detail").length;
+    var show_lengh =  show_num[id];
+    $(element).find('.faq-detail:lt('+show_lengh+')').show();
+    if(show_lengh >= size_list) {
+        $(element).find(".btn-view-more").hide();
     }
+    show_num[id] = show_lengh;
 }
-
+function toggleIcon(e) {
+    $(e.target)
+        .prev('.panel-heading')
+        .find(".more-less")
+        .toggleClass('fa-chevron-circle-down fa-chevron-circle-up');
+}
 $(document).ready(function(){
     $(".faq-detail").css('display','none');
 
-    viewMore();
+    $(".faqs_category:first").addClass('active');
+    $(".faqs-content:first").addClass('active');
 
-    $(".btn-view-more").click(function() {
-        show_num += view_more;
-        viewMore();
+    $(".tab-content .tab-pane").each(function(){
+        var id = $(this).attr("id");
+        show_num[id] = first_show;
+        viewMore($(this).find(".view-more-div"));
     });
 
-    function toggleIcon(e) {
-        $(e.target)
-            .prev('.panel-heading')
-            .find(".more-less")
-            .toggleClass('fa-chevron-circle-down fa-chevron-circle-up');
-    }
+    $(".btn-view-more").click(function() {
+        var div_parent = $(this).parent().parent();
+        var size_list = $(div_parent).find(".item-line").length;
+        var id = $(div_parent).parent().attr("id");
+        show_num[id] += view_more;
+        viewMore(div_parent);
+    });
+
     $('.panel-group').on('hidden.bs.collapse', toggleIcon);
     $('.panel-group').on('shown.bs.collapse', toggleIcon);
     $( ".card-description" ).each(function(  ) {
