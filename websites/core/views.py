@@ -237,6 +237,9 @@ def promotions(request):
     print "***START EVENT CONTENT PAGE***"
     result = {}
 
+
+    promotions_hots = Promotion.objects.all()[:3]
+    result["promotions_hots"] = promotions_hots
     # Promotion type
     promotion_category = Category.objects.filter(pk__in=[const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.NIGHT_LIFE_CATEGORY])
 
