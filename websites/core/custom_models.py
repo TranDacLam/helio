@@ -72,14 +72,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         # The user is identified by their email address
         return self.email
 
-    def has_perm(self, perm, obj=None):
-        return super(User, self).has_perm(perm, obj)
+    # def has_perm(self, perm, obj=None):
+    #     return super(User, self).has_perm(perm, obj)
 
-    def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app `app_label`?"
-        # Simplest possible answer: Yes, always
-        print "Check Permistion ",self.is_active, self.is_superuser
-        return super(User, self).has_module_perms(app_label)
+    # def has_module_perms(self, app_label):
+    #     "Does the user have permissions to view the app `app_label`?"
+    #     # Simplest possible answer: Yes, always
+    #     print "Check Permistion ",self.is_active, self.is_superuser
+    #     return super(User, self).has_module_perms(app_label)
 
     def __str__(self):              # __unicode__ on Python 2
         return self.email
@@ -88,4 +88,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     def is_staff(self):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
-        return self.is_staffing
+        return self.is_superuser
