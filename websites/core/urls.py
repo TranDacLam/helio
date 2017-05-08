@@ -5,6 +5,7 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^power-card/$', views.power_card, name='power_card'),
     url(r'^promotions/$', views.promotions, name='promotions'),
+    url(r'^promotions/(?P<promotion_id>[0-9]+)/detail/$', views.promotion_detail, name='promotion_detail'),
     url(r'^faqs/$', views.faqs, name='faqs'),
     url(r'^events/$', views.events, name='events'),
     url(r'^helio-play/$', views.helio_play, name='helio_play'),

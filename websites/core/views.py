@@ -281,6 +281,14 @@ def promotions(request):
 
     return render(request, 'websites/promotions.html', {"result": result})
 
+def promotion_detail(request, promotion_id):
+    print "***START PROMOTION DETAIl PAGE***"
+    promotion = Promotion.objects.get(pk=promotion_id)
+
+    other_promotions = Promotion.objects.all()[:3]
+
+    return render(request, 'websites/promotion_detail.html', {"promotion": promotion, "other_promotions": other_promotions})
+
 def careers(request):
     print "***START CARRER CONTENT PAGE***"
     result = {}
