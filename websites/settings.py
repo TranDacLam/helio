@@ -203,7 +203,8 @@ CKEDITOR_CONFIGS = {
                'dialogui'
             ]
         ),
-        'font_names': "Yanone Kaffeesatz; FontThuPhap",
+        'font_names': "Yanone Kaffeesatz; Cabin",
+        'contentsCss': ','.join(['../../../../static/assets/websites/css/custom_admin.css'])
     },
 }
 CKEDITOR_BROWSE_SHOW_DIRS = True
