@@ -1,0 +1,56 @@
+.hr-custom {
+	border-color: #802ca2;
+	margin: 50px 0px;
+}
+
+.center-div {
+	margin: 50px auto;
+	width: 85%;
+	text-align: left;
+}
+.input-contact {
+	margin-top: 20px;
+	width: 100%;
+}
+.form-contact label.error {
+	color:red;
+	float: left;
+	font-size: 15px;
+	font-weight: normal;
+}
+
+.form-control-custom {
+	color: #fff;
+	background-color: #211336;
+	border: 1px solid #fff;
+	border-radius: 0px;	
+	margin: 10px 0;
+}
+
+
+.btn-custom-style.btn-custom-style-experiences {
+	border: 1px solid #fff;
+    background-color: transparent;
+    font-size: 24px;
+    font-family: "Yanone Kaffeesatz";
+    padding: 10px 30px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    margin: 50px auto;
+}
+.active .btn-custom-style.btn-custom-style-experiences:focus,
+.btn-custom-style.btn-custom-style-experiences:focus, 
+.btn-custom-style.btn-custom-style-experiences:hover {
+    color: #15062b;
+    background-color: #fff;
+    border-image-source: linear-gradient(16deg, #fff, #fff);
+    background-image: none;
+}
+
+@media (max-width: 767px) {
+	.center-div {
+		margin: 50px auto;
+		width: 100%;
+		text-align: left;
+	}
+}
