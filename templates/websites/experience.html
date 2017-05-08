@@ -11,64 +11,34 @@
 
 <div class="container">
 	<!-- CARD PAGE DESCRIPTION -->
+	{% if result.experiences %}
 	<div class="page-top">
 		<div class="page-header-img">
-			<div id="promotionCarousel" class="carousel slide carousel-custom" data-ride="carousel">
+			<div id="experiences_carousel" class="carousel slide carousel-custom" data-ride="carousel">
 				<!-- Indicators -->
 				<ol class="carousel-indicators carousel-indicators-custom">
-					<li data-target="#promotionCarousel" data-slide-to="0" class="active"></li>
-					<li data-target="#promotionCarousel" data-slide-to="1"></li>
-					<li data-target="#promotionCarousel" data-slide-to="2"></li>
-					<li data-target="#promotionCarousel" data-slide-to="3"></li>
-					<li data-target="#promotionCarousel" data-slide-to="4"></li>
+					{% for experience in result.experiences_hots %}
+					<li data-target="#experiences_carousel" data-slide-to="{{forloop.counter0}}" class="{% if forloop.counter0 == 0 %} active {% endif %}"></li>
+					{% endfor %}
 				</ol>
 
 				<!-- Wrapper for slides -->
 				<div class="carousel-inner" role="listbox">
-					<div class="item active">
-						<img src="{{ STATIC_URL }}assets/websites/images/event_detail_header.png" alt="Helio">
+					{% for experience in result.experiences_hots %}
+					<div class="item {% if forloop.counter0 == 0 %} active {% endif %}">
+						<img src="{{ MEDIA_URL }}{{ experience.image }}" alt="Helio" width="100%">
 						<div class="carousel-caption carousel-caption-custom">
 							<p class="big-font-size">
-								8 TRẢI NGHIỆM TUYỆT VỜI KHI ĐẾN ĐÀ NẴNG
+								{{experience.name}}
 							</p>
 						</div>
 					</div>
-					<div class="item">
-						<img src="{{ STATIC_URL }}assets/websites/images/event_detail_header.png" alt="Helio">
-						<div class="carousel-caption carousel-caption-custom">
-							<p class="big-font-size">
-								NGẮM CÁC "SIÊU CẦU" NỔI TIẾNG TRONG VÀ NGOÀI NƯỚC
-							</p>
-						</div>
-					</div>
-					<div class="item">
-						<img src="{{ STATIC_URL }}assets/websites/images/event_detail_header.png" alt="Helio">
-						<div class="carousel-caption carousel-caption-custom">
-							<p class="big-font-size">
-								8 TRẢI NGHIỆM TUYỆT VỜI KHI ĐẾN ĐÀ NẴNG
-							</p>
-						</div>
-					</div>
-					<div class="item">
-						<img src="{{ STATIC_URL }}assets/websites/images/event_detail_header.png" alt="Helio">
-						<div class="carousel-caption carousel-caption-custom">
-							<p class="big-font-size">
-								NGẮM CÁC "SIÊU CẦU" NỔI TIẾNG TRONG VÀ NGOÀI NƯỚC
-							</p>
-						</div>
-					</div>
-					<div class="item">
-						<img src="{{ STATIC_URL }}assets/websites/images/event_detail_header.png" alt="Helio">
-						<div class="carousel-caption carousel-caption-custom">
-							<p class="big-font-size">
-								8 TRẢI NGHIỆM TUYỆT VỜI KHI ĐẾN ĐÀ NẴNG
-							</p>
-						</div>
-					</div>
+					{% endfor %}
 				</div>
 			</div>
 		</div>
 	</div>
+	{% endif %}
 
 	<!-- CONTENT -->
 	{% if result.experiences %}

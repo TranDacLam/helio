@@ -1,39 +1,39 @@
 from fabric.api import *
 
-ENV = 'development' # Choices ['uat','production','development']
+ENV = 'uat' # Choices ['uat','production','development']
 #ENV = 'production'
 SERVERS = {
     'development': '192.168.1.13',
-    'uat': '172.16.1.29',
-    'production' : '172.16.1.30'
+    'uat': '49.156.53.49',
+    # 'production' : '172.16.1.30'
 }
 BRANCH = {
     'development': 'develop',
-    'uat': 'staging',
-    'production': 'production'
+    'uat': 'uat',
+    # 'production': 'production'
 }
 
 USERS = {
     'development': 'vooc',
-    'uat': 'hoanit',
-    'production': 'cskh'
+    'uat': 'thangv',
+    # 'production': 'cskh'
 }
 
 PASSWORDS = {
     'development': 'vooc@min',
-    # 'uat': 'Khoiphat@2016',
+    'uat': 'ThangV@@123',
     # 'production': 'Helio@@2016'
 }
 
 VIRTUAL_ENVS = {
     'development': 'source /home/vooc/envs_root/helio_web_env/bin/activate',
-    # 'uat': 'source /home/hoanit/envs_root/helio_web_env/bin/activate',
+    'uat': 'source /home/thangv/envs/helio_web_env/bin/activate',
     # 'production': 'source /home/cskh/envs_root/helio_web_env/bin/activate'
 }
 
 PATHS = {
     'development': '/home/vooc/projects/helio_web',
-    # 'uat': '/home/hoanit/projects/helio',
+    'uat': '/home/thangv/projects/helio_web/',
     # 'production': '/home/cskh/projects/helio'
 }
 

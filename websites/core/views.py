@@ -8,6 +8,7 @@ import constant as const
 import time
 from django.core.paginator import Paginator
 
+# TOTO FIX : try catch all fucntion
 
 def home(request):
     result = {}
@@ -43,6 +44,7 @@ def power_card(request):
     result["powercard_type"] = powercard_type
 
     # Powercard list
+    # TODO FIX : post_type = powercard_type
     powercards = Post.objects.filter(post_type_id=const.POWERCARD_POST_TYPE_ID)
     result["powercards"] = powercards
 
@@ -184,6 +186,8 @@ def experience(request):
     # Experience list
     experiences = Post.objects.filter(post_type_id=const.EXPERIENCE_POST_TYPE_ID)
     result["experiences"] = experiences
+
+    result["experiences_hots"] = experiences[:5]
     print experiences
     
     return render(request, 'websites/experience.html', {"result": result})
@@ -237,6 +241,9 @@ def promotions(request):
     print "***START EVENT CONTENT PAGE***"
     result = {}
 
+
+    promotions_hots = Promotion.objects.all()[:3]
+    result["promotions_hots"] = promotions_hots
     # Promotion type
     promotion_category = Category.objects.filter(pk__in=[const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.NIGHT_LIFE_CATEGORY])
 
