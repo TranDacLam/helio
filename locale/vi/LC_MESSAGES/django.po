@@ -68,6 +68,9 @@ msgstr "Xem tất cả"
 
 msgid "btn.view_more"
 msgstr "Hiển thị thêm"
+
+msgid "btn.view_detail"
+msgstr "Xem chi tiết"
 # END BUTTON
 
 # START HOME PAGE
@@ -109,11 +112,35 @@ msgid "powercard.title.section.faq"
 msgstr "NHỮNG CÂU HỎI THƯỜNG GẶP"
 # END FAQs POWERCARD
 
-# START EXPERIENCE 
-msgid "experience.btn.view_detail"
-msgstr "Xem chi tiết"
-# END EXPERIENCE
+# START EXPERIENCE DETAIl
+msgid "experiencepage.btn.all_experience" 
+msgstr "TẤT CẢ TRẢI NGHIỆM"
 
+msgid "experiencepage.other_experience" 
+msgstr "TRẢI NGHIỆM KHÁC"
+# END EXPERIENCE DETAIl
+
+# START EVENT DETAIl
+msgid "eventpage.btn.all_event" 
+msgstr "TẤT CẢ SỰ KIỆN"
+
+msgid "eventpage.other_event" 
+msgstr "SỰ KIỆN KHÁC"
+# END EVENT DETAIl
+
+# START PROMOTION DETAIl
+msgid "promotionpage.btn.all_promotion" 
+msgstr "TẤT CẢ KHUYẾN MÃI "
+
+msgid "promotionpage.other_promotion" 
+msgstr "TKHUYẾN MÃI  KHÁC"
+# END PROMOTION DETAIl
+
+# START CARRER DETAIl
+msgid "carrerpage.btn.all_carrer" 
+msgstr "TẤT CẢ TRẢI NGHIỆM"
+
+<<<<<<< HEAD
 # START CONTACT 
 msgid "contact.btn.send"
 msgstr "GỬI TIN NHẮN" 
@@ -137,6 +164,11 @@ msgid "contact.label.error"
 msgstr "Vui lòng nhập tên"
 # END CONTACT
 
+=======
+msgid "carrerpage.other_carrer" 
+msgstr "TRẢI NGHIỆM KHÁC"
+# END CARRER DETAIl
+>>>>>>> 9f804c40434a4e6f40070a1e9124057f7d3db063
 #START FOOTER
 msgid "footer.contact.address"
 msgstr "Khu công viên Đông Nam Đài tưởng niệm, Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu, TP Đà Nẵng"

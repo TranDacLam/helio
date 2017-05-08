@@ -170,11 +170,18 @@ def events(request):
 
     return render(request, 'websites/events.html', {"result": result})
 
+def event_detail(request, event_id):
+    print "***START EVENT DETAIl PAGE***"
+    event = Event.objects.get(pk=event_id)
+
+    other_events = Event.objects.all()[:3]
+
+    return render(request, 'websites/event_detail.html', {"event": event, "other_events": other_events})
+
 def event_content(request):
     print "***START EVENT CONTENT PAGE***"
     
     return render(request, 'websites/event_content.html')
-
     
 def experience(request):
     print "***START EXPERIENCE CONTENT PAGE***"
@@ -192,10 +199,13 @@ def experience(request):
     
     return render(request, 'websites/experience.html', {"result": result})
 
-def experience_detail(request):
+def experience_detail(request, experience_id):
     print "***START EVENT CONTENT PAGE***"
-    
-    return render(request, 'websites/experience_detail.html')
+    experience = Post.objects.get(pk=experience_id)
+
+    other_experiences = Post.objects.filter(post_type_id=const.EXPERIENCE_POST_TYPE_ID)[:3]
+
+    return render(request, 'websites/experience_detail.html', {"experience": experience, "other_experiences": other_experiences})
 
 def news(request):
     print "***START News PAGE***"
@@ -278,6 +288,14 @@ def promotions(request):
 
     return render(request, 'websites/promotions.html', {"result": result})
 
+def promotion_detail(request, promotion_id):
+    print "***START PROMOTION DETAIl PAGE***"
+    promotion = Promotion.objects.get(pk=promotion_id)
+
+    other_promotions = Promotion.objects.all()[:3]
+
+    return render(request, 'websites/promotion_detail.html', {"promotion": promotion, "other_promotions": other_promotions})
+
 def careers(request):
     print "***START CARRER CONTENT PAGE***"
     result = {}
@@ -295,3 +313,11 @@ def careers(request):
     result["careers"] = careers
 
     return render(request, 'websites/careers.html', {"result": result})
+
+def career_detail(request, career_id):
+    print "***START CARRER DETAIl PAGE***"
+    career = Post.objects.get(pk=career_id)
+
+    other_careers = Post.objects.filter(post_type_id=const.CAREERS_POST_TYPE_ID)[:3]
+
+    return render(request, 'websites/carrer_detail.html', {"career": career, "other_careers": other_careers})
