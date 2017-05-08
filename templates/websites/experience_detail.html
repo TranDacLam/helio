@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
-
-{% block title %}Experience detail{% endblock %}
+{% load i18n %}
+{% block title %}Experience Detail{% endblock %}
 {% block extrastylesheet %}
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/page_detail.css">
 {% endblock %}
@@ -55,10 +55,10 @@
 	<div class="block-post-involved">
 	    <div class="row block-post-title">
 	      	<div class="col-md-6 col-md-6-custom">
-	        	<h4>TRẢI NGHIỆM KHÁC</h4>
+	        	<h4>{% trans "experiencepage.other_experience" %}</h4>
 	      	</div>
 	      	<div class="col-md-6 col-md-6-custom">
-	        	<a class="btn button-all btn-custom-style btn-custom-style-kids" href="{% url 'experience' %}" role="button">TẤT CẢ TRẢI NGHIỆM<span class="glyphicon glyphicon-menu-right"></span></a>
+	        	<a class="btn button-all btn-custom-style btn-custom-style-kids" href="{% url 'experience' %}" role="button">{% trans "experiencepage.btn.all_experience" %}<span class="glyphicon glyphicon-menu-right"></span></a>
 	      	</div>
 	    </div>
 	    <div class="row custom-other-exp">
@@ -67,7 +67,7 @@
 	        	<div class="style-post">
 	          		<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ experience.image }}" width="100%"></a></span>
 	          		<a class="title-post" href="/experience/{{experience.id}}/detail/">{{experience.name}}</a>
-	          		<p class="text-limit-rows">{{experience.short_description}}</p> <a class="view-detail" href="/experience/{{experience.id}}/detail/">Xem chi tiết</a>
+	          		<p class="text-limit-rows">{{experience.short_description}}</p> <a class="view-detail" href="/experience/{{experience.id}}/detail/">{% trans "btn.view_detail" %}</a>
 	        	</div>
 	      	</div>
 	      	{% endfor %}

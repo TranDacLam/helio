@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
-
-{% block title %}carrer detail{% endblock %}
+{% load i18n %}
+{% block title %}Carrer Detail{% endblock %}
 {% block extrastylesheet %}
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/page_detail.css">
 {% endblock %}
@@ -40,10 +40,10 @@
 	<div class="block-post-involved">
 	    <div class="row block-post-title">
 	      	<div class="col-md-6 col-md-6-custom">
-	        	<h4>TUYỂN DỤNG KHÁC</h4>
+	        	<h4>{% trans "carrerpage.other_carrer" %}</h4>
 	      	</div>
 	      	<div class="col-md-6 col-md-6-custom">
-	        	<a class="btn button-all btn-custom-style btn-custom-style-kids" href="{% url 'careers' %}" role="button">TẤT CẢ TUYỂN DỤNG<span class="glyphicon glyphicon-menu-right"></span></a>
+	        	<a class="btn button-all btn-custom-style btn-custom-style-kids" href="{% url 'careers' %}" role="button">{% trans "carrerpage.btn.all_carrer" %}<span class="glyphicon glyphicon-menu-right"></span></a>
 	      	</div>
 	    </div>
 	    <div class="row custom-other-exp">
@@ -52,7 +52,7 @@
 	        	<div class="style-post">
 	          		<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ career.image }}" width="100%"></a></span>
 	          		<a class="title-post" href="/careers/{{career.id}}/detail/">{{career.name}}</a>
-	          		<p class="text-limit-rows">{{career.short_description}}</p> <a class="view-detail" href="/careers/{{career.id}}/detail/">Xem chi tiết</a>
+	          		<p class="text-limit-rows">{{career.short_description}}</p> <a class="view-detail" href="/careers/{{career.id}}/detail/">{% trans "btn.view_detail" %}</a>
 	        	</div>
 	      	</div>
 	      	{% endfor %}

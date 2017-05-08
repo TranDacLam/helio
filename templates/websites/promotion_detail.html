@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
-
-{% block title %}promotion detail{% endblock %}
+{% load i18n %}
+{% block title %}Promotion Detail{% endblock %}
 {% block extrastylesheet %}
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/page_detail.css">
 {% endblock %}
@@ -39,10 +39,10 @@
     <div class="block-post-involved">
         <div class="row block-post-title">
             <div class="col-md-6 col-md-6-custom">
-                <h4>SỰ KIỆN KHÁC</h4>
+                <h4>{% trans "promotionpage.other_promotion" %}</h4>
             </div>
             <div class="col-md-6 col-md-6-custom">
-                <a class="btn button-all btn-custom-style btn-custom-style-kids" href="{% url 'careers' %}" role="button">TẤT CẢ SỰ KIỆN<span class="glyphicon glyphicon-menu-right"></span></a>
+                <a class="btn button-all btn-custom-style btn-custom-style-kids" href="{% url 'careers' %}" role="button">{% trans "promotionpage.btn.all_promotion" %}<span class="glyphicon glyphicon-menu-right"></span></a>
             </div>
         </div>
         <div class="row custom-other-exp">
@@ -51,7 +51,7 @@
                 <div class="style-post">
                     <span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ promotion.image }}" width="100%"></a></span>
                     <a class="title-post" href="/promotions/{{promotion.id}}/detail/">{{promotions.name}}</a>
-                    <p class="text-limit-rows">{{promotions.short_description}}</p> <a class="view-detail" href="/promotions/{{promotion.id}}/detail/">Xem chi tiết</a>
+                    <p class="text-limit-rows">{{promotions.short_description}}</p> <a class="view-detail" href="/promotions/{{promotion.id}}/detail/">{% trans "btn.view_detail" %}</a>
                 </div>
             </div>
             {% endfor %}
