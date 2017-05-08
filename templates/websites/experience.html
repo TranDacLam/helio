@@ -46,14 +46,14 @@
 		{% for experience in result.experiences %}
 		<div class="item col-md-4 col-xs-12 custom-experience experiences-div">
 			<div class="style-post">
-				<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ STATIC_URL }}assets/websites/images/event_detail_1.png" width="100%"></a></span>
-				<a class="title-post" href="#">
+				<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ experience.image }}" width="100%"></a></span>
+				<a class="title-post" href="/experience/{{experience.id}}/detail/">
 					{{experience.name}}
 				</a>
 				<p class="text-limit-rows short_description">
 					{{experience.short_description}}
 				</p> 
-				<a class="view-detail" href="#">{% trans "experience.btn.view_detail" %}</a>
+				<a class="view-detail" href="/experience/{{experience.id}}/detail/">{% trans "experience.btn.view_detail" %}</a>
 			</div>
 		</div>
 		{% endfor %}

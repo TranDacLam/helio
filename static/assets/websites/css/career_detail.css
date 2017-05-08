@@ -1,4 +1,4 @@
-/*START HEADER experience DETAIL CSS*/
+/*START HEADER carrer DETAIL CSS*/
 .page-header-img-full {
 	margin-bottom: 60px;
 	position: relative;
@@ -8,7 +8,7 @@
     text-align: center;
     margin: -420px auto;
 }
-/*END HEADER experience DETAIL CSS*/
+/*END HEADER carrer DETAIL CSS*/
 
 /*START LIKE SHARE ICON CSS*/
 ._3jn- .inlineBlock {
@@ -37,27 +37,27 @@
 }
 /*END LIKE SHARE ICON CSS*/
 
-/*START experience CONTENT CSS*/
-.experience-content {
+/*START carrer CONTENT CSS*/
+.carrer-content {
 	padding-top: 20px;
 	width: 85%;
 	text-align: left;
 	margin: 0 auto;
 }
-.experience-content p {
+.carrer-content p {
     margin-bottom: 15px;
 }
-.experience-content img {
+.carrer-content img {
     width: 100%;
 }
-.img-experience-content {
+.img-carrer-content {
     padding: 20px 0;
 }
-/*.experience-content-p {
+/*.carrer-content-p {
 	margin: 0px 0px 30px;
 }*/
 
-/*.title-experience-content {
+/*.title-carrer-content {
 	font-weight: bold;
 	font-size: 20px;
 	margin: 30px 0;

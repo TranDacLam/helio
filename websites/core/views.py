@@ -192,10 +192,13 @@ def experience(request):
     
     return render(request, 'websites/experience.html', {"result": result})
 
-def experience_detail(request):
+def experience_detail(request, experience_id):
     print "***START EVENT CONTENT PAGE***"
-    
-    return render(request, 'websites/experience_detail.html')
+    experience = Post.objects.get(pk=experience_id)
+
+    other_experiences = Post.objects.filter(post_type_id=const.EXPERIENCE_POST_TYPE_ID)[:3]
+
+    return render(request, 'websites/experience_detail.html', {"experience": experience, "other_experiences": other_experiences})
 
 def news(request):
     print "***START News PAGE***"
@@ -295,3 +298,11 @@ def careers(request):
     result["careers"] = careers
 
     return render(request, 'websites/careers.html', {"result": result})
+
+def career_detail(request, career_id):
+    print "***START CARRER DETAIl PAGE***"
+    career = Post.objects.get(pk=career_id)
+
+    other_careers = Post.objects.filter(post_type_id=const.CAREERS_POST_TYPE_ID)[:3]
+
+    return render(request, 'websites/carrer_detail.html', {"career": career, "other_careers": other_careers})

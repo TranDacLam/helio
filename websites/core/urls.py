@@ -13,8 +13,10 @@ urlpatterns = [
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^news/$', views.news, name='news'),
     url(r'^careers/$', views.careers, name='careers'),
+    url(r'^careers/(?P<career_id>[0-9]+)/detail/$', views.career_detail, name='career_detail'),
     url(r'^experience/$', views.experience, name='experience'),
-    url(r'^experience/experience-detail/$', views.experience_detail, name='experience_detail'),
+    url(r'^experience/(?P<experience_id>[0-9]+)/detail/$', views.experience_detail, name='experience_detail'),
+    # url(r'^experience/experience-detail/$', views.experience_detail, name='experience_detail'),
    
     url(r'^power-card/$', views.power_card, name='power_card'),
 
