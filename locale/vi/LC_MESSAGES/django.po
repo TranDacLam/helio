@@ -114,6 +114,29 @@ msgid "experience.btn.view_detail"
 msgstr "Xem chi tiết"
 # END EXPERIENCE
 
+# START CONTACT 
+msgid "contact.btn.send"
+msgstr "GỬI TIN NHẮN" 
+
+msgid "contact.lable.title.name"
+msgstr "Họ và Tên" 
+
+msgid "contact.lable.title.email"
+msgstr "Email" 
+
+msgid "contact.lable.title.phone"
+msgstr "Số điện thoại" 
+
+msgid "contact.lable.title.subject"
+msgstr "Chủ đề cần hỗ trợ" 
+
+msgid "contact.lable.title.message"
+msgstr "Nhập nội dung" 
+
+msgid "contact.label.error"
+msgstr "Vui lòng nhập tên"
+# END CONTACT
+
 #START FOOTER
 msgid "footer.contact.address"
 msgstr "Khu công viên Đông Nam Đài tưởng niệm, Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu, TP Đà Nẵng"

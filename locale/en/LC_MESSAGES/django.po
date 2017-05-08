@@ -114,6 +114,29 @@ msgid "experience.btn.view_detail"
 msgstr "View detail"
 # END EXPERIENCE
 
+# START CONTACT 
+msgid "contact.btn.send"
+msgstr "SEND MESSAGE" 
+
+msgid "contact.lable.title.name"
+msgstr "Your name" 
+
+msgid "contact.lable.title.email"
+msgstr "Email" 
+
+msgid "contact.lable.title.phone"
+msgstr "Phone number" 
+
+msgid "contact.lable.title.subject"
+msgstr "Subject" 
+
+msgid "contact.lable.title.message"
+msgstr "Main message" 
+
+msgid "contact.label.error"
+msgstr "Please enter your name"
+# END CONTACT
+
 #START FOOTER
 msgid "footer.contact.address"
 msgstr "2/9 str, Hoa Cuong Bac Ward, Hai Chau Dist, Da Nang City, Viet Nam"
