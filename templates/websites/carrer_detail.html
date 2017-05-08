@@ -2,7 +2,7 @@
 
 {% block title %}carrer detail{% endblock %}
 {% block extrastylesheet %}
-<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/career_detail.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/page_detail.css">
 {% endblock %}
 {% block main_content %} 
 {% if career %}
@@ -27,8 +27,8 @@
 	    
 </div>		
 	
-<div class="container carrer-content-layer">
-	<div class="carrer-content" align="center">
+<div class="container div-content-layer">
+	<div class="div-content" align="center">
 		{{career.content | safe}}
 	</div>
 	<hr class="hr-custom">

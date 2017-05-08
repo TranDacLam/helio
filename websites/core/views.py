@@ -170,11 +170,18 @@ def events(request):
 
     return render(request, 'websites/events.html', {"result": result})
 
+def event_detail(request, event_id):
+    print "***START EVENT DETAIl PAGE***"
+    event = Event.objects.get(pk=event_id)
+
+    other_events = Event.objects.all()[:3]
+
+    return render(request, 'websites/event_detail.html', {"event": event, "other_events": other_events})
+
 def event_content(request):
     print "***START EVENT CONTENT PAGE***"
     
     return render(request, 'websites/event_content.html')
-
     
 def experience(request):
     print "***START EXPERIENCE CONTENT PAGE***"

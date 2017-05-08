@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^promotions/(?P<promotion_id>[0-9]+)/detail/$', views.promotion_detail, name='promotion_detail'),
     url(r'^faqs/$', views.faqs, name='faqs'),
     url(r'^events/$', views.events, name='events'),
+    url(r'^events/(?P<event_id>[0-9]+)/detail/$', views.event_detail, name='event_detail'),
     url(r'^helio-play/$', views.helio_play, name='helio_play'),
     url(r'^helio-kids/$', views.helio_kids, name='helio_kids'),
     url(r'^night-life/$', views.night_life, name='night_life'),
