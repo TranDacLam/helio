@@ -119,10 +119,14 @@ def helio_play(request):
 
 
 def helio_introduction(request):
-
     print "***START HELIO ABOUT PAGE***"
+    # Helio About info
+    about_type = Post_Type.objects.get(pk=const.HELIO_ABOUT_POST_TYPE_ID)
+
+    # Helio About list
+    abouts = Post.objects.filter(post_type = about_type)
     
-    return render(request, 'websites/helio_introduction.html')
+    return render(request, 'websites/helio_introduction.html', {"about_type": about_type, "abouts": abouts})
 
 
 def term_condition(request):
