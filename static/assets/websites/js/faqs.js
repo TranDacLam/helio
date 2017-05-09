@@ -1,6 +1,6 @@
 var show_num = {},
-    first_show =8,
-    view_more = 8;
+    first_show = 5,
+    view_more = 5;
 
 function viewMore (element) {
     var id = $(element).parent().attr("id");

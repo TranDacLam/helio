@@ -138,7 +138,11 @@ msgstr "KHUYẾN MÃI  KHÁC"
 
 # START CARRER DETAIl
 msgid "carrerpage.btn.all_carrer" 
-msgstr "TẤT CẢ TRẢI NGHIỆM"
+msgstr "TẤT CẢ TUYỂN DỤNG"
+
+msgid "carrerpage.other_carrer" 
+msgstr "TUYỂN DỤNG KHÁC"
+# END CARRER DETAIl
 
 # START CONTACT 
 msgid "contact.btn.send"
@@ -162,10 +166,6 @@ msgstr "Nhập nội dung"
 msgid "contact.label.error"
 msgstr "Vui lòng nhập tên"
 # END CONTACT
-
-msgid "carrerpage.other_carrer" 
-msgstr "TRẢI NGHIỆM KHÁC"
-# END CARRER DETAIl
 
 #START FOOTER
 msgid "footer.contact.address"
