@@ -25,7 +25,6 @@ var PlayFunction = (function ($) {
             });
             $(".btn-view-more").click(function() {
                 var div_parent = $(this).parent().parent();
-                var size_list = $(div_parent).find(".item-line").size();
                 var id = $(div_parent).parent().attr("id");
                 show_num[id] += view_more;
                 _self.viewMore(div_parent);
@@ -58,7 +57,7 @@ var PlayFunction = (function ($) {
         }
         this.viewMore = function (element) {
             var id = $(element).parent().attr("id");
-            var size_list = $(element).find(".item-line").size();
+            var size_list = $(element).find(".item-line").length;
             var show_lengh =  show_num[id];
             $(element).find('.item-line:lt('+show_lengh+')').show();
             if(show_lengh >= size_list) {
