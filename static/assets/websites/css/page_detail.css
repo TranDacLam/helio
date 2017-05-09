@@ -3,6 +3,9 @@
 	margin-bottom: 60px;
 	position: relative;
 }
+.page-header-img-full img {
+    opacity: 0.3;
+}
 .page-title-detail {
     width: 75%;
     text-align: center;
