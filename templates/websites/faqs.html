@@ -52,7 +52,7 @@
 		<div class="col-xs-12 col-md-9 faqs-section">
 			<div class="content-section">
 				<div class="tab-content">
-					{% for category, values in result.datas.items %}
+					{% for category, values in datas.items %}
 					<div role="tabpanel" class="tab-pane faqs-content" id="faqs_{{category.id}}">
 						<div class="panel-group view-more-div" id="accordion" role="tablist" aria-multiselectable="true">
 							{% for faq in values %}
