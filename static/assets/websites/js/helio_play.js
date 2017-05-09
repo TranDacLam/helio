@@ -2,23 +2,19 @@ var PlayFunction = (function ($) {
     var helio_play = function () {
         var _self = this;
         var show_num = {};
-        var first_show = 2,
-            view_more = 2;
-        this.initElementPage = function() {
-            $(".play-btn-group li:first").addClass("active");
-            $(".tab-content .tab-pane:first").addClass("active");
-        }
+        var first_show = 3,
+            view_more = 3;
 
         this.initEventPage = function () {
             var url = window.location.href;
             var section_active = url.substring(url.lastIndexOf('/') + 2);
             $(".tab-content .tab-pane").each(function(){
                 var id = $(this).attr("id");
-                if(id === section_active) {
+                if($(this).hasClass(section_active)) {
                     $(".play-btn-group li").removeClass("active");
                     $(".tab-content .tab-pane").removeClass("active");
-                    $(".tab-content ."+id).addClass("active");
-                    $(".play-btn-group ."+id).parent().addClass("active");
+                    $(".tab-content ." + section_active).addClass("active");
+                    $(".play-btn-group ."+ section_active).parent().addClass("active");
                 }
                 show_num[id] = first_show;
                 _self.viewMore($(this).find(".view-more-div"));
@@ -71,7 +67,6 @@ var PlayFunction = (function ($) {
 
 (function (play, $) {
     $(document).ready(function(){
-        play.initElementPage()
         play.initEventPage();
     });
 })(new PlayFunction(), jQuery);

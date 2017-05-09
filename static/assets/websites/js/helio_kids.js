@@ -4,21 +4,17 @@ var KidsFunction = (function ($) {
         var show_num = {};
         var first_show = 2,
             view_more = 2;
-        this.initElementPage = function() {
-            $(".kid-btn-group li:first").addClass("active");
-            $(".tab-content .tab-pane:first").addClass("active");
-        }
 
         this.initEventPage = function () {
             var url = window.location.href;
             var section_active = url.substring(url.lastIndexOf('/') + 2);
             $(".tab-content .tab-pane").each(function(){
                 var id = $(this).attr("id");
-                if(id === section_active) {
+                if($(this).hasClass(section_active)) {
                     $(".kid-btn-group li").removeClass("active");
                     $(".tab-content .tab-pane").removeClass("active");
-                    $(".tab-content ."+id).addClass("active");
-                    $(".kid-btn-group ."+id).parent().addClass("active");
+                    $(".tab-content ."+ section_active).addClass("active");
+                    $(".kid-btn-group ."+ section_active).parent().addClass("active");
                 }
                 show_num[id] = first_show;
                 _self.viewMore($(this).find(".view-more-div"));
@@ -71,7 +67,6 @@ var KidsFunction = (function ($) {
 
 (function (kids, $) {
     $(document).ready(function(){
-        kids.initElementPage()
         kids.initEventPage();
     });
 })(new KidsFunction(), jQuery);

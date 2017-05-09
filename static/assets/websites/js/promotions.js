@@ -4,10 +4,6 @@ var KidsFunction = (function ($) {
         var show_num = {};
         var first_show = 5,
             view_more = 5;
-        this.initElementPage = function() {
-            $(".promotion-btn-group li:first").addClass("active");
-            $(".tab-content .tab-pane:first").addClass("active");
-        }
 
         this.initEventPage = function () {
             $(".tab-content .tab-pane").each(function(){
@@ -38,7 +34,6 @@ var KidsFunction = (function ($) {
 
 (function (kids, $) {
     $(document).ready(function(){
-        kids.initElementPage()
         kids.initEventPage();
     });
 })(new KidsFunction(), jQuery);

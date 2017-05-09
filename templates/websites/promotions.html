@@ -43,7 +43,7 @@
         <!-- BUTTON GROUP -->
         <ul class="nav btn-custom-group promotion-btn-group">
             {% for category in datas %}
-            <li  class="col-md-3">
+            <li  class="col-md-3 {% if forloop.counter0 == 0 %} active {% endif %}">
                 <a href="#promotion{{ category.id }}" role="tab" data-toggle="tab" class="btn-custom-style">{{category.name}}</a>
             </li>
             {% endfor %}
@@ -52,7 +52,7 @@
 
     <div class="tab-content">
         {% for category, promotions in datas.items %}
-        <div role="tabpanel" class="tab-pane" id="promotion{{ category.id }}">
+        <div role="tabpanel" class="tab-pane {% if forloop.counter0 == 0 %} active {% endif %}" id="promotion{{ category.id }}">
             <div class="row view-more-div">
                 <!--  KID GAME CONTENT -->
                 <div class="kids-game-content col-md-12">

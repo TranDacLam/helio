@@ -8,8 +8,7 @@
 
 {% endblock %}
 {% block extrascript %}
-<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.carousel-1.1.min.js"></script>
 <script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/helio_play.js"></script>
 
@@ -45,8 +44,8 @@
     <div class="play-btn-section">
         <ul class="nav play-btn-group">
             {% for type in datas %}
-            <li class="col-md-4">
-                <a href="#{{ type.sub_url|cut:'/helio-play/#' }}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-play/#' }}">{{type.name}}</a>
+            <li class="col-md-4 {% if forloop.counter0 == 0 %} active {% endif %}">
+                <a href="#play_{{type.id}}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-play/#' }}">{{type.name}}</a>
             </li>
             {% endfor %}
         </ul>
@@ -54,7 +53,7 @@
 
     <div class="tab-content">
         {% for type, datas in datas.items %}
-        <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-play/#' }}" id="{{ type.sub_url|cut:'/helio-play/#' }}">
+        <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-play/#' }} {% if forloop.counter0 == 0 %} active {% endif %}" id="play_{{type.id}}">
             <!-- Games slider -->
             <div class="carousel" >
             </div>

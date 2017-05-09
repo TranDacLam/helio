@@ -46,8 +46,8 @@
         <!-- BUTTON GROUP -->
         <ul class="nav btn-custom-group kid-btn-group">
             {% for type in datas %}
-            <li  class="col-md-6">
-                <a href="#{{ type.sub_url|cut:'/helio-kids/#' }}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-kids/#' }}">{{type.name}}</a>
+            <li  class="col-md-6 {% if forloop.counter0 == 0 %} active {% endif %}">
+                <a href="#kids_{{type.id}}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-kids/#' }}">{{type.name}}</a>
             </li>
             {% endfor %}
         </ul>
@@ -55,7 +55,7 @@
 
     <div class="tab-content">
         {% for type, datas in datas.items %}
-        <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-kids/#' }}" id="{{ type.sub_url|cut:'/helio-kids/#' }}">
+        <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-kids/#' }} {% if forloop.counter0 == 0 %} active {% endif %}" id="kids_{{type.id}}">
             <!-- Games slider -->
             <div class="carousel" >
             </div>
