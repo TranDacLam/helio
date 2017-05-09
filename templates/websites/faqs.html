@@ -30,14 +30,14 @@
 	</div>    
 
 	<!-- FAQs -->
-	{% if result.datas %}
+	{% if datas %}
 	<div class="row">
 		<div class="col-xs-12 col-md-3">
 			<div class="sidebar-nav">
 				<div class="navbar navbar-default " role="navigation">
 					<div class="navbar-collapse nav-custom sidebar-navbar-collapse">
 					  	<ul class="nav navbar-nav navbar-custom">
-							{% for category in result.datas %}
+							{% for category in datas %}
 							<li class="faqs_category">
 								<a class="list-custom-style" role="tab" data-toggle="tab" href="#faqs_{{category.id}}">
 									{{category.name}}

@@ -55,7 +55,6 @@ def power_card(request):
 
 def faqs(request):
     print "***START FAQs PAGE***"
-    result = {}
 
     faqs_categorys = Category.objects.filter(pk__in=(const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY, const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY))
 
@@ -63,11 +62,8 @@ def faqs(request):
     if faqs_categorys:
         for faqs_category in faqs_categorys:
             datas[faqs_category] = faqs_category.faq_category_rel.all().order_by('-created')
-
-    result["datas"] = datas
-    print datas
     
-    return render(request, 'websites/faqs.html', {"result":result})
+    return render(request, 'websites/faqs.html', {"datas":datas})
 
 def contact(request):
     print "***START CONTACT CONTENT PAGE***"
@@ -77,14 +73,12 @@ def contact(request):
 
 def helio_kids(request):
     print "***START HELIO KIDS PAGE***"
-    result = {}
+    datas = {}
     #Get page info
     page_info = Category.objects.get(pk=const.HELIO_KIDS_CATEGORY)
-    result["page_info"] = page_info
 
     # Game type
     if page_info:
-        datas = {}
         kids_types = page_info.game_category_rel.all()
         promotions = {}
         if kids_types:
@@ -93,10 +87,8 @@ def helio_kids(request):
                 data["games"] = item.game_type_rel.all().order_by('-created')
                 data["promotions"] = item.promotion_type_rel.all().order_by('-created')
                 datas[item] = data
-        result["datas"] = datas
 
-
-    return render(request, 'websites/helio_kids.html', {"result": result})
+    return render(request, 'websites/helio_kids.html', {"page_info": page_info, "datas": datas})
 
 def night_life(request):
     print "***START NIGHT LIFE CONTENT PAGE***"
@@ -108,14 +100,12 @@ def night_life(request):
 
 def helio_play(request):
     print "***START HELIO PLAY PAGE***"
-    result = {}
+    datas = {}
     #Get page info
     page_info = Category.objects.get(pk=const.HELIO_PLAY_CATEGORY)
-    result["page_info"] = page_info
 
     # Game type
     if page_info:
-        datas = {}
         play_types = page_info.game_category_rel.all()
         promotions = {}
         if play_types:
@@ -124,9 +114,8 @@ def helio_play(request):
                 data["games"] = item.game_type_rel.all().order_by('-created')
                 data["promotions"] = item.promotion_type_rel.all().order_by('-created')
                 datas[item] = data
-        result["datas"] = datas
 
-    return render(request, 'websites/helio_play.html', {"result": result})
+    return render(request, 'websites/helio_play.html', {"page_info": page_info, "datas": datas})
 
 
 def helio_introduction(request):
@@ -137,9 +126,15 @@ def helio_introduction(request):
 
 
 def term_condition(request):
-    print "***START HELIO ABOUT PAGE***"
+    print "***START TERM & CONDITION PAGE***"
+
+    # Experience info
+    term_type = Post_Type.objects.get(pk=const.TERM_CONDITION_POST_TYPE_ID)
+
+    # Experience list
+    terms = Post.objects.filter(post_type = term_type)
     
-    return render(request, 'websites/term_condition.html')
+    return render(request, 'websites/term_condition.html', {"term_type": term_type, "terms": terms})
 
 
 def events(request):
@@ -151,15 +146,12 @@ def events(request):
     events_map = {}
     if events:
         for event in events:
-
             if event.start_date > date.today():
                 event.event_type = 'future'
             elif event.end_date < date.today():
                 event.event_type = 'past'
             else: 
                 event.event_type = 'current'
-
-
             key = event.start_date.strftime('%m/%Y')
             if key not in events_map.keys():
                 events_map[key] = []
@@ -215,17 +207,14 @@ def news(request):
 
 def coffee_bakery(request):
     print "***START HELIO COFFEE CONTENT PAGE***"
-    result = {}
 
     coffee_page = Post.objects.get(key_query=const.COFFEE_KEY_QUERY)
-    result["page_info"] = coffee_page
     
     list_images = {}
     if coffee_page:
         list_images = coffee_page.posts_image.all()[:6]
 
-    result["list_images"] = list_images
-    return render(request, 'websites/coffee_bakery.html', {"result":result})
+    return render(request, 'websites/coffee_bakery.html', {"page_info":coffee_page, "list_images": list_images})
 
 
 def redemption_store(request):
@@ -270,12 +259,7 @@ def promotions(request):
     # Promotion hots to show coursel
     promotions_hots = promotions[:3]
 
-    result["promotions_hots"] = promotions_hots
-    result["datas"] = datas
-
-    # print "Promotions: ", datas
-
-    return render(request, 'websites/promotions.html', {"result": result})
+    return render(request, 'websites/promotions.html', {"promotions_hots": promotions_hots, "datas": datas})
 
 def promotion_detail(request, promotion_id):
     print "***START PROMOTION DETAIl PAGE***"
