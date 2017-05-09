@@ -23,7 +23,7 @@ def home(request):
     result["banners"] = banners_map
 
     # hots
-    hots = Hot.objects.filter(is_show=True).order_by('modified').reverse()[:4]
+    hots = Hot.objects.filter(is_show=True).order_by('-modified')[:4]
     result["hots"] = hots
 
     # game section
@@ -31,7 +31,7 @@ def home(request):
     result["kids_types"] = Type.objects.filter(category_id=const.HELIO_KIDS_CATEGORY)
 
     # game categorys
-    events = Event.objects.all().order_by('created').reverse()[:2]
+    events = Event.objects.all().order_by('-created')[:2]
     result["events"] = events
 
     return render(request, 'websites/home.html', {"result":result})
@@ -48,7 +48,7 @@ def power_card(request):
     powercards = Post.objects.filter(post_type = powercard_type)
     result["powercards"] = powercards
 
-    faqs = FAQ.objects.filter(category_id=const.POWERCARD_CATEGORY).order_by('created').reverse()
+    faqs = FAQ.objects.filter(category_id=const.POWERCARD_CATEGORY).order_by('-created')
     result["faqs"] = faqs
 
     return render(request, 'websites/power_card.html', {"result":result})
@@ -62,7 +62,7 @@ def faqs(request):
     datas = {}
     if faqs_categorys:
         for faqs_category in faqs_categorys:
-            datas[faqs_category] = faqs_category.faq_category_rel.all().order_by('created').reverse()
+            datas[faqs_category] = faqs_category.faq_category_rel.all().order_by('-created')
 
     result["datas"] = datas
     print datas
@@ -90,8 +90,8 @@ def helio_kids(request):
         if kids_types:
             for item in kids_types:
                 data = {}
-                data["games"] = item.game_type_rel.all().order_by('created').reverse()
-                data["promotions"] = item.promotion_type_rel.all().order_by('created').reverse()
+                data["games"] = item.game_type_rel.all().order_by('-created')
+                data["promotions"] = item.promotion_type_rel.all().order_by('-created')
                 datas[item] = data
         result["datas"] = datas
 
@@ -121,8 +121,8 @@ def helio_play(request):
         if play_types:
             for item in play_types:
                 data = {}
-                data["games"] = item.game_type_rel.all().order_by('created').reverse()
-                data["promotions"] = item.promotion_type_rel.all().order_by('created').reverse()
+                data["games"] = item.game_type_rel.all().order_by('-created')
+                data["promotions"] = item.promotion_type_rel.all().order_by('-created')
                 datas[item] = data
         result["datas"] = datas
 
@@ -146,18 +146,20 @@ def events(request):
     print "***START EVENTS PAGE***"
     result = {}
 
-    events = Event.objects.all().order_by('start_date').reverse()
+    events = Event.objects.all().order_by('-start_date')
 
     events_map = {}
-    events_map_pg = {}
     if events:
         for event in events:
+
             if event.start_date > date.today():
                 event.event_type = 'future'
             elif event.end_date < date.today():
                 event.event_type = 'past'
             else: 
                 event.event_type = 'current'
+
+
             key = event.start_date.strftime('%m/%Y')
             if key not in events_map.keys():
                 events_map[key] = []
@@ -172,7 +174,7 @@ def event_detail(request, event_id):
     print "***START EVENT DETAIl PAGE***"
     event = Event.objects.get(pk=event_id)
 
-    other_events = Event.objects.all().order_by('created').reverse()[:3]
+    other_events = Event.objects.all().order_by('-created')[:3]
 
     return render(request, 'websites/event_detail.html', {"event": event, "other_events": other_events})
 
@@ -189,7 +191,7 @@ def experience(request):
     result["experience_type"] = experience_type
 
     # Experience list
-    experiences = Post.objects.filter(post_type = experience_type).order_by('created').reverse()
+    experiences = Post.objects.filter(post_type = experience_type).order_by('-created')
     result["experiences"] = experiences
 
     result["experiences_hots"] = experiences[:5]
@@ -201,7 +203,7 @@ def experience_detail(request, experience_id):
     print "***START EVENT CONTENT PAGE***"
     experience = Post.objects.get(pk=experience_id)
 
-    other_experiences = Post.objects.filter(post_type_id=const.EXPERIENCE_POST_TYPE_ID).order_by('created').reverse()[:3]
+    other_experiences = Post.objects.filter(post_type_id=const.EXPERIENCE_POST_TYPE_ID).order_by('-created')[:3]
 
     return render(request, 'websites/experience_detail.html', {"experience": experience, "other_experiences": other_experiences})
 
@@ -239,7 +241,7 @@ def redemption_store(request):
     result["list_images"] = list_images
 
     # FAQs list
-    faqs = FAQ.objects.filter(category_id=const.REDEMPTION_STORE_CATEGORY).order_by('created').reverse()
+    faqs = FAQ.objects.filter(category_id=const.REDEMPTION_STORE_CATEGORY).order_by('-created')
     result["faqs"] = faqs
     
     return render(request, 'websites/redemption_store.html', {"result":result})
@@ -248,7 +250,7 @@ def redemption_store(request):
 def promotions(request):
     print "***START EVENT CONTENT PAGE***"
     result = {}
-    promotions = Promotion.objects.all().order_by('created').reverse()
+    promotions = Promotion.objects.all().order_by('-created')
     datas = {}
     if promotions:
         for promotion in promotions:
@@ -279,7 +281,7 @@ def promotion_detail(request, promotion_id):
     print "***START PROMOTION DETAIl PAGE***"
     promotion = Promotion.objects.get(pk=promotion_id)
 
-    other_promotions = Promotion.objects.all().order_by('created').reverse()[:3]
+    other_promotions = Promotion.objects.all().order_by('-created')[:3]
 
     return render(request, 'websites/promotion_detail.html', {"promotion": promotion, "other_promotions": other_promotions})
 
@@ -296,7 +298,7 @@ def careers(request):
     result["careers_pin_top"] = careers_pin_top
 
     # Careers list
-    careers = Post.objects.filter(post_type = careers_type).order_by('created').reverse()
+    careers = Post.objects.filter(post_type = careers_type).order_by('-created')
     result["careers"] = careers
 
     return render(request, 'websites/careers.html', {"result": result})
@@ -305,6 +307,6 @@ def career_detail(request, career_id):
     print "***START CARRER DETAIl PAGE***"
     career = Post.objects.get(pk=career_id)
 
-    other_careers = Post.objects.filter(post_type_id=const.CAREERS_POST_TYPE_ID).order_by('created').reverse()[:3]
+    other_careers = Post.objects.filter(post_type_id=const.CAREERS_POST_TYPE_ID).order_by('-created')[:3]
 
     return render(request, 'websites/carrer_detail.html', {"career": career, "other_careers": other_careers})

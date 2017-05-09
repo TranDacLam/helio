@@ -65,7 +65,7 @@
                         <section class="slider">
                             <div class="flexslider carousel">
                                 <ul class="slides">
-                                    {% for event in values %}
+                                    {% for event in values reversed%}
                                     <li class="item-flex {{event.event_type}}-class">
                                         <div class="events-name-div">
                                             <p class="events-name">{{event.name}}</p>
