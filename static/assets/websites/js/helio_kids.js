@@ -4,28 +4,23 @@ var KidsFunction = (function ($) {
         var show_num = {};
         var first_show = 2,
             view_more = 2;
-        this.initElementPage = function() {
-            $(".kid-btn-group li:first").addClass("active");
-            $(".tab-content .tab-pane:first").addClass("active");
-        }
 
         this.initEventPage = function () {
             var url = window.location.href;
             var section_active = url.substring(url.lastIndexOf('/') + 2);
             $(".tab-content .tab-pane").each(function(){
                 var id = $(this).attr("id");
-                if(id === section_active) {
+                if($(this).hasClass(section_active)) {
                     $(".kid-btn-group li").removeClass("active");
                     $(".tab-content .tab-pane").removeClass("active");
-                    $(".tab-content ."+id).addClass("active");
-                    $(".kid-btn-group ."+id).parent().addClass("active");
+                    $(".tab-content ."+ section_active).addClass("active");
+                    $(".kid-btn-group ."+ section_active).parent().addClass("active");
                 }
                 show_num[id] = first_show;
                 _self.viewMore($(this).find(".view-more-div"));
             });
             $(".btn-view-more").click(function() {
                 var div_parent = $(this).parent().parent();
-                var size_list = $(div_parent).find(".item-line").size();
                 var id = $(div_parent).parent().attr("id");
                 show_num[id] += view_more;
                 _self.viewMore(div_parent);
@@ -58,7 +53,7 @@ var KidsFunction = (function ($) {
         }
         this.viewMore = function (element) {
             var id = $(element).parent().attr("id");
-            var size_list = $(element).find(".item-line").size();
+            var size_list = $(element).find(".item-line").length;
             var show_lengh =  show_num[id];
             $(element).find('.item-line:lt('+show_lengh+')').show();
             if(show_lengh >= size_list) {
@@ -72,7 +67,6 @@ var KidsFunction = (function ($) {
 
 (function (kids, $) {
     $(document).ready(function(){
-        kids.initElementPage()
         kids.initEventPage();
     });
 })(new KidsFunction(), jQuery);

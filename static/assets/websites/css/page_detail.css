@@ -1,4 +1,4 @@
-/*START HEADER EVENT DETAIL CSS*/
+/*START HEADER experience DETAIL CSS*/
 .page-header-img-full {
 	margin-bottom: 60px;
 	position: relative;
@@ -8,7 +8,7 @@
     text-align: center;
     margin: -420px auto;
 }
-/*END HEADER EVENT DETAIL CSS*/
+/*END HEADER experience DETAIL CSS*/
 
 /*START LIKE SHARE ICON CSS*/
 ._3jn- .inlineBlock {
@@ -37,33 +37,38 @@
 }
 /*END LIKE SHARE ICON CSS*/
 
-/*START EVENT CONTENT CSS*/
-.event-content {
+/*START experience CONTENT CSS*/
+.div-content {
 	padding-top: 20px;
 	width: 85%;
 	text-align: left;
 	margin: 0 auto;
 }
-
-.img-event-content {
-	padding: 20px 0;
+.div-content p {
+    margin-bottom: 15px;
 }
-.event-content-p {
+.div-content img {
+    width: 100%;
+}
+.img-div-content {
+    padding: 20px 0;
+}
+/*.div-content-p {
 	margin: 0px 0px 30px;
-}
+}*/
 
-.title-event-content {
+/*.title-div-content {
 	font-weight: bold;
 	font-size: 20px;
 	margin: 30px 0;
-}
+}*/
 
-.author-post {
+/*.author-post {
 	text-align: right;
 	font-weight: bold;
 	font-size: 20px;
 	padding-bottom: 50px;
-}
+}*/
 .hr-custom {
 	border-color: #802ca2;
 	margin: 50px 0px;

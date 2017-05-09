@@ -87,6 +87,12 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     font-size: 36px;
     font-family: "Yanone Kaffeesatz";
 }
+.layer-coursel-btn {
+    margin-bottom: 15px;
+}
+.div-month-btn {
+    padding-top: 15px;
+}
 
 .month-btn-prev,
 .month-btn-next {
@@ -105,18 +111,42 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
 .event-coursel-btn-group {
     padding-top: 30px;
 }
-.col-7 {
-    width: 14.28%;
-    border: 1px solid #15062b;
+.events-name-div {
+    border-bottom: 3px solid #15062b;
+    min-height: 140px;
+}
+.flexslider.carousel {
+    background: none;
+    border: none;
+    margin-bottom: 20px;
+}
+.item-flex {
     padding: 0px;
     background-color: #443855;
 }
-.col-7 .events-name-div {
-    border-bottom: 1px solid #15062b;
-    min-height: 140px;
+
+.item-flex.past-class {
+    background-color: #211336;
+    opacity: 0.5;
 }
-.col-7 .events-name, 
-.col-7 .events-date {
+
+.item-line.past-class .item-content-image img {
+    opacity: 0.4;
+}
+
+.flex-direction-nav a:before {
+    font-family: 'Glyphicons Halflings';
+    content: "\e079";
+    font-size: 30px;
+    color: #fff;
+}
+.flex-direction-nav a.flex-next:before {
+    font-family: 'Glyphicons Halflings';
+    content: "\e080";
+}
+
+.events-name, 
+.events-date {
     padding: 5px 15px;
     font-size: 14px;
     margin-bottom: 0px;
@@ -127,10 +157,6 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     .content-pull-right .item-content-text
     {
         background: #23194f;
-    }
-    .layer-coursel-item, 
-    .layer-coursel-btn {
-        display: none;
     }
 }
 

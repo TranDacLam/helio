@@ -1,6 +1,6 @@
 from fabric.api import *
 
-ENV = 'uat' # Choices ['uat','production','development']
+ENV = 'development' # Choices ['uat','production','development']
 #ENV = 'production'
 SERVERS = {
     'development': '192.168.1.13',
