@@ -51,7 +51,7 @@
                 <div class="style-post">
                     <span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ event.image }}" width="100%"></a></span>
                     <a class="title-post" href="/events/{{event.id}}/detail/">{{event.name}}</a>
-                    <p class="text-limit-rows">{{promotions.short_description}}</p> <a class="view-detail" href="/events/{{event.id}}/detail/">{% trans "btn.view_detail" %}</a>
+                    <p class="text-limit-rows">{{event.short_description}}</p> <a class="view-detail" href="/events/{{event.id}}/detail/">{% trans "btn.view_detail" %}</a>
                 </div>
             </div>
             {% endfor %}
