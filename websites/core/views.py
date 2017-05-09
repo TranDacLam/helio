@@ -158,15 +158,14 @@ def events(request):
                 events_map[key] = []
             events_map[key].append(event)
 
-        for key, values in events_map.items():
-            p =  Paginator(values, 7)
-            datas = {}
-            for x in range(0, p.num_pages):
-                datas[x] = p.page(x+1)
-            events_map_pg[key] = datas
+        # for key, values in events_map.items():
+        #     p =  Paginator(values, 7)
+        #     datas = {}
+        #     for x in range(0, p.num_pages):
+        #         datas[x] = p.page(x+1)
+        #     events_map_pg[key] = datas
 
-    result["events_map"] = events_map_pg
-    result["events_map_pg"] = events_map_pg
+    result["events_map"] = events_map
 
     return render(request, 'websites/events.html', {"result": result})
 

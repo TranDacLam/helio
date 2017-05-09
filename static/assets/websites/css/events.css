@@ -105,18 +105,20 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
 .event-coursel-btn-group {
     padding-top: 30px;
 }
-.col-7 {
-    width: 14.28%;
-    border: 1px solid #15062b;
+.events-name-div {
+    border-bottom: 3px solid #15062b;
+    min-height: 140px;
+}
+.flexslider.carousel {
+    background: none;
+    border: none;
+}
+.item-flex {
     padding: 0px;
     background-color: #443855;
 }
-.col-7 .events-name-div {
-    border-bottom: 1px solid #15062b;
-    min-height: 140px;
-}
-.col-7 .events-name, 
-.col-7 .events-date {
+.events-name, 
+.events-date {
     padding: 5px 15px;
     font-size: 14px;
     margin-bottom: 0px;

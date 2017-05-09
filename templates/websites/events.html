@@ -2,10 +2,12 @@
 {% load i18n %} 
 {% block title %}Events - Sự kiện{% endblock %}
 {% block extrastylesheet %}
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/css/flexslider.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/helio_item.css">
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/events.css">
 {% endblock %}
 {% block extrascript %}
+<script type="text/javascript" src = "{{ STATIC_URL }}assets/js/jquery.flexslider.js"></script>
 <script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/events.js"></script>
 {% endblock %}
 {% block main_content %} 
@@ -56,8 +58,28 @@
             <div class="carousel-inner">
             {% for key, values in result.events_map.items %}
                 <div class="item events-list-by-month">
-                    <div class="carousel slide events-courcel" id="event_coursel_{{forloop.counter}}">
-                        <div class="carousel-inner">
+                    <div class="col-md-12">
+                        <section class="slider">
+                            <div class="flexslider carousel">
+                                <ul class="slides">
+                                    {% for event in values %}
+                                    <li class="item-flex">
+                                        <div class="events-name-div">
+                                            <p class="events-name">{{event.name}}</p>
+                                        </div>
+                                        <div class="events-date-div">
+                                            <p class="events-date">
+                                                {{ event.start_date | date:"d/m" }} - 
+                                                {{ event.start_date | date:"l" }}
+                                            </p>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+                        <!-- <div class="carousel-inner">
                             {% for x, datas in values.items %}
                                 <div class="item event-item col-xs-12">
                                 {% for event in datas %}
@@ -75,12 +97,12 @@
                                 {% endfor %}
                                 </div>
                             {% endfor %}
-                        </div>
-                        <div align="center" class="col-md-12 event-coursel-btn-group">
+                        </div> -->
+                        <!-- <div align="center" class="col-md-12 event-coursel-btn-group">
                             <button class="event-btn-prev" href="#event_coursel_{{forloop.counter}}" data-slide="prev"><i class="fa fa-caret-left" aria-hidden="true"></i>Trước</button>
                             <button class="event-btn-next" href="#event_coursel_{{forloop.counter}}" data-slide="next">Sau <i class="fa fa-caret-right" aria-hidden="true"></i></button>
-                        </div>
-                    </div>
+                        </div> -->
+                    
                 </div>
             {% endfor %}
             </div>
