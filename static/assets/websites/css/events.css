@@ -87,6 +87,12 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     font-size: 36px;
     font-family: "Yanone Kaffeesatz";
 }
+.layer-coursel-btn {
+    margin-bottom: 15px;
+}
+.div-month-btn {
+    padding-top: 15px;
+}
 
 .month-btn-prev,
 .month-btn-next {
@@ -118,6 +124,16 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     padding: 0px;
     background-color: #443855;
 }
+
+.item-flex.past-class {
+    background-color: #211336;
+    opacity: 0.5;
+}
+
+.item-line.past-class .item-content-image img {
+    opacity: 0.4;
+}
+
 .flex-direction-nav a:before {
     font-family: 'Glyphicons Halflings';
     content: "\e079";
