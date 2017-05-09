@@ -13,7 +13,7 @@ translator.register(Type, TypeTranslationOptions)
 
 # Posts
 class PostTypeTranslationOptions(TranslationOptions):
-    fields = ('name', )
+    fields = ('name', 'description',)
 
 translator.register(Post_Type, PostTypeTranslationOptions)
 
