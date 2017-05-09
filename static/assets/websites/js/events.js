@@ -56,6 +56,12 @@ var EventsFunction = (function ($) {
         }
         this.flexCoursel = function(element) {
             if(!$(element).hasClass("complete")) {
+                var items_length = $(element).find('.item-flex').length;
+                var max_items = 7;
+                if(items_length < 7)  {
+                    max_items = items_length;
+                }
+
                 $(element).flexslider({
                     animation: "slide",
                     animationSpeed: 400,
@@ -63,7 +69,7 @@ var EventsFunction = (function ($) {
                     itemWidth: 160,
                     itemMargin: 5,
                     minItems: 2, // use function to pull in initial value
-                    maxItems: 7, // use function to pull in initial value
+                    maxItems: max_items, // use function to pull in initial value
                 });
                 $(element).addClass("complete");
             }
