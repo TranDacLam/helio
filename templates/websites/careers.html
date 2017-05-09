@@ -35,7 +35,7 @@
 	<div class="row careers-lg">
 		<div class="col-md-12">
 			<div class="thumbnail carrer-item">
-				<img src="{{ MEDIA_URL }}{{result.careers_pin_top.image}}" alt="Lights" style="width:100%">
+				<img src="{{ MEDIA_URL }}{{result.careers_pin_top.image}}" alt="Lights" width="100%">
 				<div class="caption">
 					<p class="carrer-name"><a class="title-post" href="/careers/{{result.careers_pin_top.id}}/detail/">{{result.careers_pin_top.name}}</a></p>
 					<p class="short_description">{{result.careers_pin_top.short_description}}</p>
@@ -50,7 +50,7 @@
     		{% if not result.careers_pin_top.id or career.id != result.careers_pin_top.id %}
 			<div class="col-md-6 career-div">
 				<div class="thumbnail carrer-item">
-					<img src="{{ MEDIA_URL }}{{career.image}}" alt="Lights" style="width:100%">
+					<img src="{{ MEDIA_URL }}{{career.image}}" alt="Lights" width="100%">
 					<div class="caption">
 						<p class="carrer-name"><a class="title-post" href="/careers/{{career.id}}/detail/">{{career.name}}</a></p>
 						<p class="short_description">{{career.short_description}}</p>

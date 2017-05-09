@@ -133,7 +133,7 @@ msgid "promotionpage.btn.all_promotion"
 msgstr "TẤT CẢ KHUYẾN MÃI "
 
 msgid "promotionpage.other_promotion" 
-msgstr "TKHUYẾN MÃI  KHÁC"
+msgstr "KHUYẾN MÃI  KHÁC"
 # END PROMOTION DETAIl
 
 # START CARRER DETAIl
