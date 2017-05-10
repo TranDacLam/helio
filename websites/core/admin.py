@@ -210,6 +210,9 @@ admin.site.register(Banner, BannerAdmin)
 
 
 class PromotionAdmin(TranslationAdmin):
+    formfield_overrides = {
+        models.TextField: {'widget': CKEditorUploadingWidget()},
+    }
     pass
 admin.site.register(Promotion, PromotionAdmin)
 
@@ -225,10 +228,10 @@ class HotForm(forms.ModelForm):
     def clean(self):
         is_show = self.cleaned_data.get('is_show')
         total_show = Hot.objects.filter(is_show=True).count()
-        if total_show < 5:
+        if total_show < 4 or not is_show:
             pass
         else:
-            raise forms.ValidationError('Hot giới hạn tối đa 5 bài được hiển thị. Vui lòng chọn bỏ bớt trường is_show và chọn lại.',
+            raise forms.ValidationError('Hot giới hạn tối đa 4 bài được hiển thị. Vui lòng chọn bỏ bớt trường is_show và chọn lại.',
                                         code='invalid_is_show',
                                         params={'is_show': is_show},
                                         )
