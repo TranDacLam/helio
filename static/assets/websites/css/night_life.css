@@ -34,6 +34,13 @@ ol.carousel-indicators-custom li {
     border-radius: 0px;
 }
 
+
+.before-comment {
+    padding-bottom: 20vw;
+}
+.after-comment {
+    padding-top: 20vw;
+}
 .comment-img-half {
     left: 0;
     bottom: 0;
