@@ -1,44 +1,24 @@
-p.first-text-lg:first-letter {
-    float: left;
-    padding: 0px 8px 0 0;
-    display: block;
-    color: #fec231;
-    font-size: 127px;
-    line-height: 96px;
+/*START CAROUSEL*/
+.carousel-custom {
+    position: relative;
 }
-.nightlife-name {
-    color: #fec231;
-    font-family: "Cabin";
-}
-hr.nightlife-hr {
-    border-top-color: #fec231;
+.carousel-indicators-div {
+    position: absolute;
+    width: 100%;
 }
 
-.comment-div {
-    background: url(../images/night_life_1.png) no-repeat; 
-    background-size: 100% 100%; 
-    background-position: right; 
-    min-height: 500px;
-    display: table;
-}
-/*START CAROUSEL*/
-#comment_carousel, 
-#comment_carousel1 {
-    vertical-align: middle;
-    display: table-cell;
-}
 ol.carousel-indicators-custom {
     position: relative;
     left: 0px;
-    margin-left: -0px;
+    margin-left: 0px;
     text-align: left; 
     bottom: 0px;
 }
-
+/* comment crousel*/
 ol.carousel-indicators-custom .active {
     width: 40px;
     height: 4px;
-    margin: 0 5px;
+    margin-right: 10px;
     background-color: #fff;
     border-color: #fff;
 }
@@ -46,44 +26,180 @@ ol.carousel-indicators-custom li {
     display: inline-block;
     width: 40px;
     height: 4px;
-    margin: 0 5px;
+    margin-right: 10px;
     text-indent: -999px;
     cursor: pointer;
     background-color: #bd197c;
     border-color: #bd197c;
     border-radius: 0px;
 }
-/*END CAROUSEL*/
-.comment_left {
+
+.comment-img-half {
+    left: 0;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    margin: 0 auto !important;
+    width: 1140px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -1;
+}
+.imgHalf .comment-img-half {
+    position: fixed;
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: opacity 1.2s, visibility 1.2s 1.2s;
+    transition: opacity 1.2s, visibility 1.2s 1.2s;
+    pointer-events: none;
+}
+.comment-img-wrapper.imgHalf .comment-img-half:before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 500px;
+    background: transparent;
+    background: -webkit-linear-gradient(0deg, rgba(10, 10, 10, 0.5), transparent);
+    background: linear-gradient(90deg, rgba(10, 10, 10, 0.5), transparent);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    -webkit-transition: opacity 1s;
+    transition: opacity 1s;
+}
+.comment-img-half img {
+    width: 100%;
+    opacity: 0.5;
+
+}
+.comment-img-wrapper.imgHalf.animated .comment-img-half img {
+    opacity: 1;
+}
+.comment-caption-special {
+    height: 100vh;
+    position: relative;
+    margin: auto;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
+}
+.imgHalf.animated .comment-img-half {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition: opacity 1s, visibility 1s 0s;
+    transition: opacity 1s, visibility 1s 0s;
+    pointer-events: auto;
+}
+.comment-img-wrapper.imgHalf.animated .comment-img-half:before {
+    opacity: 1;
+}
+.comment-img-wrapper.imgHalf {
+    margin-bottom: 0;
+}
+.comment-left {
     border-right: 1px solid #fff;
+    min-height: 120px;
+}
+.comment-right {
+    margin-top: 30px;
+}
+.scs-content {
+    margin-left: -8%;
+    margin-bottom: 0;
+}
+.comment-title {
+    font-size: 24px;
+    color: #ffffff;
+    display: block;
+    line-height: 24px;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+    padding-top: 30px;
+}
+.comment-author {
+    font-size: 18px;
+    display: block;
+    color: #d8c280;
+    line-height: 18px;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+}
+.noCaption .comment-text {
+    margin-right: 0;
+    border-right: 0;
+}
+/* comment crousel*/
+/*END CAROUSEL*/
+.page-top {
+    position: relative;
+}
+.page-caption {
+    position: absolute;
+    width: 100%;
+    top: 40%;
+}
+.nl-page-info {
+    margin-right: 15%;
+    margin-top: 15px;
+}
+.nl-page-info .nl-page-description {
+    width: 70%;
+}
+.nl-page-info .nl-page-title p {
+    text-align: justify;
 }
 
-.comment_left p {
-    font-size: 36px;
-    line-height: 40px;
+.div-align-center {
+    width: 70%;
+    margin: auto;
+}
+.layer-2,
+.layer-3 {
+    margin-top: 60px;
+}
+.layer-1 p:first-letter {
+    float: left;
+    padding: 0px 8px 0 0;
+    display: block;
+    color: #fec231;
+    font-size: 127px;
+    line-height: 96px;
 }
 
-.first-section {
-    margin-top: -235px;
+.nl-section-title .nightlife-name {
+    color: #fec231;
+    font-family: "Cabin";
 }
-.div-first-text-lg {
-    margin-top: 50px;
+hr.line-hr {
+    border-top-color: #fec231;
 }
-.nightlife-div {
-    margin-top: 50px;
-}
-.comment-div {
-    max-width: 1400px;
-    margin: 50px auto;
-}
-@media (min-width: 1600px) {
-    .comment_left {
-        margin-left: -95px;
-        width: 30%;
+@media (max-width: 1340px) {
+    .page-caption {
+        top: 2%;
+    }
+    .scs-content {
+        margin-left: -4%;
+        margin-bottom: 0;
     }
 }
 @media (max-width: 991px) {
-    .first-section {
-        margin-top: 30px;
+    .page-caption {
+        position: static;
+    }
+    ol.carousel-indicators-custom li,
+    ol.carousel-indicators-custom .active {
+        width: 25px;
+        margin-right: 5px;
     }
 }
