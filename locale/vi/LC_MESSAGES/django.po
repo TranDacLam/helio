@@ -136,13 +136,13 @@ msgid "promotionpage.other_promotion"
 msgstr "KHUYẾN MÃI  KHÁC"
 # END PROMOTION DETAIl
 
-# START CARRER DETAIl
-msgid "carrerpage.btn.all_carrer" 
+# START CAREER DETAIl
+msgid "careerpage.btn.all_career" 
 msgstr "TẤT CẢ TUYỂN DỤNG"
 
-msgid "carrerpage.other_carrer" 
+msgid "careerpage.other_career" 
 msgstr "TUYỂN DỤNG KHÁC"
-# END CARRER DETAIl
+# END CAREER DETAIl
 
 # START CONTACT 
 msgid "contact.btn.send"
