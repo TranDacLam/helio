@@ -121,7 +121,7 @@ class PostImageInline(admin.TabularInline):
 #         post_types = set(
 #             [c.post_type for c in model_admin.model.objects.all()])
 #         result = [(pt.id, pt.name) for pt in post_types if pt != None]
-        
+
 #         return result
 
 #     def queryset(self, request, queryset):
@@ -137,13 +137,16 @@ admin.site.register(Post_Type, PostTypeAdmin)
 
 # Register Posts Model to Admin Site
 
+
 def custom_titled_filter(title):
     class Wrapper(admin.FieldListFilter):
+
         def __new__(cls, *args, **kwargs):
             instance = admin.FieldListFilter.create(*args, **kwargs)
             instance.title = title
             return instance
     return Wrapper
+
 
 class PostAdmin(TranslationAdmin):
     list_filter = (('post_type__name', custom_titled_filter('Post Type')), )
@@ -164,7 +167,24 @@ admin.site.register(Post, PostAdmin)
 # Events
 
 
+class EventForm(forms.ModelForm):
+
+    class Meta:
+        model = Event
+        fields = '__all__'
+
+    def clean(self):
+        start_date = self.cleaned_data.get('start_date')
+        end_date = self.cleaned_data.get('end_date')
+        if end_date < start_date:
+            msg = u"Ngày kết thúc phải lớn hơn ngày bắt đầu."
+            self._errors["end_date"] = self.error_class([msg])
+
+        return self.cleaned_data
+
+
 class EventAdmin(TranslationAdmin):
+    form = EventForm
     formfield_overrides = {
         models.TextField: {'widget': CKEditorUploadingWidget()},
     }
