@@ -128,3 +128,7 @@ a.btn-custom-style.btn-custom-style-faqs:hover {
     background-image: none;
 }
 /*END BUTTON VIEW MORE CSS*/
+
+.faqs-section {
+    margin-top: 60px;
+}
