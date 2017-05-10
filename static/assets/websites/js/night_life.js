@@ -9,7 +9,7 @@ $(document).ready(function () {
             var element_height = $element.outerHeight();
             var element_top = $element.offset().top;
             var element_bottom = (element_top + element_height);
-            var math_element = Math.ceil(($(window).height() * 0.20) * 2);
+            var math_element = Math.ceil(($(window).height() * 0.30) * 2);
             if (window_top >= element_top - math_element && window_top < element_top + element_height - math_element) {
                 $element.addClass('animated');
             } else {
