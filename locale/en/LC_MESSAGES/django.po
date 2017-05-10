@@ -68,6 +68,9 @@ msgstr "View all"
 
 msgid "btn.view_more"
 msgstr "View more"
+
+msgid "btn.view_detail"
+msgstr "View detail"
 # END BUTTON
 
 # START HOME PAGE
@@ -109,10 +112,60 @@ msgid "powercard.title.section.faq"
 msgstr "FREQUENTLY ASKED QUESTION"
 # END FAQs POWERCARD
 
-# START EXPERIENCE 
-msgid "experience.btn.view_detail"
-msgstr "View detail"
-# END EXPERIENCE
+# START EXPERIENCE DETAIl
+msgid "experiencepage.btn.all_experience" 
+msgstr "ALL EXPERIENCE"
+
+msgid "experiencepage.other_experience" 
+msgstr "OTHER EXPERIENCE"
+# END EXPERIENCE DETAIl
+
+# START EVENT DETAIl
+msgid "eventpage.btn.all_event" 
+msgstr "ALL EVENT"
+
+msgid "eventpage.other_event" 
+msgstr "OTHER EVENT"
+# END EVENT DETAIl
+
+# START PROMOTION DETAIl
+msgid "promotionpage.btn.all_promotion" 
+msgstr "ALL PROMOTION"
+
+msgid "promotionpage.other_promotion" 
+msgstr "OTHER PROMOTION"
+# END PROMOTION DETAIl
+
+# START CAREER DETAIl
+msgid "careerpage.btn.all_career" 
+msgstr "ALL CAREER"
+
+msgid "careerpage.other_career" 
+msgstr "OTHER CAREER"
+# END CAREER DETAIl
+
+# START CONTACT 
+msgid "contact.btn.send"
+msgstr "SEND MESSAGE" 
+
+msgid "contact.lable.title.name"
+msgstr "Your name" 
+
+msgid "contact.lable.title.email"
+msgstr "Email" 
+
+msgid "contact.lable.title.phone"
+msgstr "Phone number" 
+
+msgid "contact.lable.title.subject"
+msgstr "Subject" 
+
+msgid "contact.lable.title.message"
+msgstr "Main message" 
+
+msgid "contact.label.error"
+msgstr "Please enter your name"
+# END CONTACT
 
 #START FOOTER
 msgid "footer.contact.address"

@@ -10,7 +10,7 @@
 
 <div class="container">
     <!-- COFFEE PAGE DESCRIPTION -->
-    {% if result.page_info %}
+    {% if page_info %}
     <div class="page-top">
         <div class="page-header-img">
             <div>
@@ -18,21 +18,21 @@
             </div>
             <div class="page-title" align="center">
                 <div class="col-md-12">
-                    <p class="page-title-text">{{result.page_info.name}}</p>
+                    <p class="page-title-text">{{page_info.name}}</p>
                 </div>
             </div>
         </div>
         <div align="center" class="page-header-text">
             <div class="form-title">
-                <p class="text-description page_description">{{result.page_info.short_description}}</p>
+                <p class="text-description page_description">{{page_info.short_description}}</p>
             </div>
         </div>
     </div>
     {% endif %}
-    {% if result.list_images %}
+    {% if list_images %}
     <!-- CONTENT -->
     <div class="wrap">
-        {% for item in result.list_images %}
+        {% for item in list_images %}
         <div class="box{{forloop.counter}}">
             <div class="box-inner">
                 <img src="{{ MEDIA_URL }}{{item.image}}">

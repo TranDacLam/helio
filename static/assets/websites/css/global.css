@@ -1,11 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz");
 @import url("https://fonts.googleapis.com/css?family=Cabin");
 
-@font-face {
-    font-family: FontThuPhap;
-    src: url(../../fonts/UTM_ThuPhapThienAn.ttf);
-}
-
 body {
     font-family: "Cabin";
     background-color: #15062b;

@@ -17,7 +17,7 @@
 			</div>
 			<div class="page-title" align="center">
 				<div class="col-md-12">
-					<p class="page-title-text">NHỮNG CÂU HỎI THƯỜNG GẶP</p>
+					<p class="page-title-text">HỎI ĐÁP</p>
 				</div>
 			</div>
 		</div>
@@ -30,14 +30,14 @@
 	</div>    
 
 	<!-- FAQs -->
-	{% if result.datas %}
+	{% if datas %}
 	<div class="row">
 		<div class="col-xs-12 col-md-3">
 			<div class="sidebar-nav">
 				<div class="navbar navbar-default " role="navigation">
 					<div class="navbar-collapse nav-custom sidebar-navbar-collapse">
 					  	<ul class="nav navbar-nav navbar-custom">
-							{% for category in result.datas %}
+							{% for category in datas %}
 							<li class="faqs_category">
 								<a class="list-custom-style" role="tab" data-toggle="tab" href="#faqs_{{category.id}}">
 									{{category.name}}
@@ -52,7 +52,7 @@
 		<div class="col-xs-12 col-md-9 faqs-section">
 			<div class="content-section">
 				<div class="tab-content">
-					{% for category, values in result.datas.items %}
+					{% for category, values in datas.items %}
 					<div role="tabpanel" class="tab-pane faqs-content" id="faqs_{{category.id}}">
 						<div class="panel-group view-more-div" id="accordion" role="tablist" aria-multiselectable="true">
 							{% for faq in values %}

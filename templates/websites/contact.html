@@ -1,52 +1,17 @@
 {% extends "layout.html" %}
+{% load i18n %}
 {% block title %}Contact - Liên hệ{% endblock %}
 {% block extrastylesheet %}
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/contact.css">
 
  <style type="text/css">  
-	.center-div {
-		margin: 50px auto;
-		width: 50%;
-	}
-	.input-contact {
-		margin-top: 20px;
-		width: 100%;
-	}
-	.button-contact {
-		margin-top: 20px;
-	}
-	label.error {
-		color:red;
-		float: left;
-		font-size: 15px;
-	}
+
 </style>
 {% endblock %}
 {% block extrascript %}
-<script type="text/javascript" src="{{ STATIC_URL }}assets/websites/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/contact.js"></script>
 
-	<script>
-  	$(document).ready(function() {
-	    $("#form_contact").validate({
-	    	rule: {
-	    		name: "required",
-	    		email: {
-	    			required: true,
-					email: true
-	    		},
-	    		subject: "required"
-	    	},
-	    	messages: {
-	    		name: "Vui long nhap ho ten",
-	    		email: {
-                	required: "Vui long nhap Email",
-                	email: "Vui long nhap dung dia chi email. (ex. abc@adc.abc)",
-            	},
-	    		subject: "Vui long nhap chu de"
-	    	}
-	    });
-	});
-
-  </script>
 {% endblock %}
 {% block main_content %} 
 
@@ -70,19 +35,47 @@
 	    </div>
 	</div>
 	<!-- LINE -->
-	<hr>
+	<hr class="hr-custom">
 	<!-- CONTACT FORM #TO DO CUSTOM-->
 	
 	
 	
 	<div class="center-div form-group" align="center">
-		<form id="form_contact" class="form-contact">
-			<input class="form-control input-contact" type="text" name="name" placeholder="Nhap ho ten*" required>
-			<input class="form-control input-contact" type="email" name="email" placeholder="Nhap email*" required>
-			<input class="form-control input-contact" type="text" name="subject" placeholder="Nhap chu de" required>
-			<textarea class="form-control input-contact" rows="5" name="message" placeholder="Tin nhan cua ban"></textarea>
-			<button type="submit" class="btn btn-default button-contact">GUI</button>
+		<form id="form_contact" class="form-contact" method="POST">{% csrf_token %}
+			<div class="col-md-6">
+				<div class="col-md-12 col-xs-12">
+					<label>{% trans "contact.lable.title.name" %} </label>
+					<input class="form-control form-control-custom input-contact" type="text" name="name"" required>
+				</div>
+					
+				<div class="col-md-12 col-xs-12">
+					<label>{% trans "contact.lable.title.email" %} </label>
+					<input class="form-control form-control-custom input-contact" type="email" name="email" required>
+				</div>
+				<div class="col-md-12 col-xs-12">
+					<label>{% trans "contact.lable.title.phone" %} </label>
+					<input class="form-control form-control-custom input-contact" type="text" name="phone" required>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col-md-12 col-xs-12">
+					<label>{% trans "contact.lable.title.subject" %} </label>
+					<input class="form-control form-control-custom input-contact" type="text" name="subject" required>
+				</div>
+				<div class="col-md-12 col-xs-12">
+					<label>{% trans "contact.lable.title.message" %} </label>
+					<textarea class="form-control form-control-custom input-contact" rows="5" name="message"></textarea>
+				</div>
+			</div>
+			<div class="col-md-12" align="center">
+				<button type="submit" class="btn-custom-style btn-custom-style-experiences">{% trans "contact.btn.send" %} <span class="glyphicon glyphicon-menu-right"></span></button>
+			</div>
 		</form>
+	</div>
+	<div class="row">
+		<div class="col-md-12 map-custom.div" align="center">
+		    <iframe class="map-custom" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3834.562563375484!2d108.22225385096235!3d16.03627114452417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314219e8cb37e161%3A0xb2f5c4a784d34c60!2zVHJ1bmcgdMOibSBHaeG6o2kgdHLDrSBQaOG7qWMgaOG7o3AgSGVsaW8gQ2VudGVy!5e0!3m2!1sen!2s!4v1488335913354" width="100%"  frameborder="0"></iframe>
+		</div>
 	</div>
 </div>
 	

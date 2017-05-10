@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class MyUserManager(BaseUserManager):
-    def create_user(self, email, password=None):
+    def create_user(self, email, password=None, username=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -16,7 +16,7 @@ class MyUserManager(BaseUserManager):
             email=self.normalize_email(email)
         )
         # print "email ",email
-        # user.username = email
+        user.username = username
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -31,12 +31,14 @@ class MyUserManager(BaseUserManager):
             password=password
         )
         # user.username = email
-        user.is_staffing = True
+        user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True) 
     username = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(
         verbose_name='email address',
@@ -49,17 +51,27 @@ class User(AbstractBaseUser, PermissionsMixin):
     country = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
-    is_active = models.BooleanField(default=True)
+    # is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(
+        _('Staff Status'), default=False,
+        help_text=_('Designates whether the user can log into this admin '
+                    'site.')
+    )
+    is_active = models.BooleanField(
+        _('Active'), default=True,
+        help_text=_('Designates whether this user should be treated as '
+                    'active. Unselect this instead of deleting accounts.')
+    )
     date_joined = models.DateTimeField(_('Date Joined'), auto_now_add=True,
                                    editable=False)
     modified = models.DateTimeField(
         _('Modified Date'), auto_now=True, editable=False)
 
-    is_staffing = models.BooleanField(
-        _('staff status'),
-        default=False,
-        help_text=_('Designates whether the user can log into this admin site.'),
-    )
+    # is_staffing = models.BooleanField(
+    #     _('staff status'),
+    #     default=False,
+    #     help_text=_('Designates whether the user can log into this admin site.'),
+    # )
     objects = MyUserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -84,8 +96,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):              # __unicode__ on Python 2
         return self.email
 
-    @property
-    def is_staff(self):
-        "Is the user a member of staff?"
-        # Simplest possible answer: All admins are staff
-        return self.is_superuser
+    # @property
+    # def is_staff(self):
+    #     "Is the user a member of staff?"
+    #     # Simplest possible answer: All admins are staff
+    #     return self.is_superuser

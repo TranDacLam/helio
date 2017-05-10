@@ -43,13 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_auth',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.twitter',
+    'social_django',
+    'rest_social_auth',
     'main',
     'core',
     'api',
@@ -108,6 +103,58 @@ DATABASES = {
 # Custom User Model
 AUTH_USER_MODEL = 'core.User'
 
+SOCIAL_AUTH_USER_MODEL = 'core.User'
+# Config Social Account
+SOCIAL_AUTH_FACEBOOK_KEY = '295137440610143'
+SOCIAL_AUTH_FACEBOOK_SECRET = '4b4aef291799a7b9aaf016689339e97f'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', ]
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': ','.join([
+        # public_profile
+        'id', 'cover', 'name', 'first_name', 'last_name', 'age_range', 'link',
+        'gender', 'locale', 'picture', 'timezone', 'updated_time', 'verified',
+        # extra fields
+        'email',
+    ]),
+}
+
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '976099811367-ihbmg1pfnniln9qgfacleiu41bhl3fqn.apps.googleusercontent.com'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'JaiLLvY1BK97TSy5_xcGWDhp'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', ]
+
+# SOCIAL_AUTH_TWITTER_KEY = 'gCrpEpNxpWkAE6Cul98OzAWTk'
+# SOCIAL_AUTH_TWITTER_SECRET = '7SYSRpYY4amW5kiNXUAxUDdWS7G3nHytRIGHbDVTByzBfsqDJl'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',  # OAuth1.0
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'core.pipeline.check_email_exists',  # custom action
+    'social_core.pipeline.user.create_user',
+    # 'social_core.pipeline.mail.mail_validation',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+    # 'social_core.pipeline.social_auth.associate_by_email',
+    
+    
+    # 'users.social_pipeline.auto_logout',  # custom action
+    # 'users.social_pipeline.check_for_email',  # custom action
+    # 'users.social_pipeline.save_avatar',  # custom action
+)
+
+
+REST_SOCIAL_LOG_AUTH_EXCEPTIONS = True
+SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
@@ -203,7 +250,8 @@ CKEDITOR_CONFIGS = {
                'dialogui'
             ]
         ),
-        'font_names': "Yanone Kaffeesatz; FontThuPhap",
+        'font_names': "Yanone Kaffeesatz; Cabin",
+        'contentsCss': ','.join(['../../../../static/assets/websites/css/custom_admin.css'])
     },
 }
 CKEDITOR_BROWSE_SHOW_DIRS = True
@@ -221,3 +269,29 @@ try:
 
 except ImportError:
     pass
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s:%(name)s: %(message)s '
+                      '(%(asctime)s; %(filename)s:%(lineno)d)',
+            'datefmt': "%Y-%m-%d %H:%M:%S",
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'rest_social_auth': {
+            'handlers': ['console', ],
+            'level': "DEBUG",
+        },
+    }
+}

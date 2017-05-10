@@ -8,8 +8,7 @@
 
 {% endblock %}
 {% block extrascript %}
-<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}assets/js/jquery.carousel-1.1.min.js"></script>
 <script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/helio_play.js"></script>
 
@@ -18,7 +17,7 @@
 <!-- Page Header -->
 <div class="container">
     <!-- HELIO PLAY PAGE DESCRIPTION -->
-    {% if result.page_info %}
+    {% if page_info %}
     <div class="page-top">
         <div class="page-header-img">
             <div>
@@ -26,35 +25,35 @@
             </div>
             <div class="page-title" align="center">
                 <div class="col-md-12">
-                    <p class="page-title-text">{{result.page_info.name}}</p>
+                    <p class="page-title-text">{{page_info.name}}</p>
                 </div>
             </div>
         </div>
         <div align="center" class="page-header-text">
             <div class="form-title">
-                <p class="text-description page_description">{{result.page_info.description}}</p>
+                <p class="text-description page_description">{{page_info.description}}</p>
             </div>
         </div>
     </div>
     {% endif %}
 
 
-    {% if result.datas %}
+    {% if datas %}
 
     <!-- BUTTON GROUP -->
     <div class="play-btn-section">
         <ul class="nav play-btn-group">
-            {% for type in result.datas %}
-            <li class="col-md-4">
-                <a href="#{{ type.sub_url|cut:'/helio-play/#' }}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-play/#' }}">{{type.name}}</a>
+            {% for type in datas %}
+            <li class="col-md-4 {% if forloop.counter0 == 0 %} active {% endif %}">
+                <a href="#play_{{type.id}}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-play/#' }}">{{type.name}}</a>
             </li>
             {% endfor %}
         </ul>
     </div>
 
     <div class="tab-content">
-        {% for type, datas in result.datas.items %}
-        <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-play/#' }}" id="{{ type.sub_url|cut:'/helio-play/#' }}">
+        {% for type, datas in datas.items %}
+        <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-play/#' }} {% if forloop.counter0 == 0 %} active {% endif %}" id="play_{{type.id}}">
             <!-- Games slider -->
             <div class="carousel" >
             </div>
@@ -91,7 +90,7 @@
                                     </div>
                                     <p class="item-name">{{promotion.name}}</p>
                                     <p class="item-description short_description">{{promotion.short_description}}</p>
-                                    <a class="btn btn-custom-style btn-custom-style-play" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                                    <a class="btn btn-custom-style btn-custom-style-play" href="/promotions/{{promotion.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
                                 </div>
                             </div>
                             <div class="item-content-image col-md-9">
@@ -109,7 +108,7 @@
                                     </div>
                                     <p class="item-name">{{promotion.name}}</p>
                                     <p class="item-description short_description">{{promotion.short_description}}</p>
-                                    <a class="btn btn-custom-style btn-custom-style-play" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                                    <a class="btn btn-custom-style btn-custom-style-play" href="/promotions/{{promotion.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
                                 </div>
                             </div>
                             <div class="item-content-image col-md-9 ">
