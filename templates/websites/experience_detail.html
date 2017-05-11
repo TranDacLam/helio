@@ -6,69 +6,6 @@
 {% endblock %}
 {% block main_content %} 
 {% if experience %}
-<script type="text/javascript">
-	function fb_share() {
-		var url = window.location.href;
-		FB.ui({
-	      	method: 'share',
-	      	href: url,
-	    }); 
-	}
-	function fb_like() {
-
-		// FB.Event.subscribe('edge.create',
-		//     function(response) {
-		//         alert('You liked the URL: ' + response);
-		//     }
-		// );
-		// FB.api(
-		//     "/me/og.likes",
-		//     function (response) {
-		//      	console.log(response);
-		//     }
-		// );
-
-		FB.ui({
-			method: 'share_open_graph',
-			action_type: 'og.likes',
-			action_properties: JSON.stringify({
-				object:'https://developers.facebook.com/docs/',
-			})}, function(response){
-				// Debug response (optional)console.log(response);
-			});
-
-
-		// console.log("sdfafa");
-		// var id = 1;
-		// FB.getLoginStatus(function(response) {
-
-  //           if(response.status === "connected") {
-  //           	console.log("1: "+ response.authResponse.userID);
-  //               id = response.authResponse.userID
-  //               FB.api(
-		// 		    "/"+id+"/likes",
-		// 		    function (response1111) {
-		// 		    	console.log(response1111);
-		// 		    }
-		// 		);
-  //           } else {
-  //               FB.login(function(response2) {
-  //                   if(response2.status === "connected") {
-  //                       id = response2.authResponse.userID;
-  //                       console.log("1: "+ response2.authResponse.userID);
-  //                       FB.api(
-		// 				    "/"+id+"/likes",
-		// 				    function (response3333) {
-		// 				    	console.log(response3333);
-		// 				    }
-		// 				);
-  //                   }
-  //               });
-  //           }
-  //       }, true);
-	}
-
-</script>
 <div class="page-top">
     <div class="page-header-img-full">
 	    <img src="{{ MEDIA_URL }}{{ experience.image }}" width="100%">
@@ -80,9 +17,8 @@
 			        </div>
 			        <div class="col-md-12">
 				        <div class="custom-icons" align="center">
-				        	<a class="style-icon" onclick="fb_like();"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
-				        	<a class="style-icon" onclick="fb_share();"><span class="fa fa-share-alt circle-icon" aria-hidden="true"></span> Share</a>
-							<!-- <div class="fb-like" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div> -->
+				        	<a id="fb_like_btn" class="style-icon"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
+				        	<a id="fb_share_btn" class="style-icon"><span class="fa fa-share-alt circle-icon" aria-hidden="true"></span> Share</a>
 				        </div>
 			        </div>
 			    </div>
