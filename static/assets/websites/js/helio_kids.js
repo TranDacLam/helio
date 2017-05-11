@@ -2,8 +2,8 @@ var KidsFunction = (function ($) {
     var helio_kids = function () {
         var _self = this;
         var show_num = {};
-        var first_show = 2,
-            view_more = 2;
+        var first_show = 4,
+            view_more = 4;
 
         this.initEventPage = function () {
             var url = window.location.href;

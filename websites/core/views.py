@@ -92,10 +92,8 @@ def helio_kids(request):
 
 def night_life(request):
     print "***START NIGHT LIFE CONTENT PAGE***"
-    result = {}
     night_life = Post.objects.get(key_query=const.NIGHT_LIFE_KEY_QUERY)
-    result["night_life"] = night_life
-    return render(request, 'websites/night_life.html', {"result": result})
+    return render(request, 'websites/night_life.html', {"night_life": night_life})
 
 
 def helio_play(request):

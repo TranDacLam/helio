@@ -2,8 +2,8 @@ var PlayFunction = (function ($) {
     var helio_play = function () {
         var _self = this;
         var show_num = {};
-        var first_show = 3,
-            view_more = 3;
+        var first_show = 4,
+            view_more = 4;
 
         this.initEventPage = function () {
             var url = window.location.href;
