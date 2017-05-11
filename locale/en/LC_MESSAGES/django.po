@@ -136,13 +136,13 @@ msgid "promotionpage.other_promotion"
 msgstr "OTHER PROMOTION"
 # END PROMOTION DETAIl
 
-# START CARRER DETAIl
-msgid "carrerpage.btn.all_carrer" 
-msgstr "ALL CARRER"
+# START CAREER DETAIl
+msgid "careerpage.btn.all_career" 
+msgstr "ALL CAREER"
 
-msgid "carrerpage.other_carrer" 
-msgstr "OTHER CARRER"
-# END CARRER DETAIl
+msgid "careerpage.other_career" 
+msgstr "OTHER CAREER"
+# END CAREER DETAIl
 
 # START CONTACT 
 msgid "contact.btn.send"

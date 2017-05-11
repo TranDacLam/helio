@@ -2,10 +2,12 @@
 {% load i18n %} 
 {% block title %}Events - Sự kiện{% endblock %}
 {% block extrastylesheet %}
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/css/flexslider.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/helio_item.css">
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/events.css">
 {% endblock %}
 {% block extrascript %}
+<script type="text/javascript" src = "{{ STATIC_URL }}assets/js/jquery.flexslider.js"></script>
 <script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/events.js"></script>
 {% endblock %}
 {% block main_content %} 
@@ -39,12 +41,15 @@
     </div>
     {% if result.events_map %}
     <div class="row layer-coursel-btn">
-        <div class="col-md-6">
+        <div class="col-xs-6">
             {% for key, values in result.events_map.items %}
-                <h4 class="event-month">{{key}}</h4>
+                {% if values.0 %}
+                <h4 class="event-month">{{values.0.start_date | date:"M/Y"}}</h4>
+                {% endif %}
+
             {% endfor %}
         </div>
-        <div class="col-md-6">
+        <div class="col-xs-6 div-month-btn">
             <div class="pull-right">
                 <button class="month-btn-prev" href="#month_coursel" data-slide="prev"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
                 <button class="month-btn-next" href="#month_coursel" data-slide="next"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
@@ -56,12 +61,12 @@
             <div class="carousel-inner">
             {% for key, values in result.events_map.items %}
                 <div class="item events-list-by-month">
-                    <div class="carousel slide events-courcel" id="event_coursel_{{forloop.counter}}">
-                        <div class="carousel-inner">
-                            {% for x, datas in values.items %}
-                                <div class="item event-item col-xs-12">
-                                {% for event in datas %}
-                                    <div class="col-7 col-xs-2">
+                    <div class="col-md-12">
+                        <section class="slider">
+                            <div class="flexslider carousel">
+                                <ul class="slides">
+                                    {% for event in values reversed%}
+                                    <li class="item-flex {{event.event_type}}-class">
                                         <div class="events-name-div">
                                             <p class="events-name">{{event.name}}</p>
                                         </div>
@@ -71,15 +76,11 @@
                                                 {{ event.start_date | date:"l" }}
                                             </p>
                                         </div>
-                                    </div>
-                                {% endfor %}
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div align="center" class="col-md-12 event-coursel-btn-group">
-                            <button class="event-btn-prev" href="#event_coursel_{{forloop.counter}}" data-slide="prev"><i class="fa fa-caret-left" aria-hidden="true"></i>Trước</button>
-                            <button class="event-btn-next" href="#event_coursel_{{forloop.counter}}" data-slide="next">Sau <i class="fa fa-caret-right" aria-hidden="true"></i></button>
-                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </section>
                     </div>
                 </div>
             {% endfor %}
@@ -97,12 +98,21 @@
                 <div class="kids-game-content col-md-12">
                     {% for event in result.events %}
                     {% if forloop.counter|divisibleby:2 %} 
-                    <div class="item-line content-pull-left col-md-12" style="display: none;">
+                    <div class="item-line content-pull-left col-md-12 {{event.event_type}}-class" style="display: none;">
                         <div class="row">
                             <div class="item-content-text col-md-5 pull-right">
                                 <div class="col-md-9 image-text pull-right">
                                     <div class="image-text-head">
-                                        <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
+                                        <p> 
+                                            {% if event.event_type == "future" %} 
+                                                SẮP DIỄN RA
+                                            {% elif event.event_type == "past"%} 
+                                                ĐÃ DIỄN RA
+                                            {% else %}
+                                                ĐANG DIỄN RA
+                                            {% endif %}
+                                            <span class="glyphicon glyphicon-play"></span>
+                                        </p>
                                     </div>
                                     <p class="item-name">{{event.name}}</p>
                                     <p class="item-description short_description">{{event.short_description}}</p>
@@ -115,12 +125,21 @@
                         </div>
                     </div>
                     {% else %}
-                    <div class="item-line content-pull-right col-md-12" style="display: none;">
+                    <div class="item-line content-pull-right col-md-12 {{event.event_type}}-class" style="display: none;">
                         <div class="row">
                             <div class="item-content-text col-md-5">
                                 <div class="col-md-9 image-text">
                                     <div class="image-text-head">
-                                        <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
+                                        <p>
+                                            {% if event.event_type == "future" %} 
+                                                SẮP DIỄN RA
+                                            {% elif event.event_type == "past"%} 
+                                                ĐÃ DIỄN RA
+                                            {% else %}
+                                                ĐANG DIỄN RA
+                                            {% endif %}
+                                            <span class="glyphicon glyphicon-play"></span>
+                                        </p>
                                     </div>
                                     <p class="item-name">{{event.name}}</p>
                                     <p class="item-description short_description">{{event.short_description}}</p>

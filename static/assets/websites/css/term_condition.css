@@ -33,8 +33,11 @@
 .panel-custom-content p {
     padding: 10px 0px;
 }
+p.page-title-text {
+    max-width: 980px;
+}
 
-ol {
+/*ol {
     counter-reset: item;
 }
 
@@ -61,4 +64,4 @@ ol.ol-custom ol > li:before {
     margin-left: -15px;
     font-weight: normal;
     margin-top: 10px;
-}
+}*/

@@ -9,16 +9,18 @@
 <div class="page-top">
     <div class="page-header-img-full">
         <img src="{{ MEDIA_URL }}{{ event.image }}" width="100%">
-        <div class="container">
-            <div class="page-title-detail row">
-                <div class="col-md-12" align="center">
-                    <p class="big-font-size">{{event.name}}</p>
-                </div>
-                <div class="col-md-12">
-                    <div class="custom-icons" align="center">
-                        <a href="#" class="style-icon"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
-                        <a href="#" class="style-icon"><span class="fa fa-share-alt circle-icon" aria-hidden="true"></span> Share</a>   
-                        <!-- <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div> -->
+        <div class="page-caption">
+            <div class="container">
+                <div class="page-title-detail row">
+                    <div class="col-md-12" align="center">
+                        <p class="big-font-size">{{event.name}}</p>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="custom-icons" align="center">
+                            <a href="#" class="style-icon"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
+                            <a href="#" class="style-icon"><span class="fa fa-share-alt circle-icon" aria-hidden="true"></span> Share</a>   
+                            <!-- <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div> -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -42,7 +44,7 @@
                 <h4>{% trans "eventpage.other_event" %}</h4>
             </div>
             <div class="col-md-6 col-md-6-custom">
-                <a class="btn button-all btn-custom-style btn-custom-style-kids" href="{% url 'careers' %}" role="button">{% trans "eventpage.btn.all_event" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                <a class="btn button-all btn-custom-style btn-custom-style-kids" href="{% url 'events' %}" role="button">{% trans "eventpage.btn.all_event" %}<span class="glyphicon glyphicon-menu-right"></span></a>
             </div>
         </div>
         <div class="row custom-other-exp">
@@ -51,7 +53,7 @@
                 <div class="style-post">
                     <span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ event.image }}" width="100%"></a></span>
                     <a class="title-post" href="/events/{{event.id}}/detail/">{{event.name}}</a>
-                    <p class="text-limit-rows">{{promotions.short_description}}</p> <a class="view-detail" href="/events/{{event.id}}/detail/">{% trans "btn.view_detail" %}</a>
+                    <p class="text-limit-rows">{{event.short_description}}</p> <a class="view-detail" href="/events/{{event.id}}/detail/">{% trans "btn.view_detail" %}</a>
                 </div>
             </div>
             {% endfor %}

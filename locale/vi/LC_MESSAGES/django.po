@@ -133,14 +133,17 @@ msgid "promotionpage.btn.all_promotion"
 msgstr "TẤT CẢ KHUYẾN MÃI "
 
 msgid "promotionpage.other_promotion" 
-msgstr "TKHUYẾN MÃI  KHÁC"
+msgstr "KHUYẾN MÃI  KHÁC"
 # END PROMOTION DETAIl
 
-# START CARRER DETAIl
-msgid "carrerpage.btn.all_carrer" 
-msgstr "TẤT CẢ TRẢI NGHIỆM"
+# START CAREER DETAIl
+msgid "careerpage.btn.all_career" 
+msgstr "TẤT CẢ TUYỂN DỤNG"
 
-<<<<<<< HEAD
+msgid "careerpage.other_career" 
+msgstr "TUYỂN DỤNG KHÁC"
+# END CAREER DETAIl
+
 # START CONTACT 
 msgid "contact.btn.send"
 msgstr "GỬI TIN NHẮN" 
@@ -164,11 +167,6 @@ msgid "contact.label.error"
 msgstr "Vui lòng nhập tên"
 # END CONTACT
 
-=======
-msgid "carrerpage.other_carrer" 
-msgstr "TRẢI NGHIỆM KHÁC"
-# END CARRER DETAIl
->>>>>>> 9f804c40434a4e6f40070a1e9124057f7d3db063
 #START FOOTER
 msgid "footer.contact.address"
 msgstr "Khu công viên Đông Nam Đài tưởng niệm, Đường 2/9, Phường Hòa Cường Bắc, Quận Hải Châu, TP Đà Nẵng"

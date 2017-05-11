@@ -42,17 +42,37 @@ var EventsFunction = (function ($) {
             $('.month-carousel').carousel({
                 interval: false
             });
-            $('.events-courcel').carousel({
-                interval: false
-            });
+            _self.flexCoursel('.events-list-by-month.active .flexslider');
             $('.month-carousel').on('slide.bs.carousel', function (e) {
                 if($(e.relatedTarget).attr('class') === 'item events-list-by-month') {
                     var indexFrom = $('.month-carousel>.carousel-inner>.item.active').index();
                     var indexTo = $(e.relatedTarget).index();
                     $('.event-month').eq(indexFrom).hide()
                     $('.event-month').eq(indexTo).show();
+
+                    _self.flexCoursel($(e.relatedTarget).find('.flexslider'));
                 }
             });
+        }
+        this.flexCoursel = function(element) {
+            if(!$(element).hasClass("complete")) {
+                var items_length = $(element).find('.item-flex').length;
+                var max_items = 7;
+                if(items_length < 7)  {
+                    max_items = items_length;
+                }
+
+                $(element).flexslider({
+                    animation: "slide",
+                    animationSpeed: 400,
+                    animationLoop: false,
+                    itemWidth: 160,
+                    itemMargin: 5,
+                    minItems: 2, // use function to pull in initial value
+                    maxItems: max_items, // use function to pull in initial value
+                });
+                $(element).addClass("complete");
+            }
         }
     }
     return helio_events;

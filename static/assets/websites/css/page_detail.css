@@ -1,12 +1,20 @@
 /*START HEADER experience DETAIL CSS*/
+.page-caption {
+    position: absolute;
+    width: 100%;
+    top: 40%;
+}
 .page-header-img-full {
 	margin-bottom: 60px;
 	position: relative;
 }
+.page-header-img-full img {
+    opacity: 0.3;
+}
 .page-title-detail {
     width: 75%;
     text-align: center;
-    margin: -420px auto;
+    margin: 0px auto;
 }
 /*END HEADER experience DETAIL CSS*/
 
@@ -145,6 +153,9 @@ a.btn-custom-style.btn-custom-style-kids:hover {
 
 /*MEDIA*/
 @media (max-width: 991px) {
+    .page-caption {
+        position: static;
+    }
 	.form-title {
 		width: 100%;
 	}

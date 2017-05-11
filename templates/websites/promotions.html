@@ -14,20 +14,20 @@
 <!-- Page Header -->
 <div class="container">
     <!-- CARD PAGE DESCRIPTION -->
-    {% if result.promotions_hots %}
+    {% if promotions_hots %}
     <div class="page-top">
         <div class="page-header-img">
             <div id="promotion_carousel" class="carousel slide carousel-custom" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators carousel-indicators-custom">
-                    {% for promotion in result.promotions_hots %}
+                    {% for promotion in promotions_hots %}
                     <li data-target="#promotion_carousel" data-slide-to="{{forloop.counter0}}" class="{% if forloop.counter0 == 0 %} active {% endif %}"></li>
                     {% endfor %}
                 </ol>
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
-                    {% for promotion in result.promotions_hots %}
+                    {% for promotion in promotions_hots %}
                     <div class="item {% if forloop.counter0 == 0 %} active {% endif %}">
                         <img src="{{ MEDIA_URL }}{{ promotion.image }}" alt="Helio" width="100%">
                     </div>
@@ -38,12 +38,12 @@
     </div>
     {% endif %}
 
-    {% if result.datas %}
+    {% if datas %}
     <div class="btn-section-div">
         <!-- BUTTON GROUP -->
         <ul class="nav btn-custom-group promotion-btn-group">
-            {% for category in result.datas %}
-            <li  class="col-md-3">
+            {% for category in datas %}
+            <li  class="col-md-3 {% if forloop.counter0 == 0 %} active {% endif %}">
                 <a href="#promotion{{ category.id }}" role="tab" data-toggle="tab" class="btn-custom-style">{{category.name}}</a>
             </li>
             {% endfor %}
@@ -51,8 +51,8 @@
     </div>
 
     <div class="tab-content">
-        {% for category, promotions in result.datas.items %}
-        <div role="tabpanel" class="tab-pane" id="promotion{{ category.id }}">
+        {% for category, promotions in datas.items %}
+        <div role="tabpanel" class="tab-pane {% if forloop.counter0 == 0 %} active {% endif %}" id="promotion{{ category.id }}">
             <div class="row view-more-div">
                 <!--  KID GAME CONTENT -->
                 <div class="kids-game-content col-md-12">

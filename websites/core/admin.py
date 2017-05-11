@@ -48,8 +48,8 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = custom_models.User
-        fields = ('email', 'password', 'birth_date', 'phone', 'personal_id',
-                  'country', 'address', 'city', 'is_active', 'is_staffing', 'is_superuser', 'groups')
+        fields = ('email', 'password', 'birth_date', 'phone', 'personal_id', 'first_name', 'last_name',
+                  'country', 'address', 'city', 'is_active', 'is_staff', 'is_superuser', 'groups')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -66,13 +66,13 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'country', 'is_staffing')
-    list_filter = ('is_staffing', 'is_superuser', )
+    list_display = ('email', 'country', 'is_staff', 'is_superuser')
+    list_filter = ('is_staff', 'is_superuser', )
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('birth_date', 'phone',
                                       'personal_id', 'country', 'address', 'city',)}),
-        ('Permissions', {'fields': ('is_staffing', 'is_superuser', 'groups', )}),
+        ('Permissions', {'fields': ('is_staff', 'is_superuser', 'groups', )}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
@@ -121,7 +121,7 @@ class PostImageInline(admin.TabularInline):
 #         post_types = set(
 #             [c.post_type for c in model_admin.model.objects.all()])
 #         result = [(pt.id, pt.name) for pt in post_types if pt != None]
-        
+
 #         return result
 
 #     def queryset(self, request, queryset):
@@ -137,13 +137,16 @@ admin.site.register(Post_Type, PostTypeAdmin)
 
 # Register Posts Model to Admin Site
 
+
 def custom_titled_filter(title):
     class Wrapper(admin.FieldListFilter):
+
         def __new__(cls, *args, **kwargs):
             instance = admin.FieldListFilter.create(*args, **kwargs)
             instance.title = title
             return instance
     return Wrapper
+
 
 class PostAdmin(TranslationAdmin):
     list_filter = (('post_type__name', custom_titled_filter('Post Type')), )
@@ -164,7 +167,24 @@ admin.site.register(Post, PostAdmin)
 # Events
 
 
+class EventForm(forms.ModelForm):
+
+    class Meta:
+        model = Event
+        fields = '__all__'
+
+    def clean(self):
+        start_date = self.cleaned_data.get('start_date')
+        end_date = self.cleaned_data.get('end_date')
+        if end_date < start_date:
+            msg = u"Ngày kết thúc phải lớn hơn ngày bắt đầu."
+            self._errors["end_date"] = self.error_class([msg])
+
+        return self.cleaned_data
+
+
 class EventAdmin(TranslationAdmin):
+    form = EventForm
     formfield_overrides = {
         models.TextField: {'widget': CKEditorUploadingWidget()},
     }
@@ -210,6 +230,9 @@ admin.site.register(Banner, BannerAdmin)
 
 
 class PromotionAdmin(TranslationAdmin):
+    formfield_overrides = {
+        models.TextField: {'widget': CKEditorUploadingWidget()},
+    }
     pass
 admin.site.register(Promotion, PromotionAdmin)
 
@@ -225,10 +248,10 @@ class HotForm(forms.ModelForm):
     def clean(self):
         is_show = self.cleaned_data.get('is_show')
         total_show = Hot.objects.filter(is_show=True).count()
-        if total_show < 5:
+        if total_show < 4 or not is_show:
             pass
         else:
-            raise forms.ValidationError('Hot giới hạn tối đa 5 bài được hiển thị. Vui lòng chọn bỏ bớt trường is_show và chọn lại.',
+            raise forms.ValidationError('Hot giới hạn tối đa 4 bài được hiển thị. Vui lòng chọn bỏ bớt trường is_show và chọn lại.',
                                         code='invalid_is_show',
                                         params={'is_show': is_show},
                                         )

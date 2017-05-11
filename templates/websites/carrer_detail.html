@@ -9,19 +9,21 @@
 <div class="page-top">
     <div class="page-header-img-full">
 	    <img src="{{ MEDIA_URL }}{{ career.image }}" width="100%">
-		<div class="container">
-			<div class="page-title-detail row">
-		        <div class="col-md-12" align="center">
-		            <p class="big-font-size">{{career.name}}</p>
-		        </div>
-		        <div class="col-md-12">
-			        <div class="custom-icons" align="center">
-			        	<a href="#" class="style-icon"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
-			        	<a href="#" class="style-icon"><span class="fa fa-share-alt circle-icon" aria-hidden="true"></span> Share</a>	
-						<!-- <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div> -->
+	    <div class="page-caption">
+			<div class="container">
+				<div class="page-title-detail row">
+			        <div class="col-md-12" align="center">
+			            <p class="big-font-size">{{career.name}}</p>
 			        </div>
-		        </div>
-		    </div>
+			        <div class="col-md-12">
+				        <div class="custom-icons" align="center">
+				        	<a href="#" class="style-icon"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
+				        	<a href="#" class="style-icon"><span class="fa fa-share-alt circle-icon" aria-hidden="true"></span> Share</a>	
+							<!-- <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div> -->
+				        </div>
+			        </div>
+			    </div>
+			</div>
 		</div>
 	</div>
 	    
@@ -40,10 +42,10 @@
 	<div class="block-post-involved">
 	    <div class="row block-post-title">
 	      	<div class="col-md-6 col-md-6-custom">
-	        	<h4>{% trans "carrerpage.other_carrer" %}</h4>
+	        	<h4>{% trans "careerpage.other_career" %}</h4>
 	      	</div>
 	      	<div class="col-md-6 col-md-6-custom">
-	        	<a class="btn button-all btn-custom-style btn-custom-style-kids" href="{% url 'careers' %}" role="button">{% trans "carrerpage.btn.all_carrer" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+	        	<a class="btn button-all btn-custom-style btn-custom-style-kids" href="{% url 'careers' %}" role="button">{% trans "careerpage.btn.all_career" %}<span class="glyphicon glyphicon-menu-right"></span></a>
 	      	</div>
 	    </div>
 	    <div class="row custom-other-exp">
