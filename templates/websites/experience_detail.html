@@ -16,30 +16,34 @@
 	    }); 
 	}
 	function fb_like() {
+		console.log("sdfafa");
 		var id = 1;
 		FB.getLoginStatus(function(response) {
+
             if(response.status === "connected") {
+            	console.log("1: "+ response.authResponse.userID);
                 id = response.authResponse.userID
+                FB.api(
+				    "/"+id+"/likes",
+				    function (response1111) {
+				    	console.log(response1111);
+				    }
+				);
             } else {
                 FB.login(function(response2) {
                     if(response2.status === "connected") {
-                        id = response2.authResponse.userID
+                        id = response2.authResponse.userID;
+                        console.log("1: "+ response2.authResponse.userID);
+                        FB.api(
+						    "/"+id+"/likes",
+						    function (response3333) {
+						    	console.log(response3333);
+						    }
+						);
                     }
                 });
             }
         }, true);
-
-		FB.api(
-		    "/{object-id}/likes",
-		    function (response) {
-		    	console.log(response);
-
-		      if (response && !response.error) {
-		        /* handle the result */
-		      }
-		    }
-		);
-		
 	}
 
 </script>
@@ -54,8 +58,8 @@
 			        </div>
 			        <div class="col-md-12">
 				        <div class="custom-icons" align="center">
-				        	<a href="#" class="style-icon" onclick="fb_like();"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
-				        	<a href="#" class="style-icon" onclick="fb_share();"><span class="fa fa-share-alt circle-icon" aria-hidden="true"></span> Share</a>
+				        	<a class="style-icon" onclick="fb_like();"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
+				        	<a class="style-icon" onclick="fb_share();"><span class="fa fa-share-alt circle-icon" aria-hidden="true"></span> Share</a>
 							<!-- <div class="fb-like" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div> -->
 				        </div>
 			        </div>
