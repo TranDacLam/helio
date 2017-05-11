@@ -7,7 +7,7 @@
 {% block main_content %} 
 {% if experience %}
 <script type="text/javascript">
-	function share_icon() {
+	function fb_share() {
 		FB.ui({
 	      	method: 'share',
 	      	href: 'http://192.168.1.13/en/',
@@ -15,13 +15,33 @@
 	        console.log(response);
 	    }); 
 	}
-	function feed_icon() {
-		FB.Event.subscribe('edge.create',
-		    function(response) {
-		        alert('You liked the URL: ' + response);
+	function fb_like() {
+		var id = 1;
+		FB.getLoginStatus(function(response) {
+            if(response.status === "connected") {
+                id = response.authResponse.userID
+            } else {
+                FB.login(function(response2) {
+                    if(response2.status === "connected") {
+                        id = response2.authResponse.userID
+                    }
+                });
+            }
+        }, true);
+
+		FB.api(
+		    "/{object-id}/likes",
+		    function (response) {
+		    	console.log(response);
+
+		      if (response && !response.error) {
+		        /* handle the result */
+		      }
 		    }
 		);
+		
 	}
+
 </script>
 <div class="page-top">
     <div class="page-header-img-full">
@@ -34,8 +54,8 @@
 			        </div>
 			        <div class="col-md-12">
 				        <div class="custom-icons" align="center">
-				        	<a href="#" class="style-icon" onclick="feed_icon();"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
-				        	<a href="#" class="style-icon" onclick="share_icon();"><span class="fa fa-share-alt circle-icon" aria-hidden="true"></span> Share</a>
+				        	<a href="#" class="style-icon" onclick="fb_like();"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
+				        	<a href="#" class="style-icon" onclick="fb_share();"><span class="fa fa-share-alt circle-icon" aria-hidden="true"></span> Share</a>
 							<!-- <div class="fb-like" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div> -->
 				        </div>
 			        </div>
