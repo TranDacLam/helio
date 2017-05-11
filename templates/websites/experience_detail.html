@@ -16,12 +16,11 @@
 	    }); 
 	}
 	function feed_icon() {
-		FB.ui({
-	      	method: 'feed',
-	      	href: 'http://192.168.1.13/en/',
-	    }, function(response){
-	        console.log(response);
-	    }); 
+		FB.Event.subscribe('edge.create',
+		    function(response) {
+		        alert('You liked the URL: ' + response);
+		    }
+		);
 	}
 </script>
 <div class="page-top">
