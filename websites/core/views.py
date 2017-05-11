@@ -212,6 +212,16 @@ def news(request):
 
     return render(request, 'websites/news.html')
 
+def other_product(request):
+    print "***START News PAGE***"
+    result = {}
+
+    # FAQs list
+    faqs = FAQ.objects.filter(category_id=const.OTHER_PRODUCT_CATEGORY)
+    result["faqs"] = faqs
+
+    return render(request, 'websites/other_product.html', {"result":result})
+
 
 def coffee_bakery(request):
     print "***START HELIO COFFEE CONTENT PAGE***"

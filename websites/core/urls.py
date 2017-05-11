@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^helio-introduction/$', views.helio_introduction, name='helio_introduction'),
     url(r'^term-condition/$', views.term_condition, name='term_condition'),
     url(r'^coffee_bakery/$', views.coffee_bakery, name='coffee_bakery'),
+    url(r'^other-product/$', views.other_product, name='other_product'),
     url(r'^redemption-store/$', views.redemption_store, name='redemption_store'),
 
 
