@@ -15,6 +15,14 @@
 	        console.log(response);
 	    }); 
 	}
+	function feed_icon() {
+		FB.ui({
+	      	method: 'feed',
+	      	href: 'http://192.168.1.13/en/',
+	    }, function(response){
+	        console.log(response);
+	    }); 
+	}
 </script>
 <div class="page-top">
     <div class="page-header-img-full">
@@ -27,7 +35,7 @@
 			        </div>
 			        <div class="col-md-12">
 				        <div class="custom-icons" align="center">
-				        	<a href="#" class="style-icon"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
+				        	<a href="#" class="style-icon" onclick="feed_icon();"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
 				        	<a href="#" class="style-icon" onclick="share_icon();"><span class="fa fa-share-alt circle-icon" aria-hidden="true"></span> Share</a>
 							<!-- <div class="fb-like" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div> -->
 				        </div>
