@@ -26,25 +26,25 @@ $(document).ready( function() {
 	    }); 
 	});
 	$("#fb_like_btn").click(function() {
-		// FB.ui({
-		// 	method: 'share_open_graph',
-		// 	action_type: 'og.likes',
-		// 	action_properties: JSON.stringify({
-		// 		object: url,
-		// 	})
-		// });
-		FB.api(
-		    "/me/og.likes",
-		    "POST",
-		    {
-		        "object": "http:\/\/helio.vn\/"
-		    },
-		    function (response) {
-		    	console.log("response: " + response);
-			    if (response && response.error) {
-			        console.log("ERRR: " + response.error);
-			    }
-		    }
-		);
+		FB.ui({
+			method: 'share_open_graph',
+			action_type: 'og.likes',
+			action_properties: JSON.stringify({
+				object: url,
+			})
+		});
+		// FB.api(
+		//  	'/me/og.likes',
+		//  	{
+		//  		object:url
+		//  	}, 
+		//  	function(response){
+		// 	    if (!response || response.error) {
+	 //              	alert('you couldnt like.');
+	 //           	} else {
+	 //              	alert('you liked it.');
+	 //           	}
+		// 	}
+		// );
 	});
 });
