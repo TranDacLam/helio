@@ -16,12 +16,26 @@
 	}
 	function fb_like() {
 
-		FB.Event.subscribe('edge.create',
-		    function(response) {
-		        alert('You liked the URL: ' + response);
-		    }
-		);
+		// FB.Event.subscribe('edge.create',
+		//     function(response) {
+		//         alert('You liked the URL: ' + response);
+		//     }
+		// );
+		// FB.api(
+		//     "/me/og.likes",
+		//     function (response) {
+		//      	console.log(response);
+		//     }
+		// );
 
+		FB.ui({
+			method: 'share_open_graph',
+			action_type: 'og.likes',
+			action_properties: JSON.stringify({
+				object:'https://developers.facebook.com/docs/',
+			})}, function(response){
+				// Debug response (optional)console.log(response);
+			});
 
 
 		// console.log("sdfafa");
