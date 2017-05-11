@@ -37,10 +37,13 @@ $(document).ready( function() {
 		    "/me/og.likes",
 		    "POST",
 		    {
-		        "object": url
+		        "object": "http:\/\/helio.vn\/"
 		    },
 		    function (response) {
-		     	console.log("Like: " + response);
+		    	console.log("response: " + response);
+			    if (response && response.error) {
+			        console.log("ERRR: " + response.error);
+			    }
 		    }
 		);
 	});
