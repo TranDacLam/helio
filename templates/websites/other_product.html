@@ -1,0 +1,293 @@
+{% extends "layout.html" %}
+{% load i18n %} 
+{% block title %}Other product - Sản phẩm khác{% endblock %}
+{% block extrastylesheet %}
+	<link href="{{ STATIC_URL }}assets/websites/css/redemtion_and_other.css" rel="stylesheet" type="text/css" />
+	<link href="{{ STATIC_URL }}assets/websites/css/other_product.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block extrascript %}
+	<script src = "{{ STATIC_URL }}assets/websites/js/redemtion_and_other.js"></script>
+{% endblock %}
+{% block main_content %} 
+
+<div class="container">
+	<!-- OTHER PRODUCT PAGE DESCRIPTION -->
+	<div class="page-top">
+		<div class="page-header-img">
+			<div>
+				<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_header.png" width="100%">
+			</div>
+			<div class="page-title" align="center">
+				<div class="col-md-12">
+					<p class="page-title-text">SẢN PHẨM KHÁC</p>
+				</div>
+			</div>
+		</div>
+		<div align="center" class="page-header-text">
+			<div class="form-title">
+				<p class="text-description">Không gian trưng bày của khu vui chơi Helio Center rộng gần 60 m2 với hơn 3000 món quà thú vị. Bạn có thể thoải mái thăm quan, lựa chọn món quà yêu thích cho mình. Hệ quà đa dạng phong phú đảm bảo đã chơi game sẽ có quà đem về.</p>
+			</div>
+		</div>
+	</div>
+	<!-- BUTTON GROUP -->
+    <div class="play-btn-section">
+        <ul class="nav play-btn-group">
+            <li class="col-md-4 active">
+                <a href="#birthday_party" role="tab" data-toggle="tab" class="btn-custom-style ">TIỆC SINH NHẬT</a>
+            </li>
+            <li class="col-md-4">
+                <a href="#school_trip" role="tab" data-toggle="tab" class="btn-custom-style ">TRIP TRƯỜNG HỌC</a>
+            </li>
+            <li class="col-md-4">
+                <a href="#combo_helio" role="tab" data-toggle="tab" class="btn-custom-style ">COMBO HELIO</a>
+            </li>
+        </ul>
+    </div>
+	<!-- CONTENT -->
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="birthday_party">
+			<div class="wrap">
+				<div class="box1">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_1.png">
+					</div>
+				</div>
+				<div class="box2">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_2.png">
+					</div>
+				</div>
+				<div class="box3">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_3.png">
+					</div>
+				</div>
+				<div class="box4">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_4.png">
+					</div>
+				</div>
+				<div class="box5">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_5.png">
+					</div>
+				</div>
+				<div class="box6">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_7.png">
+					</div>
+				</div>
+			</div>
+	 		<div class="faqs-section">
+				<div class="faqs-title" align="center">
+					<p class="big-font-size">{% trans "redemption_store.title.section.faq" %}</p>
+				</div>
+			 	<div class="faqs-content">
+					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+				        <div class="panel panel-default faq-detail">
+				            <div class="panel-heading" role="tab" id="heading_1">
+				                <h4 class="panel-title">
+				                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_1" aria-expanded="true" aria-controls="collapse_1">
+				                        <i class="more-less fa fa-chevron-circle-down"></i>
+				                    </a>
+				                    <p>Combo Helio là gì?</p>
+				                </h4>
+				            </div>
+				            <div id="collapse_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_1">
+				                <div class="panel-body">
+									<p>- Là một gói tích hợp các trò chơi tại Helio Center, được nạp vào thẻ Power Card của bạn, và khi đó bạn sẽ có quyền dùng thẻ này để quẹt và chơi tại các trò chơi đó, với GIÁ RẺ HƠN RẤT NHIỀU so với việc chơi từng trò riêng lẻ như bình thường. Tiết kiệm đến 165.000đ luôn đây!</p>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="panel panel-default faq-detail">
+				            <div class="panel-heading" role="tab" id="heading_1">
+				                <h4 class="panel-title">
+				                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_1" aria-expanded="true" aria-controls="collapse_1">
+				                        <i class="more-less fa fa-chevron-circle-down"></i>
+				                    </a>
+				                    <p>Mua combo helio ở đâu?</p>
+				                </h4>
+				            </div>
+				            <div id="collapse_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_1">
+				                <div class="panel-body">
+									<p>- Là một gói tích hợp các trò chơi tại Helio Center, được nạp vào thẻ Power Card của bạn, và khi đó bạn sẽ có quyền dùng thẻ này để quẹt và chơi tại các trò chơi đó, với GIÁ RẺ HƠN RẤT NHIỀU so với việc chơi từng trò riêng lẻ như bình thường. Tiết kiệm đến 165.000đ luôn đây!</p>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="div-view-more" align="center">
+					<div class="view-more">
+						<a class="btn-view-more btn-custom-style btn-custom-style-faqs" role="button">{% trans "btn.view_more" %}<span class="glyphicon glyphicon-chevron-down glyphicon-custom"></span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div role="tabpanel" class="tab-pane" id="school_trip">
+			<div class="wrap">
+				<div class="box1">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_7.png">
+					</div>
+				</div>
+				<div class="box2">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_5.png">
+					</div>
+				</div>
+				<div class="box3">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_3.png">
+					</div>
+				</div>
+				<div class="box4">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_2.png">
+					</div>
+				</div>
+				<div class="box5">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_1.png">
+					</div>
+				</div>
+				<div class="box6">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_4.png">
+					</div>
+				</div>
+			</div>
+
+			<!-- FAQs -->
+			<div class="faqs-section">
+				<div class="faqs-title" align="center">
+					<p class="big-font-size">{% trans "redemption_store.title.section.faq" %}</p>
+				</div>
+			 	<div class="faqs-content">
+					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+				        <div class="panel panel-default faq-detail">
+				            <div class="panel-heading" role="tab" id="heading_1">
+				                <h4 class="panel-title">
+				                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_1" aria-expanded="true" aria-controls="collapse_1">
+				                        <i class="more-less fa fa-chevron-circle-down"></i>
+				                    </a>
+				                    <p>Thời gian sử dụng combo Helio như thế nào?</p>
+				                </h4>
+				            </div>
+				            <div id="collapse_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_1">
+				                <div class="panel-body">
+									<p>- Là một gói tích hợp các trò chơi tại Helio Center, được nạp vào thẻ Power Card của bạn, và khi đó bạn sẽ có quyền dùng thẻ này để quẹt và chơi tại các trò chơi đó, với GIÁ RẺ HƠN RẤT NHIỀU so với việc chơi từng trò riêng lẻ như bình thường. Tiết kiệm đến 165.000đ luôn đây!</p>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="panel panel-default faq-detail">
+				            <div class="panel-heading" role="tab" id="heading_1">
+				                <h4 class="panel-title">
+				                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_1" aria-expanded="true" aria-controls="collapse_1">
+				                        <i class="more-less fa fa-chevron-circle-down"></i>
+				                    </a>
+				                    <p>Mua combo helio ở đâu?</p>
+				                </h4>
+				            </div>
+				            <div id="collapse_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_1">
+				                <div class="panel-body">
+									<p>- Là một gói tích hợp các trò chơi tại Helio Center, được nạp vào thẻ Power Card của bạn, và khi đó bạn sẽ có quyền dùng thẻ này để quẹt và chơi tại các trò chơi đó, với GIÁ RẺ HƠN RẤT NHIỀU so với việc chơi từng trò riêng lẻ như bình thường. Tiết kiệm đến 165.000đ luôn đây!</p>
+				                </div>
+				            </div>
+				        </div>
+
+				    </div>
+				</div>
+				<div class="div-view-more" align="center">
+					<div class="view-more">
+						<a class="btn-view-more btn-custom-style btn-custom-style-faqs" role="button">{% trans "btn.view_more" %}<span class="glyphicon glyphicon-chevron-down glyphicon-custom"></span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div role="tabpanel" class="tab-pane" id="combo_helio">
+			<div class="wrap">
+				<div class="box1">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_3.png">
+					</div>
+				</div>
+				<div class="box2">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_4.png">
+					</div>
+				</div>
+				<div class="box3">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_1.png">
+					</div>
+				</div>
+				<div class="box4">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_2.png">
+					</div>
+				</div>
+				<div class="box5">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_7.png">
+					</div>
+				</div>
+				<div class="box6">
+					<div class="box-inner">
+						<img src="{{ STATIC_URL }}assets/websites/images/helio_redemption_store_5.png">
+					</div>
+				</div>
+			</div>
+			<!-- FAQs -->
+			<div class="faqs-section">
+				<div class="faqs-title" align="center">
+					<p class="big-font-size">{% trans "redemption_store.title.section.faq" %}</p>
+				</div>
+			 	<div class="faqs-content">
+					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+				        <div class="panel panel-default faq-detail">
+				            <div class="panel-heading" role="tab" id="heading_1">
+				                <h4 class="panel-title">
+				                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_1" aria-expanded="true" aria-controls="collapse_1">
+				                        <i class="more-less fa fa-chevron-circle-down"></i>
+				                    </a>
+				                    <p>Lượt chơi tự do là gì?</p>
+				                </h4>
+				            </div>
+				            <div id="collapse_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_1">
+				                <div class="panel-body">
+									<p>- Là một gói tích hợp các trò chơi tại Helio Center, được nạp vào thẻ Power Card của bạn, và khi đó bạn sẽ có quyền dùng thẻ này để quẹt và chơi tại các trò chơi đó, với GIÁ RẺ HƠN RẤT NHIỀU so với việc chơi từng trò riêng lẻ như bình thường. Tiết kiệm đến 165.000đ luôn đây!</p>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="panel panel-default faq-detail">
+				            <div class="panel-heading" role="tab" id="heading_1">
+				                <h4 class="panel-title">
+				                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_1" aria-expanded="true" aria-controls="collapse_1">
+				                        <i class="more-less fa fa-chevron-circle-down"></i>
+				                    </a>
+				                    <p>Mua combo helio ở đâu?</p>
+				                </h4>
+				            </div>
+				            <div id="collapse_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_1">
+				                <div class="panel-body">
+									<p>- Là một gói tích hợp các trò chơi tại Helio Center, được nạp vào thẻ Power Card của bạn, và khi đó bạn sẽ có quyền dùng thẻ này để quẹt và chơi tại các trò chơi đó, với GIÁ RẺ HƠN RẤT NHIỀU so với việc chơi từng trò riêng lẻ như bình thường. Tiết kiệm đến 165.000đ luôn đây!</p>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="div-view-more" align="center">
+					<div class="view-more">
+						<a class="btn-view-more btn-custom-style btn-custom-style-faqs" role="button">{% trans "btn.view_more" %}<span class="glyphicon glyphicon-chevron-down glyphicon-custom"></span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- DOWNLOAD APP BANNER -->
+	<div class="app-banner">
+		<a href="#"><img src="{{ STATIC_URL }}assets/websites/images/download-app_banner.png" width="100%"></a>
+	</div>
+</div>
+
+{% endblock %}
