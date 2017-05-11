@@ -1,4 +1,4 @@
-
+/*START IMAGE GALLERY*/
 .wrap {
     overflow: hidden;
     margin: 40px 0px 80px;
@@ -12,7 +12,6 @@
     width: 50%;
     padding-bottom: 50%;
 }
-
 .box2 {
     float: right;
     position: relative;
@@ -33,22 +32,18 @@
     padding-bottom: 20%;
     left: 25%;
 }
-
 .box5 {
     float: left;
     position: relative;
     width: 25%;
-    padding-bottom: 50%;
-    
+    padding-bottom: 50%;    
 }
 .box6 {
     float: right;
     position: relative;
     width: 75%;
     padding-bottom: 50%;
-    
 }
-
 .box-inner {
     position: absolute;
     left: 2px;
@@ -61,5 +56,4 @@
  	width: 100%;
  	height: 100%;
 }
-
-
+/*END IMAGE GALLERY*/
