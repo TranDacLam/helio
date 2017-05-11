@@ -16,12 +16,17 @@
 	}
 	function fb_like() {
 
-		FB.Event.subscribe('edge.create',
-		    function(response) {
-		        alert('You liked the URL: ' + response);
+		// FB.Event.subscribe('edge.create',
+		//     function(response) {
+		//         alert('You liked the URL: ' + response);
+		//     }
+		// );
+		FB.api(
+		    "/me/og.likes",
+		    function (response) {
+		     	console.log("aaaaaaaaa");
 		    }
 		);
-
 
 
 		// console.log("sdfafa");
