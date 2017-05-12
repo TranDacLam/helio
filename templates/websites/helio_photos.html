@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 {% block extrastylesheet %}
-    <!-- <link href="{{ STATIC_URL }}assets/websites/css/image_section.css" rel="stylesheet" type="text/css" /> -->
+    <link href="{{ STATIC_URL }}assets/websites/css/helio_photos.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block title %}Helio Photos{% endblock title %}
 {% block extrascript %}
-
+    <script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/helio_photos.js"></script>
 {% endblock %}
 {% block main_content %} 
 
@@ -13,7 +13,7 @@
     <div class="page-top">
         <div class="page-header-img">
             <div>
-                <img src="{{ STATIC_URL }}assets/websites/images/helio_coffee_header.png" width="100%">
+                <img src="{{ STATIC_URL }}assets/websites/images/helio_photos_header.png" width="100%">
             </div>
             <div class="page-title" align="center">
                 <div class="col-md-12">
@@ -23,82 +23,38 @@
         </div>
         <div align="center" class="page-header-text">
             <div class="form-title">
-                <p class="text-description page_description">Helio Photos Helio Photos Helio Photos Helio Photos Helio Photos Helio Photos Helio Photos Helio Photos Helio Photos Helio Photos Helio Photos Helio Photos </p>
+                <p class="text-description page_description">Helio mang trong mình niềm vui và mong muốn lan tỏa đến với tất cả mọi người. Hãy xùng xem lại những khoảnh khắc tuyệt vời mà mọi người đã lưu lại tại Helio Center qua những hình ảnh đầy vui nhộn và ngập tràn hạnh phúc.</p>
             </div>
         </div>
     </div>
-    <style type="text/css">
-        .box {
-            padding: 0px; 
-            position: relative; 
-            padding-top: 33.33333333333%;
-        }
-        .box-inner {
-            position: absolute; 
-            top: 0px; 
-            height: 100%;
-        }
-        .box-inner img {
-            opacity: 0.5;
-        }
-        .box-text {
-            width:100%;
-            height:100%;
-            position:absolute;
-            top:0;
-            text-align:center;
-            padding:20px;
-            /* New lines for alignment */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
     <!-- CONTENT -->
-    <div class="wrap">
-        <div class="box col-xs-4">
-            <div class="box-inner" style="">
-                <img src="{{ STATIC_URL }}assets/websites/images/helio_coffee_header.png" width="100%" height="100%">
-            </div>
-            <div class="box-text">
-                <div>
-                    <p>ABCBBBB</p>
-
-                    <p>ABCBBBB</p>
-                </div>
-            </div>
-        </div>
+    {% if photos %}
+    <div class="wrap row photos-section">
+        {% for photo in photos %}
         <div class="box col-xs-4">
             <div class="box-inner">
-                <img src="{{ STATIC_URL }}assets/websites/images/helio_coffee_header.png" width="100%" height="100%">
+                <img src="{{ MEDIA_URL }}{{photo.image}}" width="100%" height="100%">
             </div>
             <div class="box-text">
-                <div>
-                    <p>ABCBBBB</p>
+                <div class="div-text">
+                    <p class="ablum-name big-font-size">{{photo.name}}</p>
                 </div>
             </div>
         </div>
-        <div class="box col-xs-4">
-            <div class="box-inner" style="">
-                <img src="{{ STATIC_URL }}assets/websites/images/helio_coffee_header.png" width="100%" height="100%">
+        {% endfor %}
+        <div class="box-view-more col-xs-4">
+            <div class="box-inner">
+                
             </div>
             <div class="box-text">
-                <div>
-                    <p>ABCBBBB</p>
-                </div>
-            </div>
-        </div>
-        <div class="box col-xs-4">
-            <div class="box-inner" style="">
-                <img src="{{ STATIC_URL }}assets/websites/images/helio_coffee_header.png" width="100%" height="100%">
-            </div>
-            <div class="box-text">
-                <div>
-                    <p>ABCBBBB</p>
+                <div class="div-text">
+                    <p class="ablum-name big-font-size"><i class="fa fa-plus" aria-hidden="true"></i></p>
+                    <p class="ablum-name big-font-size">XEM THÊM</p>
                 </div>
             </div>
         </div>
     </div>
+    {% endif %}
     <!-- DOWNLOAD APP BANNER -->
     <div class="app-banner">
         <a href="#"><img src="{{ STATIC_URL }}assets/websites/images/download-app_banner.png" width="100%"></a>
