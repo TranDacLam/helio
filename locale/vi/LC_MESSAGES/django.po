@@ -144,6 +144,14 @@ msgid "careerpage.other_career"
 msgstr "TUYỂN DỤNG KHÁC"
 # END CAREER DETAIl
 
+# START NEW DETAIl
+msgid "newpage.btn.all_news" 
+msgstr "TẤT CẢ TIN TỨC"
+
+msgid "newpage.other_new" 
+msgstr "TIN TỨC KHÁC"
+# END NEW DETAIl
+
 # START CONTACT 
 msgid "contact.btn.send"
 msgstr "GỬI TIN NHẮN" 

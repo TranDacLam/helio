@@ -1,0 +1,142 @@
+/*START CAROUSEL*/
+.carousel-custom {
+    position: relative;
+    margin: 0px auto;
+    height: 80%;
+    border: none;
+    overflow: visible;
+}
+
+ol.carousel-indicators-custom .active {
+    width: 40px;
+    height: 4px;
+    margin: 0 5px;
+    background-color: #fff;
+    border-color: #fff;
+}
+ol.carousel-indicators-custom li {
+    display: inline-block;
+    width: 40px;
+    height: 4px;
+    margin: 0 5px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: #bd197c;
+    border-color: #bd197c;
+    border-radius: 0px;
+}
+.carousel-caption-custom {
+    top: 30%;
+}
+/*
+div.carousel-caption-custom > .big-font-size {
+    line-height: 90px;
+}*/
+
+/*END CAROUSEL*/
+
+/*START news CSS*/
+.custom-new {
+    margin: 25px 0;
+}
+.thumbnail-custom {
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+}
+.style-post a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+.style-post .title-post:focus,
+.style-post .title-post:hover{
+    color: #fec231;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+.style-post p {
+    padding-top: 10px;
+}
+.style-post a.view-detail {
+    color: #f332a4;
+    font-size: 18px;
+}
+.custom-other-exp {
+    padding: 10px 0px 80px;
+}
+.btn-custom {
+    background-color: transparent;
+}
+.text-limit-rows {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   max-height: 80px;      
+   -webkit-line-clamp: 3; 
+   -webkit-box-orient: vertical;
+}
+.text-limit-rows > a {
+    display: inline-block;
+}
+/*END news CSS*/
+
+/*START BUTTON VIEW MORE CSS*/
+.div-view-more {
+    padding-top: 30px;
+}
+a.btn-custom-style.btn-custom-style-news {
+    border-image-source: linear-gradient(16deg, #0095bb, #0095bb);
+}
+.active a.btn-custom-style.btn-custom-style-news:focus,
+a.btn-custom-style.btn-custom-style-news:focus, 
+a.btn-custom-style.btn-custom-style-news:hover {
+    color: #0095bb;
+    background-color: #fff;
+    border-image-source: linear-gradient(16deg, #15062b, #15062b);
+    background-image: none;
+}
+/*END BUTTON VIEW MORE CSS*/
+@media (max-width: 991px) {
+    /*CAROUSEL PHONE SCREEN*/
+    ol.carousel-indicators-custom .active {
+        width: 20px;
+        height: 3px;
+        margin: 0 5px;
+        background-color: #fff;
+        border-color: #fff;
+    }
+    ol.carousel-indicators-custom li {
+        display: inline-block;
+        width: 20px;
+        height: 3px;
+        margin: 0 5px;
+        text-indent: -999px;
+        cursor: pointer;
+        background-color: #bd197c;
+        border-color: #bd197c;
+        border-radius: 0px;
+    }
+    .big-font-size {
+        font-size: 20px;
+        font-family: "Yanone Kaffeesatz";
+        letter-spacing: 3px;
+        font-weight: bold;
+    }
+    div.carousel-caption-custom > .big-font-size {
+        line-height: 30px;
+    }
+    .carousel-caption-custom {
+        top: 14%;
+    }
+}
+@media (max-width: 992px) {
+    .carousel-caption-custom {
+        top: 20%;
+        width: 80%;
+        left: 10%;
+        right: 10%;
+    }
+}
