@@ -62,7 +62,7 @@ def faqs(request):
     if faqs_categorys:
         for faqs_category in faqs_categorys:
             datas[faqs_category] = faqs_category.faq_category_rel.all().order_by('-created')
-    
+        
     return render(request, 'websites/faqs.html', {"datas":datas})
 
 def contact(request):
@@ -298,7 +298,7 @@ def career_detail(request, career_id):
 
 
 def other_product(request):
-    print "***START News PAGE***"
+    print "***START other product PAGE***"
 
     result = {}
 
@@ -307,7 +307,7 @@ def other_product(request):
 
     products = Post.objects.filter(post_type_id=const.ORTHER_PROD_POST_TYPE_ID).order_by('-created')
     
-    print "products ", products
+    # print "products ", products
     datas = {}
     for product in products:
         if product:
@@ -316,11 +316,16 @@ def other_product(request):
             datas[product.id] = product
          
     result["datas"] = datas
-    print datas
+    # print datas
 
     # FAQs list
-    faqs = FAQ.objects.filter(category_id=const.OTHER_PRODUCT_CATEGORY)
+    faqs_categorys = Category.objects.filter(pk__in=(const.BIRTHDAY_PARTY_CATEGORY, const.SCHOOL_TRIP_CATEGORY, const.COMBO_HELIO_CATEGORY))
+    faqs ={}
+    if faqs_categorys:
+        for faqs_category in faqs_categorys:
+            faqs[faqs_category] = faqs_category.faq_category_rel.all().order_by('-created')
     result["faqs"] = faqs
+    print faqs
 
     return render(request, 'websites/other_product.html', {"result":result})
 

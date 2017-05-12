@@ -60,56 +60,39 @@
 				{% endfor %}
 			</div>
 			{% endif %}
-	 		<!-- <div class="faqs-section">
-				<div class="faqs-title" align="center">
-					<p class="big-font-size">{% trans "redemption_store.title.section.faq" %}</p>
-				</div>
-			 	<div class="faqs-content">
-					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-				        <div class="panel panel-default faq-detail">
-				            <div class="panel-heading" role="tab" id="heading_1">
-				                <h4 class="panel-title">
-				                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_1" aria-expanded="true" aria-controls="collapse_1">
-				                        <i class="more-less fa fa-chevron-circle-down"></i>
-				                    </a>
-				                    <p>Combo Helio là gì?</p>
-				                </h4>
-				            </div>
-				            <div id="collapse_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_1">
-				                <div class="panel-body">
-									<p>- Là một gói tích hợp các trò chơi tại Helio Center, được nạp vào thẻ Power Card của bạn, và khi đó bạn sẽ có quyền dùng thẻ này để quẹt và chơi tại các trò chơi đó, với GIÁ RẺ HƠN RẤT NHIỀU so với việc chơi từng trò riêng lẻ như bình thường. Tiết kiệm đến 165.000đ luôn đây!</p>
-				                </div>
-				            </div>
-				        </div>
-				        <div class="panel panel-default faq-detail">
-				            <div class="panel-heading" role="tab" id="heading_1">
-				                <h4 class="panel-title">
-				                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_1" aria-expanded="true" aria-controls="collapse_1">
-				                        <i class="more-less fa fa-chevron-circle-down"></i>
-				                    </a>
-				                    <p>Mua combo helio ở đâu?</p>
-				                </h4>
-				            </div>
-				            <div id="collapse_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_1">
-				                <div class="panel-body">
-									<p>- Là một gói tích hợp các trò chơi tại Helio Center, được nạp vào thẻ Power Card của bạn, và khi đó bạn sẽ có quyền dùng thẻ này để quẹt và chơi tại các trò chơi đó, với GIÁ RẺ HƠN RẤT NHIỀU so với việc chơi từng trò riêng lẻ như bình thường. Tiết kiệm đến 165.000đ luôn đây!</p>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-				<div class="div-view-more" align="center">
-					<div class="view-more">
-						<a class="btn-view-more btn-custom-style btn-custom-style-faqs" role="button">{% trans "btn.view_more" %}<span class="glyphicon glyphicon-chevron-down glyphicon-custom"></span></a>
-					</div>
-				</div>
-			</div> -->
 			{% if result.faqs %}
 			<div class="faqs-section">
+
+				
 				<div class="faqs-title" align="center">
 					<p class="big-font-size">{% trans "redemption_store.title.section.faq" %}</p>
 				</div>
-				{% include 'websites/sections/faqs_section.html' %}
+				{% if result.faqs %}
+				<div class="faqs-content">
+					
+					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+						{% for category, values in result.faqs.items %}
+				        <div class="panel panel-default faq-detail">
+				        	{% for faq in values %}
+				            <div class="panel-heading" role="tab" id="heading_{{faq.id}}">
+				                <h4 class="panel-title">
+				                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{faq.id}}" aria-expanded="true" aria-controls="collapse_{{faq.id}}">
+				                        <i class="more-less fa fa-chevron-circle-down"></i>
+				                    </a>
+				                    <p>{{faq.question}}</p>
+				                </h4>
+				            </div>
+				            {% endfor %}
+				            <div id="collapse_{{faq.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_{{faq.id}}">
+				                <div class="panel-body">
+									<p>{{faq.answer}}</p>
+				                </div>
+				            </div>
+				        </div>
+				        {% endfor %}
+				    </div>
+				</div>
+				{% endif %}
 				<div class="div-view-more" align="center">
 					<div class="view-more">
 						<a class="btn-view-more btn-custom-style btn-custom-style-faqs" role="button">{% trans "btn.view_more" %}<span class="glyphicon glyphicon-chevron-down glyphicon-custom"></span></a>
