@@ -334,3 +334,9 @@ def other_product(request):
 
     return render(request, 'websites/other_product.html', {"result":result})
 
+def policy(request):
+    print "***START POLICY PAGE***"
+    # Policy list
+    policy = Post.objects.get(key_query=const.POLICY_KEY_QUERY)
+
+    return render(request, 'websites/policy.html', {"policy":policy})

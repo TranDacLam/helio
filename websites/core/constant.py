@@ -15,3 +15,4 @@ OTHER_PRODUCT_CATEGORY=6
 NIGHT_LIFE_KEY_QUERY='kq_night_life'
 COFFEE_KEY_QUERY='kq_coffee'
 REDEMPTION_STORE_KEY_QUERY='kq_redemption_store'
+POLICY_KEY_QUERY="kq_policy"
