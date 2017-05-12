@@ -182,7 +182,9 @@ class Promotion(DateTimeModel):
 class FAQ(DateTimeModel):
 
     def limit_category_Faq():
-        return {'id__in': [const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY, const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY, const.BIRTHDAY_PARTY_CATEGORY, const.SCHOOL_TRIP_CATEGORY, const.COMBO_HELIO_CATEGORY]}
+        return {'id__in': [const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY, 
+                            const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY, const.BIRTHDAY_PARTY_CATEGORY, 
+                            const.SCHOOL_TRIP_CATEGORY, const.COMBO_HELIO_CATEGORY]}
 
     question = models.CharField(max_length=255, unique=True)
     answer = models.TextField()

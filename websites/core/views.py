@@ -321,23 +321,23 @@ def other_product(request):
     datas = {}
     for product in products:
         if product:
-            list_images = product.posts_image.all()[:6]
-            product.post_images = list_images
-            datas[product.id] = product
-         
+            products_faqs = {}
+            #get list post images
+            product.post_images = product.posts_image.all()[:6]
+            products_faqs["product"] = product
+
+            #get list post images by name
+            faqs_category =  Category.objects.filter(name_en = product.name_en) 
+            if faqs_category:
+                faq_category = faqs_category[0]
+                products_faqs["faqs"] = faq_category.faq_category_rel.all().order_by('-created')
+            datas[product.id] = products_faqs
+
+
+    print datas
     result["datas"] = datas
-    # print datas
 
-    # FAQs list
-    faqs_categorys = Category.objects.filter(pk__in=(const.BIRTHDAY_PARTY_CATEGORY, const.SCHOOL_TRIP_CATEGORY, const.COMBO_HELIO_CATEGORY))
-    faqs ={}
-    if faqs_categorys:
-        for faqs_category in faqs_categorys:
-            faqs[faqs_category] = faqs_category.faq_category_rel.all().order_by('-created')
-    result["faqs"] = faqs
-    print faqs
-
-    return render(request, 'websites/other_product.html', {"result":result})
+    return render(request, 'websites/other_product.html', {"datas":datas})
 
 def policy(request):
     print "***START POLICY PAGE***"
