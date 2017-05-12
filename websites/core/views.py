@@ -352,4 +352,8 @@ def helio_photos(request):
     # Helio photos
     photos = Post.objects.filter(post_type_id=const.HELIO_PHOTOS_POST_TYPE_ID)
 
+    for photo in photos:
+        # get len of post images
+        photo.images_len =  len(photo.posts_image.all())
+
     return render(request, 'websites/helio_photos.html', {"photos": photos});

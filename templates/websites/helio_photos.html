@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% load i18n %}
 {% block extrastylesheet %}
     <link href="{{ STATIC_URL }}assets/websites/css/helio_photos.css" rel="stylesheet" type="text/css" />
 {% endblock %}
@@ -38,6 +39,12 @@
             <div class="box-text">
                 <div class="div-text">
                     <p class="ablum-name big-font-size">{{photo.name}}</p>
+                    {% if photo.images_len > 1 %}
+                    <div class="view-all">
+                        <p>{{photo.images_len}} images</p>
+                        <a class="btn btn-custom-style" role="button">{% trans "btn.view_all" %}</a>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
