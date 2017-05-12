@@ -343,6 +343,8 @@ def policy(request):
 
 
 def helio_photos(request):
+    print "***START HELIO PHOTOS PAGE***"
+    # Helio photos
+    photos = Post.objects.filter(post_type_id=const.HELIO_PHOTOS_POST_TYPE_ID)
 
-
-    return render(request, 'websites/helio_photos.html')
+    return render(request, 'websites/helio_photos.html', {"photos": photos});
