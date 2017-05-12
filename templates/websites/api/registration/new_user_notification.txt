@@ -1,0 +1,2 @@
+Hi {{user.email}},
+Your account is now activated. You can visit website now.

@@ -4,7 +4,7 @@ from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 import ast
 from django.http import JsonResponse
-import constant as const
+import constants as const
 import time
 from datetime import *
 from django.core.paginator import Paginator

@@ -1,5 +1,46 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 from core.models import *
+from django.contrib.auth import get_user_model
+from message_custom import SetCustomErrorMessagesMixin
+from django.utils.translation import ugettext_lazy as _
+
+
+User = get_user_model()
+
+
+class UserSerializer(SetCustomErrorMessagesMixin, serializers.ModelSerializer):
+    email = serializers.EmailField(validators=[UniqueValidator(queryset=User.objects.all())])
+    username = serializers.CharField(max_length=255)
+    first_name = serializers.CharField(max_length=255)
+    last_name = serializers.CharField(max_length=255)
+    birth_date = serializers.DateField()
+    phone = serializers.CharField(max_length=50)
+    personal_id = serializers.CharField(max_length=50)
+    address = serializers.CharField(max_length=255)
+    city = serializers.CharField(max_length=255)
+    country = serializers.CharField(max_length=255)
+    password = serializers.CharField(
+        style={'input_type': 'password'},
+        write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'email', 'first_name', 'last_name', 'birth_date', 'phone', 'personal_id', 'country', 'address', 'city',)
+        custom_error_messages_for_validators = {
+            'email': {
+                UniqueValidator: _('This email is already taken. Please, try again')
+            }
+        }
+
+    def create(self, validated_data):
+        email = validated_data.pop('email')
+        username = validated_data.pop('username')
+        password = validated_data.pop('password')
+        user = User.objects.create_user(username=username, email=email, password=password, **validated_data)
+        user.is_active = True
+        # user.save()
+        return user
 
 
 class HotsSerializer(serializers.Serializer):
