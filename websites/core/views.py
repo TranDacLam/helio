@@ -328,7 +328,7 @@ def other_product(request):
 
             #get list post images by name
             faqs_category =  Category.objects.filter(name_en = product.name_en) 
-            if faqs_category:
+            if faqs_category and faqs_category[0]:
                 faq_category = faqs_category[0]
                 products_faqs["faqs"] = faq_category.faq_category_rel.all().order_by('-created')
             datas[product.id] = products_faqs
