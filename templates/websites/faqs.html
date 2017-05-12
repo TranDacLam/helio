@@ -54,12 +54,12 @@
 				<div class="tab-content">
 					{% for category, values in datas.items %}
 					<div role="tabpanel" class="tab-pane faqs-content" id="faqs_{{category.id}}">
-						<div class="panel-group view-more-div" id="accordion" role="tablist" aria-multiselectable="true">
+						<div class="panel-group view-more-div" id="faqs_category_{{category.id}}" role="tablist" aria-multiselectable="true">
 							{% for faq in values %}
 					        <div class="panel panel-default faq-detail">
 					            <div class="panel-heading" role="tab" id="heading_{{faq.id}}">
 					                <h4 class="panel-title">
-					                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{faq.id}}" aria-expanded="true" aria-controls="collapse_{{faq.id}}">
+					                    <a role="button" data-toggle="collapse" data-parent="#faqs_category_{{category.id}}" href="#collapse_{{faq.id}}" aria-expanded="true" aria-controls="collapse_{{faq.id}}">
 					                        <i class="more-less fa fa-chevron-circle-down"></i>
 					                    </a>
 					                    <p>{{faq.question}}</p>
