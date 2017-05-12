@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import AbstractUser
 import custom_models
-import constant as const
+import constants as const
 
 # Create your models here.
 

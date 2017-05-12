@@ -18,9 +18,13 @@ urlpatterns = [
     url(r'^transaction/filter/$', views.transactions_type, name="get-transactions-filter"),
     url(r'^faqs/$', views.faqs),
 
+    url(r'^verify/email/$', views.verify_email, name="verify-email"),
+    url(r'^accounts/registrations/$',
+        views.RegistrationView.as_view(), name='registration_register'),
     url(r'^accounts/login/$', obtain_jwt_token, name="accounts-login"),
     # Social Login : alias name url is : login_social_jwt_user and url is : api/login/social/jwt_user/
     url(r'^login/', include('rest_social_auth.urls_jwt')),
     # url(r'^api-token-verify/', verify_jwt_token),
+    url(r'^upload/avatar/(?P<filename>[^/]+)$', views.FileUploadView.as_view(), name="upload-avatar")
 
 ]
