@@ -23,13 +23,6 @@
     border-style: solid;
     border-color: #e336a7 transparent transparent transparent;
 }
-@media (max-width: 991px) {
-	.intro-btn-group li.active a.btn-custom-style:after {
-	    background-image: none;
-	    background-color: #e336a7;
-	    border: none;
-	}
-}
 .content-section {
 	font-family: "Yanone Kaffeesatz";
 }
@@ -129,4 +122,17 @@
 }
 .image-section img {
 	width: 250px;
+}
+
+img.textwrap {
+	width: 160px;
+	height: 160px;
+}
+
+@media (max-width: 991px) {
+	.intro-btn-group li.active a.btn-custom-style:after {
+	    background-image: none;
+	    background-color: #e336a7;
+	    border: none;
+	}
 }
