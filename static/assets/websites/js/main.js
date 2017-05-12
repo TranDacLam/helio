@@ -17,34 +17,21 @@ $(document).ready( function() {
 	}); 
 
 
-
-	var url = window.location.href;
-	$("#fb_share_btn").click(function() {
-		FB.ui({
-	      	method: 'share',
-	      	href: url,
-	    }); 
-	});
-	$("#fb_like_btn").click(function() {
-		FB.ui({
-			method: 'share_open_graph',
-			action_type: 'og.likes',
-			action_properties: JSON.stringify({
-				object: url,
-			})
-		});
-		// FB.api(
-		//  	'/me/og.likes',
-		//  	{
-		//  		object:url
-		//  	}, 
-		//  	function(response){
-		// 	    if (!response || response.error) {
-	 //              	alert('you couldnt like.');
-	 //           	} else {
-	 //              	alert('you liked it.');
-	 //           	}
-		// 	}
-		// );
-	});
+    /*FB LIKE AND SHARE CUSTOM FUNCTION*/
+	// var url = window.location.href;
+	// $("#fb_share_btn").click(function() {
+	// 	FB.ui({
+	//       	method: 'share',
+	//       	href: url,
+	//     }); 
+	// });
+	// $("#fb_like_btn").click(function() {
+	// 	FB.ui({
+	// 		method: 'share_open_graph',
+	// 		action_type: 'og.likes',
+	// 		action_properties: JSON.stringify({
+	// 			object: url,
+	// 		})
+	// 	});
+	// });
 });
