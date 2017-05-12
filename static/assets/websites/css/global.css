@@ -13,7 +13,9 @@ p {
     line-height: 24px;
     letter-spacing: 0.5px;
 }
-
+img {
+    width: 100%;
+}
 p.short_description {
     font-size: 16px;
 }
@@ -21,6 +23,27 @@ p.short_description {
 p.page_description {
     font-size: 20px;
 }
+
+/* start custom modal bootstrap */
+.modal-backdrop.fade.in {
+    opacity: 1;
+} 
+.custom-modal .modal-header, 
+.custom-modal .modal-body {
+    border-bottom: none;
+    padding: 0px;
+}
+.custom-modal .modal-header .close {
+    font-size: 76px;
+    color: #fff;
+    opacity: 1;
+    margin-right: 5px;
+    font-weight: normal;
+}
+.custom-modal .modal-content {
+    background: transparent;
+}
+/* end custom modal bootstrap */
 
 .big-font-size {
     font-size: 72px;
@@ -100,7 +123,7 @@ p.page_description {
     padding-right: 0px;
 }
 .main-menu  .navbar-nav>li {
-    padding: 0 50px 0 0;
+    padding: 0 40px 0 0;
     min-height: 57px;
 }
 .main-menu .navbar-nav>li.active>a,

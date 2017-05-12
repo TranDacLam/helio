@@ -15,4 +15,23 @@ $(document).ready( function() {
 		$('#menu-caret').addClass('glyphicon-chevron-down');
 		$('#menu-caret').removeClass('glyphicon-chevron-up');
 	}); 
+
+
+    /*FB LIKE AND SHARE CUSTOM FUNCTION*/
+	// var url = window.location.href;
+	// $("#fb_share_btn").click(function() {
+	// 	FB.ui({
+	//       	method: 'share',
+	//       	href: url,
+	//     }); 
+	// });
+	// $("#fb_like_btn").click(function() {
+	// 	FB.ui({
+	// 		method: 'share_open_graph',
+	// 		action_type: 'og.likes',
+	// 		action_properties: JSON.stringify({
+	// 			object: url,
+	// 		})
+	// 	});
+	// });
 });

@@ -62,7 +62,7 @@ def faqs(request):
     if faqs_categorys:
         for faqs_category in faqs_categorys:
             datas[faqs_category] = faqs_category.faq_category_rel.all().order_by('-created')
-    
+        
     return render(request, 'websites/faqs.html', {"datas":datas})
 
 def contact(request):
@@ -92,10 +92,8 @@ def helio_kids(request):
 
 def night_life(request):
     print "***START NIGHT LIFE CONTENT PAGE***"
-    result = {}
     night_life = Post.objects.get(key_query=const.NIGHT_LIFE_KEY_QUERY)
-    result["night_life"] = night_life
-    return render(request, 'websites/night_life.html', {"result": result})
+    return render(request, 'websites/night_life.html', {"night_life": night_life})
 
 
 def helio_play(request):
@@ -174,10 +172,6 @@ def event_detail(request, event_id):
 
     return render(request, 'websites/event_detail.html', {"event": event, "other_events": other_events})
 
-def event_content(request):
-    print "***START EVENT CONTENT PAGE***"
-    
-    return render(request, 'websites/event_content.html')
     
 def experience(request):
     print "***START EXPERIENCE CONTENT PAGE***"
@@ -205,9 +199,22 @@ def experience_detail(request, experience_id):
 
 def news(request):
     print "***START News PAGE***"
+    result = {}
+    # News info
+    news_type = Post_Type.objects.get(pk=const.NEWS_POST_TYPE_ID)
+    
+    # News list
+    news = Post.objects.filter(post_type = news_type).order_by('-created')
 
-    return render(request, 'websites/news.html')
+    return render(request, 'websites/news.html', {"news_type": news_type, "news": news, "news_hots": news[:5]})
 
+def new_detail(request, new_id):
+    print "***START NEW CONTENT PAGE***"
+    new = Post.objects.get(pk=new_id)
+
+    other_news = Post.objects.filter(post_type_id=const.NEWS_POST_TYPE_ID).order_by('-created')[:3]
+
+    return render(request, 'websites/new_detail.html', {"new": new, "other_news": other_news})
 
 def coffee_bakery(request):
     print "***START HELIO COFFEE CONTENT PAGE***"
@@ -298,3 +305,55 @@ def career_detail(request, career_id):
     other_careers = Post.objects.filter(post_type_id=const.CAREERS_POST_TYPE_ID).order_by('-created')[:3]
 
     return render(request, 'websites/carrer_detail.html', {"career": career, "other_careers": other_careers})
+
+
+def other_product(request):
+    print "***START other product PAGE***"
+
+    result = {}
+
+    page_info = Post_Type.objects.get(pk=const.ORTHER_PROD_POST_TYPE_ID)
+    result["page_info"] = page_info
+
+    products = Post.objects.filter(post_type_id=const.ORTHER_PROD_POST_TYPE_ID).order_by('-created')
+    
+    # print "products ", products
+    datas = {}
+    for product in products:
+        if product:
+            products_faqs = {}
+            #get list post images
+            product.post_images = product.posts_image.all()[:6]
+            products_faqs["product"] = product
+
+            #get list post images by name
+            faqs_category =  Category.objects.filter(name_en = product.name_en) 
+            if faqs_category:
+                faq_category = faqs_category[0]
+                products_faqs["faqs"] = faq_category.faq_category_rel.all().order_by('-created')
+            datas[product.id] = products_faqs
+
+
+    print datas
+    result["datas"] = datas
+
+    return render(request, 'websites/other_product.html', {"datas":datas})
+
+def policy(request):
+    print "***START POLICY PAGE***"
+    # Policy
+    policy = Post.objects.get(key_query=const.POLICY_KEY_QUERY)
+
+    return render(request, 'websites/policy.html', {"policy":policy})
+
+
+def helio_photos(request):
+    print "***START HELIO PHOTOS PAGE***"
+    # Helio photos
+    photos = Post.objects.filter(post_type_id=const.HELIO_PHOTOS_POST_TYPE_ID)
+
+    for photo in photos:
+        # get len of post images
+        photo.images_len =  len(photo.posts_image.all())
+
+    return render(request, 'websites/helio_photos.html', {"photos": photos});

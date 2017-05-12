@@ -37,6 +37,9 @@ msgstr "PROMOTION"
 
 msgid "menu.faq"
 msgstr "FAQs"
+
+msgid "menu.helio_photos"
+msgstr "HELIO PHOTOS"
 # END MAIN MENU
 
 # START SUB MENU
@@ -143,6 +146,22 @@ msgstr "ALL CAREER"
 msgid "careerpage.other_career" 
 msgstr "OTHER CAREER"
 # END CAREER DETAIl
+
+# START NEW DETAIl
+msgid "newpage.btn.all_news" 
+msgstr "ALL NEWS"
+
+msgid "newpage.other_new" 
+msgstr "OTHER NEWS"
+# END NEW DETAIl
+
+# START FAQS
+msgid "faqspage.text.support_more"
+msgstr "SUPPORT MORE"
+
+msgid "faqspage.text.contact_us"
+msgstr "CONTACT US"
+# END FAQs
 
 # START CONTACT 
 msgid "contact.btn.send"

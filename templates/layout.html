@@ -28,10 +28,12 @@
     <script type="text/javascript">
         var STATIC_URL = '{{ STATIC_URL }}';
         var lang_code = '{{ LANGUAGE_CODE }}';
+        var fbAppId = '{{FB_APP_ID}}';
     </script>
     
     <script src = "{{ STATIC_URL }}assets/js/jquery-3.2.1.min.js"></script>
     <script src = "{{ STATIC_URL }}assets/js/bootstrap.min.js"></script>
+    <script src = "//connect.facebook.net/en_US/sdk.js"></script>
     <script src = "{{ STATIC_URL }}assets/websites/js/ajaxSetup.js"></script>
     <script src = "{{ STATIC_URL }}assets/websites/js/main.js"></script>
     {% block extrascript %}{% endblock %}

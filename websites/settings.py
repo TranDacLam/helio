@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+FB_APP_ID = '126726044544310'
+
 
 # Application definition
 
@@ -82,6 +84,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.media',
                 'main.middleware.set_language_code',
+                'main.middleware.get_app_fb_id',
             ],
         },
     },

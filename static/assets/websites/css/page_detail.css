@@ -2,7 +2,11 @@
 .page-caption {
     position: absolute;
     width: 100%;
-    top: 40%;
+    top: 0px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .page-header-img-full {
 	margin-bottom: 60px;
@@ -22,9 +26,6 @@
 ._3jn- .inlineBlock {
 	background-image: url('../images/heart-button.png');
 	background-size: cover;
-}
-.custom-icons {
-	padding-top: 20px;
 }
 .custom-icons a {
 	color: #fff;
@@ -153,17 +154,9 @@ a.btn-custom-style.btn-custom-style-kids:hover {
 
 /*MEDIA*/
 @media (max-width: 991px) {
-    .page-caption {
-        position: static;
-    }
 	.form-title {
 		width: 100%;
 	}
-	.page-title-detail {
-        position: static;
-        margin: 50px auto 0;
-        width: 100%;
-    }
     .button-all {
     	float: left;
     }

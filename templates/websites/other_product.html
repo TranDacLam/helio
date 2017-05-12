@@ -1,0 +1,109 @@
+{% extends "layout.html" %}
+{% load i18n %} 
+{% block title %}Other product - Sản phẩm khác{% endblock %}
+{% block extrastylesheet %}
+	<link href="{{ STATIC_URL }}assets/websites/css/image_section.css" rel="stylesheet" type="text/css" />
+	<link href="{{ STATIC_URL }}assets/websites/css/faqs_section.css" rel="stylesheet" type="text/css" />
+	<link href="{{ STATIC_URL }}assets/websites/css/other_product.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block extrascript %}
+	<script src = "{{ STATIC_URL }}assets/websites/js/other_product.js"></script>
+{% endblock %}
+{% block main_content %} 
+
+<div class="container">
+	<!-- OTHER PRODUCT PAGE DESCRIPTION -->
+	{% if page_info %}
+	<div class="page-top">
+		<div class="page-header-img">
+			<div>
+				<img src="{{ STATIC_URL }}assets/websites/images/other_product_header.png" width="100%">
+			</div>
+			<div class="page-title" align="center">
+				<div class="col-md-12">
+					<p class="page-title-text">{{page_info.name}}</p>
+				</div>
+			</div>
+		</div>
+		<div align="center" class="page-header-text">
+			<div class="form-title">
+				<p class="text-description">{{page_info.description}}</p>
+			</div>
+		</div>
+	</div>
+    {% endif %}
+	<!-- BUTTON GROUP -->
+	{% if datas %} 
+    <div class="play-btn-section">
+        <ul class="nav play-btn-group">
+        	{% for key, products_faqs in datas.items %}
+            <li class="col-md-4 {% if forloop.counter0 == 0 %} active {% endif %}">
+            	{% if products_faqs.product %} 
+                <a href="#id_{{key}}" role="tab" data-toggle="tab" class="btn-custom-style ">{{products_faqs.product.name}}</a>
+            	{% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+	<!-- CONTENT -->
+
+	<div class="tab-content">
+		{% for key, products_faqs in datas.items %}
+		<div role="tabpanel" class="tab-pane {% if forloop.counter0 == 0 %} active {% endif %}" id="id_{{key}}">
+			<!-- CONTENT -->
+			{% if products_faqs.product %} 
+			<div class="wrap">
+				{% for item in products_faqs.product.post_images %}
+					<div class="box{{forloop.counter}}">
+						<div class="box-inner">
+							<img src="{{ MEDIA_URL }}{{item.image}}">
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			{% endif %}
+
+			{% if products_faqs.faqs %} 
+			<div class="faqs-section">
+				<div class="faqs-title" align="center">
+					<p class="big-font-size">{% trans "redemption_store.title.section.faq" %}</p>
+				</div>
+				<div class="faqs-content">
+					<div class="panel-group" id="faq_{{key}}" role="tablist" aria-multiselectable="true">
+						{% for faq in products_faqs.faqs %}
+				        <div class="panel panel-default faq-detail">
+				            <div class="panel-heading" role="tab" id="heading_{{faq.id}}">
+				                <h4 class="panel-title">
+				                    <a role="button" data-toggle="collapse" data-parent="#faq_{{key}}" href="#collapse_{{faq.id}}" aria-expanded="true" aria-controls="collapse_{{faq.id}}">
+				                        <i class="more-less fa fa-chevron-circle-down"></i>
+				                    </a>
+				                    <p>{{faq.question}}</p>
+				                </h4>
+				            </div>
+				            <div id="collapse_{{faq.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_{{faq.id}}">
+				                <div class="panel-body">
+									<p>{{faq.answer}}</p>
+				                </div>
+				            </div>
+				        </div>
+				        {% endfor %}
+				    </div>
+				</div>
+				<div class="div-view-more" align="center">
+					<div class="view-more">
+						<a class="btn-view-more btn-custom-style btn-custom-style-faqs" role="button">{% trans "btn.view_more" %}<span class="glyphicon glyphicon-chevron-down glyphicon-custom"></span></a>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+	<!-- DOWNLOAD APP BANNER -->
+	<div class="app-banner">
+		<a href="#"><img src="{{ STATIC_URL }}assets/websites/images/download-app_banner.png" width="100%"></a>
+	</div>
+</div>
+
+{% endblock %}
