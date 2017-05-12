@@ -216,17 +216,6 @@ def new_detail(request, new_id):
 
     return render(request, 'websites/new_detail.html', {"new": new, "other_news": other_news})
 
-def other_product(request):
-    print "***START News PAGE***"
-    result = {}
-
-    # FAQs list
-    faqs = FAQ.objects.filter(category_id=const.OTHER_PRODUCT_CATEGORY)
-    result["faqs"] = faqs
-
-    return render(request, 'websites/other_product.html', {"result":result})
-
-
 def coffee_bakery(request):
     print "***START HELIO COFFEE CONTENT PAGE***"
 
@@ -316,3 +305,32 @@ def career_detail(request, career_id):
     other_careers = Post.objects.filter(post_type_id=const.CAREERS_POST_TYPE_ID).order_by('-created')[:3]
 
     return render(request, 'websites/carrer_detail.html', {"career": career, "other_careers": other_careers})
+
+
+def other_product(request):
+    print "***START News PAGE***"
+
+    result = {}
+
+    page_info = Post_Type.objects.get(pk=const.ORTHER_PROD_POST_TYPE_ID)
+    result["page_info"] = page_info
+
+    products = Post.objects.filter(post_type_id=const.ORTHER_PROD_POST_TYPE_ID).order_by('-created')
+    
+    print "products ", products
+    datas = {}
+    for product in products:
+        if product:
+            list_images = product.posts_image.all()[:6]
+            product.post_images = list_images
+            datas[product.id] = product
+         
+    result["datas"] = datas
+    print datas
+
+    # FAQs list
+    faqs = FAQ.objects.filter(category_id=const.OTHER_PRODUCT_CATEGORY)
+    result["faqs"] = faqs
+
+    return render(request, 'websites/other_product.html', {"result":result})
+
