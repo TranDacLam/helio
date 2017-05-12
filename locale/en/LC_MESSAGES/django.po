@@ -37,6 +37,9 @@ msgstr "PROMOTION"
 
 msgid "menu.faq"
 msgstr "FAQs"
+
+msgid "menu.helio_photos"
+msgstr "HELIO PHOTOS"
 # END MAIN MENU
 
 # START SUB MENU

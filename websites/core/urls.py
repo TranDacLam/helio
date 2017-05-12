@@ -30,5 +30,5 @@ urlpatterns = [
     url(r'^redemption-store/$', views.redemption_store, name='redemption_store'),
 
     url(r'^policy/$', views.policy, name='policy'),
-    
+    url(r'^helio_photos/$', views.helio_photos, name='helio_photos'),
 ]

@@ -336,7 +336,13 @@ def other_product(request):
 
 def policy(request):
     print "***START POLICY PAGE***"
-    # Policy list
+    # Policy
     policy = Post.objects.get(key_query=const.POLICY_KEY_QUERY)
 
     return render(request, 'websites/policy.html', {"policy":policy})
+
+
+def helio_photos(request):
+
+
+    return render(request, 'websites/helio_photos.html')

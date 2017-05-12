@@ -37,6 +37,9 @@ msgstr "KHUYẾN MÃI"
 
 msgid "menu.faq"
 msgstr "HỎI ĐÁP"
+
+msgid "menu.helio_photos"
+msgstr "HÌNH ẢNH"
 # END MAIN MENU
 
 # START SUB MENU
