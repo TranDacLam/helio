@@ -155,6 +155,14 @@ msgid "newpage.other_new"
 msgstr "TIN TỨC KHÁC"
 # END NEW DETAIl
 
+# START FAQS
+msgid "faqspage.text.support_more"
+msgstr "BẠN VẪN MUỐN HỖ TRỢ THÊM?"
+
+msgid "faqspage.text.contact_us"
+msgstr "LIÊN HỆ VỚI CHÚNG TÔI"
+# END FAQs
+
 # START CONTACT 
 msgid "contact.btn.send"
 msgstr "GỬI TIN NHẮN" 

@@ -87,10 +87,10 @@
 	<div class="col-md-12 col-xs-12 suport-more" align="center">
 	<hr class="hr-custom">
 		<div class="view-more-desc">
-			BẠN VẪN MUỐN HỖ TRỢ THÊM?
+			{% trans "faqspage.text.support_more" %}
 		</div>
 		<div class="view-more">
-			<a href="#" class="btn-custom-style btn-custom-style-faqs" role="button">LIÊN HỆ VỚI CHÚNG TÔI
+			<a href="{% url 'contact' %}" class="btn-custom-style btn-custom-style-faqs" role="button">{% trans "faqspage.text.contact_us" %}
 			<span class="glyphicon glyphicon glyphicon-menu-right"></span></a>
 		</div>
 	</div>
