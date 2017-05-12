@@ -37,6 +37,9 @@ msgstr "KHUYẾN MÃI"
 
 msgid "menu.faq"
 msgstr "HỎI ĐÁP"
+
+msgid "menu.helio_photos"
+msgstr "HÌNH ẢNH"
 # END MAIN MENU
 
 # START SUB MENU
@@ -143,6 +146,22 @@ msgstr "TẤT CẢ TUYỂN DỤNG"
 msgid "careerpage.other_career" 
 msgstr "TUYỂN DỤNG KHÁC"
 # END CAREER DETAIl
+
+# START NEW DETAIl
+msgid "newpage.btn.all_news" 
+msgstr "TẤT CẢ TIN TỨC"
+
+msgid "newpage.other_new" 
+msgstr "TIN TỨC KHÁC"
+# END NEW DETAIl
+
+# START FAQS
+msgid "faqspage.text.support_more"
+msgstr "BẠN VẪN MUỐN HỖ TRỢ THÊM?"
+
+msgid "faqspage.text.contact_us"
+msgstr "LIÊN HỆ VỚI CHÚNG TÔI"
+# END FAQs
 
 # START CONTACT 
 msgid "contact.btn.send"

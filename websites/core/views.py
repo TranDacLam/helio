@@ -172,10 +172,6 @@ def event_detail(request, event_id):
 
     return render(request, 'websites/event_detail.html', {"event": event, "other_events": other_events})
 
-def event_content(request):
-    print "***START EVENT CONTENT PAGE***"
-    
-    return render(request, 'websites/event_content.html')
     
 def experience(request):
     print "***START EXPERIENCE CONTENT PAGE***"
@@ -203,8 +199,22 @@ def experience_detail(request, experience_id):
 
 def news(request):
     print "***START News PAGE***"
+    result = {}
+    # News info
+    news_type = Post_Type.objects.get(pk=const.NEWS_POST_TYPE_ID)
+    
+    # News list
+    news = Post.objects.filter(post_type = news_type).order_by('-created')
 
-    return render(request, 'websites/news.html')
+    return render(request, 'websites/news.html', {"news_type": news_type, "news": news, "news_hots": news[:5]})
+
+def new_detail(request, new_id):
+    print "***START NEW CONTENT PAGE***"
+    new = Post.objects.get(pk=new_id)
+
+    other_news = Post.objects.filter(post_type_id=const.NEWS_POST_TYPE_ID).order_by('-created')[:3]
+
+    return render(request, 'websites/new_detail.html', {"new": new, "other_news": other_news})
 
 def coffee_bakery(request):
     print "***START HELIO COFFEE CONTENT PAGE***"
@@ -329,3 +339,15 @@ def other_product(request):
 
     return render(request, 'websites/other_product.html', {"result":result})
 
+def policy(request):
+    print "***START POLICY PAGE***"
+    # Policy
+    policy = Post.objects.get(key_query=const.POLICY_KEY_QUERY)
+
+    return render(request, 'websites/policy.html', {"policy":policy})
+
+
+def helio_photos(request):
+
+
+    return render(request, 'websites/helio_photos.html')

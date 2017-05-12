@@ -1,3 +1,6 @@
+body {
+    background-color: #06020c;
+}
 /*START CAROUSEL*/
 .carousel-custom {
     position: relative;
@@ -29,8 +32,8 @@ ol.carousel-indicators-custom li {
     margin-right: 10px;
     text-indent: -999px;
     cursor: pointer;
-    background-color: #bd197c;
-    border-color: #bd197c;
+    background-color: #fec231;
+    border-color: #fec231;
     border-radius: 0px;
 }
 
@@ -124,7 +127,7 @@ ol.carousel-indicators-custom li {
     margin-top: 30px;
 }
 .scs-content {
-    margin-left: -8%;
+    margin-left: -9.5%;
     margin-bottom: 0;
 }
 .comment-title {
