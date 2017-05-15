@@ -53,8 +53,8 @@
 			<div class="content-section">
 				<div class="tab-content">
 					{% for category, values in datas.items %}
-					<div role="tabpanel" class="tab-pane faqs-content" id="faqs_{{category.id}}">
-						<div class="panel-group view-more-div" id="faqs_category_{{category.id}}" role="tablist" aria-multiselectable="true">
+					<div role="tabpanel" class="tab-pane faqs-content view-more-content" id="faqs_{{category.id}}">
+						<div class="panel-group" id="faqs_category_{{category.id}}" role="tablist" aria-multiselectable="true">
 							{% for faq in values %}
 					        <div class="panel panel-default faq-detail">
 					            <div class="panel-heading" role="tab" id="heading_{{faq.id}}">

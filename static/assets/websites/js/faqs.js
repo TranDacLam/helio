@@ -3,7 +3,7 @@ var show_num = {},
     view_more = 5;
 
 function viewMore (element) {
-    var id = $(element).parent().attr("id");
+    var id = $(element).attr("id");
     var size_list = $(element).find(".faq-detail").length;
     var show_lengh =  show_num[id];
     $(element).find('.faq-detail:lt('+show_lengh+')').show();
@@ -24,36 +24,20 @@ $(document).ready(function(){
     $(".faqs_category:first").addClass('active');
     $(".faqs-content:first").addClass('active');
 
-    $(".tab-content .tab-pane").each(function(){
+    $(".tab-content .tab-pane.view-more-content").each(function(){
         var id = $(this).attr("id");
         show_num[id] = first_show;
-        viewMore($(this).find(".view-more-div"));
+        viewMore($(this));
     });
 
     $(".btn-view-more").click(function() {
-        var div_parent = $(this).parent().parent();
-        var size_list = $(div_parent).find(".item-line").length;
-        var id = $(div_parent).parent().attr("id");
+        var element_content = $(this).parent().closest('.view-more-content');
+        var size_list = $(element_content).find(".item-line").length;
+        var id = $(element_content).attr("id");
         show_num[id] += view_more;
-        viewMore(div_parent);
+        viewMore(element_content);
     });
 
     $('.panel-group').on('hidden.bs.collapse', toggleIcon);
     $('.panel-group').on('shown.bs.collapse', toggleIcon);
-    $( ".card-description" ).each(function(  ) {
-        if ( $(this ).height() > 200 ) {
-            $( this ).addClass("height-limit")
-            $( this ).parent().parent().find(".card-div-bottom").removeClass("hidden");
-        }
-    });
-    $(".view-full").click(function(){
-        var powercard_content = $(this).parent().parent().find(".card-description");
-        if($(powercard_content).hasClass("height-limit")) {
-            $(powercard_content).removeClass("height-limit");
-            $(this).html('THU GỌN <br> <i class="glyphicon glyphicon-chevron-up">');
-        } else {
-            $(powercard_content).addClass("height-limit");
-            $(this).html('XEM ĐẦY ĐỦ <br> <i class="glyphicon glyphicon-chevron-down">');
-        }
-    });    
 });

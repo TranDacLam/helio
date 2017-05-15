@@ -52,8 +52,8 @@
 
     <div class="tab-content">
         {% for category, promotions in datas.items %}
-        <div role="tabpanel" class="tab-pane {% if forloop.counter0 == 0 %} active {% endif %}" id="promotion{{ category.id }}">
-            <div class="row view-more-div">
+        <div role="tabpanel" class="tab-pane view-more-content {% if forloop.counter0 == 0 %} active {% endif %}" id="promotion{{ category.id }}">
+            <div class="row">
                 <!--  KID GAME CONTENT -->
                 <div class="kids-game-content col-md-12">
                     {% for promotion in promotions %}

@@ -53,7 +53,7 @@
 
     <div class="tab-content">
         {% for type, datas in datas.items %}
-        <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-play/#' }} {% if forloop.counter0 == 0 %} active {% endif %}" id="play_{{type.id}}">
+        <div role="tabpanel" class="tab-pane view-more-content {{ type.sub_url|cut:'/helio-play/#' }} {% if forloop.counter0 == 0 %} active {% endif %}" id="play_{{type.id}}">
             <!-- Games slider -->
             <div class="carousel" >
             </div>
@@ -76,7 +76,7 @@
             {% endif %}
             <!-- line -->
             <hr>
-            <div class="row view-more-div">
+            <div class="row">
                 <!--  PLAY GAME CONTENT -->
                 <div class="kids-game-content col-md-12">
                     {% for promotion in datas.promotions %}
