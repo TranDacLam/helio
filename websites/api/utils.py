@@ -28,6 +28,8 @@ def html2text(html):
 
 def send_mail(subject, message_plain, message_html, email_from, email_to,
               data, custom_headers={}, attachments=()):
+
+    print "send mail"
     """
     Build the email as a multipart message containing
     a multipart alternative for text (plain, HTML) plus

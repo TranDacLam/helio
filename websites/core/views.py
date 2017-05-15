@@ -7,7 +7,8 @@ from django.http import JsonResponse
 import constants as const
 import time
 from datetime import *
-from django.core.paginator import Paginator
+from forms import *
+import api.utils as utils
 
 # TOTO FIX : try catch all fucntion
 
@@ -69,7 +70,13 @@ def faqs(request):
 
 def contact(request):
     print "***START CONTACT CONTENT PAGE***"
-    
+
+    if request.method == 'POST':
+        contact_form = ContactForm(request.POST, request=request)
+
+        if contact_form.is_valid():
+            contact_form.save()
+
     return render(request, 'websites/contact.html')
 
 
