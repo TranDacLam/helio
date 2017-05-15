@@ -281,6 +281,12 @@ a.btn-custom-style:hover {
     margin-bottom: 80px;
 }
 
+/*ROW EQUAL FOR EXPERIENCE AND CAREER*/
+.row-equal {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 /*FOOTER*/
 .menuwidget.nav li {
     width: 100%;
