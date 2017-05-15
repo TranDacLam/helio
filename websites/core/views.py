@@ -56,14 +56,16 @@ def power_card(request):
 def faqs(request):
     print "***START FAQs PAGE***"
 
-    faqs_categorys = Category.objects.filter(pk__in=(const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY, const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY))
+    faqs_categorys = Category.objects.filter(pk__in=(const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY, const.REDEMPTION_STORE_CATEGORY))
 
     datas = {}
     if faqs_categorys:
         for faqs_category in faqs_categorys:
             datas[faqs_category] = faqs_category.faq_category_rel.all().order_by('-created')
+
+    other_prods_faqs = FAQ.objects.filter(category_id__in=(const.BIRTHDAY_PARTY_CATEGORY, const.SCHOOL_TRIP_CATEGORY, const.COMBO_HELIO_CATEGORY)).order_by('-created')
         
-    return render(request, 'websites/faqs.html', {"datas":datas})
+    return render(request, 'websites/faqs.html', {"datas":datas, "other_prods_faqs": other_prods_faqs})
 
 def contact(request):
     print "***START CONTACT CONTENT PAGE***"
@@ -312,8 +314,8 @@ def other_product(request):
 
     result = {}
 
-    page_info = Post_Type.objects.get(pk=const.ORTHER_PROD_POST_TYPE_ID)
-    result["page_info"] = page_info
+    # page_info = Post_Type.objects.get(pk=const.ORTHER_PROD_POST_TYPE_ID)
+    # result["page_info"] = page_info
 
     products = Post.objects.filter(post_type_id=const.ORTHER_PROD_POST_TYPE_ID).order_by('-created')
     
