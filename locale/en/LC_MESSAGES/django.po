@@ -21,7 +21,7 @@ msgstr ""
 
 # START MAIN MENU
 msgid "menu.product"
-msgstr "PRODUCT 11111"
+msgstr "PRODUCT"
 
 msgid "menu.night_life"
 msgstr "NIGHT LIFE"
