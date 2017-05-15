@@ -48,7 +48,7 @@
     <div class="row careers-content row-equal">
     	{% for career in result.careers %}
     		{% if not result.careers_pin_top.id or career.id != result.careers_pin_top.id %}
-			<div class="col-md-6 career-div">
+			<div class="col-md-6 career-div col-equal">
 				<div class="thumbnail carrer-item">
 					<img src="{{ MEDIA_URL }}{{career.image}}" alt="Lights" width="100%">
 					<div class="caption">
