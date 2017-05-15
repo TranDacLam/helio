@@ -13,7 +13,7 @@
 
 <div class="container">
 	<!-- OTHER PRODUCT PAGE DESCRIPTION -->
-	{% if page_info %}
+	
 	<div class="page-top">
 		<div class="page-header-img">
 			<div>
@@ -21,17 +21,16 @@
 			</div>
 			<div class="page-title" align="center">
 				<div class="col-md-12">
-					<p class="page-title-text">{{page_info.name}}</p>
+					<p class="page-title-text">{% trans "other_product.header.title" %}</p>
 				</div>
 			</div>
 		</div>
 		<div align="center" class="page-header-text">
 			<div class="form-title">
-				<p class="text-description">{{page_info.description}}</p>
+				<p class="text-description">{% trans "other_product.header.description" %}</p>
 			</div>
 		</div>
 	</div>
-    {% endif %}
 	<!-- BUTTON GROUP -->
 	{% if datas %} 
     <div class="play-btn-section">

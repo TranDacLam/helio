@@ -181,10 +181,15 @@ msgstr "Chủ đề cần hỗ trợ"
 
 msgid "contact.lable.title.message"
 msgstr "Nhập nội dung" 
-
-msgid "contact.label.error"
-msgstr "Vui lòng nhập tên"
 # END CONTACT
+
+# START OTHER PRODUCT
+msgid "other_product.header.title"
+msgstr "SẢN PHẨM KHÁC"
+
+msgid "other_product.header.description"
+msgstr "Ngoài những sản phẩm của Helio center như Helio Play, helio Kids, Quầy đổi quà, Coffee & Bakery. helio Center còn có những sản phẩm độc đáo khác mang bản sắc riêng của Helio Center như Combo, Trip trường học, Tiệc sinh nhật nhằm phục vụ tốt hơn các nhu cầu vui chơi và giả trí cảu khách hàng."
+# END OTHER PRODUCT
 
 #START FOOTER
 msgid "footer.contact.address"

@@ -180,11 +180,16 @@ msgid "contact.lable.title.subject"
 msgstr "Subject" 
 
 msgid "contact.lable.title.message"
-msgstr "Main message" 
-
-msgid "contact.label.error"
-msgstr "Please enter your name"
+msgstr "Main message"
 # END CONTACT
+
+# START OTHER PRODUCT
+msgid "other_product.header.title"
+msgstr "OTHER PRODUCT"
+
+msgid "other_product.header.description"
+msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra. Donec sit amet enim a velit varius eleifend eget vitae eros. Nulla in vulputate justo. Suspendisse potenti."
+# END OTHER PRODUCT
 
 #START FOOTER
 msgid "footer.contact.address"
