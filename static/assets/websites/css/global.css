@@ -231,6 +231,10 @@ p.page-title-text {
     padding-top: 25px;
 }
 
+.footer-contact img {
+    width: 160px;
+}
+
 a.btn-custom-style {
     border-radius: 0px;
     text-align: center;
