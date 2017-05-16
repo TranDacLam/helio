@@ -162,7 +162,9 @@ a.btn-custom-style.btn-custom-style-kids:hover {
 .text-limit-rows > a {
     display: inline-block;
 }
-
+.custom-promotion {
+    margin-bottom: 20px;
+}
 
 /*MEDIA*/
 @media (max-width: 991px) {
