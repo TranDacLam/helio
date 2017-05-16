@@ -5,6 +5,35 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/css/flexslider.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/helio_item.css">
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/events.css">
+<style type="text/css">
+.countdown-container {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.countdown-content {
+    width: 350px;
+    border: 4px solid #fec231;
+    height: 150px;
+}
+.countdown-content .time {
+    position: relative;
+}
+.countdown-content .time .current {
+    color: #fec231;
+    font-size: 60px;
+}
+.countdown-content .time .label {
+    color: #fec231;
+    font-size: 18px;
+    position: absolute;
+}
+</style>
 {% endblock %}
 {% block extrascript %}
 <script type="text/javascript" src = "{{ STATIC_URL }}assets/js/jquery.flexslider.js"></script>
@@ -20,7 +49,6 @@
 </script>
 {% endblock %}
 {% block main_content %} 
-<!-- Page Header -->
 <div class="container">
     <!-- CARD PAGE DESCRIPTION -->
     <div class="page-top">
@@ -55,7 +83,6 @@
                 {% if values.0 %}
                 <h4 class="event-month">{{values.0.start_date | date:"M/Y"}}</h4>
                 {% endif %}
-
             {% endfor %}
         </div>
         <div class="col-xs-6 div-month-btn">
@@ -129,7 +156,17 @@
                                 </div>
                             </div>
                             <div class="item-content-image col-md-9">
-                                <div class="row"><img src="{{ MEDIA_URL }}{{event.image}}" width="100%" height="100%"></div>
+                                <div class="row">
+                                    <img src="{{ MEDIA_URL }}{{event.image}}" width="100%" height="100%">
+                                    <div class="countdown-container">
+                                        <div class="countdown-content">
+                                            <div class="time weeks flip">
+                                                <span class="count current">00</span>
+                                                <span class="label">weeks</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

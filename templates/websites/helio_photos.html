@@ -14,6 +14,7 @@
 
 <div class="container">
     <!-- COFFEE PAGE DESCRIPTION -->
+    {% if photos_type %}
     <div class="page-top">
         <div class="page-header-img">
             <div>
@@ -21,16 +22,17 @@
             </div>
             <div class="page-title" align="center">
                 <div class="col-md-12">
-                    <p class="page-title-text">HELIO PHOTOS</p>
+                    <p class="page-title-text">{{photos_type.name}}</p>
                 </div>
             </div>
         </div>
         <div align="center" class="page-header-text">
             <div class="form-title">
-                <p class="text-description page_description">Helio mang trong mình niềm vui và mong muốn lan tỏa đến với tất cả mọi người. Hãy xùng xem lại những khoảnh khắc tuyệt vời mà mọi người đã lưu lại tại Helio Center qua những hình ảnh đầy vui nhộn và ngập tràn hạnh phúc.</p>
+                <p class="text-description page_description">{{photos_type.description}}</p>
             </div>
         </div>
     </div>
+    {% endif %}
     <!-- CONTENT -->
     {% if photos %}
     <div class="wrap row photos-section">
