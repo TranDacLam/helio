@@ -189,9 +189,15 @@ def events(request):
         events_map = {}
         if events:
             for event in events:
-                if event.start_date > date.today():
+
+                event.start_datetime = datetime.combine(event.start_date, event.start_time)
+                event.end_datetime = datetime.combine(event.end_date, event.end_time)
+                
+                print event.start_datetime, datetime.now()
+
+                if event.start_datetime > datetime.now():
                     event.event_type = 'future'
-                elif event.end_date < date.today():
+                elif event.end_datetime < datetime.now():
                     event.event_type = 'past'
                 else: 
                     event.event_type = 'current'

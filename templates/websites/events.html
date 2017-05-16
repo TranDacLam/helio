@@ -8,7 +8,16 @@
 {% endblock %}
 {% block extrascript %}
 <script type="text/javascript" src = "{{ STATIC_URL }}assets/js/jquery.flexslider.js"></script>
+<script type="text/javascript" src = "{{ STATIC_URL }}assets/js/jquery.countdown.js"></script>
 <script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/events.js"></script>
+<script type="text/javascript">
+    // $("#getting-started").countdown("2017/01/01", function(event) {
+    //     $(this).text(
+    //         event.strftime('%D days %H:%M:%S')
+    //     );
+    // });
+
+</script>
 {% endblock %}
 {% block main_content %} 
 <!-- Page Header -->
@@ -102,8 +111,8 @@
                         <div class="row">
                             <div class="item-content-text col-md-5 pull-right">
                                 <div class="col-md-9 image-text pull-right">
-                                    <div class="image-text-head">
-                                        <p> 
+                                    <label class="image-text-head">
+                                        <label>
                                             {% if event.event_type == "future" %} 
                                                 SẮP DIỄN RA
                                             {% elif event.event_type == "past"%} 
@@ -112,8 +121,8 @@
                                                 ĐANG DIỄN RA
                                             {% endif %}
                                             <span class="glyphicon glyphicon-play"></span>
-                                        </p>
-                                    </div>
+                                        </label>
+                                    </label>
                                     <p class="item-name">{{event.name}}</p>
                                     <p class="item-description short_description">{{event.short_description}}</p>
                                     <a class="btn btn-custom-style btn-custom-style-events" href="/events/{{event.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
@@ -129,8 +138,8 @@
                         <div class="row">
                             <div class="item-content-text col-md-5">
                                 <div class="col-md-9 image-text">
-                                    <div class="image-text-head">
-                                        <p>
+                                    <label class="image-text-head">
+                                        <label>
                                             {% if event.event_type == "future" %} 
                                                 SẮP DIỄN RA
                                             {% elif event.event_type == "past"%} 
@@ -139,8 +148,8 @@
                                                 ĐANG DIỄN RA
                                             {% endif %}
                                             <span class="glyphicon glyphicon-play"></span>
-                                        </p>
-                                    </div>
+                                        </label>
+                                    </label>
                                     <p class="item-name">{{event.name}}</p>
                                     <p class="item-description short_description">{{event.short_description}}</p>
                                     <a class="btn btn-custom-style btn-custom-style-events" href="/events/{{event.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
