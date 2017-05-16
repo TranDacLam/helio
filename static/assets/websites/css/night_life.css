@@ -219,12 +219,4 @@ hr.line-hr {
         width: 25px;
         margin-right: 5px;
     }
-    .nl-section-title p {
-        color: #fec231;
-        font-family: "Cabin";
-        font-size: 36px;
-        line-height: 45px;
-        letter-spacing: 3px;
-        font-weight: bold;
-    }
 }
