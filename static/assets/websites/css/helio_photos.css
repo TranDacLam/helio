@@ -39,3 +39,10 @@
     line-height: 70px;
     margin-bottom: 0px;
 }
+
+/* Custom flex css  */
+
+#images_modal .flexslider {
+    border: none;
+    margin-bottom: 30px;
+}

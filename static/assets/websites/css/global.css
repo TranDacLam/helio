@@ -139,16 +139,19 @@ p.page_description {
     text-decoration: none;
     background-color: transparent;
 }
+.dropdown-menu-custom {
+    background-color: #15062b;
+}
 .navbar-default .main-menu ul.dropdown-menu {
     padding: 0px;
 }
 .navbar-default .main-menu .dropdown-menu>li>a:hover,
 .navbar-default .main-menu .dropdown-menu>li>a:focus {
-    background-color: #15062b;
-    color: #fff;
+    background-color: #fec231;
+    color: #15062b;
 }
 .navbar-default .main-menu .dropdown-menu>li>a {
-    color: #15062b;
+    color: #fff;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -309,6 +312,22 @@ a.btn-custom-style:hover {
 .search-btn .glyphicon-search {
     top: 5px;
 }
+.custom-icon {
+    margin: 0px 20px;
+    font-size: 30px;
+    color: #fff;
+}
+.icon-footer a:hover,
+.icon-footer a:focus {
+    color: #fff;
+}
+.icon-footer .icon-youtube-play:hover,
+.icon-footer .icon-youtube-play:focus {
+    color: #e336b6;
+}
+.icon-youtube-play {
+    color: #e336b6;
+}
 
 input.input-search {
     background-color: transparent;
@@ -365,7 +384,7 @@ input.input-search {
     }
     .header .navbar.header-nav {
         padding-left: 0px;
-        margin: 0px -15px;
+        margin: 50px -15px 0px;
     }
 
     .main-menu .navbar-nav {

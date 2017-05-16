@@ -8,37 +8,70 @@
 {% endblock %}
 {% block extrascript %}
 <script type="text/javascript" src = "{{ STATIC_URL }}assets/js/jquery.flexslider.js"></script>
+<script type="text/javascript" src = "{{ STATIC_URL }}assets/js/jquery.countdown.js"></script>
 <script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/events.js"></script>
 {% endblock %}
 {% block main_content %} 
-<!-- Page Header -->
 <div class="container">
     <!-- CARD PAGE DESCRIPTION -->
+    {% if result.event_hots %}
     <div class="page-top">
         <div class="page-header-img">
             <div id="eventsCarousel" class="carousel slide carousel-custom" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators carousel-indicators-custom">
-                    <li data-target="#eventsCarousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#eventsCarousel" data-slide-to="1"></li>
-                    <li data-target="#eventsCarousel" data-slide-to="2"></li>
+                    {% for event in result.event_hots %}
+                    <li data-target="#eventsCarousel" data-slide-to="{{forloop.counter0}}" class="{% if forloop.counter0 == 0 %} active {% endif %}"></li>
+                    {% endfor %}
                 </ol>
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        <img src="{{ STATIC_URL }}assets/websites/images/power_card_header.png" alt="Helio">
+                    {% for event in result.event_hots %}
+                    <div class="item {% if forloop.counter0 == 0 %} active {% endif %} {{event.event_type}}-class countdown">
+                        <img src="{{ MEDIA_URL }}{{ event.image }}" alt="Helio">
+                        <div class="hidden start_datetime">{{event.start_datetime | date:"Y/m/d H:i"}}</div>
+                        
+                        <div class="page-header-text">
+                            <div class="page-header-info">
+                                {% if event.event_type == "future" %} 
+                                <div class="countdown-coursel">
+                                    <div class="countdown-content">
+                                        <div class="time days flip">
+                                            <span class="count current">00</span>
+                                            <span class="label">DAYS</span>
+                                        </div>
+                                        <div class="time hours flip">
+                                            <span class="count current">00</span>
+                                            <span class="label">HOURS</span>
+                                        </div>
+                                        <div class="time minutes flip">
+                                            <span class="count current">00</span>
+                                            <span class="label">MINUTES</span>
+                                        </div>
+                                        <div class="time seconds flip">
+                                            <span class="count current">00</span>
+                                            <span class="label">SECONDS</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <div class="event-info">
+                                    <p class="big-font-size">{{event.name}}</p>
+                                    <p class="short_description">{{event.short_description}}</p>
+                                </div>
+                            </div>
+                                
+                        </div>
+                        
+                        
                     </div>
-                    <div class="item">
-                        <img src="{{ STATIC_URL }}assets/websites/images/power_card_header.png" alt="Helio">
-                    </div>
-                    <div class="item">
-                        <img src="{{ STATIC_URL }}assets/websites/images/power_card_header.png" alt="Helio">
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
+    {% endif %}
     {% if result.events_map %}
     <div class="row layer-coursel-btn">
         <div class="col-xs-6">
@@ -46,7 +79,6 @@
                 {% if values.0 %}
                 <h4 class="event-month">{{values.0.start_date | date:"M/Y"}}</h4>
                 {% endif %}
-
             {% endfor %}
         </div>
         <div class="col-xs-6 div-month-btn">
@@ -91,77 +123,123 @@
     {% endif %}
 
     {% if result.events %}
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane" id="events_content">
-            <div class="row view-more-div">
-                <!--  KID GAME CONTENT -->
-                <div class="kids-game-content col-md-12">
-                    {% for event in result.events %}
-                    {% if forloop.counter|divisibleby:2 %} 
-                    <div class="item-line content-pull-left col-md-12 {{event.event_type}}-class" style="display: none;">
-                        <div class="row">
-                            <div class="item-content-text col-md-5 pull-right">
-                                <div class="col-md-9 image-text pull-right">
-                                    <div class="image-text-head">
-                                        <p> 
-                                            {% if event.event_type == "future" %} 
-                                                SẮP DIỄN RA
-                                            {% elif event.event_type == "past"%} 
-                                                ĐÃ DIỄN RA
-                                            {% else %}
-                                                ĐANG DIỄN RA
-                                            {% endif %}
-                                            <span class="glyphicon glyphicon-play"></span>
-                                        </p>
-                                    </div>
-                                    <p class="item-name">{{event.name}}</p>
-                                    <p class="item-description short_description">{{event.short_description}}</p>
-                                    <a class="btn btn-custom-style btn-custom-style-events" href="/events/{{event.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
-                                </div>
+    <div id="events_content">
+        <div class="row">
+            <!--  KID GAME CONTENT -->
+            <div class="kids-game-content col-md-12">
+                {% for event in result.events %}
+                {% if forloop.counter|divisibleby:2 %} 
+                <div class="item-line content-pull-left col-md-12 {{event.event_type}}-class countdown" style="display: none;">
+                    <div class="hidden start_datetime">{{event.start_datetime | date:"Y/m/d H:i"}}</div>
+                    <div class="row">
+                        <div class="item-content-text col-md-5 pull-right">
+                            <div class="col-md-9 image-text pull-right">
+                                <label class="image-text-head">
+                                    <label>
+                                        {% if event.event_type == "future" %} 
+                                            SẮP DIỄN RA
+                                        {% elif event.event_type == "past"%} 
+                                            ĐÃ DIỄN RA
+                                        {% else %}
+                                            ĐANG DIỄN RA
+                                        {% endif %}
+                                        <span class="glyphicon glyphicon-play"></span>
+                                    </label>
+                                </label>
+                                <p class="item-name">{{event.name}}</p>
+                                <p class="item-description short_description">{{event.short_description}}</p>
+                                <a class="btn btn-custom-style btn-custom-style-events" href="/events/{{event.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
                             </div>
-                            <div class="item-content-image col-md-9">
-                                <div class="row"><img src="{{ MEDIA_URL }}{{event.image}}" width="100%" height="100%"></div>
+                        </div>
+                        <div class="item-content-image col-md-9">
+                            <div class="row">
+                                <img src="{{ MEDIA_URL }}{{event.image}}" width="100%" height="100%">
+                                {% if event.event_type == "future" %} 
+                                <div class="countdown-container">
+                                    <div class="countdown-content">
+                                        <div class="time days flip">
+                                            <span class="count current">00</span>
+                                            <span class="label">DAYS</span>
+                                        </div>
+                                        <div class="time hours flip">
+                                            <span class="count current">00</span>
+                                            <span class="label">HOURS</span>
+                                        </div>
+                                        <div class="time minutes flip">
+                                            <span class="count current">00</span>
+                                            <span class="label">MINUTES</span>
+                                        </div>
+                                        <div class="time seconds flip">
+                                            <span class="count current">00</span>
+                                            <span class="label">SECONDS</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-                    {% else %}
-                    <div class="item-line content-pull-right col-md-12 {{event.event_type}}-class" style="display: none;">
-                        <div class="row">
-                            <div class="item-content-text col-md-5">
-                                <div class="col-md-9 image-text">
-                                    <div class="image-text-head">
-                                        <p>
-                                            {% if event.event_type == "future" %} 
-                                                SẮP DIỄN RA
-                                            {% elif event.event_type == "past"%} 
-                                                ĐÃ DIỄN RA
-                                            {% else %}
-                                                ĐANG DIỄN RA
-                                            {% endif %}
-                                            <span class="glyphicon glyphicon-play"></span>
-                                        </p>
-                                    </div>
-                                    <p class="item-name">{{event.name}}</p>
-                                    <p class="item-description short_description">{{event.short_description}}</p>
-                                    <a class="btn btn-custom-style btn-custom-style-events" href="/events/{{event.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
-                                </div>
+                </div>
+                {% else %}
+                <div class="item-line content-pull-right col-md-12 {{event.event_type}}-class countdown" style="display: none;">
+                    <div class="hidden start_datetime">{{event.start_datetime | date:"Y/m/d H:i"}}</div>
+                    <div class="row">
+                        <div class="item-content-text col-md-5">
+                            <div class="col-md-9 image-text">
+                                <label class="image-text-head">
+                                    <label>
+                                        {% if event.event_type == "future" %} 
+                                            SẮP DIỄN RA
+                                        {% elif event.event_type == "past"%} 
+                                            ĐÃ DIỄN RA
+                                        {% else %}
+                                            ĐANG DIỄN RA
+                                        {% endif %}
+                                        <span class="glyphicon glyphicon-play"></span>
+                                    </label>
+                                </label>
+                                <p class="item-name">{{event.name}}</p>
+                                <p class="item-description short_description">{{event.short_description}}</p>
+                                <a class="btn btn-custom-style btn-custom-style-events" href="/events/{{event.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
                             </div>
-                            <div class="item-content-image col-md-9 ">
-                                <div class="row">
-                                    <img src="{{ MEDIA_URL }}{{event.image}}" width="100%" height="100%">
+                        </div>
+                        <div class="item-content-image col-md-9 ">
+                            <div class="row">
+                                <img src="{{ MEDIA_URL }}{{event.image}}" width="100%" height="100%">
+                                {% if event.event_type == "future" %} 
+                                <div class="countdown-container">
+                                    <div class="countdown-content">
+                                        <div class="time days flip">
+                                            <span class="count current">00</span>
+                                            <span class="label">DAYS</span>
+                                        </div>
+                                        <div class="time hours flip">
+                                            <span class="count current">00</span>
+                                            <span class="label">HOURS</span>
+                                        </div>
+                                        <div class="time minutes flip">
+                                            <span class="count current">00</span>
+                                            <span class="label">MINUTES</span>
+                                        </div>
+                                        <div class="time seconds flip">
+                                            <span class="count current">00</span>
+                                            <span class="label">SECONDS</span>
+                                        </div>
+                                    </div>
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-                    {% endif %}
-                    {% endfor %}
                 </div>
-                <div class="btn-read-more div-view-more col-md-12" align="center">
-                    <a class="btn-view-more btn-custom-style btn-custom-style-events-view-more" role="button">{% trans "btn.view_more" %}</a>
-                </div>
+                {% endif %}
+                {% endfor %}
             </div>
-            
+            <div class="btn-read-more div-view-more col-md-12" align="center">
+                <a class="btn-view-more btn-custom-style btn-custom-style-events-view-more" role="button">{% trans "btn.view_more" %}</a>
+            </div>
         </div>
+        
     </div>
     {% endif %}
 

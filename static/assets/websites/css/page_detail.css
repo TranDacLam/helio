@@ -27,13 +27,25 @@
 	background-image: url('../images/heart-button.png');
 	background-size: cover;
 }
+.custom-icons {
+    margin-top: 15px;
+}
 .custom-icons a {
 	color: #fff;
-	padding-left: 30px;
+	padding: 0 10px 0 30px;
 	text-decoration: none;
 	font-size: 22px;
 }
-
+.glyphicon-custom {
+    position: absolute;
+    top: -25%;
+    left: 42%;
+    display: inline-block;
+    font-size: 30px;
+}
+.icon-custom-color {
+    color: #4267b2;
+}
 .circle-icon {
     background: #f332a4;
     padding: 9px 10px;

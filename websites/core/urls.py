@@ -31,4 +31,5 @@ urlpatterns = [
 
     url(r'^policy/$', views.policy, name='policy'),
     url(r'^helio_photos/$', views.helio_photos, name='helio_photos'),
+    url(r'^list_photos_by_album/$', views.list_photos_by_album, name='list_photos_by_album'),
 ]
