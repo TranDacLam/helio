@@ -186,4 +186,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
 	.style-icon i {
 		padding-right: 5px;
 	}
+    .page-title-detail {
+        width: 100%;
+    }
 }
