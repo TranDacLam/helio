@@ -48,7 +48,7 @@
         </div>
         <div class="row custom-other-exp">
             {% for promotion in other_promotions %}
-            <div class="item col-md-4 col-xs-12 custom-promotion">
+            <div class="item col-md-4 col-xs-12 custom-promotion other-item">
                 <div class="style-post">
                     <span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ promotion.image }}" width="100%"></a></span>
                     <a class="title-post" href="/promotions/{{promotion.id}}/detail/">{{promotion.name}}</a>
