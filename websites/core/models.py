@@ -229,6 +229,19 @@ class Contact(DateTimeModel):
 
 
 @python_2_unicode_compatible
+class FeedBack(DateTimeModel):
+    name = models.CharField(max_length=500)
+    email = models.EmailField(max_length=500)
+    phone = models.CharField(max_length=500, null=True, blank=True)
+    subject = models.CharField(max_length=500)
+    message = models.TextField()
+    rate = models.CharField(max_length=155, null=True, blank=True)
+
+    def __str__(self):
+        return '%s' % (self.name)
+
+
+@python_2_unicode_compatible
 class Transaction_Type(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
 
@@ -244,3 +257,22 @@ class Gift(DateTimeModel):
 
     def __str__(self):
         return '%s' % (self.user.name)
+
+
+@python_2_unicode_compatible
+class Advertisement(DateTimeModel):
+    name = models.CharField(max_length=255)
+    is_show = models.BooleanField('Show', default=False)
+
+    def __str__(self):
+        return '%s' % (self.name)
+
+
+@python_2_unicode_compatible
+class Promotion_Label(DateTimeModel):
+    promotion = models.ForeignKey('Promotion', related_name='promotion_label_rel',
+                                 on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return '%s' % (self.name)

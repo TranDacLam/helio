@@ -4,6 +4,7 @@ from django.template.loader import get_template
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
+from django.contrib.auth import get_user_model
 from rest_framework import permissions
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser, FormParser
@@ -20,14 +21,14 @@ import constants
 import utils
 
 
-
 def custom_exception_handler(exc, context):
     # to get the standard error response.
     response = exception_handler(exc, context)
     # Now add the HTTP status code to the response.
     if response is not None:
         response.data['code'] = response.status_code
-        response.data['message'] = response.data['detail'] if 'detail' in response.data else str(response.data)
+        response.data['message'] = response.data[
+            'detail'] if 'detail' in response.data else str(response.data)
         response.data['fields'] = ""
         if 'detail' in response.data:
             del response.data['detail']
@@ -45,24 +46,22 @@ class RegistrationView(drf_generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    email_plaintext = get_template('websites/api/registration/new_user_notification.txt')
-    email_html = get_template('websites/api/registration/new_user_notification.html')
     email_subject_template = 'websites/api/registration/new_user_notification_subject.txt'
 
     def send_activation_email(self, user):
-        ctx = {
+        data_render = {
             'site': get_current_site(self.request),
             'user': user,
         }
+        # Send email welcome
         subject = render_to_string(self.email_subject_template)
         subject = ' '.join(subject.splitlines())
-        print 'Subject ',subject
-        message_text = self.email_plaintext.render(ctx)
-        message_html = self.email_html.render(ctx)
 
-        msg = EmailMultiAlternatives(subject, message_text, settings.DEFAULT_FROM_EMAIL, [user.email])
-        msg.attach_alternative(message_html, "text/html")
-        msg.send()
+        message_plain = "websites/api/registration/new_user_notification.txt"
+        message_html = "websites/api/registration/new_user_notification.html"
+
+        utils.send_mail(subject=subject, message_plain=message_plain, message_html=message_html, email_from=None, email_to=[user.email],
+                        data=data_render)
 
     def create_inactive_user(self, serializer):
         user = serializer.save(is_active=False)
@@ -75,12 +74,15 @@ class RegistrationView(drf_generics.CreateAPIView):
 """
     Verify emaill address and send secure code to email
 """
+
+
 @api_view(['POST'])
 def verify_email(request):
     try:
         email = request.data.get('email', '')
         if not email:
-            error = {"code": 400, "message": "The email field is required.", "fields": "email"}
+            error = {
+                "code": 400, "message": "The email field is required.", "fields": "email"}
             return Response(error, status=400)
         user = User.objects.get(email=email)
         user.secure_code()
@@ -94,13 +96,14 @@ def verify_email(request):
             'email': user.email
         }
         utils.send_mail(subject=subject, message_plain=message_plain, message_html=message_html, email_from=None, email_to=[user.email],
-              data=data_render)
+                        data=data_render)
 
-        return Response({"message":"Send security code to email successfully.", "flag":True})
+        return Response({"message": "Send security code to email successfully.", "flag": True})
 
     except User.DoesNotExist, e:
         error = {"code": 500, "message": "%s" % e, "fields": "", "flag": False}
         return Response(error, status=500)
+
 
 @api_view(['POST'])
 def reset_password(request):
@@ -109,27 +112,30 @@ def reset_password(request):
         secure_code = request.data.get('secure_code', '')
         password1 = request.data.get('password1', '')
         password2 = request.data.get('password2', '')
-        
+
         if not email or not secure_code or not password1 or not password2:
-            error = {"code": 400, "message": "Please check required fields : [email, secure_code, password1, password2]", "fields": ""}
+            error = {
+                "code": 400, "message": "Please check required fields : [email, secure_code, password1, password2]", "fields": ""}
             return Response(error, status=400)
         if password1 != password2:
-            error = {"code": 400, "message": "Password does not match.", "fields": "Password"}
+            error = {"code": 400, "message": "Password does not match.",
+                     "fields": "Password"}
             return Response(error, status=400)
 
-        user = User.objects.filter(email=email, code=secure_code)
+        user = User.objects.get(email=email, code=secure_code)
         user.set_password(password1)
         user.save()
 
-        return Response({"message":"Reset Password Successfully.", "flag":True})
+        return Response({"message": "Reset Password Successfully.", "flag": True})
 
     except User.DoesNotExist, e:
-        error = {"code": 500, "message": "The email or secure code matching query does not exist.", "fields": "", "flag": False}
+        error = {"code": 500, "message": "The email or secure code matching query does not exist.",
+                 "fields": "", "flag": False}
         return Response(error, status=500)
 
 
 class FileUploadView(APIView):
-    parser_classes = (FileUploadParser,MultiPartParser, FormParser)
+    parser_classes = (FileUploadParser, MultiPartParser, FormParser)
 
     def put(self, request, filename, format=None):
         try:
@@ -137,9 +143,10 @@ class FileUploadView(APIView):
             user = self.request.user
             user.avatar = file_obj
             user.save()
-            return Response(status=204)
+            return Response({"message": "Update Avatar Successfully.", "flag": True}, status=204)
         except Exception, e:
-            error = {"code": 500, "message": "Upload avatar error. Please contact administartor", "fields": "avatar"}
+            error = {
+                "code": 500, "message": "Upload avatar error. Please contact administartor", "fields": "avatar", "flag": False}
             return Response(error, status=500)
         # path = '/Users/tiendang/Downloads/testimg.png'
         # with open(path, 'w') as open_file:
@@ -153,8 +160,106 @@ class FileUploadView(APIView):
         # # open_file.write(json.loads(file_obj.file.read())['file1'].decode('base64'))
         # open_file.write(file_obj.file.read())
         # open_file.close()
-        
 
+
+"""
+    Update User Infomation
+"""
+
+
+@api_view(['PUT'])
+def user_info(request):
+    try:
+        # TODO : Check user i not anonymous
+        if not request.user.anonymously:
+            first_name = request.data.get('first_name', '')
+            last_name = request.data.get('last_name', '')
+            birth_date = request.data.get('birth_date', '')
+            phone = request.data.get('phone', '')
+            personal_id = request.data.get('personal_id', '')
+            country = request.data.get('country', '')
+            address = request.data.get('address', '')
+            city = request.data.get('city', '')
+
+            user = request.user
+            if first_name:
+                user.first_name = first_name
+            if last_name:
+                user.last_name = last_name
+            if birth_date:
+                user.birth_date = birth_date
+            if phone:
+                user.phone = phone
+            if personal_id:
+                user.personal_id = personal_id
+            if country:
+                user.country = country
+            if address:
+                user.address = address
+            if city:
+                user.city = city
+
+            user.save()
+        return Response({'flag': True, 'message': 'Update infomation user successfully.'})
+
+    except Exception, e:
+        error = {"code": 500, "message": "Cannot update infomation user. Please contact administrator.",
+                 "fields": "", "flag": False}
+        return Response(error, status=500)
+
+"""
+    Change Password User
+"""
+
+
+@api_view(['PUT'])
+def change_password(request):
+    try:
+        # TODO : Check user i not anonymous
+        if not request.user.anonymously:
+            password1 = request.data.get('password1', '')
+            password2 = request.data.get('password2', '')
+
+            if not password1 or not password2:
+                error = {
+                    "code": 400, "message": "Please check required fields : [password1, password2]", "fields": "",
+                    "flag": False}
+                return Response(error, status=400)
+            if password1 != password2:
+                error = {
+                    "code": 400, "message": "Password does not match.", "fields": "Password",
+                    "flag": False}
+                return Response(error, status=400)
+
+            user = request.user
+            user.set_password(password1)
+            user.save()
+        return Response({'flag': True, 'message': 'Update password for user successfully.'})
+
+    except Exception, e:
+        error = {"code": 500, "message": "Cannot update password for user. Please contact administrator.",
+                 "fields": "", "flag": False}
+        return Response(error, status=500)
+
+"""
+    Send Feedback
+"""
+
+
+@api_view(['POST'])
+def send_feedback(request):
+    try:
+        # TODO : Check user i not anonymous
+        if not request.user.anonymously:
+            serializer = FeedBackSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    except Exception, e:
+        error = {"code": 500, "message": "Cannot update password for user. Please contact administrator.",
+                 "fields": "", "flag": False}
+        return Response(error, status=500)
 
 """
     Get Hots List to show in Homepage
@@ -173,6 +278,28 @@ def hots(request):
 
 
 """
+    Get All Game Type By Category
+"""
+
+
+@api_view(['GET'])
+def game_types_by_category(request, category_id):
+    try:
+        print '#### category_id ', category_id
+        error = helper.checkIdValid(category_id)
+        if not helper.isEmpty(error):
+            errors = {"code": 400, "message": "%s" %
+                      error, "fields": "type_id"}
+            return Response(errors, status=400)
+
+        game_types = Type.objects.filter(category_id=category_id)
+        serializer = TypeSerializer(game_types, many=True)
+        return Response(serializer.data)
+    except Exception, e:
+        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        return Response(error, status=500)
+
+"""
     Get All Game Play by Type ID
 """
 
@@ -181,7 +308,6 @@ def hots(request):
 def games(request):
     try:
         game_type_id = request.GET.get("type_id")
-        print '#### game_type_id ', game_type_id
         error = helper.checkIdValid(game_type_id)
         if not helper.isEmpty(error):
             errors = {"code": 400, "message": "%s" %
