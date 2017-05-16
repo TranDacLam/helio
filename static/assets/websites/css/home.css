@@ -258,4 +258,7 @@ ul.type-group li a span {
     .vidieo-left {
         position: static;
     }
+    .game-type-content {
+        min-height: 170px;
+    }
 }
