@@ -73,7 +73,8 @@ class UserAdmin(BaseUserAdmin):
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('birth_date', 'phone',
                                       'personal_id', 'country', 'address', 'city', 'avatar')}),
-        ('Permissions', {'fields': ('is_staff', 'is_superuser', 'is_active', 'groups', )}),
+        ('Permissions', {'fields': ('is_staff',
+                                    'is_superuser', 'is_active', 'groups', )}),
         ('Security', {'fields': ('code',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -265,3 +266,18 @@ class HotsAdmin(TranslationAdmin):
     form = HotForm
     pass
 admin.site.register(Hot, HotsAdmin)
+
+
+class FeedBackAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(FeedBack, FeedBackAdmin)
+
+
+class AdvertisementAdmin(TranslationAdmin):
+    pass
+admin.site.register(Advertisement, AdvertisementAdmin)
+
+
+class PromotionLabelAdmin(TranslationAdmin):
+    pass
+admin.site.register(Promotion_Label, PromotionLabelAdmin)
