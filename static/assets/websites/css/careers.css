@@ -60,3 +60,8 @@ a.btn-custom-style.btn-custom-style-career:hover {
 	background-color: #372f60;
 	width: 100%;
 }
+@media (max-width: 991px) {
+	.careers-lg .carrer-item.thumbnail .caption {
+		position: static;
+	}
+}
