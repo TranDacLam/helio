@@ -22,7 +22,7 @@
     position: absolute;
     z-index: 1000;
     border-left: 10px solid #f0f0f0;
-    border-bottom: 21px solid transparent;
+    border-bottom: 25px solid transparent;
     right: -10px;
     top: 0px;
 }
@@ -47,7 +47,7 @@
 }
 
 .image-text-head label {
-    margin-bottom: 0px;
+    margin: 3px 10px 2px 0px;
 }
 .content-pull-left .image-text-head {
     transition: background 0.2s;
@@ -97,7 +97,7 @@
         position: absolute;
         z-index: 1000;
         border-left: 10px solid #f0f0f0;
-        border-bottom: 24px solid transparent;
+        border-bottom: 25px solid transparent;
         right: -10px;
         top: 0px;
     }
