@@ -89,9 +89,6 @@ def helio_kids(request):
     page_info = Category.objects.get(pk=const.HELIO_KIDS_CATEGORY)
     #Get kids pricing
     kids_pricing = Post.objects.get(key_query=const.KIDS_PRICING_KEY_QUERY)
-    # Kids pricing image
-    if kids_pricing:
-        img_kid_pricing = kids_pricing.image
 
     # Game type
     if page_info:
@@ -104,7 +101,7 @@ def helio_kids(request):
                 data["promotions"] = item.promotion_type_rel.all().order_by('-created')
                 datas[item] = data
 
-    return render(request, 'websites/helio_kids.html', {"page_info": page_info, "img_kid_pricing": img_kid_pricing, "datas": datas})
+    return render(request, 'websites/helio_kids.html', {"page_info": page_info, "kids_pricing": kids_pricing, "datas": datas})
 
 def night_life(request):
     print "***START NIGHT LIFE CONTENT PAGE***"
