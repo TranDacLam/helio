@@ -348,6 +348,13 @@ input.input-search {
         font-size: 36px;
         line-height: 40px;
     }
+    .helio-footer-info div.icon-footer {
+        text-align: left;
+        
+    }
+    .helio-footer-info div.pull-right {
+        float: none !important; 
+    }
 
 }
 
