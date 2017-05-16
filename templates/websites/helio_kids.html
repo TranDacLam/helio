@@ -36,13 +36,13 @@
     {% endif %}
 
     {% if datas %}
-    
     <div class="pricing-btn-section">
         <!-- PRICING -->
+        {% if img_kid_pricing %}
         <div class="pricing-div">
-            <img src="{{ STATIC_URL }}assets/websites/images/kids_pricing.png" width="100%">
+            <img src="{{ MEDIA_URL }}{{img_kid_pricing}}" width="100%">
         </div>
-
+        {% endif %}
         <!-- BUTTON GROUP -->
         <ul class="nav btn-custom-group kid-btn-group">
             {% for type in datas %}
