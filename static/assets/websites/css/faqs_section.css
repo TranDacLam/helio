@@ -168,4 +168,17 @@ ol.ol-custom ol > li:before {
         font-size: 72px;
         letter-spacing: 3px;
     }
+    .faqs-section .panel-default>.panel-heading .panel-title,
+    .faqs-section .panel-default>.panel-heading .panel-title p {
+        font-size: 28px;
+        font-weight: bold;
+        line-height: 1.11;
+        letter-spacing: 1.8px;
+        text-align: left;
+        color: #ffffff;
+    }
+    .view-more-desc {
+        margin: 0px 0 25px;
+        font-size: 34px;
+    }
 }
