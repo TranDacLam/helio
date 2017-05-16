@@ -189,9 +189,15 @@ def events(request):
         events_map = {}
         if events:
             for event in events:
-                if event.start_date > date.today():
+
+                event.start_datetime = datetime.combine(event.start_date, event.start_time)
+                event.end_datetime = datetime.combine(event.end_date, event.end_time)
+
+                print event.start_datetime, datetime.now()
+
+                if event.start_datetime > datetime.now():
                     event.event_type = 'future'
-                elif event.end_date < date.today():
+                elif event.end_datetime < datetime.now():
                     event.event_type = 'past'
                 else: 
                     event.event_type = 'current'
@@ -202,6 +208,7 @@ def events(request):
 
         result["events"] = events
         result["events_map"] = events_map
+        result["event_hots"] = events[:3]
 
         return render(request, 'websites/events.html', {"result": result})
     except Exception, e:
@@ -436,14 +443,16 @@ def policy(request):
 def helio_photos(request):
     print "***START HELIO PHOTOS PAGE***"
     try:
+        photos_type = Post_Type.objects.get(pk=const.HELIO_PHOTOS_POST_TYPE_ID)
+
         # Helio photos
-        photos = Post.objects.filter(post_type_id=const.HELIO_PHOTOS_POST_TYPE_ID)
+        photos = Post.objects.filter(post_type=photos_type)
 
         for photo in photos:
             # get len of post images
             photo.images_len =  len(photo.posts_image.all())
 
-        return render(request, 'websites/helio_photos.html', {"photos": photos});
+        return render(request, 'websites/helio_photos.html', {"photos_type": photos_type, "photos": photos});
     except Exception, e:
         print "Error: ", e
     return render(request, 'websites/helio_photos.html')
