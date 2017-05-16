@@ -1,11 +1,14 @@
 {% extends "layout.html" %}
 {% load i18n %}
 {% block extrastylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}assets/css/flexslider.css" type="text/css" media="screen" />
     <link href="{{ STATIC_URL }}assets/websites/css/helio_photos.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block title %}Helio Photos{% endblock title %}
 {% block extrascript %}
+    <script type="text/javascript" src = "{{ STATIC_URL }}assets/js/jquery.flexslider.js"></script>
     <script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/helio_photos.js"></script>
+
 {% endblock %}
 {% block main_content %} 
 
@@ -39,12 +42,12 @@
             <div class="box-text">
                 <div class="div-text">
                     <p class="ablum-name big-font-size">{{photo.name}}</p>
-                    {% if photo.images_len > 1 %}
-                    <div class="view-all">
+                    <div class="view-all" style="display: none;">
                         <p>{{photo.images_len}} images</p>
-                        <a class="btn btn-custom-style" role="button" data-toggle="modal" data-target="#images_modal">{% trans "btn.view_all" %}</a>
+                        {% if photo.images_len > 0 %}
+                        <a id="{{photo.id}}" class="btn btn-custom-style view-images-btn" role="button" data-toggle="modal" >{% trans "btn.view_all" %}</a>
+                        {% endif %}
                     </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
@@ -76,7 +79,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-body">
-               <!--  <iframe id="helio_vidieo" width="100%" height="500px" src="https://www.youtube.com/embed/tGwuUvSuKLk" frameborder="0" allowfullscreen></iframe> -->
+                
             </div>
         </div>
 

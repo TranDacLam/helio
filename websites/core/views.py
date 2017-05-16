@@ -9,6 +9,8 @@ import time
 from datetime import *
 from forms import *
 import api.utils as utils
+from django.http import HttpResponse
+import json
 
 # TOTO FIX : try catch all fucntion
 
@@ -366,3 +368,18 @@ def helio_photos(request):
         photo.images_len =  len(photo.posts_image.all())
 
     return render(request, 'websites/helio_photos.html', {"photos": photos});
+
+def list_photos_by_album(request):
+    list_images = {}
+
+    if request.method == 'POST':
+        album_id = request.POST["album_id"]
+        print "album_id", album_id
+        if album_id:
+            album = Post.objects.get(pk=album_id)
+            if album:
+                list_images = list(album.posts_image.all().values('image'))
+    return HttpResponse(
+        json.dumps(list_images),
+        content_type="application/json"
+    )
