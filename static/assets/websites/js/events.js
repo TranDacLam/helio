@@ -6,6 +6,15 @@ var EventsFunction = (function ($) {
             view_more = 4;
         this.initElementPage = function() {
             $(".tab-content .tab-pane:first").addClass("active");
+            $(".item-line.future-class").each(function(){
+                var start_time = $(this).find(".start_datetime").text();
+                $(this).countdown(start_time, function(event) {
+                    $(this).find(".days").find(".current").text(event.strftime('%D'));
+                    $(this).find(".hours").find(".current").text(event.strftime('%H'));
+                    $(this).find(".minutes").find(".current").text(event.strftime('%M'));
+                    $(this).find(".seconds").find(".current").text(event.strftime('%S'));
+                });
+            });
         }
 
         this.initEventPage = function () {

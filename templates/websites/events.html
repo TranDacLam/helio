@@ -5,48 +5,11 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/css/flexslider.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/helio_item.css">
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/events.css">
-<style type="text/css">
-.countdown-container {
-    position: absolute;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.countdown-content {
-    width: 350px;
-    border: 4px solid #fec231;
-    height: 150px;
-}
-.countdown-content .time {
-    position: relative;
-}
-.countdown-content .time .current {
-    color: #fec231;
-    font-size: 60px;
-}
-.countdown-content .time .label {
-    color: #fec231;
-    font-size: 18px;
-    position: absolute;
-}
-</style>
 {% endblock %}
 {% block extrascript %}
 <script type="text/javascript" src = "{{ STATIC_URL }}assets/js/jquery.flexslider.js"></script>
 <script type="text/javascript" src = "{{ STATIC_URL }}assets/js/jquery.countdown.js"></script>
 <script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/events.js"></script>
-<script type="text/javascript">
-    // $("#getting-started").countdown("2017/01/01", function(event) {
-    //     $(this).text(
-    //         event.strftime('%D days %H:%M:%S')
-    //     );
-    // });
-
-</script>
 {% endblock %}
 {% block main_content %} 
 <div class="container">
@@ -135,6 +98,7 @@
                     {% for event in result.events %}
                     {% if forloop.counter|divisibleby:2 %} 
                     <div class="item-line content-pull-left col-md-12 {{event.event_type}}-class" style="display: none;">
+                        <div class="hidden start_datetime">{{event.start_datetime | date:"Y/m/d H:i"}}</div>
                         <div class="row">
                             <div class="item-content-text col-md-5 pull-right">
                                 <div class="col-md-9 image-text pull-right">
@@ -158,20 +122,35 @@
                             <div class="item-content-image col-md-9">
                                 <div class="row">
                                     <img src="{{ MEDIA_URL }}{{event.image}}" width="100%" height="100%">
+                                    {% if event.event_type == "future" %} 
                                     <div class="countdown-container">
                                         <div class="countdown-content">
-                                            <div class="time weeks flip">
+                                            <div class="time days flip">
                                                 <span class="count current">00</span>
-                                                <span class="label">weeks</span>
+                                                <span class="label">DAYS</span>
+                                            </div>
+                                            <div class="time hours flip">
+                                                <span class="count current">00</span>
+                                                <span class="label">HOURS</span>
+                                            </div>
+                                            <div class="time minutes flip">
+                                                <span class="count current">00</span>
+                                                <span class="label">MINUTES</span>
+                                            </div>
+                                            <div class="time seconds flip">
+                                                <span class="count current">00</span>
+                                                <span class="label">SECONDS</span>
                                             </div>
                                         </div>
                                     </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
                     {% else %}
                     <div class="item-line content-pull-right col-md-12 {{event.event_type}}-class" style="display: none;">
+                        <div class="hidden start_datetime">{{event.start_datetime | date:"Y/m/d H:i"}}</div>
                         <div class="row">
                             <div class="item-content-text col-md-5">
                                 <div class="col-md-9 image-text">
@@ -195,6 +174,28 @@
                             <div class="item-content-image col-md-9 ">
                                 <div class="row">
                                     <img src="{{ MEDIA_URL }}{{event.image}}" width="100%" height="100%">
+                                    {% if event.event_type == "future" %} 
+                                    <div class="countdown-container">
+                                        <div class="countdown-content">
+                                            <div class="time days flip">
+                                                <span class="count current">00</span>
+                                                <span class="label">DAYS</span>
+                                            </div>
+                                            <div class="time hours flip">
+                                                <span class="count current">00</span>
+                                                <span class="label">HOURS</span>
+                                            </div>
+                                            <div class="time minutes flip">
+                                                <span class="count current">00</span>
+                                                <span class="label">MINUTES</span>
+                                            </div>
+                                            <div class="time seconds flip">
+                                                <span class="count current">00</span>
+                                                <span class="label">SECONDS</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
