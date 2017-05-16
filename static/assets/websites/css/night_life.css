@@ -154,6 +154,9 @@ ol.carousel-indicators-custom li {
 .page-top {
     position: relative;
 }
+.custom-icons {
+    margin-top: 10px;
+}
 .page-caption {
     position: absolute;
     width: 100%;
