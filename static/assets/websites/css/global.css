@@ -338,7 +338,7 @@ input.input-search {
 }
 .glyphicon-custom {
     top: 0px;
-    left: 8px;
+    margin-left: 8px;
     font-weight: normal;
     font-size: 18px;
 }

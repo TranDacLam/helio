@@ -52,12 +52,12 @@ a.btn-custom-style.btn-custom-style-promotion:hover {
 /*END GAME CONTENT CSS*/
 
 /*START BUTTON GROUP CSS*/
+.btn-section-div {
+    margin-top: 20px;
+}
 .promotion-btn-group {
     margin-right: -2px;
     margin-left: -2px;
-}
-.kids-content-text .image-text {
-    padding-top: 40px;
 }
 .promotion-btn-group li a.btn-custom-style:hover,
 .promotion-btn-group li a.btn-custom-style:focus,
@@ -98,6 +98,7 @@ a.btn-custom-style.btn-custom-style-promotion:hover {
 /*START BUTTON VIEW MORE*/
 
 .div-view-more {
+    margin:auto;
     margin-top: 50px;
 }
 

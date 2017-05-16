@@ -1,5 +1,6 @@
 /*START BUTTON VIEW MORE CSS*/
 .div-view-more {
+	margin:auto;
     padding-top: 30px;
 }
 a.btn-custom-style.btn-custom-style-faqs {

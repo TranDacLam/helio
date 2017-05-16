@@ -1,9 +1,9 @@
 /*START FAQ CONTENT CSS*/
 /*.faqs-section {
-	margin-top: 10px;
+    margin-top: 10px;
 }*/
 .faqs-title p.big-font-size {
-	color: #fec231;
+    color: #fec231;
 }
 
 .more-less {
@@ -13,41 +13,42 @@
 .faqs-section .panel-default,
 .faqs-section .panel-default>.panel-heading,
 .faqs-section .panel-default>.panel-heading+.panel-collapse>.panel-body {
-	background: none;
-	border: none;
-	color: #fff;
+    background: none;
+    border: none;
+    color: #fff;
 }
 
 .faqs-section .panel-default>.panel-heading .panel-title,
 .faqs-section .panel-default>.panel-heading .panel-title p {
-	font-size: 36px;
-	font-weight: bold;
-	line-height: 1.11;
-	letter-spacing: 1.8px;
-	text-align: left;
-	color: #ffffff;
+    font-size: 36px;
+    font-weight: bold;
+    line-height: 1.11;
+    letter-spacing: 1.8px;
+    text-align: left;
+    color: #ffffff;
 }
 .faqs-section .panel-default {
-	border-bottom: 3px dotted #fff;
+    border-bottom: 3px dotted #fff;
 }
 .faqs-section .panel-default:first-child {
-	border-top: 3px dotted #fff;
+    border-top: 3px dotted #fff;
 }
 .faqs-section .panel-default>.panel-heading {
-	padding: 35px 0px 20px 0px;
+    padding: 35px 0px 20px 0px;
 }
 .faqs-section .panel-default .panel-body {
-	padding-top: 0px;
-	width: 90%;
-	margin: auto;
+    padding-top: 0px;
+    width: 90%;
+    margin: auto;
 }
 /*END FAQ CONTENT CSS*/
 
 .view-more-desc {
-	margin: 0px 0 25px;
+    margin: 0px 0 25px;
     font-size: 38px;
 }
 .div-view-more {
+    margin:auto;
 	margin-top: 50px;
 }
 
@@ -64,13 +65,13 @@ a.btn-custom-style.btn-custom-style-faqs:hover {
     background-image: none;
 }
 .suport-more {
-	margin: 50px 0;
+    margin: 50px 0;
 }
 /*END BUTTON CSS*/
 /*START CUSTOM HR*/
 .hr-custom {
-	border-color: #802ca2;
-	margin: 50px 0px;
+    border-color: #802ca2;
+    margin: 50px 0px;
 }
 /*END CUSTOM HR*/
 
@@ -107,7 +108,7 @@ a.btn-custom-style.btn-custom-style-faqs:hover {
     letter-spacing: 3px;
 }
 .nav-custom .navbar-nav>li>a{
-	color: #fff;
+    color: #fff;
     font-family: "Yanone Kaffeesatz";
     font-size: 25px;
     letter-spacing: 3px;
@@ -153,19 +154,36 @@ ol.ol-custom ol > li:before {
 /*END PANEL CSS*/
 
 @media (max-width: 997px) {
-	.nav-custom {
-	    text-align: left;
-	    padding: 0 0 20px;
-	}
-	a.btn-custom-style {
-		font-size: 20px;
-	}
-	.page-title {
+    .nav-custom {
+        text-align: left;
+        padding: 0 0 20px;
+    }
+    a.btn-custom-style {
+        font-size: 20px;
+    }
+    .page-title {
         position: static;
         margin-top: 50px;
     }
     p.page-title-text {
         font-size: 72px;
         letter-spacing: 3px;
+    }
+    .faqs-section .panel-default>.panel-heading .panel-title,
+    .faqs-section .panel-default>.panel-heading .panel-title p {
+        font-size: 28px;
+        font-weight: bold;
+        line-height: 1.11;
+        letter-spacing: 1.8px;
+        text-align: left;
+        color: #ffffff;
+    }
+    .view-more-desc {
+        margin: 0px 0 25px;
+        font-size: 34px;
+    }
+    .hr-custom {
+        border-color: #802ca2;
+        margin: 0px 0px 50px;
     }
 }

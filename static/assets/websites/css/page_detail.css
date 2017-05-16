@@ -146,7 +146,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     font-size: 18px;
 }
 .custom-other-exp {
-    padding: 10px 0px 80px;
+    padding: 10px 0px 30px;
 }
 .btn-custom {
     background-color: transparent;
@@ -162,8 +162,12 @@ a.btn-custom-style.btn-custom-style-kids:hover {
 .text-limit-rows > a {
     display: inline-block;
 }
-
-
+.custom-promotion {
+    margin-bottom: 20px;
+}
+.other-item {
+    margin-bottom: 30px;
+}
 /*MEDIA*/
 @media (max-width: 991px) {
 	.form-title {
