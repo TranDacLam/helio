@@ -17,7 +17,7 @@
 
 .nav-custom {
     text-align: right;
-    padding: 70px 15px 20px;
+    padding: 70px 0px 20px;
 }
 .nav-custom .navbar-nav>.active>a, 
 .nav-custom .navbar-nav>.active>a:focus, 
@@ -37,7 +37,7 @@
     letter-spacing: 2px;
 }
 .panel-custom-content {
-    padding: 70px 15px 20px;
+    padding: 70px 0px 20px;
 }
 
 .panel-custom-content p {
@@ -46,32 +46,3 @@
 p.page-title-text {
     max-width: 980px;
 }
-
-/*ol {
-    counter-reset: item;
-}
-
-ol > li {
-    counter-increment: item;
-}
-
-ol ol > li {
-    display: block;
-}
-
-ol.ol-custom ol > li:before {
-    content: counters(item, ".") ". ";
-    margin-left: -55px;
-}
-
-.ol-custom {
-    padding: 10px;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.ol-custom p {
-    margin-left: -15px;
-    font-weight: normal;
-    margin-top: 10px;
-}*/
