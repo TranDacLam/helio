@@ -1,39 +1,39 @@
 /*Button*/
-.play-btn-section {
+.other-product-btn-section {
     width: 67.5%;
     position: relative;
     margin: auto;
 }
-.play-btn-group {
+.other-product-btn-group {
     margin-bottom: 50px;
     margin-top: 50px;
     margin-right: -2px;
     margin-left: -2px;
 }
-.play-btn-group li a.btn-custom-style:hover,
-.play-btn-group li a.btn-custom-style:focus,
-.play-btn-group li a {
+.other-product-btn-group li a.btn-custom-style:hover,
+.other-product-btn-group li a.btn-custom-style:focus,
+.other-product-btn-group li a {
     border: 1px solid #000;
     background-color: #25618a;
     border-radius: 0px;
     background-image: none;
     font-size: 36px;
 }
-.play-btn-group li {
+.other-product-btn-group li {
     padding-bottom: 25px;
     padding-right: 2px;
     padding-left: 2px;
 }
-.play-btn-group li a.btn-custom-style {
+.other-product-btn-group li a.btn-custom-style {
     padding-right: 0px;
     padding-left: 0px;
 }
-.play-btn-group li.active a.btn-custom-style {
+.other-product-btn-group li.active a.btn-custom-style {
     background-image: none;
     background-color: #36bdeb;
     border: 1px solid #000;
 }
-.play-btn-group li.active a.btn-custom-style:after {
+.other-product-btn-group li.active a.btn-custom-style:after {
     content: "";
     position: absolute;
     bottom: -20px;
@@ -48,3 +48,10 @@
     font-family: "Yanone Kaffeesatz";
 }
 /*END BUTTON*/
+
+/**/
+@media (max-width: 1199px) { 
+    .other-product-btn-group li.active a.btn-custom-style:after {
+        content: none;
+    }
+} 

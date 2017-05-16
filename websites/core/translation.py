@@ -1,10 +1,12 @@
 from modeltranslation.translator import translator, TranslationOptions
 from models import *
 
+
 class CategoryTranslationOptions(TranslationOptions):
     fields = ('name', 'description', )
 
 translator.register(Category, CategoryTranslationOptions)
+
 
 class TypeTranslationOptions(TranslationOptions):
     fields = ('name', 'description', 'description_game')
@@ -12,10 +14,13 @@ class TypeTranslationOptions(TranslationOptions):
 translator.register(Type, TypeTranslationOptions)
 
 # Posts
+
+
 class PostTypeTranslationOptions(TranslationOptions):
     fields = ('name', 'description',)
 
 translator.register(Post_Type, PostTypeTranslationOptions)
+
 
 class PostsTranslationOptions(TranslationOptions):
     fields = ('name', 'short_description', 'content', )
@@ -23,12 +28,15 @@ class PostsTranslationOptions(TranslationOptions):
 translator.register(Post, PostsTranslationOptions)
 
 # Events
+
+
 class EventsTranslationOptions(TranslationOptions):
     fields = ('name', 'short_description', 'content', )
 
 translator.register(Event, EventsTranslationOptions)
 
 # Games
+
 
 class GameTranslationOptions(TranslationOptions):
     fields = ('name', 'short_description', 'content', )
@@ -43,28 +51,47 @@ class EntertainmentsAdminTranslationOptions(TranslationOptions):
 translator.register(Entertainment, EntertainmentsAdminTranslationOptions)
 
 # FAQs
+
+
 class FAQsTranslationOptions(TranslationOptions):
     fields = ('question', 'answer', )
 
 translator.register(FAQ, FAQsTranslationOptions)
 
 # Hots
+
+
 class HotTranslationOptions(TranslationOptions):
     fields = ('name', )
-    
+
 translator.register(Hot, HotTranslationOptions)
 
+
 class BannerTranslationOptions(TranslationOptions):
-    fields = ( )
-    
+    fields = ()
+
 translator.register(Banner, BannerTranslationOptions)
 
+
 class PromotionTranslationOptions(TranslationOptions):
-    fields = ('name', 'short_description', 'content' )
-    
+    fields = ('name', 'short_description', 'content')
+
 translator.register(Promotion, PromotionTranslationOptions)
+
 
 class TransactionTypeTranslationOptions(TranslationOptions):
     fields = ('name', )
-    
+
 translator.register(Transaction_Type, TransactionTypeTranslationOptions)
+
+
+class PromotionLabelTranslationOptions(TranslationOptions):
+    fields = ('name', )
+
+translator.register(Promotion_Label, PromotionLabelTranslationOptions)
+
+
+class AdvertisementTranslationOptions(TranslationOptions):
+    fields = ('name', )
+
+translator.register(Advertisement, AdvertisementTranslationOptions)

@@ -155,7 +155,7 @@ ol.carousel-indicators-custom li {
     position: relative;
 }
 .custom-icons {
-    margin-top: 10px;
+    margin: 10px 0px;
 }
 .page-caption {
     position: absolute;
@@ -218,5 +218,17 @@ hr.line-hr {
     ol.carousel-indicators-custom .active {
         width: 25px;
         margin-right: 5px;
+    }
+    .nl-page-info {
+        margin-right: 12%;
+        margin-top: 15px;
+    }
+    .nl-section-title p {
+        color: #fec231;
+        font-family: "Cabin";
+        font-size: 36px;
+        line-height: 45px;
+        letter-spacing: 3px;
+        font-weight: bold;
     }
 }

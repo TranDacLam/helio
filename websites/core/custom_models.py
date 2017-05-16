@@ -70,11 +70,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         _('Modified Date'), auto_now=True, editable=False)
     code = models.TextField(_('Code Verify'), null=True, blank=True)
     avatar = models.ImageField(max_length=1000, null=True, blank=True, upload_to="avatar")
-    # is_staffing = models.BooleanField(
-    #     _('staff status'),
-    #     default=False,
-    #     help_text=_('Designates whether the user can log into this admin site.'),
-    # )
+    anonymously = models.BooleanField(
+        _('Anonymous User'),
+        default=False
+    )
+    device_uid = models.CharField(max_length=255, null=True, blank=True)
+
     objects = MyUserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
