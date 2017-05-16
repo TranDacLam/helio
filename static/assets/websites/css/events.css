@@ -55,6 +55,7 @@ a.btn-custom-style.btn-custom-style-events:hover {
 
 /*START BUTTON VIEW MORE*/
 .div-view-more {
+    margin:auto;
     margin-top: 50px;
 }
 a.btn-custom-style.btn-custom-style-events-view-more {
@@ -162,8 +163,6 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     margin: auto;
     margin-top: 30px;
 }
-
-
 .page-header-text {
     position: absolute;
     top: 0px;
@@ -173,7 +172,22 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     align-items: center;
     justify-content: center;
 }
+/* custom color event by time  */
+.future-class .image-text-head {
+    background: #fec231;
+}
+.future-class .image-text-head:after {
+    border-left: 10px solid #fec231;
+}
 
+.current-class .image-text-head {
+    background: #bd197c;
+}
+.current-class .image-text-head:after {
+    border-left: 10px solid #bd197c;
+}
+
+/*start countdown*/
 .countdown-container {
     position: absolute;
     top: 0px;
@@ -209,7 +223,7 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     left: 0;
     right: 0;
 }
-
+/*end countdown*/
 @media (max-width: 991px) {
     .content-pull-left .item-content-text,
     .content-pull-right .item-content-text
