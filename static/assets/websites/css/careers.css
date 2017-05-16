@@ -2,6 +2,9 @@
 .career-div {
 	padding-top: 25px;
 }
+.col-equal {
+	display: flex;
+}
 .carrer-item.thumbnail {
 	margin-bottom: 0px;
 	padding: 0px;
