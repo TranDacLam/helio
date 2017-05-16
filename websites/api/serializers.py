@@ -39,8 +39,6 @@ class UserSerializer(SetCustomErrorMessagesMixin, serializers.ModelSerializer):
         username = validated_data.pop('username')
         password = validated_data.pop('password')
         user = User.objects.create_user(username=username, email=email, password=password, **validated_data)
-        user.is_active = True
-        # user.save()
         return user
 
 

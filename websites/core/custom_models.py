@@ -20,6 +20,7 @@ class MyUserManager(BaseUserManager):
         # print "email ",email
         user.username = username
         user.set_password(password)
+        user.is_active = True
         user.save(using=self._db)
         return user
 
@@ -35,6 +36,7 @@ class MyUserManager(BaseUserManager):
         # user.username = email
         user.is_staff = True
         user.is_superuser = True
+        user.is_active = True
         user.save(using=self._db)
         return user
 
