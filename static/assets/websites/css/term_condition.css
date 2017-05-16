@@ -21,13 +21,23 @@
 }
 .nav-custom .navbar-nav>.active>a, 
 .nav-custom .navbar-nav>.active>a:focus, 
-.nav-custom .navbar-nav>.active>a:hover {
-    color: #fff;
+.nav-custom .navbar-nav>.active>a:hover, 
+.nav-custom .navbar-nav>li>a:focus,
+.nav-custom .navbar-nav>li>a:hover{
+    color: #fec231;
     background-color: #15062b;
+    font-family: "Yanone Kaffeesatz";
+    font-size: 23px;
+    letter-spacing: 2px;
 }
-
+.nav-custom .navbar-nav>li>a{
+    color: #fff;
+    font-family: "Yanone Kaffeesatz";
+    font-size: 23px;
+    letter-spacing: 2px;
+}
 .panel-custom-content {
-    padding: 75px 15px 20px;
+    padding: 70px 15px 20px;
 }
 
 .panel-custom-content p {
