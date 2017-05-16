@@ -122,7 +122,7 @@ def reset_password(request):
                      "fields": "Password"}
             return Response(error, status=400)
 
-        user = User.objects.filter(email=email, code=secure_code)
+        user = User.objects.get(email=email, code=secure_code)
         user.set_password(password1)
         user.save()
 
