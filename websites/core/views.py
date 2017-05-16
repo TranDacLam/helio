@@ -208,6 +208,7 @@ def events(request):
 
         result["events"] = events
         result["events_map"] = events_map
+        result["event_hots"] = events[:3]
 
         return render(request, 'websites/events.html', {"result": result})
     except Exception, e:

@@ -2,11 +2,12 @@ var EventsFunction = (function ($) {
     var helio_events = function () {
         var _self = this;
         var show_num = {};
-        var first_show = 4,
+        var show_num = 4,
             view_more = 4;
         this.initElementPage = function() {
-            $(".tab-content .tab-pane:first").addClass("active");
-            $(".item-line.future-class").each(function(){
+            _self.eventsCoursel();
+            
+            $(".countdown.future-class").each(function(){
                 var start_time = $(this).find(".start_datetime").text();
                 $(this).countdown(start_time, function(event) {
                     $(this).find(".days").find(".current").text(event.strftime('%D'));
@@ -18,27 +19,19 @@ var EventsFunction = (function ($) {
         }
 
         this.initEventPage = function () {
-            $(".tab-content .tab-pane").each(function(){
-                var id = $(this).attr("id");
-                show_num[id] = first_show;
-                _self.viewMore($(this).find(".view-more-div"));
-            });
+            _self.viewMore();
+
             $(".btn-view-more").click(function() {
-                var div_parent = $(this).parent().parent();
-                var id = $(div_parent).parent().attr("id");
-                show_num[id] += view_more;
-                _self.viewMore(div_parent);
+                show_num += view_more;
+                _self.viewMore();
             });     
         }
-        this.viewMore = function (element) {
-            var id = $(element).parent().attr("id");
-            var size_list = $(element).find(".item-line").length;
-            var show_lengh =  show_num[id];
-            $(element).find('.item-line:lt('+show_lengh+')').show();
-            if(show_lengh >= size_list) {
-                $(element).find(".btn-view-more").hide();
+        this.viewMore = function () {
+            var size_list = $("#events_content .item-line").length;
+            $('#events_content .item-line:lt('+show_num+')').show();
+            if(show_num >= size_list) {
+                $(".btn-view-more").hide();
             }
-            show_num[id] = show_lengh;
         }
         this.eventsCoursel = function() {
             $(".event-month:last").addClass("active");
@@ -91,6 +84,5 @@ var EventsFunction = (function ($) {
     $(document).ready(function(){
         events.initElementPage()
         events.initEventPage();
-        events.eventsCoursel();
     });
 })(new EventsFunction(), jQuery);
