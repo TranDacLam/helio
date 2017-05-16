@@ -124,6 +124,7 @@ def reset_password(request):
 
         user = User.objects.get(email=email, code=secure_code)
         user.set_password(password1)
+        user.code = None
         user.save()
 
         return Response({"message": "Reset Password Successfully.", "flag": True})
