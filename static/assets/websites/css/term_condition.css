@@ -29,12 +29,14 @@
     font-family: "Yanone Kaffeesatz";
     font-size: 23px;
     letter-spacing: 2px;
+    line-height: 1.2;
 }
 .nav-custom .navbar-nav>li>a{
     color: #fff;
     font-family: "Yanone Kaffeesatz";
     font-size: 23px;
     letter-spacing: 2px;
+    line-height: 1.2;
 }
 .panel-custom-content {
     padding: 70px 0px 20px;
