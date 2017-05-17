@@ -89,14 +89,14 @@ div.carousel-caption-custom > .big-font-size {
     padding-top: 30px;
 }
 a.btn-custom-style.btn-custom-style-news {
-    border-image-source: linear-gradient(16deg, #0095bb, #0095bb);
+    border: 1px solid #0095bb;
 }
 .active a.btn-custom-style.btn-custom-style-news:focus,
 a.btn-custom-style.btn-custom-style-news:focus, 
 a.btn-custom-style.btn-custom-style-news:hover {
     color: #0095bb;
     background-color: #fff;
-    border-image-source: linear-gradient(16deg, #15062b, #15062b);
+    border: 1px solid #15062b;
     background-image: none;
 }
 /*END BUTTON VIEW MORE CSS*/

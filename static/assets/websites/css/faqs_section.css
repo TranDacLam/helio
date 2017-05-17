@@ -54,14 +54,14 @@
 
 /*START BUTTON CSS*/
 a.btn-custom-style.btn-custom-style-faqs {
-    border-image-source: linear-gradient(16deg, #f4963a, #f4963a);
+    border: 1px solid #f4963a;
 }
 .active a.btn-custom-style.btn-custom-style-faqs:focus,
 a.btn-custom-style.btn-custom-style-faqs:focus, 
 a.btn-custom-style.btn-custom-style-faqs:hover {
     color: #f4963a;
     background-color: #fff;
-    border-image-source: linear-gradient(16deg, #f4963a, #f4963a);
+    border: 1px solid #f4963a;
     background-image: none;
 }
 .suport-more {

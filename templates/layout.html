@@ -50,7 +50,9 @@
     <!-- Start Body -->
     <div class="body-wrap">
         <div class="container-fluid text-center event-new">
-            <p><i class="fa fa-bell-o" aria-hidden="true"></i>CHƯƠNG TRÌNH GIẢM GIÁ BÁNH TẠI BAKERY - SẮP DIỄN RA LÚC 17:30</p>
+            
+
+        <marquee behavior="scroll" direction="left" id="marq" loop="50" onmouseout="this.start()" onmouseover="this.stop()" scrollamount="10" scrolldelay="0"><p><i class="fa fa-bell-o" aria-hidden="true"></i>CHƯƠNG TRÌNH GIẢM GIÁ BÁNH TẠI BAKERY - SẮP DIỄN RA LÚC 17:30</p></marquee>
         </div>
         {% block main_content %} {% endblock %}
 

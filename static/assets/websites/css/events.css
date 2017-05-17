@@ -41,14 +41,14 @@ ol.carousel-indicators-custom li {
     background-size: 100% 100%;
 }
 a.btn-custom-style.btn-custom-style-events {
-    border-image-source: linear-gradient(16deg, #fff, #fff);
+    border: 1px solid #fff;
 }
 .active a.btn-custom-style.btn-custom-style-events:focus,
 a.btn-custom-style.btn-custom-style-events:focus, 
 a.btn-custom-style.btn-custom-style-events:hover {
     color: #23194f;
     background-color: #fff;
-    border-image-source: linear-gradient(16deg, #fff, #fff);
+    border: 1px solid #fff;
     background-image: none;
 }
 /*END GAME CONTENT CSS*/
@@ -229,6 +229,41 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     .content-pull-right .item-content-text
     {
         background: #23194f;
+    }
+
+
+    .countdown-content {
+        width: 300px;
+        border: 4px solid #fec231;
+        height: 70px;
+        margin: auto;
+    }
+    .countdown-content .time {
+        position: relative;
+        width: 67px;
+        display: inline-block;
+        text-align: center;
+    }
+    .countdown-content .time .current {
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .countdown-content .time .label {
+        font-size: 14px;
+        top: 37px;
+    }
+
+    .event-info {
+        margin-top: 15px;
+    }
+
+    .item-content-text {
+        min-height: auto;
+    }
+
+    .item-content-text.pull-right, 
+    .image-text.pull-right {
+        float: none !important;
     }
 }
 

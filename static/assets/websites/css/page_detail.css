@@ -107,6 +107,7 @@ div.block-post-title > div > h4 {
 /*START BUTON ALL CSS*/
 a.btn-custom-style.btn-custom-style-kids {
     border-image-source: linear-gradient(16deg, #fff, #fff);
+    border: 1px solid #fff;
 }
 .active a.btn-custom-style.btn-custom-style-kids:focus,
 a.btn-custom-style.btn-custom-style-kids:focus, 
