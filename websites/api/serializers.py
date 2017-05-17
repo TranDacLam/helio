@@ -150,10 +150,10 @@ class FeedBackSerializer(serializers.Serializer):
     id = serializers.IntegerField(required=False)
     name = serializers.CharField(max_length=500)
     email = serializers.EmailField(max_length=500)
-    phone = serializers.CharField(max_length=500, required=False, allow_null=True)
+    phone = serializers.CharField(max_length=500, required=False, allow_null=True, allow_blank=True)
     subject = serializers.CharField(max_length=500)
     message = serializers.CharField()
-    rate = serializers.CharField(max_length=500, required=False, allow_null=True)
+    rate = serializers.CharField(max_length=500, required=False, allow_null=True, allow_blank=True)
 
     def create(self, validated_data):
         fb = FeedBack.objects.create(**validated_data)
