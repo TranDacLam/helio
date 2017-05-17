@@ -69,7 +69,7 @@ var EventsFunction = (function ($) {
                     animationSpeed: 400,
                     animationLoop: false,
                     itemWidth: 160,
-                    itemMargin: 5,
+                    itemMargin: 3,
                     minItems: 2, // use function to pull in initial value
                     maxItems: max_items, // use function to pull in initial value
                 });
