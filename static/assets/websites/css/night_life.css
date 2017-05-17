@@ -219,4 +219,7 @@ hr.line-hr {
         width: 25px;
         margin-right: 5px;
     }
+    .comment-right {
+        margin-top: 0px;
+    }
 }
