@@ -194,11 +194,11 @@
                                 <label class="image-text-head">
                                     <label>
                                         {% if event.event_type == "future" %} 
-                                            SẮP DIỄN RA
+                                            {% trans "eventpage.future" %}
                                         {% elif event.event_type == "past"%} 
-                                            ĐÃ DIỄN RA
+                                            {% trans "eventpage.finished" %}
                                         {% else %}
-                                            ĐANG DIỄN RA
+                                            {% trans "eventpage.current" %}
                                         {% endif %}
                                         <span class="glyphicon glyphicon-play"></span>
                                     </label>
