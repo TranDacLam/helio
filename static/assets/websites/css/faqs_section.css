@@ -182,7 +182,7 @@ ol.ol-custom ol > li:before {
     }
     .view-more-desc {
         margin: 0px 0 25px;
-        font-size: 34px;
+        font-size: 30px;
     }
     .hr-custom {
         border-color: #802ca2;
@@ -204,5 +204,8 @@ ol.ol-custom ol > li:before {
     }
     .panel-body > p {
         font-size: 14px;
+    }
+    .suport-more {
+        margin: 20px 0;
     }
 }
