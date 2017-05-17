@@ -37,7 +37,7 @@
     {% if photos %}
     <div class="wrap row photos-section">
         {% for photo in photos %}
-        <div class="box col-xs-6 col-sm-6">
+        <div class="box col-xs-6 col-sm-4">
             <div class="box-inner">
                 <img src="{{ MEDIA_URL }}{{photo.image}}" width="100%" height="100%">
             </div>
@@ -54,7 +54,7 @@
             </div>
         </div>
         {% endfor %}
-        <div class="box-view-more col-xs-6 col-sm-6">
+        <div class="box-view-more col-xs-6 col-sm-4">
             <div class="box-inner">
                 
             </div>
