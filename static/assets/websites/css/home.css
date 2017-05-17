@@ -180,6 +180,7 @@ ul.type-group li a span {
     height: 100%;
     padding-top: 5%; 
     padding-bottom: 5%;
+    position: relative;
 }
 .vidieo-left .vidieo-img img {
     height: 100%;

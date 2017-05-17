@@ -248,11 +248,13 @@ a.btn-custom-style {
     border-style: solid;
     color: #fff;
     border-width: 1px;
-    border-image-source: linear-gradient(16deg, #e436aa, #2c1b76);
     border-image-slice: 1;
+    border-style: solid;
+    border-image-source: linear-gradient(16deg, #e436aa, #2c1b76);
     padding: 9px 15px 3px 15px;
     text-decoration: none;
     text-transform: uppercase;
+    border-color: #fff;
 }
 .active>a.btn-custom-style,
 a.btn-custom-style:focus, 
@@ -375,6 +377,15 @@ input.input-search {
         font-size: 28px;
         line-height: 28px;
     }
+
+    .title-content {
+        font-size: 24px;
+    }
+    a.btn-custom-style {
+        font-size: 20px;
+        padding-top: 3px;
+    }
+
 
     .navbar-toggle.pull-left {
         margin-left: 10px;
