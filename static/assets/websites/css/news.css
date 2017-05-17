@@ -127,7 +127,7 @@ a.btn-custom-style.btn-custom-style-news:hover {
         font-weight: bold;
     }
     div.carousel-caption-custom > .big-font-size {
-        line-height: 30px;
+        line-height: 25px;
     }
     .carousel-caption-custom {
         top: 14%;
@@ -135,7 +135,7 @@ a.btn-custom-style.btn-custom-style-news:hover {
 }
 @media (max-width: 992px) {
     .carousel-caption-custom {
-        top: 20%;
+        top: 15%;
         width: 80%;
         left: 10%;
         right: 10%;
