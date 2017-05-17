@@ -56,10 +56,10 @@ $(document).ready(function(){
             controlNav: false,
             animationLoop: false,
             slideshow: false,
-            itemWidth: 160,
-            itemMargin: 5,
+            itemWidth: 170,
+            itemMargin: 0,
             minItems: 2,
-            maxItems: 5,
+            maxItems: 4,
             asNavFor: '#slider'
         });
 
