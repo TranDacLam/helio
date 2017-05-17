@@ -368,18 +368,16 @@ input.input-search {
     p.short_description {
         font-size: 14px;
     }
-
     p.page_description {
         font-size: 18px;
     }
-
     .big-font-size {
         font-size: 28px;
         line-height: 28px;
     }
-
     .title-content {
         font-size: 24px;
+        line-height: 30px;
     }
     a.btn-custom-style {
         font-size: 20px;

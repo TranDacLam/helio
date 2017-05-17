@@ -248,7 +248,9 @@ ul.type-group li a span {
     text-align: left;
     color: #ffffff;
 }
-
+.event-all-btn {
+    text-align: right;
+}
 @media (max-width: 991px) {
     .vidieo-right {
         background: url("../images/m_vidieo_right.png") no-repeat;
@@ -261,5 +263,8 @@ ul.type-group li a span {
     }
     .game-type-content {
         min-height: 170px;
+    }
+    .event-all-btn {
+        text-align: left;
     }
 }
