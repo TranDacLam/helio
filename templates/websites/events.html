@@ -55,6 +55,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% elif event.event_type == "past"%}
+                                <div class="label-event-header {{event.event_type}}-class">
+                                    <button class="lable-btn big-font-size">{% trans "eventpage.finished" %}</button>
+                                </div>
+                                {% else %}
+                                <div class="label-event-header {{event.event_type}}-class">
+                                    <button class="lable-btn big-font-size">{% trans "eventpage.current" %}</button>
+                                </div>
                                 {% endif %}
                                 <div class="event-info">
                                     <p class="big-font-size">{{event.name}}</p>
@@ -137,11 +145,11 @@
                                 <label class="image-text-head">
                                     <label>
                                         {% if event.event_type == "future" %} 
-                                            SẮP DIỄN RA
+                                            {% trans "eventpage.future" %}
                                         {% elif event.event_type == "past"%} 
-                                            ĐÃ DIỄN RA
+                                            {% trans "eventpage.finished" %}
                                         {% else %}
-                                            ĐANG DIỄN RA
+                                            {% trans "eventpage.current" %}
                                         {% endif %}
                                         <span class="glyphicon glyphicon-play"></span>
                                     </label>
@@ -159,19 +167,19 @@
                                     <div class="countdown-content">
                                         <div class="time days flip">
                                             <span class="count current">00</span>
-                                            <span class="label">DAYS</span>
+                                            <span class="label">{% trans "eventpage.days" %}</span>
                                         </div>
                                         <div class="time hours flip">
                                             <span class="count current">00</span>
-                                            <span class="label">HOURS</span>
+                                            <span class="label">{% trans "eventpage.hours" %}</span>
                                         </div>
                                         <div class="time minutes flip">
                                             <span class="count current">00</span>
-                                            <span class="label">MINUTES</span>
+                                            <span class="label">{% trans "eventpage.minutes" %}</span>
                                         </div>
                                         <div class="time seconds flip">
                                             <span class="count current">00</span>
-                                            <span class="label">SECONDS</span>
+                                            <span class="label">{% trans "eventpage.seconds" %}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -211,19 +219,19 @@
                                     <div class="countdown-content">
                                         <div class="time days flip">
                                             <span class="count current">00</span>
-                                            <span class="label">DAYS</span>
+                                            <span class="label">{% trans "eventpage.days" %}</span>
                                         </div>
                                         <div class="time hours flip">
                                             <span class="count current">00</span>
-                                            <span class="label">HOURS</span>
+                                            <span class="label">{% trans "eventpage.hours" %}</span>
                                         </div>
                                         <div class="time minutes flip">
                                             <span class="count current">00</span>
-                                            <span class="label">MINUTES</span>
+                                            <span class="label">{% trans "eventpage.minutes" %}</span>
                                         </div>
                                         <div class="time seconds flip">
                                             <span class="count current">00</span>
-                                            <span class="label">SECONDS</span>
+                                            <span class="label">{% trans "eventpage.seconds" %}</span>
                                         </div>
                                     </div>
                                 </div>

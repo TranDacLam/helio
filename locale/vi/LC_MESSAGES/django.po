@@ -123,13 +123,34 @@ msgid "experiencepage.other_experience"
 msgstr "TRẢI NGHIỆM KHÁC"
 # END EXPERIENCE DETAIl
 
-# START EVENT DETAIl
+# START EVENT
 msgid "eventpage.btn.all_event" 
 msgstr "TẤT CẢ SỰ KIỆN"
 
 msgid "eventpage.other_event" 
 msgstr "SỰ KIỆN KHÁC"
-# END EVENT DETAIl
+
+msgid "eventpage.days" 
+msgstr "NGÀY"
+
+msgid "eventpage.hours" 
+msgstr "GIỜ"
+
+msgid "eventpage.minutes" 
+msgstr "PHÚT"
+
+msgid "eventpage.seconds" 
+msgstr "GIÂY"
+
+msgid "eventpage.finished" 
+msgstr "ĐÃ KẾT THÚC"
+
+msgid "eventpage.current" 
+msgstr "ĐANG DIỄN RA"
+
+msgid "eventpage.future" 
+msgstr "SẮP DIỄN RA"
+# END EVENT
 
 # START PROMOTION DETAIl
 msgid "promotionpage.btn.all_promotion" 
