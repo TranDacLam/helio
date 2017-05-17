@@ -152,6 +152,7 @@ ul.type-group li a span {
     padding-top: 30px;
     padding-left: 30px;
     padding-bottom: 30px;
+    background-color: #271a3a;
 }
 .game-type-content {
     min-height: 200px;
