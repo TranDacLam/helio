@@ -256,10 +256,11 @@ def send_feedback(request):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-
+            return Response({"code": 400, "message": "%s"%serializer.errors,
+                 "fields": ""}, status=400)
     except Exception, e:
         error = {"code": 500, "message": "Cannot update password for user. Please contact administrator.",
-                 "fields": "", "flag": False}
+                 "fields": ""}
         return Response(error, status=500)
 
 """
