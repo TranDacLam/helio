@@ -189,6 +189,13 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     border-left: 10px solid #bd197c;
 }
 
+.future-class .events-date-div {
+    background-color: #fec231;
+}
+.current-class .events-date-div {
+    background-color: #bd197c;
+}
+
 /*start countdown*/
 .countdown-container {
     position: absolute;
