@@ -147,7 +147,7 @@ class TransactionTypeSerializer(serializers.Serializer):
 
 
 class FeedBackSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
+    id = serializers.IntegerField(required=False)
     name = serializers.CharField(max_length=500)
     email = serializers.EmailField(max_length=500)
     phone = serializers.CharField(max_length=500, required=False, allow_null=True)
