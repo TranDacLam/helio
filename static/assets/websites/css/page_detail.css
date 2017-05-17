@@ -37,9 +37,7 @@
 	font-size: 22px;
 }
 .glyphicon-custom {
-    position: absolute;
-    top: -25%;
-    left: 42%;
+    position: relative;
     display: inline-block;
     font-size: 30px;
 }
