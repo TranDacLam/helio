@@ -386,7 +386,7 @@ input.input-search {
     }
     a.btn-custom-style {
         font-size: 20px;
-        padding-top: 3px;
+        padding-top: 7px;
     }
 
 
@@ -472,3 +472,18 @@ input.input-search {
         background-color: transparent;
     }
 }
+/* Safari 6.1-10.0*/
+@media screen and (min-color-index:0) 
+and(-webkit-min-device-pixel-ratio:0) { @media
+{
+    a.btn-custom-style {
+        padding-top: 3px;
+    }
+}}
+/* Safari 10.1+ */
+@media not all and (min-resolution:.001dpcm) { @media
+{
+    a.btn-custom-style {
+        padding-top: 3px;
+    }
+}}
