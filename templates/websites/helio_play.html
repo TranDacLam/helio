@@ -62,10 +62,8 @@
                 <div class="slides"> <!-- BEGIN CAROUSEL -->
                     {% for game in datas.games %}
                     <div class="slideItem"> <!-- SLIDE ITEM -->
-                        <a href="#">
-                            <img src="{{ MEDIA_URL }}{{game.image}}">
-                        </a>
-                        <div class="short-description">
+                        <img class="cursor-custom" src="{{ MEDIA_URL }}{{game.image}}">
+                        <div class="short-description cursor-custom">
                             <p class="title-content game-name">{{game.name}}</p>
                             <p class="short_description">{{game.short_description}}</p>
                         </div>

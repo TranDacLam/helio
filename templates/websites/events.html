@@ -31,40 +31,42 @@
                     <div class="item {% if forloop.counter0 == 0 %} active {% endif %} event-class">
                         <img src="{{ MEDIA_URL }}{{ event.image }}" alt="Helio">
                         <div class="page-header-text">
-                            <div class="page-header-info">
-                                <div class="countdown-coursel future-event countdown" style="display: none;">
-                                    <div class="hidden start_datetime">{{event.start_datetime | date:"Y/m/d H:i"}}</div>
-                                    <div class="hidden end_datetime">{{event.end_datetime | date:"Y/m/d H:i"}}</div>
-                                    <div class="countdown-content">
-                                        <div class="time days flip">
-                                            <span class="count current">00</span>
-                                            <span class="label">{% trans "eventpage.days" %}</span>
-                                        </div>
-                                        <div class="time hours flip">
-                                            <span class="count current">00</span>
-                                            <span class="label">{% trans "eventpage.hours" %}</span>
-                                        </div>
-                                        <div class="time minutes flip">
-                                            <span class="count current">00</span>
-                                            <span class="label">{% trans "eventpage.minutes" %}</span>
-                                        </div>
-                                        <div class="time seconds flip">
-                                            <span class="count current">00</span>
-                                            <span class="label">{% trans "eventpage.seconds" %}</span>
+                            <a href="/events/{{event.id}}/detail/" target="_blank">
+                                <div class="page-header-info">
+                                    <div class="countdown-coursel future-event countdown" style="display: none;">
+                                        <div class="hidden start_datetime">{{event.start_datetime | date:"Y/m/d H:i"}}</div>
+                                        <div class="hidden end_datetime">{{event.end_datetime | date:"Y/m/d H:i"}}</div>
+                                        <div class="countdown-content">
+                                            <div class="time days flip">
+                                                <span class="count current">00</span>
+                                                <span class="label">{% trans "eventpage.days" %}</span>
+                                            </div>
+                                            <div class="time hours flip">
+                                                <span class="count current">00</span>
+                                                <span class="label">{% trans "eventpage.hours" %}</span>
+                                            </div>
+                                            <div class="time minutes flip">
+                                                <span class="count current">00</span>
+                                                <span class="label">{% trans "eventpage.minutes" %}</span>
+                                            </div>
+                                            <div class="time seconds flip">
+                                                <span class="count current">00</span>
+                                                <span class="label">{% trans "eventpage.seconds" %}</span>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="label-event-header finished-event" style="display: none;">
+                                        <button class="lable-btn big-font-size">{% trans "eventpage.finished" %}</button>
+                                    </div>
+                                    <div class="label-event-header current-event" style="display: none;">
+                                        <button class="lable-btn big-font-size">{% trans "eventpage.current" %}</button>
+                                    </div>
+                                    <div class="event-info">
+                                        <p class="big-font-size">{{event.name}}</p>
+                                        <p class="short_description">{{event.short_description}}</p>
+                                    </div>
                                 </div>
-                                <div class="label-event-header finished-event" style="display: none;">
-                                    <button class="lable-btn big-font-size">{% trans "eventpage.finished" %}</button>
-                                </div>
-                                <div class="label-event-header current-event" style="display: none;">
-                                    <button class="lable-btn big-font-size">{% trans "eventpage.current" %}</button>
-                                </div>
-                                <div class="event-info">
-                                    <p class="big-font-size">{{event.name}}</p>
-                                    <p class="short_description">{{event.short_description}}</p>
-                                </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                     {% endfor %}
