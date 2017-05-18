@@ -230,4 +230,13 @@ hr.line-hr {
     .layer-3 {
         margin-top: 50px;
     }
+
+    .imgHalf .comment-img-half {
+        width: 100%;
+        padding: 0px 15px;
+    }
+    .div-align-center {
+        width: 85%;
+        margin: auto;
+    }
 }
