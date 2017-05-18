@@ -40,6 +40,13 @@
     margin-bottom: 0px;
 }
 
+.number-images {
+    margin-top: 30px;
+}
+.number-images,
+.number-images > span {
+    font-size: 17px;
+}
 /* Custom flex css  */
 
 #images_modal .flexslider {

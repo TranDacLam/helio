@@ -31,11 +31,12 @@ $(document).ready(function(){
                 $("#carousel .slides").html("");
                     $(".modal-body").html('<div id="slider" class="flexslider"> <ul class="slides"></ul></div>' 
                                         + '<div id="carousel" class="flexslider"> <ul class="slides"></ul></div>')
-
+                
                 if(data && data.length > 0 ) {
                     for (var i = data.length - 1; i >= 0; i--) {
                         $("#slider .slides").append("<li> <img src='"+ MEDIA_URL + data[i].image +"'/></li>");
                         $("#carousel .slides").append("<li><img src='"+ MEDIA_URL + data[i].image +"'/></li>");
+                        
                     }
                     $('#images_modal').modal('show');
                 } else {
@@ -68,7 +69,14 @@ $(document).ready(function(){
             controlNav: false,
             animationLoop: false,
             slideshow: false,
-            sync: "#carousel"
+            sync: "#carousel",
+            start: function(slider){
+                $(".cur-slide").text(slider.currentSlide+1);
+                $(".total-slide").text(slider.count);
+            },
+            after: function(slider){
+                $(".cur-slide").text(slider.currentSlide+1);
+            }
         });
     });
 
