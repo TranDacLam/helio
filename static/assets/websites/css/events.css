@@ -129,12 +129,12 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     background-color: #443855;
 }
 
-.item-flex.past-class {
+.item-flex.finished-class {
     background-color: #211336;
     opacity: 0.5;
 }
 
-.item-line.past-class .item-content-image img, 
+.item-line.finished-class .item-content-image img, 
 .item-line.future-class .item-content-image img
 {
     opacity: 0.4;
@@ -202,13 +202,13 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     font-weight: bold;
 }
 
-.label-event-header.past-class .lable-btn {
+.label-event-header.finished-event .lable-btn {
     color: #000;
     background: rgba(204, 204, 204, 0.79);
     border: none;
 }
 
-.label-event-header.current-class .lable-btn {
+.label-event-header.current-event .lable-btn {
     color: #bd197c;
     background: none;
     border: 2px solid #bd197c;
