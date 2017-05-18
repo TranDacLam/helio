@@ -104,14 +104,14 @@ a.btn-custom-style.btn-custom-style-faqs:hover {
     color: #fec231;
     background-color: #15062b;
     font-family: "Yanone Kaffeesatz";
-    font-size: 25px;
+    font-size: 30px;
     letter-spacing: 3px;
     line-height: 1.2;
 }
 .nav-custom .navbar-nav>li>a{
     color: #fff;
     font-family: "Yanone Kaffeesatz";
-    font-size: 25px;
+    font-size: 30px;
     letter-spacing: 3px;
     line-height: 1.2;
 }
@@ -157,7 +157,6 @@ ol.ol-custom ol > li:before {
 
 @media (max-width: 997px) {
     .nav-custom {
-        text-align: left;
         padding: 0 0 20px;
     }
     a.btn-custom-style {

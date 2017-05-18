@@ -249,10 +249,18 @@ ul.type-group li a span {
     text-align: left;
     color: #ffffff;
 }
+.event-name:hover,
+.event-name:focus {
+    color: #fff;
+    text-decoration: none;
+}
 .event-all-btn {
     text-align: right;
 }
 @media (max-width: 991px) {
+    .banner-custom {
+        margin-top: 20px;
+    }
     .vidieo-right {
         background: url("../images/m_vidieo_right.png") no-repeat;
         background-size: 100% 100%;
