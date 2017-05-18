@@ -277,7 +277,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="caption">
-                            <p class="event-name">{{event.name}}</p>
+                            <a class="event-name" href="/events/{{event.id}}/detail/">{{event.name}}</a>
                             <p class="event-time"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ event.start_time | date:"H:i" }} - {{ event.end_time | date:"H:i" }} | {{ event.start_date | date:"d.m.Y" }} - {{ event.end_date | date:"d.m.Y" }}</p>
                             <p class="short_description">{{event.short_description}}</p>
                         </div>

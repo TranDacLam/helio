@@ -249,6 +249,11 @@ ul.type-group li a span {
     text-align: left;
     color: #ffffff;
 }
+.event-name:hover,
+.event-name:focus {
+    color: #fff;
+    text-decoration: none;
+}
 .event-all-btn {
     text-align: right;
 }
