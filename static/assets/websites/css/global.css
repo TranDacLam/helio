@@ -302,7 +302,10 @@ a.btn-custom-style:hover {
     display: flex;
     flex-wrap: wrap;
 }
-
+/*Helio play and kids*/
+.cursor-custom {
+    cursor: default;
+}
 /*FOOTER*/
 .menuwidget.nav li {
     width: 100%;

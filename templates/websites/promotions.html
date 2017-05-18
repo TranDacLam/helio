@@ -29,7 +29,7 @@
                 <div class="carousel-inner" role="listbox">
                     {% for promotion in promotions_hots %}
                     <div class="item {% if forloop.counter0 == 0 %} active {% endif %}">
-                        <img src="{{ MEDIA_URL }}{{ promotion.image }}" alt="Helio" width="100%">
+                        <a href="/promotions/{{promotion.id}}/detail/" target="_blank"><img src="{{ MEDIA_URL }}{{ promotion.image }}" alt="Helio" width="100%"></a>
                     </div>
                     {% endfor %}
                 </div>
