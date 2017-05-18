@@ -111,3 +111,9 @@
     }
 }
 
+@media (max-width: 767px) { 
+    .item-name {
+        font-size: 28px;
+        line-height: 28px;
+    }
+}

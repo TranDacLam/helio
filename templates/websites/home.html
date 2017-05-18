@@ -31,8 +31,8 @@
 {% endif %}
 <!-- BANNER 1 SECTION -->
 {% if result.banners and result.banners.1 %}
-<div class="container">
-    <a href="{{result.banners.1.sub_url}}"><img src="{{ MEDIA_URL }}{{result.banners.1.image}}" width="100%"></a>
+<div class="container banner-custom">
+    <a href="{{result.banners.1.sub_url}}" target="_blank"><img src="{{ MEDIA_URL }}{{result.banners.1.image}}" width="100%"></a>
 </div>
 {% endif %}
 
@@ -200,7 +200,7 @@
 <!-- BANNER 2 SECTION -->
 {% if result.banners and result.banners.2 %}
 <div class="container block-content-20">
-     <a href="{{result.banners.2.sub_url}}"><img src="{{ MEDIA_URL }}{{result.banners.2.image}}" width="100%"></a>
+     <a href="{{result.banners.2.sub_url}}" target="_blank"><img src="{{ MEDIA_URL }}{{result.banners.2.image}}" width="100%"></a>
 </div>
 {% endif %}
 
@@ -257,10 +257,10 @@
     <div class="row">
         <div class="col-md-12 event-section-body">
             <div class="row title-section event-title-section">
-                <div class="col-md-9">
+                <div class="col-md-9 col-sm-9">
                     <p class="big-font-size event-title">{% trans "homepage.title.section.event" %}</p>
                 </div> 
-                <div class="col-md-3" align="right">
+                <div class="col-md-3 event-all-btn">
                     <a class="btn btn-custom-style" href="{% url 'events' %}" role="button">{% trans "btn.view_all" %}</a>
                 </div>
                 
@@ -277,7 +277,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="caption">
-                            <p class="event-name">{{event.name}}</p>
+                            <a class="event-name" href="/events/{{event.id}}/detail/">{{event.name}}</a>
                             <p class="event-time"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ event.start_time | date:"H:i" }} - {{ event.end_time | date:"H:i" }} | {{ event.start_date | date:"d.m.Y" }} - {{ event.end_date | date:"d.m.Y" }}</p>
                             <p class="short_description">{{event.short_description}}</p>
                         </div>
@@ -299,8 +299,8 @@
     
 <!-- BANNER 3 SECTION -->
 {% if result.banners and result.banners.3 %}
-<div class="container block-content-20 banner3">
-    <a href="{{result.banners.3.sub_url}}"><img src="{{ MEDIA_URL }}{{result.banners.3.image}}" width="100%"></a>
+<div class="container block-content-20 banner3" >
+    <a href="{{result.banners.3.sub_url}}" target="_blank"><img src="{{ MEDIA_URL }}{{result.banners.3.image}}" width="100%"></a>
 </div>
 {% endif %}
 

@@ -43,7 +43,7 @@
 .btn-custom-style.btn-custom-style-experiences:hover {
     color: #15062b;
     background-color: #fff;
-    border-image-source: linear-gradient(16deg, #fff, #fff);
+    border: 1px solid #fff;
     background-image: none;
 }
 /**/

@@ -189,18 +189,8 @@ def events(request):
         events_map = {}
         if events:
             for event in events:
-
                 event.start_datetime = datetime.combine(event.start_date, event.start_time)
                 event.end_datetime = datetime.combine(event.end_date, event.end_time)
-
-                print event.start_datetime, datetime.now()
-
-                if event.start_datetime > datetime.now():
-                    event.event_type = 'future'
-                elif event.end_datetime < datetime.now():
-                    event.event_type = 'past'
-                else: 
-                    event.event_type = 'current'
                 key = event.start_date.strftime('%m/%Y')
                 if key not in events_map.keys():
                     events_map[key] = []
@@ -219,6 +209,9 @@ def event_detail(request, event_id):
     try:
         print "***START EVENT DETAIl PAGE***"
         event = Event.objects.get(pk=event_id)
+        if event:
+            event.start_datetime = datetime.combine(event.start_date, event.start_time)
+            event.end_datetime = datetime.combine(event.end_date, event.end_time)
 
         other_events = Event.objects.all().order_by('-created')[:3]
 

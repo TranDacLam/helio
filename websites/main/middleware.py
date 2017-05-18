@@ -1,5 +1,6 @@
 from django.utils import translation
 from django.conf import settings
+from core.models import Advertisement
 
 # class SetLocaleMiddleware:
 #     def set_language(request):
@@ -34,3 +35,10 @@ def get_app_fb_id(request):
         pass
     return {'FB_APP_ID': FB_APP_ID}
 
+def get_advertisement(request):
+    advertisements = {}
+    try:
+        advertisements = Advertisement.objects.filter(is_show=True)
+    except:
+        pass
+    return {'advertisements': advertisements}

@@ -123,13 +123,34 @@ msgid "experiencepage.other_experience"
 msgstr "OTHER EXPERIENCE"
 # END EXPERIENCE DETAIl
 
-# START EVENT DETAIl
+# START EVENT
 msgid "eventpage.btn.all_event" 
 msgstr "ALL EVENT"
 
 msgid "eventpage.other_event" 
 msgstr "OTHER EVENT"
-# END EVENT DETAIl
+
+msgid "eventpage.days" 
+msgstr "DAYS"
+
+msgid "eventpage.hours" 
+msgstr "HOURS"
+
+msgid "eventpage.minutes" 
+msgstr "MINUTES"
+
+msgid "eventpage.seconds" 
+msgstr "SECONDS"
+
+msgid "eventpage.finished" 
+msgstr "FINISHED EVENT"
+
+msgid "eventpage.current" 
+msgstr "CURRENT EVENT"
+
+msgid "eventpage.future" 
+msgstr "FUTURE EVENT"
+# END EVENT
 
 # START PROMOTION DETAIl
 msgid "promotionpage.btn.all_promotion" 

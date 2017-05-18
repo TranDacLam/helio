@@ -26,13 +26,17 @@ ol.carousel-indicators-custom li {
     border-radius: 0px;
 }
 .carousel-caption-custom {
-    top: 30%;
+    position: absolute;
+    width: 70%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
 }
-/*
-div.carousel-caption-custom > .big-font-size {
-    line-height: 90px;
-}*/
-
 /*END CAROUSEL*/
 
 /*START EXPERIENCES CSS*/
@@ -89,14 +93,14 @@ div.carousel-caption-custom > .big-font-size {
     padding-top: 30px;
 }
 a.btn-custom-style.btn-custom-style-experiences {
-    border-image-source: linear-gradient(16deg, #0095bb, #0095bb);
+    border: 1px solid #0095bb;
 }
 .active a.btn-custom-style.btn-custom-style-experiences:focus,
 a.btn-custom-style.btn-custom-style-experiences:focus, 
 a.btn-custom-style.btn-custom-style-experiences:hover {
     color: #0095bb;
     background-color: #fff;
-    border-image-source: linear-gradient(16deg, #15062b, #15062b);
+    border: 1px solid #15062b;
     background-image: none;
 }
 /*END BUTTON VIEW MORE CSS*/
@@ -120,24 +124,7 @@ a.btn-custom-style.btn-custom-style-experiences:hover {
         border-color: #bd197c;
         border-radius: 0px;
     }
-    .big-font-size {
-        font-size: 20px;
-        font-family: "Yanone Kaffeesatz";
-        letter-spacing: 3px;
-        font-weight: bold;
-    }
-    div.carousel-caption-custom > .big-font-size {
-        line-height: 30px;
-    }
     .carousel-caption-custom {
-        top: 14%;
-    }
-}
-@media (max-width: 992px) {
-    .carousel-caption-custom {
-        top: 20%;
-        width: 80%;
-        left: 10%;
-        right: 10%;
+        width: 100%;
     }
 }

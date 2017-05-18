@@ -219,4 +219,15 @@ hr.line-hr {
         width: 25px;
         margin-right: 5px;
     }
+    .comment-right {
+        margin-top: 0px;
+    }
+    .nl-section-title p {
+        font-size: 28px;
+        line-height: 38px;
+    }
+    .layer-2,
+    .layer-3 {
+        margin-top: 50px;
+    }
 }

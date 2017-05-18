@@ -152,6 +152,7 @@ ul.type-group li a span {
     padding-top: 30px;
     padding-left: 30px;
     padding-bottom: 30px;
+    background-color: #271a3a;
 }
 .game-type-content {
     min-height: 200px;
@@ -180,6 +181,7 @@ ul.type-group li a span {
     height: 100%;
     padding-top: 5%; 
     padding-bottom: 5%;
+    position: relative;
 }
 .vidieo-left .vidieo-img img {
     height: 100%;
@@ -247,8 +249,18 @@ ul.type-group li a span {
     text-align: left;
     color: #ffffff;
 }
-
+.event-name:hover,
+.event-name:focus {
+    color: #fff;
+    text-decoration: none;
+}
+.event-all-btn {
+    text-align: right;
+}
 @media (max-width: 991px) {
+    .banner-custom {
+        margin-top: 20px;
+    }
     .vidieo-right {
         background: url("../images/m_vidieo_right.png") no-repeat;
         background-size: 100% 100%;
@@ -260,5 +272,8 @@ ul.type-group li a span {
     }
     .game-type-content {
         min-height: 170px;
+    }
+    .event-all-btn {
+        text-align: left;
     }
 }
