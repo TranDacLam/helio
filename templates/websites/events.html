@@ -101,7 +101,9 @@
                             <div class="flexslider carousel">
                                 <ul class="slides">
                                     {% for event in values reversed%}
-                                    <li class="item-flex {{event.event_type}}-class">
+                                    <li class="item-flex event-class">
+                                        <div class="hidden start_datetime">{{event.start_datetime | date:"Y/m/d H:i"}}</div>
+                                        <div class="hidden end_datetime">{{event.end_datetime | date:"Y/m/d H:i"}}</div>
                                         <div class="events-name-div">
                                             <p class="events-name">{{event.name}}</p>
                                         </div>

@@ -62,6 +62,7 @@ p.page_description {
 /*Event notification*/
 .text-center.event-new {
     height: 48px;
+    overflow: hidden;
 }
 .text-center.event-new marquee {
     background-image: linear-gradient(to right, #e436aa, #2c1b76);
@@ -74,7 +75,7 @@ p.page_description {
     letter-spacing: 0.5px;
 }
 .text-center.event-new marquee span { 
-    margin-right: 50%;
+    margin-right: 20%;
 }
 .fa.fa-bell-o {
     transform: rotate(30deg);
@@ -150,7 +151,13 @@ p.page_description {
     padding: 0px;
 }
 .navbar-default .main-menu .dropdown-menu>li>a:hover,
-.navbar-default .main-menu .dropdown-menu>li>a:focus {
+.navbar-default .main-menu .dropdown-menu>li>a:focus,
+.navbar-default .main-menu .dropdown-menu>li.active>a,
+.navbar-default .main-menu .navbar-nav .open .dropdown-menu>.active>a, 
+.navbar-default .main-menu .navbar-nav .open .dropdown-menu>.active>a:focus, 
+.navbar-default .main-menu .navbar-nav .open .dropdown-menu>.active>a:hover
+
+ {
     background-color: #fec231;
     color: #15062b;
 }
@@ -388,7 +395,7 @@ input.input-search {
     }
     a.btn-custom-style {
         font-size: 20px;
-        padding-top: 3px;
+        padding-top: 7px;
     }
 
 
@@ -474,3 +481,18 @@ input.input-search {
         background-color: transparent;
     }
 }
+/* Safari 6.1-10.0*/
+@media screen and (min-color-index:0) 
+and(-webkit-min-device-pixel-ratio:0) { @media
+{
+    a.btn-custom-style {
+        padding-top: 3px;
+    }
+}}
+/* Safari 10.1+ */
+@media not all and (min-resolution:.001dpcm) { @media
+{
+    a.btn-custom-style {
+        padding-top: 3px;
+    }
+}}
