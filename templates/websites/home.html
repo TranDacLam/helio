@@ -14,7 +14,7 @@
         <div class="carousel-inner" role="listbox">
             {% for hot in result.hots %}
             <div class="item">
-                <a href="{{hot.sub_url}}"><img src="{{ MEDIA_URL }}{{hot.image}}" width="100%"></a>
+                <a href="{{hot.sub_url}}" target="_blank"><img src="{{ MEDIA_URL }}{{hot.image}}" width="100%"></a>
             </div>
             {% endfor %}
         </div>
@@ -22,7 +22,7 @@
         <ul class="nav nav-justified home-carousel hidden-sm hidden-xs">
             {% for hot in result.hots %}
             <li data-target="#myCarousel">
-                <a class="title-content" href="{{hot.sub_url}}" target="_blank">{{hot.name}}</a>
+                <a class="title-content" href="#">{{hot.name}}</a>
             </li>
             {% endfor %}
         </ul>
