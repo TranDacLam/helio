@@ -173,6 +173,9 @@ class Promotion(DateTimeModel):
     content = models.TextField()
     promotion_type = models.ForeignKey(
         'Type', related_name='promotion_type_rel', on_delete=models.CASCADE)
+    promotion_label = models.ForeignKey(
+        'Promotion_Label', related_name='promotion_label_rel', on_delete=models.CASCADE,
+                            null=True, blank=True)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -270,8 +273,6 @@ class Advertisement(DateTimeModel):
 
 @python_2_unicode_compatible
 class Promotion_Label(DateTimeModel):
-    promotion = models.ForeignKey('Promotion', related_name='promotion_label_rel',
-                                 on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
     def __str__(self):
