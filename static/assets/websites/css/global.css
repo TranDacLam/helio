@@ -151,7 +151,13 @@ p.page_description {
     padding: 0px;
 }
 .navbar-default .main-menu .dropdown-menu>li>a:hover,
-.navbar-default .main-menu .dropdown-menu>li>a:focus {
+.navbar-default .main-menu .dropdown-menu>li>a:focus,
+.navbar-default .main-menu .dropdown-menu>li.active>a,
+.navbar-default .main-menu .navbar-nav .open .dropdown-menu>.active>a, 
+.navbar-default .main-menu .navbar-nav .open .dropdown-menu>.active>a:focus, 
+.navbar-default .main-menu .navbar-nav .open .dropdown-menu>.active>a:hover
+
+ {
     background-color: #fec231;
     color: #15062b;
 }

@@ -38,6 +38,9 @@ $(document).ready( function() {
 	/*Active Menu*/
 	var url = window.location.href;
     $('.nav a').filter(function() {
-        return this.href == url;
-    }).parent().addClass('active');
+        if (this.href == url) {
+        	$(this).parent().addClass('active');
+        	$(this).parent().closest(".dropdown-submenu").addClass('active');
+        }
+    });
 });
