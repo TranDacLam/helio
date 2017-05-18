@@ -73,6 +73,9 @@ p.page_description {
     font-weight: bold;
     letter-spacing: 0.5px;
 }
+.text-center.event-new marquee span { 
+    margin-right: 50%;
+}
 .fa.fa-bell-o {
     transform: rotate(30deg);
     margin-right: 10px;

@@ -49,9 +49,13 @@
 
     <!-- Start Body -->
     <div class="body-wrap">
-        {% if advertisement %}
+        {% if advertisements %}
         <div class="text-center event-new">
-            <marquee>{{advertisement}}</marquee>
+            <marquee>
+                {% for advertisement in advertisements %}
+                    <span>{{advertisement}}</span>
+                {% endfor %}
+            </marquee>
             <!-- <marquee behavior="scroll" direction="left" id="marq" loop="50" onmouseout="this.start()" onmouseover="this.stop()" scrollamount="10" scrolldelay="10"><p><i class="fa fa-bell-o" aria-hidden="true"></i>{{advertisement}}</p></marquee> -->
         </div>
         {% endif %}
