@@ -85,12 +85,14 @@
                         <div class="row">
                             <div class="item-content-text col-md-5 pull-right">
                                 <div class="col-md-9 image-text pull-right">
+                                    {% if promotion.promotion_label %}
                                     <label class="image-text-head">
                                         <label>
-                                            CHƯƠNG TRÌNH HÈ
+                                            {{promotion.promotion_label}}
                                             <span class="glyphicon glyphicon-play"></span>
                                         </label>
                                     </label>
+                                    {% endif %}
                                     <p class="item-name">{{promotion.name}}</p>
                                     <p class="item-description short_description">{{promotion.short_description}}</p>
                                     <a class="btn btn-custom-style btn-custom-style-play" href="/promotions/{{promotion.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
@@ -106,12 +108,14 @@
                         <div class="row">
                             <div class="item-content-text col-md-5">
                                 <div class="col-md-9 image-text">
+                                    {% if promotion.promotion_label %}
                                     <label class="image-text-head">
                                         <label>
-                                            CHƯƠNG TRÌNH HÈ
+                                            {{promotion.promotion_label}}
                                             <span class="glyphicon glyphicon-play"></span>
                                         </label>
                                     </label>
+                                    {% endif %}
                                     <p class="item-name">{{promotion.name}}</p>
                                     <p class="item-description short_description">{{promotion.short_description}}</p>
                                     <a class="btn btn-custom-style btn-custom-style-play" href="/promotions/{{promotion.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
