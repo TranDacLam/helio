@@ -31,13 +31,13 @@
     font-weight: bold;
 }
 
-.label-event-header.past-class .lable-btn {
+.label-event-header.finished-event .lable-btn {
     color: #000;
     background: rgba(204, 204, 204, 0.79);
     border: none;
 }
 
-.label-event-header.current-class .lable-btn {
+.label-event-header.current-event .lable-btn {
     color: #bd197c;
     background: none;
     border: 2px solid #bd197c;

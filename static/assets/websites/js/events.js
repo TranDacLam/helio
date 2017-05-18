@@ -6,8 +6,12 @@ var EventsFunction = (function ($) {
             view_more = 4;
         this.initElementPage = function() {
             _self.eventsCoursel();
-            
-            $(".countdown.future-class").each(function(){
+
+            $(".event-class").each(function() {
+                _self.event_function($(this));
+            });
+
+            $(".event-class.future-class .countdown").each(function(){
                 var start_time = $(this).find(".start_datetime").text();
                 $(this).countdown(start_time, function(event) {
                     $(this).find(".days").find(".current").text(event.strftime('%D'));
@@ -75,6 +79,27 @@ var EventsFunction = (function ($) {
                 });
                 $(element).addClass("complete");
             }
+        }
+
+        this.event_function = function(event_class) {
+            var start_time_txt = $(event_class).find(".start_datetime").text(),
+                end_time_txt = $(event_class).find(".end_datetime").text(),
+                start_datetime = new Date(start_time_txt),
+                end_datetime = new Date(end_time_txt),
+                current_date = new Date($.now());
+
+            var event_label = "";
+
+            if(current_date > end_datetime) {
+                event_label = "finished";
+            } else if (current_date < start_datetime) {
+                event_label = "future";
+            } else {
+                event_label = "current";
+            }
+
+            $(event_class).find("."+event_label+"-event").show();
+            $(event_class).addClass(event_label+ "-class");
         }
     }
     return helio_events;

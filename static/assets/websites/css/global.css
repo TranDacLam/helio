@@ -61,9 +61,10 @@ p.page_description {
 }
 /*Event notification*/
 .text-center.event-new {
-    background-image: linear-gradient(to right, #e436aa, #2c1b76);
+    height: 48px;
 }
-.text-center.event-new p {
+.text-center.event-new marquee {
+    background-image: linear-gradient(to right, #e436aa, #2c1b76);
     padding: 10px;
     color: #fff;
     margin-bottom: 0px;
@@ -71,6 +72,9 @@ p.page_description {
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 0.5px;
+}
+.text-center.event-new marquee span { 
+    margin-right: 50%;
 }
 .fa.fa-bell-o {
     transform: rotate(30deg);

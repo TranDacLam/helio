@@ -85,6 +85,8 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'main.middleware.set_language_code',
                 'main.middleware.get_app_fb_id',
+                'main.middleware.get_advertisement',
+                
             ],
         },
     },

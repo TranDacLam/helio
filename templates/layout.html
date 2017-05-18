@@ -49,11 +49,16 @@
 
     <!-- Start Body -->
     <div class="body-wrap">
-        <div class="container-fluid text-center event-new">
-            
-
-        <marquee behavior="scroll" direction="left" id="marq" loop="50" onmouseout="this.start()" onmouseover="this.stop()" scrollamount="10" scrolldelay="0"><p><i class="fa fa-bell-o" aria-hidden="true"></i>CHƯƠNG TRÌNH GIẢM GIÁ BÁNH TẠI BAKERY - SẮP DIỄN RA LÚC 17:30</p></marquee>
+        {% if advertisements %}
+        <div class="text-center event-new">
+            <marquee>
+                {% for advertisement in advertisements %}
+                    <!-- <span> -->{{advertisement}}<!-- </span> -->
+                {% endfor %}
+            </marquee>
+            <!-- <marquee behavior="scroll" direction="left" id="marq" loop="50" onmouseout="this.start()" onmouseover="this.stop()" scrollamount="10" scrolldelay="10"><p><i class="fa fa-bell-o" aria-hidden="true"></i>{{advertisement}}</p></marquee> -->
         </div>
+        {% endif %}
         {% block main_content %} {% endblock %}
 
     </div>
