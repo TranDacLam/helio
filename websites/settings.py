@@ -254,7 +254,8 @@ CKEDITOR_CONFIGS = {
             ]
         ),
         'font_names': "Yanone Kaffeesatz; Cabin",
-        'contentsCss': ','.join(['../../../../static/assets/websites/css/custom_admin.css'])
+        'contentsCss': ','.join(['../../../../static/assets/websites/css/custom_admin.css']),
+        'allowedContent': True
     },
 }
 CKEDITOR_BROWSE_SHOW_DIRS = True
