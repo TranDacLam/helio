@@ -124,6 +124,9 @@ msgstr "OTHER EXPERIENCE"
 # END EXPERIENCE DETAIl
 
 # START EVENT
+msgid "eventpage.title.all_event" 
+msgstr "ALL EVENT"
+
 msgid "eventpage.btn.all_event" 
 msgstr "ALL EVENT"
 

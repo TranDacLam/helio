@@ -124,6 +124,9 @@ msgstr "TRẢI NGHIỆM KHÁC"
 # END EXPERIENCE DETAIl
 
 # START EVENT
+msgid "eventpage.title.all_event" 
+msgstr "TẤT CẢ CÁC SỰ KIỆN"
+
 msgid "eventpage.btn.all_event" 
 msgstr "TẤT CẢ SỰ KIỆN"
 

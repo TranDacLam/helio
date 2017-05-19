@@ -68,12 +68,6 @@ a.btn-custom-style.btn-custom-style-faqs:hover {
     margin: 50px 0;
 }
 /*END BUTTON CSS*/
-/*START CUSTOM HR*/
-.hr-custom {
-    border-color: #802ca2;
-    margin: 50px 0px;
-}
-/*END CUSTOM HR*/
 
 /*START PANEL CSS*/
 .navbar-default .nav-custom ul {

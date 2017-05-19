@@ -302,10 +302,18 @@ a.btn-custom-style:hover {
     display: flex;
     flex-wrap: wrap;
 }
-/*Helio play and kids*/
+/*START Helio play and kids*/
 .cursor-custom {
     cursor: default;
 }
+/*END Helio play and kids*/
+
+/*START CUSTOM HR*/
+.hr-custom {
+    border-color: #802ca2;
+    margin: 50px 0px;
+}
+/*END CUSTOM HR*/
 /*FOOTER*/
 .menuwidget.nav li {
     width: 100%;
