@@ -1,5 +1,10 @@
 var show_num = 5,
     view_more = 5;
+var show_more_vi = 'XEM ĐẦY ĐỦ',
+	show_more_en = 'SHOW MORE';
+var show_less_vi = 'THU GỌN',
+	show_less_en = 'SHOW LESS';
+
 
 function viewMore() {
     var size_list = $(".faqs-section .faq-detail").length;
@@ -33,14 +38,23 @@ $(document).ready( function() {
 	  		$( this ).parent().parent().find(".card-div-bottom").removeClass("hidden");
 	  	}
 	});
+	var show_more,
+		show_less;
+	if(lang_code == "en") {
+		show_more = show_more_en;
+		show_less = show_less_en;
+	} else {
+		show_more = show_more_vi;
+		show_less = show_less_vi;
+	}
 	$(".view-full").click(function(){
 		var powercard_content = $(this).parent().parent().find(".card-description");
 		if($(powercard_content).hasClass("height-limit")) {
 			$(powercard_content).removeClass("height-limit");
-			$(this).html('THU GỌN <br> <i class="glyphicon glyphicon-chevron-up">');
+			$(this).html(show_less + '<br> <i class="glyphicon glyphicon-chevron-up">');
 		} else {
 			$(powercard_content).addClass("height-limit");
-			$(this).html('XEM ĐẦY ĐỦ <br> <i class="glyphicon glyphicon-chevron-down">');
+			$(this).html(show_more + '<br> <i class="glyphicon glyphicon-chevron-down">');
 		}
 	});
 });

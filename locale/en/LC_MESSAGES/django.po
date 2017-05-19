@@ -115,6 +115,11 @@ msgid "powercard.title.section.faq"
 msgstr "FREQUENTLY ASKED QUESTION"
 # END FAQs POWERCARD
 
+# START POWERCARD
+msgid "powercard.btn.view_full"
+msgstr "SHOW MORE"
+# END POWERCARD
+
 # START EXPERIENCE DETAIl
 msgid "experiencepage.btn.all_experience" 
 msgstr "ALL EXPERIENCE"
