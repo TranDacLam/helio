@@ -186,6 +186,12 @@ msgstr "TIN TỨC KHÁC"
 # END NEW DETAIl
 
 # START FAQS
+msgid "faqspage.header.title"
+msgstr "HỎI ĐÁP"
+
+msgid "faqspage.header.description"
+msgstr "Những câu hỏi thường gặp sẽ giúp bạn có những trải nghiệm tốt hơn khi đến Helio Center."
+
 msgid "faqspage.text.support_more"
 msgstr "BẠN VẪN MUỐN HỖ TRỢ THÊM?"
 
@@ -194,6 +200,12 @@ msgstr "LIÊN HỆ VỚI CHÚNG TÔI"
 # END FAQs
 
 # START CONTACT 
+msgid "contact.header.title"
+msgstr "HỎI ĐÁP"
+
+msgid "contact.header.description"
+msgstr "Những câu hỏi thường gặp sẽ giúp bạn có những trải nghiệm tốt hơn khi đến Helio Center."
+
 msgid "contact.btn.send"
 msgstr "GỬI TIN NHẮN" 
 

@@ -185,6 +185,12 @@ msgstr "OTHER NEWS"
 # END NEW DETAIl
 
 # START FAQS
+msgid "faqspage.header.title"
+msgstr "FAQs"
+
+msgid "faqspage.header.description"
+msgstr "Frequently asked questions help you have more good experience when you go to Helio Center."
+
 msgid "faqspage.text.support_more"
 msgstr "SUPPORT MORE"
 
@@ -193,6 +199,12 @@ msgstr "CONTACT US"
 # END FAQs
 
 # START CONTACT 
+msgid "contact.header.title"
+msgstr "FAQs"
+
+msgid "contact.header.description"
+msgstr "Frequently asked questions help you have more good experience when you go to Helio Center. Frequently asked questions help you have more good experience when you go to Helio Center."
+
 msgid "contact.btn.send"
 msgstr "SEND MESSAGE" 
 

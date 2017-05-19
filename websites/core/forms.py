@@ -37,7 +37,11 @@ class ContactForm(forms.Form):
 
                 data_render = {
                     "name": name,
+                    "email": email,
+                    "phone": phone,
+                    "subject": subject,
                     "message": message
+                    
                 }
 
                 utils.send_mail(subject=subject, message_plain=message_plain, message_html=message_html, email_from=email, email_to=[email], data=data_render)
