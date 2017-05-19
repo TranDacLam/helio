@@ -277,3 +277,7 @@ class Promotion_Label(DateTimeModel):
 
     def __str__(self):
         return '%s' % (self.name)
+
+    class Meta:
+        verbose_name = 'Promotion Label'
+        verbose_name_plural = 'Promotion Label'
