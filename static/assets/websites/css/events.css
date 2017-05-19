@@ -30,6 +30,13 @@ ol.carousel-indicators-custom li {
 }
 /*END CAROUSEL*/
 
+/*START TITLE EVENT*/
+.all-event-title {
+    color: #fec231;
+    margin: 10px 0px;
+}
+/*END TITLE EVENT*/
+
 /*EVENT COTENT CSS*/
 .content-pull-right .item-content-text {
     background: url("../images/bg_events_left.png") no-repeat;
@@ -163,6 +170,10 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     margin: auto;
     margin-top: 100px;
 }
+.event-info a {
+    color: #fff;
+    text-decoration: none;
+}
 .page-header-text {
     position: absolute;
     top: 0px;
@@ -172,6 +183,11 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     align-items: center;
     justify-content: center;
 }
+.page-header-text a {
+    color: #fff;
+    text-decoration: none;
+}
+
 /* custom color event by time  */
 .future-class .image-text-head {
     background: #fec231;

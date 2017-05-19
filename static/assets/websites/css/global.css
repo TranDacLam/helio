@@ -151,7 +151,13 @@ p.page_description {
     padding: 0px;
 }
 .navbar-default .main-menu .dropdown-menu>li>a:hover,
-.navbar-default .main-menu .dropdown-menu>li>a:focus {
+.navbar-default .main-menu .dropdown-menu>li>a:focus,
+.navbar-default .main-menu .dropdown-menu>li.active>a,
+.navbar-default .main-menu .navbar-nav .open .dropdown-menu>.active>a, 
+.navbar-default .main-menu .navbar-nav .open .dropdown-menu>.active>a:focus, 
+.navbar-default .main-menu .navbar-nav .open .dropdown-menu>.active>a:hover
+
+ {
     background-color: #fec231;
     color: #15062b;
 }
@@ -296,7 +302,18 @@ a.btn-custom-style:hover {
     display: flex;
     flex-wrap: wrap;
 }
+/*START Helio play and kids*/
+.cursor-custom {
+    cursor: default;
+}
+/*END Helio play and kids*/
 
+/*START CUSTOM HR*/
+.hr-custom {
+    border-color: #802ca2;
+    margin: 50px 0px;
+}
+/*END CUSTOM HR*/
 /*FOOTER*/
 .menuwidget.nav li {
     width: 100%;

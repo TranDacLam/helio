@@ -74,8 +74,14 @@ var EventsFunction = (function ($) {
                     animationLoop: false,
                     itemWidth: 160,
                     itemMargin: 3,
-                    minItems: 2, // use function to pull in initial value
-                    maxItems: max_items, // use function to pull in initial value
+                    minItems: 2,
+                    maxItems: max_items,
+                    start: function(slider){
+                        $('.slides li img').click(function(event){
+                            event.preventDefault();
+                            slider.flexAnimate(slider.getTarget("next"));
+                        });
+                    }
                 });
                 $(element).addClass("complete");
             }

@@ -34,4 +34,13 @@ $(document).ready( function() {
 	// 		})
 	// 	});
 	// });
+
+	/*Active Menu*/
+	var url = window.location.href;
+    $('.nav a').filter(function() {
+        if (this.href == url) {
+        	$(this).parent().addClass('active');
+        	$(this).parent().closest(".dropdown-submenu").addClass('active');
+        }
+    });
 });
