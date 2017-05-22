@@ -605,16 +605,25 @@ def  play_transactions(request):
             error = {
                 "code": 400, "message": "Card id field is required.", "fields": "card_id"}
             return Response(error, status=400)
+
+        filter_id = request.GET.get("filter_id", "")
+        sub_query = ""
+        if filter_id:
+            sub_query = " WHERE transaction_type like " + filter_id
+
         cursor = connections['sql_db'].cursor()
         
-        query_str = """ SELECT TOP 50 PT.Transaction_DateTime, PT.Transaction_Amount, GD.Game_Description,
+        query_str = """ WITH PLAY_TRANSACTION AS (SELECT PT.Transaction_DateTime, PT.Transaction_Amount, GD.Game_Description,
                                  (CASE WHEN GD.Game_Group_Id = 0 THEN 'Refund' ELSE 'Play' END) AS transaction_type
                                  FROM Play_Transactions PT
                                  LEFT JOIN Game_Swipers GS ON PT.Game_Id = GS.Game_Id
                                  LEFT JOIN Game_Details GD ON GS.Game_ML_Id = GD.Game_ML_Id
-                                 WHERE PT.Card_Barcode = {0} ORDER BY PT.Transaction_DateTime DESC"""
+                                 WHERE PT.Card_Barcode = {0})
+                        SELECT TOP 50 * FROM PLAY_TRANSACTION {1} ORDER BY Transaction_DateTime DESC"""
 
-        cursor.execute(query_str.format(card_id)) 
+        print query_str.format(card_id, sub_query)
+
+        cursor.execute(query_str.format(card_id, sub_query)) 
         result = utils.play_transactions_mapper(cursor.fetchall())
 
         return Response(result)
@@ -670,10 +679,12 @@ def  reissue_history(request):
 
         cursor = connections['sql_db'].cursor()
 
-        query_str = """ SELECT CT.Transaction_DateTime, CT.Card_Barcode, CT.Transfer_Card_Barcode,
+        query_str = """WITH REISSUE_HISTORY AS (SELECT CT.Transaction_DateTime, CT.Card_Barcode, CT.Transfer_Card_Barcode,
                                  (CASE WHEN CT.Transaction_Id = 501 THEN 'Reissue' ELSE 'Upgraded' END) AS transaction_type
                                  FROM Card_Transactions CT
-                                 WHERE CT.Transaction_Id IN (501, 506) AND CT.Card_Barcode = {0}"""
+                                 WHERE CT.Transaction_Id IN (501, 506) AND CT.Card_Barcode = {0})
+
+                        SELECT TOP 50 * FROM REISSUE_HISTORY ORDER BY Transaction_DateTime DESC"""
 
         cursor.execute(query_str.format(card_id)) 
         result = utils.reissue_history_mapper(cursor.fetchall())
