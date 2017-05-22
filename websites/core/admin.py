@@ -254,6 +254,8 @@ class HotForm(forms.ModelForm):
         total_show = Hot.objects.filter(is_show=True).count()
         if total_show < 4 or not is_show:
             pass
+        elif self.instance.pk and total_show < 4:
+            pass
         else:
             raise forms.ValidationError('Hot giới hạn tối đa 4 bài được hiển thị. Vui lòng chọn bỏ bớt trường is_show và chọn lại.',
                                         code='invalid_is_show',
@@ -265,6 +267,7 @@ class HotForm(forms.ModelForm):
 
 class HotsAdmin(TranslationAdmin):
     form = HotForm
+    list_display = ('name', 'is_show', )
     pass
 admin.site.register(Hot, HotsAdmin)
 
