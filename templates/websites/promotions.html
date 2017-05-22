@@ -29,7 +29,7 @@
                 <div class="carousel-inner" role="listbox">
                     {% for promotion in promotions_hots %}
                     <div class="item {% if forloop.counter0 == 0 %} active {% endif %}">
-                        <img src="{{ MEDIA_URL }}{{ promotion.image }}" alt="Helio" width="100%">
+                        <a href="/promotions/{{promotion.id}}/detail/" target="_blank"><img src="{{ MEDIA_URL }}{{ promotion.image }}" alt="Helio" width="100%"></a>
                     </div>
                     {% endfor %}
                 </div>
@@ -52,8 +52,8 @@
 
     <div class="tab-content">
         {% for category, promotions in datas.items %}
-        <div role="tabpanel" class="tab-pane {% if forloop.counter0 == 0 %} active {% endif %}" id="promotion{{ category.id }}">
-            <div class="row view-more-div">
+        <div role="tabpanel" class="tab-pane view-more-content {% if forloop.counter0 == 0 %} active {% endif %}" id="promotion{{ category.id }}">
+            <div class="row">
                 <!--  KID GAME CONTENT -->
                 <div class="kids-game-content col-md-12">
                     {% for promotion in promotions %}
@@ -62,9 +62,14 @@
                         <div class="row">
                             <div class="item-content-text col-md-5 pull-right">
                                 <div class="col-md-9 image-text pull-right">
-                                    <div class="image-text-head">
-                                        <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
-                                    </div>
+                                    {% if promotion.promotion_label %}
+                                    <label class="image-text-head">
+                                        <label>
+                                            {{promotion.promotion_label}}
+                                            <span class="glyphicon glyphicon-play"></span>
+                                        </label>
+                                    </label>
+                                    {% endif %}
                                     <p class="item-name">{{promotion.name}}</p>
                                     <p class="item-description short_description">{{promotion.short_description}}</p>
                                     <a class="btn btn-custom-style btn-custom-style-promotion" href="/promotions/{{promotion.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
@@ -80,9 +85,14 @@
                         <div class="row">
                             <div class="item-content-text col-md-5">
                                 <div class="col-md-9 image-text">
-                                    <div class="image-text-head">
-                                        <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
-                                    </div>
+                                    {% if promotion.promotion_label %}
+                                    <label class="image-text-head">
+                                        <label>
+                                            {{promotion.promotion_label}}
+                                            <span class="glyphicon glyphicon-play"></span>
+                                        </label>
+                                    </label>
+                                    {% endif %}
                                     <p class="item-name">{{promotion.name}}</p>
                                     <p class="item-description short_description">{{promotion.short_description}}</p>
                                     <a class="btn btn-custom-style btn-custom-style-promotion" href="/promotions/{{promotion.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>

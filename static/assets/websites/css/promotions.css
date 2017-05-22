@@ -39,25 +39,27 @@ ol.carousel-indicators-custom li {
     background-size: 100% 100%;
 }
 a.btn-custom-style.btn-custom-style-promotion {
-    border-image-source: linear-gradient(16deg, #fff, #fff);
+    border: 1px solid #fff;
+ /*   border-image: linear-gradient(16deg, #fff, #fff);
+    -webkit-border-image: -webkit-linear-gradient(16deg, #fff, #fff);*/
 }
 .active a.btn-custom-style.btn-custom-style-promotion:focus,
 a.btn-custom-style.btn-custom-style-promotion:focus, 
 a.btn-custom-style.btn-custom-style-promotion:hover {
     color: #c61d82;
     background-color: #fff;
-    border-image-source: linear-gradient(16deg, #fff, #fff);
+    border: 1px solid #fff;
     background-image: none;
 }
 /*END GAME CONTENT CSS*/
 
 /*START BUTTON GROUP CSS*/
+.btn-section-div {
+    margin-top: 20px;
+}
 .promotion-btn-group {
     margin-right: -2px;
     margin-left: -2px;
-}
-.kids-content-text .image-text {
-    padding-top: 40px;
 }
 .promotion-btn-group li a.btn-custom-style:hover,
 .promotion-btn-group li a.btn-custom-style:focus,
@@ -98,6 +100,7 @@ a.btn-custom-style.btn-custom-style-promotion:hover {
 /*START BUTTON VIEW MORE*/
 
 .div-view-more {
+    margin:auto;
     margin-top: 50px;
 }
 
@@ -150,5 +153,16 @@ a.btn-custom-style.btn-custom-style-promotion-view-more:hover {
         background-color: #bd197c;
         border-color: #bd197c;
         border-radius: 0px;
+    }
+}
+@media (max-width: 767px) { 
+    .promotion-btn-group li a.btn-custom-style:hover,
+    .promotion-btn-group li a.btn-custom-style:focus,
+    .promotion-btn-group li a {
+        font-size: 24px;
+    }
+
+    .promotion-btn-group li {
+        padding-bottom: 15px;
     }
 }

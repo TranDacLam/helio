@@ -17,17 +17,29 @@
 
 .nav-custom {
     text-align: right;
-    padding: 70px 15px 20px;
+    padding: 70px 0px 20px;
 }
 .nav-custom .navbar-nav>.active>a, 
 .nav-custom .navbar-nav>.active>a:focus, 
-.nav-custom .navbar-nav>.active>a:hover {
-    color: #fff;
+.nav-custom .navbar-nav>.active>a:hover, 
+.nav-custom .navbar-nav>li>a:focus,
+.nav-custom .navbar-nav>li>a:hover{
+    color: #fec231;
     background-color: #15062b;
+    font-family: "Yanone Kaffeesatz";
+    font-size: 23px;
+    letter-spacing: 2px;
+    line-height: 1.2;
 }
-
+.nav-custom .navbar-nav>li>a{
+    color: #fff;
+    font-family: "Yanone Kaffeesatz";
+    font-size: 23px;
+    letter-spacing: 2px;
+    line-height: 1.2;
+}
 .panel-custom-content {
-    padding: 75px 15px 20px;
+    padding: 70px 0px 20px;
 }
 
 .panel-custom-content p {
@@ -36,32 +48,3 @@
 p.page-title-text {
     max-width: 980px;
 }
-
-/*ol {
-    counter-reset: item;
-}
-
-ol > li {
-    counter-increment: item;
-}
-
-ol ol > li {
-    display: block;
-}
-
-ol.ol-custom ol > li:before {
-    content: counters(item, ".") ". ";
-    margin-left: -55px;
-}
-
-.ol-custom {
-    padding: 10px;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.ol-custom p {
-    margin-left: -15px;
-    font-weight: normal;
-    margin-top: 10px;
-}*/

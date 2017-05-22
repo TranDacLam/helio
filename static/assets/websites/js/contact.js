@@ -1,7 +1,7 @@
 var en_message = {
 	"err_name_required": "Please input your name",
-	"err_email_required": "Please input your Email",
-	"err_email_format": "Please input correct format Email",
+	"err_email_required": "Please input your email",
+	"err_email_format": "Please input correct format email",
 	"err_phone_required": "Please input your phone number",
 	"err_phone_maxlength": "The phone number you just inputed is unreal",
 	" err_phone_format": "Please input correct format phone number",
@@ -9,8 +9,8 @@ var en_message = {
 }
 var vi_message = {
 	"err_name_required": "Vui lòng nhập tên",
-	"err_email_required": "Vui lòng nhập Email",
-	"err_email_format": "Vui lòng nhập đúng định dạng Email",
+	"err_email_required": "Vui lòng nhập email",
+	"err_email_format": "Vui lòng nhập đúng định dạng email",
 	"err_phone_required": "Vui lòng nhập số điện thoại",
 	"err_phone_maxlength": "Số máy quý khách vừa nhập là số không có thực",
 	" err_phone_format": "Vui lòng nhập đúng định dạng số điện thoại",

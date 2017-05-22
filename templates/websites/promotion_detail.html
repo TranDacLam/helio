@@ -17,9 +17,8 @@
                     </div>
                     <div class="col-md-12">
                         <div class="custom-icons" align="center">
-                            <a href="#" class="style-icon"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
-                            <a href="#" class="style-icon"><span class="fa fa-share-alt circle-icon" aria-hidden="true"></span> Share</a>   
-                            <!-- <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div> -->
+                            <a href="#" class="custom-icons"><i class="glyphicon glyphicon-map-marker icon-custom-color glyphicon-custom" aria-hidden="true"></i>HELIO PLAY</a>
+                            <div class="fb-like" data-layout="button" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
                         </div>
                     </div>
                 </div>
@@ -49,7 +48,7 @@
         </div>
         <div class="row custom-other-exp">
             {% for promotion in other_promotions %}
-            <div class="item col-md-4 col-xs-12 custom-promotion">
+            <div class="item col-md-4 col-xs-12 custom-promotion other-item">
                 <div class="style-post">
                     <span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ promotion.image }}" width="100%"></a></span>
                     <a class="title-post" href="/promotions/{{promotion.id}}/detail/">{{promotion.name}}</a>

@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+FB_APP_ID = '126726044544310'
+
 
 # Application definition
 
@@ -82,6 +84,9 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.media',
                 'main.middleware.set_language_code',
+                'main.middleware.get_app_fb_id',
+                'main.middleware.get_advertisement',
+                
             ],
         },
     },
@@ -251,11 +256,23 @@ CKEDITOR_CONFIGS = {
             ]
         ),
         'font_names': "Yanone Kaffeesatz; Cabin",
-        'contentsCss': ','.join(['../../../../static/assets/websites/css/custom_admin.css'])
+        'contentsCss': ','.join(['../../../../static/assets/websites/css/custom_admin.css']),
+        'allowedContent': True
     },
 }
 CKEDITOR_BROWSE_SHOW_DIRS = True
 CKEDITOR_IMAGE_BACKEND = "pillow"
+
+DEFAULT_FROM_EMAIL = "do-not-reply@helio.vn"
+# EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'voocdn@gmail.com'
+EMAIL_HOST_PASSWORD = 'voocP@ssw0rd'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = True
+
+CODE_LEN = 7 # Default code length
 
 try:
     if 'DEVELOPMENT' in os.environ and os.environ['DEVELOPMENT']:

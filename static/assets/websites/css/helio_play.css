@@ -116,4 +116,19 @@ a.btn-custom-style.btn-custom-style-play:hover {
         background-image: linear-gradient(to top, #25618a, #36bdeb);
         background-size: 100% 100%;
     }
+    a.btn-custom-style.btn-custom-style-play {
+        border-image-source: linear-gradient(16deg, #0095bb, #fff);
+    }
+}
+
+@media (max-width: 767px) { 
+    .play-btn-group li a.btn-custom-style:hover,
+    .play-btn-group li a.btn-custom-style:focus,
+    .play-btn-group li a {
+        font-size: 24px;
+    }
+
+    .play-btn-group li {
+        padding-bottom: 15px;
+    }
 }

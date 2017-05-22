@@ -24,13 +24,13 @@
 		    </div>
 		    <div class="page-title" align="center">
 		        <div class="col-md-12">
-		            <p class="page-title-text"> LIÊN HỆ VỚI CHÚNG TÔI</p>
+		            <p class="page-title-text">{% trans "contact.header.title" %}</p>
 		        </div>
 		    </div>
 		</div>
 	    <div align="center" class="page-header-text">
 	        <div class="form-title">
-	            <p class="text-description page_description">Những câu hỏi thường gặp sẽ giúp bạn có những trải nghiệm tốt hơn khi đến Helio Center.Những câu hỏi thường gặp sẽ giúp bạn có những trải nghiệm tốt hơn khi đến Helio Center</p>
+	            <p class="text-description page_description">{% trans "contact.header.description" %}</p>
 	        </div>
 	    </div>
 	</div>
@@ -41,30 +41,31 @@
 	
 	
 	<div class="center-div form-group" align="center">
-		<form id="form_contact" class="form-contact" method="POST">{% csrf_token %}
+		<form id="form_contact" class="form-contact" method="POST">
+		{% csrf_token %}
 			<div class="col-md-6">
 				<div class="col-md-12 col-xs-12">
 					<label>{% trans "contact.lable.title.name" %} </label>
-					<input class="form-control form-control-custom input-contact" type="text" name="name"" required>
+					<input id="id_name" name="name" value="{{ name }}" class="form-control form-control-custom input-contact" type="text" required>
 				</div>
 					
 				<div class="col-md-12 col-xs-12">
 					<label>{% trans "contact.lable.title.email" %} </label>
-					<input class="form-control form-control-custom input-contact" type="email" name="email" required>
+					<input id="id_email" name="email" value="{{ email }}" class="form-control form-control-custom input-contact" type="email" required>
 				</div>
 				<div class="col-md-12 col-xs-12">
 					<label>{% trans "contact.lable.title.phone" %} </label>
-					<input class="form-control form-control-custom input-contact" type="text" name="phone" required>
+					<input id="id_phone" name="phone" value="{{ phone }}" class="form-control form-control-custom input-contact" type="text" required>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="col-md-12 col-xs-12">
 					<label>{% trans "contact.lable.title.subject" %} </label>
-					<input class="form-control form-control-custom input-contact" type="text" name="subject" required>
+					<input id="id_subject" name="subject" value="{{ subject }}" class="form-control form-control-custom input-contact" type="text" required>
 				</div>
 				<div class="col-md-12 col-xs-12">
 					<label>{% trans "contact.lable.title.message" %} </label>
-					<textarea class="form-control form-control-custom input-contact" rows="5" name="message"></textarea>
+					<textarea id="id_message" name="message" value="{{ message }}" class="form-control form-control-custom input-contact" rows="5"></textarea>
 				</div>
 			</div>
 			<div class="col-md-12" align="center">

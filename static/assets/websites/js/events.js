@@ -2,34 +2,40 @@ var EventsFunction = (function ($) {
     var helio_events = function () {
         var _self = this;
         var show_num = {};
-        var first_show = 4,
+        var show_num = 4,
             view_more = 4;
         this.initElementPage = function() {
-            $(".tab-content .tab-pane:first").addClass("active");
+            _self.eventsCoursel();
+
+            $(".event-class").each(function() {
+                _self.event_function($(this));
+            });
+
+            $(".event-class.future-class .countdown").each(function(){
+                var start_time = $(this).find(".start_datetime").text();
+                $(this).countdown(start_time, function(event) {
+                    $(this).find(".days").find(".current").text(event.strftime('%D'));
+                    $(this).find(".hours").find(".current").text(event.strftime('%H'));
+                    $(this).find(".minutes").find(".current").text(event.strftime('%M'));
+                    $(this).find(".seconds").find(".current").text(event.strftime('%S'));
+                });
+            });
         }
 
         this.initEventPage = function () {
-            $(".tab-content .tab-pane").each(function(){
-                var id = $(this).attr("id");
-                show_num[id] = first_show;
-                _self.viewMore($(this).find(".view-more-div"));
-            });
+            _self.viewMore();
+
             $(".btn-view-more").click(function() {
-                var div_parent = $(this).parent().parent();
-                var id = $(div_parent).parent().attr("id");
-                show_num[id] += view_more;
-                _self.viewMore(div_parent);
+                show_num += view_more;
+                _self.viewMore();
             });     
         }
-        this.viewMore = function (element) {
-            var id = $(element).parent().attr("id");
-            var size_list = $(element).find(".item-line").length;
-            var show_lengh =  show_num[id];
-            $(element).find('.item-line:lt('+show_lengh+')').show();
-            if(show_lengh >= size_list) {
-                $(element).find(".btn-view-more").hide();
+        this.viewMore = function () {
+            var size_list = $("#events_content .item-line").length;
+            $('#events_content .item-line:lt('+show_num+')').show();
+            if(show_num >= size_list) {
+                $(".btn-view-more").hide();
             }
-            show_num[id] = show_lengh;
         }
         this.eventsCoursel = function() {
             $(".event-month:last").addClass("active");
@@ -67,12 +73,39 @@ var EventsFunction = (function ($) {
                     animationSpeed: 400,
                     animationLoop: false,
                     itemWidth: 160,
-                    itemMargin: 5,
-                    minItems: 2, // use function to pull in initial value
-                    maxItems: max_items, // use function to pull in initial value
+                    itemMargin: 3,
+                    minItems: 2,
+                    maxItems: max_items,
+                    start: function(slider){
+                        $('.slides li img').click(function(event){
+                            event.preventDefault();
+                            slider.flexAnimate(slider.getTarget("next"));
+                        });
+                    }
                 });
                 $(element).addClass("complete");
             }
+        }
+
+        this.event_function = function(event_class) {
+            var start_time_txt = $(event_class).find(".start_datetime").text(),
+                end_time_txt = $(event_class).find(".end_datetime").text(),
+                start_datetime = new Date(start_time_txt),
+                end_datetime = new Date(end_time_txt),
+                current_date = new Date($.now());
+
+            var event_label = "";
+
+            if(current_date > end_datetime) {
+                event_label = "finished";
+            } else if (current_date < start_datetime) {
+                event_label = "future";
+            } else {
+                event_label = "current";
+            }
+
+            $(event_class).find("."+event_label+"-event").show();
+            $(event_class).addClass(event_label+ "-class");
         }
     }
     return helio_events;
@@ -82,6 +115,5 @@ var EventsFunction = (function ($) {
     $(document).ready(function(){
         events.initElementPage()
         events.initEventPage();
-        events.eventsCoursel();
     });
 })(new EventsFunction(), jQuery);

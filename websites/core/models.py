@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import AbstractUser
 import custom_models
-import constant as const
+import constants as const
 
 # Create your models here.
 
@@ -173,6 +173,9 @@ class Promotion(DateTimeModel):
     content = models.TextField()
     promotion_type = models.ForeignKey(
         'Type', related_name='promotion_type_rel', on_delete=models.CASCADE)
+    promotion_label = models.ForeignKey(
+        'Promotion_Label', related_name='promotion_label_rel', on_delete=models.CASCADE,
+                            null=True, blank=True)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -182,7 +185,9 @@ class Promotion(DateTimeModel):
 class FAQ(DateTimeModel):
 
     def limit_category_Faq():
-        return {'id__in': [const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY, const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY]}
+        return {'id__in': [const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY, 
+                            const.REDEMPTION_STORE_CATEGORY, const.BIRTHDAY_PARTY_CATEGORY, 
+                            const.SCHOOL_TRIP_CATEGORY, const.COMBO_HELIO_CATEGORY]}
 
     question = models.CharField(max_length=255, unique=True)
     answer = models.TextField()
@@ -227,6 +232,19 @@ class Contact(DateTimeModel):
 
 
 @python_2_unicode_compatible
+class FeedBack(DateTimeModel):
+    name = models.CharField(max_length=500)
+    email = models.EmailField(max_length=500)
+    phone = models.CharField(max_length=500, null=True, blank=True)
+    subject = models.CharField(max_length=500)
+    message = models.TextField()
+    rate = models.CharField(max_length=155, null=True, blank=True)
+
+    def __str__(self):
+        return '%s' % (self.name)
+
+
+@python_2_unicode_compatible
 class Transaction_Type(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
 
@@ -242,3 +260,24 @@ class Gift(DateTimeModel):
 
     def __str__(self):
         return '%s' % (self.user.name)
+
+
+@python_2_unicode_compatible
+class Advertisement(DateTimeModel):
+    name = models.CharField(max_length=255)
+    is_show = models.BooleanField('Show', default=False)
+
+    def __str__(self):
+        return '%s' % (self.name)
+
+
+@python_2_unicode_compatible
+class Promotion_Label(DateTimeModel):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return '%s' % (self.name)
+
+    class Meta:
+        verbose_name = 'Promotion Label'
+        verbose_name_plural = 'Promotion Label'

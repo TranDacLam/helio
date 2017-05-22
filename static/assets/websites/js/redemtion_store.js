@@ -1,5 +1,5 @@
 var show_num =5,
-    view_more = 8;
+    view_more = 5;
 
 function viewMore() {
     var size_list = $(".faqs-section .faq-detail").length;

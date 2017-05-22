@@ -17,9 +17,7 @@
 			        </div>
 			        <div class="col-md-12">
 				        <div class="custom-icons" align="center">
-				        	<a href="#" class="style-icon"><span class="glyphicon glyphicon-heart circle-icon" aria-hidden="true"></span> Like</a>
-				        	<a href="#" class="style-icon"><span class="fa fa-share-alt circle-icon" aria-hidden="true"></span> Share</a>	
-							<!-- <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div> -->
+				        	<div class="fb-like" data-layout="button" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
 				        </div>
 			        </div>
 			    </div>
@@ -50,7 +48,7 @@
 	    </div>
 	    <div class="row custom-other-exp">
 	    	{% for career in other_careers %}
-			<div class="item col-md-4 col-xs-12 custom-carrer">
+			<div class="item col-md-4 col-xs-12 custom-carrer other-item">
 	        	<div class="style-post">
 	          		<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ career.image }}" width="100%"></a></span>
 	          		<a class="title-post" href="/careers/{{career.id}}/detail/">{{career.name}}</a>

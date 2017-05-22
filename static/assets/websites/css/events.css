@@ -1,4 +1,7 @@
 /*START CAROUSEL*/
+#eventsCarousel .carousel-inner>.item img {
+    opacity: 0.4;
+}
 .carousel-custom {
     position: relative;
     margin: 0px auto;
@@ -27,6 +30,13 @@ ol.carousel-indicators-custom li {
 }
 /*END CAROUSEL*/
 
+/*START TITLE EVENT*/
+.all-event-title {
+    color: #fec231;
+    margin: 10px 0px;
+}
+/*END TITLE EVENT*/
+
 /*EVENT COTENT CSS*/
 .content-pull-right .item-content-text {
     background: url("../images/bg_events_left.png") no-repeat;
@@ -38,20 +48,21 @@ ol.carousel-indicators-custom li {
     background-size: 100% 100%;
 }
 a.btn-custom-style.btn-custom-style-events {
-    border-image-source: linear-gradient(16deg, #fff, #fff);
+    border: 1px solid #fff;
 }
 .active a.btn-custom-style.btn-custom-style-events:focus,
 a.btn-custom-style.btn-custom-style-events:focus, 
 a.btn-custom-style.btn-custom-style-events:hover {
     color: #23194f;
     background-color: #fff;
-    border-image-source: linear-gradient(16deg, #fff, #fff);
+    border: 1px solid #fff;
     background-image: none;
 }
 /*END GAME CONTENT CSS*/
 
 /*START BUTTON VIEW MORE*/
 .div-view-more {
+    margin:auto;
     margin-top: 50px;
 }
 a.btn-custom-style.btn-custom-style-events-view-more {
@@ -125,12 +136,14 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     background-color: #443855;
 }
 
-.item-flex.past-class {
+.item-flex.finished-class {
     background-color: #211336;
     opacity: 0.5;
 }
 
-.item-line.past-class .item-content-image img {
+.item-line.finished-class .item-content-image img, 
+.item-line.future-class .item-content-image img
+{
     opacity: 0.4;
 }
 
@@ -152,11 +165,150 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     margin-bottom: 0px;
 }
 /* END CSS EVENT COURSEL */
+.event-info {
+    width: 90%;
+    margin: auto;
+    margin-top: 100px;
+}
+.event-info a {
+    color: #fff;
+    text-decoration: none;
+}
+.page-header-text {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.page-header-text a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* custom color event by time  */
+.future-class .image-text-head {
+    background: #fec231;
+    color: #fff;
+}
+.future-class .image-text-head:after {
+    border-left: 10px solid #fec231;
+}
+
+.current-class .image-text-head {
+    background: #bd197c;
+    color: #fff;
+}
+.current-class .image-text-head:after {
+    border-left: 10px solid #bd197c;
+}
+
+.future-class .events-date-div {
+    background-color: #fec231;
+}
+.current-class .events-date-div {
+    background-color: #bd197c;
+}
+.label-event-header .lable-btn {
+    padding: 25px 53px 15px;
+    font-family: "Cabin";
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.label-event-header.finished-event .lable-btn {
+    color: #000;
+    background: rgba(204, 204, 204, 0.79);
+    border: none;
+}
+
+.label-event-header.current-event .lable-btn {
+    color: #bd197c;
+    background: none;
+    border: 2px solid #bd197c;
+}
+/*start countdown*/
+.countdown-container {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.countdown-content {
+    width: 420px;
+    border: 4px solid #fec231;
+    height: 117px;
+    margin: auto;
+}
+.countdown-content .time {
+    position: relative;
+    width: 100px;
+    display: inline-block;
+    text-align: center;
+}
+.countdown-content .time .current {
+    color: #fec231;
+    font-size: 60px;
+    font-weight: bold;
+}
+.countdown-content .time .label {
+    color: #fec231;
+    font-size: 18px;
+    position: absolute;
+    top: 71px;
+    left: 0;
+    right: 0;
+}
+/*end countdown*/
 @media (max-width: 991px) {
     .content-pull-left .item-content-text,
     .content-pull-right .item-content-text
     {
         background: #23194f;
+    }
+    .label-event-header .lable-btn {
+        padding: 15px 20px 10px;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .countdown-content {
+        width: 300px;
+        border: 4px solid #fec231;
+        height: 70px;
+        margin: auto;
+    }
+    .countdown-content .time {
+        position: relative;
+        width: 67px;
+        display: inline-block;
+        text-align: center;
+    }
+    .countdown-content .time .current {
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .countdown-content .time .label {
+        font-size: 14px;
+        top: 37px;
+    }
+
+    .event-info {
+        margin-top: 15px;
+    }
+
+    .item-content-text {
+        min-height: auto;
+    }
+
+    .item-content-text.pull-right, 
+    .image-text.pull-right {
+        float: none !important;
     }
 }
 

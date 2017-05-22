@@ -84,6 +84,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
 }
 
 .div-view-more {
+    margin:auto;
     margin-top: 50px;
 }
 
@@ -103,5 +104,22 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     {
         background-image: linear-gradient(to top, #8a642e, #fec231);
         background-size: 100% 100%;
+    }
+    .short-description {
+        margin-top: 30px;
+    }
+    a.btn-custom-style.btn-custom-style-kids {
+        border-image-source: linear-gradient(16deg, #f4963a, #fff);
+    }
+} 
+@media (max-width: 767px) { 
+    .kid-btn-group li a.btn-custom-style:hover,
+    .kid-btn-group li a.btn-custom-style:focus,
+    .kid-btn-group li a {
+        font-size: 24px;
+    }
+
+    .kid-btn-group li {
+        padding-bottom: 15px;
     }
 }

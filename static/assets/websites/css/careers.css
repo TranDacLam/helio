@@ -2,6 +2,9 @@
 .career-div {
 	padding-top: 25px;
 }
+.col-equal {
+	display: flex;
+}
 .carrer-item.thumbnail {
 	margin-bottom: 0px;
 	padding: 0px;
@@ -28,17 +31,18 @@
 	color: #fec231;
 }
 .div-view-more {
+	margin: auto;
 	margin-top: 50px;
 }
 a.btn-custom-style.btn-custom-style-career {
-    border-image-source: linear-gradient(16deg, #0095bb, #0095bb);
+    border: 1px solid #0095bb;
 }
 .active a.btn-custom-style.btn-custom-style-career:focus,
 a.btn-custom-style.btn-custom-style-career:focus, 
 a.btn-custom-style.btn-custom-style-career:hover {
     color: #0095bb;
     background-color: #fff;
-    border-image-source: linear-gradient(16deg, #15062b, #15062b);
+    border: 1px solid #15062b;
     background-image: none;
 }
 /*ITEM LG HEADER*/
@@ -55,4 +59,9 @@ a.btn-custom-style.btn-custom-style-career:hover {
 	bottom: 0px;
 	background-color: #372f60;
 	width: 100%;
+}
+@media (max-width: 991px) {
+	.careers-lg .carrer-item.thumbnail .caption {
+		position: static;
+	}
 }

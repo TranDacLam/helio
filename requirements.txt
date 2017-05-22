@@ -12,6 +12,7 @@ django-ckeditor
 django-mssql
 django-pymssql
 uwsgi
+html2text==2014.4.5
 
 #-e git+git://github.com/mvpdev/django-eav.git#egg=django-eav
 #django-allauth

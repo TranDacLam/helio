@@ -1,23 +1,26 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from utils.codes import RandomPassword
 
 
 class MyUserManager(BaseUserManager):
-    def create_user(self, email, password=None, username=None):
+    def create_user(self, email, password=None, username=None, **extra_fields):
         """
-        Creates and saves a User with the given email, date of
-        birth and password.
+        Creates and saves a User with the given email and password.
         """
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
-            email=self.normalize_email(email)
+            email=self.normalize_email(email),
+            **extra_fields
         )
         # print "email ",email
         user.username = username
         user.set_password(password)
+        user.is_active = True
         user.save(using=self._db)
         return user
 
@@ -33,6 +36,7 @@ class MyUserManager(BaseUserManager):
         # user.username = email
         user.is_staff = True
         user.is_superuser = True
+        user.is_active = True
         user.save(using=self._db)
         return user
 
@@ -66,15 +70,24 @@ class User(AbstractBaseUser, PermissionsMixin):
                                    editable=False)
     modified = models.DateTimeField(
         _('Modified Date'), auto_now=True, editable=False)
+    code = models.TextField(_('Code Verify'), null=True, blank=True)
+    avatar = models.ImageField(max_length=1000, null=True, blank=True, upload_to="avatar")
+    anonymously = models.BooleanField(
+        _('Anonymous User'),
+        default=False
+    )
+    device_uid = models.CharField(max_length=255, null=True, blank=True)
 
-    # is_staffing = models.BooleanField(
-    #     _('staff status'),
-    #     default=False,
-    #     help_text=_('Designates whether the user can log into this admin site.'),
-    # )
     objects = MyUserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    def secure_code(self):
+        rand = RandomPassword()
+        code = rand.get(max_value=settings.CODE_LEN)
+        self.code = code
+        self.save()
+        return code
 
     def get_full_name(self):
         # The user is identified by their email address

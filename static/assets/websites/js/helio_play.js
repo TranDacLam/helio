@@ -2,13 +2,13 @@ var PlayFunction = (function ($) {
     var helio_play = function () {
         var _self = this;
         var show_num = {};
-        var first_show = 3,
-            view_more = 3;
+        var first_show = 4,
+            view_more = 4;
 
         this.initEventPage = function () {
             var url = window.location.href;
             var section_active = url.substring(url.lastIndexOf('/') + 2);
-            $(".tab-content .tab-pane").each(function(){
+            $(".tab-content .tab-pane.view-more-content").each(function(){
                 var id = $(this).attr("id");
                 if($(this).hasClass(section_active)) {
                     $(".play-btn-group li").removeClass("active");
@@ -17,19 +17,19 @@ var PlayFunction = (function ($) {
                     $(".play-btn-group ."+ section_active).parent().addClass("active");
                 }
                 show_num[id] = first_show;
-                _self.viewMore($(this).find(".view-more-div"));
+                _self.viewMore($(this));
             });
             $(".btn-view-more").click(function() {
-                var div_parent = $(this).parent().parent();
-                var id = $(div_parent).parent().attr("id");
+                var div_parent = $(this).parent().closest(".view-more-content");
+                var id = $(div_parent).attr("id");
                 show_num[id] += view_more;
                 _self.viewMore(div_parent);
             });
-            $(".tab-content .tab-pane").each(function(){
+            $(".tab-content .tab-pane.view-more-content").each(function(){
                 _self.initCoursel($(this).find('.carousel'));
             });
             $( window ).resize(function() {
-                $(".tab-content .tab-pane").each(function(){
+                $(".tab-content .tab-pane.view-more-content").each(function(){
                     _self.initCoursel($(this).find('.carousel'));
                 });
             });
@@ -52,7 +52,7 @@ var PlayFunction = (function ($) {
             });
         }
         this.viewMore = function (element) {
-            var id = $(element).parent().attr("id");
+            var id = $(element).attr("id");
             var size_list = $(element).find(".item-line").length;
             var show_lengh =  show_num[id];
             $(element).find('.item-line:lt('+show_lengh+')').show();

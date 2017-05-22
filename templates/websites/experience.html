@@ -26,12 +26,14 @@
 				<div class="carousel-inner" role="listbox">
 					{% for experience in result.experiences_hots %}
 					<div class="item {% if forloop.counter0 == 0 %} active {% endif %}">
-						<img src="{{ MEDIA_URL }}{{ experience.image }}" alt="Helio" width="100%">
-						<div class="carousel-caption carousel-caption-custom">
-							<p class="big-font-size">
-								{{experience.name}}
-							</p>
-						</div>
+						<a href="/experience/{{experience.id}}/detail/" target="_blank">
+							<img src="{{ MEDIA_URL }}{{ experience.image }}" alt="Helio" width="100%">
+							<div class="carousel-caption carousel-caption-custom">
+								<p class="big-font-size">
+									{{experience.name}}
+								</p>
+							</div>
+						</a>
 					</div>
 					{% endfor %}
 				</div>
@@ -42,7 +44,7 @@
 
 	<!-- CONTENT -->
 	{% if result.experiences %}
-	<div class="row experiences-content">
+	<div class="row experiences-content row-equal">
 		{% for experience in result.experiences %}
 		<div class="item col-md-4 col-xs-12 custom-experience experiences-div">
 			<div class="style-post">

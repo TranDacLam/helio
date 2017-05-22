@@ -14,7 +14,7 @@
         <div class="carousel-inner" role="listbox">
             {% for hot in result.hots %}
             <div class="item">
-                <img src="{{ MEDIA_URL }}{{hot.image}}" width="100%">
+                <a href="{{hot.sub_url}}" target="_blank"><img src="{{ MEDIA_URL }}{{hot.image}}" width="100%"></a>
             </div>
             {% endfor %}
         </div>
@@ -31,8 +31,8 @@
 {% endif %}
 <!-- BANNER 1 SECTION -->
 {% if result.banners and result.banners.1 %}
-<div class="container">
-    <a href="{{result.banners.1.sub_url}}"><img src="{{ MEDIA_URL }}{{result.banners.1.image}}" width="100%"></a>
+<div class="container banner-custom">
+    <a href="{{result.banners.1.sub_url}}" target="_blank"><img src="{{ MEDIA_URL }}{{result.banners.1.image}}" width="100%"></a>
 </div>
 {% endif %}
 
@@ -190,7 +190,7 @@
         <div class="row content-info">
             <p class="title-content ">
                 {% trans "homepage.title.section.redemption_store" %}
-                <a class="btn btn-custom-style btn-link-more" href="#" role="button">{% trans "btn.click_now" %}</a>
+                <a class="btn btn-custom-style btn-link-more" href="{% url 'redemption_store' %}" role="button">{% trans "btn.click_now" %}</a>
             </p>
             
         </div>
@@ -200,29 +200,42 @@
 <!-- BANNER 2 SECTION -->
 {% if result.banners and result.banners.2 %}
 <div class="container block-content-20">
-     <a href="{{result.banners.2.sub_url}}"><img src="{{ MEDIA_URL }}{{result.banners.2.image}}" width="100%"></a>
+     <a href="{{result.banners.2.sub_url}}" target="_blank"><img src="{{ MEDIA_URL }}{{result.banners.2.image}}" width="100%"></a>
 </div>
 {% endif %}
 
 <!-- VIDIEO SECTION -->
 <div class="container block-content-20">
-    <div class="vidieo-div">
-        <div class="vidieo-right col-md-5">
-            <div class="col-md-10 vidieo-text">
-                <ul class="list-line list-inline">
-                    <li><i class="line" aria-hidden="true"></i></li>
-                    <li><i class="line" aria-hidden="true"></i></li>
-                    <li><i class="line" aria-hidden="true"></i></li>
-                </ul>
-                <p class="big-font-size">{% trans "homepage.title.section.entertaiment" %}</p>
-                <a class="btn btn-custom-style btn-entertaiment href="#" role="button">{% trans "btn.click_now" %}</a>
+    <div class="vidieo-div col-md-12">
+        <div class="row">
+            <div class="vidieo-right col-md-5">
+                <div class="col-md-10 vidieo-text">
+                    <ul class="list-line list-inline">
+                        <li><i class="line" aria-hidden="true"></i></li>
+                        <li><i class="line" aria-hidden="true"></i></li>
+                        <li><i class="line" aria-hidden="true"></i></li>
+                    </ul>
+                    <p class="big-font-size">{% trans "homepage.title.section.entertaiment" %}</p>
+                    <a class="btn btn-custom-style btn-entertaiment" href="{% url 'helio_introduction' %}" role="button">{% trans "btn.click_now" %}</a>
+                </div>
+            </div>
+            <div class="vidieo-left col-md-9">
+                <div class="row vidieo-img">
+                    <img src="{{ STATIC_URL }}assets/websites/images/vidieo.png" width="100%" height="100%">
+                    <div class="vidieo-btn">
+                        <a class="btn btn-custom-style" href="#" role="button" data-toggle="modal" data-target="#vidieo_play_modal"><i class="fa fa-play"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="vidieo-left col-md-7">
+        
+        <!-- <div class="vidieo-left col-md-7">
             <div class="btn-play-div col-md-12">
+                <img src="{{ MEDIA_URL }}{{event.image}}" width="100%" height="100%">
+
                 <a class="btn btn-custom-style" href="#" role="button" data-toggle="modal" data-target="#vidieo_play_modal"><i class="fa fa-play"></i></a>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 
@@ -244,10 +257,10 @@
     <div class="row">
         <div class="col-md-12 event-section-body">
             <div class="row title-section event-title-section">
-                <div class="col-md-9">
+                <div class="col-md-9 col-sm-9">
                     <p class="big-font-size event-title">{% trans "homepage.title.section.event" %}</p>
                 </div> 
-                <div class="col-md-3" align="right">
+                <div class="col-md-3 event-all-btn">
                     <a class="btn btn-custom-style" href="{% url 'events' %}" role="button">{% trans "btn.view_all" %}</a>
                 </div>
                 
@@ -264,7 +277,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="caption">
-                            <p class="event-name">{{event.name}}</p>
+                            <a class="event-name" href="/events/{{event.id}}/detail/" target="_blank">{{event.name}}</a>
                             <p class="event-time"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ event.start_time | date:"H:i" }} - {{ event.end_time | date:"H:i" }} | {{ event.start_date | date:"d.m.Y" }} - {{ event.end_date | date:"d.m.Y" }}</p>
                             <p class="short_description">{{event.short_description}}</p>
                         </div>
@@ -286,21 +299,23 @@
     
 <!-- BANNER 3 SECTION -->
 {% if result.banners and result.banners.3 %}
-<div class="container block-content-20 banner3">
-    <a href="{{result.banners.3.sub_url}}"><img src="{{ MEDIA_URL }}{{result.banners.3.image}}" width="100%"></a>
+<div class="container block-content-20 banner3" >
+    <a href="{{result.banners.3.sub_url}}" target="_blank"><img src="{{ MEDIA_URL }}{{result.banners.3.image}}" width="100%"></a>
 </div>
 {% endif %}
 
 <!-- Modal -->
-<div id="vidieo_play_modal" class="modal fade" role="dialog">
+<div id="vidieo_play_modal" class="modal fade custom-modal" role="dialog">
     <div class="modal-dialog modal-lg">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-        <div class="modal-body">
-            <iframe id="helio_vidieo" width="100%" height="500px" src="https://www.youtube.com/embed/tGwuUvSuKLk" frameborder="0" allowfullscreen></iframe>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-    </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <iframe id="helio_vidieo" width="100%" height="500px" src="https://www.youtube.com/embed/tGwuUvSuKLk" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
 
     </div>
 </div>

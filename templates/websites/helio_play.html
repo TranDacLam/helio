@@ -53,7 +53,7 @@
 
     <div class="tab-content">
         {% for type, datas in datas.items %}
-        <div role="tabpanel" class="tab-pane {{ type.sub_url|cut:'/helio-play/#' }} {% if forloop.counter0 == 0 %} active {% endif %}" id="play_{{type.id}}">
+        <div role="tabpanel" class="tab-pane view-more-content {{ type.sub_url|cut:'/helio-play/#' }} {% if forloop.counter0 == 0 %} active {% endif %}" id="play_{{type.id}}">
             <!-- Games slider -->
             <div class="carousel" >
             </div>
@@ -62,10 +62,8 @@
                 <div class="slides"> <!-- BEGIN CAROUSEL -->
                     {% for game in datas.games %}
                     <div class="slideItem"> <!-- SLIDE ITEM -->
-                        <a href="#">
-                            <img src="{{ MEDIA_URL }}{{game.image}}">
-                        </a>
-                        <div class="short-description">
+                        <img class="cursor-custom" src="{{ MEDIA_URL }}{{game.image}}">
+                        <div class="short-description cursor-custom">
                             <p class="title-content game-name">{{game.name}}</p>
                             <p class="short_description">{{game.short_description}}</p>
                         </div>
@@ -76,7 +74,7 @@
             {% endif %}
             <!-- line -->
             <hr>
-            <div class="row view-more-div">
+            <div class="row">
                 <!--  PLAY GAME CONTENT -->
                 <div class="kids-game-content col-md-12">
                     {% for promotion in datas.promotions %}
@@ -85,9 +83,14 @@
                         <div class="row">
                             <div class="item-content-text col-md-5 pull-right">
                                 <div class="col-md-9 image-text pull-right">
-                                    <div class="image-text-head">
-                                        <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
-                                    </div>
+                                    {% if promotion.promotion_label %}
+                                    <label class="image-text-head">
+                                        <label>
+                                            {{promotion.promotion_label}}
+                                            <span class="glyphicon glyphicon-play"></span>
+                                        </label>
+                                    </label>
+                                    {% endif %}
                                     <p class="item-name">{{promotion.name}}</p>
                                     <p class="item-description short_description">{{promotion.short_description}}</p>
                                     <a class="btn btn-custom-style btn-custom-style-play" href="/promotions/{{promotion.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
@@ -103,9 +106,14 @@
                         <div class="row">
                             <div class="item-content-text col-md-5">
                                 <div class="col-md-9 image-text">
-                                    <div class="image-text-head">
-                                        <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
-                                    </div>
+                                    {% if promotion.promotion_label %}
+                                    <label class="image-text-head">
+                                        <label>
+                                            {{promotion.promotion_label}}
+                                            <span class="glyphicon glyphicon-play"></span>
+                                        </label>
+                                    </label>
+                                    {% endif %}
                                     <p class="item-name">{{promotion.name}}</p>
                                     <p class="item-description short_description">{{promotion.short_description}}</p>
                                     <a class="btn btn-custom-style btn-custom-style-play" href="/promotions/{{promotion.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>

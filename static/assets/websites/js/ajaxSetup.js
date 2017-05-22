@@ -28,14 +28,13 @@ $(document).ready(function() {
             }
         }
     }); 
-    $.ajaxSetup({ cache: true });
+    $.ajaxSetup({ cache: false });
 
-    $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
-        FB.init({
-            appId: '556877924479887',
-            version: 'v2.5',
-            cookie     : true,
-            xfbml      : true
-        });     
+    // FB init function
+    FB.init({
+        appId: fbAppId,
+        version: 'v2.9',
+        cookie     : true,
+        xfbml      : true
     });
 });

@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^night-life/$', views.night_life, name='night_life'),
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^news/$', views.news, name='news'),
+    url(r'^news/(?P<new_id>[0-9]+)/detail/$', views.new_detail, name='new_detail'),
     url(r'^careers/$', views.careers, name='careers'),
     url(r'^careers/(?P<career_id>[0-9]+)/detail/$', views.career_detail, name='career_detail'),
     url(r'^experience/$', views.experience, name='experience'),
@@ -25,8 +26,10 @@ urlpatterns = [
     url(r'^helio-introduction/$', views.helio_introduction, name='helio_introduction'),
     url(r'^term-condition/$', views.term_condition, name='term_condition'),
     url(r'^coffee_bakery/$', views.coffee_bakery, name='coffee_bakery'),
+    url(r'^other-product/$', views.other_product, name='other_product'),
     url(r'^redemption-store/$', views.redemption_store, name='redemption_store'),
 
-
-    
+    url(r'^policy/$', views.policy, name='policy'),
+    url(r'^helio_photos/$', views.helio_photos, name='helio_photos'),
+    url(r'^list_photos_by_album/$', views.list_photos_by_album, name='list_photos_by_album'),
 ]
