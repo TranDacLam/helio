@@ -249,22 +249,29 @@ class HotForm(forms.ModelForm):
         model = Hot
         fields = '__all__'
 
-    def clean(self):
+    def clean_is_show(self):
         is_show = self.cleaned_data.get('is_show')
         total_show = Hot.objects.filter(is_show=True).count()
+        print 'total_show ',total_show
+        print 'is_show ',is_show
+        # case update db is 4:
+
         if total_show < 4 or not is_show:
+            pass
+        elif self.instance.pk and self.instance.is_show == is_show and total_show == 4:
             pass
         else:
             raise forms.ValidationError('Hot giới hạn tối đa 4 bài được hiển thị. Vui lòng chọn bỏ bớt trường is_show và chọn lại.',
-                                        code='invalid_is_show',
-                                        params={'is_show': is_show},
-                                        )
+                                            code='invalid_is_show',
+                                            params={'is_show': is_show},
+                                            )
 
-        return self.cleaned_data
+        return self.cleaned_data['is_show']
 
 
 class HotsAdmin(TranslationAdmin):
     form = HotForm
+    list_display = ('name', 'is_show', )
     pass
 admin.site.register(Hot, HotsAdmin)
 
