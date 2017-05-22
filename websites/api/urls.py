@@ -34,8 +34,8 @@ urlpatterns = [
     url(r'^accounts/upload/avatar/(?P<filename>[^/]+)$', views.FileUploadView.as_view(), name="upload-avatar"),
 
     url(r'^card/(?P<card_id>[0-9]+)/information/$', views.card_information, name="card-information"),
-    url(r'^transactions/$', views.play_transactions, name="play-transactions"),
-    url(r'^card_transactions/$', views.card_transactions, name="card-transactions"),
+    url(r'^transactions/play/$', views.play_transactions, name="play-transactions"),
+    url(r'^transactions/card/$', views.card_transactions, name="card-transactions"),
     url(r'^reissue/history/$', views.reissue_history, name="reissue-history")
 
 ]
