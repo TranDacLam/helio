@@ -126,10 +126,11 @@
         </div>
     </div>
     {% endif %}
-
+    <hr class="hr-custom">
     {% if result.events %}
     <div id="events_content">
         <div class="row">
+            <div class="big-font-size all-event-title" align="center">{% trans "eventpage.title.all_event" %}</div>
             <!--  KID GAME CONTENT -->
             <div class="kids-game-content col-md-12">
                 {% for event in result.events %}

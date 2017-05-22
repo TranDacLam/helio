@@ -251,7 +251,7 @@ ul.type-group li a span {
 }
 .event-name:hover,
 .event-name:focus {
-    color: #fff;
+    color: #fec231;
     text-decoration: none;
 }
 .event-all-btn {

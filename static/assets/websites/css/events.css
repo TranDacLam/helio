@@ -30,6 +30,13 @@ ol.carousel-indicators-custom li {
 }
 /*END CAROUSEL*/
 
+/*START TITLE EVENT*/
+.all-event-title {
+    color: #fec231;
+    margin: 10px 0px;
+}
+/*END TITLE EVENT*/
+
 /*EVENT COTENT CSS*/
 .content-pull-right .item-content-text {
     background: url("../images/bg_events_left.png") no-repeat;

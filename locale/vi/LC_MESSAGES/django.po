@@ -115,6 +115,12 @@ msgid "powercard.title.section.faq"
 msgstr "NHỮNG CÂU HỎI THƯỜNG GẶP"
 # END FAQs POWERCARD
 
+# START POWERCARD
+msgid "powercard.btn.view_full"
+msgstr "XEM ĐẦY ĐỦ"
+# END POWERCARD
+
+
 # START EXPERIENCE DETAIl
 msgid "experiencepage.btn.all_experience" 
 msgstr "TẤT CẢ TRẢI NGHIỆM"
@@ -124,6 +130,9 @@ msgstr "TRẢI NGHIỆM KHÁC"
 # END EXPERIENCE DETAIl
 
 # START EVENT
+msgid "eventpage.title.all_event" 
+msgstr "TẤT CẢ CÁC SỰ KIỆN"
+
 msgid "eventpage.btn.all_event" 
 msgstr "TẤT CẢ SỰ KIỆN"
 
@@ -177,6 +186,12 @@ msgstr "TIN TỨC KHÁC"
 # END NEW DETAIl
 
 # START FAQS
+msgid "faqspage.header.title"
+msgstr "HỎI ĐÁP"
+
+msgid "faqspage.header.description"
+msgstr "Những câu hỏi thường gặp sẽ giúp bạn có những trải nghiệm tốt hơn khi đến Helio Center."
+
 msgid "faqspage.text.support_more"
 msgstr "BẠN VẪN MUỐN HỖ TRỢ THÊM?"
 
@@ -185,6 +200,12 @@ msgstr "LIÊN HỆ VỚI CHÚNG TÔI"
 # END FAQs
 
 # START CONTACT 
+msgid "contact.header.title"
+msgstr "HỎI ĐÁP"
+
+msgid "contact.header.description"
+msgstr "Những câu hỏi thường gặp sẽ giúp bạn có những trải nghiệm tốt hơn khi đến Helio Center."
+
 msgid "contact.btn.send"
 msgstr "GỬI TIN NHẮN" 
 

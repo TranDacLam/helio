@@ -1,5 +1,18 @@
 var show_num = 5,
     view_more = 5;
+var en_button = {
+	'show_more' : 'SHOW MORE',
+	'show_less' : 'SHOW LESS'
+}
+var vi_button = {
+	'show_more' : 'XEM ĐẦY ĐỦ',
+	'show_less' : 'THU GỌN'
+}
+// var show_more_vi = 'XEM ĐẦY ĐỦ',
+// 	show_more_en = 'SHOW MORE';
+// var show_less_vi = 'THU GỌN',
+// 	show_less_en = 'SHOW LESS';
+
 
 function viewMore() {
     var size_list = $(".faqs-section .faq-detail").length;
@@ -33,14 +46,22 @@ $(document).ready( function() {
 	  		$( this ).parent().parent().find(".card-div-bottom").removeClass("hidden");
 	  	}
 	});
+	// var show_more,
+	// 	show_less;
+	var btn_view_more={}
+	if(lang_code == "en") {
+		btn_view_more = en_button;
+	} else {
+		btn_view_more = vi_button;
+	}
 	$(".view-full").click(function(){
 		var powercard_content = $(this).parent().parent().find(".card-description");
 		if($(powercard_content).hasClass("height-limit")) {
 			$(powercard_content).removeClass("height-limit");
-			$(this).html('THU GỌN <br> <i class="glyphicon glyphicon-chevron-up">');
+			$(this).html(btn_view_more["show_less"] + '<br> <i class="glyphicon glyphicon-chevron-up">');
 		} else {
 			$(powercard_content).addClass("height-limit");
-			$(this).html('XEM ĐẦY ĐỦ <br> <i class="glyphicon glyphicon-chevron-down">');
+			$(this).html(btn_view_more["show_more"] + '<br> <i class="glyphicon glyphicon-chevron-down">');
 		}
 	});
 });
