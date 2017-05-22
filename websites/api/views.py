@@ -20,6 +20,8 @@ import ast
 import constants
 import utils
 
+from django.db import connections
+
 
 def custom_exception_handler(exc, context):
     # to get the standard error response.
@@ -530,7 +532,7 @@ def promotion_detail(request, promotion_id):
 def transactions_type(request):
     try:
         lst_item = Transaction_Type.objects.all()
-        serializer = PromotionsSerializer(lst_item, many=True)
+        serializer = TransactionTypeSerializer(lst_item, many=True)
         return Response(serializer.data)
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
@@ -558,3 +560,129 @@ def faqs(request):
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
         return Response(error, status=500)
+
+"""
+    Get Card Information
+"""
+
+
+@api_view(['GET'])
+def card_information(request, card_id):
+    print "API get card information"
+    try:
+        card_id = request.GET.get("card_id", "")
+        if not card_id:
+            error = {
+                "code": 400, "message": "Card id field is required.", "fields": "card_id"}
+            return Response(error, status=400)
+
+        cursor = connections['sql_db'].cursor()
+        query_str = """ SELECT C.Card_Added, C.Card_Status, C.Card_State, C.Cash_Balance, C.Bonus_Balance, C.ETickets,
+                    Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, Cust.EMail, Cust.Phone, 
+                    (CASE WHEN CT.Transaction_Id = 506 THEN CT.Transaction_DateTime ELSE Null END) AS Upgraded_Date, 
+                    Cust.Customer_Id  FROM Cards C
+                 LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id
+                 LEFT JOIN Card_Transactions CT ON C.Card_Barcode = CT.Card_Barcode WHERE C.Card_Barcode = {0}"""
+
+        cursor.execute(query_str.format(card_id)) 
+        result = utils.card_information_mapper(cursor.fetchone())
+
+        return Response(result)
+
+    except Exception, e:
+        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        return Response(error, status=500)
+
+"""
+    Play Transaction
+"""
+
+@api_view(['GET'])
+def  play_transactions(request):
+    try:
+        card_id = request.GET.get("card_id", "")
+        if not card_id:
+            error = {
+                "code": 400, "message": "Card id field is required.", "fields": "card_id"}
+            return Response(error, status=400)
+        cursor = connections['sql_db'].cursor()
+        
+        query_str = """ SELECT TOP 50 PT.Transaction_DateTime, PT.Transaction_Amount, GD.Game_Description,
+                                 (CASE WHEN GD.Game_Group_Id = 0 THEN 'Refund' ELSE 'Play' END) AS transaction_type
+                                 FROM Play_Transactions PT
+                                 LEFT JOIN Game_Swipers GS ON PT.Game_Id = GS.Game_Id
+                                 LEFT JOIN Game_Details GD ON GS.Game_ML_Id = GD.Game_ML_Id
+                                 WHERE PT.Card_Barcode = {0} ORDER BY PT.Transaction_DateTime DESC"""
+
+        cursor.execute(query_str.format(card_id)) 
+        result = utils.play_transactions_mapper(cursor.fetchall())
+
+        return Response(result)
+    except Exception, e:
+        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        return Response(error, status=500)
+
+
+"""
+    Card Transaction
+"""
+
+
+@api_view(['GET'])
+def  card_transactions(request):
+    try:
+        card_id = request.GET.get("card_id", "")
+        if not card_id:
+            error = {
+                "code": 400, "message": "Card id field is required.", "fields": "card_id"}
+            return Response(error, status=400)
+
+        cursor = connections['sql_db'].cursor()  
+
+        query_str = """ SELECT TOP 50 ST.Transaction_DateTime, SCT.Cash_Amount FROM Sale_Card_Transactions SCT 
+                                 INNER JOIN Sale_Transactions ST ON ST.Transaction_Id = SCT.Transaction_Id
+                                 WHERE SCT.Card_Barcode = {0} ORDER BY ST.Transaction_DateTime DESC"""
+
+        cursor.execute(query_str.format(card_id)) 
+
+        print query_str.format(card_id)
+        result = utils.card_transactions_mapper(cursor.fetchall())
+
+        return Response(result)
+    except Exception, e:
+        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        return Response(error, status=500)
+
+
+"""
+    Reissue History
+"""
+
+
+@api_view(['GET'])
+def  reissue_history(request):
+    try:
+        card_id = request.GET.get("card_id", "")
+        if not card_id:
+            error = {
+                "code": 400, "message": "Card id field is required.", "fields": "card_id"}
+            return Response(error, status=400)
+
+        cursor = connections['sql_db'].cursor()
+
+        query_str = """ SELECT CT.Transaction_DateTime, CT.Card_Barcode, CT.Transfer_Card_Barcode,
+                                 (CASE WHEN CT.Transaction_Id = 501 THEN 'Reissue' ELSE 'Upgraded' END) AS transaction_type
+                                 FROM Card_Transactions CT
+                                 WHERE CT.Transaction_Id IN (501, 506) AND CT.Card_Barcode = {0}"""
+
+        cursor.execute(query_str.format(card_id)) 
+        result = utils.reissue_history_mapper(cursor.fetchall())
+        return Response(result)
+    except Exception, e:
+        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        return Response(error, status=500)
+
+
+
+
+       

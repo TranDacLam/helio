@@ -282,3 +282,8 @@ admin.site.register(Advertisement, AdvertisementAdmin)
 class PromotionLabelAdmin(TranslationAdmin):
     pass
 admin.site.register(Promotion_Label, PromotionLabelAdmin)
+
+
+class TransactionTypeAdmin(TranslationAdmin):
+     pass
+admin.site.register(Transaction_Type, TransactionTypeAdmin)
