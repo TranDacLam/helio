@@ -290,8 +290,8 @@ def hots(request):
 def game_types_by_category(request, category_id):
     try:
         print '#### category_id ', category_id
-        error = helper.checkIdValid(category_id)
-        if not helper.isEmpty(error):
+        error = helper.check_id_valid(category_id)
+        if not helper.is_empty(error):
             errors = {"code": 400, "message": "%s" %
                       error, "fields": "type_id"}
             return Response(errors, status=400)
@@ -312,8 +312,8 @@ def game_types_by_category(request, category_id):
 def games(request):
     try:
         game_type_id = request.GET.get("type_id")
-        error = helper.checkIdValid(game_type_id)
-        if not helper.isEmpty(error):
+        error = helper.check_id_valid(game_type_id)
+        if not helper.is_empty(error):
             errors = {"code": 400, "message": "%s" %
                       error, "fields": "type_id"}
             return Response(errors, status=400)
@@ -333,7 +333,7 @@ def games(request):
 @api_view(['GET'])
 def game_detail(request, game_id):
     try:
-        error = helper.checkIdValid(game_id)
+        error = helper.check_id_valid(game_id)
         if error:
             errors = {"code": 400, "message": "%s" %
                       error, "fields": "game_id"}
@@ -357,7 +357,7 @@ def game_detail(request, game_id):
 @api_view(['GET'])
 def entertainment_detail(request, id_or_key_query):
     try:
-        if helper.isInt(id_or_key_query):
+        if helper.is_int(id_or_key_query):
             entertainment_detail = Entertainment.objects.get(
                 pk=id_or_key_query)
         else:
@@ -413,7 +413,7 @@ def events_latest(request):
 @api_view(['GET'])
 def event_detail(request, event_id):
     try:
-        error = helper.checkIdValid(event_id)
+        error = helper.check_id_valid(event_id)
         if error:
             errors = {"code": 400, "message": "%s" %
                       error, "fields": "event_id"}
@@ -440,7 +440,7 @@ def posts(request):
     try:
         type_id = request.GET.get("type_id")
 
-        error = helper.checkIdValid(type_id)
+        error = helper.check_id_valid(type_id)
         if error:
             errors = {"code": 400, "message": "%s" %
                       error, "fields": "type_id"}
@@ -462,12 +462,12 @@ def posts(request):
 @api_view(['GET'])
 def post_detail(request, id_or_key_query):
     try:
-        if helper.isEmpty(id_or_key_query):
+        if helper.is_empty(id_or_key_query):
             error = {"code": 400, "message": "This field is required.",
                      "fields": "id_or_key_query"}
             return Response(error, status=400)
 
-        if helper.isInt(id_or_key_query):
+        if helper.is_int(id_or_key_query):
             post_item = Post.objects.get(pk=id_or_key_query)
         else:
             post_item = Post.objects.get(key_query=id_or_key_query)
@@ -491,7 +491,7 @@ def promotions(request):
     try:
         type_id = request.GET.get("type_id")
 
-        error = helper.checkIdValid(type_id)
+        error = helper.check_id_valid(type_id)
         if error:
             errors = {"code": 400, "message": "%s" %
                       error, "fields": "type_id"}
@@ -548,7 +548,7 @@ def faqs(request):
     try:
         category_id = request.GET.get("category_id", "")
 
-        error = helper.checkIdValid(category_id)
+        error = helper.check_id_valid(category_id)
         if error:
             errors = {"code": 400, "message": "%s" %
                       error, "fields": "category_id"}
@@ -609,7 +609,11 @@ def  play_transactions(request):
         filter_id = request.GET.get("filter_id", "")
         sub_query = ""
         if filter_id:
-            sub_query = " WHERE transaction_type like " + filter_id
+            if not helper.is_int(filter_id):
+                errors = {"code": 400, "message": "This value must be is integer.", "fields": "filter_id"}
+                return Response(errors, status=400)
+            filter_object = Transaction_Type.objects.get(pk=filter_id)
+            sub_query = " WHERE transaction_type like '" + filter_object.name_en +"'"
 
         cursor = connections['sql_db'].cursor()
         
