@@ -38,8 +38,9 @@
 	<hr class="hr-custom">
 	<!-- CONTACT FORM #TO DO CUSTOM-->
 	
-	
-	
+	{% if message_success %} 
+	<div><p>{% trans "contact.message_success" %}</p></div>
+	{% endif %} 
 	<div class="center-div form-group" align="center">
 		<form id="form_contact" class="form-contact" method="POST">
 		{% csrf_token %}
@@ -68,13 +69,13 @@
 					<textarea id="id_message" name="message" value="{{ message }}" class="form-control form-control-custom input-contact" rows="5"></textarea>
 				</div>
 			</div>
-			<div class="col-md-12" align="center">
-				<button type="submit" class="btn-custom-style btn-custom-style-experiences">{% trans "contact.btn.send" %} <span class="glyphicon glyphicon-menu-right"></span></button>
+			<div class="col-md-12 col-xs-12" align="center">
+				<button id="submitbutton" type="submit" class="btn-custom-style btn-custom-style-experiences">{% trans "contact.btn.send" %} <span class="glyphicon glyphicon-menu-right"></span></button>
 			</div>
 		</form>
 	</div>
 	<div class="row">
-		<div class="col-md-12 map-custom.div" align="center">
+		<div class="col-md-12 col-xs-12 map-custom.div" align="center">
 		    <iframe class="map-custom" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3834.562563375484!2d108.22225385096235!3d16.03627114452417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314219e8cb37e161%3A0xb2f5c4a784d34c60!2zVHJ1bmcgdMOibSBHaeG6o2kgdHLDrSBQaOG7qWMgaOG7o3AgSGVsaW8gQ2VudGVy!5e0!3m2!1sen!2s!4v1488335913354" width="100%"  frameborder="0"></iframe>
 		</div>
 	</div>

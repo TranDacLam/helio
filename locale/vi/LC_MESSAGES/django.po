@@ -223,6 +223,9 @@ msgstr "Chủ đề cần hỗ trợ"
 
 msgid "contact.lable.title.message"
 msgstr "Nhập nội dung" 
+
+msgid "contact.message_success"
+msgstr "Tin nhắn của bạn đã gửi thành công!"
 # END CONTACT
 
 # START OTHER PRODUCT

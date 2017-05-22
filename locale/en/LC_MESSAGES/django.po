@@ -222,6 +222,9 @@ msgstr "Subject"
 
 msgid "contact.lable.title.message"
 msgstr "Main message"
+
+msgid "contact.message_success"
+msgstr "Your message was sent successfully!"
 # END CONTACT
 
 # START OTHER PRODUCT
