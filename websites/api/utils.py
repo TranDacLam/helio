@@ -74,3 +74,63 @@ def send_mail(subject, message_plain, message_html, email_from, email_to,
         msg.send()
     except Exception, e:
         raise e
+
+
+def card_information_mapper(item):
+    card_information = {}
+    if item:
+        card_information["active_date"] = item[0] # Card_Added
+        card_information["membership"] = item[1] # Card_Status
+        card_information["card_status"] = item[2] # Card_State
+        card_information["play_value"] = item[3] # Cash_Balance
+        card_information["bonus_value"] = item[4] # Bonus_Balance
+        card_information["ticket"] = item[5] # ETickets
+        card_information["first_name"] = item[6] # Firstname
+        card_information["surname"] = item[7] # Surname
+        card_information["birthday"] = item[8] # DOB
+        card_information["peronal_id"] = item[9] # PostCode
+        card_information["address"] = item[10] # Address1
+        card_information["email"] = item[11] # EMail
+        card_information["phone"] = item[12] # Phone
+        card_information["upgraded_date"] = item[13] # upgraded_date
+    return card_information
+
+
+def play_transactions_mapper(list_items):
+    list_transactions = []
+    if list_items:
+        for item in list_items:
+            transaction = {}
+            transaction["date"] = item[0] # Transaction_DateTime
+            transaction["amount"] = item[1] # Transaction_Amount
+            transaction["name"] = item[2] # Game_Description
+            transaction["type"] = item[3] # transaction_type
+            list_transactions.append(transaction)
+
+    return list_transactions
+
+def card_transactions_mapper(list_items):
+    list_transactions = []
+    if list_items:
+        for item in list_items:
+            transaction = {}
+            transaction["date"] = item[0] # Transaction_DateTime
+            transaction["amount"] = item[1] # Transaction_Amount
+            transaction["name"] = "Reload amount " + '{:,.0f}'.format(float(item[1])) # Game_Description
+            transaction["type"] = "Reload" # transaction_type
+            list_transactions.append(transaction)
+
+    return list_transactions
+
+def reissue_history_mapper(list_items):
+    list_reissues = []
+    if list_items:
+        for item in list_items:
+            reissue = {}
+            reissue["date"] = item[0] # Transaction_DateTime
+            reissue["old_id"] = item[1] # Card_Barcode
+            reissue["new_id"] = item[2] # Transfer_Card_Barcode
+            reissue["type"] = item[3] # Card_Barcode
+            list_reissues.append(reissue)
+
+    return list_reissues
