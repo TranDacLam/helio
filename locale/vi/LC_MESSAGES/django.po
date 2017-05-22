@@ -201,7 +201,7 @@ msgstr "LIÊN HỆ VỚI CHÚNG TÔI"
 
 # START CONTACT 
 msgid "contact.header.title"
-msgstr "HỎI ĐÁP"
+msgstr "LIÊN HỆ"
 
 msgid "contact.header.description"
 msgstr "Những câu hỏi thường gặp sẽ giúp bạn có những trải nghiệm tốt hơn khi đến Helio Center."

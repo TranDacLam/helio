@@ -31,6 +31,11 @@ urlpatterns = [
     # Social Login : alias name url is : login_social_jwt_user and url is : api/login/social/jwt_user/
     url(r'^login/', include('rest_social_auth.urls_jwt')),
     # url(r'^api-token-verify/', verify_jwt_token),
-    url(r'^accounts/upload/avatar/(?P<filename>[^/]+)$', views.FileUploadView.as_view(), name="upload-avatar")
+    url(r'^accounts/upload/avatar/(?P<filename>[^/]+)$', views.FileUploadView.as_view(), name="upload-avatar"),
+
+    url(r'^card/(?P<card_id>[0-9]+)/information/$', views.card_information, name="card-information"),
+    url(r'^transactions/play/$', views.play_transactions, name="play-transactions"),
+    url(r'^transactions/card/$', views.card_transactions, name="card-transactions"),
+    url(r'^reissue/history/$', views.reissue_history, name="reissue-history")
 
 ]

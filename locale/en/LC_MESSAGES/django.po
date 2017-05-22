@@ -200,7 +200,7 @@ msgstr "CONTACT US"
 
 # START CONTACT 
 msgid "contact.header.title"
-msgstr "FAQs"
+msgstr "CONTACT"
 
 msgid "contact.header.description"
 msgstr "Frequently asked questions help you have more good experience when you go to Helio Center. Frequently asked questions help you have more good experience when you go to Helio Center."
