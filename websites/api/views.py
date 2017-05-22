@@ -290,8 +290,8 @@ def hots(request):
 def game_types_by_category(request, category_id):
     try:
         print '#### category_id ', category_id
-        error = helper.checkIdValid(category_id)
-        if not helper.isEmpty(error):
+        error = helper.check_id_valid(category_id)
+        if not helper.is_empty(error):
             errors = {"code": 400, "message": "%s" %
                       error, "fields": "type_id"}
             return Response(errors, status=400)
@@ -312,8 +312,8 @@ def game_types_by_category(request, category_id):
 def games(request):
     try:
         game_type_id = request.GET.get("type_id")
-        error = helper.checkIdValid(game_type_id)
-        if not helper.isEmpty(error):
+        error = helper.check_id_valid(game_type_id)
+        if not helper.is_empty(error):
             errors = {"code": 400, "message": "%s" %
                       error, "fields": "type_id"}
             return Response(errors, status=400)
@@ -333,7 +333,7 @@ def games(request):
 @api_view(['GET'])
 def game_detail(request, game_id):
     try:
-        error = helper.checkIdValid(game_id)
+        error = helper.check_id_valid(game_id)
         if error:
             errors = {"code": 400, "message": "%s" %
                       error, "fields": "game_id"}
@@ -357,7 +357,7 @@ def game_detail(request, game_id):
 @api_view(['GET'])
 def entertainment_detail(request, id_or_key_query):
     try:
-        if helper.isInt(id_or_key_query):
+        if helper.is_int(id_or_key_query):
             entertainment_detail = Entertainment.objects.get(
                 pk=id_or_key_query)
         else:
@@ -413,7 +413,7 @@ def events_latest(request):
 @api_view(['GET'])
 def event_detail(request, event_id):
     try:
-        error = helper.checkIdValid(event_id)
+        error = helper.check_id_valid(event_id)
         if error:
             errors = {"code": 400, "message": "%s" %
                       error, "fields": "event_id"}
@@ -440,7 +440,7 @@ def posts(request):
     try:
         type_id = request.GET.get("type_id")
 
-        error = helper.checkIdValid(type_id)
+        error = helper.check_id_valid(type_id)
         if error:
             errors = {"code": 400, "message": "%s" %
                       error, "fields": "type_id"}
@@ -462,12 +462,12 @@ def posts(request):
 @api_view(['GET'])
 def post_detail(request, id_or_key_query):
     try:
-        if helper.isEmpty(id_or_key_query):
+        if helper.is_empty(id_or_key_query):
             error = {"code": 400, "message": "This field is required.",
                      "fields": "id_or_key_query"}
             return Response(error, status=400)
 
-        if helper.isInt(id_or_key_query):
+        if helper.is_int(id_or_key_query):
             post_item = Post.objects.get(pk=id_or_key_query)
         else:
             post_item = Post.objects.get(key_query=id_or_key_query)
@@ -491,7 +491,7 @@ def promotions(request):
     try:
         type_id = request.GET.get("type_id")
 
-        error = helper.checkIdValid(type_id)
+        error = helper.check_id_valid(type_id)
         if error:
             errors = {"code": 400, "message": "%s" %
                       error, "fields": "type_id"}
@@ -548,7 +548,7 @@ def faqs(request):
     try:
         category_id = request.GET.get("category_id", "")
 
-        error = helper.checkIdValid(category_id)
+        error = helper.check_id_valid(category_id)
         if error:
             errors = {"code": 400, "message": "%s" %
                       error, "fields": "category_id"}
@@ -570,7 +570,6 @@ def faqs(request):
 def card_information(request, card_id):
     print "API get card information"
     try:
-        card_id = request.GET.get("card_id", "")
         if not card_id:
             error = {
                 "code": 400, "message": "Card id field is required.", "fields": "card_id"}
@@ -605,16 +604,29 @@ def  play_transactions(request):
             error = {
                 "code": 400, "message": "Card id field is required.", "fields": "card_id"}
             return Response(error, status=400)
+
+        filter_id = request.GET.get("filter_id", "")
+        sub_query = ""
+        if filter_id:
+            if not helper.is_int(filter_id):
+                errors = {"code": 400, "message": "This value must be is integer.", "fields": "filter_id"}
+                return Response(errors, status=400)
+            filter_object = Transaction_Type.objects.get(pk=filter_id)
+            sub_query = " WHERE transaction_type like '" + filter_object.name_en +"'"
+
         cursor = connections['sql_db'].cursor()
         
-        query_str = """ SELECT TOP 50 PT.Transaction_DateTime, PT.Transaction_Amount, GD.Game_Description,
+        query_str = """ WITH PLAY_TRANSACTION AS (SELECT PT.Transaction_DateTime, PT.Transaction_Amount, GD.Game_Description,
                                  (CASE WHEN GD.Game_Group_Id = 0 THEN 'Refund' ELSE 'Play' END) AS transaction_type
                                  FROM Play_Transactions PT
                                  LEFT JOIN Game_Swipers GS ON PT.Game_Id = GS.Game_Id
                                  LEFT JOIN Game_Details GD ON GS.Game_ML_Id = GD.Game_ML_Id
-                                 WHERE PT.Card_Barcode = {0} ORDER BY PT.Transaction_DateTime DESC"""
+                                 WHERE PT.Card_Barcode = {0})
+                        SELECT TOP 50 * FROM PLAY_TRANSACTION {1} ORDER BY Transaction_DateTime DESC"""
 
-        cursor.execute(query_str.format(card_id)) 
+        print query_str.format(card_id, sub_query)
+
+        cursor.execute(query_str.format(card_id, sub_query)) 
         result = utils.play_transactions_mapper(cursor.fetchall())
 
         return Response(result)
@@ -670,10 +682,12 @@ def  reissue_history(request):
 
         cursor = connections['sql_db'].cursor()
 
-        query_str = """ SELECT CT.Transaction_DateTime, CT.Card_Barcode, CT.Transfer_Card_Barcode,
+        query_str = """WITH REISSUE_HISTORY AS (SELECT CT.Transaction_DateTime, CT.Card_Barcode, CT.Transfer_Card_Barcode,
                                  (CASE WHEN CT.Transaction_Id = 501 THEN 'Reissue' ELSE 'Upgraded' END) AS transaction_type
                                  FROM Card_Transactions CT
-                                 WHERE CT.Transaction_Id IN (501, 506) AND CT.Card_Barcode = {0}"""
+                                 WHERE CT.Transaction_Id IN (501, 506) AND CT.Card_Barcode = {0})
+
+                        SELECT TOP 50 * FROM REISSUE_HISTORY ORDER BY Transaction_DateTime DESC"""
 
         cursor.execute(query_str.format(card_id)) 
         result = utils.reissue_history_mapper(cursor.fetchall())
