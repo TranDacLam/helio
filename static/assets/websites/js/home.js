@@ -1,3 +1,10 @@
+function toggleIcon(e) {
+    $(e.target)
+        .prev('.game-section-title')
+        .find(".more-less")
+        .toggleClass('glyphicon glyphicon-plus glyphicon glyphicon-minus');
+}
+
 $(document).ready( function() {
     $(".carousel-inner .item:first").addClass("active");
     $(".home-carousel li:first").addClass("active");
@@ -33,6 +40,9 @@ $(document).ready( function() {
             div_btn_active.next().addClass("active");
         }
     }, 6000);
+
+    $('.game-section-content').on('hidden.bs.collapse', toggleIcon);
+    $('.game-section-content').on('shown.bs.collapse', toggleIcon);
     
     
     var clickEvent = false;

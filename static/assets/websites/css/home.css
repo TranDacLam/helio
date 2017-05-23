@@ -144,7 +144,13 @@ div.game-section div.game-right:not(.active) {
 div.game-section-detail {
     padding: 0px;
 }
-
+.more-less {
+    float: right;
+    color: #fff;
+    top: 25px;
+    right: 25px;
+    font-size: 20px;
+}
 /*custom*/
 ul.type-group li a {
     position: relative;
