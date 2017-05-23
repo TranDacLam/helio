@@ -201,6 +201,21 @@ ol.carousel-indicators-custom li {
 hr.line-hr {
     border-top-color: #fec231;
 }
+
+.carousel-custom>.carousel-inner>.item {
+    transition-property: opacity;
+}
+.carousel-custom>.carousel-inner>.item,
+.carousel-custom>.carousel-inner>.active.left,
+.ccarousel-custom>.carousel-inner>.active.right {
+    opacity: 0;
+}
+.carousel-custom>.carousel-inner>.active,
+.carousel-custom>.carousel-inner>.next.left,
+.carousel-custom>.carousel-inner>.prev.right {
+    opacity: 1;
+}
+
 @media (max-width: 1340px) {
     .page-caption {
         top: 2%;

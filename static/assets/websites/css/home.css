@@ -170,8 +170,10 @@ ul.type-group li a span {
 .vidieo-right {
     background: url("../images/vidieo_right.png") no-repeat;
     background-size: 100% 100%;
-    min-height: 450px;
     z-index: 1;
+}
+.vidieo-caption {
+    min-height: 335px;
 }
 .vidieo-left {
     position: absolute;
@@ -213,6 +215,10 @@ ul.type-group li a span {
     width: 33px;
     border-bottom: 5px solid;
     margin-right: 13px;
+    color: #15062b;
+}
+.list-line li.active {
+    color: #fff;
 }
 .btn-entertaiment {
     margin-bottom: 56px;
@@ -268,6 +274,17 @@ ul.type-group li a span {
 .game-section-content.active .collapse {
     display: block;
 }
+
+
+
+.flexslider.vidieo-slider {
+    margin-bottom: 0px;
+    border: none;
+    background: none;
+}
+.flexslider.vidieo-slider .flex-direction-nav {
+    display: none !important;
+}
 @media (max-width: 991px) {
     .banner-custom {
         margin-top: 20px;
@@ -276,6 +293,9 @@ ul.type-group li a span {
         background: url("../images/m_vidieo_right.png") no-repeat;
         background-size: 100% 100%;
         height: auto;
+        min-height: auto;
+    }
+    .vidieo-caption {
         min-height: auto;
     }
     .vidieo-left {
