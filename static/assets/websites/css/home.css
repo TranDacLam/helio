@@ -110,7 +110,7 @@ div.game-section-content{
     background-color: #ffffff; 
 }
 div.game-section {
-    min-height: 362px;
+    /*min-height: 362px;*/
     padding: 0px;
     background-color: #271a3a;
 }
@@ -257,6 +257,15 @@ ul.type-group li a span {
 .event-all-btn {
     text-align: right;
 }
+
+.panel.game-section-content {
+    background: none;
+    border: none;
+    margin-bottom: 0px;
+}
+.game-section-content.active .collapse {
+    display: block;
+}
 @media (max-width: 991px) {
     .banner-custom {
         margin-top: 20px;
@@ -275,5 +284,28 @@ ul.type-group li a span {
     }
     .event-all-btn {
         text-align: left;
+    }
+}
+
+
+@media (max-width: 767px) {
+    .game-left {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .game-section-content.active .collapse {
+        display: none;
+    }
+    div.game-section div.panel.game-section-content {
+        display: block;
+    }
+    .game-section-content .collapse.in {
+        display: block;
+    }
+    .game-section-content h2 {
+        padding: 18px 40px 18px 0;
+        position: relative;
+        border-top: 1px solid #ccc;
+        margin: 0px;
     }
 }
