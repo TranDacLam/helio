@@ -43,22 +43,6 @@
 .home-carousel li.active + li a {
     border-left: 0px;
 }
-/*Hots name display on mobile css*/
-.caption-custom {
-    position: relative;
-    right: 0%;
-    bottom: 0%;
-    left: 0%;
-    z-index: 10;
-    padding-bottom: 0px;
-    color: #fff;
-    text-align: center;
-    text-shadow: 0 1px 2px rgba(0,0,0,.6);
-}
-.caption-custom a {
-    color: #fff;
-    text-decoration: none;
-}
 
 /*  bhoechie tab */
 div.game-section-menu{
@@ -140,14 +124,11 @@ div.game-section div.game-type-slide:not(.active) {
 div.game-section div.game-right:not(.active) {
     display: none;
 }
-
+.game-right {
+    margin-right: -30px;
+}
 div.game-section-detail {
     padding: 0px;
-}
-.more-less {
-    float: right;
-    color: #fff;
-    font-size: 20px;
 }
 /*custom*/
 ul.type-group li a {
@@ -328,5 +309,32 @@ ul.type-group li a span {
         position: relative;
         border-top: 1px solid #ccc;
         margin: 0px;
+    }
+    /*Hots name display on mobile css*/
+    .caption-custom {
+        position: relative;
+        right: 0%;
+        bottom: 0%;
+        left: 0%;
+        z-index: 10;
+        padding-bottom: 0px;
+        color: #fff;
+        text-align: center;
+        text-shadow: 0 1px 2px rgba(0,0,0,.6);
+    }
+    .caption-custom a {
+        color: #fff;
+        text-decoration: none;
+    }
+    .more-less {
+        float: right;
+        color: #fff;
+        font-size: 20px;
+    }
+    div.game-section-content h2 {
+        background-color: #271a3a;
+    }
+    div.game-section-content h2.collapsed {
+        background-color: #15062b;
     }
 }
