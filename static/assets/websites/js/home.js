@@ -32,7 +32,7 @@ $(document).ready( function() {
             div_img_active.next().addClass("active");
             div_btn_active.next().addClass("active");
         }
-    }, 4000);
+    }, 6000);
     
     
     var clickEvent = false;

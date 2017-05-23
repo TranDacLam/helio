@@ -80,8 +80,9 @@ def card_information_mapper(item):
     card_information = {}
     if item:
         card_information["active_date"] = item[0] # Card_Added
-        card_information["membership"] = item[1] # Card_Status
-        card_information["card_status"] = item[2] # Card_State
+        print item[1]
+        card_information["membership"] = 'Member Card' if item[1] == 1 else ('Gold Card' if item[1] == 6 else 'Normal Card') # Card_Status
+        card_information["card_status"] = 'Active' if item[2] == 0 else ('Suspended' if item[2] == 2 else 'Reissued') # Card_State
         card_information["play_value"] = item[3] # Cash_Balance
         card_information["bonus_value"] = item[4] # Bonus_Balance
         card_information["ticket"] = item[5] # ETickets
