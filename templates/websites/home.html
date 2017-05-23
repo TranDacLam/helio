@@ -21,7 +21,12 @@
         <div class="carousel-inner" role="listbox">
             {% for hot in result.hots %}
             <div class="item">
-                <a href="{{hot.sub_url}}" target="_blank"><img src="{{ MEDIA_URL }}{{hot.image}}" width="100%"></a>
+                <a href="{{hot.sub_url}}" target="_blank">
+                    <img src="{{ MEDIA_URL }}{{hot.image}}" width="100%">
+                    <div class="carousel-caption caption-custom hidden-md hidden-lg">
+                        <a href="{{hot.sub_url}}" target="_blank">{{hot.name}}</a>
+                    </div>
+                </a>
             </div>
             {% endfor %}
         </div>
@@ -67,11 +72,13 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-9 col-md-9 game-section" id="id_game_section">
+                <div class="col-lg-9 col-md-9 col-xs-12 game-section" id="id_game_section">
                     <!-- NIGHT LIFT section -->
                     <div class="panel game-section-content row col-md-12">
-                        <h2 class="visible-xs" data-toggle="collapse" data-target="#id_night_life" data-parent="#id_game_section">NIGHT LIFE</h2>
-                        <div class="collapse" id="id_night_life">
+                        <div class="visible-xs game-section-title">
+                            <h2 data-toggle="collapse" data-target="#id_night_life" data-parent="#id_game_section">NIGHT LIFE<i class="more-less glyphicon glyphicon-minus"></i></h2>
+                        </div>
+                        <div class="collapse in" id="id_night_life">
                             <div class="game-section-detail">
                                 <div class="col-xs-12 col-md-6 game-left">
                                     <div class="game-type-slide">
@@ -96,7 +103,9 @@
 
                     <!-- PLAY section -->
                     <div class="panel game-section-content row col-md-12">
-                        <h2 class="visible-xs" data-toggle="collapse" href="#id_helio_play" data-parent="#id_game_section">PLAY</h2>
+                        <div class="visible-xs game-section-title">
+                            <h2 data-toggle="collapse" href="#id_helio_play" data-parent="#id_game_section">PLAY <i class="more-less glyphicon glyphicon-plus"></i></h2>
+                        </div>
                         <div id="id_helio_play" class="collapse" >
                             {% if result.play_types %}
                             <div class="game-section-detail">
@@ -136,7 +145,9 @@
 
                     <!-- KIDS section -->
                     <div class="panel game-section-content row col-md-12">
-                        <h2 class="visible-xs" data-toggle="collapse" href="#id_helio_kids" data-parent="#id_game_section">KIDS</h2>
+                        <div class="visible-xs game-section-title">
+                            <h2 data-toggle="collapse" href="#id_helio_kids" data-parent="#id_game_section">KIDS <i class="more-less glyphicon glyphicon-plus"></i></h2>
+                        </div>
                         <div class="collapse" id="id_helio_kids">
                             {% if result.kids_types %}
                             <div class="game-section-detail">
@@ -176,7 +187,9 @@
 
                     <!-- COFFEE section -->
                     <div class="panel game-section-content row col-md-12">
-                        <h2 class="visible-xs" data-toggle="collapse" href="#id_helio_coffee" data-parent="#id_game_section">COFFEE</h2>
+                        <div class="visible-xs game-section-title">
+                            <h2 data-toggle="collapse" href="#id_helio_coffee" data-parent="#id_game_section">COFFEE <i class="more-less glyphicon glyphicon-plus"></i></h2>
+                        </div>
                         <div class="collapse" id="id_helio_coffee">
                             <div class="game-section-detail">
                                 <div class="col-xs-12 col-md-6 game-left">
