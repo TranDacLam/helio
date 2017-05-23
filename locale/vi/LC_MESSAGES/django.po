@@ -81,7 +81,7 @@ msgid "homepage.title.section.game"
 msgstr "HỆ THỐNG VUI CHƠI & GIẢI TRÍ"
 
 msgid "homepage.title.section.redemption_store"
-msgstr "TÌM HIỂU HỆ THỐNG ĐỔI QUÀ TẠI REDEMPTION STORE"
+msgstr "TÌM HIỂU HỆ THỐNG ĐỔI QUÀ TẠI QUẦY ĐỔI QUÀ"
 
 msgid "homepage.title.section.powercard"
 msgstr "THẺ POWERCARD SỬ DỤNG TẠI HELIO CENTER NHƯ THẾ NÀO? "
@@ -95,6 +95,9 @@ msgstr "TRUNG TÂM VUI CHƠI GIẢI TRÍ TẠI ĐÀ NẴNG"
 msgid "homepage.text.night_life"
 msgstr "CHỢ ĐÊM"
 
+msgid "homepage.text.night_life.description"
+msgstr "Cùng trải nghiệm cuộc sống sôi động về đêm với âm nhạc cực chất, ẩm thực cực ngon, mua sắm thả ga tại CHỢ ĐÊM HELIO - vui, ngon, rẻ, nhất định phải ghé tại Đà Nẵng."
+
 msgid "homepage.text.play"
 msgstr "PLAY"
 
@@ -103,6 +106,9 @@ msgstr "KIDS"
 
 msgid "homepage.text.coffee"
 msgstr "COFFEE"
+
+msgid "homepage.text.coffee.description"
+msgstr "Cùng trải nghiệm cuộc sống sôi động về đêm với âm nhạc cực chất, ẩm thực cực ngon, mua sắm thả ga tại CHỢ ĐÊM HELIO - vui, ngon, rẻ, nhất định phải ghé tại Đà Nẵng."
 # END HOME PAGE
 
 # START FAQs REDEMPTION STORE
