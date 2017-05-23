@@ -53,7 +53,7 @@ msgid "menu.submenu.night_life"
 msgstr "Chợ Đêm"
 
 msgid "menu.submenu.coffee"
-msgstr "Cà phê & Bánh"
+msgstr "Coffee & Bakery"
 
 msgid "menu.submenu.ortherproduct"
 msgstr "Sản phẩm khác"
@@ -262,5 +262,11 @@ msgid "footer.menu.policy"
 msgstr "CHÍNH SÁCH"
 
 msgid "footer.menu.terms_of_use"
-msgstr "ĐIỀU KHOẢN SỬ DỤNG"   
+msgstr "ĐIỀU KHOẢN SỬ DỤNG"
+
+msgid "footer.text_right"
+msgstr "Một sản phẩm vui chơi đến từ"
+
+msgid "footer.text_company"
+msgstr "Khởi Phát, Ltd."     
 #END FOOTER
