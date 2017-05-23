@@ -29,7 +29,7 @@ $(document).ready(function(){
             success: function (data) {
                 $("#slider .slides").html("");
                 $("#carousel .slides").html("");
-                    $(".modal-body").html('<div id="slider" class="flexslider"> <ul class="slides"></ul></div>' 
+                $(".modal-body").html('<div id="slider" class="flexslider"> <ul class="slides"></ul></div>' 
                                         + '<div id="carousel" class="flexslider"> <ul class="slides"></ul></div>')
                 
                 if(data && data.length > 0 ) {

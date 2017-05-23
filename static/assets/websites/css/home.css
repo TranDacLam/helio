@@ -189,8 +189,10 @@ ul.type-group li a span {
 .vidieo-right {
     background: url("../images/vidieo_right.png") no-repeat;
     background-size: 100% 100%;
-    min-height: 560px;
     z-index: 1;
+}
+.vidieo-caption {
+    min-height: 335px;
 }
 .vidieo-left {
     position: absolute;
@@ -293,18 +295,14 @@ ul.type-group li a span {
 }
 
 
-.carousel-custom>.carousel-inner>.item {
-    transition-property: opacity;
+
+.flexslider.vidieo-slider {
+    margin-bottom: 0px;
+    border: none;
+    background: none;
 }
-.carousel-custom>.carousel-inner>.item,
-.carousel-custom>.carousel-inner>.active.left,
-.ccarousel-custom>.carousel-inner>.active.right {
-    opacity: 0;
-}
-.carousel-custom>.carousel-inner>.active,
-.carousel-custom>.carousel-inner>.next.left,
-.carousel-custom>.carousel-inner>.prev.right {
-    opacity: 1;
+.flexslider.vidieo-slider .flex-direction-nav {
+    display: none !important;
 }
 @media (max-width: 991px) {
     .banner-custom {
@@ -314,6 +312,9 @@ ul.type-group li a span {
         background: url("../images/m_vidieo_right.png") no-repeat;
         background-size: 100% 100%;
         height: auto;
+        min-height: auto;
+    }
+    .vidieo-caption {
         min-height: auto;
     }
     .vidieo-left {
