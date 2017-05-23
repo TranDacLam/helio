@@ -16,6 +16,23 @@ $(document).ready( function() {
         interval:   4000
     });
 
+
+    $('.vidieo-slider').flexslider({
+        animation: "slide",
+        start: function(slider){
+            $(".vidieo-caption p").hide();
+            $(".vidieo-caption p").eq(slider.currentSlide).show();
+            $(".vidieo-list li").eq(slider.currentSlide).addClass('active');
+        },
+        after: function(slider){
+            $(".vidieo-caption p").hide();
+            $(".vidieo-caption p").eq(slider.currentSlide).show();
+            $(".vidieo-list li.active").removeClass('active');
+            $(".vidieo-list li").eq(slider.currentSlide).addClass('active');
+        }
+    });
+
+
     setInterval(function() {
         var current_active = $(".game-section .game-section-content.active div.game-type-slide.active");
         var div_img_active = $(".game-section .game-section-content.active div.game-right.active");

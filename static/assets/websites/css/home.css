@@ -185,7 +185,7 @@ ul.type-group li a span {
 .vidieo-right {
     background: url("../images/vidieo_right.png") no-repeat;
     background-size: 100% 100%;
-    min-height: 450px;
+    min-height: 560px;
     z-index: 1;
 }
 .vidieo-left {
@@ -228,6 +228,10 @@ ul.type-group li a span {
     width: 33px;
     border-bottom: 5px solid;
     margin-right: 13px;
+    color: #15062b;
+}
+.list-line li.active {
+    color: #fff;
 }
 .btn-entertaiment {
     margin-bottom: 56px;
@@ -282,6 +286,21 @@ ul.type-group li a span {
 }
 .game-section-content.active .collapse {
     display: block;
+}
+
+
+.carousel-custom>.carousel-inner>.item {
+    transition-property: opacity;
+}
+.carousel-custom>.carousel-inner>.item,
+.carousel-custom>.carousel-inner>.active.left,
+.ccarousel-custom>.carousel-inner>.active.right {
+    opacity: 0;
+}
+.carousel-custom>.carousel-inner>.active,
+.carousel-custom>.carousel-inner>.next.left,
+.carousel-custom>.carousel-inner>.prev.right {
+    opacity: 1;
 }
 @media (max-width: 991px) {
     .banner-custom {

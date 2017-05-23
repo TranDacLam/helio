@@ -3,8 +3,15 @@
 
 {% block title %}Helio{% endblock title %}
 {% block extrastylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}assets/css/flexslider.css" type="text/css" media="screen" />
     <link href="{{ STATIC_URL }}assets/websites/css/home.css" rel="stylesheet" type="text/css" />
 {% endblock %}
+
+{% block extrascript %}
+    <script type="text/javascript" src = "{{ STATIC_URL }}assets/js/jquery.flexslider.js"></script>
+    <script src = "{{ STATIC_URL }}assets/websites/js/home.js"></script>
+{% endblock %}
+
 {% block main_content %}  
 <!-- SLIDE SECTION -->
 {% if result.hots %}
@@ -223,32 +230,42 @@
         <div class="row">
             <div class="vidieo-right col-md-5">
                 <div class="col-md-10 vidieo-text">
-                    <ul class="list-line list-inline">
+                    <ul class="list-line list-inline vidieo-list">
                         <li><i class="line" aria-hidden="true"></i></li>
                         <li><i class="line" aria-hidden="true"></i></li>
                         <li><i class="line" aria-hidden="true"></i></li>
                     </ul>
-                    <p class="big-font-size">{% trans "homepage.title.section.entertaiment" %}</p>
+                    <div class="vidieo-caption">
+                        <p class="big-font-size">{% trans "homepage.title.section.entertaiment" %}</p>
+                        <p class="big-font-size">NGÀY HỘI ẨM THỰC 1980s</p>
+                        <p class="big-font-size">TRUNG THU 2016</p>
+                    </div>
                     <a class="btn btn-custom-style btn-entertaiment" href="{% url 'helio_introduction' %}" role="button">{% trans "btn.click_now" %}</a>
                 </div>
             </div>
             <div class="vidieo-left col-md-9">
                 <div class="row vidieo-img">
-                    <img src="{{ STATIC_URL }}assets/websites/images/vidieo.png" width="100%" height="100%">
+                    <div class="flexslider vidieo-slider">
+                        <ul class="slides">
+                            <li>
+                                <img src="{{ STATIC_URL }}assets/websites/images/vidieo_1.jpg" />
+                            </li>
+                            <li>
+                                <img src="{{ STATIC_URL }}assets/websites/images/vidieo.png" />
+                            </li>
+                            <li>
+                                <img src="{{ STATIC_URL }}assets/websites/images/vidieo_3.jpg" />
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- <img src="{{ STATIC_URL }}assets/websites/images/vidieo.png" width="100%" height="100%"> -->
                     <div class="vidieo-btn">
                         <a class="btn btn-custom-style" href="#" role="button" data-toggle="modal" data-target="#vidieo_play_modal"><i class="fa fa-play"></i></a>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- <div class="vidieo-left col-md-7">
-            <div class="btn-play-div col-md-12">
-                <img src="{{ MEDIA_URL }}{{event.image}}" width="100%" height="100%">
-
-                <a class="btn btn-custom-style" href="#" role="button" data-toggle="modal" data-target="#vidieo_play_modal"><i class="fa fa-play"></i></a>
-            </div>
-        </div> -->
     </div>
 </div>
 
@@ -334,11 +351,6 @@
 </div>
     
 {% endblock %}
-
-{% block extrascript %}
-    <script src = "{{ STATIC_URL }}assets/websites/js/home.js"></script>
-{% endblock %}
-
 
 
 
