@@ -307,10 +307,7 @@ ul.type-group li a span {
     .event-all-btn {
         text-align: left;
     }
-}
 
-
-@media (max-width: 767px) {
     .game-left {
         padding-left: 15px;
         padding-right: 15px;
@@ -356,5 +353,9 @@ ul.type-group li a span {
     }
     div.game-section-content h2.collapsed {
         background-color: #15062b;
+    }
+
+    .game-right {
+        margin-right: 0px;
     }
 }

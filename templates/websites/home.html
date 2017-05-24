@@ -56,7 +56,7 @@
                 <p class="big-font-size game-title">{% trans "homepage.title.section.game" %}</p>
             </div>
             <div class="section-game">
-                <div class="col-lg-3 col-md-3 game-section-menu hidden-xs">
+                <div class="col-lg-3 col-md-3 game-section-menu hidden-sm hidden-xs">
                     <div class="list-group">
                         <a href="#" class="list-group-item text-center night-life">
                             {% trans "homepage.text.night_life" %}
@@ -75,7 +75,7 @@
                 <div class="col-lg-9 col-md-9 col-xs-12 game-section" id="id_game_section">
                     <!-- NIGHT LIFT section -->
                     <div class="panel game-section-content row col-md-12">
-                        <div class="visible-xs game-section-title">
+                        <div class="visible-xs visible-sm game-section-title">
                             <h2 role = "button" data-toggle="collapse" data-target="#id_night_life" data-parent="#id_game_section">NIGHT LIFE<i class="more-less glyphicon glyphicon-minus"></i></h2>
                         </div>
                         <div class="collapse in" id="id_night_life">
@@ -84,17 +84,16 @@
                                     <div class="game-type-slide">
                                         <div class="game-type-content">
                                             <p class="title-content game-type">{% trans "homepage.text.night_life" %}</p>
-                                            <p class="short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p> 
+                                            <p class="short_description">{% trans "homepage.text.night_life.description" %}</p> 
                                         </div>
                                         <hr>
-                                        <p class="game-description short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p> 
+                                        <!-- <p class="game-description short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p>  -->
                                     </div>
-                                
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-6 game-section-detail">
                                 <div class="game-right">
-                                    <img src="{{ STATIC_URL }}assets/websites/images/home_game_section_right.png" alt="helio" width="100%" height="550">
+                                    <img src="{{ STATIC_URL }}assets/websites/images/home_night_life.jpg" alt="helio" width="100%" height="550">
                                 </div>
                             </div>
                         </div>
@@ -103,7 +102,7 @@
 
                     <!-- PLAY section -->
                     <div class="panel game-section-content row col-md-12">
-                        <div class="visible-xs game-section-title">
+                        <div class="visible-xs visible-sm game-section-title">
                             <h2 role = "button" data-toggle="collapse" href="#id_helio_play" data-parent="#id_game_section" class="collapsed">PLAY <i class="more-less glyphicon glyphicon-plus"></i></h2>
                         </div>
                         <div id="id_helio_play" class="collapse" >
@@ -145,7 +144,7 @@
 
                     <!-- KIDS section -->
                     <div class="panel game-section-content row col-md-12">
-                        <div class="visible-xs game-section-title">
+                        <div class="visible-xs visible-sm game-section-title">
                             <h2 role = "button" data-toggle="collapse" href="#id_helio_kids" data-parent="#id_game_section" class="collapsed">KIDS <i class="more-less glyphicon glyphicon-plus"></i></h2>
                         </div>
                         <div class="collapse" id="id_helio_kids">
@@ -187,7 +186,7 @@
 
                     <!-- COFFEE section -->
                     <div class="panel game-section-content row col-md-12">
-                        <div class="visible-xs game-section-title">
+                        <div class="visible-xs visible-sm game-section-title">
                             <h2 role = "button" data-toggle="collapse" href="#id_helio_coffee" data-parent="#id_game_section" class="collapsed">COFFEE <i class="more-less glyphicon glyphicon-plus"></i></h2>
                         </div>
                         <div class="collapse" id="id_helio_coffee">
@@ -196,12 +195,11 @@
                                     <div class="game-type-slide">
                                         <div class="game-type-content">
                                             <p class="title-content game-type">COFFEE</p>
-                                            <p class="short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p> 
+                                            <p class="short_description">{% trans "homepage.text.coffee.description" %}</p> 
                                         </div>
                                         <hr>
-                                        <p class="game-description short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p> 
+                                        <!-- <p class="game-description short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p>  -->
                                     </div>
-                                
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-6 game-section-detail">
