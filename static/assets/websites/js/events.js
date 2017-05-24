@@ -53,7 +53,7 @@ var EventsFunction = (function ($) {
                 if($(e.relatedTarget).attr('class') === 'item events-list-by-month') {
                     var indexFrom = $('.month-carousel>.carousel-inner>.item.active').index();
                     var indexTo = $(e.relatedTarget).index();
-                    $('.event-month').eq(indexFrom).hide()
+                    $('.event-month').eq(indexFrom).hide();
                     $('.event-month').eq(indexTo).show();
 
                     _self.flexCoursel($(e.relatedTarget).find('.flexslider'));

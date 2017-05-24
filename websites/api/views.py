@@ -570,7 +570,6 @@ def faqs(request):
 def card_information(request, card_id):
     print "API get card information"
     try:
-        card_id = request.GET.get("card_id", "")
         if not card_id:
             error = {
                 "code": 400, "message": "Card id field is required.", "fields": "card_id"}

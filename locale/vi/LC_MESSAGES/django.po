@@ -53,7 +53,7 @@ msgid "menu.submenu.night_life"
 msgstr "Chợ Đêm"
 
 msgid "menu.submenu.coffee"
-msgstr "Cà phê & Bánh"
+msgstr "Coffee & Bakery"
 
 msgid "menu.submenu.ortherproduct"
 msgstr "Sản phẩm khác"
@@ -229,6 +229,9 @@ msgstr "Chủ đề cần hỗ trợ"
 
 msgid "contact.lable.title.message"
 msgstr "Nhập nội dung" 
+
+msgid "contact.message_success"
+msgstr "Tin nhắn của bạn đã gửi thành công!"
 # END CONTACT
 
 # START OTHER PRODUCT
@@ -265,5 +268,11 @@ msgid "footer.menu.policy"
 msgstr "CHÍNH SÁCH"
 
 msgid "footer.menu.terms_of_use"
-msgstr "ĐIỀU KHOẢN SỬ DỤNG"   
+msgstr "ĐIỀU KHOẢN SỬ DỤNG"
+
+msgid "footer.text_right"
+msgstr "Một sản phẩm vui chơi đến từ"
+
+msgid "footer.text_company"
+msgstr "Khởi Phát, Ltd."     
 #END FOOTER

@@ -352,6 +352,13 @@ a.btn-custom-style:hover {
 .icon-youtube-play {
     color: #e336b6;
 }
+.footer-text {
+    display: inline;
+}
+.footer-text-color {
+    color: #e336b6;
+    display: inline;
+}
 
 input.input-search {
     background-color: transparent;

@@ -43,6 +43,7 @@
 .home-carousel li.active + li a {
     border-left: 0px;
 }
+
 /*  bhoechie tab */
 div.game-section-menu{
     padding: 0px;
@@ -110,7 +111,7 @@ div.game-section-content{
     background-color: #ffffff; 
 }
 div.game-section {
-    min-height: 362px;
+    /*min-height: 362px;*/
     padding: 0px;
     background-color: #271a3a;
 }
@@ -123,11 +124,12 @@ div.game-section div.game-type-slide:not(.active) {
 div.game-section div.game-right:not(.active) {
     display: none;
 }
-
+.game-right {
+    margin-right: -30px;
+}
 div.game-section-detail {
     padding: 0px;
 }
-
 /*custom*/
 ul.type-group li a {
     position: relative;
@@ -168,8 +170,10 @@ ul.type-group li a span {
 .vidieo-right {
     background: url("../images/vidieo_right.png") no-repeat;
     background-size: 100% 100%;
-    min-height: 450px;
     z-index: 1;
+}
+.vidieo-caption {
+    min-height: 335px;
 }
 .vidieo-left {
     position: absolute;
@@ -211,6 +215,10 @@ ul.type-group li a span {
     width: 33px;
     border-bottom: 5px solid;
     margin-right: 13px;
+    color: #15062b;
+}
+.list-line li.active {
+    color: #fff;
 }
 .btn-entertaiment {
     margin-bottom: 56px;
@@ -257,6 +265,26 @@ ul.type-group li a span {
 .event-all-btn {
     text-align: right;
 }
+
+.panel.game-section-content {
+    background: none;
+    border: none;
+    margin-bottom: 0px;
+}
+.game-section-content.active .collapse {
+    display: block;
+}
+
+
+
+.flexslider.vidieo-slider {
+    margin-bottom: 0px;
+    border: none;
+    background: none;
+}
+.flexslider.vidieo-slider .flex-direction-nav {
+    display: none !important;
+}
 @media (max-width: 991px) {
     .banner-custom {
         margin-top: 20px;
@@ -267,6 +295,9 @@ ul.type-group li a span {
         height: auto;
         min-height: auto;
     }
+    .vidieo-caption {
+        min-height: auto;
+    }
     .vidieo-left {
         position: static;
     }
@@ -275,5 +306,56 @@ ul.type-group li a span {
     }
     .event-all-btn {
         text-align: left;
+    }
+
+    .game-left {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .game-section-content.active .collapse {
+        display: none;
+    }
+    div.game-section div.panel.game-section-content {
+        display: block;
+    }
+    .game-section-content .collapse.in {
+        display: block;
+    }
+    .game-section-content h2 {
+        padding: 18px 40px 18px 15px;
+        position: relative;
+        border-top: 1px solid #ccc;
+        margin: 0px;
+    }
+    /*Hots name display on mobile css*/
+    .caption-custom {
+        position: relative;
+        right: 0%;
+        bottom: 0%;
+        left: 0%;
+        z-index: 10;
+        padding-bottom: 0px;
+        color: #fff;
+        text-align: center;
+        text-shadow: 0 1px 2px rgba(0,0,0,.6);
+    }
+    .caption-custom a {
+        color: #fff;
+        text-decoration: none;
+    }
+    .more-less {
+        float: right;
+        color: #fff;
+        font-size: 20px;
+    }
+    div.game-section-content h2 {
+        background-color: #271a3a;
+    }
+    div.game-section-content h2.collapsed {
+        background-color: #15062b;
+    }
+
+    .game-right {
+        margin-right: 0px;
     }
 }

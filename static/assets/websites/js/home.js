@@ -1,3 +1,10 @@
+function toggleIcon(e) {
+    $(e.target)
+        .prev('.game-section-title')
+        .find(".more-less")
+        .toggleClass('glyphicon glyphicon-plus glyphicon glyphicon-minus');
+}
+
 $(document).ready( function() {
     $(".carousel-inner .item:first").addClass("active");
     $(".home-carousel li:first").addClass("active");
@@ -16,6 +23,23 @@ $(document).ready( function() {
         interval:   4000
     });
 
+
+    $('.vidieo-slider').flexslider({
+        animation: "slide",
+        start: function(slider){
+            $(".vidieo-caption p").hide();
+            $(".vidieo-caption p").eq(slider.currentSlide).show();
+            $(".vidieo-list li").eq(slider.currentSlide).addClass('active');
+        },
+        after: function(slider){
+            $(".vidieo-caption p").hide();
+            $(".vidieo-caption p").eq(slider.currentSlide).show();
+            $(".vidieo-list li.active").removeClass('active');
+            $(".vidieo-list li").eq(slider.currentSlide).addClass('active');
+        }
+    });
+
+
     setInterval(function() {
         var current_active = $(".game-section .game-section-content.active div.game-type-slide.active");
         var div_img_active = $(".game-section .game-section-content.active div.game-right.active");
@@ -32,7 +56,10 @@ $(document).ready( function() {
             div_img_active.next().addClass("active");
             div_btn_active.next().addClass("active");
         }
-    }, 4000);
+    }, 6000);
+
+    $('#id_game_section').on('hidden.bs.collapse', toggleIcon);
+    $('#id_game_section').on('shown.bs.collapse', toggleIcon);
     
     
     var clickEvent = false;
@@ -65,8 +92,10 @@ $(document).ready( function() {
         $("div.game-section>div.game-section-content").removeClass("active");
         $("div.game-section>div.game-section-content").eq(index).addClass("active");
     });
-
+    $("#vidieo_play_modal").on("shown.bs.modal", function () {
+        $('#helio_vidieo').attr('src', $(".vidieo-list li.active div").text()); //$('#helio_vidieo').attr('src')
+    });
     $("#vidieo_play_modal").on("hidden.bs.modal", function () {
-        $('#helio_vidieo').attr('src', $('#helio_vidieo').attr('src'));
+        $('#helio_vidieo').attr('src', ''); //$('#helio_vidieo').attr('src')
     });
 });

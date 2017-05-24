@@ -90,7 +90,7 @@ msgid "homepage.title.section.event"
 msgstr "HELIO CENTER EVENT"
 
 msgid "homepage.title.section.entertaiment"
-msgstr "TRUNG TÂM VUI CHƠI GIẢI TRÍ TẠI ĐÀ NẴNG"
+msgstr "ENTERTAINMENT CENTER AT DA NANG"
 
 msgid "homepage.text.night_life"
 msgstr "NIGHT LIFE"
@@ -229,6 +229,9 @@ msgstr "Subject"
 
 msgid "contact.lable.title.message"
 msgstr "Main message"
+
+msgid "contact.message_success"
+msgstr "Your message was sent successfully!"
 # END CONTACT
 
 # START OTHER PRODUCT
@@ -266,4 +269,10 @@ msgstr "POLICY"
 
 msgid "footer.menu.terms_of_use"
 msgstr "TERM & CONDITION"   
+
+msgid "footer.text_right"
+msgstr "Powered by"
+
+msgid "footer.text_company"
+msgstr "KhoiPhat, Ltd."   
 #END FOOTER

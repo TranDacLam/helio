@@ -80,11 +80,16 @@ def faqs(request):
 def contact(request):
     print "***START CONTACT CONTENT PAGE***"
     try:
+        message_success = {}
         if request.method == 'POST':
             contact_form = ContactForm(request.POST, request=request)
 
             if contact_form.is_valid():
-                contact_form.save()
+                contact_form.save() 
+                message_success = 'Successfully!'
+                print message_success
+                return render(request, 'websites/contact.html', {"message_success": message_success})
+                
 
     except Exception, e:
         print "Error: ", e
