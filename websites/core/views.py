@@ -196,13 +196,13 @@ def events(request):
             for event in events:
                 event.start_datetime = datetime.combine(event.start_date, event.start_time)
                 event.end_datetime = datetime.combine(event.end_date, event.end_time)
-                key = event.start_date.strftime('%m/%Y')
+                key = event.start_date.strftime('%Y_%m')
                 if key not in events_map.keys():
                     events_map[key] = []
                 events_map[key].append(event)
-
+                
         result["events"] = events
-        result["events_map"] = events_map
+        result["events_map"] = sorted(events_map.items())
         result["event_hots"] = events[:3]
 
         return render(request, 'websites/events.html', {"result": result})

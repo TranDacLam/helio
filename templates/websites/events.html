@@ -78,7 +78,7 @@
     {% if result.events_map %}
     <div class="row layer-coursel-btn">
         <div class="col-xs-6">
-            {% for key, values in result.events_map.items %}
+            {% for key, values in result.events_map %}
                 {% if values.0 %}
                 <h4 class="event-month">{{values.0.start_date | date:"M/Y"}}</h4>
                 {% endif %}
@@ -94,7 +94,7 @@
     <div class="row events-list layer-coursel-item">
         <div class="carousel slide month-carousel carousel-fade" id="month_coursel">
             <div class="carousel-inner">
-            {% for key, values in result.events_map.items %}
+            {% for key, values in result.events_map %}
                 <div class="item events-list-by-month">
                     <div class="col-md-12">
                         <section class="slider">
