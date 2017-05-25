@@ -37,6 +37,7 @@ class Post(DateTimeModel):
                                   blank=True)
     key_query = models.CharField(max_length=255, unique=True)
     pin_to_top = models.BooleanField("Pin to Top",default=False)
+    is_draft = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -78,6 +79,7 @@ class Event(DateTimeModel):
     end_date = models.DateField(null=True, blank=True)
     start_time = models.TimeField(null=True, blank=True)
     end_time = models.TimeField(null=True, blank=True)
+    is_draft = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -92,6 +94,7 @@ class Game(DateTimeModel):
         max_length=1000, null=True, blank=True, upload_to="games")
     game_type = models.ForeignKey(
         'Type', related_name='game_type_rel', on_delete=models.CASCADE)
+    is_draft = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -130,52 +133,18 @@ class Category(models.Model):
 
 
 @python_2_unicode_compatible
-class Entertainment(DateTimeModel):
-
-    def limit_category_entertainments():
-        return {'name_en__in': ['Entertainments', 'Kiosk', 'Store']}
-
-    name = models.CharField(max_length=255, unique=True)
-    short_description = models.CharField(max_length=350)
-    content = models.TextField()
-    key_query = models.CharField(
-        max_length=255, unique=True, null=True, blank=True)
-    image1 = models.ImageField(
-        _('Image 1'), max_length=1000, null=True, blank=True, upload_to="entertainments")
-    image2 = models.ImageField(
-        _('Image 2'), max_length=1000, null=True, blank=True, upload_to="entertainments")
-    image3 = models.ImageField(
-        _('Image 3'), max_length=1000, null=True, blank=True, upload_to="entertainments")
-    image4 = models.ImageField(
-        _('Image 4'), max_length=1000, null=True, blank=True, upload_to="entertainments")
-    image5 = models.ImageField(
-        _('Image 5'), max_length=1000, null=True, blank=True, upload_to="entertainments")
-    image6 = models.ImageField(
-        _('Image 6'), max_length=1000, null=True, blank=True, upload_to="entertainments")
-    category = models.ForeignKey('Category', related_name='entertainments_category_rel',
-                                 on_delete=models.CASCADE, limit_choices_to=limit_category_entertainments)
-
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.key_query = "kq_" + self.key_query.replace(" ", "_")
-        super(Entertainment, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return '%s' % (self.name)
-
-
-@python_2_unicode_compatible
 class Promotion(DateTimeModel):
     name = models.CharField(max_length=255, unique=True)
     image = models.ImageField(
         _('Image'), max_length=1000, null=True, blank=True, upload_to="promotions")
     short_description = models.CharField(max_length=350)
     content = models.TextField()
-    promotion_type = models.ForeignKey(
-        'Type', related_name='promotion_type_rel', on_delete=models.CASCADE)
+    promotion_category = models.ForeignKey(
+        'Category', related_name='promotion_category_rel', on_delete=models.CASCADE, null=True, blank=True)
     promotion_label = models.ForeignKey(
         'Promotion_Label', related_name='promotion_label_rel', on_delete=models.CASCADE,
                             null=True, blank=True)
+    is_draft = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -186,8 +155,7 @@ class FAQ(DateTimeModel):
 
     def limit_category_Faq():
         return {'id__in': [const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY, 
-                            const.REDEMPTION_STORE_CATEGORY, const.BIRTHDAY_PARTY_CATEGORY, 
-                            const.SCHOOL_TRIP_CATEGORY, const.COMBO_HELIO_CATEGORY]}
+                            const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY]}
 
     question = models.CharField(max_length=255, unique=True)
     answer = models.TextField()

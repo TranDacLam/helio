@@ -578,7 +578,7 @@ def card_information(request, card_id):
         cursor = connections['sql_db'].cursor()
         query_str = """ SELECT C.Card_Added, C.Card_Status, C.Card_State, C.Cash_Balance, C.Bonus_Balance, C.ETickets,
                     Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, Cust.EMail, Cust.Phone, 
-                    (CASE WHEN CT.Transaction_Id = 506 THEN CT.Transaction_DateTime ELSE Null END) AS Upgraded_Date, 
+                    (CASE WHEN CT.Transaction_Type = 506 THEN CT.Transaction_DateTime ELSE Null END) AS Upgraded_Date, 
                     Cust.Customer_Id  FROM Cards C
                  LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id
                  LEFT JOIN Card_Transactions CT ON C.Card_Barcode = CT.Card_Barcode WHERE C.Card_Barcode = {0}"""
@@ -683,9 +683,9 @@ def  reissue_history(request):
         cursor = connections['sql_db'].cursor()
 
         query_str = """WITH REISSUE_HISTORY AS (SELECT CT.Transaction_DateTime, CT.Card_Barcode, CT.Transfer_Card_Barcode,
-                                 (CASE WHEN CT.Transaction_Id = 501 THEN 'Reissue' ELSE 'Upgraded' END) AS transaction_type
-                                 FROM Card_Transactions CT
-                                 WHERE CT.Transaction_Id IN (501, 506) AND CT.Card_Barcode = {0})
+                                 (CASE WHEN CT.Transaction_Type = 506 THEN 'Upgraded' ELSE 'Reissue' END) AS Transaction_Type_Txt, 
+                                 CT.Transaction_Type FROM Card_Transactions CT
+                                 WHERE CT.Transaction_Type IN (500, 501, 506) AND CT.Card_Barcode = {0})
 
                         SELECT TOP 50 * FROM REISSUE_HISTORY ORDER BY Transaction_DateTime DESC"""
 
