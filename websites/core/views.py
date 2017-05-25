@@ -62,16 +62,14 @@ def power_card(request):
 def faqs(request):
     print "***START FAQs PAGE***"
     try:
-        faqs_categorys = Category.objects.filter(pk__in=(const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY, const.REDEMPTION_STORE_CATEGORY))
+        faqs_categorys = Category.objects.filter(pk__in=(const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY, const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY))
 
         datas = {}
         if faqs_categorys:
             for faqs_category in faqs_categorys:
                 datas[faqs_category] = faqs_category.faq_category_rel.all().order_by('-created')
-
-        other_prods_faqs = FAQ.objects.filter(category_id__in=(const.BIRTHDAY_PARTY_CATEGORY, const.SCHOOL_TRIP_CATEGORY, const.COMBO_HELIO_CATEGORY)).order_by('-created')
-        
-        return render(request, 'websites/faqs.html', {"datas":datas, "other_prods_faqs": other_prods_faqs})
+ 
+        return render(request, 'websites/faqs.html', {"datas":datas})
     except Exception, e:
         print "Error: ", e
 
@@ -100,7 +98,7 @@ def contact(request):
 def helio_kids(request):
     print "***START HELIO KIDS PAGE***"
     try:
-        datas = {}
+        games = {}
         #Get page info
         page_info = Category.objects.get(pk=const.HELIO_KIDS_CATEGORY)
         #Get kids pricing
@@ -112,12 +110,11 @@ def helio_kids(request):
             promotions = {}
             if kids_types:
                 for item in kids_types:
-                    data = {}
-                    data["games"] = item.game_type_rel.all().order_by('-created')
-                    data["promotions"] = item.promotion_type_rel.all().order_by('-created')
-                    datas[item] = data
+                    games[item] = item.game_type_rel.all().order_by('-created')
 
-        return render(request, 'websites/helio_kids.html', {"page_info": page_info, "kids_pricing": kids_pricing, "datas": datas})
+        promotions = Promotion.objects.filter(promotion_category_id=const.HELIO_KIDS_CATEGORY).order_by('-created')
+
+        return render(request, 'websites/helio_kids.html', {"page_info": page_info, "kids_pricing": kids_pricing, "map_games": games, "promotions": promotions})
     except Exception, e:
         print "Error: ", e
     return render(request, 'websites/helio_kids.html')
@@ -135,22 +132,20 @@ def night_life(request):
 def helio_play(request):
     print "***START HELIO PLAY PAGE***"
     try:
-        datas = {}
+        games = {}
         #Get page info
         page_info = Category.objects.get(pk=const.HELIO_PLAY_CATEGORY)
 
         # Game type
         if page_info:
             play_types = page_info.game_category_rel.all()
-            promotions = {}
             if play_types:
                 for item in play_types:
-                    data = {}
-                    data["games"] = item.game_type_rel.all().order_by('-created')
-                    data["promotions"] = item.promotion_type_rel.all().order_by('-created')
-                    datas[item] = data
+                    games[item] = item.game_type_rel.all().order_by('-created')
 
-        return render(request, 'websites/helio_play.html', {"page_info": page_info, "datas": datas})
+        promotions = Promotion.objects.filter(promotion_category_id=const.HELIO_PLAY_CATEGORY).order_by('-created')
+
+        return render(request, 'websites/helio_play.html', {"page_info": page_info, "map_games": games, "promotions": promotions})
 
     except Exception, e:
         print "Error: ", e
@@ -196,13 +191,13 @@ def events(request):
             for event in events:
                 event.start_datetime = datetime.combine(event.start_date, event.start_time)
                 event.end_datetime = datetime.combine(event.end_date, event.end_time)
-                key = event.start_date.strftime('%m/%Y')
+                key = event.start_date.strftime('%Y_%m')
                 if key not in events_map.keys():
                     events_map[key] = []
                 events_map[key].append(event)
-
+                
         result["events"] = events
-        result["events_map"] = events_map
+        result["events_map"] = sorted(events_map.items())
         result["event_hots"] = events[:3]
 
         return render(request, 'websites/events.html', {"result": result})
@@ -334,8 +329,8 @@ def promotions(request):
         datas = {}
         if promotions:
             for promotion in promotions:
-                if promotion.promotion_type:
-                    key = promotion.promotion_type.category
+                if promotion.promotion_category:
+                    key = promotion.promotion_category
                     if key not in datas.keys():
                         datas[key] = []
                     datas[key].append(promotion)
@@ -404,25 +399,17 @@ def career_detail(request, career_id):
 def other_product(request):
     print "***START other product PAGE***"
     try:
-        products = Post.objects.filter(post_type_id=const.ORTHER_PROD_POST_TYPE_ID).order_by('-created')
+        result = Post.objects.filter(post_type_id=const.ORTHER_PROD_POST_TYPE_ID).order_by('-created')
         
         # print "products ", products
-        datas = {}
-        for product in products:
+        products = []
+        for product in result:
             if product:
-                products_faqs = {}
                 #get list post images
                 product.post_images = product.posts_image.all()[:6]
-                products_faqs["product"] = product
+                products.append(product)
 
-                #get list post images by name
-                faqs_category =  Category.objects.filter(name_en = product.name_en) 
-                if faqs_category and faqs_category[0]:
-                    faq_category = faqs_category[0]
-                    products_faqs["faqs"] = faq_category.faq_category_rel.all().order_by('-created')
-                datas[product.id] = products_faqs
-
-        return render(request, 'websites/other_product.html', {"datas":datas})
+        return render(request, 'websites/other_product.html', {"products":products})
     except Exception, e:
         print "Error: ", e
     return render(request, 'websites/other_product.html')

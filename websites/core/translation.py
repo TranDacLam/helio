@@ -44,12 +44,6 @@ class GameTranslationOptions(TranslationOptions):
 translator.register(Game, GameTranslationOptions)
 
 
-# Entertainments
-class EntertainmentsAdminTranslationOptions(TranslationOptions):
-    fields = ('name', 'short_description', 'content', )
-
-translator.register(Entertainment, EntertainmentsAdminTranslationOptions)
-
 # FAQs
 
 

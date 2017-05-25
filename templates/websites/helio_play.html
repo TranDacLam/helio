@@ -38,12 +38,11 @@
     {% endif %}
 
 
-    {% if datas %}
-
+    {% if map_games %}
     <!-- BUTTON GROUP -->
     <div class="play-btn-section">
         <ul class="nav play-btn-group">
-            {% for type in datas %}
+            {% for type in map_games %}
             <li class="col-md-4 {% if forloop.counter0 == 0 %} active {% endif %}">
                 <a href="#play_{{type.id}}" role="tab" data-toggle="tab" class="btn-custom-style {{ type.sub_url | cut:'/helio-play/#' }}">{{type.name}}</a>
             </li>
@@ -52,15 +51,14 @@
     </div>
 
     <div class="tab-content">
-        {% for type, datas in datas.items %}
+        {% for type, games in map_games.items %}
         <div role="tabpanel" class="tab-pane view-more-content {{ type.sub_url|cut:'/helio-play/#' }} {% if forloop.counter0 == 0 %} active {% endif %}" id="play_{{type.id}}">
             <!-- Games slider -->
             <div class="carousel" >
             </div>
-            {% if datas.games %}
             <div class="carousel-tmp hidden">
                 <div class="slides"> <!-- BEGIN CAROUSEL -->
-                    {% for game in datas.games %}
+                    {% for game in games %}
                     <div class="slideItem"> <!-- SLIDE ITEM -->
                         <img class="cursor-custom" src="{{ MEDIA_URL }}{{game.image}}">
                         <div class="short-description cursor-custom">
@@ -71,71 +69,73 @@
                     {% endfor %}
                 </div>
             </div>
-            {% endif %}
-            <!-- line -->
-            <hr>
-            <div class="row">
-                <!--  PLAY GAME CONTENT -->
-                <div class="kids-game-content col-md-12">
-                    {% for promotion in datas.promotions %}
-                    {% if forloop.counter|divisibleby:2 %} 
-                    <div class="item-line content-pull-left col-md-12" style="display: none;">
-                        <div class="row">
-                            <div class="item-content-text col-md-5 pull-right">
-                                <div class="col-md-9 image-text pull-right">
-                                    {% if promotion.promotion_label %}
-                                    <label class="image-text-head">
-                                        <label>
-                                            {{promotion.promotion_label}}
-                                            <span class="glyphicon glyphicon-play"></span>
-                                        </label>
-                                    </label>
-                                    {% endif %}
-                                    <p class="item-name">{{promotion.name}}</p>
-                                    <p class="item-description short_description">{{promotion.short_description}}</p>
-                                    <a class="btn btn-custom-style btn-custom-style-play" href="/promotions/{{promotion.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
-                                </div>
-                            </div>
-                            <div class="item-content-image col-md-9">
-                                <div class="row"><img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%" height="100%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    {% else %}
-                    <div class="item-line content-pull-right col-md-12" style="display: none;">
-                        <div class="row">
-                            <div class="item-content-text col-md-5">
-                                <div class="col-md-9 image-text">
-                                    {% if promotion.promotion_label %}
-                                    <label class="image-text-head">
-                                        <label>
-                                            {{promotion.promotion_label}}
-                                            <span class="glyphicon glyphicon-play"></span>
-                                        </label>
-                                    </label>
-                                    {% endif %}
-                                    <p class="item-name">{{promotion.name}}</p>
-                                    <p class="item-description short_description">{{promotion.short_description}}</p>
-                                    <a class="btn btn-custom-style btn-custom-style-play" href="/promotions/{{promotion.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
-                                </div>
-                            </div>
-                            <div class="item-content-image col-md-9 ">
-                                <div class="row">
-                                    <img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%" height="100%">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-                <div class="btn-read-more div-view-more col-md-12" align="center">
-                    <a class="btn-view-more btn-custom-style btn-custom-style-play" role="button">{% trans "btn.view_more" %} <span class="glyphicon glyphicon-chevron-down glyphicon-custom"></a>
-                </div>
-            </div>
-            
         </div>
         {% endfor %}
+    </div>
+    {% endif %}
+
+    
+    <!-- line -->
+    <hr>
+    {% if promotions %}
+    <div class="row" id="promotion_content">
+        <!--  PLAY GAME CONTENT -->
+        <div class="kids-game-content col-md-12">
+            {% for promotion in promotions %}
+            {% if forloop.counter|divisibleby:2 %} 
+            <div class="item-line content-pull-left col-md-12" style="display: none;">
+                <div class="row">
+                    <div class="item-content-text col-md-5 col-xs-12 pull-right">
+                        <div class="col-md-9 image-text pull-right">
+                            {% if promotion.promotion_label %}
+                            <label class="image-text-head">
+                                <label>
+                                    {{promotion.promotion_label}}
+                                    <span class="glyphicon glyphicon-play"></span>
+                                </label>
+                            </label>
+                            {% endif %}
+                            <p class="item-name">{{promotion.name}}</p>
+                            <p class="item-description short_description">{{promotion.short_description}}</p>
+                            <a class="btn btn-custom-style btn-custom-style-play" href="/promotions/{{promotion.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                        </div>
+                    </div>
+                    <div class="item-content-image col-md-9 col-xs-12">
+                        <div class="row"><img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%" height="100%"></div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="item-line content-pull-right col-md-12" style="display: none;">
+                <div class="row">
+                    <div class="item-content-text col-md-5 col-xs-12">
+                        <div class="col-md-9 image-text">
+                            {% if promotion.promotion_label %}
+                            <label class="image-text-head">
+                                <label>
+                                    {{promotion.promotion_label}}
+                                    <span class="glyphicon glyphicon-play"></span>
+                                </label>
+                            </label>
+                            {% endif %}
+                            <p class="item-name">{{promotion.name}}</p>
+                            <p class="item-description short_description">{{promotion.short_description}}</p>
+                            <a class="btn btn-custom-style btn-custom-style-play" href="/promotions/{{promotion.id}}/detail/" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                        </div>
+                    </div>
+                    <div class="item-content-image col-md-9 col-xs-12">
+                        <div class="row">
+                            <img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%" height="100%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="btn-read-more div-view-more col-md-12" align="center">
+            <a class="btn-view-more btn-custom-style btn-custom-style-play" role="button">{% trans "btn.view_more" %} <span class="glyphicon glyphicon-chevron-down glyphicon-custom"></a>
+        </div>
     </div>
     {% endif %}
     
