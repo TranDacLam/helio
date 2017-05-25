@@ -110,9 +110,9 @@ def helio_kids(request):
             promotions = {}
             if kids_types:
                 for item in kids_types:
-                    games[item] = item.game_type_rel.all().order_by('-created')
+                    games[item] = item.game_type_rel.filter(is_draft=False).order_by('-created')
 
-        promotions = Promotion.objects.filter(promotion_category_id=const.HELIO_KIDS_CATEGORY).order_by('-created')
+        promotions = Promotion.objects.filter(is_draft=False, promotion_category_id=const.HELIO_KIDS_CATEGORY).order_by('-created')
 
         return render(request, 'websites/helio_kids.html', {"page_info": page_info, "kids_pricing": kids_pricing, "map_games": games, "promotions": promotions})
     except Exception, e:
@@ -141,9 +141,9 @@ def helio_play(request):
             play_types = page_info.game_category_rel.all()
             if play_types:
                 for item in play_types:
-                    games[item] = item.game_type_rel.all().order_by('-created')
+                    games[item] = item.game_type_rel.filter(is_draft=False).order_by('-created')
 
-        promotions = Promotion.objects.filter(promotion_category_id=const.HELIO_PLAY_CATEGORY).order_by('-created')
+        promotions = Promotion.objects.filter(is_draft=False, promotion_category_id=const.HELIO_PLAY_CATEGORY).order_by('-created')
 
         return render(request, 'websites/helio_play.html', {"page_info": page_info, "map_games": games, "promotions": promotions})
 
@@ -159,7 +159,7 @@ def helio_introduction(request):
         about_type = Post_Type.objects.get(pk=const.HELIO_ABOUT_POST_TYPE_ID)
 
         # Helio About list
-        abouts = Post.objects.filter(post_type = about_type)
+        abouts = Post.objects.filter(is_draft=False, post_type = about_type)
         
         return render(request, 'websites/helio_introduction.html', {"about_type": about_type, "abouts": abouts})
 
@@ -185,7 +185,7 @@ def events(request):
     print "***START EVENTS PAGE***"
     try:
         result = {}
-        events = Event.objects.all().order_by('-start_date')
+        events = Event.objects.filter(is_draft=False).order_by('-start_date')
         events_map = {}
         if events:
             for event in events:
@@ -231,7 +231,7 @@ def experience(request):
         result["experience_type"] = experience_type
 
         # Experience list
-        experiences = Post.objects.filter(post_type = experience_type).order_by('-created')
+        experiences = Post.objects.filter(is_draft=False, post_type = experience_type).order_by('-created')
         result["experiences"] = experiences
 
         result["experiences_hots"] = experiences[:5]
@@ -264,7 +264,7 @@ def news(request):
         news_type = Post_Type.objects.get(pk=const.NEWS_POST_TYPE_ID)
         
         # News list
-        news = Post.objects.filter(post_type = news_type).order_by('-created')
+        news = Post.objects.filter(is_draft=False, post_type = news_type).order_by('-created')
 
         return render(request, 'websites/news.html', {"news_type": news_type, "news": news, "news_hots": news[:5]})
     except Exception, e:
@@ -325,7 +325,7 @@ def promotions(request):
     print "***START EVENT CONTENT PAGE***"
     try:
         result = {}
-        promotions = Promotion.objects.all().order_by('-created')
+        promotions = Promotion.objects.filter(is_draft=False).order_by('-created')
         datas = {}
         if promotions:
             for promotion in promotions:
@@ -371,11 +371,11 @@ def careers(request):
         result["careers_type"] = careers_type
 
         # Careers pin to top
-        careers_pin_top = Post.objects.filter(pin_to_top=True).first()
+        careers_pin_top = Post.objects.filter(is_draft=False, pin_to_top=True).first()
         result["careers_pin_top"] = careers_pin_top
 
         # Careers list
-        careers = Post.objects.filter(post_type = careers_type).order_by('-created')
+        careers = Post.objects.filter(is_draft=False, post_type = careers_type).order_by('-created')
         result["careers"] = careers
 
         return render(request, 'websites/careers.html', {"result": result})
@@ -389,7 +389,7 @@ def career_detail(request, career_id):
         print "***START CARRER DETAIl PAGE***"
         career = Post.objects.get(pk=career_id)
 
-        other_careers = Post.objects.filter(post_type_id=const.CAREERS_POST_TYPE_ID).order_by('-created')[:3]
+        other_careers = Post.objects.filter(is_draft=False, post_type_id=const.CAREERS_POST_TYPE_ID).order_by('-created')[:3]
 
         return render(request, 'websites/carrer_detail.html', {"career": career, "other_careers": other_careers})
     except Exception, e:
