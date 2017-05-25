@@ -7,7 +7,7 @@ logs/*
 !public/
 public/*
 
-!public/media/
-public/media/*
+!public/media/*
+
 
 
