@@ -1,7 +1,6 @@
 var EventsFunction = (function ($) {
     var helio_events = function () {
         var _self = this;
-        var show_num = {};
         var show_num = 4,
             view_more = 4;
         this.initElementPage = function() {
