@@ -578,7 +578,7 @@ def card_information(request, card_id):
         cursor = connections['sql_db'].cursor()
         query_str = """ SELECT C.Card_Added, C.Card_Status, C.Card_State, C.Cash_Balance, C.Bonus_Balance, C.ETickets,
                     Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, Cust.EMail, Cust.Phone, 
-                    (CASE WHEN CT.Transaction_Id = 506 THEN CT.Transaction_DateTime ELSE Null END) AS Upgraded_Date, 
+                    (CASE WHEN CT.Transaction_Type = 506 THEN CT.Transaction_DateTime ELSE Null END) AS Upgraded_Date, 
                     Cust.Customer_Id  FROM Cards C
                  LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id
                  LEFT JOIN Card_Transactions CT ON C.Card_Barcode = CT.Card_Barcode WHERE C.Card_Barcode = {0}"""
