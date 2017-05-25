@@ -205,15 +205,6 @@ class GameAdmin(TranslationAdmin):
     pass
 admin.site.register(Game, GameAdmin)
 
-# Entertainments
-
-
-class EntertainmentAdmin(TranslationAdmin):
-    formfield_overrides = {
-        models.TextField: {'widget': CKEditorUploadingWidget()},
-    }
-    pass
-admin.site.register(Entertainment, EntertainmentAdmin)
 
 # FAQs
 
