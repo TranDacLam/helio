@@ -683,9 +683,9 @@ def  reissue_history(request):
         cursor = connections['sql_db'].cursor()
 
         query_str = """WITH REISSUE_HISTORY AS (SELECT CT.Transaction_DateTime, CT.Card_Barcode, CT.Transfer_Card_Barcode,
-                                 (CASE WHEN CT.Transaction_Id = 501 THEN 'Reissue' ELSE 'Upgraded' END) AS transaction_type
-                                 FROM Card_Transactions CT
-                                 WHERE CT.Transaction_Id IN (501, 506) AND CT.Card_Barcode = {0})
+                                 (CASE WHEN CT.Transaction_Type = 506 THEN 'Upgraded' ELSE 'Reissue' END) AS Transaction_Type_Txt, 
+                                 CT.Transaction_Type FROM Card_Transactions CT
+                                 WHERE CT.Transaction_Type IN (500, 501, 506) AND CT.Card_Barcode = {0})
 
                         SELECT TOP 50 * FROM REISSUE_HISTORY ORDER BY Transaction_DateTime DESC"""
 
