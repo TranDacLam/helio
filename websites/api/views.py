@@ -497,7 +497,7 @@ def promotions(request):
                       error, "fields": "type_id"}
             return Response(errors, status=400)
 
-        lst_item = Promotion.objects.filter(promotion_type_id=type_id)
+        lst_item = Promotion.objects.filter(promotion_category_id=type_id)
         serializer = PromotionsSerializer(lst_item, many=True)
         return Response(serializer.data)
     except Exception, e:
@@ -576,12 +576,20 @@ def card_information(request, card_id):
             return Response(error, status=400)
 
         cursor = connections['sql_db'].cursor()
-        query_str = """ SELECT C.Card_Added, C.Card_Status, C.Card_State, C.Cash_Balance, C.Bonus_Balance, C.ETickets,
-                    Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, Cust.EMail, Cust.Phone, 
-                    (CASE WHEN CT.Transaction_Type = 506 THEN CT.Transaction_DateTime ELSE Null END) AS Upgraded_Date, 
-                    Cust.Customer_Id  FROM Cards C
+
+        query_str = """ WITH UPGRADE_INFO AS (SELECT Customer_Id, Transaction_DateTime FROM (SELECT DISTINCT ROW_NUMBER() OVER(partition by C.Customer_Id Order by Transaction_DateTime DESC) AS RN_C, 
+                                     C.Customer_Id, CT.Transaction_DateTime FROM Cards C 
+                                     INNER JOIN Card_Transactions CT ON CT.Card_Barcode = C.Card_Barcode 
+                                     WHERE Transaction_Type = 506 AND C.Customer_Id IS NOT NULL) AS TEMP WHERE RN_C = 1)
+
+                SELECT C.Card_Added, C.Card_Status, C.Card_State, C.Cash_Balance, C.Bonus_Balance, C.ETickets,
+                     Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, Cust.EMail, Cust.Phone, 
+                     UI.Transaction_DateTime, C.ReIssued_To_Card, Cust.Customer_Id  FROM Cards C
                  LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id
-                 LEFT JOIN Card_Transactions CT ON C.Card_Barcode = CT.Card_Barcode WHERE C.Card_Barcode = {0}"""
+                 LEFT JOIN UPGRADE_INFO UI ON Cust.Customer_Id = UI.Customer_Id WHERE C.Card_Barcode = {0}"""
+
+
+        print query_str.format(card_id)
 
         cursor.execute(query_str.format(card_id)) 
         result = utils.card_information_mapper(cursor.fetchone())
