@@ -318,7 +318,7 @@ def games(request):
                       error, "fields": "type_id"}
             return Response(errors, status=400)
 
-        game_list = Game.objects.filter(game_type_id=game_type_id)
+        game_list = Game.objects.filter(is_draft=False, game_type_id=game_type_id)
         serializer = GameSerializer(game_list, many=True)
         return Response(serializer.data)
     except Exception, e:
@@ -383,7 +383,7 @@ def entertainment_detail(request, id_or_key_query):
 @api_view(['GET'])
 def events(request):
     try:
-        event_list = event_list = Event.objects.all()
+        event_list = event_list = Event.objects.filter(is_draft=False)
         serializer = EventsSerializer(event_list, many=True)
         return Response(serializer.data)
     except Exception, e:
@@ -398,7 +398,7 @@ def events(request):
 @api_view(['GET'])
 def events_latest(request):
     try:
-        event_list = Event.objects.all().order_by('-created')[:2]
+        event_list = Event.objects.filter(is_draft=False).order_by('-created')[:2]
         serializer = EventsSerializer(event_list, many=True)
         return Response(serializer.data)
     except Exception, e:
@@ -446,7 +446,7 @@ def posts(request):
                       error, "fields": "type_id"}
             return Response(errors, status=400)
 
-        post_list = Post.objects.filter(post_type_id=type_id)
+        post_list = Post.objects.filter(is_draft=False, post_type_id=type_id)
         print "description type ", post_list[0].post_type.description
         serializer = PostsSerializer(post_list, many=True)
         return Response(serializer.data)
@@ -497,7 +497,7 @@ def promotions(request):
                       error, "fields": "type_id"}
             return Response(errors, status=400)
 
-        lst_item = Promotion.objects.filter(promotion_category_id=type_id)
+        lst_item = Promotion.objects.filter(is_draft=False, promotion_category_id=type_id)
         serializer = PromotionsSerializer(lst_item, many=True)
         return Response(serializer.data)
     except Exception, e:
