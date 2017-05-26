@@ -497,7 +497,7 @@ def promotions(request):
                       error, "fields": "type_id"}
             return Response(errors, status=400)
 
-        lst_item = Promotion.objects.filter(promotion_type_id=type_id)
+        lst_item = Promotion.objects.filter(promotion_category_id=type_id)
         serializer = PromotionsSerializer(lst_item, many=True)
         return Response(serializer.data)
     except Exception, e:
