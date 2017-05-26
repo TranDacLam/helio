@@ -37,8 +37,7 @@ def home(request):
         return render(request, 'websites/home.html', {"result":result})
     except Exception, e:
         print "Error: ", e
-
-    return render(request, 'websites/home.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 def power_card(request):
     print "***START Power Card Introduction PAGE***"
@@ -57,7 +56,7 @@ def power_card(request):
         return render(request, 'websites/power_card.html', {"result":result})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/power_card.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 def faqs(request):
     print "***START FAQs PAGE***"
@@ -72,8 +71,8 @@ def faqs(request):
         return render(request, 'websites/faqs.html', {"datas":datas})
     except Exception, e:
         print "Error: ", e
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
-    return render(request, 'websites/faqs.html')
         
 def contact(request):
     print "***START CONTACT CONTENT PAGE***"
@@ -88,11 +87,11 @@ def contact(request):
                 print message_success
                 return render(request, 'websites/contact.html', {"message_success": message_success})
                 
+        return render(request, 'websites/contact.html')
 
     except Exception, e:
         print "Error: ", e
-
-    return render(request, 'websites/contact.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 
 def helio_kids(request):
@@ -117,7 +116,7 @@ def helio_kids(request):
         return render(request, 'websites/helio_kids.html', {"page_info": page_info, "kids_pricing": kids_pricing, "map_games": games, "promotions": promotions})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/helio_kids.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
     
 
 def night_life(request):
@@ -127,7 +126,7 @@ def night_life(request):
         return render(request, 'websites/night_life.html', {"night_life": night_life})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/night_life.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 def helio_play(request):
     print "***START HELIO PLAY PAGE***"
@@ -149,7 +148,7 @@ def helio_play(request):
 
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/helio_play.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 
 def helio_introduction(request):
@@ -165,7 +164,8 @@ def helio_introduction(request):
 
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/helio_introduction.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
+
 
 def term_condition(request):
     print "***START TERM & CONDITION PAGE***"
@@ -179,31 +179,44 @@ def term_condition(request):
         return render(request, 'websites/term_condition.html', {"term_type": term_type, "terms": terms})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/term_condition.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
+
 
 def events(request):
     print "***START EVENTS PAGE***"
     try:
+        current_time =  datetime.now()
+
         result = {}
         events = Event.objects.filter(is_draft=False).order_by('-start_date')
         events_map = {}
+
+        event_list = []
         if events:
             for event in events:
                 event.start_datetime = datetime.combine(event.start_date, event.start_time)
                 event.end_datetime = datetime.combine(event.end_date, event.end_time)
+
+                # if current event then show on top
+                if event.start_datetime < current_time and current_time < event.end_datetime:
+                    event_list.insert(0, event)
+                else:
+                    event_list.append(event)
+
                 key = event.start_date.strftime('%Y_%m')
                 if key not in events_map.keys():
                     events_map[key] = []
                 events_map[key].append(event)
-                
-        result["events"] = events
+
+        result["events"] = event_list
         result["events_map"] = sorted(events_map.items())
-        result["event_hots"] = events[:3]
+        result["event_hots"] = event_list[:3]
 
         return render(request, 'websites/events.html', {"result": result})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/events.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
+
 
 def event_detail(request, event_id):
     try:
@@ -219,7 +232,7 @@ def event_detail(request, event_id):
 
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/event_detail.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 
 def experience(request):
@@ -240,7 +253,7 @@ def experience(request):
         return render(request, 'websites/experience.html', {"result": result})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/experience.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 def experience_detail(request, experience_id):
     try:
@@ -253,7 +266,7 @@ def experience_detail(request, experience_id):
 
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/experience_detail.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 
 def news(request):
@@ -269,7 +282,7 @@ def news(request):
         return render(request, 'websites/news.html', {"news_type": news_type, "news": news, "news_hots": news[:5]})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/news.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 
 def new_detail(request, new_id):
@@ -282,7 +295,7 @@ def new_detail(request, new_id):
         return render(request, 'websites/new_detail.html', {"new": new, "other_news": other_news})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/new_detail.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 
 def coffee_bakery(request):
@@ -297,7 +310,8 @@ def coffee_bakery(request):
         return render(request, 'websites/coffee_bakery.html', {"page_info":coffee_page, "list_images": list_images})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/coffee_bakery.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
+
 
 def redemption_store(request):
     print "***START HELIO COFFEE CONTENT PAGE***"
@@ -319,7 +333,8 @@ def redemption_store(request):
         return render(request, 'websites/redemption_store.html', {"result":result})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/redemption_store.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
+
 
 def promotions(request):
     print "***START EVENT CONTENT PAGE***"
@@ -348,7 +363,7 @@ def promotions(request):
         return render(request, 'websites/promotions.html', {"promotions_hots": promotions_hots, "datas": datas})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/promotions.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 def promotion_detail(request, promotion_id):
     print "***START PROMOTION DETAIl PAGE***"
@@ -360,7 +375,7 @@ def promotion_detail(request, promotion_id):
         return render(request, 'websites/promotion_detail.html', {"promotion": promotion, "other_promotions": other_promotions})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/promotion_detail.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 def careers(request):
     print "***START CARRER CONTENT PAGE***"
@@ -381,7 +396,7 @@ def careers(request):
         return render(request, 'websites/careers.html', {"result": result})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/careers.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 
 def career_detail(request, career_id):
@@ -394,7 +409,7 @@ def career_detail(request, career_id):
         return render(request, 'websites/carrer_detail.html', {"career": career, "other_careers": other_careers})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/carrer_detail.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 def other_product(request):
     print "***START other product PAGE***"
@@ -412,7 +427,7 @@ def other_product(request):
         return render(request, 'websites/other_product.html', {"products":products})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/other_product.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 def policy(request):
     print "***START POLICY PAGE***"
@@ -423,7 +438,7 @@ def policy(request):
         return render(request, 'websites/policy.html', {"policy":policy})
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/policy.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 def helio_photos(request):
     print "***START HELIO PHOTOS PAGE***"
@@ -440,7 +455,7 @@ def helio_photos(request):
         return render(request, 'websites/helio_photos.html', {"photos_type": photos_type, "photos": photos});
     except Exception, e:
         print "Error: ", e
-    return render(request, 'websites/helio_photos.html')
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
 
 def list_photos_by_album(request):
@@ -455,6 +470,7 @@ def list_photos_by_album(request):
                     list_images = list(album.posts_image.all().values('image'))
     except Exception, e:
         print "Error: ", e
+        raise Exception("ERROR : Internal Server Error .Please contact administrator.")
 
     return HttpResponse(
         json.dumps(list_images),
