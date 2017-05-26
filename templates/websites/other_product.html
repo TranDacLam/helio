@@ -46,7 +46,7 @@
 
 	<div class="tab-content">
 		{% for product in products %}
-		<div role="tabpanel" class="tab-pane view-more-content {% if forloop.counter0 == 0 %} active {% endif %}" id="id_{{key}}">
+		<div role="tabpanel" class="tab-pane view-more-content {% if forloop.counter0 == 0 %} active {% endif %}" id="id_{{product.id}}">
 			<!-- CONTENT -->
 			<div class="wrap">
 				{% for item in product.post_images %}
