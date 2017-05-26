@@ -138,7 +138,7 @@ class PromotionsSerializer(serializers.Serializer):
     short_description = serializers.CharField(max_length=350)
     content = serializers.CharField()
     image = serializers.ImageField(max_length=1000)
-    promotion_type = TypeSerializer(many=False)
+    promotion_category = CategorySerializer(many=False)
 
 
 class TransactionTypeSerializer(serializers.Serializer):
