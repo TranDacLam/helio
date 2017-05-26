@@ -129,8 +129,8 @@ def reissue_history_mapper(list_items):
         for item in list_items:
             reissue = {}
             reissue["date"] = item[0] # Transaction_DateTime
-            reissue["old_id"] = item[2] if item[4] == 501 else item[1] # Card_Barcode
-            reissue["new_id"] = item[1] if item[4] == 501 else item[2] # Transfer_Card_Barcode
+            reissue["old_id"] = item[2] if item[4] == 500 else item[1] # Card_Barcode
+            reissue["new_id"] = item[1] if item[4] == 500 else item[2] # Transfer_Card_Barcode
             reissue["type"] = item[3] # Card_Barcode
             list_reissues.append(reissue)
 
