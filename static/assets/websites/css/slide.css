@@ -20,8 +20,6 @@ Version: 1.0
 {
 	position :relative ;
 	margin :30px auto;
-	
-	height :650px;
 	border :none;
 	overflow : visible ;
 }
