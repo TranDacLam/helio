@@ -8,6 +8,7 @@ from django.conf import settings
 from django.template import Context
 from django.template.loader import get_template
 from django.contrib.sites.models import Site
+import helper
 
 
 LINK_RE = re.compile(r"https?://([^ \n]+\n)+[^ \n]+", re.MULTILINE)
@@ -80,9 +81,8 @@ def card_information_mapper(item):
     card_information = {}
     if item:
         card_information["active_date"] = item[0] # Card_Added
-        print item[1]
         card_information["membership"] = 'Member Card' if item[1] == 1 else ('Gold Card' if item[1] == 6 else 'Normal Card') # Card_Status
-        card_information["card_status"] = 'Active' if item[2] == 0 else ('Suspended' if item[2] == 2 else 'Reissued') # Card_State
+        card_information["card_status"] = helper.get_card_status(item[2], item[14]) # Card_State
         card_information["play_value"] = item[3] # Cash_Balance
         card_information["bonus_value"] = item[4] # Bonus_Balance
         card_information["ticket"] = item[5] # ETickets
