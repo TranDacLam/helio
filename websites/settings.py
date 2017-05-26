@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'core',
     'api',
     'ckeditor',
-    'ckeditor_uploader'
+    'ckeditor_uploader',
+    'multiupload'
     
 ]
 
@@ -88,6 +89,10 @@ TEMPLATES = [
                 'main.middleware.get_advertisement',
                 
             ],
+            'libraries':{
+                'raw': 'multiupload.templatetags.raw',
+
+            }
         },
     },
 ]
@@ -179,6 +184,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES':(
+        'rest_framework.parsers.JSONParser',
+    ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
@@ -187,6 +198,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
+    'UNICODE_JSON': True,
     'EXCEPTION_HANDLER': 'api.views.custom_exception_handler'
 }
 JWT_AUTH = {
@@ -213,7 +225,7 @@ LANGUAGES = (
 
 # MODELTRANSLATION_DEFAULT_LANGUAGE = 'vi'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Ho_Chi_Minh'
 
 USE_I18N = True
 

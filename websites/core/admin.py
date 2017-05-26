@@ -8,6 +8,7 @@ from django import forms
 import custom_models
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from multiupload.admin import MultiUploadAdmin
 # from django.contrib.admin import SimpleListFilter
 
 
@@ -106,10 +107,28 @@ admin.site.register(Type, TypeAdmin)
 
 # Register Posts Type Model to Admin Site
 
+class PostTypeAdmin(TranslationAdmin):
+    pass
+admin.site.register(Post_Type, PostTypeAdmin)
+
 
 class PostImageInline(admin.TabularInline):
     model = Post_Image
     extra = 3
+
+class PostMultiuploadMixing(object):
+
+    def process_uploaded_file(self, uploaded, post, request):
+        if post:
+            image_obj = post.posts_image.create(image=uploaded)
+        else:
+            image_obj = Post_Image.objects.create(image=uploaded, post=None)
+        return {
+            'url': image_obj.image.url,
+            'thumbnail_url': image_obj.image.url,
+            'id': image_obj.id,
+            'name': image_obj.filename
+        }
 
 # Add Filter Post Type
 
@@ -135,10 +154,6 @@ class PostImageInline(admin.TabularInline):
 #             return queryset
 
 
-class PostTypeAdmin(TranslationAdmin):
-    pass
-admin.site.register(Post_Type, PostTypeAdmin)
-
 # Register Posts Model to Admin Site
 
 
@@ -152,13 +167,22 @@ def custom_titled_filter(title):
     return Wrapper
 
 
-class PostAdmin(TranslationAdmin):
+class PostAdmin(PostMultiuploadMixing, MultiUploadAdmin, TranslationAdmin):
     list_filter = (('post_type__name', custom_titled_filter('Post Type')), )
     # list_filter = (PostTypeFilter, )
     inlines = [PostImageInline, ]
     formfield_overrides = {
         models.TextField: {'widget': CKEditorUploadingWidget()},
     }
+    multiupload_form = True
+    multiupload_list = False
+
+    def delete_file(self, pk, request):
+        '''
+        Delete an image.
+        '''
+        obj = get_object_or_404(Image, pk=pk)
+        return obj.delete()
 
     def get_readonly_fields(self, request, obj=None):
         if obj:  # editing an existing object
