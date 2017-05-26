@@ -449,6 +449,7 @@ def posts(request):
         post_list = Post.objects.filter(is_draft=False, post_type_id=type_id)
         print "description type ", post_list[0].post_type.description
         serializer = PostsSerializer(post_list, many=True)
+        print "DEbug Data ",serializer.data
         return Response(serializer.data)
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
