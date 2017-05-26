@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import permissions
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser, FormParser
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, renderer_classes
 from rest_framework import status
 from rest_framework.views import exception_handler, APIView
 from rest_framework.response import Response
@@ -435,6 +435,7 @@ def event_detail(request, event_id):
 
 
 @api_view(['GET'])
+@renderer_classes((JSONRenderer,))
 def posts(request):
     # TODO : Posts_image in request /posts is required?
     try:
@@ -449,7 +450,6 @@ def posts(request):
         post_list = Post.objects.filter(is_draft=False, post_type_id=type_id)
         print "description type ", post_list[0].post_type.description
         serializer = PostsSerializer(post_list, many=True)
-        print "DEbug Data ",serializer.data
         return Response(serializer.data)
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
