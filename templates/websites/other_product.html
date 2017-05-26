@@ -32,14 +32,12 @@
 		</div>
 	</div>
 	<!-- BUTTON GROUP -->
-	{% if datas %} 
+	{% if products %} 
     <div class="other-product-btn-section">
         <ul class="nav other-product-btn-group">
-        	{% for key, products_faqs in datas.items %}
+        	{% for product in products %}
             <li class="col-md-4 {% if forloop.counter0 == 0 %} active {% endif %}">
-            	{% if products_faqs.product %} 
-                <a href="#id_{{key}}" role="tab" data-toggle="tab" class="btn-custom-style ">{{products_faqs.product.name}}</a>
-            	{% endif %}
+                <a href="#id_{{product.id}}" role="tab" data-toggle="tab" class="btn-custom-style ">{{product.name}}</a>
             </li>
             {% endfor %}
         </ul>
@@ -47,12 +45,11 @@
 	<!-- CONTENT -->
 
 	<div class="tab-content">
-		{% for key, products_faqs in datas.items %}
-		<div role="tabpanel" class="tab-pane view-more-content {% if forloop.counter0 == 0 %} active {% endif %}" id="id_{{key}}">
+		{% for product in products %}
+		<div role="tabpanel" class="tab-pane view-more-content {% if forloop.counter0 == 0 %} active {% endif %}" id="id_{{product.id}}">
 			<!-- CONTENT -->
-			{% if products_faqs.product %} 
 			<div class="wrap">
-				{% for item in products_faqs.product.post_images %}
+				{% for item in product.post_images %}
 					<div class="box{{forloop.counter}}">
 						<div class="box-inner">
 							<img src="{{ MEDIA_URL }}{{item.image}}">
@@ -60,40 +57,6 @@
 					</div>
 				{% endfor %}
 			</div>
-			{% endif %}
-
-			{% if products_faqs.faqs %} 
-			<div class="faqs-section">
-				<div class="faqs-title" align="center">
-					<p class="big-font-size">{% trans "redemption_store.title.section.faq" %}</p>
-				</div>
-				<div class="faqs-content">
-					<div class="panel-group" id="faq_{{key}}" role="tablist" aria-multiselectable="true">
-						{% for faq in products_faqs.faqs %}
-				        <div class="panel panel-default faq-detail">
-				            <div class="panel-heading" role="tab" id="heading_{{faq.id}}">
-				                <h4 class="panel-title">
-				                    <a role="button" data-toggle="collapse" data-parent="#faq_{{key}}" href="#collapse_{{faq.id}}" aria-expanded="true" aria-controls="collapse_{{faq.id}}">
-				                        <i class="more-less fa fa-chevron-circle-down"></i>
-				                    </a>
-				                    <p>{{faq.question}}</p>
-				                </h4>
-				            </div>
-				            <div id="collapse_{{faq.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_{{faq.id}}">
-				                <div class="panel-body">
-									<p>{{faq.answer}}</p>
-				                </div>
-				            </div>
-				        </div>
-				        {% endfor %}
-
-				        <div class="div-view-more" align="center">
-							<a class="btn-view-more btn-custom-style btn-custom-style-faqs" role="button">{% trans "btn.view_more" %}<span class="glyphicon glyphicon-chevron-down glyphicon-custom"></span></a>
-						</div>
-				    </div>
-				</div>
-			</div>
-			{% endif %}
 		</div>
 		{% endfor %}
 	</div>

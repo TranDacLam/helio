@@ -8,6 +8,7 @@ from django.conf import settings
 from django.template import Context
 from django.template.loader import get_template
 from django.contrib.sites.models import Site
+import helper
 
 
 LINK_RE = re.compile(r"https?://([^ \n]+\n)+[^ \n]+", re.MULTILINE)
@@ -80,9 +81,8 @@ def card_information_mapper(item):
     card_information = {}
     if item:
         card_information["active_date"] = item[0] # Card_Added
-        print item[1]
         card_information["membership"] = 'Member Card' if item[1] == 1 else ('Gold Card' if item[1] == 6 else 'Normal Card') # Card_Status
-        card_information["card_status"] = 'Active' if item[2] == 0 else ('Suspended' if item[2] == 2 else 'Reissued') # Card_State
+        card_information["card_status"] = helper.get_card_status(item[2], item[14]) # Card_State
         card_information["play_value"] = item[3] # Cash_Balance
         card_information["bonus_value"] = item[4] # Bonus_Balance
         card_information["ticket"] = item[5] # ETickets
@@ -129,8 +129,8 @@ def reissue_history_mapper(list_items):
         for item in list_items:
             reissue = {}
             reissue["date"] = item[0] # Transaction_DateTime
-            reissue["old_id"] = item[2] if item[4] == 501 else item[1] # Card_Barcode
-            reissue["new_id"] = item[1] if item[4] == 501 else item[2] # Transfer_Card_Barcode
+            reissue["old_id"] = item[2] if item[4] == 500 else item[1] # Card_Barcode
+            reissue["new_id"] = item[1] if item[4] == 500 else item[2] # Transfer_Card_Barcode
             reissue["type"] = item[3] # Card_Barcode
             list_reissues.append(reissue)
 
