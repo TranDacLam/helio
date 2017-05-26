@@ -210,6 +210,38 @@ def user_info(request):
                  "fields": "", "flag": False}
         return Response(error, status=500)
 
+
+"""
+    Get User Infomation
+"""
+
+
+@api_view(['GET'])
+def users(request, user_id):
+    try:
+        error = helper.check_id_valid(user_id)
+        if error:
+            errors = {"code": 400, "message": "%s" %
+                      error, "fields": "user_id"}
+            return Response(errors, status=400)
+
+        # TODO : Check user i not anonymous
+        if not request.user.anonymously:
+            user = User.objects.get(pk=user_id)
+            serializer = UserSerializer(user, many=False)
+            return Response(serializer.data)
+        else:
+            return Response({'message': 'Anonymous User Cannot Get User Infomation'}, status=400)
+
+    except User.DoesNotExist, e:
+        error = {"code": 400, "message": "%s" % e, "fields": "user_id"}
+        return Response(error, status=400)
+    except Exception, e:
+        error = {"code": 500, "message": "Cannot update infomation user. Please contact administrator.",
+                 "fields": "", "flag": False}
+        return Response(error, status=500)
+
+
 """
     Change Password User
 """
