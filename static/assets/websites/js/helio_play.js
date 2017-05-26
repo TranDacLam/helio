@@ -33,12 +33,16 @@ var PlayFunction = (function ($) {
         }
         this.initCoursel = function (element) {
             $(element).html($(element).parent().find('.carousel-tmp').html());
-            var content_width = $(".container").width();
-            var w = content_width * 0.675;
-            var h = content_width > 1100 ? 500 : 350;
+            var content_width = $(".container").width(),
+                w = content_width * 0.675,
+                h = w / 1.8,
+                h_carousel = h + 200,
+                h_bw = h/2 - 20;
+            $(".prevButton").css('top', h_bw + 'px');
+            $(".nextButton").css('top', h_bw + 'px')
             $(element).carousel({
                 carouselWidth: content_width,
-                carouselHeight: 500,
+                carouselHeight: h_carousel,
                 directionNav:true,    
                 shadow:false, 
                 frontWidth:w,
