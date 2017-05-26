@@ -195,7 +195,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
-    'UNICODE_JSON': False,
+    'UNICODE_JSON': True,
     'EXCEPTION_HANDLER': 'api.views.custom_exception_handler'
 }
 JWT_AUTH = {
