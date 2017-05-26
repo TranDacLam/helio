@@ -522,15 +522,17 @@ def post_detail(request, id_or_key_query):
 @api_view(['GET'])
 def promotions(request):
     try:
-        type_id = request.GET.get("type_id")
+        category_id = request.GET.get("category_id")
 
-        error = helper.check_id_valid(type_id)
-        if error:
-            errors = {"code": 400, "message": "%s" %
-                      error, "fields": "type_id"}
-            return Response(errors, status=400)
+        lst_item = Promotion.objects.filter(is_draft=False)
 
-        lst_item = Promotion.objects.filter(is_draft=False, promotion_category_id=type_id)
+        if category_id:
+            if helper.is_int(category_id):
+                lst_item = lst_item.filter(promotion_category_id=category_id)
+            else:
+                errors = {"code": 400, "message": "This value must be is integer.", "fields": "category_id"}
+                return Response(errors, status=400)
+            
         serializer = PromotionsSerializer(lst_item, many=True)
         return Response(serializer.data)
     except Exception, e:
