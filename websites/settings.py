@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'core',
     'api',
     'ckeditor',
-    'ckeditor_uploader'
+    'ckeditor_uploader',
+    'multiupload'
     
 ]
 
@@ -88,6 +89,10 @@ TEMPLATES = [
                 'main.middleware.get_advertisement',
                 
             ],
+            'libraries':{
+                'raw': 'multiupload.templatetags.raw',
+
+            }
         },
     },
 ]
