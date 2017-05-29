@@ -362,8 +362,10 @@ a.btn-custom-style.btn-custom-game-type:hover {
     div.game-section-content h2.collapsed {
         background-color: #15062b;
     }
-
     .game-right {
         margin-right: 0px;
+    }
+    a.btn-custom-style.btn-custom-game-type {
+        letter-spacing: 1.5px;
     }
 }
