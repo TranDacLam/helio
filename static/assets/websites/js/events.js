@@ -37,8 +37,18 @@ var EventsFunction = (function ($) {
             }
         }
         this.eventsCoursel = function() {
-            $(".event-month:last").addClass("active");
-            $(".events-list-by-month:last").addClass("active");
+            var current_date = new Date($.now());
+            var m = current_date.getMonth() + 1;
+                m = m > 9 ? m : "0" + m;
+            var m_y_current = current_date.getFullYear() + "_" + m;
+
+            $(".event-month").each(function() {
+                if($(this).attr('value') >=  m_y_current) {
+                    $(this).addClass("active");
+                    $(".events-list-by-month").eq($(this).index()).addClass("active");
+                    return false;
+                }
+            });
             
             $('.events-list-by-month').each(function() {
                 $(this).find(".event-item:last").addClass("active");
