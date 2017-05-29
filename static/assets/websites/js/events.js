@@ -76,10 +76,9 @@ var EventsFunction = (function ($) {
                     minItems: 2,
                     maxItems: max_items,
                     start: function(slider){
-                        $('.slides li img').click(function(event){
-                            event.preventDefault();
-                            slider.flexAnimate(slider.getTarget("next"));
-                        });
+                        if (slider.last === 0) {
+                            slider.directionNav.addClass("flex-disabled");
+                        }
                     }
                 });
                 $(element).addClass("complete");
