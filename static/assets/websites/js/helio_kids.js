@@ -38,8 +38,6 @@ var KidsFunction = (function ($) {
                 h = w / 1.8,
                 h_carousel = h + 200,
                 h_bw = h/2 - 20;
-            $(".prevButton").css('top', h_bw + 'px');
-            $(".nextButton").css('top', h_bw + 'px')
             $(element).carousel({
                 carouselWidth: content_width,
                 carouselHeight: h_carousel,
@@ -51,6 +49,8 @@ var KidsFunction = (function ($) {
                 vMargin: 0.8,
                 short_description: true
             });
+            $(element).find(".prevButton").css('top', h_bw + 'px');
+            $(element).find(".nextButton").css('top', h_bw + 'px');
         }
         this.viewMore = function (element) {
             var size_list = $("#promotion_content .item-line").length;

@@ -37,9 +37,27 @@ var EventsFunction = (function ($) {
             }
         }
         this.eventsCoursel = function() {
-            $(".event-month:last").addClass("active");
-            $(".events-list-by-month:last").addClass("active");
-            
+            /*current Month display slide*/
+            var current_date = new Date($.now());
+            var m = current_date.getMonth() + 1, 
+                is_active = false;
+                m = m > 9 ? m : "0" + m;
+            var m_y_current = current_date.getFullYear() + "_" + m;
+
+            $(".event-month").each(function() {
+                if($(this).attr('value') >=  m_y_current) {
+                    $(this).addClass("active");
+                    $(".events-list-by-month").eq($(this).index()).addClass("active");
+                    is_active = true;
+                    return false;
+                }
+            });
+            if(is_active == false) {
+                $(".event-month:last").addClass("active");
+                $(".events-list-by-month:last").addClass("active");
+            }
+            /*end current Month display slide*/
+
             $('.events-list-by-month').each(function() {
                 $(this).find(".event-item:last").addClass("active");
             });
@@ -76,10 +94,9 @@ var EventsFunction = (function ($) {
                     minItems: 2,
                     maxItems: max_items,
                     start: function(slider){
-                        $('.slides li img').click(function(event){
-                            event.preventDefault();
-                            slider.flexAnimate(slider.getTarget("next"));
-                        });
+                        if (slider.last === 0) {
+                            slider.directionNav.addClass("flex-disabled");
+                        }
                     }
                 });
                 $(element).addClass("complete");

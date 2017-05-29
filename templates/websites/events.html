@@ -80,7 +80,7 @@
         <div class="col-xs-6">
             {% for key, values in result.events_map %}
                 {% if values.0 %}
-                <h4 class="event-month">{{values.0.start_date | date:"M/Y"}}</h4>
+                <h4 class="event-month" value="{{key}}">{{values.0.start_date | date:"M/Y"}}</h4>
                 {% endif %}
             {% endfor %}
         </div>
