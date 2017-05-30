@@ -24,8 +24,8 @@ def get_card_status(card_status_code, reissued_to_card):
     card_status_text = ""
     if card_status_code == 0:
         card_status_text = "Active"
-    elif card_status_code == 2 and reissued_to_card:
-        card_status_text = "Suspended"
     elif card_status_code == 2 and not reissued_to_card:
+        card_status_text = "Suspended"
+    elif card_status_code == 2 and reissued_to_card:
         card_status_text = "Reissued"
     return card_status_text
