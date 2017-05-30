@@ -37,10 +37,7 @@
 	<!-- LINE -->
 	<hr class="hr-custom">
 	<!-- CONTACT FORM #TO DO CUSTOM-->
-	
-	{% if message_success %} 
-	<div><p>{% trans "contact.message_success" %}</p></div>
-	{% endif %} 
+	<div id="message_success" style="display: none;"><p>{% trans "contact.message_success" %}</p></div>
 	<div class="center-div form-group" align="center">
 		<form id="form_contact" class="form-contact" method="POST">
 		{% csrf_token %}
@@ -70,7 +67,7 @@
 				</div>
 			</div>
 			<div class="col-md-12 col-xs-12" align="center">
-				<button id="submitbutton" type="submit" class="btn-custom-style btn-custom-style-experiences">{% trans "contact.btn.send" %} <span class="glyphicon glyphicon-menu-right"></span></button>
+				<button id="submitbutton" type="button" class="btn-custom-style btn-custom-style-experiences">{% trans "contact.btn.send" %} <span class="glyphicon glyphicon-menu-right"></span></button>
 			</div>
 		</form>
 	</div>

@@ -43,4 +43,10 @@ $(document).ready( function() {
         	$(this).parent().closest(".dropdown-submenu").addClass('active');
         }
     });
+
+    $(document).bind("ajaxSend", function(e, xhr, settings) {
+	    console.log('startingnnnnnnnnn');
+	}).bind("ajaxStop", function() {
+	    console.log('stoppppppppppppp');
+	});
 });
