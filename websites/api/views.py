@@ -217,24 +217,25 @@ def user_info(request):
 
 
 @api_view(['GET'])
-def users(request, user_id):
+def users(request):
     try:
-        error = helper.check_id_valid(user_id)
+        email = request.GET.get("email")
+        error = helper.is_empty(email)
         if error:
             errors = {"code": 400, "message": "%s" %
-                      error, "fields": "user_id"}
+                      error, "fields": "email"}
             return Response(errors, status=400)
 
         # TODO : Check user i not anonymous
         if not request.user.anonymously:
-            user = User.objects.get(pk=user_id)
+            user = User.objects.get(email=email)
             serializer = UserSerializer(user, many=False)
             return Response(serializer.data)
         else:
             return Response({'message': 'Anonymous User Cannot Get User Infomation'}, status=400)
 
     except User.DoesNotExist, e:
-        error = {"code": 400, "message": "%s" % e, "fields": "user_id"}
+        error = {"code": 400, "message": "%s" % e, "fields": "email"}
         return Response(error, status=400)
     except Exception, e:
         error = {"code": 500, "message": "Cannot update infomation user. Please contact administrator.",
