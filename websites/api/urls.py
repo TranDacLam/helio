@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^accounts/$', views.user_info, name="update-account"),
     url(r'^accounts/password/$', views.change_password, name="update-account-password"),
     url(r'^accounts/feedback/$', views.send_feedback, name="accounts-feedback"),
-    url(r'^accounts/users/(?P<user_id>[0-9]+)/$', views.users, name="accounts-users-info"),
+    url(r'^accounts/users/$', views.users, name="accounts-users-info"),
 
     url(r'^accounts/login/$', obtain_jwt_token, name="accounts-login"),
     # Social Login : alias name url is : login_social_jwt_user and url is : api/login/social/jwt_user/
