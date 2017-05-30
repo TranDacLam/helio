@@ -56,7 +56,6 @@ $(document).ready(function() {
 			subject: contact_message["err_subject_required"]
 		}
 	});
-
 	$(document).on("click","#submitbutton",function() {
 	    if($('#form_contact').valid()) {
 			var frm = $('#form_contact');
@@ -66,7 +65,9 @@ $(document).ready(function() {
 		        dataType: 'json',
 		        data: frm.serialize(),
 		        success: function (data) {
-		            $("#message_success").css('display','block')
+		        	$("input").val("");
+		            $("textarea").val("");
+		            $("#message_success").css('display','block');
 		        },
 		        error: function(data) {
 		            alert("Internal Error")

@@ -45,8 +45,14 @@ $(document).ready( function() {
     });
 
     $(document).bind("ajaxSend", function(e, xhr, settings) {
-	    console.log('startingnnnnnnnnn');
+	    $.blockUI({
+	    	message: '<h1><img src="'+STATIC_URL+'assets/websites/images/loading.gif" style="width: 100px"></h1>',
+	        css: {
+	            border: 'none',
+	            background: 'transparent'
+	        }
+        });
 	}).bind("ajaxStop", function() {
-	    console.log('stoppppppppppppp');
+	    $.unblockUI();
 	});
 });
