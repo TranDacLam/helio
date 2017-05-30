@@ -56,5 +56,9 @@ $(document).ready(function() {
 			subject: contact_message["err_subject_required"]
 		}
 	});
+	$("#").submit(function() {
+	    $("#WaitDialog").show();
+	    return true;
+	});
 });
 
