@@ -133,4 +133,10 @@ a.btn-custom-style.btn-custom-style-play:hover {
     .play-btn-group li {
         padding-bottom: 15px;
     }
+    .short-description {
+        margin-top: 30px;
+    }
+    .hr-custom-play {
+        margin-top: 55px;
+    }
 }
