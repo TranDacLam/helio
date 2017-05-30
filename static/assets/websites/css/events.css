@@ -310,6 +310,9 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     .image-text.pull-right {
         float: none !important;
     }
+    .event-info .big-font-size {
+        letter-spacing: 1.5px;
+    }
 }
 
 

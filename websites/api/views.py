@@ -586,13 +586,13 @@ def card_information(request, card_id):
                                      WHERE Transaction_Type = 506 AND C.Customer_Id IS NOT NULL) AS TEMP WHERE RN_C = 1)
 
                 SELECT C.Card_Added, C.Card_Status, C.Card_State, C.Cash_Balance, C.Bonus_Balance, C.ETickets,
-                     Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, Cust.EMail, Cust.Phone, 
+                     Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, Cust.EMail, Cust.Mobile_Phone, 
                      UI.Transaction_DateTime, C.ReIssued_To_Card, Cust.Customer_Id  FROM Cards C
                  LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id
                  LEFT JOIN UPGRADE_INFO UI ON Cust.Customer_Id = UI.Customer_Id WHERE C.Card_Barcode = {0}"""
 
 
-        print query_str.format(card_id)
+        # print query_str.format(card_id)
 
         cursor.execute(query_str.format(card_id)) 
         result = utils.card_information_mapper(cursor.fetchone())
