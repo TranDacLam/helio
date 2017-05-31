@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% load i18n %} 
+{% block title %}Admin Promotions{% endblock %}
+{% block extrastylesheet %}
+	<link href="{{ STATIC_URL }}assets/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		table.dataTable tbody tr {
+			background: none;
+		}
+		.dataTables_wrapper .dataTables_length, 
+		.dataTables_wrapper .dataTables_filter, 
+		.dataTables_wrapper .dataTables_info, 
+		.dataTables_wrapper .dataTables_processing, 
+		.dataTables_wrapper .dataTables_paginate {
+			color: #fff;
+		}
+		.dataTables_wrapper .dataTables_length select,
+		.dataTables_wrapper .dataTables_filter input {
+			color: #000;
+		}
+	</style>
+{% endblock %}
+{% block extrascript %}
+	<script src="{{ STATIC_URL }}assets/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src = "{{ STATIC_URL }}assets/websites/js/admin_promotions.js"></script>
+{% endblock %}
+{% block main_content %} 
+
+<div class="container">
+	{% if promotions %}
+	<div class="row">
+		<div class="col-md-12">
+			<div class="table-responsive">
+				<table id="promotions-table" class="table" width="100%">
+					<thead>
+			            <tr>
+			            	<th>ID</th>
+			            	<th>NAME</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			        	{% for promotion in promotions %}
+            			<tr>
+            				<td>{{ promotion.id }}</td>
+			            	<td><a href="/admin-promotions/{{promotion.id}}/detail/">{{ promotion.name }}</a></td>
+            			</tr>
+            			{% endfor %}
+            		</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+</div>
+
+{% endblock %}
