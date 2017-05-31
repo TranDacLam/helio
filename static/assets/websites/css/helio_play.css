@@ -130,8 +130,8 @@ a.btn-custom-style.btn-custom-style-play:hover {
     .play-btn-group li a.btn-custom-style:focus,
     .play-btn-group li a {
         font-size: 24px;
+        letter-spacing: 1px;
     }
-
     .play-btn-group li {
         padding-bottom: 15px;
     }
@@ -140,5 +140,9 @@ a.btn-custom-style.btn-custom-style-play:hover {
     }
     .hr-custom-play {
         margin-top: 55px;
+    }
+    .play-btn-group li.active a.btn-custom-style {
+        font-size: 24px;
+        letter-spacing: 1px;
     }
 }

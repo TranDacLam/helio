@@ -23,7 +23,7 @@ $(document).ready(function(){
         }
         $.ajax({
             type: 'POST',
-            url: '/en/list_photos_by_album/',
+            url: '/vi/list-photos-by-album/',
             dataType: 'json',
             data: param,
             success: function (data) {

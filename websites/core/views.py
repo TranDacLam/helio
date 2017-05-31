@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from models import *
+from custom_models import *
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 import ast
@@ -11,6 +12,7 @@ from forms import *
 import api.utils as utils
 from django.http import HttpResponse
 import json
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     try:
@@ -79,13 +81,16 @@ def contact(request):
     try:
         message_success = {}
         if request.method == 'POST':
+            print "POSTTTTTTTTTTTTT"
+
             contact_form = ContactForm(request.POST, request=request)
 
             if contact_form.is_valid():
                 contact_form.save() 
                 message_success = 'Successfully!'
-                print message_success
-                return render(request, 'websites/contact.html', {"message_success": message_success})
+
+                return HttpResponse(json.dumps(message_success),content_type="application/json")
+                # return render(request, 'websites/contact.html', {"message_success": message_success})
                 
         return render(request, 'websites/contact.html')
 
@@ -476,3 +481,55 @@ def list_photos_by_album(request):
         json.dumps(list_images),
         content_type="application/json"
     )
+
+@login_required(login_url='/admin/login/')
+def admin_promotions(request):
+    promotions = Promotion.objects.filter(is_draft=False).order_by('-created')
+
+    return render(request, 'websites/admin_promotions.html', {"promotions":promotions})
+
+@login_required(login_url='/admin/login/')
+def admin_promotion_detail(request, promotion_id):
+    promotion = Promotion.objects.get(pk=promotion_id)
+    users = User.objects.all()
+
+    list_gift = Gift.objects.filter(promotion_id=promotion_id)
+
+    promotion_user_ids = list_gift.values_list('user_id', flat=True)
+
+    for user in users:
+        if user.id in promotion_user_ids:
+            user.is_selected = True
+
+    return render(request, 'websites/admin_promotion_detail.html', {"promotion":promotion, "users": users})
+
+@login_required(login_url='/admin/login/')
+def update_promotions_user(request):
+    if request.method == 'POST':
+
+        promotion_id = request.POST.get("promotion_id")
+        list_user = map(long,request.POST.getlist('list_user[]'))
+
+        list_delete = []
+        if promotion_id:
+            # Gift.objects.filter(promotion_id=promotion_id).delete()
+            promotion_user_db =  Gift.objects.filter(promotion_id=promotion_id).values_list('user_id', flat=True)
+            list_update_user = set(list_user)^set(promotion_user_db)
+            if list_update_user:
+                for user_id in list_update_user:
+                    if user_id not in promotion_user_db:
+                        gift_item = Gift()
+                        gift_item.promotion_id = promotion_id
+                        gift_item.user_id = user_id
+                        gift_item.save()
+                    else:
+                        list_delete.append(user_id)
+
+                if list_delete:
+                    Gift.objects.filter(user_id__in=list_delete).delete()
+
+        return HttpResponse(
+            json.dumps({}),
+            content_type="application/json"
+        )
+    return render(request, 'websites/admin_promotion_detail.html', {"promotion":promotion, "users": users})

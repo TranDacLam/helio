@@ -25,11 +25,16 @@ urlpatterns = [
 
     url(r'^helio-introduction/$', views.helio_introduction, name='helio_introduction'),
     url(r'^term-condition/$', views.term_condition, name='term_condition'),
-    url(r'^coffee_bakery/$', views.coffee_bakery, name='coffee_bakery'),
+    url(r'^coffee-bakery/$', views.coffee_bakery, name='coffee_bakery'),
     url(r'^other-product/$', views.other_product, name='other_product'),
     url(r'^redemption-store/$', views.redemption_store, name='redemption_store'),
 
     url(r'^policy/$', views.policy, name='policy'),
-    url(r'^helio_photos/$', views.helio_photos, name='helio_photos'),
-    url(r'^list_photos_by_album/$', views.list_photos_by_album, name='list_photos_by_album'),
+    url(r'^helio-photos/$', views.helio_photos, name='helio_photos'),
+    url(r'^list-photos-by-album/$', views.list_photos_by_album, name='list_photos_by_album'),
+
+    url(r'^admin-promotions/$', views.admin_promotions, name='admin_promotions'),
+    url(r'^admin-promotions/(?P<promotion_id>[0-9]+)/detail/$', views.admin_promotion_detail, name='admin_promotion_detail'),
+    url(r'^update-promotions-user/$', views.update_promotions_user, name='update_promotions_user'),
+
 ]

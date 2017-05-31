@@ -56,5 +56,27 @@ $(document).ready(function() {
 			subject: contact_message["err_subject_required"]
 		}
 	});
+	$(document).on("click","#submitbutton",function() {
+	    if($('#form_contact').valid()) {
+			var frm = $('#form_contact');
+		    $.ajax({
+		        type: frm.attr('method'),
+		        url: frm.attr('action'),
+		        dataType: 'json',
+		        data: frm.serialize(),
+		        success: function (data) {
+		        	$("input").val("");
+		            $("textarea").val("");
+		            $("#message_success").css('display','block');
+		        },
+		        error: function(data) {
+		            alert("Internal Error")
+		        }
+		    });
+		}
+		else {
+			$("#message_success").css('display','none');
+		}
+	});
 });
 
