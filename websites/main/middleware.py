@@ -1,6 +1,7 @@
 from django.utils import translation
 from django.conf import settings
-from core.models import Advertisement
+from core.models import Advertisement, Post
+import core.constants as const
 
 # class SetLocaleMiddleware:
 #     def set_language(request):
@@ -42,3 +43,12 @@ def get_advertisement(request):
     except:
         pass
     return {'advertisements': advertisements}
+
+def get_time_active(request):
+    time_active = {}
+    try:
+        time_active = Post.objects.get(key_query=const.TIME_ACTIVE_KEY_QUERY)
+        print time_active
+    except Exception, e:
+        print e
+    return {'time_active': time_active}
