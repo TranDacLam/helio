@@ -87,6 +87,7 @@ TEMPLATES = [
                 'main.middleware.set_language_code',
                 'main.middleware.get_app_fb_id',
                 'main.middleware.get_advertisement',
+                'main.middleware.get_time_active',
                 
             ],
             'libraries':{
