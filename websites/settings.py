@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'api',
     'ckeditor',
     'ckeditor_uploader',
-    'multiupload'
+    'multiupload',
+    'captcha'
     
 ]
 
@@ -276,6 +277,7 @@ CKEDITOR_CONFIGS = {
 CKEDITOR_BROWSE_SHOW_DIRS = True
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
+DEFAULT_TO_ADMIN_EMAIL = "contact@helio.vn"
 DEFAULT_FROM_EMAIL = "do-not-reply@helio.vn"
 # EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -286,6 +288,9 @@ EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = True
 
 CODE_LEN = 7 # Default code length
+
+# Config Google reCaptcha
+NOCAPTCHA = True
 
 try:
     if 'DEVELOPMENT' in os.environ and os.environ['DEVELOPMENT']:
