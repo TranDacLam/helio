@@ -1,6 +1,7 @@
 from django import forms
 from models import Contact
 import api.utils as utils
+from django.contrib.sites.shortcuts import get_current_site
 
 class ContactForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput())
@@ -40,7 +41,8 @@ class ContactForm(forms.Form):
                     "email": email,
                     "phone": phone,
                     "subject": subject,
-                    "message": message
+                    "message": message,
+                    'site': get_current_site(self.request),
                     
                 }
 
