@@ -1,6 +1,9 @@
 from django import forms
 from models import Contact
 import api.utils as utils
+from captcha.fields import ReCaptchaField
+from django.conf import settings
+
 
 class ContactForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput())
@@ -8,6 +11,7 @@ class ContactForm(forms.Form):
     phone = forms.CharField(widget=forms.TextInput())
     subject = forms.CharField(widget=forms.TextInput())
     message = forms.CharField(widget=forms.TextInput())
+    captcha = ReCaptchaField()
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
@@ -19,8 +23,6 @@ class ContactForm(forms.Form):
         phone = self.cleaned_data['phone']
         subject = self.cleaned_data['subject']
         message = self.cleaned_data['message']
-        print "name11: ", name
-        print commit
 
         if commit:
             try:
@@ -44,7 +46,9 @@ class ContactForm(forms.Form):
                     
                 }
 
-                utils.send_mail(subject=subject, message_plain=message_plain, message_html=message_html, email_from=email, email_to=[email], data=data_render)
+                utils.send_mail(subject=subject, message_plain=message_plain, message_html=message_html, 
+                                    email_from=settings.DEFAULT_FROM_EMAIL, email_to=[settings.DEFAULT_TO_ADMIN_EMAIL], data=data_render)
             except Exception, e:
                 print 'Error ', e
+                raise Exception("ERROR : Internal Server Error .Please contact administrator.")
     
