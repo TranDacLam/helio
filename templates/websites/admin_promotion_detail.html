@@ -3,27 +3,8 @@
 {% block title %}Admin Promotions{% endblock %}
 {% block extrastylesheet %}
 	<link href="{{ STATIC_URL }}assets/css/multi-select.css" media="screen" rel="stylesheet" type="text/css">
-	<style type="text/css">
-		.layer {
-			margin: 30px auto;
-		}
-		.ms-container {
-			width: 100%;
-		}
-		.ms-container .ms-selectable, 
-		.ms-container .ms-selection {
-			text-align: center;
-		}
-		.ms-container .ms-selectable ul, 
-		.ms-container .ms-selection ul {
-			text-align: left;
-		}
-
-		.ms-header {
-			background-color: #b733ad;
-		    color: #fff;
-		}
-	</style>
+	<link href="{{ STATIC_URL }}assets/websites/css/admin_promotion_detail.css" media="screen" rel="stylesheet" type="text/css">
+	
 {% endblock %}
 {% block extrascript %}
 	<script src="{{ STATIC_URL }}assets/js/jquery.multi-select.js" type="text/javascript"></script>
@@ -34,10 +15,13 @@
 <div class="container">
 	{% if promotion %}
 	<div class="row layer">
-		<div class="col-md-12">
+		<div class="col-md-9">
 			<input id="promotion_id" value="{{promotion.id}}" type="hidden" name="promotion_id">
 			<p>ID: {{promotion.id}}</p>
 			<p>NAME: {{promotion.name}}</p>
+		</div>
+		<div class="col-md-3">
+			<a class="btn btn-custom-style btn-link-more" href="{% url 'admin_promotions' %}" role="button">TRỞ VỀ ADMIN PROMOTION{% trans "" %}</a>
 		</div>
 	</div>
 	{% endif %}

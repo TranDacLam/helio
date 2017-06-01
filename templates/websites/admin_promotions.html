@@ -3,22 +3,7 @@
 {% block title %}Admin Promotions{% endblock %}
 {% block extrastylesheet %}
 	<link href="{{ STATIC_URL }}assets/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
-	<style type="text/css">
-		table.dataTable tbody tr {
-			background: none;
-		}
-		.dataTables_wrapper .dataTables_length, 
-		.dataTables_wrapper .dataTables_filter, 
-		.dataTables_wrapper .dataTables_info, 
-		.dataTables_wrapper .dataTables_processing, 
-		.dataTables_wrapper .dataTables_paginate {
-			color: #fff;
-		}
-		.dataTables_wrapper .dataTables_length select,
-		.dataTables_wrapper .dataTables_filter input {
-			color: #000;
-		}
-	</style>
+	<link href="{{ STATIC_URL }}assets/websites/css/admin_promotions.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block extrascript %}
 	<script src="{{ STATIC_URL }}assets/js/jquery.dataTables.min.js"></script>
@@ -30,7 +15,7 @@
 	{% if promotions %}
 	<div class="row">
 		<div class="col-md-12">
-			<div class="table-responsive">
+			<div class="table-responsive table-custom">
 				<table id="promotions-table" class="table" width="100%">
 					<thead>
 			            <tr>
@@ -41,8 +26,9 @@
 			        <tbody>
 			        	{% for promotion in promotions %}
             			<tr>
-            				<td>{{ promotion.id }}</td>
-			            	<td><a href="/admin-promotions/{{promotion.id}}/detail/">{{ promotion.name }}</a></td>
+            				<td class="numeric">{{ promotion.id }}</td>
+			            	<td valign="middle"><a class="title-promotion" href="/admin-promotions/{{promotion.id}}/detail/">{{ promotion.name }}</a></td>
+			            	<td><a class="btn btn-custom-style btn-link-more btn-custom-ad-promotion" href="/admin-promotions/{{promotion.id}}/detail/" role="button">{% trans "btn.view_detail" %}</a></td>
             			</tr>
             			{% endfor %}
             		</tbody>
