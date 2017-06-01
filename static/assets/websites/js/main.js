@@ -43,4 +43,16 @@ $(document).ready( function() {
         	$(this).parent().closest(".dropdown-submenu").addClass('active');
         }
     });
+
+    $(document).bind("ajaxSend", function(e, xhr, settings) {
+	    $.blockUI({
+	    	message: '<h1><img src="'+STATIC_URL+'assets/websites/images/loading.gif" style="width: 100px"></h1>',
+	        css: {
+	            border: 'none',
+	            background: 'transparent'
+	        }
+        });
+	}).bind("ajaxStop", function() {
+	    $.unblockUI();
+	});
 });

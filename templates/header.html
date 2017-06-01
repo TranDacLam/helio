@@ -38,11 +38,12 @@
 					    	<span class="glyphicon glyphicon-search "></span>
 					    </a> -->
 					</div>
-					<div class="right-nav pull-right hidden-xs"> 
+					<div class="right-nav pull-right hidden-xs">
+						{% if time_active %}
 	            		<div class="time-wrapper">
-	            			<p>THỨ HAI - THỨ SÁU | 17:30 - 18:30</p>
-	            			<p>THỨ BAY - CHU NHAT | 17:30 - 18:30</p>
+	            			{{time_active.content | safe}}
 	            		</div>
+	            		{% endif %}
 	            	</div>
 				</div>
 			</div>

@@ -20,7 +20,7 @@
 	<div class="page-top">
 		<div class="page-header-img">
 		    <div>
-		        <img src="{{ STATIC_URL }}assets/websites/images/faqs_header.png" width="100%">
+		        <img src="{{ STATIC_URL }}assets/websites/images/contact-header.jpg" width="100%">
 		    </div>
 		    <div class="page-title" align="center">
 		        <div class="col-md-12">
@@ -37,11 +37,10 @@
 	<!-- LINE -->
 	<hr class="hr-custom">
 	<!-- CONTACT FORM #TO DO CUSTOM-->
+	<div id="message_success" style="display: none;"><div class="alert alert-success message-success">{% trans "contact.message_success" %}</div></div>
 	
-	{% if message_success %} 
-	<div><p>{% trans "contact.message_success" %}</p></div>
-	{% endif %} 
 	<div class="center-div form-group" align="center">
+
 		<form id="form_contact" class="form-contact" method="POST">
 		{% csrf_token %}
 			<div class="col-md-6">
@@ -70,8 +69,14 @@
 				</div>
 			</div>
 			<div class="col-md-12 col-xs-12" align="center">
-				<button id="submitbutton" type="submit" class="btn-custom-style btn-custom-style-experiences">{% trans "contact.btn.send" %} <span class="glyphicon glyphicon-menu-right"></span></button>
+				<button id="submitbutton" type="button" class="btn-custom-style btn-custom-style-experiences">{% trans "contact.btn.send" %} <span class="glyphicon glyphicon-menu-right"></span></button>
 			</div>
+			<div id="WaitDialog" class="wait-dialog" align="center">
+		        <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+		        <p>Please wait</p>
+		    </div>
+		
+			
 		</form>
 	</div>
 	<div class="row">

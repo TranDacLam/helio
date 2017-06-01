@@ -53,6 +53,21 @@
 	border: 0;
 	padding: 50px 0px;
 }
+.message-success {
+	width: 80%;
+	margin: 50px auto;
+}
+.wait-dialog {
+	display: none;
+}
+.wait-dialog i {
+	font-size: 60px;
+	margin-top: 30px;
+}
+.wait-dialog p {
+	font-size: 25px;
+	margin-top: 15px;
+}
 /**/
 @media (max-width: 767px) {
 	.center-div {
