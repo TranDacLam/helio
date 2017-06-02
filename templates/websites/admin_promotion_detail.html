@@ -13,6 +13,7 @@
 {% block main_content %} 
 
 <div class="container">
+	<div id="message_success" style="display: none;"><div class="alert alert-success message-success">{% trans "admin_promotion.message_success" %}</div></div>
 	{% if promotion %}
 	<div class="row layer">
 		<div class="col-md-9">
@@ -21,7 +22,7 @@
 			<p>NAME: {{promotion.name}}</p>
 		</div>
 		<div class="col-md-3" align="right">
-			<a class="btn btn-custom-style btn-ad-promotion-detail" href="{% url 'admin_promotions' %}" role="button">TRỞ VỀ ADMIN PROMOTION{% trans "" %}</a>
+			<a class="btn btn-custom-style btn-ad-promotion-detail" href="{% url 'admin_promotions' %}" role="button">{% trans "admin_promotion.btn_back_admin" %}</a>
 		</div>
 	</div>
 	{% endif %}
@@ -41,7 +42,7 @@
 
 	<div class="row layer">
 		<div class="col-md-12" align="right">
-            <a id ="save-btn" class="btn-view-more btn-custom-style btn-ad-promotion-detail" role="button">SAVE</a>
+            <a id ="save-btn" class="btn-view-more btn-custom-style btn-ad-promotion-detail" role="button">{% trans "admin_promotion.btn_save" %}</a>
         </div>
 	</div>
 	{% endif %}
