@@ -231,6 +231,12 @@ msgstr "Main message"
 
 msgid "contact.message_success"
 msgstr "Your message was sent successfully!"
+
+msgid "contact.message_error"
+msgstr "Please fix errors below"
+
+msgid "This field is required."
+msgstr "This field is required."
 # END CONTACT
 
 # START OTHER PRODUCT

@@ -4,18 +4,21 @@ import api.utils as utils
 from captcha.fields import ReCaptchaField
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
+from django.utils.translation import ugettext_lazy
+
 
 class ContactForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput())
     email = forms.CharField(widget=forms.TextInput())
     phone = forms.CharField(widget=forms.TextInput())
     subject = forms.CharField(widget=forms.TextInput())
-    message = forms.CharField(widget=forms.TextInput())
-    captcha = ReCaptchaField()
+    message = forms.CharField(widget=forms.TextInput(), required=False)
+    captcha = ReCaptchaField(required=True)
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
         super(ContactForm, self).__init__(*args, **kwargs)
+        self.fields['captcha'].error_messages = {'required': ugettext_lazy("This field is required.")}
 
     def save(self, commit=True):
         name = self.cleaned_data['name']

@@ -232,6 +232,15 @@ msgstr "Nhập nội dung"
 
 msgid "contact.message_success"
 msgstr "Tin nhắn của bạn đã gửi thành công!"
+
+msgid "contact.message_error"
+msgstr "Có lỗi xãy ra. Bạn vui lòng xem và sửa các lỗi dưới đây"
+
+msgid "Incorrect, please try again."
+msgstr "Không hợp lệ. Vui Lòng Thử Lại."
+
+msgid "This field is required."
+msgstr "Trường này không được bỏ trống."
 # END CONTACT
 
 # START OTHER PRODUCT

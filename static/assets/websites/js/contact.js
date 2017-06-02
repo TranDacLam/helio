@@ -70,7 +70,10 @@ $(document).ready(function() {
 		            $("#message_success").css('display','block');
 		        },
 		        error: function(data) {
-		            alert("Internal Error")
+		        	var form_err = $.parseJSON(data.responseText);
+		        	$("#errors_detail").text(JSON.stringify(form_err));
+		            $("#message_error").css('display','block');
+		            
 		        }
 		    });
 		}
