@@ -232,6 +232,15 @@ msgstr "Nhập nội dung"
 
 msgid "contact.message_success"
 msgstr "Tin nhắn của bạn đã gửi thành công!"
+
+msgid "contact.message_error"
+msgstr "Có lỗi xãy ra. Bạn vui lòng xem và sửa các lỗi dưới đây"
+
+msgid "Incorrect, please try again."
+msgstr "Không hợp lệ. Vui Lòng Thử Lại."
+
+msgid "This field is required."
+msgstr "Trường này không được bỏ trống."
 # END CONTACT
 
 # START OTHER PRODUCT
@@ -241,6 +250,17 @@ msgstr "SẢN PHẨM KHÁC"
 msgid "other_product.header.description"
 msgstr "Ngoài những sản phẩm của Helio center như Helio Play, helio Kids, Quầy đổi quà, Coffee & Bakery. helio Center còn có những sản phẩm độc đáo khác mang bản sắc riêng của Helio Center như Combo, Trip trường học, Tiệc sinh nhật nhằm phục vụ tốt hơn các nhu cầu vui chơi và giả trí cảu khách hàng."
 # END OTHER PRODUCT
+
+# START ADMIN PROMOTION
+msgid "admin_promotion.message_success"
+msgstr "Lưu thành công!"
+
+msgid "admin_promotion.btn_back_admin"
+msgstr "TRỞ VỀ ADMIN PROMOTION!"
+
+msgid "admin_promotion.btn_save"
+msgstr "LƯU"
+# START ADMIN PROMOTION
 
 #START FOOTER
 msgid "footer.contact.address"

@@ -741,6 +741,20 @@ def  reissue_history(request):
         return Response(error, status=500)
 
 
+"""
+    Get Open Time
+"""
 
+
+@api_view(['GET'])
+def open_time(request):
+    try:
+        opentimes = OpenTime.objects.all().order_by('-open_date')
+        serializer = OpenTimeSerializer(opentimes, many=True)
+        return Response(serializer.data)
+    except Exception, e:
+        error = {"code": 500, "message": "Internal Server Error. Please contact administrator.",
+                 "fields": ""}
+        return Response(error, status=500)
 
        

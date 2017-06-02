@@ -4,7 +4,6 @@ from custom_models import *
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 import ast
-from django.http import JsonResponse
 import constants as const
 import time
 from datetime import *
@@ -13,6 +12,7 @@ import api.utils as utils
 from django.http import HttpResponse
 import json
 from django.contrib.auth.decorators import login_required
+
 
 def home(request):
     try:
@@ -80,19 +80,19 @@ def contact(request):
     print "***START CONTACT CONTENT PAGE***"
     try:
         message_success = {}
+        contact_form = ContactForm(request=request)
         if request.method == 'POST':
-            print "POSTTTTTTTTTTTTT"
-
             contact_form = ContactForm(request.POST, request=request)
-
             if contact_form.is_valid():
                 contact_form.save() 
                 message_success = 'Successfully!'
-
                 return HttpResponse(json.dumps(message_success),content_type="application/json")
-                # return render(request, 'websites/contact.html', {"message_success": message_success})
-                
-        return render(request, 'websites/contact.html')
+            else:
+                errors = {}
+                errors[k] = [v[0] for k, v in contact_form.errors.items()]
+                return HttpResponse(json.dumps(errors), content_type="application/json", status=400)
+
+        return render(request, 'websites/contact.html', {"form":contact_form})
 
     except Exception, e:
         print "Error: ", e

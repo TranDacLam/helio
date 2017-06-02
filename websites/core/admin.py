@@ -309,3 +309,8 @@ admin.site.register(Promotion_Label, PromotionLabelAdmin)
 class TransactionTypeAdmin(TranslationAdmin):
      pass
 admin.site.register(Transaction_Type, TransactionTypeAdmin)
+
+
+class OpenTimeAdmin(admin.ModelAdmin):
+     pass
+admin.site.register(OpenTime, OpenTimeAdmin)

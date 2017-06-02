@@ -68,9 +68,13 @@ $(document).ready(function() {
 		        	$("input").val("");
 		            $("textarea").val("");
 		            $("#message_success").css('display','block');
+		            $("#message_error").css('display','none');
 		        },
 		        error: function(data) {
-		            alert("Internal Error")
+		        	var form_err = $.parseJSON(data.responseText);
+		        	$("#errors_detail").text(JSON.stringify(form_err));
+		            $("#message_error").css('display','block');
+		            
 		        }
 		    });
 		}

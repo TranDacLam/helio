@@ -231,6 +231,12 @@ msgstr "Main message"
 
 msgid "contact.message_success"
 msgstr "Your message was sent successfully!"
+
+msgid "contact.message_error"
+msgstr "Please fix errors below"
+
+msgid "This field is required."
+msgstr "This field is required."
 # END CONTACT
 
 # START OTHER PRODUCT
@@ -240,6 +246,17 @@ msgstr "OTHER PRODUCT"
 msgid "other_product.header.description"
 msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra. Donec sit amet enim a velit varius eleifend eget vitae eros. Nulla in vulputate justo. Suspendisse potenti."
 # END OTHER PRODUCT
+
+# START ADMIN PROMOTION DETAIL
+msgid "admin_promotion.message_success"
+msgstr "Save success!"
+
+msgid "admin_promotion.btn_back_admin"
+msgstr "BACK TO ADMIN PROMOTION!"
+
+msgid "admin_promotion.btn_save"
+msgstr "SAVE"
+# START ADMIN PROMOTION DETAIL
 
 #START FOOTER
 msgid "footer.contact.address"

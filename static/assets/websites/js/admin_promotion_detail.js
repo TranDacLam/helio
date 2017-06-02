@@ -15,7 +15,7 @@ $(document).ready(function() {
 			dataType: 'json',
 			data: param,
 			success: function (data) {
-				alert("Save success.");
+				$("#message_success").fadeIn('slow').delay(5000).fadeOut('slow');
 			},
 	        error : function(jqXHR, textStatus, errorThrown) {
 	            alert("Error: " + textStatus + ": " + errorThrown);

@@ -38,6 +38,10 @@
 	<hr class="hr-custom">
 	<!-- CONTACT FORM #TO DO CUSTOM-->
 	<div id="message_success" style="display: none;"><div class="alert alert-success message-success">{% trans "contact.message_success" %}</div></div>
+	<div id="message_error" style="display: none;"><div class="alert alert-danger message-success ">{% trans "contact.message_error" %}
+		<br>
+		<div id="errors_detail"></div>
+	</div></div>
 	
 	<div class="center-div form-group" align="center">
 
@@ -56,6 +60,10 @@
 				<div class="col-md-12 col-xs-12">
 					<label>{% trans "contact.lable.title.phone" %} </label>
 					<input id="id_phone" name="phone" value="{{ phone }}" class="form-control form-control-custom input-contact" type="text" required>
+				</div>
+				<div class="col-md-12 col-xs-12">
+					<label>Captcha </label>
+					{{ form.captcha }}
 				</div>
 			</div>
 			<div class="col-md-6">
