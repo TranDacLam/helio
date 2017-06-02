@@ -27,6 +27,8 @@
 .play-btn-group li a.btn-custom-style {
     padding-right: 0px;
     padding-left: 0px;
+    letter-spacing: 0px;
+    font-size: 30px;
 }
 .play-btn-group li.active a.btn-custom-style {
     background-image: none;

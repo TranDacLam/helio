@@ -81,7 +81,7 @@ msgid "homepage.title.section.game"
 msgstr "HỆ THỐNG VUI CHƠI & GIẢI TRÍ"
 
 msgid "homepage.title.section.redemption_store"
-msgstr "TÌM HIỂU HỆ THỐNG ĐỔI QUÀ TẠI REDEMPTION STORE"
+msgstr "TÌM HIỂU HỆ THỐNG ĐỔI QUÀ TẠI QUẦY ĐỔI QUÀ"
 
 msgid "homepage.title.section.powercard"
 msgstr "THẺ POWERCARD SỬ DỤNG TẠI HELIO CENTER NHƯ THẾ NÀO? "
