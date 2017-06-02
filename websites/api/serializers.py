@@ -158,3 +158,10 @@ class FeedBackSerializer(serializers.Serializer):
     def create(self, validated_data):
         fb = FeedBack.objects.create(**validated_data)
         return fb
+
+
+class OpenTimeSerializer(serializers.Serializer):
+    id = serializers.IntegerField(required=False)
+    open_date = serializers.DateField(allow_null=True)
+    start_time = serializers.TimeField(allow_null=True)
+    end_time = serializers.TimeField(allow_null=True)

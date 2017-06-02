@@ -68,6 +68,7 @@ $(document).ready(function() {
 		        	$("input").val("");
 		            $("textarea").val("");
 		            $("#message_success").css('display','block');
+		            $("#message_error").css('display','none');
 		        },
 		        error: function(data) {
 		        	var form_err = $.parseJSON(data.responseText);

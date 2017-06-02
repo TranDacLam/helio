@@ -256,3 +256,17 @@ class Promotion_Label(DateTimeModel):
     class Meta:
         verbose_name = 'Promotion Label'
         verbose_name_plural = 'Promotion Label'
+
+
+@python_2_unicode_compatible
+class OpenTime(DateTimeModel):
+    open_date = models.DateField(null=True, blank=True)
+    start_time = models.TimeField(null=True, blank=True)
+    end_time = models.TimeField(null=True, blank=True)
+
+    def __str__(self):
+        return '%s' % (self.open_date)
+
+    class Meta:
+        verbose_name = 'Open Time'
+        verbose_name_plural = 'Open Time'
