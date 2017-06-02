@@ -39,5 +39,7 @@ urlpatterns = [
     url(r'^transactions/card/$', views.card_transactions, name="card-transactions"),
     url(r'^reissue/history/$', views.reissue_history, name="reissue-history"),
     url(r'^open/time/$', views.open_time, name="open-time"),
+    url(r'^promotion/gift/$', views.gift_user, name="gift-user"),
+    
 
 ]
