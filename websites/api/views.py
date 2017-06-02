@@ -183,6 +183,7 @@ def user_info(request):
             country = request.data.get('country', '')
             address = request.data.get('address', '')
             city = request.data.get('city', '')
+            device_uid = request.data.get('device_uid', '')
 
             user = request.user
             if first_name:
@@ -201,6 +202,8 @@ def user_info(request):
                 user.address = address
             if city:
                 user.city = city
+            if device_uid:
+                user.device_uid = device_uid
 
             user.save()
         return Response({'flag': True, 'message': 'Update infomation user successfully.'})
@@ -749,10 +752,20 @@ def  reissue_history(request):
 @api_view(['GET'])
 def open_time(request):
     try:
-        opentimes = OpenTime.objects.all().order_by('-open_date')
-        serializer = OpenTimeSerializer(opentimes, many=True)
+        open_date = request.GET.get("open_date", "")
+        if not open_date:
+            error = {
+                "code": 400, "message": "Date request is required.", "fields": "open_date"}
+            return Response(error, status=400)
+
+        opentimes = OpenTime.objects.get(open_date=open_date)
+        serializer = OpenTimeSerializer(opentimes, many=False)
         return Response(serializer.data)
+    except OpenTime.DoesNotExist, e:
+        error = {"code": 400, "message": "%s" % e, "fields": "open_date"}
+        return Response(error, status=400)
     except Exception, e:
+        print "Action open_time : ", e
         error = {"code": 500, "message": "Internal Server Error. Please contact administrator.",
                  "fields": ""}
         return Response(error, status=500)
