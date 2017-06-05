@@ -175,12 +175,9 @@ def term_condition(request):
     print "***START TERM & CONDITION PAGE***"
     try:
         # Experience info
-        term_type = Post_Type.objects.get(pk=const.TERM_CONDITION_POST_TYPE_ID)
-
-        # Experience list
-        terms = Post.objects.filter(post_type = term_type)
+        term = Post.objects.get(key_query=const.TERM_AND_CONDITION_KEY_QUERY)
         
-        return render(request, 'websites/term_condition.html', {"term_type": term_type, "terms": terms})
+        return render(request, 'websites/term_condition.html', {"term": term})
     except Exception, e:
         print "Error: ", e
         raise Exception("ERROR : Internal Server Error .Please contact administrator.")

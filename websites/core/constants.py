@@ -20,3 +20,4 @@ REDEMPTION_STORE_KEY_QUERY='kq_redemption_store'
 POLICY_KEY_QUERY="kq_policy"
 KIDS_PRICING_KEY_QUERY='kq_kids_pricing'
 TIME_ACTIVE_KEY_QUERY='kq_time_active'
+TERM_AND_CONDITION_KEY_QUERY='kq_term_and_condition'
