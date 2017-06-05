@@ -27,13 +27,20 @@ def custom_exception_handler(exc, context):
     response = exception_handler(exc, context)
     # Now add the HTTP status code to the response.
     if response is not None:
+        try:
+            message = exc.detail.values()[0] if exc.detail else ""
+            field = exc.detail.keys()[0] if exc.detail else ""
+        except Exception, e:
+            print "custom_exception_handler ",e
+            message = "errors"
+        
         response.data['code'] = response.status_code
         response.data['message'] = response.data[
-            'detail'] if 'detail' in response.data else str(response.data)
-        response.data['fields'] = ""
+            'detail'] if 'detail' in response.data else str(message)
+        response.data['fields'] = field
         if 'detail' in response.data:
             del response.data['detail']
-
+    
     return response
 
 """
