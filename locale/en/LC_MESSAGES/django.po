@@ -246,7 +246,7 @@ msgid "admin_promotion.message_success"
 msgstr "Save success!"
 
 msgid "admin_promotion.btn_back_admin"
-msgstr "BACK TO ADMIN PROMOTION!"
+msgstr "BACK TO ADMIN PROMOTION"
 
 msgid "admin_promotion.btn_save"
 msgstr "SAVE"

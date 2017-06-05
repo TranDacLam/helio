@@ -247,7 +247,7 @@ msgid "admin_promotion.message_success"
 msgstr "Lưu thành công!"
 
 msgid "admin_promotion.btn_back_admin"
-msgstr "TRỞ VỀ ADMIN PROMOTION!"
+msgstr "TRỞ VỀ ADMIN PROMOTION"
 
 msgid "admin_promotion.btn_save"
 msgstr "LƯU"
