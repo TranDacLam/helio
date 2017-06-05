@@ -140,8 +140,7 @@ a.btn-custom-style.btn-custom-style-events-view-more:hover {
     background-color: #211336;
     opacity: 0.5;
 }
-
-.item-line.finished-class .item-content-image img, 
+ 
 .item-line.future-class .item-content-image img
 {
     opacity: 0.4;
