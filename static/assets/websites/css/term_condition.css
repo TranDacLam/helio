@@ -1,49 +1,15 @@
-.navbar-default .nav-custom ul {
-    float: none;
-    display: block;
+.div-content {
+    margin: 150px 0 50px;
 }
-.sidebar-nav .navbar-custom li {
-    float: none;
-    display: block;
+.title-term-condition {
+    margin-bottom: 50px;
 }
-.sidebar-nav .navbar-custom li:after {
-    background-color: #15062b;
-    color: #fff;
+.date-term-conditon {
+    margin-bottom: 20px;
 }
-
-.navbar-default .nav-custom {
-    border: none;
-}
-
-.nav-custom {
-    text-align: right;
-    padding: 70px 0px 20px;
-}
-.nav-custom .navbar-nav>.active>a, 
-.nav-custom .navbar-nav>.active>a:focus, 
-.nav-custom .navbar-nav>.active>a:hover, 
-.nav-custom .navbar-nav>li>a:focus,
-.nav-custom .navbar-nav>li>a:hover{
-    color: #fec231;
-    background-color: #15062b;
-    font-family: "Yanone Kaffeesatz";
-    font-size: 23px;
-    letter-spacing: 2px;
-    line-height: 1.2;
-}
-.nav-custom .navbar-nav>li>a{
-    color: #fff;
-    font-family: "Yanone Kaffeesatz";
-    font-size: 23px;
-    letter-spacing: 2px;
-    line-height: 1.2;
-}
-.panel-custom-content {
-    padding: 70px 0px 20px;
-}
-
-.panel-custom-content p {
-    padding: 10px 0px;
+.div-content a {
+    text-decoration: none;
+    color: #337ab7;
 }
 p.page-title-text {
     max-width: 980px;

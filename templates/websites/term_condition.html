@@ -1,66 +1,28 @@
 {% extends "layout.html" %}
+{% load i18n %}
+{% block title %}Term and condition{% endblock %}
 {% block extrastylesheet %}
 	<link href="{{ STATIC_URL }}assets/websites/css/term_condition.css" rel="stylesheet" type="text/css" />
-
-{% endblock %}
-{% block title %}Term and condition - Điều khoản sử dụng{% endblock %}
-{% block extrascript %}
-   <!--  <script src = "{{ STATIC_URL }}assets/websites/js/powercard.js"></script> -->
 {% endblock %}
 {% block main_content %} 
-
-<div class="container">
-	<!-- CARD PAGE DESCRIPTION -->
-	{% if term_type %}
+{% if term %}
+<div class="container div-content-layer">
 	<div class="page-top">
 		<div class="page-header-img">
 			<div>
-				<img src="{{ STATIC_URL }}assets/websites/images/tcs-header.png" width="100%">
+				<img src="{{ MEDIA_URL }}{{ term.image }}" width="100%">
 			</div>
 			<div class="page-title" align="center">
 				<div class="col-md-12">
-					<p class="page-title-text">{{term_type.name}}</p>
+					<p class="page-title-text">{{term.name}}</p>
 				</div>
 			</div>
 		</div>
 	</div>
-	{% endif %}
-	<!-- button -->
-	{% if terms %}
-	<div class="row">
-		<div class="col-xs-4 col-md-4">
-			<div class="sidebar-nav">
-				<div class="navbar navbar-default " role="navigation">
-					<div class="navbar-collapse nav-custom sidebar-navbar-collapse">
-						<ul class="nav navbar-nav navbar-custom">
-							{% for term in terms %}
-							<li class="{% if forloop.counter0 == 0 %} active {% endif %}">
-								<a class="list-custom-style" role="tab" data-toggle="tab" href="#term_{{term.id}}">{{term.name}}</a>
-							</li>
-							{% endfor %}
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-xs-8 col-md-8">
-			<div class="content-section">
-				<div class="tab-content">
-					{% for term in terms %}
-					<div role="tabpanel" class="tab-pane {% if forloop.counter0 == 0 %} active {% endif %}" id="term_{{term.id}}">
-						<div class="panel-custom-content">
-							{{term.content | safe}}
-						</div>
-					</div>
-					{% endfor %}
-				</div>
-			</div>
-		</div>
-	</div>
-	{% endif %}
-	<!-- DOWNLOAD APP BANNER -->
-	<div class="app-banner">
-		<a href="#"><img src="{{ STATIC_URL }}assets/websites/images/download-app_banner.png" width="100%"></a>
+	<div class="div-content">
+		{{term.content | safe}}
 	</div>
 </div>
+{% endif %}
+
 {% endblock %}
