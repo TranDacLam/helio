@@ -19,7 +19,6 @@ import helper
 import ast
 import constants
 import utils
-
 from django.db import connections
 
 
@@ -183,6 +182,7 @@ def user_info(request):
             country = request.data.get('country', '')
             address = request.data.get('address', '')
             city = request.data.get('city', '')
+            device_uid = request.data.get('device_uid', '')
 
             user = request.user
             if first_name:
@@ -201,6 +201,8 @@ def user_info(request):
                 user.address = address
             if city:
                 user.city = city
+            if device_uid:
+                user.device_uid = device_uid
 
             user.save()
         return Response({'flag': True, 'message': 'Update infomation user successfully.'})
@@ -276,6 +278,44 @@ def change_password(request):
         error = {"code": 500, "message": "Cannot update password for user. Please contact administrator.",
                  "fields": "", "flag": False}
         return Response(error, status=500)
+
+
+"""
+    Update user have get a gift
+"""
+
+@api_view(['PUT'])
+def gift_user(request):
+    try:
+        if not request.user.anonymously:
+            promotion_id = request.data.get('promotion_id', '')
+            if not promotion_id:
+                error = {
+                    "code": 400, "message": "promotion_id is required.", "fields": "promotion_id"}
+                return Response(error, status=400)
+
+            gift = Gift.objects.get(user=request.user, promotion_id=promotion_id)
+            message = "Error. User Have get gift from promotion"
+            status_code = 501
+            if not gift.is_used:
+                message = "Success"
+                status_code = 200
+                gift.is_used = True
+                gift.save()
+
+            return Response({'message': message}, status=status_code)
+        else:
+            return Response({'message': 'Anonymous User Cannot Call This Action.'}, status=400)
+
+    except Gift.DoesNotExist, e:
+        error = {"code": 400, "message": "Promotion for user does not matching. Please check again.",
+                 "fields": ""}
+    except Exception, e:
+        print "Error gift_user ",e
+        error = {"code": 500, "message": "Cannot update password for user. Please contact administrator.",
+                 "fields": ""}
+        return Response(error, status=500)
+
 
 """
     Send Feedback
@@ -749,10 +789,24 @@ def  reissue_history(request):
 @api_view(['GET'])
 def open_time(request):
     try:
-        opentimes = OpenTime.objects.all().order_by('-open_date')
-        serializer = OpenTimeSerializer(opentimes, many=True)
+        open_date = request.GET.get("open_date", "")
+        if not open_date:
+            error = {
+                "code": 400, "message": "Date request is required.", "fields": "open_date"}
+            return Response(error, status=400)
+
+        opentimes = OpenTime.objects.get(open_date=open_date.strip())
+        serializer = OpenTimeSerializer(opentimes, many=False)
         return Response(serializer.data)
+    except OpenTime.DoesNotExist, e:
+        error = {"code": 400, "message": "%s" % e, "fields": "open_date"}
+        return Response(error, status=400)
+    except ValidationError, e:
+        error = {"code": 400, "message": "%s"%e,
+                 "fields": ""}
+        return Response(error, status=400)
     except Exception, e:
+        print "Action open_time : ", e
         error = {"code": 500, "message": "Internal Server Error. Please contact administrator.",
                  "fields": ""}
         return Response(error, status=500)
