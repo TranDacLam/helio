@@ -28,7 +28,7 @@ def custom_exception_handler(exc, context):
     # Now add the HTTP status code to the response.
     if response is not None:
         try:
-            message = exc.detail.values()[0] if exc.detail else ""
+            message = exc.detail.values()[0][0] if exc.detail else ""
             field = exc.detail.keys()[0] if exc.detail else ""
         except Exception, e:
             print "custom_exception_handler ",e
