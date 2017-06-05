@@ -81,16 +81,17 @@ def contact(request):
     try:
         message_success = {}
         contact_form = ContactForm(request=request)
-
         if request.method == 'POST':
             contact_form = ContactForm(request.POST, request=request)
-
             if contact_form.is_valid():
                 contact_form.save() 
                 message_success = 'Successfully!'
-
                 return HttpResponse(json.dumps(message_success),content_type="application/json")
-        
+            else:
+                errors = {}
+                errors[k] = [v[0] for k, v in contact_form.errors.items()]
+                return HttpResponse(json.dumps(errors), content_type="application/json", status=400)
+
         return render(request, 'websites/contact.html', {"form":contact_form})
 
     except Exception, e:
