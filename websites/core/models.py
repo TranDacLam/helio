@@ -82,10 +82,10 @@ class Event(DateTimeModel):
         max_length=1000, null=True, blank=True, upload_to="events")
     short_description = models.CharField(max_length=350)
     content = models.TextField()
-    start_date = models.DateField(null=True, blank=True)
-    end_date = models.DateField(null=True, blank=True)
-    start_time = models.TimeField(null=True, blank=True)
-    end_time = models.TimeField(null=True, blank=True)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
     is_draft = models.BooleanField(default=False)
 
     def __str__(self):
