@@ -197,7 +197,7 @@ def user_info(request):
             if last_name:
                 user.last_name = last_name
             if birth_date:
-                user.birth_date = birth_date
+                user.birth_date = birth_date 
             if phone:
                 user.phone = phone
             if personal_id:
@@ -247,7 +247,8 @@ def users(request):
         error = {"code": 400, "message": "%s" % e, "fields": "email"}
         return Response(error, status=400)
     except Exception, e:
-        error = {"code": 500, "message": "Cannot update infomation user. Please contact administrator.",
+        print "Error Get User ",e
+        error = {"code": 500, "message": "Internal Server Error. Please contact administrator.",
                  "fields": "", "flag": False}
         return Response(error, status=500)
 
