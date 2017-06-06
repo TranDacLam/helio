@@ -12,10 +12,13 @@ import api.utils as utils
 from django.http import HttpResponse
 import json
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import LANGUAGE_SESSION_KEY
+
 
 
 def home(request):
     try:
+        request.session[LANGUAGE_SESSION_KEY] = 'vi'
         result = {}
         # banners on home page
         banners = Banner.objects.filter(is_show=True).order_by('position')

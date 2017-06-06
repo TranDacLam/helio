@@ -118,7 +118,7 @@ class PostTypeSerializer(serializers.Serializer):
 
 class PostImageSerializer(serializers.Serializer):
     id = serializers.IntegerField()
-    image = serializers.CharField(max_length=1000)
+    image = serializers.ImageField(max_length=1000)
 
 
 class PostsSerializer(serializers.Serializer):
