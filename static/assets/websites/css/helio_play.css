@@ -145,4 +145,8 @@ a.btn-custom-style.btn-custom-style-play:hover {
         font-size: 24px;
         letter-spacing: 1px;
     }
+    .play-btn-group li a.btn-custom-style {
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
 }
