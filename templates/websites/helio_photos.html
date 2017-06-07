@@ -45,7 +45,7 @@
                 <div class="div-text">
                     <p class="ablum-name big-font-size">{{photo.name}}</p>
                     <div class="view-all" style="display: none;">
-                        <p>{{photo.images_len}} images</p>
+                        <p>{{photo.images_len}} {% trans "helio_photo.total_image" %}</p>
                         {% if photo.images_len > 0 %}
                         <a id="{{photo.id}}" class="btn btn-custom-style view-images-btn" role="button" data-toggle="modal" >{% trans "btn.view_all" %}</a>
                         {% endif %}

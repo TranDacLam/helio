@@ -26,7 +26,7 @@
         <div class="carousel-inner" role="listbox">
           {% for new in news_hots %}
           <div class="item {% if forloop.counter0 == 0 %} active {% endif %}">
-            <img src="{{ MEDIA_URL }}{{ new.image }}" alt="Helio" width="100%">
+            <img class="img-slide-news" src="{{ MEDIA_URL }}{{ new.image }}" alt="Helio" width="100%">
             <div class="carousel-caption carousel-caption-custom">
               <p class="big-font-size">
                 {{new.name}}

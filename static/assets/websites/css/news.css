@@ -37,6 +37,9 @@ ol.carousel-indicators-custom li {
     left: 0;
     margin: auto;
 }
+#news_carousel .img-slide-news {
+    opacity: 0.4;
+}
 /*END CAROUSEL*/
 
 /*START news CSS*/
