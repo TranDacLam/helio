@@ -98,11 +98,6 @@ msgstr "PLAY"
 msgid "homepage.text.kids"
 msgstr "KIDS"
 
-msgid "homepage.text.coffee"
-msgstr "COFFEE"
-
-msgid "homepage.text.coffee.description"
-msgstr "Cùng trải nghiệm cuộc sống sôi động về đêm với âm nhạc cực chất, ẩm thực cực ngon, mua sắm thả ga tại CHỢ ĐÊM HELIO - vui, ngon, rẻ, nhất định phải ghé tại Đà Nẵng."
 # END HOME PAGE
 
 # START FAQs REDEMPTION STORE
