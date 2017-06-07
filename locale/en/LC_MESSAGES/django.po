@@ -92,11 +92,17 @@ msgstr "HELIO CENTER EVENT"
 msgid "homepage.title.section.entertaiment"
 msgstr "ENTERTAINMENT CENTER AT DA NANG"
 
+msgid "homepage.text.night_life"
+msgstr "NIGHT LIFE"
+
 msgid "homepage.text.play"
 msgstr "PLAY"
 
 msgid "homepage.text.kids"
 msgstr "KIDS"
+
+msgid "homepage.text.coffee"
+msgstr "COFFEE"
 
 # END HOME PAGE
 
