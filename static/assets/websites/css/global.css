@@ -82,6 +82,15 @@ p.page_description {
     transform: rotate(30deg);
     margin-right: 10px;
 }
+/*LIMIT SHORT DESCRIPTION*/
+.text-limit-rows {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   max-height: 100px;
+    -webkit-line-clamp: 4;
+   -webkit-box-orient: vertical;
+}
 
 /*HEADER*/
 .navbar-default .navbar-nav>.open>a, 

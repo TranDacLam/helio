@@ -58,6 +58,14 @@ a.btn-custom-style.btn-custom-style-events:hover {
     border: 1px solid #fff;
     background-image: none;
 }
+.text-limit-rows {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   max-height: 100px;
+    -webkit-line-clamp: 4;
+   -webkit-box-orient: vertical;
+}
 /*END GAME CONTENT CSS*/
 
 /*START BUTTON VIEW MORE*/

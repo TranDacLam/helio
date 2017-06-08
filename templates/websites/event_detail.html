@@ -84,7 +84,7 @@
             {% for event in other_events %}
             <div class="item col-md-4 col-xs-12 custom-promotion other-item">
                 <div class="style-post">
-                    <span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ event.image }}" width="100%"></a></span>
+                    <span><a href="/events/{{event.id}}/detail/" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ event.image }}" width="100%"></a></span>
                     <a class="title-post" href="/events/{{event.id}}/detail/">{{event.name}}</a>
                     <p class="text-limit-rows">{{event.short_description}}</p> <a class="view-detail" href="/events/{{event.id}}/detail/">{% trans "btn.view_detail" %}</a>
                 </div>

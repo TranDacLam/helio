@@ -67,7 +67,7 @@
 	    	{% for experience in other_experiences %}
 			<div class="item col-md-4 col-xs-12 custom-experience other-item">
 	        	<div class="style-post">
-	          		<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ experience.image }}" width="100%"></a></span>
+	          		<span><a href="/experience/{{experience.id}}/detail/" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ experience.image }}" width="100%"></a></span>
 	          		<a class="title-post" href="/experience/{{experience.id}}/detail/">{{experience.name}}</a>
 	          		<p class="text-limit-rows">{{experience.short_description}}</p> <a class="view-detail" href="/experience/{{experience.id}}/detail/">{% trans "btn.view_detail" %}</a>
 	        	</div>

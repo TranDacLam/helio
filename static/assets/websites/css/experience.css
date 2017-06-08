@@ -77,14 +77,6 @@ ol.carousel-indicators-custom li {
 .btn-custom {
     background-color: transparent;
 }
-.text-limit-rows {
-   overflow: hidden;
-   text-overflow: ellipsis;
-   display: -webkit-box;
-   max-height: 80px;      
-   -webkit-line-clamp: 3; 
-   -webkit-box-orient: vertical;
-}
 .text-limit-rows > a {
     display: inline-block;
 }

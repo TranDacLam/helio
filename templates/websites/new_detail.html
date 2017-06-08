@@ -50,7 +50,7 @@
 	    	{% for new in other_news %}
 			<div class="item col-md-4 col-xs-12 custom-experience other-item">
 	        	<div class="style-post">
-	          		<span><a href="#" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ new.image }}" width="100%"></a></span>
+	          		<span><a href="/news/{{new.id}}/detail/" class="thumbnail thumbnail-custom"><img src="{{ MEDIA_URL }}{{ new.image }}" width="100%"></a></span>
 	          		<a class="title-post" href="/news/{{new.id}}/detail/">{{new.name}}</a>
 	          		<p class="text-limit-rows">{{new.short_description}}</p> <a class="view-detail" href="/news/{{new.id}}/detail/">{% trans "btn.view_detail" %}</a>
 	        	</div>
