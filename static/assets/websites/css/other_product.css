@@ -55,3 +55,22 @@
         content: none;
     }
 } 
+@media (max-width: 767px) { 
+    .other-product-btn-group li a.btn-custom-style:hover,
+    .other-product-btn-group li a.btn-custom-style:focus,
+    .other-product-btn-group li a {
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
+    .other-product-btn-group li {
+        padding-bottom: 15px;
+    }
+    .other-product-btn-group li.active a.btn-custom-style {
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
+    .other-product-btn-group li a.btn-custom-style {
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
+}
