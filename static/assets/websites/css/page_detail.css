@@ -176,4 +176,7 @@ a.btn-custom-style.btn-custom-style-kids:hover {
     .page-title-detail {
         width: 100%;
     }
+    .div-content a {
+        word-wrap: break-word;
+    }
 }
