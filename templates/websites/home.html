@@ -79,23 +79,32 @@
                             <h2 role = "button" data-toggle="collapse" data-target="#id_night_life" data-parent="#id_game_section">NIGHT LIFE<i class="more-less glyphicon glyphicon-minus"></i></h2>
                         </div>
                         <div class="collapse in" id="id_night_life">
+                            {% if result.night_life_types %}
                             <div class="game-section-detail">
                                 <div class="col-xs-12 col-md-6 game-left">
+                                    {% for type in result.night_life_types %}
                                     <div class="game-type-slide">
                                         <div class="game-type-content">
-                                            <p class="title-content game-type">{% trans "homepage.text.night_life" %}</p>
-                                            <p class="short_description">{% trans "homepage.text.night_life.description" %}</p> 
+                                            <p class="title-content game-type">
+                                                {{type.name}}</p>
+                                            <p class="short_description">
+                                                {{type.description}}
+                                                <!-- {% trans "homepage.text.night_life.description" %} --></p> 
                                         </div>
                                         <hr>
                                         <!-- <p class="game-description short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p>  -->
                                     </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-6 game-section-detail">
+                                {% for type in result.night_life_types %}
                                 <div class="game-right">
-                                    <img src="{{ STATIC_URL }}assets/websites/images/home_night_life.jpg" alt="helio" width="100%" height="550">
+                                    <img src="{{ MEDIA_URL }}{{type.image}}" alt="helio" width="100%" height="550">
                                 </div>
+                                {% endfor %}
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                     
@@ -190,23 +199,29 @@
                             <h2 role = "button" data-toggle="collapse" href="#id_helio_coffee" data-parent="#id_game_section" class="collapsed">COFFEE <i class="more-less glyphicon glyphicon-plus"></i></h2>
                         </div>
                         <div class="collapse" id="id_helio_coffee">
+                            {% if result.coffee_types %}
                             <div class="game-section-detail">
                                 <div class="col-xs-12 col-md-6 game-left">
+                                    {% for type in result.coffee_types %}
                                     <div class="game-type-slide">
                                         <div class="game-type-content">
-                                            <p class="title-content game-type">COFFEE</p>
-                                            <p class="short_description">{% trans "homepage.text.coffee.description" %}</p> 
+                                            <p class="title-content game-type">{{type.name}}</p>
+                                            <p class="short_description">{{type.description}}</p> 
                                         </div>
                                         <hr>
                                         <!-- <p class="game-description short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p>  -->
                                     </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-6 game-section-detail">
+                                {% for type in result.coffee_types %}
                                 <div class="game-right">
-                                    <img src="{{ STATIC_URL }}assets/websites/images/home_game_section_right.png" alt="helio" width="100%" height="550">
+                                    <img src="{{ MEDIA_URL }}{{type.image}}" alt="helio" width="100%" height="550">
                                 </div>
+                                {% endfor %}
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                    

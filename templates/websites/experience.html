@@ -27,7 +27,7 @@
 					{% for experience in result.experiences_hots %}
 					<div class="item {% if forloop.counter0 == 0 %} active {% endif %}">
 						<a href="/experience/{{experience.id}}/detail/" target="_blank">
-							<img src="{{ MEDIA_URL }}{{ experience.image }}" alt="Helio" width="100%">
+							<img class="img-slide-experience" src="{{ MEDIA_URL }}{{ experience.image }}" alt="Helio" width="100%">
 							<div class="carousel-caption carousel-caption-custom">
 								<p class="big-font-size">
 									{{experience.name}}

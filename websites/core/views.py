@@ -33,9 +33,11 @@ def home(request):
         result["hots"] = hots
 
         # game section
+        result["night_life_types"] = Type.objects.filter(category_id=const.NIGHT_LIFE_CATEGORY)
         result["play_types"] = Type.objects.filter(category_id=const.HELIO_PLAY_CATEGORY)
         result["kids_types"] = Type.objects.filter(category_id=const.HELIO_KIDS_CATEGORY)
-
+        result["coffee_types"] = Type.objects.filter(category_id=const.COFFEE_CATEGORY)
+        
         # game categorys
         events = Event.objects.all().order_by('-created')[:2]
         result["events"] = events

@@ -95,9 +95,6 @@ msgstr "TRUNG TÂM VUI CHƠI GIẢI TRÍ TẠI ĐÀ NẴNG"
 msgid "homepage.text.night_life"
 msgstr "CHỢ ĐÊM"
 
-msgid "homepage.text.night_life.description"
-msgstr "Cùng trải nghiệm cuộc sống sôi động về đêm với âm nhạc cực chất, ẩm thực cực ngon, mua sắm thả ga tại CHỢ ĐÊM HELIO - vui, ngon, rẻ, nhất định phải ghé tại Đà Nẵng."
-
 msgid "homepage.text.play"
 msgstr "PLAY"
 
@@ -107,8 +104,6 @@ msgstr "KIDS"
 msgid "homepage.text.coffee"
 msgstr "COFFEE"
 
-msgid "homepage.text.coffee.description"
-msgstr "Cùng trải nghiệm cuộc sống sôi động về đêm với âm nhạc cực chất, ẩm thực cực ngon, mua sắm thả ga tại CHỢ ĐÊM HELIO - vui, ngon, rẻ, nhất định phải ghé tại Đà Nẵng."
 # END HOME PAGE
 
 # START FAQs REDEMPTION STORE
@@ -261,6 +256,11 @@ msgstr "TRỞ VỀ ADMIN PROMOTION"
 msgid "admin_promotion.btn_save"
 msgstr "LƯU"
 # START ADMIN PROMOTION
+
+# START HELIO PHOTO
+msgid "helio_photo.total_image"
+msgstr "ảnh"
+# END HELIO PHOTO
 
 #START FOOTER
 msgid "footer.contact.address"

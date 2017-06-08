@@ -37,6 +37,9 @@ ol.carousel-indicators-custom li {
     left: 0;
     margin: auto;
 }
+#experiences_carousel .img-slide-experience {
+    opacity: 0.4;
+}
 /*END CAROUSEL*/
 
 /*START EXPERIENCES CSS*/
