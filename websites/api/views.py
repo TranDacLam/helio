@@ -638,7 +638,11 @@ def faqs(request):
                       error, "fields": "category_id"}
             return Response(errors, status=400)
 
-        faq_list = FAQ.objects.filter(category_id=category_id)
+        if category_id:
+            faq_list = FAQ.objects.filter(category_id=category_id)
+        else:
+            faq_list = FAQ.objects.all()
+        
         serializer = FAQsSerializer(faq_list, many=True)
         return Response(serializer.data)
     except Exception, e:
