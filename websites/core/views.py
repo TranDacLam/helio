@@ -359,8 +359,6 @@ def promotions(request):
 
 
             category_all = Category();
-            category_all.name = "ALL"
-            category_all.name_vi = "ALL"
             category_all.id = 0
             datas[category_all] = promotions
 
