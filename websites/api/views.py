@@ -632,13 +632,11 @@ def faqs(request):
     try:
         category_id = request.GET.get("category_id", "")
 
-        error = helper.check_id_valid(category_id)
-        if error:
-            errors = {"code": 400, "message": "%s" %
-                      error, "fields": "category_id"}
-            return Response(errors, status=400)
+        if category_id:
+            faq_list = FAQ.objects.filter(category_id=category_id)
+        else:
+            faq_list = FAQ.objects.all()
 
-        faq_list = FAQ.objects.filter(category_id=category_id)
         serializer = FAQsSerializer(faq_list, many=True)
         return Response(serializer.data)
     except Exception, e:

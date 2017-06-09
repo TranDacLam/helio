@@ -168,6 +168,9 @@ msgstr "TẤT CẢ KHUYẾN MÃI "
 
 msgid "promotionpage.other_promotion" 
 msgstr "KHUYẾN MÃI  KHÁC"
+
+msgid "promotionpage.menu.all" 
+msgstr "TẤT CẢ"
 # END PROMOTION DETAIl
 
 # START CAREER DETAIl

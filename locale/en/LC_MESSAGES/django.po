@@ -167,6 +167,9 @@ msgstr "ALL PROMOTION"
 
 msgid "promotionpage.other_promotion" 
 msgstr "OTHER PROMOTION"
+
+msgid "promotionpage.menu.all" 
+msgstr "ALL"
 # END PROMOTION DETAIl
 
 # START CAREER DETAIl
