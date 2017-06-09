@@ -262,7 +262,7 @@ msgstr "LƯU"
 
 # START HELIO PHOTO
 msgid "helio_photo.total_image"
-msgstr "ảnh"
+msgstr "Hình ảnh"
 # END HELIO PHOTO
 
 #START FOOTER
