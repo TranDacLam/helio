@@ -39,7 +39,7 @@ def home(request):
         result["coffee_types"] = Type.objects.filter(category_id=const.COFFEE_CATEGORY)
         
         # game categorys
-        events = Event.objects.all().order_by('-created')[:2]
+        events = Event.objects.all().order_by('-start_date')[:2]
         result["events"] = events
         return render(request, 'websites/home.html', {"result":result})
     except Exception, e:
