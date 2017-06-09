@@ -24,7 +24,7 @@ class UserSerializer(SetCustomErrorMessagesMixin, serializers.ModelSerializer):
         style={'input_type': 'password'},
         write_only=True)
     device_uid = serializers.CharField(max_length=255)
-    avatar = serializers.ImageField(max_length=1000, allow_null=True)
+    avatar = serializers.ImageField(max_length=1000, allow_null=True, required=False)
 
     class Meta:
         model = User
