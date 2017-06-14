@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 {% load i18n %}
+
+{% block metacontent %}
+    <meta property="og:title" content="{{event.name}}" />
+{% endblock %}
+
 {% block title %}Event Detail{% endblock %}
 {% block extrastylesheet %}
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/page_detail.css">

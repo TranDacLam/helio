@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 {% load i18n %}
+
+{% block metacontent %}
+    <meta property="og:title" content="{{career.name}}" />
+{% endblock %}
+
 {% block title %}Carrer Detail{% endblock %}
 {% block extrastylesheet %}
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/page_detail.css">
