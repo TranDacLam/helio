@@ -16,7 +16,7 @@ class UserSerializer(SetCustomErrorMessagesMixin, serializers.ModelSerializer):
     last_name = serializers.CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
     birth_date = serializers.DateField(required=False, allow_null=True)
     phone = serializers.CharField(max_length=50, required=False, allow_null=True, allow_blank=True)
-    personal_id = serializers.CharField(max_length=50)
+    personal_id = serializers.CharField(max_length=50, required=False, allow_null=True, allow_blank=True)
     address = serializers.CharField(max_length=255)
     city = serializers.CharField(max_length=255)
     country = serializers.CharField(max_length=255)
