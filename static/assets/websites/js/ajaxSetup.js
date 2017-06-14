@@ -29,21 +29,12 @@ $(document).ready(function() {
         }
     }); 
     $.ajaxSetup({ cache: false });
-
+    
     // FB init function
-    // FB.init({
-    //     appId: fbAppId,
-    //     version: 'v2.9',
-    //     cookie     : true,
-    //     xfbml      : true
-    // });
-
-    $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
-        FB.init({
-          appId: fbAppId,
-          version: 'v2.7' // or v2.1, v2.2, v2.3, ...
-        });     
-        $('#loginbutton,#feedbutton').removeAttr('disabled');
-        FB.getLoginStatus();
-      });
+    FB.init({
+        appId: fbAppId,
+        version: 'v2.9',
+        cookie     : true,
+        xfbml      : true
+    });
 });
