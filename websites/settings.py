@@ -24,11 +24,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '4ygz*y=+@n+gl4!7#b070!+(&g(5uo09&-$crcvp+w^87&%ize'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-FB_APP_ID = '126726044544310'
+FB_APP_ID = '382447632149159'
 
 
 # Application definition
@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'multiupload',
-    'captcha'
+    'captcha',
+    # 'fcm_django'
     
 ]
 
@@ -117,8 +118,8 @@ AUTH_USER_MODEL = 'core.User'
 
 SOCIAL_AUTH_USER_MODEL = 'core.User'
 # Config Social Account
-SOCIAL_AUTH_FACEBOOK_KEY = '295137440610143'
-SOCIAL_AUTH_FACEBOOK_SECRET = '4b4aef291799a7b9aaf016689339e97f'
+SOCIAL_AUTH_FACEBOOK_KEY = '382447632149159'
+SOCIAL_AUTH_FACEBOOK_SECRET = '83bca2e84b3f783f7a41ca9ec14bb39c'
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', ]
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': ','.join([
@@ -291,6 +292,11 @@ CODE_LEN = 7 # Default code length
 
 # Config Google reCaptcha
 NOCAPTCHA = True
+
+# FCM_DJANGO_SETTINGS = {
+#     "FCM_SERVER_KEY": "AAAAMkND2_U:APA91bEVkDFA8uACGPTTj-Vc86kg4fuyhrPuUmGHJdzkuBaaJh4ZQuc09zMZCEt2xaSj5Xi7opPT9OZHq-hxDrWmqfkRGqRv38uC2nqHHK3Xwy-jwglWoSwIYywpT-qcsoW9TKAsiUayeRAkj_AYJ0AG-D02Ubx0jg",
+#     # "FCM_ERROR_TIMEOUT": 3600
+# }
 
 try:
     if 'DEVELOPMENT' in os.environ and os.environ['DEVELOPMENT']:

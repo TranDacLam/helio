@@ -234,7 +234,7 @@ class Gift(DateTimeModel):
     is_used = models.BooleanField('Used', default=False)
 
     def __str__(self):
-        return '%s' % (self.user.name)
+        return '%s' % (self.user.email)
 
 
 @python_2_unicode_compatible

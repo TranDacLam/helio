@@ -33,6 +33,7 @@ def custom_exception_handler(exc, context):
         except Exception, e:
             print "custom_exception_handler ",e
             message = "errors"
+            field = ""
         
         response.data['code'] = response.status_code
         response.data['message'] = response.data[
