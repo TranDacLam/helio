@@ -28,7 +28,7 @@ class UserSerializer(SetCustomErrorMessagesMixin, serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'email', 'first_name', 'last_name', 'birth_date', 'phone', 'personal_id', 'country', 'address', 'city', 'device_uid', 'avatar',)
+        fields = ('username', 'password', 'email', 'first_name', 'last_name', 'birth_date', 'phone', 'personal_id', 'country', 'address', 'city', 'device_uid', 'avatar', 'is_staff')
         custom_error_messages_for_validators = {
             'email': {
                 UniqueValidator: _('This email is already taken. Please, try again')
