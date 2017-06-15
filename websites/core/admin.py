@@ -314,3 +314,13 @@ admin.site.register(Transaction_Type, TransactionTypeAdmin)
 class OpenTimeAdmin(admin.ModelAdmin):
      pass
 admin.site.register(OpenTime, OpenTimeAdmin)
+
+
+class NotificationAdmin(TranslationAdmin):
+     pass
+admin.site.register(Notification, NotificationAdmin)
+
+
+class CategoryNotificationAdmin(TranslationAdmin):
+     pass
+admin.site.register(Category_Notification, CategoryNotificationAdmin)

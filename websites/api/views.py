@@ -182,37 +182,18 @@ def user_info(request):
     try:
         # TODO : Check user i not anonymous
         if not request.user.anonymously:
-            first_name = request.data.get('first_name', '')
-            last_name = request.data.get('last_name', '')
-            birth_date = request.data.get('birth_date', '')
-            phone = request.data.get('phone', '')
-            personal_id = request.data.get('personal_id', '')
-            country = request.data.get('country', '')
-            address = request.data.get('address', '')
-            city = request.data.get('city', '')
-            device_uid = request.data.get('device_uid', '')
-
             user = request.user
-            if first_name:
-                user.first_name = first_name
-            if last_name:
-                user.last_name = last_name
-            if birth_date:
-                user.birth_date = birth_date 
-            if phone:
-                user.phone = phone
-            if personal_id:
-                user.personal_id = personal_id
-            if country:
-                user.country = country
-            if address:
-                user.address = address
-            if city:
-                user.city = city
-            if device_uid:
-                user.device_uid = device_uid
-
+            user.first_name = request.data.get('first_name', '')
+            user.last_name = request.data.get('last_name', '')
+            user.birth_date = request.data.get('birth_date', '')
+            user.phone = request.data.get('phone', '')
+            user.personal_id = request.data.get('personal_id', '')
+            user.country = request.data.get('country', '')
+            user.address = request.data.get('address', '')
+            user.city = request.data.get('city', '')
+            user.device_uid = request.data.get('device_uid', '')
             user.save()
+
         return Response({'flag': True, 'message': 'Update infomation user successfully.'})
 
     except Exception, e:
@@ -371,7 +352,6 @@ def hots(request):
 @api_view(['GET'])
 def game_types_by_category(request, category_id):
     try:
-        print '#### category_id ', category_id
         error = helper.check_id_valid(category_id)
         if not helper.is_empty(error):
             errors = {"code": 400, "message": "%s" %
@@ -688,7 +668,7 @@ def card_information(request, card_id):
 """
 
 @api_view(['GET'])
-def  play_transactions(request):
+def play_transactions(request):
     try:
         card_id = request.GET.get("card_id", "")
         if not card_id:
@@ -732,7 +712,7 @@ def  play_transactions(request):
 
 
 @api_view(['GET'])
-def  card_transactions(request):
+def card_transactions(request):
     try:
         card_id = request.GET.get("card_id", "")
         if not card_id:
@@ -763,7 +743,7 @@ def  card_transactions(request):
 
 
 @api_view(['GET'])
-def  reissue_history(request):
+def reissue_history(request):
     try:
         card_id = request.GET.get("card_id", "")
         if not card_id:
@@ -818,4 +798,51 @@ def open_time(request):
                  "fields": ""}
         return Response(error, status=500)
 
+
+@api_view(['GET'])
+def notifications(request):
+    try:
+        category_id = request.GET.get("category_id", "")
+        user = request.user
+
+        if category_id:
+            notification_list = User_Notification.objects.filter(notification__category_id=category_id, user=user)
+        else:
+            notification_list = User_Notification.objects.all()
+
+        serializer = UserNotificationSerializer(notification_list, many=True)
+        return Response(serializer.data)
+    except Exception, e:
+        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        return Response(error, status=500)
+
+
+@api_view(['GET'])
+def notification_category(request):
+    try:
+        categories = Category_Notification.objects.all()
+        serializer = CategoryNotificationSerializer(categories, many=True)
+        return Response(serializer.data)
+    except Exception, e:
+        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        return Response(error, status=500)
+
+
+@api_view(['POST'])
+def user_read_notification(request):
+    try:
+        user = request.user
+        notification_id = request.data.get('notification_id', '')
+        if not notification_id:
+            return Response({'message': 'Notification Id is required.'}, status=400)
+        if user.anonymously:
+            return Response({'message': 'Anonymous User Cannot Update Notification'}, status=400)
+
+        
+        obj, created = User_Notification.objects.update_or_create(notification_id=notification_id, user=user, is_read=True)
+        return Response({'message': 'Successfull'})
+        
+    except Exception, e:
+        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        return Response(error, status=500)
        
