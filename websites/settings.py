@@ -295,7 +295,8 @@ NOCAPTCHA = True
 
 PUSH_NOTIFICATIONS_SETTINGS = {
     "APNS_CERTIFICATE": os.path.join(BASE_DIR, "key_apns/pem_dev/push_dev.pem"),
-    "APNS_USE_SANDBOX": True
+    "APNS_USE_SANDBOX": True,
+    "APNS_TOPIC": "com.example.push_test",
 }
 # FCM_DJANGO_SETTINGS = {
 #     "FCM_SERVER_KEY": "AAAAMkND2_U:APA91bEVkDFA8uACGPTTj-Vc86kg4fuyhrPuUmGHJdzkuBaaJh4ZQuc09zMZCEt2xaSj5Xi7opPT9OZHq-hxDrWmqfkRGqRv38uC2nqHHK3Xwy-jwglWoSwIYywpT-qcsoW9TKAsiUayeRAkj_AYJ0AG-D02Ubx0jg",
