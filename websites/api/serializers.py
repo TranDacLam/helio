@@ -4,6 +4,7 @@ from core.models import *
 from django.contrib.auth import get_user_model
 from message_custom import SetCustomErrorMessagesMixin
 from django.utils.translation import ugettext_lazy as _
+from django.urls import reverse
 
 
 User = get_user_model()
@@ -109,6 +110,12 @@ class EventsSerializer(serializers.Serializer):
     content = serializers.CharField()
     start_date = serializers.DateField()
     end_date = serializers.DateField()
+    url_share = serializers.SerializerMethodField()
+
+    def get_url_share(self, obj):
+        url = reverse("get-events-detail" ,args=[obj.id])
+        url = url.replace("api/", "")
+        return url
 
 
 class PostTypeSerializer(serializers.Serializer):
@@ -140,6 +147,12 @@ class PromotionsSerializer(serializers.Serializer):
     content = serializers.CharField()
     image = serializers.ImageField(max_length=1000)
     promotion_category = CategorySerializer(many=False)
+    url_share = serializers.SerializerMethodField()
+
+    def get_url_share(self, obj):
+        url = reverse("get-promotions-detail" ,args=[obj.id])
+        url = url.replace("api/", "")
+        return url
 
 
 class TransactionTypeSerializer(serializers.Serializer):

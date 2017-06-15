@@ -465,7 +465,7 @@ def entertainment_detail(request, id_or_key_query):
 @api_view(['GET'])
 def events(request):
     try:
-        event_list = event_list = Event.objects.filter(is_draft=False)
+        event_list = Event.objects.filter(is_draft=False)
         serializer = EventsSerializer(event_list, many=True)
         return Response(serializer.data)
     except Exception, e:
