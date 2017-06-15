@@ -92,9 +92,21 @@
                                                 <!-- {% trans "homepage.text.night_life.description" %} --></p> 
                                         </div>
                                         <hr>
+                                        <p class="game-description short_description">{{type.description_detail}}</p> 
                                         <!-- <p class="game-description short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p>  -->
                                     </div>
                                     {% endfor %}
+                                    <div class="type-group">
+                                        <!-- Night Life Type-->
+                                        <ul class="nav btn-custom-group type-group">
+                                            {% for type in result.night_life_types %}
+                                            <li>
+                                                <a class="btn-custom-style btn-custom-game-type" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-6 game-section-detail">
@@ -125,7 +137,7 @@
                                             <p class="short_description">{{type.description}}</p> 
                                         </div>
                                         <hr>
-                                        <p class="game-description short_description">{{type.description_game}}</p> 
+                                        <p class="game-description short_description">{{type.description_detail}}</p> 
                                     </div>
                                     {% endfor %}
                                     <div class="type-group">
@@ -167,7 +179,7 @@
                                             <p class="short_description">{{type.description}}</p> 
                                         </div>
                                         <hr>
-                                        <p class="game-description short_description">{{type.description_game}}</p> 
+                                        <p class="game-description short_description">{{type.description_detail}}</p> 
                                     </div>
                                     {% endfor %}
                                     <div class="type-group">

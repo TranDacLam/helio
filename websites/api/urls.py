@@ -40,6 +40,8 @@ urlpatterns = [
     url(r'^reissue/history/$', views.reissue_history, name="reissue-history"),
     url(r'^open/time/$', views.open_time, name="open-time"),
     url(r'^promotion/gift/$', views.gift_user, name="gift-user"),
-    
+    url(r'^notifications/$', views.notifications, name="notification-category"),
+    url(r'^notification/category/$', views.notification_category, name="notifications"),
+    url(r'^notification/read/$', views.user_read_notification, name="notification-read"),
 
 ]
