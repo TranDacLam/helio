@@ -294,7 +294,7 @@ CODE_LEN = 7 # Default code length
 NOCAPTCHA = True
 
 PUSH_NOTIFICATIONS_SETTINGS = {
-    "APNS_CERTIFICATE": "/Users/tiendang/Documents/projects/push/pem_dev/push_dev.pem",
+    "APNS_CERTIFICATE": os.path.join(BASE_DIR, "key_apns/pem_dev/push_dev.pem"),
     "APNS_USE_SANDBOX": True
 }
 # FCM_DJANGO_SETTINGS = {
