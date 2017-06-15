@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '4ygz*y=+@n+gl4!7#b070!+(&g(5uo09&-$crcvp+w^87&%ize'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'multiupload',
     'captcha',
-    # 'fcm_django'
+    'push_notifications'
     
 ]
 
@@ -293,6 +293,10 @@ CODE_LEN = 7 # Default code length
 # Config Google reCaptcha
 NOCAPTCHA = True
 
+PUSH_NOTIFICATIONS_SETTINGS = {
+    "APNS_CERTIFICATE": "/Users/tiendang/Documents/projects/push/pem_dev/push_dev.pem",
+    "APNS_USE_SANDBOX": True
+}
 # FCM_DJANGO_SETTINGS = {
 #     "FCM_SERVER_KEY": "AAAAMkND2_U:APA91bEVkDFA8uACGPTTj-Vc86kg4fuyhrPuUmGHJdzkuBaaJh4ZQuc09zMZCEt2xaSj5Xi7opPT9OZHq-hxDrWmqfkRGqRv38uC2nqHHK3Xwy-jwglWoSwIYywpT-qcsoW9TKAsiUayeRAkj_AYJ0AG-D02Ubx0jg",
 #     # "FCM_ERROR_TIMEOUT": 3600
