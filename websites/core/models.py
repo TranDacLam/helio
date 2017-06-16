@@ -280,7 +280,7 @@ class Notification(DateTimeModel):
     sub_url = models.CharField(max_length=255, null=True, blank=True)
     category = models.ForeignKey('Category_Notification', related_name='notification_category_rel',
                                  on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return '%s' % (self.subject)
 
@@ -303,8 +303,8 @@ class Category_Notification(DateTimeModel):
 
 @python_2_unicode_compatible
 class User_Notification(DateTimeModel):
-    user = models.ForeignKey(custom_models.User)
-    notification = models.ForeignKey(Notification)
+    user = models.ForeignKey(custom_models.User, on_delete=models.CASCADE)
+    notification = models.ForeignKey(Notification, on_delete=models.CASCADE)
     is_read = models.BooleanField('Is Read', default=False)
 
     def __str__(self):

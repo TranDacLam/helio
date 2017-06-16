@@ -41,6 +41,11 @@ class MyUserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
+    DEVICE_TYPE = (
+        ('android', 'Android'),
+        ('ios', 'IOS')
+    )
+
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True) 
     username = models.CharField(max_length=255, null=True, blank=True)
@@ -77,6 +82,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=False
     )
     device_uid = models.CharField(max_length=255, null=True, blank=True)
+    device_type = models.CharField(max_length=255, choices=DEVICE_TYPE, null=True, blank=True)
+    is_new_register = models.BooleanField(default=True)
 
     objects = MyUserManager()
     USERNAME_FIELD = 'email'
