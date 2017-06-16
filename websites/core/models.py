@@ -277,6 +277,7 @@ class OpenTime(DateTimeModel):
 class Notification(DateTimeModel):
     subject = models.CharField(max_length=255, unique=True)
     message = models.TextField()
+    image = models.ImageField(max_length=1000, null=True, blank=True)
     sub_url = models.CharField(max_length=255, null=True, blank=True)
     category = models.ForeignKey('Category_Notification', related_name='notification_category_rel',
                                  on_delete=models.CASCADE)
