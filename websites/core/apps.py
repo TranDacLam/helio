@@ -17,6 +17,6 @@ from django.apps import AppConfig
 class CoreConfig(AppConfig):
     name = 'core'
 
-    # def ready(self):
-    #     print "Connect Core Config"
+    def ready(self):
+        import signals
     #     post_migrate.connect(add_user_permissions, sender=self)

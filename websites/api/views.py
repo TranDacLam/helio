@@ -20,6 +20,7 @@ import ast
 import constants
 import utils
 from django.db import connections
+from core import constants as core_constants
 
 
 def custom_exception_handler(exc, context):
@@ -73,11 +74,18 @@ class RegistrationView(drf_generics.CreateAPIView):
                         data=data_render)
 
     def create_inactive_user(self, serializer):
-        user = serializer.save(is_active=False)
+        user = serializer.save()
         self.send_activation_email(user)
         return user
 
     def perform_create(self, serializer):
+        user_agent = self.request.META.get("HTTP_USER_AGENT", "")
+        if user_agent:
+            if 'ios' in user_agent.lower():
+                serializer.validated_data['device_type'] = 'ios'
+            else:
+                serializer.validated_data['device_type'] = 'android'
+
         user = self.create_inactive_user(serializer)
 
 """
@@ -278,20 +286,39 @@ def change_password(request):
 def gift_user(request):
     try:
         if not request.user.anonymously:
+            user = request.user
             promotion_id = request.data.get('promotion_id', '')
             if not promotion_id:
                 error = {
                     "code": 400, "message": "promotion_id is required.", "fields": "promotion_id"}
                 return Response(error, status=400)
 
-            gift = Gift.objects.get(user=request.user, promotion_id=promotion_id)
-            message = "Error. User Have get gift from promotion"
+            obj_promotion = Promotion.objects.get(pk=promotion_id)
+            """ 
+                Case 1 : Check user is new registration
+                Case 2 : Check Device have using
+             """
+            if obj_promotion.promotion_category.id == core_constants.PROMOTION_SETUP_DEVICE and user.is_new_register:
+                try:
+                    gift = Gift.objects.get(device_id=user.device_uid, promotion_id=promotion_id)
+                except Gift.DoesNotExist, e:
+                    # IF query does not exist then is new user and device
+                    gift = Gift(user=user, device_id=user.device_uid, promotion_id=promotion_id)
+                    gift.save()
+            else:
+                gift = Gift.objects.get(user=user, promotion_id=promotion_id)
+
+            message = "Error. User or Deivce Have get gift from promotion"
             status_code = 501
             if not gift.is_used:
                 message = "Success"
                 status_code = 200
                 gift.is_used = True
                 gift.save()
+                # Update User have gift
+                user.is_new_register = False
+                user.save()
+
 
             return Response({'message': message}, status=status_code)
         else:
