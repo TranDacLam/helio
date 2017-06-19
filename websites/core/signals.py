@@ -2,7 +2,6 @@ from django.db.models.signals import post_save
 from models import Notification, User_Notification
 from custom_models import User
 import push_notification
-from push_notifications.models import APNSDevice, GCMDevice
 
 
 def bulk_user_notifications(sender, instance, created, **kwargs):
@@ -19,18 +18,24 @@ def bulk_user_notifications(sender, instance, created, **kwargs):
 post_save.connect(bulk_user_notifications, sender=Notification)
 
 
-def insert_user_pns(sender, instance, created, **kwargs):
-    try:
-        if created and instance.device_uid:
-            if instance.device_type == 'ios':
-                device = APNSDevice(user=instance, name=instance.email, registration_id=instance.device_uid)
-                device.save()
-            else:
-                device = GCMDevice(user=instance, name=instance.email, registration_id=instance.device_uid, cloud_message_type="FCM")
-                device.save()
+# def insert_user_pns(sender, instance, created, **kwargs):
+#     try:
+#         if created and instance.device_uid:
+#             if instance.device_type == 'ios':
+#                 try:
+#                     device = APNSDevice.objects.get(registration_id=instance.device_uid)
+#                     device.user = instance
+#                     device.save()
 
-    except Exception, e:
-        print "Error bulk_user_notifications : ",e
-        raise Exception("Error. Cannot insert insert user push notification.")
+#                 except APNSDevice.DoesNotExist, e:
+#                     device = APNSDevice(user=instance, name=instance.email, registration_id=instance.device_uid)
+#                     device.save()
+#             else:
+#                 device = GCMDevice(user=instance, name=instance.email, registration_id=instance.device_uid, cloud_message_type="FCM")
+#                 device.save()
 
-post_save.connect(insert_user_pns, sender=User)
+#     except Exception, e:
+#         print "Error insert_user_pns : ",e
+#         raise Exception("Error. Cannot insert insert user push notification.")
+
+# post_save.connect(insert_user_pns, sender=User)

@@ -81,9 +81,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         _('Anonymous User'),
         default=False
     )
-    device_uid = models.CharField(max_length=255, null=True, blank=True)
-    device_type = models.CharField(max_length=255, choices=DEVICE_TYPE, null=True, blank=True)
+    # device_uid = models.CharField(max_length=255, null=True, blank=True)
+    # device_type = models.CharField(max_length=255, choices=DEVICE_TYPE, null=True, blank=True)
     is_new_register = models.BooleanField(default=True)
+    flag_notification = models.BooleanField(default=True)
 
     objects = MyUserManager()
     USERNAME_FIELD = 'email'
