@@ -27,7 +27,9 @@ urlpatterns = [
     url(r'^accounts/password/$', views.change_password, name="update-account-password"),
     url(r'^accounts/feedback/$', views.send_feedback, name="accounts-feedback"),
     url(r'^accounts/users/$', views.users, name="accounts-users-info"),
-
+    url(r'^device/connect/$', views.connect_device, name="connect-device-user"),
+    url(r'^device/disconnect/$', views.disconnect_device, name="disconnect-device-user"),
+    
     url(r'^accounts/login/$', obtain_jwt_token, name="accounts-login"),
     # Social Login : alias name url is : login_social_jwt_user and url is : api/login/social/jwt_user/
     url(r'^login/', include('rest_social_auth.urls_jwt')),
@@ -43,5 +45,7 @@ urlpatterns = [
     url(r'^notifications/$', views.notifications, name="notification-category"),
     url(r'^notification/category/$', views.notification_category, name="notifications"),
     url(r'^notification/read/$', views.user_read_notification, name="notification-read"),
+    url(r'^notification/off/$', views.turn_off_notification, name="turn-off-notification"),
+    url(r'^notification/on/$', views.turn_on_notification, name="turn-on-notification"),
 
 ]

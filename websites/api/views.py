@@ -21,6 +21,7 @@ import constants
 import utils
 from django.db import connections
 from core import constants as core_constants
+from push_notifications.models import APNSDevice, GCMDevice
 
 
 def custom_exception_handler(exc, context):
@@ -79,14 +80,125 @@ class RegistrationView(drf_generics.CreateAPIView):
         return user
 
     def perform_create(self, serializer):
-        user_agent = self.request.META.get("HTTP_USER_AGENT", "")
-        if user_agent:
-            if 'ios' in user_agent.lower():
-                serializer.validated_data['device_type'] = 'ios'
-            else:
-                serializer.validated_data['device_type'] = 'android'
-
         user = self.create_inactive_user(serializer)
+
+
+"""
+    Connect Device for User
+"""
+@api_view(['POST'])
+def connect_device(request):
+    try:
+        user = request.user
+
+        if not request.user.anonymously:
+            user_agent = request.META.get("HTTP_USER_AGENT", "")
+            device_uid = request.data.get("device_uid", "")
+
+            if not device_uid:
+                error = {
+                     "code": 400, "message": "The device_uid field is required.", "fields": "device_uid"}
+                return Response(error, status=400)
+
+            if user_agent:
+                if 'ios' in user_agent.lower():
+                    try:
+                        device = APNSDevice.objects.get(registration_id=device_uid)
+                        device.user = user
+                        device.save()
+                        
+                    except APNSDevice.DoesNotExist, e:
+                        device = APNSDevice(user=user, name=user.email, registration_id=device_uid)
+                        device.save()
+                else:
+                    device = GCMDevice(user=user, name=user.email, registration_id=device_uid, cloud_message_type="FCM")
+                    device.save()
+            return Response({'message': 'Connect device successful.'})
+        else:
+            return Response({'message': 'Anonymous User Cannot Call This Action.'}, status=400)
+
+    except Exception, e:
+        print "Error connect_device : ",e
+        return Response({'message': 'Internal Server Error. Please Contact Administrator.'}, status=500)
+
+
+"""
+    Connect Device for User
+"""
+@api_view(['POST'])
+def disconnect_device(request):
+    try:
+        user = request.user
+
+        if not request.user.anonymously:
+            user_agent = request.META.get("HTTP_USER_AGENT", "")
+            device_uid = request.data.get("device_uid", "")
+
+            if not device_uid:
+                error = {
+                     "code": 400, "message": "The device_uid field is required.", "fields": "device_uid"}
+                return Response(error, status=400)
+
+            if user_agent:
+                if 'ios' in user_agent.lower():
+                    device = APNSDevice.objects.get(registration_id=device_uid)
+                    device.user = None
+                    device.save()
+                else:
+                    device = GCMDevice.objects.get(registration_id=device_uid)
+                    device.user = None
+                    device.save()
+
+            return Response({'message': 'Disconnect device successful.'})
+        else:
+            return Response({'message': 'Anonymous User Cannot Call This Action.'}, status=400)
+    
+    except APNSDevice.DoesNotExist, e:
+        return Response({'message': 'Cannot disconnect device. DeviceID not found.'}, status=400)
+    except GCMDevice.DoesNotExist, e:
+        return Response({'message': 'Cannot disconnect device. DeviceID not found.'}, status=400)
+    except Exception, e:
+        print "Error connect_device : ",e
+        return Response({'message': 'Internal Server Error. Please Contact Administrator.'}, status=500)
+
+"""
+    Turn off Notification
+"""
+@api_view(['PUT'])
+def turn_off_notification(request):
+    try:
+        if not request.user.anonymously:
+            user = request.user
+            user.flag_notification = False
+            user.save()
+            return Response({'message': 'Turn off notification successful.'})
+        else:
+            return Response({'message': 'Anonymous User Cannot Call This Action.'}, status=400)
+
+    except Exception, e:
+        print "Error turn_off_notification ", e
+        return Response({'message': 'Internal Server Error. Please Contact Administrator.'}, status=500)
+
+
+"""
+    Turn on Notification
+"""
+@api_view(['PUT'])
+def turn_on_notification(request):
+    try:
+        if not request.user.anonymously:
+            user = request.user
+            user.flag_notification = True
+            user.save()
+            return Response({'message': 'Turn on notification successful.'})
+        else:
+            return Response({'message': 'Anonymous User Cannot Call This Action.'}, status=400)
+
+    except Exception, e:
+        print "Error turn_on_notification ", e
+        return Response({'message': 'Internal Server Error. Please Contact Administrator.'}, status=500)
+
+
 
 """
     Verify emaill address and send secure code to email
@@ -288,6 +400,12 @@ def gift_user(request):
         if not request.user.anonymously:
             user = request.user
             promotion_id = request.data.get('promotion_id', '')
+            device_uid = request.data.get('device_uid', '')
+            
+            if not device_uid:
+                error = {
+                    "code": 400, "message": "device_uid is required.", "fields": "device_uid"}
+                return Response(error, status=400)
             if not promotion_id:
                 error = {
                     "code": 400, "message": "promotion_id is required.", "fields": "promotion_id"}
@@ -300,10 +418,10 @@ def gift_user(request):
              """
             if obj_promotion.promotion_category.id == core_constants.PROMOTION_SETUP_DEVICE and user.is_new_register:
                 try:
-                    gift = Gift.objects.get(device_id=user.device_uid, promotion_id=promotion_id)
+                    gift = Gift.objects.get(device_id=device_uid, promotion_id=promotion_id)
                 except Gift.DoesNotExist, e:
                     # IF query does not exist then is new user and device
-                    gift = Gift(user=user, device_id=user.device_uid, promotion_id=promotion_id)
+                    gift = Gift(user=user, device_id=device_uid, promotion_id=promotion_id)
                     gift.save()
             else:
                 gift = Gift.objects.get(user=user, promotion_id=promotion_id)
