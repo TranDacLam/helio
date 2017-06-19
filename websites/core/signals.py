@@ -7,7 +7,7 @@ import push_notification
 def bulk_user_notifications(sender, instance, created, **kwargs):
     try:
         if created:
-            users = User.objects.filter(is_active=True, device_uid__isnull=False)
+            users = User.objects.filter(is_active=True)
             objs = [User_Notification(notification=instance, user=u) for u in users]
             User_Notification.objects.bulk_create(objs)
             push_notification.send_notification_all_user(subject=instance.subject, message=instance.message, sub_url=instance.sub_url)

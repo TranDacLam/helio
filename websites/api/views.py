@@ -200,7 +200,6 @@ def turn_on_notification(request):
 
 
 
-
 """
     Verify emaill address and send secure code to email
 """
