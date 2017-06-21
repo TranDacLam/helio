@@ -20,6 +20,15 @@
     text-align: center;
     margin: 0px auto;
 }
+@media all and (-ms-high-contrast:none)
+     {
+      /* IE10 and hight */
+     .page-title-detail {
+        width: 75%;
+        text-align: center;
+        margin: 0;
+}
+     }
 /*END HEADER experience DETAIL CSS*/
 
 /*START LIKE SHARE ICON CSS*/
