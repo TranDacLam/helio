@@ -16,7 +16,7 @@
     opacity: 0.3;
 }
 .page-title-detail {
-    width: 75%;
+    width: 50%;
     text-align: center;
     margin: 0px auto;
 }
@@ -173,9 +173,9 @@ a.btn-custom-style.btn-custom-style-kids:hover {
 	.style-icon i {
 		padding-right: 5px;
 	}
-    .page-title-detail {
+    ./*page-title-detail {
         width: 100%;
-    }
+    }*/
     .div-content a {
         word-wrap: break-word;
     }
