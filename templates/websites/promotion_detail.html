@@ -8,6 +8,9 @@
 
 {% block extrastylesheet %}
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/page_detail.css">
+<!--[if IE]>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}assets/websites/css/promotion_fix_ie.css" />
+<![endif]-->
 {% endblock %}
 {% block main_content %} 
 {% if promotion %}
@@ -15,7 +18,7 @@
     <div class="page-header-img-full">
         <img src="{{ MEDIA_URL }}{{ promotion.image }}" width="100%">
         <div class="page-caption">
-            <div class="">
+            <div class="container">
                 <div class="page-title-detail row">
                     <div class="col-md-12" align="center">
                         <p class="big-font-size">{{promotion.name}}</p>
