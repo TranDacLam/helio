@@ -23,11 +23,12 @@
 @media all and (-ms-high-contrast:none)
      {
       /* IE10 and hight */
-     .page-title-detail {
+    .page-title-detail {
         width: 75%;
         text-align: center;
-        margin: 0;
-}
+        left:0;
+        position: -ms-page;
+                        }
      }
 /*END HEADER experience DETAIL CSS*/
 
