@@ -26,7 +26,8 @@
     .page-title-detail {
         width: 75%;
         text-align: center;
-        left:0;
+        left:12%;
+        right:12%;
         position: -ms-page;
                         }
      }
