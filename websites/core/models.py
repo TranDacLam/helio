@@ -28,7 +28,7 @@ class DateTimeModel(models.Model):
 
 @python_2_unicode_compatible
 class Post(DateTimeModel):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
     image = models.ImageField(
         max_length=1000, null=True, blank=True, upload_to="posts")
     short_description = models.CharField(max_length=350)

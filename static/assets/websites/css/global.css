@@ -1,47 +1,44 @@
 /*@import url("https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz");*/
 /*@import url("https://fonts.googleapis.com/css?family=Cabin");*/
 
-/* vietnamese */
 @font-face {
-  font-family: 'Cabin';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../../fonts/Cabin.woff2');
-  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Cabin';
-  font-style: normal;
-  font-weight: 400;
-  src: url(../../fonts/CabinLatinext.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Cabin';
-  font-style: normal;
-  font-weight: 400;
-  src: url(../../fonts/CabinLatin.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-
-@font-face {
-    font-family: 'Yanone Kaffeesatz';
-    src: url('../../fonts/YanoneKaffeesatz-Regular.eot');
-    src: url('../../fonts/YanoneKaffeesatz-Regular.eot?#iefix') format('embedded-opentype'),
-        url('../../fonts/YanoneKaffeesatz-Regular.woff') format('woff'),
-        url('../../fonts/YanoneKaffeesatz-Regular.ttf') format('truetype');
+    font-family: 'Cabin';
+    src: url('../../fonts/Cabin-Regular.eot');
+    src: url('../../fonts/Cabin-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../../fonts/Cabin-Regular.woff') format('woff'),
+        url('../../fonts/Cabin-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
+    font-family: 'Cabin';
+    src: url('../../fonts/Cabin-Regular_1.eot');
+    src: url('../../fonts/Cabin-Regular_1.eot?#iefix') format('embedded-opentype'),
+        url('../../fonts/Cabin-Regular_1.woff') format('woff'),
+        url('../../fonts/Cabin-Regular_1.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cabin';
+    src: url('../../fonts/Cabin-Regular_2.eot');
+    src: url('../../fonts/Cabin-Regular_2.eot?#iefix') format('embedded-opentype'),
+        url('../../fonts/Cabin-Regular_2.woff') format('woff'),
+        url('../../fonts/Cabin-Regular_2.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*Yanone facefont */
+
+@font-face {
     font-family: 'Yanone Kaffeesatz';
     src: url('../../fonts/YanoneKaffeesatz-Regular_1.eot');
     src: url('../../fonts/YanoneKaffeesatz-Regular_1.eot?#iefix') format('embedded-opentype'),
-        url('../../fonts/YanoneKaffeesatz-Regular_1.woff') format('woff'),
-        url('../../fonts/YanoneKaffeesatz-Regular_1.ttf') format('truetype');
+         url('../../fonts/YanoneKaffeesatz-Regular_1.woff') format('woff'),
+         url('../../fonts/YanoneKaffeesatz-Regular_1.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -50,8 +47,8 @@
     font-family: 'Yanone Kaffeesatz';
     src: url('../../fonts/YanoneKaffeesatz-Regular_2.eot');
     src: url('../../fonts/YanoneKaffeesatz-Regular_2.eot?#iefix') format('embedded-opentype'),
-        url('../../fonts/YanoneKaffeesatz-Regular_2.woff') format('woff'),
-        url('../../fonts/YanoneKaffeesatz-Regular_2.ttf') format('truetype');
+         url('../../fonts/YanoneKaffeesatz-Regular_2.woff') format('woff'),
+         url('../../fonts/YanoneKaffeesatz-Regular_2.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -60,8 +57,8 @@
     font-family: 'Yanone Kaffeesatz';
     src: url('../../fonts/YanoneKaffeesatz-Regular_3.eot');
     src: url('../../fonts/YanoneKaffeesatz-Regular_3.eot?#iefix') format('embedded-opentype'),
-        url('../../fonts/YanoneKaffeesatz-Regular_3.woff') format('woff'),
-        url('../../fonts/YanoneKaffeesatz-Regular_3.ttf') format('truetype');
+         url('../../fonts/YanoneKaffeesatz-Regular_3.woff') format('woff'),
+         url('../../fonts/YanoneKaffeesatz-Regular_3.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }

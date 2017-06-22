@@ -28,8 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-FB_APP_ID = '382447632149159'
-
 
 # Application definition
 
@@ -118,8 +116,7 @@ AUTH_USER_MODEL = 'core.User'
 
 SOCIAL_AUTH_USER_MODEL = 'core.User'
 # Config Social Account
-SOCIAL_AUTH_FACEBOOK_KEY = '382447632149159'
-SOCIAL_AUTH_FACEBOOK_SECRET = '83bca2e84b3f783f7a41ca9ec14bb39c'
+
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', ]
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': ','.join([
