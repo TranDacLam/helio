@@ -47,5 +47,7 @@ urlpatterns = [
     url(r'^notification/read/$', views.user_read_notification, name="notification-read"),
     url(r'^notification/off/$', views.turn_off_notification, name="turn-off-notification"),
     url(r'^notification/on/$', views.turn_on_notification, name="turn-on-notification"),
+    url(r'^notification/(?P<notification_id>[0-9]+)/detail/$', views.notification_detail, name="get-notification-detail"),
+    
 
 ]
