@@ -56,7 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     birth_date = models.DateField(null=True, blank=True)
     phone = models.CharField(max_length=50, null=True, blank=True)
-    personal_id = models.CharField(max_length=50)
+    personal_id = models.CharField(max_length=50, null=True, blank=True)
     country = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=255)

@@ -953,7 +953,7 @@ def notifications(request):
         if category_id:
             notification_list = User_Notification.objects.filter(notification__category_id=category_id, user=user)
         else:
-            notification_list = User_Notification.objects.all()
+            notification_list = User_Notification.objects.filter(user=user)
 
         serializer = UserNotificationSerializer(notification_list, many=True)
         return Response(serializer.data)
@@ -984,10 +984,27 @@ def user_read_notification(request):
             return Response({'message': 'Anonymous User Cannot Update Notification'}, status=400)
 
         
-        obj, created = User_Notification.objects.update_or_create(notification_id=notification_id, user=user, is_read=True)
+        obj, created = User_Notification.objects.update_or_create(notification_id=notification_id, user=user)
+        obj.is_read = True
+        obj.save()
         return Response({'message': 'Successfull'})
         
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
         return Response(error, status=500)
-       
+
+
+@api_view(['GET'])
+def notification_detail(request, notification_id):
+    try:
+        notification_obj = Notification.objects.get(pk=notification_id)
+        print 'notification_obj ',notification_obj
+        serializer = NotificationSerializer(notification_obj, many=False)
+        return Response(serializer.data)
+
+    except User_Notification.DoesNotExist, e:
+        error = {"code": 400, "message": "%s" % e, "fields": "notification_id"}
+        return Response(error, status=400)
+    except Exception, e:
+        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        return Response(error, status=500)
