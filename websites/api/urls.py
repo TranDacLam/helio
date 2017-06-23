@@ -43,11 +43,13 @@ urlpatterns = [
     url(r'^open/time/$', views.open_time, name="open-time"),
     url(r'^promotion/gift/$', views.gift_user, name="gift-user"),
     url(r'^notifications/$', views.notifications, name="notification-category"),
+    url(r'^notification/new/$', views.add_notification, name="add-notification"),
     url(r'^notification/category/$', views.notification_category, name="notifications"),
     url(r'^notification/read/$', views.user_read_notification, name="notification-read"),
     url(r'^notification/off/$', views.turn_off_notification, name="turn-off-notification"),
     url(r'^notification/on/$', views.turn_on_notification, name="turn-on-notification"),
     url(r'^notification/(?P<notification_id>[0-9]+)/detail/$', views.notification_detail, name="get-notification-detail"),
+    url(r'^notification/push/$', views.send_notification, name="push-notification"),
     
 
 ]
