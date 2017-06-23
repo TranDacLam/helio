@@ -23,6 +23,7 @@ from django.db import connections
 from core import constants as core_constants
 from push_notifications.models import APNSDevice, GCMDevice
 from rest_framework.permissions import AllowAny
+from push_notifications.models import APNSDevice, GCMDevice
 
 
 def custom_exception_handler(exc, context):
@@ -406,6 +407,7 @@ def gift_user(request):
     try:
         if not request.user.anonymously:
             user = request.user
+            print "## Current User ",user
             promotion_id = request.data.get('promotion_id', '')
             device_uid = request.data.get('device_uid', '')
             
@@ -477,7 +479,7 @@ def send_feedback(request):
             return Response({"code": 400, "message": "%s"%serializer.errors,
                  "fields": ""}, status=400)
     except Exception, e:
-        error = {"code": 500, "message": "Cannot update password for user. Please contact administrator.",
+        error = {"code": 500, "message": "Cannot send feedback. Please contact administrator.",
                  "fields": ""}
         return Response(error, status=500)
 
@@ -1016,3 +1018,69 @@ def notification_detail(request, notification_id):
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
         return Response(error, status=500)
+
+
+@api_view(['POST'])
+def add_notification(request):
+    try:
+        # TODO : Check user i not anonymous
+        if not request.user.anonymously:
+            subject = request.data.get('subject', '')
+            message = request.data.get('message', '')
+            category_id = request.data.get('category_id', '')
+            sub_url = request.data.get('sub_url', '')
+            if not subject or not message or not category_id:
+                error = {
+                    "code": 400, "message": "Please check required fields : [subject, message, category_id]", "fields": "",
+                    "flag": False}
+                return Response(error, status=400)
+
+            category_obj = Category_Notification.objects.get(pk=category_id)
+            notify_obj = Notification(subject=subject, message=message, category=category_obj, sub_url=sub_url)
+            notify_obj.save()
+
+            return Response({'message': 'Add Notification Successfull'})
+
+    except Category_Notification.DoesNotExist, e:
+        error = {"code": 400, "message": "%s" % e,
+                 "fields": ""}
+        return Response(error, status=400)
+    except Exception, e:
+        error = {"code": 500, "message": "Cannot add new notification. Please contact administrator.",
+                 "fields": ""}
+        return Response(error, status=500)
+
+
+@api_view(['POST'])
+def send_notification(request):
+    try:
+        # TODO : Check user i not anonymous
+        if not request.user.anonymously:
+            notification_id = request.data.get('notification_id', '')
+            if not notification_id:
+                error = {
+                    "code": 400, "message": "Please check required fields : [notification_id]", "fields": "",
+                    "flag": False}
+                return Response(error, status=400)
+
+            notify_obj = Notification.objects.get(pk=notification_id)
+
+            data_notify = {"title": notify_obj.subject, "body" : notify_objmessage, "sub_url":notify_obj.sub_url, "image":notify_obj.image}
+
+            devices_ios = APNSDevice.objects.filter(user__flag_notification=True)
+            devices_ios.send_message(message=data_notify, extra=data_notify)
+
+            fcm_devices = GCMDevice.objects.filter(user__flag_notification=True)
+            fcm_devices.send_message(notify_obj.subject, extra=data_notify)
+
+            return Response({'message': 'Push Notification Successfull'})
+
+    except Notification.DoesNotExist, e:
+        error = {"code": 400, "message": "%s" % e,
+                 "fields": ""}
+        return Response(error, status=400)
+    except Exception, e:
+        error = {"code": 500, "message": "Cannot push notification. Please contact administrator.",
+                 "fields": ""}
+        return Response(error, status=500)
+
