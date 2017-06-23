@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import permissions
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser, FormParser
-from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework import status
 from rest_framework.views import exception_handler, APIView
 from rest_framework.response import Response
@@ -22,6 +22,7 @@ import utils
 from django.db import connections
 from core import constants as core_constants
 from push_notifications.models import APNSDevice, GCMDevice
+from rest_framework.permissions import AllowAny
 
 
 def custom_exception_handler(exc, context):
@@ -206,6 +207,7 @@ def turn_on_notification(request):
 
 
 @api_view(['POST'])
+@permission_classes((AllowAny,))
 def verify_email(request):
     try:
         email = request.data.get('email', '')
@@ -235,6 +237,7 @@ def verify_email(request):
 
 
 @api_view(['POST'])
+@permission_classes((AllowAny,))
 def reset_password(request):
     try:
         email = request.data.get('email', '')
@@ -365,26 +368,30 @@ def change_password(request):
     try:
         # TODO : Check user i not anonymous
         if not request.user.anonymously:
-            password1 = request.data.get('password1', '')
-            password2 = request.data.get('password2', '')
+            old_password = request.data.get('old_password', '')
+            new_password = request.data.get('new_password', '')
 
-            if not password1 or not password2:
+            if not old_password or not new_password:
                 error = {
-                    "code": 400, "message": "Please check required fields : [password1, password2]", "fields": "",
-                    "flag": False}
-                return Response(error, status=400)
-            if password1 != password2:
-                error = {
-                    "code": 400, "message": "Password does not match.", "fields": "Password",
+                    "code": 400, "message": "Please check required fields : [old_password, old_password]", "fields": "",
                     "flag": False}
                 return Response(error, status=400)
 
             user = request.user
-            user.set_password(password1)
+            # verify old password
+            valid_pass = user.check_password(old_password)
+            if not valid_pass:
+                error = {
+                    "code": 400, "message": "OldPassword does not match.", "fields": "old_password",
+                    "flag": False}
+                return Response(error, status=400)
+
+            user.set_password(new_password)
             user.save()
         return Response({'flag': True, 'message': 'Update password for user successfully.'})
 
     except Exception, e:
+        print "ERROR change_password ",e
         error = {"code": 500, "message": "Cannot update password for user. Please contact administrator.",
                  "fields": "", "flag": False}
         return Response(error, status=500)
@@ -445,9 +452,10 @@ def gift_user(request):
     except Gift.DoesNotExist, e:
         error = {"code": 400, "message": "Promotion for user does not matching. Please check again.",
                  "fields": ""}
+        return Response(error, status=400)
     except Exception, e:
         print "Error gift_user ",e
-        error = {"code": 500, "message": "Cannot update password for user. Please contact administrator.",
+        error = {"code": 500, "message": "Your account not apply current promotion. Please contact administrator.",
                  "fields": ""}
         return Response(error, status=500)
 
