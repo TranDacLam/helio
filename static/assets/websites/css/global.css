@@ -586,3 +586,11 @@ and(-webkit-min-device-pixel-ratio:0) { @media
         padding-top: 3px;
     }
 }}
+
+
+/* IE10 and hight and max-with:991px*/
+@media all and (-ms-high-contrast:none) and (min-width: 991px){
+    .big-font-size {
+        font-size: 60px;
+    }
+}
