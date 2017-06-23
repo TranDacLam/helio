@@ -451,7 +451,7 @@ def helio_photos(request):
         photos_type = Post_Type.objects.get(pk=const.HELIO_PHOTOS_POST_TYPE_ID)
 
         # Helio photos
-        photos = Post.objects.filter(post_type=photos_type)
+        photos = Post.objects.filter(post_type=photos_type).order_by('-id')
 
         for photo in photos:
             # get len of post images

@@ -10,7 +10,7 @@ def bulk_user_notifications(sender, instance, created, **kwargs):
             users = User.objects.filter(is_active=True)
             objs = [User_Notification(notification=instance, user=u) for u in users]
             User_Notification.objects.bulk_create(objs)
-            push_notification.send_notification_all_user(subject=instance.subject, message=instance.message, sub_url=instance.sub_url)
+            push_notification.send_notification_all_user(subject=instance.subject, message=instance.message, sub_url=instance.sub_url, image=instance.image)
     except Exception, e:
         print "Error bulk_user_notifications : ",e
         raise Exception("Error. Cannot insert bulk user notifications.")

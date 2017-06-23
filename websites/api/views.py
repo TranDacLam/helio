@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import permissions
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser, FormParser
-from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework import status
 from rest_framework.views import exception_handler, APIView
 from rest_framework.response import Response
@@ -21,6 +21,8 @@ import constants
 import utils
 from django.db import connections
 from core import constants as core_constants
+from push_notifications.models import APNSDevice, GCMDevice
+from rest_framework.permissions import AllowAny
 from push_notifications.models import APNSDevice, GCMDevice
 
 
@@ -206,6 +208,7 @@ def turn_on_notification(request):
 
 
 @api_view(['POST'])
+@permission_classes((AllowAny,))
 def verify_email(request):
     try:
         email = request.data.get('email', '')
@@ -235,6 +238,7 @@ def verify_email(request):
 
 
 @api_view(['POST'])
+@permission_classes((AllowAny,))
 def reset_password(request):
     try:
         email = request.data.get('email', '')
@@ -365,26 +369,30 @@ def change_password(request):
     try:
         # TODO : Check user i not anonymous
         if not request.user.anonymously:
-            password1 = request.data.get('password1', '')
-            password2 = request.data.get('password2', '')
+            old_password = request.data.get('old_password', '')
+            new_password = request.data.get('new_password', '')
 
-            if not password1 or not password2:
+            if not old_password or not new_password:
                 error = {
-                    "code": 400, "message": "Please check required fields : [password1, password2]", "fields": "",
-                    "flag": False}
-                return Response(error, status=400)
-            if password1 != password2:
-                error = {
-                    "code": 400, "message": "Password does not match.", "fields": "Password",
+                    "code": 400, "message": "Please check required fields : [old_password, old_password]", "fields": "",
                     "flag": False}
                 return Response(error, status=400)
 
             user = request.user
-            user.set_password(password1)
+            # verify old password
+            valid_pass = user.check_password(old_password)
+            if not valid_pass:
+                error = {
+                    "code": 400, "message": "OldPassword does not match.", "fields": "old_password",
+                    "flag": False}
+                return Response(error, status=400)
+
+            user.set_password(new_password)
             user.save()
         return Response({'flag': True, 'message': 'Update password for user successfully.'})
 
     except Exception, e:
+        print "ERROR change_password ",e
         error = {"code": 500, "message": "Cannot update password for user. Please contact administrator.",
                  "fields": "", "flag": False}
         return Response(error, status=500)
@@ -399,6 +407,7 @@ def gift_user(request):
     try:
         if not request.user.anonymously:
             user = request.user
+            print "## Current User ",user
             promotion_id = request.data.get('promotion_id', '')
             device_uid = request.data.get('device_uid', '')
             
@@ -416,7 +425,7 @@ def gift_user(request):
                 Case 1 : Check user is new registration
                 Case 2 : Check Device have using
              """
-            if obj_promotion.promotion_category.id == core_constants.PROMOTION_SETUP_DEVICE and user.is_new_register:
+            if obj_promotion.promotion_category and obj_promotion.promotion_category.id == core_constants.PROMOTION_SETUP_DEVICE and user.is_new_register:
                 try:
                     gift = Gift.objects.get(device_id=device_uid, promotion_id=promotion_id)
                 except Gift.DoesNotExist, e:
@@ -445,9 +454,10 @@ def gift_user(request):
     except Gift.DoesNotExist, e:
         error = {"code": 400, "message": "Promotion for user does not matching. Please check again.",
                  "fields": ""}
+        return Response(error, status=400)
     except Exception, e:
         print "Error gift_user ",e
-        error = {"code": 500, "message": "Cannot update password for user. Please contact administrator.",
+        error = {"code": 500, "message": "Your account not apply current promotion. Please contact administrator.",
                  "fields": ""}
         return Response(error, status=500)
 
@@ -469,7 +479,7 @@ def send_feedback(request):
             return Response({"code": 400, "message": "%s"%serializer.errors,
                  "fields": ""}, status=400)
     except Exception, e:
-        error = {"code": 500, "message": "Cannot update password for user. Please contact administrator.",
+        error = {"code": 500, "message": "Cannot send feedback. Please contact administrator.",
                  "fields": ""}
         return Response(error, status=500)
 
@@ -1008,3 +1018,69 @@ def notification_detail(request, notification_id):
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
         return Response(error, status=500)
+
+
+@api_view(['POST'])
+def add_notification(request):
+    try:
+        # TODO : Check user i not anonymous
+        if not request.user.anonymously:
+            subject = request.data.get('subject', '')
+            message = request.data.get('message', '')
+            category_id = request.data.get('category_id', '')
+            sub_url = request.data.get('sub_url', '')
+            if not subject or not message or not category_id:
+                error = {
+                    "code": 400, "message": "Please check required fields : [subject, message, category_id]", "fields": "",
+                    "flag": False}
+                return Response(error, status=400)
+
+            category_obj = Category_Notification.objects.get(pk=category_id)
+            notify_obj = Notification(subject=subject, message=message, category=category_obj, sub_url=sub_url)
+            notify_obj.save()
+
+            return Response({'message': 'Add Notification Successfull'})
+
+    except Category_Notification.DoesNotExist, e:
+        error = {"code": 400, "message": "%s" % e,
+                 "fields": ""}
+        return Response(error, status=400)
+    except Exception, e:
+        error = {"code": 500, "message": "Cannot add new notification. Please contact administrator.",
+                 "fields": ""}
+        return Response(error, status=500)
+
+
+@api_view(['POST'])
+def send_notification(request):
+    try:
+        # TODO : Check user i not anonymous
+        if not request.user.anonymously:
+            notification_id = request.data.get('notification_id', '')
+            if not notification_id:
+                error = {
+                    "code": 400, "message": "Please check required fields : [notification_id]", "fields": "",
+                    "flag": False}
+                return Response(error, status=400)
+
+            notify_obj = Notification.objects.get(pk=notification_id)
+
+            data_notify = {"title": notify_obj.subject, "body" : notify_objmessage, "sub_url":notify_obj.sub_url, "image":notify_obj.image}
+
+            devices_ios = APNSDevice.objects.filter(user__flag_notification=True)
+            devices_ios.send_message(message=data_notify, extra=data_notify)
+
+            fcm_devices = GCMDevice.objects.filter(user__flag_notification=True)
+            fcm_devices.send_message(notify_obj.subject, extra=data_notify)
+
+            return Response({'message': 'Push Notification Successfull'})
+
+    except Notification.DoesNotExist, e:
+        error = {"code": 400, "message": "%s" % e,
+                 "fields": ""}
+        return Response(error, status=400)
+    except Exception, e:
+        error = {"code": 500, "message": "Cannot push notification. Please contact administrator.",
+                 "fields": ""}
+        return Response(error, status=500)
+
