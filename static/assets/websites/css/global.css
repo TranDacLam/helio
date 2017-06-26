@@ -333,7 +333,7 @@ a.btn-custom-style {
     font-weight: bold;
     border-style: solid;
     color: #fff;
-    border-width: 1px;
+    border-width: 2px;
     border-image-slice: 1;
     border-style: solid;
     border-image-source: linear-gradient(16deg, #e436aa, #2c1b76);
@@ -371,7 +371,10 @@ a.btn-custom-style:hover {
     margin-top: 50px;
     margin-bottom: 80px;
 }
-
+.banner3 {
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
 /*ROW EQUAL FOR EXPERIENCE AND CAREER*/
 .row-equal {
     display: flex;
