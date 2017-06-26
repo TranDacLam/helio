@@ -5,7 +5,7 @@ DEBUG = False
 
 DATABASES = {
     'default': {
-        'NAME': 'helio_db',
+        'NAME': 'helio_web',
         'ENGINE': 'django.db.backends.mysql',
         'HOST': 'localhost',
         'PORT': 3306,
@@ -15,10 +15,10 @@ DATABASES = {
     'sql_db': {
         'NAME': 'ECS7',
         'ENGINE': 'sqlserver_pymssql',
-        'HOST': '172.16.1.10:1433',
-        'USER': 'cskh',
-        'PASSWORD': 'CHelio@@2016#',
-        'POST':1433
+        'HOST': '113.160.225.204:1433',
+        'USER': 'sa',
+        'PASSWORD': 'vooc2017',
+        'PORT':1433
     }
 
 }
