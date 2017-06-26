@@ -276,8 +276,8 @@ CKEDITOR_CONFIGS = {
 CKEDITOR_BROWSE_SHOW_DIRS = True
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
-DEFAULT_TO_ADMIN_EMAIL = "contact@helio.vn"
-DEFAULT_FROM_EMAIL = "do-not-reply@helio.vn"
+DEFAULT_TO_ADMIN_EMAIL = "noreply@helio.vn"
+DEFAULT_FROM_EMAIL = "noreply@helio.vn"
 # EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'voocdn@gmail.com'
