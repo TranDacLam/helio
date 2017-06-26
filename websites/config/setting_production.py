@@ -23,6 +23,12 @@ DATABASES = {
 
 }
 
+gettext = lambda s: s
+LANGUAGES = (
+    ('vi', gettext('Vietnamese')),
+    # ('en', gettext('English')),
+)
+
 FB_APP_ID = '753086748186657'
 SOCIAL_AUTH_FACEBOOK_KEY = '753086748186657'
 SOCIAL_AUTH_FACEBOOK_SECRET = '560179f08361bae229869d5b50312ea5'
