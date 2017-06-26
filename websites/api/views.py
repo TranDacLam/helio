@@ -425,7 +425,7 @@ def gift_user(request):
                 Case 1 : Check user is new registration
                 Case 2 : Check Device have using
              """
-            if obj_promotion.promotion_category.id == core_constants.PROMOTION_SETUP_DEVICE and user.is_new_register:
+            if obj_promotion.promotion_category and obj_promotion.promotion_category.id == core_constants.PROMOTION_SETUP_DEVICE and user.is_new_register:
                 try:
                     gift = Gift.objects.get(device_id=device_uid, promotion_id=promotion_id)
                 except Gift.DoesNotExist, e:

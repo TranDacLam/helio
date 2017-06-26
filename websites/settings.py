@@ -276,8 +276,8 @@ CKEDITOR_CONFIGS = {
 CKEDITOR_BROWSE_SHOW_DIRS = True
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
-DEFAULT_TO_ADMIN_EMAIL = "contact@helio.vn"
-DEFAULT_FROM_EMAIL = "do-not-reply@helio.vn"
+DEFAULT_TO_ADMIN_EMAIL = "noreply@helio.vn"
+DEFAULT_FROM_EMAIL = "noreply@helio.vn"
 # EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'voocdn@gmail.com'
@@ -305,6 +305,9 @@ try:
 
     if 'UAT' in os.environ and os.environ['UAT']:
         from config.setting_uat import *
+
+    if 'API_HELIO' in os.environ and os.environ['API_HELIO']:
+        from config.setting_api import *
 
     if 'PRODUCTION' in os.environ and os.environ['PRODUCTION']:
         from config.setting_production import *
