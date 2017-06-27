@@ -67,3 +67,8 @@
         margin-bottom: 3px;
     }
 }
+
+.flex-direction-nav a:before {
+  color: #fff;
+  line-height: 1;
+}
