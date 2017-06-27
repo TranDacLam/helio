@@ -24,7 +24,7 @@ from core import constants as core_constants
 from push_notifications.models import APNSDevice, GCMDevice
 from rest_framework.permissions import AllowAny
 from push_notifications.models import APNSDevice, GCMDevice
-
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 def custom_exception_handler(exc, context):
     # to get the standard error response.
@@ -99,7 +99,7 @@ def connect_device(request):
 
             if not device_uid:
                 error = {
-                     "code": 400, "message": "The device_uid field is required.", "fields": "device_uid"}
+                     "code": 400, "message": _("The device_uid field is required."), "fields": "device_uid"}
                 return Response(error, status=400)
 
             if user_agent:
@@ -115,13 +115,13 @@ def connect_device(request):
                 else:
                     device = GCMDevice(user=user, name=user.email, registration_id=device_uid, cloud_message_type="FCM")
                     device.save()
-            return Response({'message': 'Connect device successful.'})
+            return Response({'message': _('Connect device successful.')})
         else:
-            return Response({'message': 'Anonymous User Cannot Call This Action.'}, status=400)
+            return Response({'message': _('Anonymous User Cannot Call This Action.')}, status=400)
 
     except Exception, e:
         print "Error connect_device : ",e
-        return Response({'message': 'Internal Server Error. Please Contact Administrator.'}, status=500)
+        return Response({'message': _('Internal Server Error. Please Contact Administrator.')}, status=500)
 
 
 """
@@ -138,7 +138,7 @@ def disconnect_device(request):
 
             if not device_uid:
                 error = {
-                     "code": 400, "message": "The device_uid field is required.", "fields": "device_uid"}
+                     "code": 400, "message": _("The device_uid field is required."), "fields": "device_uid"}
                 return Response(error, status=400)
 
             if user_agent:
@@ -151,17 +151,17 @@ def disconnect_device(request):
                     device.user = None
                     device.save()
 
-            return Response({'message': 'Disconnect device successful.'})
+            return Response({'message': _('Disconnect device successful.')})
         else:
-            return Response({'message': 'Anonymous User Cannot Call This Action.'}, status=400)
+            return Response({'message': _('Anonymous User Cannot Call This Action.')}, status=400)
     
     except APNSDevice.DoesNotExist, e:
-        return Response({'message': 'Cannot disconnect device. DeviceID not found.'}, status=400)
+        return Response({'message': _('Cannot disconnect device. DeviceID not found.')}, status=400)
     except GCMDevice.DoesNotExist, e:
-        return Response({'message': 'Cannot disconnect device. DeviceID not found.'}, status=400)
+        return Response({'message': _('Cannot disconnect device. DeviceID not found.')}, status=400)
     except Exception, e:
         print "Error connect_device : ",e
-        return Response({'message': 'Internal Server Error. Please Contact Administrator.'}, status=500)
+        return Response({'message': _('Internal Server Error. Please Contact Administrator.')}, status=500)
 
 """
     Turn off Notification
@@ -173,13 +173,13 @@ def turn_off_notification(request):
             user = request.user
             user.flag_notification = False
             user.save()
-            return Response({'message': 'Turn off notification successful.'})
+            return Response({'message': _('Turn off notification successful.')})
         else:
-            return Response({'message': 'Anonymous User Cannot Call This Action.'}, status=400)
+            return Response({'message': _('Anonymous User Cannot Call This Action.')}, status=400)
 
     except Exception, e:
         print "Error turn_off_notification ", e
-        return Response({'message': 'Internal Server Error. Please Contact Administrator.'}, status=500)
+        return Response({'message': _('Internal Server Error. Please Contact Administrator.')}, status=500)
 
 
 """
@@ -192,13 +192,13 @@ def turn_on_notification(request):
             user = request.user
             user.flag_notification = True
             user.save()
-            return Response({'message': 'Turn on notification successful.'})
+            return Response({'message': _('Turn on notification successful.')})
         else:
-            return Response({'message': 'Anonymous User Cannot Call This Action.'}, status=400)
+            return Response({'message': _('Anonymous User Cannot Call This Action.')}, status=400)
 
     except Exception, e:
         print "Error turn_on_notification ", e
-        return Response({'message': 'Internal Server Error. Please Contact Administrator.'}, status=500)
+        return Response({'message': _('Internal Server Error. Please Contact Administrator.')}, status=500)
 
 
 
@@ -214,7 +214,7 @@ def verify_email(request):
         email = request.data.get('email', '')
         if not email:
             error = {
-                "code": 400, "message": "The email field is required.", "fields": "email"}
+                "code": 400, "message": _("The email field is required."), "fields": "email"}
             return Response(error, status=400)
         user = User.objects.get(email=email)
         user.secure_code()
@@ -230,7 +230,7 @@ def verify_email(request):
         utils.send_mail(subject=subject, message_plain=message_plain, message_html=message_html, email_from=None, email_to=[user.email],
                         data=data_render)
 
-        return Response({"message": "Send security code to email successfully.", "flag": True})
+        return Response({"message": _("Send security code to email successfully."), "flag": True})
 
     except User.DoesNotExist, e:
         error = {"code": 500, "message": "%s" % e, "fields": "", "flag": False}
@@ -251,7 +251,7 @@ def reset_password(request):
                 "code": 400, "message": "Please check required fields : [email, secure_code, password1, password2]", "fields": ""}
             return Response(error, status=400)
         if password1 != password2:
-            error = {"code": 400, "message": "Password does not match.",
+            error = {"code": 400, "message": _("Password does not match."),
                      "fields": "Password"}
             return Response(error, status=400)
 
@@ -260,10 +260,10 @@ def reset_password(request):
         user.code = None
         user.save()
 
-        return Response({"message": "Reset Password Successfully.", "flag": True})
+        return Response({"message": _("Reset Password Successfully."), "flag": True})
 
     except User.DoesNotExist, e:
-        error = {"code": 500, "message": "The email or secure code matching query does not exist.",
+        error = {"code": 500, "message": _("The email or secure code matching query does not exist."),
                  "fields": "", "flag": False}
         return Response(error, status=500)
 
@@ -277,10 +277,10 @@ class FileUploadView(APIView):
             user = self.request.user
             user.avatar = file_obj
             user.save()
-            return Response({"message": "Update Avatar Successfully.", "flag": True}, status=204)
+            return Response({"message": _("Update Avatar Successfully."), "flag": True}, status=204)
         except Exception, e:
             error = {
-                "code": 500, "message": "Upload avatar error. Please contact administartor", "fields": "avatar", "flag": False}
+                "code": 500, "message": _("Upload avatar error. Please contact administartor"), "fields": "avatar", "flag": False}
             return Response(error, status=500)
         # path = '/Users/tiendang/Downloads/testimg.png'
         # with open(path, 'w') as open_file:
@@ -318,10 +318,10 @@ def user_info(request):
             user.device_uid = request.data.get('device_uid', '')
             user.save()
 
-        return Response({'flag': True, 'message': 'Update infomation user successfully.'})
+        return Response({'flag': True, 'message': _('Update infomation user successfully.')})
 
     except Exception, e:
-        error = {"code": 500, "message": "Cannot update infomation user. Please contact administrator.",
+        error = {"code": 500, "message": _("Cannot update infomation user. Please contact administrator."),
                  "fields": "", "flag": False}
         return Response(error, status=500)
 
@@ -347,14 +347,14 @@ def users(request):
             serializer = UserSerializer(user, many=False)
             return Response(serializer.data)
         else:
-            return Response({'message': 'Anonymous User Cannot Get User Infomation'}, status=400)
+            return Response({'message': _('Anonymous User Cannot Get User Infomation')}, status=400)
 
     except User.DoesNotExist, e:
         error = {"code": 400, "message": "%s" % e, "fields": "email"}
         return Response(error, status=400)
     except Exception, e:
         print "Error Get User ",e
-        error = {"code": 500, "message": "Internal Server Error. Please contact administrator.",
+        error = {"code": 500, "message": _("Internal Server Error. Please contact administrator."),
                  "fields": "", "flag": False}
         return Response(error, status=500)
 
@@ -374,7 +374,7 @@ def change_password(request):
 
             if not old_password or not new_password:
                 error = {
-                    "code": 400, "message": "Please check required fields : [old_password, old_password]", "fields": "",
+                    "code": 400, "message": _("Please check required fields : [old_password, new_password]"), "fields": "",
                     "flag": False}
                 return Response(error, status=400)
 
@@ -383,17 +383,17 @@ def change_password(request):
             valid_pass = user.check_password(old_password)
             if not valid_pass:
                 error = {
-                    "code": 400, "message": "OldPassword does not match.", "fields": "old_password",
+                    "code": 400, "message": _("OldPassword does not match."), "fields": "old_password",
                     "flag": False}
                 return Response(error, status=400)
 
             user.set_password(new_password)
             user.save()
-        return Response({'flag': True, 'message': 'Update password for user successfully.'})
+        return Response({'flag': True, 'message': _('Update password for user successfully.')})
 
     except Exception, e:
         print "ERROR change_password ",e
-        error = {"code": 500, "message": "Cannot update password for user. Please contact administrator.",
+        error = {"code": 500, "message": _("Cannot update password for user. Please contact administrator."),
                  "fields": "", "flag": False}
         return Response(error, status=500)
 
@@ -413,11 +413,11 @@ def gift_user(request):
             
             if not device_uid:
                 error = {
-                    "code": 400, "message": "device_uid is required.", "fields": "device_uid"}
+                    "code": 400, "message": _("The device_uid is required."), "fields": "device_uid"}
                 return Response(error, status=400)
             if not promotion_id:
                 error = {
-                    "code": 400, "message": "promotion_id is required.", "fields": "promotion_id"}
+                    "code": 400, "message": _("The promotion_id is required."), "fields": "promotion_id"}
                 return Response(error, status=400)
 
             obj_promotion = Promotion.objects.get(pk=promotion_id)
@@ -435,7 +435,7 @@ def gift_user(request):
             else:
                 gift = Gift.objects.get(user=user, promotion_id=promotion_id)
 
-            message = "Error. User or Deivce Have get gift from promotion"
+            message = _("Error. User or Deivce Have get gift from promotion")
             status_code = 501
             if not gift.is_used:
                 message = "Success"
@@ -449,15 +449,15 @@ def gift_user(request):
 
             return Response({'message': message}, status=status_code)
         else:
-            return Response({'message': 'Anonymous User Cannot Call This Action.'}, status=400)
+            return Response({'message': _('Anonymous User Cannot Call This Action.')}, status=400)
 
     except Gift.DoesNotExist, e:
-        error = {"code": 400, "message": "Promotion for user does not matching. Please check again.",
+        error = {"code": 400, "message": _("Promotion for user does not matching. Please check again."),
                  "fields": ""}
         return Response(error, status=400)
     except Exception, e:
         print "Error gift_user ",e
-        error = {"code": 500, "message": "Your account not apply current promotion. Please contact administrator.",
+        error = {"code": 500, "message": _("Your account not apply current promotion. Please contact administrator."),
                  "fields": ""}
         return Response(error, status=500)
 
@@ -479,7 +479,7 @@ def send_feedback(request):
             return Response({"code": 400, "message": "%s"%serializer.errors,
                  "fields": ""}, status=400)
     except Exception, e:
-        error = {"code": 500, "message": "Cannot send feedback. Please contact administrator.",
+        error = {"code": 500, "message": _("Cannot send feedback. Please contact administrator."),
                  "fields": ""}
         return Response(error, status=500)
 
@@ -715,7 +715,7 @@ def promotions(request):
             if helper.is_int(category_id):
                 lst_item = lst_item.filter(promotion_category_id=category_id)
             else:
-                errors = {"code": 400, "message": "This value must be is integer.", "fields": "category_id"}
+                errors = {"code": 400, "message": _("This value must be is integer."), "fields": "category_id"}
                 return Response(errors, status=400)
             
         serializer = PromotionsSerializer(lst_item, many=True)
@@ -790,7 +790,7 @@ def card_information(request, card_id):
     try:
         if not card_id:
             error = {
-                "code": 400, "message": "Card id field is required.", "fields": "card_id"}
+                "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
             return Response(error, status=400)
 
         cursor = connections['sql_db'].cursor()
@@ -828,14 +828,14 @@ def play_transactions(request):
         card_id = request.GET.get("card_id", "")
         if not card_id:
             error = {
-                "code": 400, "message": "Card id field is required.", "fields": "card_id"}
+                "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
             return Response(error, status=400)
 
         filter_id = request.GET.get("filter_id", "")
         sub_query = ""
         if filter_id:
             if not helper.is_int(filter_id):
-                errors = {"code": 400, "message": "This value must be is integer.", "fields": "filter_id"}
+                errors = {"code": 400, "message": _("This value must be is integer."), "fields": "filter_id"}
                 return Response(errors, status=400)
             filter_object = Transaction_Type.objects.get(pk=filter_id)
             sub_query = " WHERE transaction_type like '" + filter_object.name_en +"'"
@@ -872,7 +872,7 @@ def card_transactions(request):
         card_id = request.GET.get("card_id", "")
         if not card_id:
             error = {
-                "code": 400, "message": "Card id field is required.", "fields": "card_id"}
+                "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
             return Response(error, status=400)
 
         cursor = connections['sql_db'].cursor()  
@@ -903,7 +903,7 @@ def reissue_history(request):
         card_id = request.GET.get("card_id", "")
         if not card_id:
             error = {
-                "code": 400, "message": "Card id field is required.", "fields": "card_id"}
+                "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
             return Response(error, status=400)
 
         cursor = connections['sql_db'].cursor()
@@ -934,7 +934,7 @@ def open_time(request):
         open_date = request.GET.get("open_date", "")
         if not open_date:
             error = {
-                "code": 400, "message": "Date request is required.", "fields": "open_date"}
+                "code": 400, "message": _("Date request is required."), "fields": "open_date"}
             return Response(error, status=400)
 
         opentimes = OpenTime.objects.get(open_date=open_date.strip())
@@ -949,7 +949,7 @@ def open_time(request):
         return Response(error, status=400)
     except Exception, e:
         print "Action open_time : ", e
-        error = {"code": 500, "message": "Internal Server Error. Please contact administrator.",
+        error = {"code": 500, "message": _("Internal Server Error. Please contact administrator."),
                  "fields": ""}
         return Response(error, status=500)
 
@@ -989,15 +989,15 @@ def user_read_notification(request):
         user = request.user
         notification_id = request.data.get('notification_id', '')
         if not notification_id:
-            return Response({'message': 'Notification Id is required.'}, status=400)
+            return Response({'message': _('Notification Id is required.')}, status=400)
         if user.anonymously:
-            return Response({'message': 'Anonymous User Cannot Update Notification'}, status=400)
+            return Response({'message': _('Anonymous User Cannot Update Notification')}, status=400)
 
         
         obj, created = User_Notification.objects.update_or_create(notification_id=notification_id, user=user)
         obj.is_read = True
         obj.save()
-        return Response({'message': 'Successfull'})
+        return Response({'message': _('Successfull')})
         
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
@@ -1039,14 +1039,14 @@ def add_notification(request):
             notify_obj = Notification(subject=subject, message=message, category=category_obj, sub_url=sub_url)
             notify_obj.save()
 
-            return Response({'message': 'Add Notification Successfull'})
+            return Response({'message': _('Add Notification Successfull')})
 
     except Category_Notification.DoesNotExist, e:
         error = {"code": 400, "message": "%s" % e,
                  "fields": ""}
         return Response(error, status=400)
     except Exception, e:
-        error = {"code": 500, "message": "Cannot add new notification. Please contact administrator.",
+        error = {"code": 500, "message": _("Cannot add new notification. Please contact administrator."),
                  "fields": ""}
         return Response(error, status=500)
 
@@ -1073,14 +1073,14 @@ def send_notification(request):
             fcm_devices = GCMDevice.objects.filter(user__flag_notification=True)
             fcm_devices.send_message(notify_obj.subject, extra=data_notify)
 
-            return Response({'message': 'Push Notification Successfull'})
+            return Response({'message': _('Push Notification Successfull')})
 
     except Notification.DoesNotExist, e:
         error = {"code": 400, "message": "%s" % e,
                  "fields": ""}
         return Response(error, status=400)
     except Exception, e:
-        error = {"code": 500, "message": "Cannot push notification. Please contact administrator.",
+        error = {"code": 500, "message": _("Cannot push notification. Please contact administrator."),
                  "fields": ""}
         return Response(error, status=500)
 

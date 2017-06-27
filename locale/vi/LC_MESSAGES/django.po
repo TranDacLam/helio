@@ -412,3 +412,6 @@ msgstr "Không thể gởi thông báo. Vui lòng liên hệ với quản trị 
 msgid "KNOW ABOUT HELIO CENTER"
 msgstr "TÌM HIỂU VỀ HELIO CENTER"
 
+msgid "Please check required fields : [old_password, new_password]"
+msgstr "Hãy kiểm tra các trường bắt buộc: [old_password, new_password]"
+
