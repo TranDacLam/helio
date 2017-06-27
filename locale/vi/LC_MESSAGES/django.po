@@ -415,3 +415,7 @@ msgstr "TÌM HIỂU VỀ HELIO CENTER"
 msgid "Please check required fields : [old_password, new_password]"
 msgstr "Hãy kiểm tra các trường bắt buộc: [old_password, new_password]"
 
+
+msgid "BACK TO ADMIN NOTIFICATION"
+msgstr "TRỞ VỀ ADMIN NOTIFICATION"
+
