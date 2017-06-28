@@ -434,6 +434,9 @@ msgstr "Email không tồn tại."
 msgid "Unable to login with provided credentials."
 msgstr "Email hoặc mật khẩu không chính xác."
 
+msgid "Unable to log in with provided credentials."
+msgstr "Email hoặc mật khẩu không chính xác."
+
 #END API
 
 #START ADMIN MARKETING
