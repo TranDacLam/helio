@@ -1,3 +1,3 @@
 $(document).ready(function(){
-	$('#promotions-table').DataTable({});
+	$('#notification-table').DataTable({});
 });
