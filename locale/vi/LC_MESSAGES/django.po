@@ -300,17 +300,18 @@ msgid "footer.text_company"
 msgstr "Khởi Phát, Ltd."     
 #END FOOTER
 
+#START API
 msgid "Internal Server Error. Please Contact Administrator."
 msgstr "Lỗi Máy chủ Nội bộ. Xin vui lòng liên hệ với Quản trị viên."
 
 msgid "The device_uid field is required."
-msgstr "Trường device_uid là bắt buộc."
+msgstr "Trường device_uid không được bỏ trống."
 
 msgid "Connect device successful."
 msgstr "Kết nối thiết bị thành công."
 
 msgid "Anonymous User Cannot Call This Action."
-msgstr "Người dùng chưa xác định. Không thể gọi hành động này."
+msgstr "Người dùng chưa chưa đăng ký. Không thể gọi hành động này."
 
 msgid "Disconnect device successful."
 msgstr "Ngắt kết nối thiết bị thành công."
@@ -325,7 +326,7 @@ msgid "Turn on notification successful."
 msgstr "Bật thông báo thành công."
 
 msgid "The email field is required."
-msgstr "Trường email là bắt buộc."
+msgstr "Trường email không được bỏ trống."
 
 msgid "Send security code to email successfully."
 msgstr "Gửi mã bảo mật đến email thành công."
@@ -337,7 +338,7 @@ msgid "Reset Password Successfully."
 msgstr "Đặt lại mật khẩu thành công."
 
 msgid "The email or secure code matching query does not exist."
-msgstr "Email hoặc truy vấn phù hợp với mã bảo mật không tồn tại."
+msgstr "Email hoặc mã bảo mật không đúng."
 
 msgid "Update Avatar Successfully."
 msgstr "Cập nhật Avatar thành công."
@@ -349,22 +350,22 @@ msgid "Update infomation user successfully."
 msgstr "Cập nhật thông tin người dùng thành công."
 
 msgid "Cannot update infomation user. Please contact administrator."
-msgstr "Không thể cập nhật người dùng thông tin. Vui lòng liên hệ với quản trị viên."
+msgstr "Không thể cập nhật thông tin người dùng. Vui lòng liên hệ với quản trị viên."
 
 msgid "OldPassword does not match."
 msgstr "Mặt khẩu cũ không khớp."
 
 msgid "Update password for user successfully."
-msgstr "Cập nhật mật khẩu cho người dùng thành công."
+msgstr "Cập nhật mật khẩu thành công."
 
 msgid "Cannot update password for user. Please contact administrator."
-msgstr "Không thể cập nhật mật khẩu cho người dùng. Vui lòng liên hệ với quản trị viên."
+msgstr "Không thể cập nhật mật khẩu. Vui lòng liên hệ với quản trị viên."
 
 msgid "The promotion_id is required."
-msgstr "Promot_id là bắt buộc."
+msgstr "Trường promotion_id không được bỏ trống."
 
 msgid "Error. User or Deivce Have get gift from promotion."
-msgstr "Lỗi. Người dùng hoặc thiết bị đã nhận được quà tặng từ khuyến mãi."
+msgstr "Lỗi. Người dùng hoặc thiết bị đã nhận được quà tặng khuyến mãi."
 
 msgid "Promotion for user does not matching. Please check again."
 msgstr "Khuyến mãi này không dành cho người dùng hiện tại. Vui lòng kiểm tra lại."
@@ -382,16 +383,16 @@ msgid "This value must be is integer."
 msgstr "Giá trị này phải là số nguyên."
 
 msgid "Card id field is required."
-msgstr "Trường Card id là bắt buộc."
+msgstr "Trường card_id không được bỏ trống."
 
 msgid "Date request is required."
-msgstr "Vui lòng nhập ngày là bắt buộc."
+msgstr "Trường open_date không được bỏ trống."
 
 msgid "Notification Id is required."
-msgstr "Id thông báo là bắt buộc."
+msgstr "Trường notification_id không được bỏ trống."
 
 msgid "Anonymous User Cannot Update Notification."
-msgstr "Anonymous Người dùng không thể cập nhật thông báo."
+msgstr "Người dùng chưa chưa đăng ký không thể cập nhật thông báo."
 
 msgid "Successfull"
 msgstr "Thành công"
@@ -414,4 +415,5 @@ msgstr "TÌM HIỂU VỀ HELIO CENTER"
 
 msgid "Please check required fields : [old_password, new_password]"
 msgstr "Hãy kiểm tra các trường bắt buộc: [old_password, new_password]"
+#END API
 
