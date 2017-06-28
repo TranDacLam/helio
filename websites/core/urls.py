@@ -41,6 +41,6 @@ urlpatterns = [
     url(r'^admin-notifications/(?P<notification_id>[0-9]+)/detail/$', views.admin_notification_detail, name='admin_promotion_detail'),
     url(r'^update-notifications-user/$', views.update_notifications_user, name='update_notifications_user'),
 
-
+    url(r'^admin-marketing/$', views.admin_marketing, name='admin_marketing'),
 
 ]

@@ -585,3 +585,8 @@ def update_notifications_user(request):
             content_type="application/json"
         )
     return render(request, 'websites/admin_notification_detail.html', {"notification":notification, "users": users})
+
+
+@login_required(login_url='/admin/login/')
+def admin_marketing(request):
+    return render(request, 'websites/admin_marketing.html')

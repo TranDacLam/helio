@@ -55,10 +55,12 @@
         {% if advertisements %}
         <div class="text-center event-new">
             <marquee>
+                <div>
                 {% for advertisement in advertisements %}
                     <i class="fa fa-bell-o" aria-hidden="true"></i>
                     <span>{{advertisement}}</span>
                 {% endfor %}
+                </div>
             </marquee>
             <!-- <marquee behavior="scroll" direction="left" id="marq" loop="50" onmouseout="this.start()" onmouseover="this.stop()" scrollamount="10" scrolldelay="10"><p><i class="fa fa-bell-o" aria-hidden="true"></i>{{advertisement}}</p></marquee> -->
         </div>
