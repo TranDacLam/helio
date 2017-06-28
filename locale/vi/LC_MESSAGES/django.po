@@ -422,6 +422,18 @@ msgstr "Địa chỉ email đã tồn tại trong hệ thống. Vui lòng chọn
 msgid "This field may not be blank."
 msgstr "Trường không được bỏ trống."
 
+msgid "Please check required fields : [email, secure_code, password1, password2]"
+msgstr "Các trường sau không được bỏ trống : [email, secure_code, password1, password2]"
+
+msgid "User matching query does not exist."
+msgstr "User không tồn tại."
+
+msgid "Email matching query does not exist."
+msgstr "Email không tồn tại."
+
+msgid "Unable to login with provided credentials."
+msgstr "Email hoặc mật khẩu không chính xác."
+
 #END API
 
 #START ADMIN MARKETING
