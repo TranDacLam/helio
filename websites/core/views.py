@@ -533,3 +533,55 @@ def update_promotions_user(request):
             content_type="application/json"
         )
     return render(request, 'websites/admin_promotion_detail.html', {"promotion":promotion, "users": users})
+
+@login_required(login_url='/admin/login/')
+def admin_notifications(request):
+    notifications = Notification.objects.all().order_by('-created')
+
+    return render(request, 'websites/admin_notifications.html', {"notifications":notifications})
+
+@login_required(login_url='/admin/login/')
+def admin_notification_detail(request, notification_id):
+    notification = Notification.objects.get(pk=notification_id)
+    users = User.objects.all()
+
+    list_user_notification = User_Notification.objects.filter(notification_id=notification_id)
+
+    notification_user_ids = list_user_notification.values_list('user_id', flat=True)
+
+    for user in users:
+        if user.id in notification_user_ids:
+            user.is_selected = True
+
+    return render(request, 'websites/admin_notification_detail.html', {"notification":notification, "users": users})
+
+@login_required(login_url='/admin/login/')
+def update_notifications_user(request):
+    if request.method == 'POST':
+
+        notification_id = request.POST.get("notification_id")
+        list_user = map(long,request.POST.getlist('list_user[]'))
+
+        list_delete = []
+        if notification_id:
+            # Gift.objects.filter(promotion_id=promotion_id).delete()
+            notification_user_db =  User_Notification.objects.filter(notification_id=notification_id).values_list('user_id', flat=True)
+            list_update_user = set(list_user)^set(notification_user_db)
+            if list_update_user:
+                for user_id in list_update_user:
+                    if user_id not in notification_user_db:
+                        notification_user_item = User_Notification()
+                        notification_user_item.notification_id = notification_id
+                        notification_user_item.user_id = user_id
+                        notification_user_item.save()
+                    else:
+                        list_delete.append(user_id)
+
+                if list_delete:
+                    User_Notification.objects.filter(user_id__in=list_delete).delete()
+
+        return HttpResponse(
+            json.dumps({}),
+            content_type="application/json"
+        )
+    return render(request, 'websites/admin_notification_detail.html', {"notification":notification, "users": users})
