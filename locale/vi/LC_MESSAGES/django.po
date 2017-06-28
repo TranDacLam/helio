@@ -439,4 +439,18 @@ msgstr "Email hoặc mật khẩu không chính xác."
 #START ADMIN MARKETING
 msgid "BACK TO ADMIN NOTIFICATION"
 msgstr "TRỞ VỀ ADMIN NOTIFICATION"
+
+msgid "BACK TO ADMIN MANAGEMENT"
+msgstr "TRỞ VỀ ADMIN MANAGEMENT"
+
+msgid "Send Notification"
+msgstr "Gửi thông báo"
+
+msgid "Notification Management"
+msgstr "Quản lý Thông báo"
+
+msgid "Promotion Management"
+msgstr "Quản lý Khuyến mãi"
+
+
 #END ADMIN MARKETING
