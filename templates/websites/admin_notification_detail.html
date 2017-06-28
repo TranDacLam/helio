@@ -18,15 +18,30 @@
 		<p class="big-font-size">Notifications Detail Managerment</h1>
 	</div>
 	<div id="message_success" style="display: none;"><div class="alert alert-success message-success">{% trans "admin_promotion.message_success" %}</div></div>
-	<div class="col-md-12">
+	<div class="col-md-12 layer">
 		<a class="btn btn-lg btn-primary" href="{% url 'admin_notifications' %}" role="button">{% trans "BACK TO ADMIN NOTIFICATION" %}</a>
 	</div>
 	{% if notification %}
 	<div class="row layer">
-		<div class="col-md-9">
+		
+		<div class="col-md-12">
 			<input id="notification_id" value="{{notification.id}}" type="hidden" name="notification_id">
-			<p>ID: {{ notification.id }}</p>
-			<p>SUBJECT: {{ notification.subject }}</p>
+			<div class="row">
+		        <div class="col-md-1">
+		            <p>ID:</p>
+		        </div>
+		        <div class="col-md-10">
+		            <p><strong class="txt-color">{{notification.id}}</strong></p>
+		        </div>
+		    </div>
+		    <div class="row">
+		        <div class="col-md-1">
+		            <p>NAME:</p>
+		        </div>
+		        <div class="col-md-10">
+		            <p><strong class="txt-color">{{notification.subject}}</strong></p>
+		        </div>
+		    </div>
 		</div>
 		<a class="btn btn-lg btn-primary btn-send" href="" role="button">{% trans "Send Notification" %}</a>
 	</div>

@@ -20,19 +20,34 @@
 	<div id="message_success" style="display: none;">
 		<div class="alert alert-success message-success">{% trans "admin_promotion.message_success" %}</div>
 	</div>
-	<div class="col-md-12">
+	<div class="col-md-12 layer">
 		<a class="btn btn-lg btn-primary" href="{% url 'admin_promotions' %}" role="button">{% trans "admin_promotion.btn_back_admin" %}</a>
 	</div>
+	
+	<br/>
+	
 	{% if promotion %}
 	<div class="row layer">
 		
 		<div class="col-md-12">
 			<input id="promotion_id" value="{{promotion.id}}" type="hidden" name="promotion_id">
-			<p>ID: {{promotion.id}}</p>
-			<p>NAME: {{promotion.name}}</p>
+			<div class="row">
+		        <div class="col-md-1">
+		            <p>ID:</p>
+		        </div>
+		        <div class="col-md-10">
+		            <p><strong class="txt-color">{{promotion.id}}</strong></p>
+		        </div>
+		    </div>
+		    <div class="row">
+		        <div class="col-md-1">
+		            <p>NAME:</p>
+		        </div>
+		        <div class="col-md-10">
+		            <p><strong class="txt-color">{{promotion.name}}</strong></p>
+		        </div>
+		    </div>
 		</div>
-		
-		
 	</div>
 	{% endif %}
 	

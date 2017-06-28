@@ -35,8 +35,8 @@
 			        	{% for promotion in promotions %}
             			<tr>
             				<td class="numeric">{{ promotion.id }}</td>
-			            	<td valign="middle"><a class="title-promotion" href="/admin-promotions/{{promotion.id}}/detail/">{{ promotion.name }}</a></td>
-			            	<td><a class="btn btn-lg btn-primary" href="/admin-promotions/{{promotion.id}}/detail/" role="button">{% trans "btn.view_detail" %}</a></td>
+			            	<td valign="middle"><a class="title-promotion" href="{% url 'admin_promotion_detail' promotion.id %}">{{ promotion.name }}</a></td>
+			            	<td><a class="btn btn-lg btn-primary" href="{% url 'admin_promotion_detail' promotion.id %}" role="button">{% trans "btn.view_detail" %}</a></td>
             			</tr>
             			{% endfor %}
             		</tbody>

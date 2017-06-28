@@ -36,8 +36,8 @@
 			        	{% for notification in notifications %}
             			<tr>
             				<td class="numeric">{{ notification.id }}</td>
-			            	<td valign="middle"><a class="title-notification" href="/admin-notifications/{{notification.id}}/detail/">{{ notification.subject }}</a></td>
-			            	<td><a class="btn btn-lg btn-primary" href="/admin-notifications/{{notification.id}}/detail/" role="button">{% trans "btn.view_detail" %}</a></td>
+			            	<td valign="middle"><a class="title-notification" href="{% url 'admin_notification_detail' notification.id %}">{{ notification.subject }}</a></td>
+			            	<td><a class="btn btn-lg btn-primary" href="{% url 'admin_notification_detail' notification.id %}" role="button">{% trans "btn.view_detail" %}</a></td>
             			</tr>
             			{% endfor %}
             		</tbody>
