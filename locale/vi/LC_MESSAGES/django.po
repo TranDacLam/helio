@@ -415,6 +415,13 @@ msgstr "TÌM HIỂU VỀ HELIO CENTER"
 
 msgid "Please check required fields : [old_password, new_password]"
 msgstr "Hãy kiểm tra các trường bắt buộc: [old_password, new_password]."
+
+msgid "This email is already taken. Please, try again"
+msgstr "Địa chỉ email đã tồn tại trong hệ thống. Vui lòng chọn email khác."
+
+msgid "This field may not be blank."
+msgstr "Trường không được bỏ trống."
+
 #END API
 
 #START ADMIN MARKETING
