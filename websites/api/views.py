@@ -233,7 +233,7 @@ def verify_email(request):
         return Response({"message": _("Send security code to email successfully."), "flag": True})
 
     except User.DoesNotExist, e:
-        error = {"code": 500, "message": "%s" % e, "fields": "", "flag": False}
+        error = {"code": 500, "message": _("Email matching query does not exist."), "fields": "", "flag": False}
         return Response(error, status=500)
 
 
@@ -248,7 +248,7 @@ def reset_password(request):
 
         if not email or not secure_code or not password1 or not password2:
             error = {
-                "code": 400, "message": "Please check required fields : [email, secure_code, password1, password2]", "fields": ""}
+                "code": 400, "message": _("Please check required fields : [email, secure_code, password1, password2]"), "fields": ""}
             return Response(error, status=400)
         if password1 != password2:
             error = {"code": 400, "message": _("Password does not match."),

@@ -43,6 +43,11 @@ class UserSerializer(SetCustomErrorMessagesMixin, serializers.ModelSerializer):
                 UniqueValidator: _('This email is already taken. Please, try again')
             }
         }
+        extra_kwargs = {"username": {"error_messages": {
+                                        "required": _("This field may not be blank.")
+                                        }
+                                    }
+                }
 
     def create(self, validated_data):
         email = validated_data.pop('email')
