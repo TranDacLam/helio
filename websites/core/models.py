@@ -275,7 +275,7 @@ class OpenTime(DateTimeModel):
 
 @python_2_unicode_compatible
 class Notification(DateTimeModel):
-    subject = models.CharField(max_length=255, unique=True)
+    subject = models.CharField(max_length=255)
     message = models.TextField()
     image = models.ImageField(max_length=1000, null=True, blank=True)
     sub_url = models.CharField(max_length=255, null=True, blank=True)
