@@ -22,6 +22,12 @@ DATABASES = {
 
 }
 
+gettext = lambda s: s
+LANGUAGES = (
+    ('vi', gettext('Vietnamese')),
+    ('en', gettext('English')),
+)
+
 RECAPTCHA_PUBLIC_KEY = '6LfMmSYUAAAAANJJC-toiepJxWBFlPXgfz9Cg5tA'
 RECAPTCHA_PRIVATE_KEY = '6LfMmSYUAAAAAI8a3MHrDW07gjr9kddPAMd2nOTL'
 
