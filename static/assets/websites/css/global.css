@@ -437,6 +437,10 @@ a.btn-custom-style:hover {
     color: #e336b6;
     display: inline;
 }
+/* hover menu navbar */
+.header .header-nav ul li:hover ul{
+    display: block;
+}
 
 input.input-search {
     background-color: transparent;

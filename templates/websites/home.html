@@ -29,8 +29,16 @@
                 </a>
             </div>
             {% endfor %}
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <span class="sr-only">Next</span>
+            </a>
         </div>
-
         <ul class="nav nav-justified home-carousel hidden-sm hidden-xs">
             {% for hot in result.hots %}
             <li data-target="#myCarousel">
@@ -53,7 +61,7 @@
     <div class="row">
         <div class="col-md-12 game-section-body">
             <div class="title-section" align="center">
-                <p class="big-font-size game-title">{% trans "menu.night_life" %}</p>
+                <p class="big-font-size game-title">{% trans "homepage.title.section.game" %}</p>
             </div>
             <div class="section-game">
                 <div class="col-lg-3 col-md-3 game-section-menu hidden-sm hidden-xs">
@@ -76,9 +84,9 @@
                     <!-- NIGHT LIFT section -->
                     <div class="panel game-section-content row col-md-12">
                         <div class="visible-xs visible-sm game-section-title">
-                            <h2 role = "button" data-toggle="collapse" data-target="#id_night_life" data-parent="#id_game_section">{% trans "homepage.text.night_life" %}<i class="more-less glyphicon glyphicon-minus"></i></h2>
+                            <h2 role = "button" data-toggle="collapse" data-target="#id_night_life" data-parent="#id_game_section">{% trans "homepage.text.night_life" %}<i class="more-less glyphicon glyphicon-plus"></i></h2>
                         </div>
-                        <div class="collapse in" id="id_night_life">
+                        <div class="collapse" id="id_night_life">
                             {% if result.night_life_types %}
                             <div class="game-section-detail">
                                 <div class="col-xs-12 col-md-6 game-left">
@@ -101,7 +109,7 @@
                                         <ul class="nav btn-custom-group type-group">
                                             {% for type in result.night_life_types %}
                                             <li>
-                                                <a class="btn-custom-style btn-custom-game-type" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
+                                                <a class="btn-custom-style" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
                                             </li>
                                             {% endfor %}
                                         </ul>
@@ -145,7 +153,7 @@
                                         <ul class="nav btn-custom-group type-group">
                                             {% for type in result.play_types %}
                                             <li>
-                                                <a class="btn-custom-style btn-custom-game-type" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
+                                                <a class="btn-custom-style" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
                                             </li>
                                             {% endfor %}
                                         </ul>

@@ -29,7 +29,7 @@ class UserSerializer(SetCustomErrorMessagesMixin, serializers.ModelSerializer):
     password = serializers.CharField(
         style={'input_type': 'password'},
         write_only=True)
-    # device_uid = serializers.CharField(max_length=255)
+    device_unique = serializers.CharField(max_length=255)
     # device_type = serializers.CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
     avatar = serializers.ImageField(
         max_length=1000, allow_null=True, required=False)
@@ -37,7 +37,7 @@ class UserSerializer(SetCustomErrorMessagesMixin, serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'password', 'email', 'first_name', 'last_name', 'birth_date', 'phone',
-                  'personal_id', 'country', 'address', 'city', 'avatar', 'is_staff')
+                  'personal_id', 'country', 'address', 'city', 'avatar', 'is_staff', 'device_unique')
         custom_error_messages_for_validators = {
             'email': {
                 UniqueValidator: _('This email is already taken. Please, try again')
