@@ -19,6 +19,9 @@
 #message_success {
 	margin-top: 20px;
 }
+.btn-send {
+	margin-left: 15px;
+}
 
 .txt-color{
     color: #fec231;
