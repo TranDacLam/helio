@@ -18,6 +18,7 @@
 		<p class="big-font-size">Notifications Detail Managerment</h1>
 	</div>
 	<div id="message_success" style="display: none;"><div class="alert alert-success message-success">{% trans "admin_promotion.message_success" %}</div></div>
+	<div id="message_errors" style="display: none;"><div class="alert alert-danger message_errors"></div></div>
 	<div class="col-md-12 layer">
 		<a class="btn btn-lg btn-primary" href="{% url 'admin_notifications' %}" role="button">{% trans "BACK TO ADMIN NOTIFICATION" %}</a>
 	</div>
@@ -43,7 +44,7 @@
 		        </div>
 		    </div>
 		</div>
-		<a class="btn btn-lg btn-primary btn-send" href="" role="button">{% trans "Send Notification" %}</a>
+		<a id="btn-push-notify" class="btn btn-lg btn-primary btn-send" href="#" role="button">{% trans "Send Notification" %}</a>
 	</div>
 	{% endif %}
 	

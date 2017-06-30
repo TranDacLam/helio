@@ -18,8 +18,29 @@ $(document).ready(function() {
 				$("#message_success").fadeIn('slow').delay(5000).fadeOut('slow');
 			},
 	        error : function(jqXHR, textStatus, errorThrown) {
-	            alert("Error: " + textStatus + ": " + errorThrown);
+                data_error = $.parseJSON(jqXHR.responseText);
+                $(".message_errors").text(data_error.message);
+                $("#message_errors").fadeIn('slow').delay(5000).fadeOut('slow');
 	        }
   		});
     });
+
+    $("#btn-push-notify").click(function() {
+        $.ajax({
+            type: 'POST',
+            url: '/vi/api/notification/push/',
+            contentType: "application/json",
+            dataType: 'json',
+            data: '{ "notification_id": '+$("#notification_id").val()+' }',
+            success: function (data) {
+                $("#message_success").fadeIn('slow').delay(5000).fadeOut('slow');
+            },
+            error : function(jqXHR, textStatus, errorThrown) {
+                data_error = $.parseJSON(jqXHR.responseText);
+                $(".message_errors").text(data_error.message);
+                $("#message_errors").fadeIn('slow').delay(5000).fadeOut('slow');
+            }
+        });
+    });
+    
 });

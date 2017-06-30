@@ -51,7 +51,7 @@ class UserChangeForm(forms.ModelForm):
         model = custom_models.User
         fields = ('email', 'password', 'birth_date', 'phone', 'personal_id', 'first_name', 'last_name',
                   'country', 'address', 'city', 'is_active', 'is_staff', 'is_superuser', 'groups', 'code', 
-                  'avatar', 'anonymously', 'flag_notification', )
+                  'avatar', 'anonymously', 'flag_notification', 'device_unique', )
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -64,7 +64,7 @@ class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
     add_form = UserCreationForm
-    readonly_fields = ('code', 'anonymously', 'flag_notification', )
+    readonly_fields = ('code', 'anonymously', 'flag_notification', 'device_unique' )
 
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
@@ -77,7 +77,7 @@ class UserAdmin(BaseUserAdmin):
                                       'personal_id', 'country', 'address', 'city', 'avatar', )}),
         ('Permissions', {'fields': ('is_staff',
                                     'is_superuser', 'is_active', 'anonymously', 'groups', )}),
-        ('Security', {'fields': ('code', )}),
+        ('Security', {'fields': ('code', 'device_unique', )}),
         ('Notification', {'fields': ('flag_notification', )}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
