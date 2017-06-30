@@ -148,10 +148,13 @@ ol.ol-custom ol > li:before {
 }
 
 /*END PANEL CSS*/
+/*Hover questions and margin*/
 .questions:hover {
     color: #fec231;
     text-decoration: none;
  }
+
+/*end hover questions*/
 @media (max-width: 997px) {
     .nav-custom {
         padding: 0 0 20px;
