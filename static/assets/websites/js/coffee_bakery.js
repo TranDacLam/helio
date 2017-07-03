@@ -1,5 +1,5 @@
-var KidsFunction = (function ($) {
-    var helio_kids = function () {
+var CoffeeFunction = (function ($) {
+    var coffee = function () {
         var _self = this;
         var show_num = 4,
             view_more = 4;
@@ -10,10 +10,8 @@ var KidsFunction = (function ($) {
             $(".tab-content .tab-pane.view-more-content").each(function(){
                 var id = $(this).attr("id");
                 if($(this).hasClass(section_active)) {
-                    $(".kid-btn-group li").removeClass("active");
                     $(".tab-content .tab-pane").removeClass("active");
                     $(".tab-content ."+ section_active).addClass("active");
-                    $(".kid-btn-group ."+ section_active).parent().addClass("active");
                 }
                 
                 _self.viewMore();
@@ -61,11 +59,11 @@ var KidsFunction = (function ($) {
             }
         }
     }
-    return helio_kids;
+    return coffee;
 })(jQuery);
 
-(function (kids, $) {
+(function (coffee, $) {
     $(document).ready(function(){
-        kids.initEventPage();
+        coffee.initEventPage();
     });
-})(new KidsFunction(), jQuery);
+})(new CoffeeFunction(), jQuery);

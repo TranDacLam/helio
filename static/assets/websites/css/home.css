@@ -246,6 +246,9 @@ a.btn-custom-style.btn-custom-game-type:hover {
     align-items: center;
     justify-content: center;
 }
+.vidieo-list li:hover{
+    cursor:pointer;
+}
 
 .btn-link-more {
     margin: 10px 15px;
@@ -394,7 +397,7 @@ a.btn-custom-style.btn-custom-game-type:hover {
         font-size: 20px;
     }
     div.game-section-content h2 {
-        background-color: #271a3a;
+        background-color: #15062b;
     }
     div.game-section-content h2.collapsed {
         background-color: #15062b;

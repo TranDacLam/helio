@@ -15,6 +15,8 @@ $(document).ready( function() {
     $(".game-section div.game-right:first-child").addClass("active");
     $(".game-section .btn-custom-group li:first-child").addClass("active");
     
+
+    
     /*menu hover*/
     $(".header .header-nav ul li ul li").hover(function(){
         $(this).parent().parent().addClass("active");
@@ -31,7 +33,7 @@ $(document).ready( function() {
         interval:   4000
     });
 
-    $('.vidieo-slider').flexslider({
+    var vidieSlider = $('.vidieo-slider').flexslider({
         animation: "slide",
         start: function(slider){
             $(".vidieo-caption p").hide();
@@ -116,4 +118,12 @@ $(document).ready( function() {
     $("#vidieo_play_modal").on("hidden.bs.modal", function () {
         $('#helio_vidieo').attr('src', ''); //$('#helio_vidieo').attr('src')
     });
+
+    $(".list-line li").each(function(index){
+        $(this).click(function () {
+        vidieSlider.flexslider(index);
+        vidieSlider.data('flexslider').play();
+        });
+    });
+
 });
