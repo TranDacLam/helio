@@ -156,7 +156,7 @@
                         </div>
                         <div class="item-content-image col-md-9">
                             <div class="row">
-                                <img src="{{ MEDIA_URL }}{{event.image}}" width="100%" height="100%">
+                                <a href="/events/{{event.id}}/detail/"><img src="{{ MEDIA_URL }}{{event.image}}" width="100%" height="100%"></a>
                                 <div class="countdown-container future-event" style="display: none;">
                                     <div class="countdown-content">
                                         <div class="time days flip">
@@ -203,7 +203,7 @@
                         </div>
                         <div class="item-content-image col-md-9 ">
                             <div class="row">
-                                <img src="{{ MEDIA_URL }}{{event.image}}" width="100%" height="100%">
+                                <a href="/events/{{event.id}}/detail/"><img src="{{ MEDIA_URL }}{{event.image}}" width="100%" height="100%"></a>
                                 <div class="countdown-container future-event" style="display: none;">
                                     <div class="countdown-content">
                                         <div class="time days flip">
