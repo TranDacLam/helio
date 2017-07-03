@@ -288,14 +288,12 @@ def change_password(request):
 @permission_classes((AllowAny,))
 def send_feedback(request):
     try:
-        # TODO : Check user i not anonymous
-        if not request.user.anonymously:
-            serializer = FeedBackSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response({"code": 400, "message": "%s" % serializer.errors,
-                             "fields": ""}, status=400)
+        serializer = FeedBackSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response({"code": 400, "message": "%s" % serializer.errors,
+                         "fields": ""}, status=400)
     except Exception, e:
         error = {"code": 500, "message": _("Cannot send feedback. Please contact administrator."),
                  "fields": ""}
@@ -982,7 +980,8 @@ def send_notification(request):
             notification_id=notification_id).values_list('user_id', flat=True)
 
         data_notify = {"title": notify_obj.subject, "body": notify_obj.message,
-                       "sub_url": notify_obj.sub_url, "image": notify_obj.image.url if notify_obj.image else ""}
+                       "sub_url": notify_obj.sub_url, "image": notify_obj.image.url if notify_obj.image else "",
+                       "notification_id": notify_obj.id}
 
         devices_ios = APNSDevice.objects.filter(
             user__flag_notification=True, user__id__in=user_of_notification)
