@@ -352,6 +352,9 @@ msgstr "Tải lên hình đại diện lỗi. Vui lòng liên hệ với quản 
 msgid "Update infomation user successfully."
 msgstr "Cập nhật thông tin người dùng thành công."
 
+msgid "Update device unique successfully."
+msgstr "Cập nhật mã máy thiết bị thành công."
+
 msgid "Cannot update infomation user. Please contact administrator."
 msgstr "Không thể cập nhật thông tin người dùng. Vui lòng liên hệ với quản trị viên."
 
