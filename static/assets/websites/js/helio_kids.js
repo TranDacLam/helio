@@ -41,7 +41,7 @@ var KidsFunction = (function ($) {
             $(element).carousel({
                 carouselWidth: content_width,
                 carouselHeight: h_carousel,
-                directionNav:true,    
+                directionNav:true,
                 shadow:false, 
                 frontWidth:w,
                 frontHeight:h,

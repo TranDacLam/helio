@@ -253,6 +253,9 @@ msgstr "Ngoài những sản phẩm của Helio center như Helio Play, helio Ki
 msgid "admin_promotion.message_success"
 msgstr "Lưu thành công!"
 
+msgid "admin_promotion.message_promotion_install"
+msgstr "Khuyến mãi dành cho người dùng cài đặt ứng dụng lần đầu. Chức năng này không được áp dụng."
+
 msgid "admin_promotion.btn_back_admin"
 msgstr "TRỞ VỀ QUẢN LÝ KHUYẾN MÃI"
 
@@ -436,6 +439,9 @@ msgstr "Email hoặc mật khẩu không chính xác."
 
 msgid "Unable to log in with provided credentials."
 msgstr "Email hoặc mật khẩu không chính xác."
+
+msgid "Error. DeivceID of user is empty. Please check again."
+msgstr "Lỗi. Người dùng hiện tại không có device_id. Vui lòng xác minh lại."
 
 #END API
 
