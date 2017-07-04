@@ -20,6 +20,9 @@
 	<div id="message_success" style="display: none;">
 		<div class="alert alert-success message-success">{% trans "admin_promotion.message_success" %}</div>
 	</div>
+	{% if flag_disable == True %}
+		<div class="alert alert-warning message-warning">{% trans "admin_promotion.message_promotion_install" %}</div>
+	{% endif %}
 	<div class="col-md-12 layer">
 		<a class="btn btn-lg btn-primary" href="{% url 'admin_promotions' %}" role="button">{% trans "admin_promotion.btn_back_admin" %}</a>
 	</div>
@@ -52,7 +55,7 @@
 	{% endif %}
 	
 	{% if users %}
-	<div class="row layer">
+	<div class="row layer {% if flag_disable == True %} disable_all {% endif %}">
 		<div class="col-md-12">
 			<select multiple="multiple" id="my-select" name="my-select[]" class="user_choose">
 			    {% for user in users %}
@@ -64,7 +67,7 @@
 		</div>
 	</div>
 
-	<div class="row layer">
+	<div class="row layer {% if flag_disable == True %} disable_all {% endif %}">
 		<div class="col-md-12" align="right">
             <a id ="save-btn" class="btn btn-lg btn-primary" role="button">{% trans "admin_promotion.btn_save" %}</a>
         </div>
