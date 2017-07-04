@@ -208,6 +208,28 @@ def user_info(request):
 
 
 """
+    Update unique device id for user register is facebook
+"""
+
+
+@api_view(['PUT'])
+def update_unique_device_id(request):
+    try:
+        # TODO : Check user i not anonymous
+        if not request.user.anonymously:
+            user = request.user
+            user.device_unique = request.data.get('device_unique', '')
+            user.save()
+
+        return Response({'flag': True, 'message': _('Update device unique successfully.')})
+
+    except Exception, e:
+        error = {"code": 500, "message": _("Cannot update infomation user. Please contact administrator."),
+                 "fields": "", "flag": False}
+        return Response(error, status=500)
+
+
+"""
     Get User Infomation
 """
 
@@ -1112,11 +1134,10 @@ def gift_user(request):
                 return Response(error, status=400)
 
             obj_promotion = Promotion.objects.get(pk=promotion_id)
-            
+
             # CHECK Promotion Category is new user install app helio
             if obj_promotion.id == core_constants.PROMOTION_ID_SETUP_DEVICE:
                 return gift_install_app(user, promotion_id)
-
 
             gift = Gift.objects.get(user=user, promotion_id=promotion_id)
 
@@ -1161,7 +1182,7 @@ def gift_install_app(user, promotion_id):
         if user.is_new_register:
             if not user.device_unique:
                 return Response({'message': _("Error. DeivceID of user is empty. Please check again.")}, status=501)
-                    
+
             try:
                 gift = Gift.objects.get(
                     device_id=user.device_unique, promotion_id=promotion_id)
@@ -1185,7 +1206,7 @@ def gift_install_app(user, promotion_id):
             user.save()
 
         return Response({'message': message}, status=status_code)
-        
+
     except Exception, e:
         print "Error gift_install_app ", e
         error = {"code": 500, "message": _("Your account not apply current promotion. Please contact administrator."),
