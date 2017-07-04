@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^accounts/login/$', obtain_jwt_token, name="accounts-login"),
     # Social Login : alias name url is : login_social_jwt_user and url is : api/login/social/jwt_user/
     url(r'^login/', include('rest_social_auth.urls_jwt')),
+    url(r'^accounts/facebook/deviceuid/$', views.update_unique_device_id, name="update-unique-device-id"),
     # url(r'^api-token-verify/', verify_jwt_token),
     url(r'^accounts/upload/avatar/(?P<filename>[^/]+)$', views.FileUploadView.as_view(), name="upload-avatar"),
 

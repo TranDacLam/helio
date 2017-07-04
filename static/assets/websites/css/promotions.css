@@ -116,12 +116,6 @@ a.btn-custom-style.btn-custom-style-promotion-view-more:hover {
     background-image: none;
 }
 
-/*END BUTTON VIEW MORE*/
-.btn-group-five{
-    width: 20%;
-}
-
-
 @media (max-width: 1199px) { 
     .promotion-btn-group li.active a.btn-custom-style:after {
         content: none;
@@ -169,4 +163,11 @@ a.btn-custom-style.btn-custom-style-promotion-view-more:hover {
     .promotion-btn-group li {
         padding-bottom: 15px;
     }
+}
+
+@media (min-width: 991px){
+    .btn-group-five{
+        width: 20%;
+    }
+
 }
