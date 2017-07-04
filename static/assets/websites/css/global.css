@@ -608,7 +608,7 @@ and(-webkit-min-device-pixel-ratio:0) { @media
         font-size: 60px;
     }
 }
-@media (min-width: 991px){
+@media (min-width: 768px){
     /* hover menu navbar */
     .header .header-nav ul li:hover ul{
         display: block;
