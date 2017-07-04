@@ -202,6 +202,7 @@ def user_info(request):
         return Response({'flag': True, 'message': _('Update infomation user successfully.')})
 
     except Exception, e:
+        print 'Erro Update user_info ',e
         error = {"code": 500, "message": _("Cannot update infomation user. Please contact administrator."),
                  "fields": "", "flag": False}
         return Response(error, status=500)
