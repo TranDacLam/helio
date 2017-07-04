@@ -447,10 +447,7 @@ a.btn-custom-style:hover {
     color: #e336b6;
     display: inline;
 }
-/* hover menu navbar */
-.header .header-nav ul li:hover ul{
-    display: block;
-}
+
 
 input.input-search {
     background-color: transparent;
@@ -609,5 +606,11 @@ and(-webkit-min-device-pixel-ratio:0) { @media
 @media all and (-ms-high-contrast:none) and (min-width: 991px){
     .big-font-size {
         font-size: 60px;
+    }
+}
+@media (min-width: 991px){
+    /* hover menu navbar */
+    .header .header-nav ul li:hover ul{
+        display: block;
     }
 }
