@@ -68,7 +68,7 @@ a.btn-custom-style.btn-custom-style-promotion:hover {
     background-color: #7d1e6a;
     border-radius: 0px;
     background-image: none;
-    font-size: 36px;
+    font-size: 30px;
 }
 .promotion-btn-group li {
     padding-bottom: 25px;
@@ -87,7 +87,7 @@ a.btn-custom-style.btn-custom-style-promotion:hover {
     left: 0;
     width: 0;
     height: 0;
-    border-width: 20px 141px 0 141px;
+    border-width: 20px 112px 0 112px;
     border-style: solid;
     border-color: #ed3aa7 transparent transparent transparent;
 }
@@ -117,6 +117,10 @@ a.btn-custom-style.btn-custom-style-promotion-view-more:hover {
 }
 
 /*END BUTTON VIEW MORE*/
+.btn-group-five{
+    width: 20%;
+}
+
 
 @media (max-width: 1199px) { 
     .promotion-btn-group li.active a.btn-custom-style:after {

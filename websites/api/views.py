@@ -288,14 +288,12 @@ def change_password(request):
 @permission_classes((AllowAny,))
 def send_feedback(request):
     try:
-        # TODO : Check user i not anonymous
-        if not request.user.anonymously:
-            serializer = FeedBackSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response({"code": 400, "message": "%s" % serializer.errors,
-                             "fields": ""}, status=400)
+        serializer = FeedBackSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response({"code": 400, "message": "%s" % serializer.errors,
+                         "fields": ""}, status=400)
     except Exception, e:
         error = {"code": 500, "message": _("Cannot send feedback. Please contact administrator."),
                  "fields": ""}
@@ -982,7 +980,8 @@ def send_notification(request):
             notification_id=notification_id).values_list('user_id', flat=True)
 
         data_notify = {"title": notify_obj.subject, "body": notify_obj.message,
-                       "sub_url": notify_obj.sub_url, "image": notify_obj.image.url if notify_obj.image else ""}
+                       "sub_url": notify_obj.sub_url, "image": notify_obj.image.url if notify_obj.image else "",
+                       "notification_id": notify_obj.id}
 
         devices_ios = APNSDevice.objects.filter(
             user__flag_notification=True, user__id__in=user_of_notification)
@@ -1113,6 +1112,11 @@ def gift_user(request):
                 return Response(error, status=400)
 
             obj_promotion = Promotion.objects.get(pk=promotion_id)
+            
+            # CHECK Promotion Category is new user install app helio
+            if obj_promotion.id == core_constants.PROMOTION_ID_SETUP_DEVICE:
+                return gift_install_app(user, promotion_id)
+
 
             gift = Gift.objects.get(user=user, promotion_id=promotion_id)
 
@@ -1148,57 +1152,42 @@ def gift_user(request):
 """
 
 
-@api_view(['PUT'])
-def gift_install_app(request):
+def gift_install_app(user, promotion_id):
     try:
-        if not request.user.anonymously:
-            user = request.user
-            print "## Current User gift_install_app ", user
-            promotion_id = request.data.get('promotion_id', '')
-
-            if not promotion_id:
-                error = {
-                    "code": 400, "message": _("The promotion_id is required."), "fields": "promotion_id"}
-                return Response(error, status=400)
-
-            obj_promotion = Promotion.objects.get(pk=promotion_id)
-            """ 
-                Case 1 : Check user is new registration
-                Case 2 : Check Device have using
-             """
-            if user.is_new_register:
-                try:
-                    gift = Gift.objects.get(
-                        device_id=user.device_unique, promotion_id=promotion_id)
-                except Gift.DoesNotExist, e:
-                    # IF query does not exist then is new user and device
-                    gift = Gift(user=user, device_id=user.device_unique,
-                                promotion_id=promotion_id)
-                    gift.save()
-            else:
-                return Response({'message': _("Error. User or Deivce Have get gift from promotion")}, status=501)
-
-            message = _("Error. User or Deivce Have get gift from promotion")
-            status_code = 501
-            if not gift.is_used:
-                message = "Success"
-                status_code = 200
-                gift.is_used = True
+        """ 
+            Case 1 : Check user is new registration
+            Case 2 : Check Device have using
+         """
+        if user.is_new_register:
+            if not user.device_unique:
+                return Response({'message': _("Error. DeivceID of user is empty. Please check again.")}, status=501)
+                    
+            try:
+                gift = Gift.objects.get(
+                    device_id=user.device_unique, promotion_id=promotion_id)
+            except Gift.DoesNotExist, e:
+                # IF query does not exist then is new user and device
+                gift = Gift(user=user, device_id=user.device_unique,
+                            promotion_id=promotion_id)
                 gift.save()
-                # Update User have gift
-                user.is_new_register = False
-                user.save()
-
-            return Response({'message': message}, status=status_code)
         else:
-            return Response({'message': _('Anonymous User Cannot Call This Action.')}, status=400)
+            return Response({'message': _("Error. User or Deivce Have get gift from promotion")}, status=501)
 
-    except Promotion.DoesNotExist, e:
-        error = {"code": 400, "message": _("Promotion for user does not matching. Please check again."),
-                 "fields": ""}
-        return Response(error, status=400)
+        message = _("Error. User or Deivce Have get gift from promotion")
+        status_code = 501
+        if not gift.is_used:
+            message = "Success"
+            status_code = 200
+            gift.is_used = True
+            gift.save()
+            # Update User have gift
+            user.is_new_register = False
+            user.save()
+
+        return Response({'message': message}, status=status_code)
+        
     except Exception, e:
-        print "Error gift_user ", e
+        print "Error gift_install_app ", e
         error = {"code": 500, "message": _("Your account not apply current promotion. Please contact administrator."),
                  "fields": ""}
         return Response(error, status=500)

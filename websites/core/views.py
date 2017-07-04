@@ -350,17 +350,16 @@ def promotions(request):
         promotions = Promotion.objects.filter(is_draft=False).order_by('-created')
         datas = {}
         if promotions:
+            category_all = Category();
+            category_all.id = 0
+            datas[category_all] = promotions
+
             for promotion in promotions:
                 if promotion.promotion_category:
                     key = promotion.promotion_category
                     if key not in datas.keys():
                         datas[key] = []
                     datas[key].append(promotion)
-
-
-            category_all = Category();
-            category_all.id = 0
-            datas[category_all] = promotions
 
         # Promotion hots to show coursel
         promotions_hots = promotions[:3]
@@ -501,7 +500,12 @@ def admin_promotion_detail(request, promotion_id):
         if user.id in promotion_user_ids:
             user.is_selected = True
 
-    return render(request, 'websites/admin_promotion_detail.html', {"promotion":promotion, "users": users})
+    # add flag disable admin promotion when promotion is setup app
+    flag_disable = False
+    if promotion.id == const.PROMOTION_ID_SETUP_DEVICE:
+        flag_disable = True
+    
+    return render(request, 'websites/admin_promotion_detail.html', {"promotion":promotion, "users": users, "flag_disable": flag_disable})
 
 @login_required(login_url='/admin/login/')
 def update_promotions_user(request):

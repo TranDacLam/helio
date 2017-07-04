@@ -42,7 +42,7 @@ urlpatterns = [
     url(r'^reissue/history/$', views.reissue_history, name="reissue-history"),
     url(r'^open/time/$', views.open_time, name="open-time"),
     url(r'^promotion/gift/$', views.gift_user, name="gift-user"),
-    url(r'^promotion/gift/install/app/$', views.gift_install_app, name="gift-install-app"),
+    # url(r'^promotion/gift/install/app/$', views.gift_install_app, name="gift-install-app"),
     
     url(r'^notifications/$', views.notifications, name="notification-category"),
     url(r'^notification/new/$', views.add_notification, name="add-notification"),
