@@ -224,6 +224,7 @@ def update_unique_device_id(request):
         return Response({'flag': True, 'message': _('Update device unique successfully.')})
 
     except Exception, e:
+        print 'update_unique_device_id ',e
         error = {"code": 500, "message": _("Cannot update infomation user. Please contact administrator."),
                  "fields": "", "flag": False}
         return Response(error, status=500)
