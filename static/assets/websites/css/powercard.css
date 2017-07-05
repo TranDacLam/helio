@@ -76,9 +76,7 @@
 .faqs-section {
 	margin-top: 60px;
 }
-.card-info-section {
-	margin-top: 60px;
-}
+
 /*margin when screen > 991px*/
 @media (min-width: 991px){
 .faqs-content {
