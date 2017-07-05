@@ -63,11 +63,11 @@ var OrtherProductFunction = (function ($) {
             var content_width = $(".container").width(),
                 w = content_width * 0.675,
                 h = w / 1.8,
-                // h_carousel = h + 200,
+                h_carousel = h + 200,
                 h_bw = h/2 - 20;
             $(element).carousel({
                 carouselWidth: content_width,
-                carouselHeight: h,
+                carouselHeight: h_carousel,
                 directionNav:true,    
                 shadow:false, 
                 frontWidth:w,
