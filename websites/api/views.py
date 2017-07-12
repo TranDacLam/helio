@@ -1143,7 +1143,7 @@ def gift_user(request):
 
             gift = Gift.objects.get(user=user, promotion_id=promotion_id)
 
-            message = _("Error. User or Deivce Have get gift from promotion")
+            message = _("Error. User or Deivce Have get gift from promotion.")
             status_code = 501
             if not gift.is_used:
                 message = "Success"
