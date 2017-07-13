@@ -458,6 +458,9 @@ msgstr "Lỗi. Người dùng hiện tại không có device_id. Vui lòng xác 
 msgid "Email is ready in system. Please choice another email."
 msgstr "Địa chỉ email đã có người sử dụng. Vui lòng sử dụng email khác."
 
+msgid "This phone number is empty. Please check again."
+msgstr "Số điện thoại không được bỏ trống."
+
 #END API
 
 #START ADMIN MARKETING
