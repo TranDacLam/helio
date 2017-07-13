@@ -358,6 +358,12 @@ msgstr "Cập nhật mã máy thiết bị thành công."
 msgid "Cannot update infomation user. Please contact administrator."
 msgstr "Không thể cập nhật thông tin người dùng. Vui lòng liên hệ với quản trị viên."
 
+msgid "This phone number has already. Please choice another."
+msgstr "Số điện thoại đã có người sử dụng. Vui lòng chọn số khác."
+
+msgid "This field must be unique."
+msgstr "Trường này là duy nhất. Vui lòng thử lại."
+
 msgid "OldPassword does not match."
 msgstr "Mặt khẩu cũ không khớp."
 

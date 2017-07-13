@@ -176,6 +176,12 @@ def user_info(request):
         # TODO : Check user i not anonymous
         if not request.user.anonymously:
             user = request.user
+            # verify phone number
+            phone = request.data.get('phone', '')
+            ps = User.objects.filter(phone=phone).exclude(pk=user.id)
+            if qs.count() > 0:
+                return Response({'flag': False, 'message': _('This phone number has already. Please choice another.')})
+
             user.full_name = request.data.get('full_name', '')
             user.birth_date = request.data.get('birth_date', '')
             user.phone = request.data.get('phone', '')
