@@ -188,12 +188,11 @@ def user_info(request):
                 try:
                     datetime.datetime.strptime(birth_date, "%Y-%m-%d")
                 except Exception, e:
-                    print "FORMAT ERROR ", e
                     return Response({'flag': False, 'message': _('Birth day invalid format (YYYY-MM-DD).')})
 
             user.full_name = request.data.get('full_name', '')
             user.birth_date = birth_date
-            user.phone = request.data.get ('phone', '')
+            user.phone = request.data.get('phone', '')
             user.personal_id = request.data.get('personal_id', '')
             user.country = request.data.get('country', '')
             user.address = request.data.get('address', '')
