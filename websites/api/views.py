@@ -21,6 +21,7 @@ from core import constants as core_constants
 from push_notifications.models import APNSDevice, GCMDevice
 from rest_framework.permissions import AllowAny
 from django.utils.translation import ugettext, ugettext_lazy as _
+import datetime
 
 
 def custom_exception_handler(exc, context):
@@ -163,18 +164,6 @@ class FileUploadView(APIView):
             error = {
                 "code": 500, "message": _("Upload avatar error. Please contact administartor"), "fields": "avatar", "flag": False}
             return Response(error, status=500)
-        # path = '/Users/tiendang/Downloads/testimg.png'
-        # with open(path, 'w') as open_file:
-        #     for c in file_obj.chunks():
-        #         open_file.write(c)
-        #         open_file.close()
-
-        # # write image (base64 string encode upload)
-        # import base64
-        # import json
-        # # open_file.write(json.loads(file_obj.file.read())['file1'].decode('base64'))
-        # open_file.write(file_obj.file.read())
-        # open_file.close()
 
 
 """
@@ -188,9 +177,24 @@ def user_info(request):
         # TODO : Check user i not anonymous
         if not request.user.anonymously:
             user = request.user
-            user.first_name = request.data.get('first_name', '')
-            user.last_name = request.data.get('last_name', '')
-            user.birth_date = request.data.get('birth_date', '')
+            # verify phone number
+            phone = request.data.get('phone', '')
+            if not phone:
+                return Response({'flag': False, 'message': _('This phone number is empty. Please check again.')})
+
+            qs = User.objects.filter(phone=phone).exclude(pk=user.id)
+            if qs.count() > 0:
+                return Response({'flag': False, 'message': _('This phone number has already. Please choice another.')})
+
+            birth_date = request.data.get('birth_date', '')
+            if birth_date:
+                try:
+                    datetime.datetime.strptime(birth_date, "%Y-%m-%d")
+                except Exception, e:
+                    return Response({'flag': False, 'message': _('Birth day invalid format (YYYY-MM-DD).')})
+
+            user.full_name = request.data.get('full_name', '')
+            user.birth_date = birth_date
             user.phone = request.data.get('phone', '')
             user.personal_id = request.data.get('personal_id', '')
             user.country = request.data.get('country', '')

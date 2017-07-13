@@ -46,8 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('ios', 'IOS')
     )
 
-    first_name = models.CharField(max_length=255, null=True, blank=True)
-    last_name = models.CharField(max_length=255, null=True, blank=True) 
+    full_name = models.CharField(max_length=255, null=True, blank=True) 
     username = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(
         verbose_name='email address',
@@ -55,11 +54,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         unique=True,
     )
     birth_date = models.DateField(null=True, blank=True)
-    phone = models.CharField(max_length=50, null=True, blank=True)
+    phone = models.CharField(max_length=50, unique=True, blank=False)
     personal_id = models.CharField(max_length=50, null=True, blank=True)
-    country = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
+    country = models.CharField(max_length=255, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True)
     # is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(
         _('Staff Status'), default=False,
