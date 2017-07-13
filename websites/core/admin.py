@@ -49,7 +49,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = custom_models.User
-        fields = ('email', 'password', 'birth_date', 'phone', 'personal_id', 'first_name', 'last_name',
+        fields = ('email', 'password', 'birth_date', 'phone', 'personal_id', 'full_name',
                   'country', 'address', 'city', 'is_active', 'is_staff', 'is_superuser', 'groups', 'code', 
                   'avatar', 'anonymously', 'flag_notification', 'device_unique', )
 
@@ -73,7 +73,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('is_staff', 'is_superuser', )
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'birth_date', 'phone',
+        ('Personal info', {'fields': ('full_name', 'birth_date', 'phone',
                                       'personal_id', 'country', 'address', 'city', 'avatar', )}),
         ('Permissions', {'fields': ('is_staff',
                                     'is_superuser', 'is_active', 'anonymously', 'groups', )}),
@@ -88,7 +88,7 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'password1', 'password2')}
          ),
     )
-    search_fields = ('email',)
+    search_fields = ('email', 'phone', )
     ordering = ('email',)
     filter_horizontal = ()
 
