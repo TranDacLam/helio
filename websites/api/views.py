@@ -186,7 +186,7 @@ def user_info(request):
             birth_date = request.data.get('birth_date', '')
             if birth_date:
                 try:
-                    datetime.strptime(str_date, "%Y-%m-%d")
+                    datetime.datetime.strptime(str_date, "%Y-%m-%d")
                 except:
                     return Response({'flag': False, 'message': _('Birth day invalid format (YYYY-MM-DD).')})
 
