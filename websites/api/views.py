@@ -186,8 +186,9 @@ def user_info(request):
             birth_date = request.data.get('birth_date', '')
             if birth_date:
                 try:
-                    datetime.datetime.strptime(str_date, "%Y-%m-%d")
-                except:
+                    datetime.datetime.strptime(birth_date, "%Y-%m-%d")
+                except Exception, e:
+                    print "FORMAT ERROR ", e
                     return Response({'flag': False, 'message': _('Birth day invalid format (YYYY-MM-DD).')})
 
             user.full_name = request.data.get('full_name', '')
