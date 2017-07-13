@@ -361,6 +361,9 @@ msgstr "Không thể cập nhật thông tin người dùng. Vui lòng liên h�
 msgid "This phone number has already. Please choice another."
 msgstr "Số điện thoại đã có người sử dụng. Vui lòng chọn số khác."
 
+msgid "Birth day invalid format (YYYY-MM-DD)."
+msgstr "Ngày sinh không đúng định dạng (YYYY-MM-DD)."
+
 msgid "This field must be unique."
 msgstr "Trường này là duy nhất. Vui lòng thử lại."
 

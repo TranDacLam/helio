@@ -182,9 +182,16 @@ def user_info(request):
             if qs.count() > 0:
                 return Response({'flag': False, 'message': _('This phone number has already. Please choice another.')})
 
+            birth_date = request.data.get('birth_date', '')
+            if birth_date:
+                try:
+                    datetime.strptime(str_date, "%Y-%m-%d")
+                except:
+                    return Response({'flag': False, 'message': _('Birth day invalid format (YYYY-MM-DD).')})
+
             user.full_name = request.data.get('full_name', '')
-            user.birth_date = request.data.get('birth_date', '')
-            user.phone = request.data.get('phone', '')
+            user.birth_date = birth_date
+            user.phone = request.data.get ('phone', '')
             user.personal_id = request.data.get('personal_id', '')
             user.country = request.data.get('country', '')
             user.address = request.data.get('address', '')
