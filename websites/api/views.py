@@ -200,7 +200,6 @@ def user_info(request):
             user.country = request.data.get('country', '')
             user.address = request.data.get('address', '')
             user.city = request.data.get('city', '')
-            user.device_uid = request.data.get('device_uid', '')
             user.save()
 
         return Response({'flag': True, 'message': _('Update infomation user successfully.')})
@@ -243,21 +242,9 @@ def update_unique_device_id(request):
 @api_view(['GET'])
 def users(request):
     try:
-        email = request.GET.get("email")
-        error = helper.is_empty(email)
-        if error:
-            errors = {"code": 400, "message": "%s" %
-                      error, "fields": "email"}
-            return Response(errors, status=400)
-
-        # TODO : Check user i not anonymous
-        if not request.user.anonymously:
-            user = User.objects.get(email=email)
-            serializer = UserSerializer(user, many=False)
-            return Response(serializer.data)
-        else:
-            return Response({'message': _('Anonymous User Cannot Get User Infomation')}, status=400)
-
+        user = User.objects.get(pk=request.user.id)
+        serializer = UserSerializer(user, many=False)
+        return Response(serializer.data)
     except User.DoesNotExist, e:
         error = {"code": 400, "message": "%s" % e, "fields": "email"}
         return Response(error, status=400)
@@ -1198,9 +1185,9 @@ def gift_install_app(user, promotion_id):
                             promotion_id=promotion_id)
                 gift.save()
         else:
-            return Response({'message': _("Error. User or Deivce Have get gift from promotion")}, status=501)
+            return Response({'message': _("Error. User or Deivce Have get gift from promotion.")}, status=501)
 
-        message = _("Error. User or Deivce Have get gift from promotion")
+        message = _("Error. User or Deivce Have get gift from promotion.")
         status_code = 501
         if not gift.is_used:
             message = "Success"
