@@ -29,6 +29,9 @@ class UserSerializer(SetCustomErrorMessagesMixin, serializers.ModelSerializer):
         custom_error_messages_for_validators = {
             'email': {
                 UniqueValidator: _('This email is already taken. Please, try again')
+            },
+            'phone': {
+                UniqueValidator: _('This phone is already taken. Please, try again')
             }
         }
 
