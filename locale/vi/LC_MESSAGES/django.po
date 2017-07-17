@@ -434,6 +434,9 @@ msgstr "Hãy kiểm tra các trường bắt buộc: [old_password, new_password
 msgid "This email is already taken. Please, try again"
 msgstr "Địa chỉ email đã tồn tại trong hệ thống. Vui lòng chọn email khác."
 
+msgid "This phone is already taken. Please, try again"
+msgstr "Số điện thoại đã được sử dụng. Vui lòng chọn số khác."
+
 msgid "This field may not be blank."
 msgstr "Trường không được bỏ trống."
 
