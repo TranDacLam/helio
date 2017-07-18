@@ -15,9 +15,9 @@ DATABASES = {
     'sql_db': {
         'NAME': 'ECS7',
         'ENGINE': 'sqlserver_pymssql',
-        'HOST': '113.160.225.204:1433',
-        'USER': 'sa',
-        'PASSWORD': 'vooc2017',
+        'HOST': '113.176.107.20:1433',
+        'USER': 'apiembed',
+        'PASSWORD': 'ed@2017API',
         'PORT':1433
     }
 
