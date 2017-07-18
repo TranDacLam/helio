@@ -180,21 +180,21 @@ def user_info(request):
             # verify phone number
             phone = request.data.get('phone', '')
             if not phone:
-                return Response({'flag': False, 'message': _('This phone number is empty. Please check again.')})
+                return Response({'flag': False, 'message': _('This phone number is empty. Please check again.')}, status=400)
 
             qs = User.objects.filter(phone=phone).exclude(pk=user.id)
             if qs.count() > 0:
-                return Response({'flag': False, 'message': _('This phone number has already. Please choice another.')})
+                return Response({'flag': False, 'message': _('This phone number has already. Please choice another.')}, status=400)
 
             birth_date = request.data.get('birth_date', '')
             if birth_date:
                 try:
                     datetime.datetime.strptime(birth_date, "%Y-%m-%d")
+                    user.birth_date = birth_date
                 except Exception, e:
-                    return Response({'flag': False, 'message': _('Birth day invalid format (YYYY-MM-DD).')})
+                    return Response({'flag': False, 'message': _('Birth day invalid format (YYYY-MM-DD).')}, status=400)
 
             user.full_name = request.data.get('full_name', '')
-            user.birth_date = birth_date
             user.phone = request.data.get('phone', '')
             user.personal_id = request.data.get('personal_id', '')
             user.country = request.data.get('country', '')
