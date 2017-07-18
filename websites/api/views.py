@@ -186,14 +186,17 @@ def user_info(request):
             if qs.count() > 0:
                 return Response({'flag': False, 'message': _('This phone number has already. Please choice another.')}, status=400)
 
-            birth_date = request.data.get('birth_date', '')
+            birth_date = request.data.get('birth_date', None)
             if birth_date:
                 try:
                     datetime.datetime.strptime(birth_date, "%Y-%m-%d")
-                    user.birth_date = birth_date
                 except Exception, e:
                     return Response({'flag': False, 'message': _('Birth day invalid format (YYYY-MM-DD).')}, status=400)
-
+            else:
+                # because request.data.get if null then cast data to string '', birth date accept none
+                birth_date = None
+            
+            user.birth_date = birth_date
             user.full_name = request.data.get('full_name', '')
             user.phone = request.data.get('phone', '')
             user.personal_id = request.data.get('personal_id', '')
