@@ -358,6 +358,15 @@ msgstr "Cập nhật mã máy thiết bị thành công."
 msgid "Cannot update infomation user. Please contact administrator."
 msgstr "Không thể cập nhật thông tin người dùng. Vui lòng liên hệ với quản trị viên."
 
+msgid "This phone number has already. Please choice another."
+msgstr "Số điện thoại đã có người sử dụng. Vui lòng chọn số khác."
+
+msgid "Birth day invalid format (YYYY-MM-DD)."
+msgstr "Ngày sinh không đúng định dạng (YYYY-MM-DD)."
+
+msgid "This field must be unique."
+msgstr "Trường này là duy nhất. Vui lòng thử lại."
+
 msgid "OldPassword does not match."
 msgstr "Mặt khẩu cũ không khớp."
 
@@ -425,6 +434,9 @@ msgstr "Hãy kiểm tra các trường bắt buộc: [old_password, new_password
 msgid "This email is already taken. Please, try again"
 msgstr "Địa chỉ email đã tồn tại trong hệ thống. Vui lòng chọn email khác."
 
+msgid "This phone is already taken. Please, try again"
+msgstr "Số điện thoại đã được sử dụng. Vui lòng chọn số khác."
+
 msgid "This field may not be blank."
 msgstr "Trường không được bỏ trống."
 
@@ -448,6 +460,9 @@ msgstr "Lỗi. Người dùng hiện tại không có device_id. Vui lòng xác 
 
 msgid "Email is ready in system. Please choice another email."
 msgstr "Địa chỉ email đã có người sử dụng. Vui lòng sử dụng email khác."
+
+msgid "This phone number is empty. Please check again."
+msgstr "Số điện thoại không được bỏ trống."
 
 #END API
 

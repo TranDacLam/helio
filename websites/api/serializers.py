@@ -13,45 +13,31 @@ User = get_user_model()
 class UserSerializer(SetCustomErrorMessagesMixin, serializers.ModelSerializer):
     email = serializers.EmailField(
         validators=[UniqueValidator(queryset=User.objects.all())])
-    username = serializers.CharField(max_length=255)
-    first_name = serializers.CharField(
+    full_name = serializers.CharField(
         max_length=255, required=False, allow_null=True, allow_blank=True)
-    last_name = serializers.CharField(
-        max_length=255, required=False, allow_null=True, allow_blank=True)
-    birth_date = serializers.DateField(required=False, allow_null=True)
     phone = serializers.CharField(
-        max_length=50, required=False, allow_null=True, allow_blank=True)
-    personal_id = serializers.CharField(
-        max_length=50, required=False, allow_null=True, allow_blank=True)
-    address = serializers.CharField(max_length=255)
-    city = serializers.CharField(max_length=255)
-    country = serializers.CharField(max_length=255)
+        validators=[UniqueValidator(queryset=User.objects.all())])
     password = serializers.CharField(
         style={'input_type': 'password'},
         write_only=True)
     device_unique = serializers.CharField(max_length=255)
-    # device_type = serializers.CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
-    avatar = serializers.ImageField(
-        max_length=1000, allow_null=True, required=False)
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'email', 'first_name', 'last_name', 'birth_date', 'phone',
-                  'personal_id', 'country', 'address', 'city', 'avatar', 'is_staff', 'device_unique')
+        fields = ('email', 'password', 'full_name', 'phone', 'device_unique', 'birth_date', 'phone',
+                  'personal_id', 'country', 'address', 'city', 'avatar', 'is_staff')
         custom_error_messages_for_validators = {
             'email': {
                 UniqueValidator: _('This email is already taken. Please, try again')
+            },
+            'phone': {
+                UniqueValidator: _('This phone is already taken. Please, try again')
             }
         }
-        extra_kwargs = {"username": {"error_messages": {
-                                        "required": _("This field may not be blank.")
-                                        }
-                                    }
-                }
 
     def create(self, validated_data):
         email = validated_data.pop('email')
-        username = validated_data.pop('username')
+        username = email
         password = validated_data.pop('password')
         user = User.objects.create_user(
             username=username, email=email, password=password, **validated_data)

@@ -21,6 +21,7 @@ from core import constants as core_constants
 from push_notifications.models import APNSDevice, GCMDevice
 from rest_framework.permissions import AllowAny
 from django.utils.translation import ugettext, ugettext_lazy as _
+import datetime
 
 
 def custom_exception_handler(exc, context):
@@ -163,18 +164,6 @@ class FileUploadView(APIView):
             error = {
                 "code": 500, "message": _("Upload avatar error. Please contact administartor"), "fields": "avatar", "flag": False}
             return Response(error, status=500)
-        # path = '/Users/tiendang/Downloads/testimg.png'
-        # with open(path, 'w') as open_file:
-        #     for c in file_obj.chunks():
-        #         open_file.write(c)
-        #         open_file.close()
-
-        # # write image (base64 string encode upload)
-        # import base64
-        # import json
-        # # open_file.write(json.loads(file_obj.file.read())['file1'].decode('base64'))
-        # open_file.write(file_obj.file.read())
-        # open_file.close()
 
 
 """
@@ -188,15 +177,30 @@ def user_info(request):
         # TODO : Check user i not anonymous
         if not request.user.anonymously:
             user = request.user
-            user.first_name = request.data.get('first_name', '')
-            user.last_name = request.data.get('last_name', '')
-            user.birth_date = request.data.get('birth_date', '')
-            user.phone = request.data.get('phone', '')
+            # verify phone number
+            phone = request.data.get('phone', '')
+            if phone:
+                qs = User.objects.filter(phone=phone).exclude(pk=user.id)
+                if qs.count() > 0:
+                    return Response({'flag': False, 'message': _('This phone number has already. Please choice another.')}, status=400)
+
+            birth_date = request.data.get('birth_date', None)
+            if birth_date:
+                try:
+                    datetime.datetime.strptime(birth_date, "%Y-%m-%d")
+                except Exception, e:
+                    return Response({'flag': False, 'message': _('Birth day invalid format (YYYY-MM-DD).')}, status=400)
+            else:
+                # because request.data.get if null then cast data to string '', birth date accept none
+                birth_date = None
+            
+            user.birth_date = birth_date
+            user.full_name = request.data.get('full_name', '')
+            user.phone = phone
             user.personal_id = request.data.get('personal_id', '')
             user.country = request.data.get('country', '')
             user.address = request.data.get('address', '')
             user.city = request.data.get('city', '')
-            user.device_uid = request.data.get('device_uid', '')
             user.save()
 
         return Response({'flag': True, 'message': _('Update infomation user successfully.')})
@@ -239,21 +243,9 @@ def update_unique_device_id(request):
 @api_view(['GET'])
 def users(request):
     try:
-        email = request.GET.get("email")
-        error = helper.is_empty(email)
-        if error:
-            errors = {"code": 400, "message": "%s" %
-                      error, "fields": "email"}
-            return Response(errors, status=400)
-
-        # TODO : Check user i not anonymous
-        if not request.user.anonymously:
-            user = User.objects.get(email=email)
-            serializer = UserSerializer(user, many=False)
-            return Response(serializer.data)
-        else:
-            return Response({'message': _('Anonymous User Cannot Get User Infomation')}, status=400)
-
+        user = User.objects.get(pk=request.user.id)
+        serializer = UserSerializer(user, many=False)
+        return Response(serializer.data)
     except User.DoesNotExist, e:
         error = {"code": 400, "message": "%s" % e, "fields": "email"}
         return Response(error, status=400)
@@ -1194,9 +1186,9 @@ def gift_install_app(user, promotion_id):
                             promotion_id=promotion_id)
                 gift.save()
         else:
-            return Response({'message': _("Error. User or Deivce Have get gift from promotion")}, status=501)
+            return Response({'message': _("Error. User or Deivce Have get gift from promotion.")}, status=501)
 
-        message = _("Error. User or Deivce Have get gift from promotion")
+        message = _("Error. User or Deivce Have get gift from promotion.")
         status_code = 501
         if not gift.is_used:
             message = "Success"
