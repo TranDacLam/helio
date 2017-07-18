@@ -183,6 +183,8 @@ def user_info(request):
                 qs = User.objects.filter(phone=phone).exclude(pk=user.id)
                 if qs.count() > 0:
                     return Response({'flag': False, 'message': _('This phone number has already. Please choice another.')}, status=400)
+            else:
+                phone = None
 
             birth_date = request.data.get('birth_date', None)
             if birth_date:
