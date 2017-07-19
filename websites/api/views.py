@@ -65,8 +65,7 @@ class RegistrationView(drf_generics.CreateAPIView):
             'user': user,
         }
         # Send email welcome
-        subject = render_to_string(self.email_subject_template)
-        subject = ' '.join(subject.splitlines())
+        subject = _(constants.SUBJECT_REGISTRATION)
 
         message_plain = "websites/api/registration/new_user_notification.txt"
         message_html = "websites/api/registration/new_user_notification.html"
@@ -101,7 +100,7 @@ def verify_email(request):
         user.secure_code()
 
         # Send email security code to email
-        subject = constants.SUBJECT_VERIFY_EMAIL
+        subject = _(constants.SUBJECT_VERIFY_EMAIL)
         message_plain = "websites/api/registration/verify_email.txt"
         message_html = "websites/api/registration/verify_email.html"
         data_render = {
