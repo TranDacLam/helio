@@ -440,6 +440,9 @@ msgstr "Số điện thoại đã được sử dụng. Vui lòng chọn số kh
 msgid "This field may not be blank."
 msgstr "Trường không được bỏ trống."
 
+msgid "This field name may not be blank."
+msgstr "Tên không được bỏ trống."
+
 msgid "Please check required fields : [email, secure_code, password1, password2]"
 msgstr "Các trường sau không được bỏ trống : [email, secure_code, password1, password2]"
 
@@ -484,3 +487,62 @@ msgstr "Quản lý Khuyến mãi"
 
 
 #END ADMIN MARKETING
+
+
+#START EMAIL TEMPLATE
+
+msgid "mail.hello"
+msgstr "Xin Chào"
+
+msgid "mail.register.header"
+msgstr "Bạn vừa đăng kí một tài khoản Helio Center."
+
+msgid "mail.register.content1"
+msgstr "Sử dụng tài khoản email này đăng nhập vào "
+
+msgid "mail.register.content2"
+msgstr "trên máy tính hoặc thiết bị di động của bạn để tham gia nhiều trải nghiệm cá nhân hơn."
+
+msgid "mail.register.content3"
+msgstr "Tài khoản Email của bạn là: "
+
+msgid "mail.register.footer1"
+msgstr "Nếu tài khoản của bạn bị lỗi hoặc không thể truy cập, vui lòng gọi "
+
+msgid "mail.register.footer2"
+msgstr "để được hổ trợ."
+
+msgid "mail.register.footer3"
+msgstr "Trân Trọng Cảm Ơn,"
+
+msgid "mail.register.footer4"
+msgstr "Đội Ngũ Hổ Trợ Helio Center."
+
+msgid "mail.verify.header"
+msgstr "Tài Khoản Helio Center"
+
+msgid "mail.verify.code"
+msgstr "Mã bảo mật"
+
+msgid "mail.verify.content"
+msgstr "Sử dụng mã bảo mật bên dưới để đặt lại mật khẩu tài khoản Helio Center"
+
+msgid "mail.verify.footer"
+msgstr "Trân Trọng Cảm Ơn,"
+
+msgid "mail.verify.footer2"
+msgstr "Đội quản lý tài khoản Helio Center."
+
+msgid "mail.contact.content1"
+msgstr "Bạn vừa nhận được một liên hệ từ"
+
+msgid "mail.contact.content2"
+msgstr "với tin nhắn bên dưới"
+
+msgid "mail.contact.email"
+msgstr "Địa chỉ email người dùng"
+
+msgid "mail.contact.phone"
+msgstr "Số điện thoại"
+
+#START EMAIL TEMPLATE

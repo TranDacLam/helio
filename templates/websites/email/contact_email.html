@@ -1,3 +1,4 @@
+{% load i18n %} 
 <!doctype html>
 <html>
     <head>
@@ -61,7 +62,7 @@
                 </tr>
                 <tr>
                     <td style="color:#394f67;padding:4px 37px 0px 40px">
-                        You have been recieved a contact from <strong>{{name}}</strong> with the following message:<br>
+                        {% trans "mail.contact.content1" %} <strong>{{name}}</strong> {% trans "mail.contact.content2" %}:<br>
                         <p>{{message}}</p>
                     </td>
                 </tr>
@@ -70,12 +71,12 @@
                 </tr>
                 <tr>
                     <td style="color:#394f67;padding:4px 37px 0px 40px">
-                        <strong>User Email:</strong> {{email}}
+                        <strong>{% trans "mail.contact.email" %}:</strong> {{email}}
                     </td>
                 </tr>
                 <tr>
                     <td style="color:#394f67;padding:4px 37px 0px 40px">
-                        <strong>Phone Number: </strong>{{phone}}
+                        <strong>{% trans "mail.contact.phone" %}: </strong>{{phone}}
                     </td>
                 </tr>
                 <tr>

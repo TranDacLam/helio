@@ -306,6 +306,10 @@ def change_password(request):
 @permission_classes((AllowAny,))
 def send_feedback(request):
     try:
+        if not request.data.get('name', ''):
+            return Response({"code": 400, "message": _("This field name may not be blank."),
+                         "fields": ""}, status=400)
+
         serializer = FeedBackSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
