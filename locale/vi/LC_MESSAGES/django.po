@@ -510,7 +510,7 @@ msgid "mail.register.footer1"
 msgstr "Nếu tài khoản của bạn bị lỗi hoặc không thể truy cập, vui lòng gọi "
 
 msgid "mail.register.footer2"
-msgstr "để được hổ trợ."
+msgstr "để được hỗ trợ."
 
 msgid "mail.register.footer3"
 msgstr "Trân Trọng Cảm Ơn,"
