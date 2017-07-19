@@ -492,10 +492,10 @@ msgstr "Quản lý Khuyến mãi"
 #START EMAIL TEMPLATE
 
 msgid "mail.hello"
-msgstr "Xin Chào"
+msgstr "Xin chào"
 
 msgid "mail.register.header"
-msgstr "Bạn vừa đăng kí một tài khoản Helio Center."
+msgstr "bạn vừa đăng kí một tài khoản Helio Center."
 
 msgid "mail.register.content1"
 msgstr "Sử dụng tài khoản email này đăng nhập vào "
@@ -516,7 +516,7 @@ msgid "mail.register.footer3"
 msgstr "Trân Trọng Cảm Ơn,"
 
 msgid "mail.register.footer4"
-msgstr "Đội Ngũ Hổ Trợ Helio Center."
+msgstr "Đội Ngũ Hỗ Trợ Helio Center."
 
 msgid "mail.verify.header"
 msgstr "Tài Khoản Helio Center"
@@ -544,5 +544,11 @@ msgstr "Địa chỉ email người dùng"
 
 msgid "mail.contact.phone"
 msgstr "Số điện thoại"
+
+msgid "Helio account security code"
+msgstr "Mã Bảo Mật Tài Khoản Helio"
+
+msgid "Create Account Helio Successfully"
+msgstr "Tạo Tài Khoản Helio Center Thành Công"
 
 #START EMAIL TEMPLATE
