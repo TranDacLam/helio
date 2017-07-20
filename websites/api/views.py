@@ -104,6 +104,7 @@ def verify_email(request):
         message_plain = "websites/api/registration/verify_email.txt"
         message_html = "websites/api/registration/verify_email.html"
         data_render = {
+            'site': get_current_site(self.request),
             "code": user.code,
             'email': user.email
         }
