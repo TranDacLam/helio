@@ -34,10 +34,14 @@ class CustomJSONWebTokenAuthentication(JSONWebTokenAuthentication):
             note the change password time in the user db, so when the change password time is greater than the token creation time, 
             then token is not valid. Hence the remaining session will get logged out soon.
         """
-        user = super(CustomJSONWebTokenAuthentication,
-                     self).authenticate_credentials(payload)
-        iat_timestamp = timegm(user.token_last_expired.utctimetuple())
+        try:
+            user = super(CustomJSONWebTokenAuthentication,
+                         self).authenticate_credentials(payload)
+            iat_timestamp = timegm(user.token_last_expired.utctimetuple())
 
-        if iat_timestamp > payload['orig_iat']:
+            if iat_timestamp > payload['orig_iat']:
+                raise exceptions.AuthenticationFailed(_('Invalid token.'))
+        except Exception, e:
+            print "JWT authenticate_credentials ", e
             raise exceptions.AuthenticationFailed(_('Invalid token.'))
         return user
