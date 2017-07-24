@@ -202,7 +202,13 @@ class EventForm(forms.ModelForm):
         model = Event
         fields = '__all__'
 
+    def clean_name_en(self):
+        name_en = self.cleaned_data.get('name_en')
+        if not name_en:
+            raise forms.ValidationError("Trường này không được bỏ trống.")
+
     def clean_end_date(self):
+        print 'self.cleaned_data ',self.cleaned_data
         end_date = self.cleaned_data.get('end_date')
         start_date = self.cleaned_data.get('start_date')
 
