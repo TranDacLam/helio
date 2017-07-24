@@ -199,15 +199,18 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'main.custom_jwt.CustomJSONWebTokenAuthentication',
     ),
     'UNICODE_JSON': True,
-    'EXCEPTION_HANDLER': 'api.views.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'api.views.custom_exception_handler',
 }
 JWT_AUTH = {
     # 'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=1700),
+    'JWT_VERIFY': True,
     'JWT_AUTH_HEADER_PREFIX':'Bearer',
-    'JWT_VERIFY_EXPIRATION': False
+    'JWT_VERIFY_EXPIRATION': False,
+    'JWT_ALLOW_REFRESH': True,
 }
 
 REST_USE_JWT = True
