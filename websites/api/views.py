@@ -22,6 +22,7 @@ from push_notifications.models import APNSDevice, GCMDevice
 from rest_framework.permissions import AllowAny
 from django.utils.translation import ugettext, ugettext_lazy as _
 import datetime
+from django.utils import timezone
 
 
 def custom_exception_handler(exc, context):
@@ -287,6 +288,7 @@ def change_password(request):
                 return Response(error, status=400)
 
             user.set_password(new_password)
+            user.token_last_expired = timezone.now()
             user.save()
         return Response({'flag': True, 'message': _('Update password for user successfully.')})
 
@@ -1013,6 +1015,7 @@ def send_notification(request):
         fcm_devices = GCMDevice.objects.filter(
             user__flag_notification=True, user__id__in=user_of_notification)
         if fcm_devices:
+            data_notify['click_action'] = "ACTIVITY_NOTIFICATION"
             fcm_devices.send_message(notify_obj.subject, extra=data_notify)
 
         return Response({'message': _('Push Notification Successfull')})

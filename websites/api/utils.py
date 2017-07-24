@@ -74,7 +74,9 @@ def send_mail(subject, message_plain, message_html, email_from, email_to,
             msg.attach_alternative(html_content, "text/html")
         msg.send()
     except Exception, e:
-        raise e
+        print "Error cannot send email : ", e
+        pass
+
 
 
 def card_information_mapper(item):

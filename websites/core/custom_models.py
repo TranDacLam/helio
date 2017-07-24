@@ -3,6 +3,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from utils.codes import RandomPassword
+from django.utils import timezone
 
 
 class MyUserManager(BaseUserManager):
@@ -84,6 +85,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # device_type = models.CharField(max_length=255, choices=DEVICE_TYPE, null=True, blank=True)
     is_new_register = models.BooleanField(default=True)
     flag_notification = models.BooleanField(default=True)
+    token_last_expired = models.DateTimeField(default=timezone.now)
 
     objects = MyUserManager()
     USERNAME_FIELD = 'email'
