@@ -20,7 +20,7 @@ from django.db import connections
 from core import constants as core_constants
 from push_notifications.models import APNSDevice, GCMDevice
 from rest_framework.permissions import AllowAny
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 import datetime
 from django.utils import timezone
 

@@ -467,6 +467,9 @@ msgstr "Địa chỉ email đã có người sử dụng. Vui lòng sử dụng 
 msgid "This phone number is empty. Please check again."
 msgstr "Số điện thoại không được bỏ trống."
 
+msgid "Invalid token."
+msgstr "Mã chứng thực không hợp lệ. Vui lòng kiểm tra lại."
+
 #END API
 
 #START ADMIN MARKETING

@@ -22,6 +22,7 @@
 
 from calendar import timegm
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from django.utils.translation import ugettext_lazy as _
 
 
 class CustomJSONWebTokenAuthentication(JSONWebTokenAuthentication):
@@ -37,5 +38,5 @@ class CustomJSONWebTokenAuthentication(JSONWebTokenAuthentication):
         iat_timestamp = timegm(user.token_last_expired.utctimetuple())
 
         if iat_timestamp > payload['orig_iat']:
-            raise exceptions.AuthenticationFailed('Invalid payload')
+            raise exceptions.AuthenticationFailed(_('Invalid token.'))
         return user
