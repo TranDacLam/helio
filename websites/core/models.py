@@ -77,15 +77,15 @@ class Post_Image(DateTimeModel):
 
 @python_2_unicode_compatible
 class Event(DateTimeModel):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255, unique=True, blank=False)
     image = models.ImageField(
         max_length=1000, null=True, blank=True, upload_to="events")
     short_description = models.CharField(max_length=350)
     content = models.TextField()
-    start_date = models.DateField()
-    end_date = models.DateField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    start_date = models.DateField(blank=False)
+    end_date = models.DateField(blank=False)
+    start_time = models.TimeField(blank=False)
+    end_time = models.TimeField(blank=False)
     is_draft = models.BooleanField(default=False)
 
     def __str__(self):
