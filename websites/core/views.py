@@ -374,7 +374,7 @@ def promotion_detail(request, promotion_id):
     try:
         promotion = Promotion.objects.get(pk=promotion_id)
 
-        other_promotions = Promotion.objects.all().order_by('-created')[:3]
+        other_promotions = Promotion.objects.filter(is_draft=False).order_by('-created')[:3]
 
         return render(request, 'websites/promotion_detail.html', {"promotion": promotion, "other_promotions": other_promotions})
     except Exception, e:
