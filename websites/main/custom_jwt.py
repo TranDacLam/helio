@@ -1,6 +1,6 @@
 # from django.utils.dateformat import format
 
-# from rest_framework import exceptions
+
 # from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 # class CustomJSONWebTokenAuthentication(JSONWebTokenAuthentication):
@@ -22,6 +22,7 @@
 
 from calendar import timegm
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework import exceptions
 from django.utils.translation import ugettext_lazy as _
 
 
