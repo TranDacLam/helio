@@ -470,6 +470,9 @@ msgstr "Số điện thoại không được bỏ trống."
 msgid "Invalid token."
 msgstr "Mã chứng thực không hợp lệ. Vui lòng kiểm tra lại."
 
+msgid "You don't have permission to access."
+msgstr "Bạn không có quyền truy cập."
+
 #END API
 
 #START ADMIN MARKETING
