@@ -202,14 +202,19 @@ class EventForm(forms.ModelForm):
         model = Event
         fields = '__all__'
 
-    def clean(self):
-        start_date = self.cleaned_data.get('start_date')
-        end_date = self.cleaned_data.get('end_date')
-        if end_date < start_date:
-            msg = u"Ngày kết thúc phải lớn hơn ngày bắt đầu."
-            self._errors["end_date"] = self.error_class([msg])
+    # def clean_name_en(self):
+    #     name_en = self.cleaned_data.get('name_en')
+    #     if not name_en:
+    #         raise forms.ValidationError("Trường này không được bỏ trống.")
 
-        return self.cleaned_data
+    def clean_end_date(self):
+        print 'self.cleaned_data ',self.cleaned_data
+        end_date = self.cleaned_data.get('end_date')
+        start_date = self.cleaned_data.get('start_date')
+
+        if start_date and end_date < start_date:
+            raise forms.ValidationError("Ngày kết thúc phải lớn hơn ngày bắt đầu.")
+        return end_date
 
 
 class EventAdmin(TranslationAdmin):

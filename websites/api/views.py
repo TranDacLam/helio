@@ -20,8 +20,9 @@ from django.db import connections
 from core import constants as core_constants
 from push_notifications.models import APNSDevice, GCMDevice
 from rest_framework.permissions import AllowAny
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 import datetime
+from django.utils import timezone
 
 
 def custom_exception_handler(exc, context):
@@ -65,8 +66,7 @@ class RegistrationView(drf_generics.CreateAPIView):
             'user': user,
         }
         # Send email welcome
-        subject = render_to_string(self.email_subject_template)
-        subject = ' '.join(subject.splitlines())
+        subject = _(constants.SUBJECT_REGISTRATION)
 
         message_plain = "websites/api/registration/new_user_notification.txt"
         message_html = "websites/api/registration/new_user_notification.html"
@@ -101,10 +101,11 @@ def verify_email(request):
         user.secure_code()
 
         # Send email security code to email
-        subject = constants.SUBJECT_VERIFY_EMAIL
+        subject = _(constants.SUBJECT_VERIFY_EMAIL)
         message_plain = "websites/api/registration/verify_email.txt"
         message_html = "websites/api/registration/verify_email.html"
         data_render = {
+            'site': get_current_site(request),
             "code": user.code,
             'email': user.email
         }
@@ -183,6 +184,8 @@ def user_info(request):
                 qs = User.objects.filter(phone=phone).exclude(pk=user.id)
                 if qs.count() > 0:
                     return Response({'flag': False, 'message': _('This phone number has already. Please choice another.')}, status=400)
+            else:
+                phone = None
 
             birth_date = request.data.get('birth_date', None)
             if birth_date:
@@ -285,6 +288,7 @@ def change_password(request):
                 return Response(error, status=400)
 
             user.set_password(new_password)
+            user.token_last_expired = timezone.now()
             user.save()
         return Response({'flag': True, 'message': _('Update password for user successfully.')})
 
@@ -304,6 +308,10 @@ def change_password(request):
 @permission_classes((AllowAny,))
 def send_feedback(request):
     try:
+
+        if not request.data.get('name', ''):
+            request.data['name'] = request.data['email']
+
         serializer = FeedBackSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -658,7 +666,7 @@ def card_information(request, card_id):
         # print query_str.format(card_id)
 
         cursor.execute(query_str.format(card_id))
-        result = utils.card_information_mapper(cursor.fetchone())
+        result = utils.card_information_mapper(cursor.fetchone(), request.user.is_staff)
 
         return Response(result)
 
@@ -674,38 +682,42 @@ def card_information(request, card_id):
 @api_view(['GET'])
 def play_transactions(request):
     try:
-        card_id = request.GET.get("card_id", "")
-        if not card_id:
-            error = {
-                "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
+        if request.user.is_staff:
+            card_id = request.GET.get("card_id", "")
+            if not card_id:
+                error = {
+                    "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
+                return Response(error, status=400)
+
+            filter_id = request.GET.get("filter_id", "")
+            sub_query = ""
+            if filter_id:
+                if not helper.is_int(filter_id):
+                    errors = {"code": 400, "message": _(
+                        "This value must be is integer."), "fields": "filter_id"}
+                    return Response(errors, status=400)
+                filter_object = Transaction_Type.objects.get(pk=filter_id)
+                sub_query = " WHERE transaction_type like '" + filter_object.name_en + "'"
+
+            cursor = connections['sql_db'].cursor()
+
+            query_str = """ WITH PLAY_TRANSACTION AS (SELECT PT.Transaction_DateTime, PT.Transaction_Amount, GD.Game_Description,
+                                     (CASE WHEN GD.Game_Group_Id = 0 THEN 'Refund' ELSE 'Play' END) AS transaction_type
+                                     FROM Play_Transactions PT
+                                     LEFT JOIN Game_Swipers GS ON PT.Game_Id = GS.Game_Id
+                                     LEFT JOIN Game_Details GD ON GS.Game_ML_Id = GD.Game_ML_Id
+                                     WHERE PT.Card_Barcode = {0})
+                            SELECT TOP 50 * FROM PLAY_TRANSACTION {1} ORDER BY Transaction_DateTime DESC"""
+
+            print query_str.format(card_id, sub_query)
+
+            cursor.execute(query_str.format(card_id, sub_query))
+            result = utils.play_transactions_mapper(cursor.fetchall())
+
+            return Response(result)
+        else:
+            error = {"code": 400, "message": _("You don't have permission to access."), "fields": ""}
             return Response(error, status=400)
-
-        filter_id = request.GET.get("filter_id", "")
-        sub_query = ""
-        if filter_id:
-            if not helper.is_int(filter_id):
-                errors = {"code": 400, "message": _(
-                    "This value must be is integer."), "fields": "filter_id"}
-                return Response(errors, status=400)
-            filter_object = Transaction_Type.objects.get(pk=filter_id)
-            sub_query = " WHERE transaction_type like '" + filter_object.name_en + "'"
-
-        cursor = connections['sql_db'].cursor()
-
-        query_str = """ WITH PLAY_TRANSACTION AS (SELECT PT.Transaction_DateTime, PT.Transaction_Amount, GD.Game_Description,
-                                 (CASE WHEN GD.Game_Group_Id = 0 THEN 'Refund' ELSE 'Play' END) AS transaction_type
-                                 FROM Play_Transactions PT
-                                 LEFT JOIN Game_Swipers GS ON PT.Game_Id = GS.Game_Id
-                                 LEFT JOIN Game_Details GD ON GS.Game_ML_Id = GD.Game_ML_Id
-                                 WHERE PT.Card_Barcode = {0})
-                        SELECT TOP 50 * FROM PLAY_TRANSACTION {1} ORDER BY Transaction_DateTime DESC"""
-
-        print query_str.format(card_id, sub_query)
-
-        cursor.execute(query_str.format(card_id, sub_query))
-        result = utils.play_transactions_mapper(cursor.fetchall())
-
-        return Response(result)
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
         return Response(error, status=500)
@@ -719,24 +731,28 @@ def play_transactions(request):
 @api_view(['GET'])
 def card_transactions(request):
     try:
-        card_id = request.GET.get("card_id", "")
-        if not card_id:
-            error = {
-                "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
+        if request.user.is_staff:
+            card_id = request.GET.get("card_id", "")
+            if not card_id:
+                error = {
+                    "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
+                return Response(error, status=400)
+
+            cursor = connections['sql_db'].cursor()
+
+            query_str = """ SELECT TOP 50 ST.Transaction_DateTime, SCT.Cash_Amount FROM Sale_Card_Transactions SCT 
+                                     INNER JOIN Sale_Transactions ST ON ST.Transaction_Id = SCT.Transaction_Id
+                                     WHERE SCT.Card_Barcode = {0} ORDER BY ST.Transaction_DateTime DESC"""
+
+            cursor.execute(query_str.format(card_id))
+
+            print query_str.format(card_id)
+            result = utils.card_transactions_mapper(cursor.fetchall())
+
+            return Response(result)
+        else:
+            error = {"code": 400, "message": _("You don't have permission to access."), "fields": ""}
             return Response(error, status=400)
-
-        cursor = connections['sql_db'].cursor()
-
-        query_str = """ SELECT TOP 50 ST.Transaction_DateTime, SCT.Cash_Amount FROM Sale_Card_Transactions SCT 
-                                 INNER JOIN Sale_Transactions ST ON ST.Transaction_Id = SCT.Transaction_Id
-                                 WHERE SCT.Card_Barcode = {0} ORDER BY ST.Transaction_DateTime DESC"""
-
-        cursor.execute(query_str.format(card_id))
-
-        print query_str.format(card_id)
-        result = utils.card_transactions_mapper(cursor.fetchall())
-
-        return Response(result)
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
         return Response(error, status=500)
@@ -751,24 +767,28 @@ def card_transactions(request):
 @permission_classes((AllowAny,))
 def reissue_history(request):
     try:
-        card_id = request.GET.get("card_id", "")
-        if not card_id:
-            error = {
-                "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
+        if request.user.is_staff:
+            card_id = request.GET.get("card_id", "")
+            if not card_id:
+                error = {
+                    "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
+                return Response(error, status=400)
+
+            cursor = connections['sql_db'].cursor()
+
+            query_str = """WITH REISSUE_HISTORY AS (SELECT CT.Transaction_DateTime, CT.Card_Barcode, CT.Transfer_Card_Barcode,
+                                     (CASE WHEN CT.Transaction_Type = 506 THEN 'Upgraded' ELSE 'Reissue' END) AS Transaction_Type_Txt, 
+                                     CT.Transaction_Type FROM Card_Transactions CT
+                                     WHERE CT.Transaction_Type IN (500, 501, 506) AND CT.Card_Barcode = {0})
+
+                            SELECT TOP 50 * FROM REISSUE_HISTORY ORDER BY Transaction_DateTime DESC"""
+
+            cursor.execute(query_str.format(card_id))
+            result = utils.reissue_history_mapper(cursor.fetchall())
+            return Response(result)
+        else:
+            error = {"code": 400, "message": _("You don't have permission to access."), "fields": ""}
             return Response(error, status=400)
-
-        cursor = connections['sql_db'].cursor()
-
-        query_str = """WITH REISSUE_HISTORY AS (SELECT CT.Transaction_DateTime, CT.Card_Barcode, CT.Transfer_Card_Barcode,
-                                 (CASE WHEN CT.Transaction_Type = 506 THEN 'Upgraded' ELSE 'Reissue' END) AS Transaction_Type_Txt, 
-                                 CT.Transaction_Type FROM Card_Transactions CT
-                                 WHERE CT.Transaction_Type IN (500, 501, 506) AND CT.Card_Barcode = {0})
-
-                        SELECT TOP 50 * FROM REISSUE_HISTORY ORDER BY Transaction_DateTime DESC"""
-
-        cursor.execute(query_str.format(card_id))
-        result = utils.reissue_history_mapper(cursor.fetchall())
-        return Response(result)
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
         return Response(error, status=500)
@@ -1007,6 +1027,7 @@ def send_notification(request):
         fcm_devices = GCMDevice.objects.filter(
             user__flag_notification=True, user__id__in=user_of_notification)
         if fcm_devices:
+            data_notify['click_action'] = "ACTIVITY_NOTIFICATION"
             fcm_devices.send_message(notify_obj.subject, extra=data_notify)
 
         return Response({'message': _('Push Notification Successfull')})

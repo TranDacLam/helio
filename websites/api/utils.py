@@ -74,26 +74,33 @@ def send_mail(subject, message_plain, message_html, email_from, email_to,
             msg.attach_alternative(html_content, "text/html")
         msg.send()
     except Exception, e:
-        raise e
+        print "Error cannot send email : ", e
+        pass
 
 
-def card_information_mapper(item):
+
+def card_information_mapper(item, is_staff):
     card_information = {}
     if item:
+        # normal user
         card_information["active_date"] = item[0] # Card_Added
-        card_information["membership"] = 'Member Card' if item[1] == 1 else ('Gold Card' if item[1] == 6 else 'Normal Card') # Card_Status
-        card_information["card_status"] = helper.get_card_status(item[2], item[14]) # Card_State
+        card_information["upgraded_date"] = item[13] # upgraded_date
         card_information["play_value"] = item[3] # Cash_Balance
         card_information["bonus_value"] = item[4] # Bonus_Balance
         card_information["ticket"] = item[5] # ETickets
-        card_information["first_name"] = item[6] # Firstname
-        card_information["surname"] = item[7] # Surname
-        card_information["birthday"] = item[8] # DOB
-        card_information["peronal_id"] = item[9] # PostCode
-        card_information["address"] = item[10] # Address1
-        card_information["email"] = item[11] # EMail
-        card_information["phone"] = item[12] # Phone
-        card_information["upgraded_date"] = item[13] # upgraded_date
+        card_information["card_status"] = helper.get_card_status(item[2], item[14]) # Card_State
+        card_information["membership"] = 'Member Card' if item[1] == 1 else ('Gold Card' if item[1] == 6 else 'Normal Card') # Card_Status
+
+        # staff user
+        if is_staff:
+            card_information["first_name"] = item[6] # Firstname
+            card_information["surname"] = item[7] # Surname
+            card_information["birthday"] = item[8] # DOB
+            card_information["peronal_id"] = item[9] # PostCode
+            card_information["address"] = item[10] # Address1
+            card_information["email"] = item[11] # EMail
+            card_information["phone"] = item[12] # Phone
+            
     return card_information
 
 

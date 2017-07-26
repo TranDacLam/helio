@@ -22,8 +22,15 @@ DATABASES = {
 
 }
 
+
+gettext = lambda s: s
+LANGUAGES = (
+    ('vi', gettext('Vietnamese')),
+    ('en', gettext('English')),
+)
 RECAPTCHA_PUBLIC_KEY = '6LcScCcUAAAAAHjKpSCNS2-m2JkEHxsyEgXQx10l'
 RECAPTCHA_PRIVATE_KEY = '6LcScCcUAAAAAK1_4pfun7sgVPuxGUk4hNfEyj6l'
+
 
 FB_APP_ID = '753086748186657'
 SOCIAL_AUTH_FACEBOOK_KEY = '753086748186657'

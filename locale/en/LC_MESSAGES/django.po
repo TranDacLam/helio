@@ -298,3 +298,62 @@ msgstr "Powered by"
 msgid "footer.text_company"
 msgstr "KhoiPhat, Ltd."   
 #END FOOTER
+
+
+#START EMAIL TEMPLATE
+
+msgid "mail.hello"
+msgstr "Hello"
+
+msgid "mail.register.header"
+msgstr "you have registered for the Helio center."
+
+msgid "mail.register.content1"
+msgstr "Use this account email to sign in to "
+
+msgid "mail.register.content2"
+msgstr "on your computer or mobile device to enjoy a more personalized experience."
+
+msgid "mail.register.content3"
+msgstr "Account Email: "
+
+msgid "mail.register.footer1"
+msgstr "If this account was set up in error, please call "
+
+msgid "mail.register.footer2"
+msgstr "for assistance."
+
+msgid "mail.register.footer3"
+msgstr "Thank you,"
+
+msgid "mail.register.footer4"
+msgstr "Helio Center Support Team."
+
+msgid "mail.verify.header"
+msgstr "Helio Account"
+
+msgid "mail.verify.code"
+msgstr "Security code"
+
+msgid "mail.verify.content"
+msgstr "Please use the following security code for the Helio account"
+
+msgid "mail.verify.footer"
+msgstr "Thank,"
+
+msgid "mail.verify.footer2"
+msgstr "The Helio account team."
+
+msgid "mail.contact.content1"
+msgstr "You have been recieved a contact from"
+
+msgid "mail.contact.content2"
+msgstr "with the following message"
+
+msgid "mail.contact.email"
+msgstr "User Email"
+
+msgid "mail.contact.phone"
+msgstr "Phone Number"
+
+#START EMAIL TEMPLATE

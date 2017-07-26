@@ -158,7 +158,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
     # 'social_core.pipeline.social_auth.associate_by_email',
-    
+    'core.pipeline.save_avatar',  # custom action
     
     # 'users.social_pipeline.auto_logout',  # custom action
     # 'users.social_pipeline.check_for_email',  # custom action
@@ -199,15 +199,18 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'main.custom_jwt.CustomJSONWebTokenAuthentication',
     ),
     'UNICODE_JSON': True,
-    'EXCEPTION_HANDLER': 'api.views.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'api.views.custom_exception_handler',
 }
 JWT_AUTH = {
     # 'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=1700),
+    'JWT_VERIFY': True,
     'JWT_AUTH_HEADER_PREFIX':'Bearer',
-    'JWT_VERIFY_EXPIRATION': False
+    'JWT_VERIFY_EXPIRATION': False,
+    'JWT_ALLOW_REFRESH': True,
 }
 
 REST_USE_JWT = True
@@ -280,11 +283,11 @@ CKEDITOR_BROWSE_SHOW_DIRS = True
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
 DEFAULT_TO_ADMIN_EMAIL = "contact@helio.vn"
-DEFAULT_FROM_EMAIL = "noreply@helio.vn"
+DEFAULT_FROM_EMAIL = "no-reply@helio.vn"
 # EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 EMAIL_HOST = 'mail.helio.vn'
-EMAIL_HOST_USER = 'noreply@helio.vn'
-EMAIL_HOST_PASSWORD = 'noreply!@#'
+EMAIL_HOST_USER = 'no-reply@helio.vn'
+EMAIL_HOST_PASSWORD = 'N0reply!@#'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = True
@@ -314,7 +317,7 @@ try:
 
     if 'PRODUCTION' in os.environ and os.environ['PRODUCTION']:
         from config.setting_production import *
-
+    
 except ImportError:
     pass
 
