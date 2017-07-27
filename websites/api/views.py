@@ -697,7 +697,7 @@ def play_transactions(request):
                         "This value must be is integer."), "fields": "filter_id"}
                     return Response(errors, status=400)
                 filter_object = Transaction_Type.objects.get(pk=filter_id)
-                sub_query = " WHERE transaction_type like '" + filter_object.name_en + "'"
+                sub_query = " WHERE transaction_type like '" + filter_object.name + "'"
 
             cursor = connections['sql_db'].cursor()
 
