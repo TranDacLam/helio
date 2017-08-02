@@ -146,7 +146,7 @@ def reset_password(request):
         return Response({"message": _("Reset Password Successfully."), "flag": True})
 
     except User.DoesNotExist, e:
-        error = {"code": 500, "message": _("The email or secure code matching query does not exist."),
+        error = {"code": 500, "message": _("The secure code matching query does not exist."),
                  "fields": "", "flag": False}
         return Response(error, status=500)
 

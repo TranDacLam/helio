@@ -340,8 +340,8 @@ msgstr "Mật khẩu không hợp lệ."
 msgid "Reset Password Successfully."
 msgstr "Đặt lại mật khẩu thành công."
 
-msgid "The email or secure code matching query does not exist."
-msgstr "Email hoặc mã bảo mật không đúng."
+msgid "The secure code matching query does not exist."
+msgstr "Mã bảo mật không đúng. Vui lòng kiểm tra lại."
 
 msgid "Update Avatar Successfully."
 msgstr "Cập nhật Avatar thành công."
