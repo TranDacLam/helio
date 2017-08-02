@@ -146,7 +146,7 @@ def reset_password(request):
         return Response({"message": _("Reset Password Successfully."), "flag": True})
 
     except User.DoesNotExist, e:
-        error = {"code": 500, "message": _("The email or secure code matching query does not exist."),
+        error = {"code": 500, "message": _("The secure code matching query does not exist."),
                  "fields": "", "flag": False}
         return Response(error, status=500)
 
@@ -697,7 +697,7 @@ def play_transactions(request):
                         "This value must be is integer."), "fields": "filter_id"}
                     return Response(errors, status=400)
                 filter_object = Transaction_Type.objects.get(pk=filter_id)
-                sub_query = " WHERE transaction_type like '" + filter_object.name_en + "'"
+                sub_query = " WHERE transaction_type like '" + filter_object.name + "'"
 
             cursor = connections['sql_db'].cursor()
 
