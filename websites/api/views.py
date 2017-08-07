@@ -160,7 +160,7 @@ class FileUploadView(APIView):
             user = self.request.user
             user.avatar = file_obj
             user.save()
-            return Response({"message": _("Update Avatar Successfully."), "flag": True}, status=204)
+            return Response(status=200)
         except Exception, e:
             error = {
                 "code": 500, "message": _("Upload avatar error. Please contact administartor"), "fields": "avatar", "flag": False}
