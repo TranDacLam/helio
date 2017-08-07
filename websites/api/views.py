@@ -1028,7 +1028,7 @@ def send_notification(request):
             user__flag_notification=True, user__id__in=user_of_notification)
         if fcm_devices:
             data_notify['click_action'] = "ACTIVITY_NOTIFICATION"
-            fcm_devices.send_message(notify_obj.subject, extra=data_notify)
+            fcm_devices.send_message(notify_obj.subject, title=notify_obj.subject, body=notify_obj.message, extra=data_notify)
 
         return Response({'message': _('Push Notification Successfull')})
 
