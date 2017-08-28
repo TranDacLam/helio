@@ -473,6 +473,9 @@ msgstr "Mã chứng thực không hợp lệ. Vui lòng kiểm tra lại."
 msgid "You don't have permission to access."
 msgstr "Bạn không có quyền truy cập."
 
+msgid "Account is not active. Please contact support team."
+msgstr "Tài khoản của bạn chưa được kích hoạt. Vui lòng liên lạc với đội ngũ hổ trợ."
+
 #END API
 
 #START ADMIN MARKETING
