@@ -1028,7 +1028,9 @@ def send_notification(request):
             user__flag_notification=True, user__id__in=user_of_notification)
         if fcm_devices:
             data_notify['click_action'] = "ACTIVITY_NOTIFICATION"
-            fcm_devices.send_message(notify_obj.subject, title=notify_obj.subject, body=notify_obj.message, extra=data_notify)
+            data_notify['title_payload'] = notify_obj.subject
+            data_notify['body_payload'] = notify_obj.message
+            fcm_devices.send_message(notify_obj.subject, extra=data_notify)
 
         return Response({'message': _('Push Notification Successfull')})
 
@@ -1076,9 +1078,16 @@ def connect_device(request):
                             user=user, name=user.email, registration_id=device_uid)
                         device.save()
                 else:
-                    device = GCMDevice(
-                        user=user, name=user.email, registration_id=device_uid, cloud_message_type="FCM")
-                    device.save()
+                    try:
+                        device = GCMDevice.objects.get(
+                            registration_id=device_uid, cloud_message_type="FCM")
+                        device.user = user
+                        device.save()
+
+                    except GCMDevice.DoesNotExist, e:
+                        device = GCMDevice(
+                            user=user, name=user.email, registration_id=device_uid, cloud_message_type="FCM")
+                        device.save()
             return Response({'message': _('Connect device successful.')})
         else:
             return Response({'message': _('Anonymous User Cannot Call This Action.')}, status=400)

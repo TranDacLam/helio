@@ -4,6 +4,7 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from requests import request, HTTPError
 from django.core.files.base import ContentFile
 
+
 def check_email_exists(backend, details, uid, user=None, *args, **kwargs):
     print 'Check Email Verify ', user
 
@@ -34,23 +35,28 @@ def save_avatar(strategy, details, user=None, *args, **kwargs):
                 social_thumb = (
                     'http://graph.facebook.com/{0}/picture?type=normal'
                 ).format(response['id'])
-            
+
         elif 'twitter' in backend_name and response.get('profile_image_url'):
             social_thumb = response['profile_image_url']
         elif 'googleoauth2' in backend_name and response.get('image', {}).get('url'):
             social_thumb = response['image']['url'].split('?')[0]
         else:
             social_thumb = 'http://www.gravatar.com/avatar/'
-            social_thumb += hashlib.md5(user.email.lower().encode('utf8')).hexdigest()
+            social_thumb += hashlib.md5(
+                user.email.lower().encode('utf8')).hexdigest()
             social_thumb += '?size=100'
-        
+
         if social_thumb and user.avatar != social_thumb:
             # user.avatar = social_thumb
             try:
                 response_social = request('GET', social_thumb)
                 user.avatar.save('{0}_social.jpg'.format(user.username),
-                                   ContentFile(response_social.content))
-                strategy.storage.user.changed(user)    
+                                 ContentFile(response_social.content))
+                strategy.storage.user.changed(user)
             except HTTPError:
                 pass
-            
+
+def check_account_active(backend, details, uid, user=None, *args, **kwargs):
+    if user and not user.is_active:
+        return Response({'message': _("Account is not active. Please contact support team.")}, status=400)
+
