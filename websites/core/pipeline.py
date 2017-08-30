@@ -57,6 +57,6 @@ def save_avatar(strategy, details, user=None, *args, **kwargs):
                 pass
 
 def check_account_active(backend, details, uid, user=None, *args, **kwargs):
-    if not user and not user.is_active:
+    if user and not user.is_active:
         return Response({'message': _("Account is not active. Please contact support team.")}, status=400)
 
