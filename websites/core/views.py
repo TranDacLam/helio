@@ -599,7 +599,7 @@ def update_promotions_user(request):
                         list_delete.append(user_id)
 
                 if list_delete:
-                    Gift.objects.filter(user_id__in=list_delete).delete()
+                    Gift.objects.filter(user_id__in=list_delete, promotion_id=promotion_id).delete()
 
         return HttpResponse(
             json.dumps({}),
@@ -658,7 +658,7 @@ def update_notifications_user(request):
 
                 if list_delete:
                     User_Notification.objects.filter(
-                        user_id__in=list_delete).delete()
+                        user_id__in=list_delete, notification_id=notification_id).delete()
 
         return HttpResponse(
             json.dumps({}),
