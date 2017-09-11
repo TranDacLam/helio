@@ -683,3 +683,10 @@ and(-webkit-min-device-pixel-ratio:0) { @media
         min-height: 180px;
     }
 }
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+    .download-app{
+        min-height: 250px;
+    }
+}
