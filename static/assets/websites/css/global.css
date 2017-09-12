@@ -402,6 +402,35 @@ a.btn-custom-style:hover {
     margin: 50px 0px;
 }
 /*END CUSTOM HR*/
+
+.download-app{
+    background: url('../images/download-app_banner.png') no-repeat;
+    min-height: 250px;
+    /*width: 100%;*/
+    position: relative;
+    background-size: 100% auto;
+}
+
+.download-app .app-android{
+    right: 13px;
+    position: absolute;
+    top: 40%;
+    width: 20%;
+    height: 40%;
+    cursor: pointer;
+    right: 0;
+}
+
+.download-app .app-ios{
+    right: 13px;
+    position: absolute;
+    top: 0;
+    width: 20%;
+    height: 38%;
+    cursor: pointer;
+    right: 0;
+}
+
 /*FOOTER*/
 .menuwidget.nav li {
     width: 100%;
@@ -608,9 +637,56 @@ and(-webkit-min-device-pixel-ratio:0) { @media
         font-size: 60px;
     }
 }
-@media (min-width: 768px){
-    /* hover menu navbar */
+
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+    .download-app{
+        min-height: 70px;
+    }
+    .download-app .app-ios{
+       height: 40%; 
+    }
+    .download-app .app-android{
+       top: 42%;
+       height: 40%; 
+    }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+    .download-app{
+        min-height: 130px;
+    }
+    .download-app .app-ios{
+       height: 37%; 
+    }
+    .download-app .app-android{
+       top: 43%;
+       height: 40%; 
+    }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 768px) {
     .header .header-nav ul li:hover ul{
         display: block;
+    }
+
+    .download-app{
+        min-height: 130px;
+    }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+    .download-app{
+        min-height: 180px;
+    }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+    .download-app{
+        min-height: 250px;
     }
 }
