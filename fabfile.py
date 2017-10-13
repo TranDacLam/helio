@@ -1,6 +1,6 @@
 from fabric.api import *
 
-ENV = 'api' # Choices ['uat','production','development']
+ENV = 'development' # Choices ['uat','production','development']
 #ENV = 'production'
 SERVERS = {
     'development': '192.168.1.31',
@@ -25,8 +25,8 @@ USERS = {
 PASSWORDS = {
     'development': 'vooc@min',
     # 'uat': 'ThangV@@123',
-    'production': 'ThangV@@123',
-    'api': 'ThangV@@123'
+    'production': 'develop@vooc.vn',
+    'api': 'develop@vooc.vn'
 }
 
 VIRTUAL_ENVS = {
@@ -68,17 +68,20 @@ def restart_app_server():
 
 def deploy():
     with cd(PROJECT_PATH):
-        sudo('git checkout %s'%BRANCH[ENV])
-        sudo('git fetch {0} origin {1}'.format('' , BRANCH[ENV]))
-        sudo('git reset --hard origin/%s'%BRANCH[ENV])
+        run('git checkout %s'%BRANCH[ENV])
+        run('git fetch {0} origin {1}'.format('' , BRANCH[ENV]))
+        run('git reset --hard origin/%s'%BRANCH[ENV])
         # run('git reset --hard origin/master')
-        sudo('find . -name "*.pyc" -exec rm -rf {} \;')
+        run('find . -name "*.pyc" -exec rm -rf {} \;')
         
         with cd('websites'):
             with prefix(env.activate):
                 run('pip install -r ../requirements.txt')
-                sudo('python manage.py collectstatic --noinput')
-                sudo('su -s /bin/bash www-data -c "%s;%s" '%(env.activate,"uwsgi --reload %s"%PROCESS_ID[ENV]))
+                run('python manage.py collectstatic --noinput')
+                if ENV == "production":
+                    sudo('systemctl restart uwsgi_helio')
+                else:
+                    sudo('su -s /bin/bash www-data -c "%s;%s" '%(env.activate,"uwsgi --reload %s"%PROCESS_ID[ENV]))
 
         
 
