@@ -1,0 +1,12 @@
+<p>
+  Welcome to Site : {{user.name}}
+</p>
+
+<div><span>id: </span>{{hero.id}}</div>
+<div><span>name: </span>{{hero.name | uppercase }}</div>
+
+<div>
+    <label>name:
+      <input [(ngModel)]="hero.name" placeholder="name">
+    </label>
+</div>
