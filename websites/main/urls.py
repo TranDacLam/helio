@@ -45,6 +45,7 @@ if settings.DEBUG:
 
 urlpatterns += i18n_patterns(
     url(r'^api/', include('api.urls')),
+    url(r'^api/', include('api_admin.urls')),
     url(r'', include('core.urls')),
 
     # prefix_default_language=False

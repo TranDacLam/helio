@@ -87,6 +87,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     flag_notification = models.BooleanField(default=True)
     token_last_expired = models.DateTimeField(default=timezone.now)
 
+    barcode = models.CharField(max_length=100, null=True, blank=True)
+    username_mapping = models.CharField(max_length=255, null=True, blank=True)
+
     objects = MyUserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

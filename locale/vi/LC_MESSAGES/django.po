@@ -561,3 +561,31 @@ msgid "Create Account Helio Successfully"
 msgstr "Tạo Tài Khoản Helio Center Thành Công"
 
 #START EMAIL TEMPLATE
+
+msgid "Popular"
+msgstr "Khuyến mãi đại trà"
+
+msgid "Users"
+msgstr "Khuyến mãi theo danh sách user"
+
+msgid "Feedback"
+msgstr "Phản hồi"
+
+msgid "Contact"
+msgstr "Liên hệ"
+
+msgid "No Process"
+msgstr "Chưa xử lý"
+
+msgid "Answered"
+msgstr "Đã trả lời"
+
+msgid "Moved to related department"
+msgstr "Đã chuyển đến bộ phận liên quan"
+
+msgid "Ticket transfer fee"
+msgstr "Phí chuyển ticket"
+
+msgid "Deposit fee"
+msgstr "Phí nộp tiền"
+

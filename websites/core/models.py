@@ -36,7 +36,7 @@ class Post(DateTimeModel):
     post_type = models.ForeignKey('Post_Type', related_name='posts_type_rel', on_delete=models.CASCADE, null=True,
                                   blank=True)
     key_query = models.CharField(max_length=255, unique=True)
-    pin_to_top = models.BooleanField("Pin to Top",default=False)
+    pin_to_top = models.BooleanField("Pin to Top", default=False)
     is_draft = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
@@ -141,16 +141,27 @@ class Category(models.Model):
 
 @python_2_unicode_compatible
 class Promotion(DateTimeModel):
+    TYPE = (
+        ('popular', _('Popular')),
+        ('users', _('Users')),
+        ('users_divece', _('Users Device'))
+    )
     name = models.CharField(max_length=255, unique=True)
     image = models.ImageField(
         _('Image'), max_length=1000, null=True, blank=True, upload_to="promotions")
+    image_thumbnail = models.ImageField(
+        _('Image Thumbnail'), max_length=1000, null=True, blank=True, upload_to="promotions")
     short_description = models.CharField(max_length=350)
     content = models.TextField()
     promotion_category = models.ForeignKey(
         'Category', related_name='promotion_category_rel', on_delete=models.CASCADE, null=True, blank=True)
     promotion_label = models.ForeignKey(
         'Promotion_Label', related_name='promotion_label_rel', on_delete=models.CASCADE,
-                            null=True, blank=True)
+        null=True, blank=True)
+    promotion_type = models.CharField(max_length=50, choices=TYPE, default="popular")
+    apply_date = models.DateField(_("Apply Date"), blank=True, null=True)
+    end_date = models.DateField(_("End Date"), blank=True, null=True)
+    QR_code = models.ImageField(upload_to='qrcode', blank=True, null=True)
     is_draft = models.BooleanField(default=False)
 
     def __str__(self):
@@ -161,8 +172,8 @@ class Promotion(DateTimeModel):
 class FAQ(DateTimeModel):
 
     def limit_category_Faq():
-        return {'id__in': [const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY, 
-                            const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY]}
+        return {'id__in': [const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY,
+                           const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY]}
 
     question = models.CharField(max_length=255, unique=True)
     answer = models.TextField()
@@ -208,12 +219,29 @@ class Contact(DateTimeModel):
 
 @python_2_unicode_compatible
 class FeedBack(DateTimeModel):
+    TYPE = (
+        ('feedback', _('Feedback')),
+        ('contact', _('Contact'))
+    )
+    STATUS = (
+        ('no_process', _('No Process')),
+        ('answered', _('Answered')),
+        ('moved', _('Moved to related department'))
+    )
     name = models.CharField(max_length=500)
     email = models.EmailField(max_length=500)
     phone = models.CharField(max_length=500, null=True, blank=True)
     subject = models.CharField(max_length=500)
     message = models.TextField()
     rate = models.CharField(max_length=155, null=True, blank=True)
+
+    sent_date = models.DateField(_('Sent Date'), auto_now_add=True,
+                                 editable=False)
+    feedback_type = models.CharField(
+        max_length=50, choices=TYPE, default="feedback")
+    status = models.CharField(
+        max_length=50, choices=STATUS, default="no_process")
+    answer = models.CharField(max_length=1000, null=True, blank=True)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -281,6 +309,8 @@ class Notification(DateTimeModel):
     sub_url = models.CharField(max_length=255, null=True, blank=True)
     category = models.ForeignKey('Category_Notification', related_name='notification_category_rel',
                                  on_delete=models.CASCADE)
+    is_QR_code = models.BooleanField('Is QR Code', default=False)
+    location = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
         return '%s' % (self.subject)
@@ -310,3 +340,37 @@ class User_Notification(DateTimeModel):
 
     def __str__(self):
         return '%s' % (self.notification)
+
+
+""" HELIO ADMIN V2"""
+
+
+@python_2_unicode_compatible
+class Fee(DateTimeModel):
+    FEE_TYPE = (
+        ('%', '%'),
+        ('vnd', 'VND')
+    )
+    POSITION_TYPE = (
+        ('tickets', _('Ticket transfer fee')),
+        ('deposit', 'Deposit fee')
+    )
+    fee = models.IntegerField(default=0)
+    fee_type = models.CharField(max_length=20, choices=FEE_TYPE, default="%")
+    position = models.CharField(
+        max_length=50, choices=POSITION_TYPE, default="tickets")
+    is_apply = models.BooleanField('Is Apply', default=False)
+
+    def __str__(self):
+        return '%s' % (self.fee)
+
+""" HELIO ADMIN V2"""
+
+
+@python_2_unicode_compatible
+class Denomination(DateTimeModel):
+    denomination = models.IntegerField(default=0, unique=True)
+
+    def __str__(self):
+        return '%s' % (self.fee)
+

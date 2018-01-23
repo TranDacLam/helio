@@ -357,3 +357,31 @@ msgid "mail.contact.phone"
 msgstr "Phone Number"
 
 #START EMAIL TEMPLATE
+
+msgid "Popular"
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+msgid "Feedback"
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "No Process"
+msgstr ""
+
+msgid "Answered"
+msgstr ""
+
+msgid "Moved to related department"
+msgstr ""
+
+msgid "Ticket transfer fee"
+msgstr ""
+
+msgid "Deposit fee"
+msgstr ""
+
