@@ -8,13 +8,21 @@ import { User } from './user';
 })
 export class UsersComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  public this.ckeConfig;
 
   user: User = {
       id: 1,
       name: "TienDht"
+  }
+
+  constructor() { }
+
+  ngOnInit() {
+    this.ckeConfig = {
+      height: 400,
+      language: 'vi',
+      filebrowserBrowseUrl : 'http://127.0.0.1:8000/ckeditor/upload/', //TODO
+      filebrowserUploadUrl : 'http://127.0.0.1:8000/ckeditor/upload/' //TODO
+    };
   }
 }
