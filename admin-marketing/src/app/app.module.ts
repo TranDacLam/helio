@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './/app.routing';
 import { UsersComponent } from './components/users/users.component';
 
 
@@ -16,7 +17,8 @@ import { UsersComponent } from './components/users/users.component';
   imports: [
     BrowserModule,
     FormsModule,
-    CKEditorModule
+    CKEditorModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
