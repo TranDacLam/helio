@@ -7,13 +7,14 @@ import { User } from './user';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-
-  public this.ckeConfig;
+  public ckeditorContent: string = '';
+  public ckeConfig = {};
 
   user: User = {
       id: 1,
       name: "TienDht"
   }
+
 
   constructor() { }
 
