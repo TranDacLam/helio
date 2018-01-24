@@ -309,18 +309,16 @@ PUSH_NOTIFICATIONS_SETTINGS = {
 }
 
 try:
-    if 'DEVELOPMENT' in os.environ and os.environ['DEVELOPMENT']:
-        from config.setting_local import *
-
     if 'UAT' in os.environ and os.environ['UAT']:
         from config.setting_uat import *
 
-    if 'API_HELIO' in os.environ and os.environ['API_HELIO']:
+    elif 'API_HELIO' in os.environ and os.environ['API_HELIO']:
         from config.setting_api import *
 
-    if 'PRODUCTION' in os.environ and os.environ['PRODUCTION']:
+    elif 'PRODUCTION' in os.environ and os.environ['PRODUCTION']:
         from config.setting_production import *
-    
+    else:
+        from config.setting_local import *
 except ImportError:
     pass
 
