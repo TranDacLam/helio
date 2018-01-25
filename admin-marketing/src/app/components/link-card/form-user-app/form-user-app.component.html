@@ -1,0 +1,122 @@
+<div class="row helio-app">
+    <fieldset class="scheduler-border">
+    <legend class="scheduler-border">THÔNG TIN TÀI KHOẢN HELIO APP</legend>
+        <div class="col-xs-6 col-sm-6">
+            <form [formGroup]="appForm" novalidate>
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <input class="form-check-input" type="checkbox" 
+                        (change)="dis_input_app.name = !dis_input_app.name" />&emsp;
+                        <label class="col-form-label form-check-label">Họ Và Tên</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" formControlName="name"
+                        [readonly]="dis_input_app.name" [class.error_user]="status_error.name"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <input class="form-check-input" type="checkbox"
+                        (change)="dis_input_app.email = !dis_input_app.email" />&emsp;
+                        <label class="col-form-label form-check-label">Email</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" formControlName="email"
+                        [readonly]="dis_input_app.email" [class.error_user]="status_error.email"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <input class="form-check-input" type="checkbox"
+                        (change)="dis_input_app.phone = !dis_input_app.phone" />&emsp;
+                        <label class="col-form-label form-check-label">Số Điện Thoại</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" formControlName="phone"
+                        [readonly]="dis_input_app.phone" [class.error_user]="status_error.phone"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <input class="form-check-input" type="checkbox"
+                        (change)="dis_input_app.birth_date = !dis_input_app.birth_date" />&emsp;
+                        <label class="col-form-label form-check-label">Ngày Sinh</label>
+                    </div>
+                    <div class="input-group col-sm-7 birth_date">
+                        <input type="text" class="form-control" formControlName="birth_date"
+                        [readonly]="dis_input_app.birth_date" [class.error_user]="status_error.birth_date"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <input class="form-check-input" type="checkbox"
+                        (change)="dis_input_app.government_id = !dis_input_app.government_id" />&emsp;
+                        <label class="col-form-label form-check-label">Chứng Minh Nhân Dân</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" formControlName="government_id"
+                        [readonly]="dis_input_app.government_id" [class.error_user]="status_error.government_id"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <input class="form-check-input" type="checkbox"
+                        (change)="dis_input_app.address = !dis_input_app.address" />&emsp;
+                        <label class="col-form-label form-check-label">Địa Chỉ</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" formControlName="address"
+                        [readonly]="dis_input_app.address" [class.error_user]="status_error.address"/>
+                    </div>
+                </div>
+          
+                <button class="btn btn-primary" (click)="onSubmitApp()"
+                    [disabled]="user_app && appForm.invalid"
+                >LƯU</button>
+            </form>
+        </div>
+        <div class="col-xs-6 col-sm-6">
+            <div class="row">
+                <div class="col-sm-3 mgt-5">
+                    <label class="col-form-label form-check-label">Email</label>
+                </div>
+                <div class="col-sm-9">
+                    <div id="imaginary_container"> 
+                        <div class="input-group stylish-input-group">
+                            <input type="text" class="form-control" placeholder="Search" 
+                                [(ngModel)]="search_email" (keyup)="searchEmail($event)"/>
+                            <span class="input-group-addon">
+                                <button>
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>  
+                            </span>
+                        </div>
+                        <ul class="list-group" *ngIf="status_search">
+                            <li class="list-group-item" 
+                                *ngFor="let user of all_user_app | filter:search_email" 
+                                (click)="getEmail(user)">
+                                {{user.email}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <div class="panel panel-default mgt-15">
+                        <div class="panel-heading"><strong>Ghi chú</strong></div>
+                        <div class="panel-body">
+                            <p>1. Sau khi liên kết, người dùng không thể sửa thông tin trên App.</p>
+                            <p>2. Thông tin liên hệ của thẻ và tài khoản App phải khớp để liên kết.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
