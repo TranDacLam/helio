@@ -6,12 +6,12 @@
                 <div class="form-group row">
                     <div class="col-sm-5 form-check">
                         <input class="form-check-input" type="checkbox" 
-                        (change)="dis_input_app.name = !dis_input_app.name" />&emsp;
+                        (change)="dis_input_app.full_name = !dis_input_app.full_name" />&emsp;
                         <label class="col-form-label form-check-label">Họ Và Tên</label>
                     </div>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" formControlName="name"
-                        [readonly]="dis_input_app.name" [class.error_user]="status_error.name"/>
+                        <input type="text" class="form-control" formControlName="full_name"
+                        [readonly]="dis_input_app.full_name" [class.error_user]="status_error.full_name"/>
                     </div>
                 </div>
 
@@ -45,7 +45,7 @@
                         (change)="dis_input_app.birth_date = !dis_input_app.birth_date" />&emsp;
                         <label class="col-form-label form-check-label">Ngày Sinh</label>
                     </div>
-                    <div class="input-group col-sm-7 birth_date">
+                    <div class="col-sm-7">
                         <input type="text" class="form-control" formControlName="birth_date"
                         [readonly]="dis_input_app.birth_date" [class.error_user]="status_error.birth_date"/>
                     </div>
@@ -54,12 +54,12 @@
                 <div class="form-group row">
                     <div class="col-sm-5 form-check">
                         <input class="form-check-input" type="checkbox"
-                        (change)="dis_input_app.government_id = !dis_input_app.government_id" />&emsp;
+                        (change)="dis_input_app.personal_id = !dis_input_app.personal_id" />&emsp;
                         <label class="col-form-label form-check-label">Chứng Minh Nhân Dân</label>
                     </div>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" formControlName="government_id"
-                        [readonly]="dis_input_app.government_id" [class.error_user]="status_error.government_id"/>
+                        <input type="text" class="form-control" formControlName="personal_id"
+                        [readonly]="dis_input_app.personal_id" [class.error_user]="status_error.personal_id"/>
                     </div>
                 </div>
 
@@ -89,20 +89,20 @@
                     <div id="imaginary_container"> 
                         <div class="input-group stylish-input-group">
                             <input type="text" class="form-control" placeholder="Search" 
-                                [(ngModel)]="search_email" (keyup)="searchEmail($event)"/>
+                                #search_email />
                             <span class="input-group-addon">
-                                <button>
+                                <button (click)="searchEmail(search_email.value)">
                                     <span class="glyphicon glyphicon-search"></span>
                                 </button>  
                             </span>
                         </div>
-                        <ul class="list-group" *ngIf="status_search">
-                            <li class="list-group-item" 
-                                *ngFor="let user of all_user_app | filter:search_email" 
-                                (click)="getEmail(user)">
-                                {{user.email}}
-                            </li>
-                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="status_search">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <div class="alert alert-danger">
+                        Không tìm thấy Email
                     </div>
                 </div>
             </div>

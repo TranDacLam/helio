@@ -18,12 +18,12 @@
                 <div class="form-group row">
                     <div class="col-sm-5 form-check">
                         <input class="form-check-input" type="checkbox" 
-                        (change)="dis_input_embed.name = !dis_input_embed.name" />&emsp;
+                        (change)="dis_input_embed.full_name = !dis_input_embed.full_name" />&emsp;
                         <label class="col-form-label form-check-label">Họ Và Tên</label>
                     </div>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" formControlName="name"
-                        [readonly]="dis_input_embed.name" [class.error_user]="status_error.name"/>
+                        <input type="text" class="form-control" formControlName="full_name"
+                        [readonly]="dis_input_embed.full_name" [class.error_user]="status_error.full_name"/>
                     </div>
                 </div>
 
@@ -66,12 +66,12 @@
                 <div class="form-group row">
                     <div class="col-sm-5 form-check">
                         <input class="form-check-input" type="checkbox"
-                        (change)="dis_input_embed.government_id = !dis_input_embed.government_id" />&emsp;
+                        (change)="dis_input_embed.personal_id = !dis_input_embed.personal_id" />&emsp;
                         <label class="col-form-label form-check-label">Chứng Minh Nhân Dân</label>
                     </div>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" formControlName="government_id"
-                        [readonly]="dis_input_embed.government_id" [class.error_user]="status_error.government_id"/>
+                        <input type="text" class="form-control" formControlName="personal_id"
+                        [readonly]="dis_input_embed.personal_id" [class.error_user]="status_error.personal_id"/>
                     </div>
                 </div>
 
@@ -101,9 +101,9 @@
                     <div id="imaginary_container"> 
                         <div class="input-group stylish-input-group">
                             <input type="number" class="form-control" placeholder="Search" 
-                                [(ngModel)]="search_barcode"/>
+                                #search_barcode />
                             <span class="input-group-addon">
-                                <button (click)="searchBarcode(search_barcode)">
+                                <button (click)="searchBarcode(search_barcode.value)">
                                     <span class="glyphicon glyphicon-search"></span>
                                 </button>  
                             </span>
