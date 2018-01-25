@@ -4,5 +4,7 @@ from api_admin import views
 from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token
 
 urlpatterns = [
-	url(r'^hots_admin/$', views.hots, name="get-hosts-admin"),
+	url(r'^get_all_promotion/$', views.get_all_promotion, name="get-all-promotion"),
+	url(r'^user_promotion/$', views.user_promotion, name="user-promotion"),
+	
 ]
