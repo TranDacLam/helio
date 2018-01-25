@@ -15,7 +15,7 @@ const _options = {
 export class PromotionService {
 
    	private user_promotion = "http://localhost:8000/api/user_promotion";
-   	private get_all_promotion = "http://localhost:8000/api/get_all_promotion";
+   	private promotion = "http://localhost:8000/api/promotion";
 
     constructor(private http: Http) { }
 
@@ -27,7 +27,7 @@ export class PromotionService {
 
 
     getAllPromotion() {
-        return this.http.get(this.get_all_promotion).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(this.promotion).map((res: Response) => res.json()).catch(this.handleError);
     }
 
    
