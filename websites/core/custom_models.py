@@ -89,6 +89,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     barcode = models.CharField(max_length=100, null=True, blank=True)
     username_mapping = models.CharField(max_length=255, null=True, blank=True)
+    date_mapping = models.DateField(null=True, blank=True)
 
     objects = MyUserManager()
     USERNAME_FIELD = 'email'
