@@ -11,7 +11,8 @@ from rest_framework.views import exception_handler, APIView
 from rest_framework.response import Response
 from rest_framework import generics as drf_generics
 from core.models import *
-from rest_framework.permissions import AllowAny
+from core.custom_models import User
+from rest_framework.permissions import AllowAny, IsAdminUser
 
 
 from api_admin import serializers as admin_serializers
@@ -31,3 +32,35 @@ def hots(request):
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
         return Response(error, status=500)
+
+
+class UserDetail(drf_generics.RetrieveUpdateAPIView):
+    lookup_field = "id"
+    serializer_class = admin_serializers.UserSerializer
+    permission_classes = [IsAdminUser]
+    queryset = User
+
+    def retrieve(self, request, format=None):
+        try:
+            email = self.request.query_params.get('email', None)
+            if email:
+                user = User.objects.get(email=email)
+                serializer = admin_serializers.UserSerializer(user)
+                return Response(serializer.data)
+            return Response({"code": 500, "message": "Not found email", "fields": ""}, status=500)
+
+        except Exception, e:
+            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            return Response(error, status=500)
+
+    def update(self, request, id):
+        try:
+            user = User.objects.get(id=id)
+            serializer = admin_serializers.UserSerializer(instance=user, data = request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+            return Response({"code": 500, "message": serializer.errors, "fields": ""}, status=500)
+        except Exception, e:
+            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            return Response(error, status=500)
