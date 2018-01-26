@@ -55,6 +55,7 @@ export class UserMultiselectComponent implements OnInit {
         this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
             selected_temp = dtInstance.rows( '.selected' ).data();
             dtInstance.rows('.selected').remove().draw();
+
             
         });
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {

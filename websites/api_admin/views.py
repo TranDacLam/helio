@@ -7,13 +7,13 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser, FormParser
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework import status
-from rest_framework.views import exception_handler, APIView
+from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import generics as drf_generics
 from core.models import *
 from core.custom_models import *
 from rest_framework.permissions import AllowAny, IsAdminUser
 from api_admin import serializers as admin_serializers
+from django.db import connections
 
 
 """

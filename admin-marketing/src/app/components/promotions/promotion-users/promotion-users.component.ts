@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { PromotionService } from '../../../shared/services/promotion.service';
 import { User } from '../../../shared/class/user';
+import { Promotion } from '../../../shared/class/promotion';
 
 @Component({
     selector: 'app-promotion-users',
@@ -12,6 +13,8 @@ import { User } from '../../../shared/class/user';
 export class PromotionUsersComponent implements OnInit {
 	user_list_left: User[];
     user_list_right: User[] = [];
+
+    promotion: Promotion;
 
 
     constructor(private route: ActivatedRoute, private promotionService: PromotionService) { }

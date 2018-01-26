@@ -32,6 +32,7 @@ export class PromotionService {
 
    
     private handleError(error: Response) {
+        alert("errrr");
         return Observable.throw(error.statusText);
     }
 
