@@ -102,3 +102,33 @@ class UserDetail(APIView):
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
 
+"""
+GET and POST Promotion_Label
+"""
+@permission_classes((AllowAny, ))
+class PromotionLabel(APIView):
+    
+    def get(self, request, format=None):
+        """
+            Get all promotion_label
+        """
+        try:
+            promotion_label_list = Promotion_Label.objects.all()
+            serializer = admin_serializers.PromotionLabelSerializer(promotion_label_list, many=True)
+            return Response(serializer.data)
+        except Exception, e:
+            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            return Response(error, status=500)
+
+    def post(self, request, format=None):
+        """
+            POST: Create a new Promotion_Label
+        """
+        serializer = admin_serializers.PromotionLabelSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
