@@ -11,36 +11,73 @@ from rest_framework.views import exception_handler, APIView
 from rest_framework.response import Response
 from rest_framework import generics as drf_generics
 from core.models import *
-from core.custom_models import User
+from core.custom_models import *
 from rest_framework.permissions import AllowAny, IsAdminUser
-
-
 from api_admin import serializers as admin_serializers
 
+
 """
-    Get Hots List to show in Homepage
+    Get Promotion
 """
 
-
-@api_view(['GET'])
 @permission_classes((AllowAny,))
-def hots(request):
-    try:
-        hot_list = Hot.objects.filter(is_show=True).order_by('-created')[:5]
-        serializer = admin_serializers.HotsSerializer(hot_list, many=True)
-        return Response(serializer.data)
-    except Exception, e:
-        error = {"code": 500, "message": "%s" % e, "fields": ""}
-        return Response(error, status=500)
+class PromotionView(APIView):
+    def get(self, request, format=None):
+        try:
+            promotion_id =  request.GET.get('id', '')
+            if promotion_id:
+                item = Promotion.objects.get(pk=id)
+                serializer = admin_serializers.PromotionSerializer(item, many=False)
+                return Response(serializer.data)
+            else:
+                lst_item = Promotion.objects.all()
+                serializer = admin_serializers.PromotionSerializer(lst_item, many=True)
+                return Response(serializer.data)
+        except Exception, e:
+            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            return Response(error, status=500)
+
+    # def post(self, request):
+    #     # CREATE
+    # def put(self, request):
+    #     # UPDATE
+    # def delete(self, request):
+    #     # DELETE
+
+"""
+    Get Promotion Users Detail
+"""
+
+"""
+    Get Promotion
+"""
+
+@permission_classes((AllowAny,))
+class PromotionUserView(APIView):
+    def get(self, request, format=None):
+        try:
+            promotion_id =  request.GET['id']
+            if promotion_id:
+                promotion_detail = Promotion.objects.get(pk=promotion_id)
+                user_all_list = User.objects.all()
+                promotion_user_id_list = Gift.objects.filter(promotion_id=promotion_id).values_list('user_id', flat=True)
+                user_promotion_list = User.objects.filter(pk__in=promotion_user_id_list)
+                
+                result = {}
+                result['promotion_detail'] = admin_serializers.PromotionSerializer(promotion_detail, many=False).data
+                result['user_all'] = admin_serializers.UserSerializer(user_all_list, many=True).data
+                result['user_promotion'] = admin_serializers.UserSerializer(user_promotion_list, many=True).data
+        
+                return Response(result)
+        except Exception, e:
+            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            return Response(error, status=500)
 
 
-class UserDetail(drf_generics.RetrieveUpdateAPIView):
-    lookup_field = "id"
-    serializer_class = admin_serializers.UserSerializer
-    permission_classes = [IsAdminUser]
-    queryset = User
+@permission_classes((AllowAny,))
+class UserDetail(APIView):   
 
-    def retrieve(self, request, format=None):
+    def get(self, request, format=None):
         try:
             email = self.request.query_params.get('email', None)
             if email:
@@ -53,7 +90,7 @@ class UserDetail(drf_generics.RetrieveUpdateAPIView):
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
 
-    def update(self, request, id):
+    def put(self, request, id):
         try:
             user = User.objects.get(id=id)
             serializer = admin_serializers.UserSerializer(instance=user, data = request.data)
@@ -64,3 +101,4 @@ class UserDetail(drf_generics.RetrieveUpdateAPIView):
         except Exception, e:
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
+

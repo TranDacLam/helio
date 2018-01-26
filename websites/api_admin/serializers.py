@@ -4,21 +4,11 @@ from core.models import *
 from core.custom_models import *
 from django.contrib.auth import get_user_model
 
-
-
-class HotsSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField(max_length=255)
-    sub_url = serializers.CharField(max_length=1000)
-    image = serializers.ImageField(max_length=1000)
-    is_show = serializers.BooleanField()
-
-
 class UserSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = User
-		fields=('full_name', 'email', 'phone','birth_date', 'personal_id', 'address')
+		fields=('id' ,'full_name', 'email', 'phone','birth_date', 'personal_id', 'address')
 
 	def update(self, instance, validated_data):
 		instance.full_name = validated_data.get('full_name', instance.full_name)
@@ -29,5 +19,10 @@ class UserSerializer(serializers.ModelSerializer):
 		instance.address = validated_data.get('address', instance.address)
 		instance.save()
 		return instance
+
+class PromotionSerializer(serializers.ModelSerializer):
+    class Meta:
+		model = Promotion
+		fields=('id', 'name')
 
 
