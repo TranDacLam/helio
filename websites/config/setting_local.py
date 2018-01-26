@@ -14,10 +14,10 @@ DATABASES = {
     'sql_db': {
         'NAME': 'ECS7',
         'ENGINE': 'sqlserver_pymssql',
-        'HOST': '192.168.1.101\SQLEXPRESS',
+        'HOST': '192.168.1.101',
         'USER': 'sa',
         'PASSWORD': 'khoiphatit',
-        'POST':1433
+        'PORT':1433
     }
 }
 
