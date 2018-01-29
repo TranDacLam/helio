@@ -22,7 +22,7 @@ export class UsersComponent implements OnInit {
     this.ckeConfig = {
       height: 400,
       language: 'vi',
-      filebrowserBrowseUrl : 'http://127.0.0.1:8000/ckeditor/upload/', //TODO
+      filebrowserBrowseUrl : 'http://127.0.0.1:8000/ckeditor/browse/', //TODO
       filebrowserUploadUrl : 'http://127.0.0.1:8000/ckeditor/upload/' //TODO
     };
   }
