@@ -1,0 +1,155 @@
+<div class="row card-link-success">
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">
+            Chỉnh Sửa Thẻ Liên Kế
+            <span class="pull-right"><i>Bạn đã thực hiện liên kết thẻ với tài khoản Helio thành công.</i></span>
+        </legend>
+        <div class="col-xs-7 col-sm-7" *ngIf="user_app || user_embed">
+            <form novalidate>
+                <legend class="scheduler-border">THÔNG TIN TÀI KHOẢN HELIO APP</legend>
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Họ Và Tên</label>
+                    </div>
+                    <div class="col-sm-7">
+                        {{ user_app.name }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Email</label>
+                    </div>
+                    <div class="col-sm-7">
+                        {{ user_app.email }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Số Điện Thoại</label>
+                    </div>
+                    <div class="col-sm-7">
+                        {{ user_app.phone }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Ngày Sinh</label>
+                    </div>
+                    <div class="col-sm-7">
+                        {{ user_app.birth_date }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Chứng Minh Nhân Dân</label>
+                    </div>
+                    <div class="col-sm-7">
+                        {{ user_app.government_id }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Địa Chỉ</label>
+                    </div>
+                    <div class="col-sm-7">
+                        {{ user_app.address }}
+                    </div>
+                </div>
+
+                <legend class="scheduler-border">THÔNG TIN THẺ HELIO APP</legend>
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Card Barcode</label>
+                    </div>
+                    <div class="col-sm-7">
+                        {{ user_embed.barcode }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Tên Chủ Thẻ</label>
+                    </div>
+                    <div class="col-sm-7">
+                        {{ user_embed.name }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Email</label>
+                    </div>
+                    <div class="col-sm-7">
+                        {{ user_embed.email }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Số Điện Thoại</label>
+                    </div>
+                    <div class="col-sm-7">
+                        {{ user_embed.phone }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Ngày Sinh</label>
+                    </div>
+                    <div class="col-sm-7">
+                        {{ user_embed.birth_date }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Chứng Minh Nhân Dân</label>
+                    </div>
+                    <div class="col-sm-7">
+                        {{ user_embed.government_id }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Địa Chỉ</label>
+                    </div>
+                    <div class="col-sm-7">
+                        {{ user_embed.address }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Tài Khoản Thực Hiện Mapping</label>
+                    </div>
+                    <div class="col-sm-7">
+                        admin@vooc.vn
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <label class="col-form-label form-check-label">Thời Gian Mapping</label>
+                    </div>
+                    <div class="col-sm-7">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-5 col-sm-5">
+            <div class="row pull-right">
+                <a routerLink="/card-link" class="btn btn-primary">
+                    <i class="fa fa-plus" aria-hidden="true"></i> 
+                    Thêm Thẻ Liên Kết
+                </a>
+            </div>
+        </div>
+    </fieldset>
+</div>
