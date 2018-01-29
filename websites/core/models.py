@@ -158,7 +158,8 @@ class Promotion(DateTimeModel):
     promotion_label = models.ForeignKey(
         'Promotion_Label', related_name='promotion_label_rel', on_delete=models.CASCADE,
         null=True, blank=True)
-    promotion_type = models.CharField(max_length=50, choices=TYPE, default="popular")
+    promotion_type = models.CharField(
+        max_length=50, choices=TYPE, default="popular")
     apply_date = models.DateField(_("Apply Date"), blank=True, null=True)
     end_date = models.DateField(_("End Date"), blank=True, null=True)
     QR_code = models.ImageField(upload_to='qrcode', blank=True, null=True)
@@ -235,8 +236,7 @@ class FeedBack(DateTimeModel):
     message = models.TextField()
     rate = models.CharField(max_length=155, null=True, blank=True)
 
-    sent_date = models.DateField(_('Sent Date'), auto_now_add=True,
-                                 editable=False)
+    sent_date = models.DateField(_('Sent Date'), null=True, blank=True)
     feedback_type = models.CharField(
         max_length=50, choices=TYPE, default="feedback")
     status = models.CharField(
@@ -312,6 +312,11 @@ class Notification(DateTimeModel):
     is_QR_code = models.BooleanField('Is QR Code', default=False)
     location = models.CharField(max_length=500, null=True, blank=True)
 
+    is_draft = models.BooleanField(default=False)
+    sent_date = models.DateField(_('Sent Date'), null=True, blank=True)
+    sent_user = models.ForeignKey('User', related_name='notification_user_rel',
+                                  null=True, blank=True)
+
     def __str__(self):
         return '%s' % (self.subject)
 
@@ -373,4 +378,3 @@ class Denomination(DateTimeModel):
 
     def __str__(self):
         return '%s' % (self.fee)
-
