@@ -22,6 +22,7 @@ import { PromotionsComponent } from './components/promotions/promotions/promotio
 
 import { PromotionService } from './shared/services/promotion.service';
 import { PromotionDetailComponent } from './components/promotions/promotion-detail/promotion-detail.component';
+import { NotificationDetailComponent } from './components/notification/notification-detail/notification-detail.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { PromotionDetailComponent } from './components/promotions/promotion-deta
     UserMultiselectComponent,
     PromotionUsersComponent,
     PromotionsComponent,
-    PromotionDetailComponent
+    PromotionDetailComponent,
+    NotificationDetailComponent
   ],
   imports: [
     BrowserModule,
