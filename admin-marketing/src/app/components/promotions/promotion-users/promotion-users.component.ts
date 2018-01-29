@@ -27,14 +27,14 @@ export class PromotionUsersComponent implements OnInit {
         const id = +this.route.snapshot.paramMap.get('id');
 
         this.promotionService.getPromotionUsersDetail(id).subscribe(promotion=> {
-            console.log(promotion.promotion_detail);
+            // console.log(promotion.promotion_detail);
             this.user_list_left = promotion.user_all
             this.user_list_right = promotion.user_promotion
         });
     }
 
     countChange(event) {
-    	console.log("tesst");
+    	// console.log("tesst");
     	console.log(event);
 	}
 

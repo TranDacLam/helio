@@ -26,9 +26,21 @@ class PromotionSerializer(serializers.ModelSerializer):
         model = Promotion
         fields=('id', 'name', 'image', 'image_thumbnail', 'apply_date', 'end_date', 'is_draft', 'created')
 
+class AdvertisementSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Advertisement
+        fields = ('id', 'name', 'is_show')
+
+class PromotionLabelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Promotion_Label
+        fields= ('id', 'name')
 
 class NotificationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Notification
         fields=('id', 'subject', 'image', 'sub_url', 'category', 'sent_date', 'sent_user', 'is_draft')
+
