@@ -14,7 +14,7 @@ export class PromotionLabelListComponent implements OnInit {
 	promotionsLabel: PromotionLabel[];
   	constructor(private promotionlabelService: PromotionLabelService) { }
 
- 	 ngOnInit() {
+ 	ngOnInit() {
  	 	this.getAllPromotionLabel();
   	}
 

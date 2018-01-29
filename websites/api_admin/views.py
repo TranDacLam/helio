@@ -103,6 +103,62 @@ class UserDetail(APIView):
             return Response(error, status=500)
 
 """
+GET and POST Advertisement
+"""     
+@permission_classes((AllowAny, ))
+class AdvertisementView(APIView):
+
+    def get(self, request, format=None):
+        """
+        Get all Advertisement
+        """
+        try:
+            adv_list = Advertisement.objects.all()
+            serializer = admin_serializers.AdvertisementSerializer(adv_list, many=True)
+            return Response(serializer.data)
+        except Exception, e:
+            error = {"code":500, "message": "%s" % e, "fields": ""}
+            return Response(error, status=500)
+
+    def post(self, request, format=None):
+        """
+        POST: Create a new Advertisement
+        """
+        serializer = admin_serializers.AdvertisementSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+"""
+GET, PUT Advertisement Detail
+"""
+@permission_classes((AllowAny, ))
+class AdvertisementDetail(APIView):
+    """
+    Retrieve, update or delete a advertisement instance
+    """
+    def get_object(self, pk):
+        try:
+            adv = Advertisement.objects.get(pk=pk)
+            return adv
+        except Exception, e:
+            return Response(status=500)
+
+    def get(self, request, pk, format=None):
+        advertisement = self.get_object(pk)
+        serializer = admin_serializers.AdvertisementSerializer(advertisement)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        advertisement = self.get_object(pk)
+        serializer = admin_serializers.AdvertisementSerializer(advertisement, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(request.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+"""
 GET and POST Promotion_Label
 """
 @permission_classes((AllowAny, ))
@@ -129,6 +185,8 @@ class PromotionLabel(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 

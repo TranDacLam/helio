@@ -11,6 +11,10 @@ urlpatterns = [
 	url(r'^user/$', views.UserDetail.as_view(), name="get-hosts-admin"),
 	url(r'^user/(?P<id>[0-9]+)/$', views.UserDetail.as_view(), name="get-hosts-admin"),
 
-	url(r'^promotion_label/$', views.PromotionLabel.as_view(), name="promotion_label")
+	url(r'^promotion_label/$', views.PromotionLabel.as_view(), name="promotion_label"),
+
+	url(r'^advertisement/$', views.AdvertisementView.as_view(), name="advertisement"),
+	url(r'^advertisement/(?P<pk>[0-9]+)/$', views.AdvertisementDetail.as_view(), name="advertisement-detail"),
+
 
 ]

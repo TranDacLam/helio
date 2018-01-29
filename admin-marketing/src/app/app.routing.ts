@@ -7,6 +7,9 @@ import { PromotionsComponent } from './components/promotions/promotions/promotio
 import { PromotionDetailComponent } from './components/promotions/promotion-detail/promotion-detail.component';
 import { PromotionLabelListComponent } from './components/promotion-label/promotion-label-list/promotion-label-list.component';
 import { PromotionLabelAddComponent } from './components/promotion-label/promotion-label-add/promotion-label-add.component';
+import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
+import { AdvertisementDetailComponent } from './components/advertisement/advertisement-detail/advertisement-detail.component';
+import { AdvertisementAddComponent } from './components/advertisement/advertisement-add/advertisement-add.component';
 
 const routes: Routes = [
     { 
@@ -21,6 +24,12 @@ const routes: Routes = [
         path: 'promotion-label-list', component: PromotionLabelListComponent
     }, {
         path: 'promotion-label-add', component: PromotionLabelAddComponent
+    }, {
+        path: 'advertisement-list', component: AdvertisementListComponent
+    }, {
+        path: 'advertisement-detail/:id', component: AdvertisementDetailComponent
+    }, {
+        path: 'advertisement-add', component: AdvertisementAddComponent
     }
 ];
 
