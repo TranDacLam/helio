@@ -18,13 +18,14 @@ from django.db.models import Q
 
 
 """
-    Get Promotion
+    Get All Promotion
 """
 
 @permission_classes((AllowAny,))
 class PromotionListView(APIView):
     def get(self, request, format=None):
         try:
+            # Get all promotion
             lst_item = Promotion.objects.all()
             serializer = admin_serializers.PromotionSerializer(lst_item, many=True)
             return Response(serializer.data)
@@ -35,19 +36,19 @@ class PromotionListView(APIView):
 
 
 """
-    Get Promotion
+    Get Promotion By Promotion ID
 """
 
 @permission_classes((AllowAny,))
 class PromotionDetailView(APIView):
     def get(self, request, id):
         try:
-            if id:
-                item = Promotion.objects.get(pk=id)
-                serializer = admin_serializers.PromotionSerializer(item, many=False)
-                return Response(serializer.data)
+            item = Promotion.objects.get(pk=id)
+            serializer = admin_serializers.PromotionSerializer(item, many=False)
+            return Response(serializer.data)
+            
         except Promotion.DoesNotExist, e:
-            error = {"code": 400, "message": "Id Not Found.", "fields": "email"}
+            error = {"code": 400, "message": "Id Not Found.", "fields": ""}
             return Response(error, status=400)
         except Exception, e:
             print 'PromotionDetailView ',e
@@ -56,26 +57,28 @@ class PromotionDetailView(APIView):
 
 
 """
-    Get Promotion
+    Get User List By Promotion
 """
 
 @permission_classes((AllowAny,))
 class PromotionUserView(APIView):
     def get(self, request, id):
         try:
-            if id:
-                promotion_detail = Promotion.objects.get(pk=id)
-    
-                promotion_user_id_list = Gift.objects.filter(promotion_id=id).values_list('user_id', flat=True)
-                user_promotion_list = User.objects.filter(pk__in=promotion_user_id_list)
-                user_all_list = User.objects.filter(~Q(pk__in=promotion_user_id_list))
+            promotion_detail = Promotion.objects.get(pk=id)
 
-                result = {}
-                result['promotion_detail'] = admin_serializers.PromotionSerializer(promotion_detail, many=False).data
-                result['user_all'] = admin_serializers.UserSerializer(user_all_list, many=True).data
-                result['user_promotion'] = admin_serializers.UserSerializer(user_promotion_list, many=True).data
+            promotion_user_id_list = Gift.objects.filter(promotion_id=id).values_list('user_id', flat=True)
+            user_promotion_list = User.objects.filter(pk__in=promotion_user_id_list)
+            user_all_list = User.objects.filter(~Q(pk__in=promotion_user_id_list))
+
+            result = {}
+            result['promotion_detail'] = admin_serializers.PromotionSerializer(promotion_detail, many=False).data
+            result['user_all'] = admin_serializers.UserSerializer(user_all_list, many=True).data
+            result['user_promotion'] = admin_serializers.UserSerializer(user_promotion_list, many=True).data
         
-                return Response(result)
+            return Response(result)
+        except Promotion.DoesNotExist, e:
+            error = {"code": 400, "message": "Id Not Found.", "fields": "email"}
+            return Response(error, status=400)
         except Exception, e:
             print 'PromotionUserView ',e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
@@ -116,7 +119,7 @@ class UserDetail(APIView):
 
 
 """
-    Get Promotion
+    Get Notification List
 """
 
 @permission_classes((AllowAny,))
@@ -132,42 +135,47 @@ class NotificationListView(APIView):
 
 
 """
-    Get Promotion
+    Get Notification Detail
 """
 
 @permission_classes((AllowAny,))
 class NotificationDetailView(APIView):
     def get(self, request, id):
         try:
-            if id:
-                item = Notification.objects.get(pk=id)
-                serializer = admin_serializers.NotificationSerializer(item, many=False)
-                return Response(serializer.data)
-            return Response({"code": 400, "message": "ID is required", "fields": "notification_id"}, status=400)
+            item = Notification.objects.get(pk=id)
+            serializer = admin_serializers.NotificationSerializer(item, many=False)
+            return Response(serializer.data)
+        except Notification.DoesNotExist, e:
+            error = {"code": 400, "message": "Id Not Found.", "fields": "email"}
+            return Response(error, status=400)
         except Exception, e:
             print 'NotificationDetailView ',e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
 
+
 """
-    Get Promotion
+    Get User List By Notification
 """
 
 @permission_classes((AllowAny,))
 class NotificationUserView(APIView):
     def get(self, request, id):
         try:
-            if id:
-                notification_detail = Notification.objects.get(pk=id)
-                notification_user_id_list = User_Notification.objects.filter(notification_id=id).values_list('user_id', flat=True)
-                user_notification_list = User.objects.filter(pk__in=notification_user_id_list)
-                user_all_list = User.objects.filter(~Q(pk__in=notification_user_id_list))
-                result = {}
-                result['notification_detail'] = admin_serializers.NotificationSerializer(notification_detail, many=False).data
-                result['user_all'] = admin_serializers.UserSerializer(user_all_list, many=True).data
-                result['user_notification'] = admin_serializers.UserSerializer(user_notification_list, many=True).data
-        
-                return Response(result)
+            notification_detail = Notification.objects.get(pk=id)
+            notification_user_id_list = User_Notification.objects.filter(notification_id=id).values_list('user_id', flat=True)
+            user_notification_list = User.objects.filter(pk__in=notification_user_id_list)
+            user_all_list = User.objects.filter(~Q(pk__in=notification_user_id_list))
+            result = {}
+            result['notification_detail'] = admin_serializers.NotificationSerializer(notification_detail, many=False).data
+            result['user_all'] = admin_serializers.UserSerializer(user_all_list, many=True).data
+            result['user_notification'] = admin_serializers.UserSerializer(user_notification_list, many=True).data
+    
+            return Response(result)
+            
+        except Notification.DoesNotExist, e:
+            error = {"code": 400, "message": "Id Not Found.", "fields": "email"}
+            return Response(error, status=400)
         except Exception, e:
             print 'NotificationUserView ',e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
