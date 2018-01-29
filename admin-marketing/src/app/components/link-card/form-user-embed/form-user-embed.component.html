@@ -1,0 +1,123 @@
+<div class="row helio-embed">
+    <fieldset class="scheduler-border">
+    <legend class="scheduler-border">THÔNG TIN THẺ HELIO APP</legend>
+        <div class="col-xs-6 col-sm-6">
+            <form [formGroup]="embedForm" novalidate>
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <input class="form-check-input" type="checkbox" 
+                        (change)="dis_input_embed.barcode = !dis_input_embed.barcode" />&emsp;
+                        <label class="col-form-label form-check-label">Card Barcode</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" formControlName="barcode"
+                        [readonly]="dis_input_embed.barcode"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <input class="form-check-input" type="checkbox" 
+                        (change)="dis_input_embed.full_name = !dis_input_embed.full_name" />&emsp;
+                        <label class="col-form-label form-check-label">Họ Và Tên</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" formControlName="full_name"
+                        [readonly]="dis_input_embed.full_name" [class.error_user]="status_error.full_name"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <input class="form-check-input" type="checkbox"
+                        (change)="dis_input_embed.email = !dis_input_embed.email" />&emsp;
+                        <label class="col-form-label form-check-label">Email</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" formControlName="email"
+                        [readonly]="dis_input_embed.email" [class.error_user]="status_error.email"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <input class="form-check-input" type="checkbox"
+                        (change)="dis_input_embed.phone = !dis_input_embed.phone" />&emsp;
+                        <label class="col-form-label form-check-label">Số Điện Thoại</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" formControlName="phone"
+                        [readonly]="dis_input_embed.phone" [class.error_user]="status_error.phone"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <input class="form-check-input" type="checkbox"
+                        (change)="dis_input_embed.birth_date = !dis_input_embed.birth_date" />&emsp;
+                        <label class="col-form-label form-check-label">Ngày Sinh</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" formControlName="birth_date"
+                        [readonly]="dis_input_embed.birth_date" [class.error_user]="status_error.birth_date"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <input class="form-check-input" type="checkbox"
+                        (change)="dis_input_embed.personal_id = !dis_input_embed.personal_id" />&emsp;
+                        <label class="col-form-label form-check-label">Chứng Minh Nhân Dân</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" formControlName="personal_id"
+                        [readonly]="dis_input_embed.personal_id" [class.error_user]="status_error.personal_id"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-5 form-check">
+                        <input class="form-check-input" type="checkbox"
+                        (change)="dis_input_embed.address = !dis_input_embed.address" />&emsp;
+                        <label class="col-form-label form-check-label">Địa Chỉ</label>
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" formControlName="address"
+                        [readonly]="dis_input_embed.address" [class.error_user]="status_error.address"/>
+                    </div>
+                </div>
+          
+                <button class="btn btn-primary" (click)="onSubmitEmbed()"
+                    [disabled]="user_embed && embedForm.invalid"
+                >LƯU</button>
+            </form>
+        </div>
+        <div class="col-xs-6 col-sm-6">
+            <div class="row">
+                <div class="col-sm-3 mgt-5">
+                    <label class="col-form-label form-check-label">Card Barcode</label>
+                </div>
+                <div class="col-sm-9">
+                    <div id="imaginary_container"> 
+                        <div class="input-group stylish-input-group">
+                            <input type="number" class="form-control" placeholder="Search" 
+                                #search_barcode />
+                            <span class="input-group-addon">
+                                <button (click)="searchBarcode(search_barcode.value)">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>  
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="errorMessage">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <div class="alert alert-danger">
+                        {{ errorMessage }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>

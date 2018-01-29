@@ -17,4 +17,7 @@ urlpatterns = [
 	url(r'^advertisement/(?P<pk>[0-9]+)/$', views.AdvertisementDetail.as_view(), name="advertisement-detail"),
 
 
+	url(r'^notification/$', views.NotificationView.as_view(), name="notification"),
+	url(r'^user_notification/$', views.PromotionUserView.as_view(), name="user-promotion"),
+
 ]

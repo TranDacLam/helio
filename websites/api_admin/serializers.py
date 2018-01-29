@@ -37,3 +37,10 @@ class PromotionLabelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Promotion_Label
         fields= ('id', 'name')
+
+class NotificationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Notification
+        fields=('id', 'subject', 'image', 'sub_url', 'category', 'sent_date', 'sent_user', 'is_draft')
+

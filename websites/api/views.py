@@ -642,14 +642,17 @@ def faqs(request):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def card_information(request, card_id):
     print "API get card information"
     try:
         if not card_id:
+
             error = {
                 "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
             return Response(error, status=400)
 
+        print card_id
         cursor = connections['sql_db'].cursor()
 
         query_str = """ WITH UPGRADE_INFO AS (SELECT Customer_Id, Transaction_DateTime FROM (SELECT DISTINCT ROW_NUMBER() OVER(partition by C.Customer_Id Order by Transaction_DateTime DESC) AS RN_C, 

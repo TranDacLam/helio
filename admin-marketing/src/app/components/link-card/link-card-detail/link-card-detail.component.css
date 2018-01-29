@@ -1,0 +1,6 @@
+.card-link-success fieldset>legend{
+    font-size: 17px;
+}
+.card-link-success fieldset>legend span{
+    color: green;
+}
