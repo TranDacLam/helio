@@ -1,0 +1,12 @@
+<div class="row text-center">
+    <h3>LIÊN KẾT THẺ HELIO</h3>
+</div>
+<div class="row">
+    <strong *ngIf="status_card_link" class="error_card_link">Lỗi liên kết. Xin vui lòng kiểm tra lại.</strong>
+    <hr/>
+</div>
+<form-user-app [status_error]="status_error"></form-user-app>
+<form-user-embed [status_error]="status_error"></form-user-embed>
+<div class="row">
+    <button class="btn btn-success pull-right" (click)="onCardLink()">Liên Kết</button>
+</div>
