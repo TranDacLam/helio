@@ -84,9 +84,13 @@ class UserDetail(APIView):
                 user = User.objects.get(email=email)
                 serializer = admin_serializers.UserSerializer(user)
                 return Response(serializer.data)
-            return Response({"code": 500, "message": "Not found email", "fields": ""}, status=500)
-
+            return Response({"code": 400, "message": "Email is required", "fields": ""}, status=400)
+        
+        except User.DoesNotExist, e:
+            error = {"code": 400, "message": "Email Not Found.", "fields": "email"}
+            return Response(error, status=400)
         except Exception, e:
+            print e
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
 

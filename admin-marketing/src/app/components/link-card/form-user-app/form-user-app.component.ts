@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../../../shared/class/user';
 import { LinkCardService } from '../../../shared/services/link-card.service';
+import 'rxjs/add/observable/throw';
 
 @Component({
   selector: 'form-user-app',
@@ -18,7 +19,7 @@ export class FormUserAppComponent implements OnInit {
     user_app = new User();
 
     dis_input_app = {full_name: true, email: true, phone: true, birth_date: true, personal_id: true, address: true};
-    status_search = false;
+    errorMessage = "";
 
 
     constructor(private fb: FormBuilder, private linkCardService: LinkCardService) { }
@@ -39,9 +40,8 @@ export class FormUserAppComponent implements OnInit {
     }
 
     searchEmail(value){
-        this.linkCardService.getEmail(value).subscribe(data => {
-            console.log(data);
-            if(data){
+        this.linkCardService.getEmail(value).subscribe(
+            (data) => {
                 this.user_app = data;
                 this.appForm.setValue({
                     full_name: this.user_app.full_name,
@@ -51,18 +51,16 @@ export class FormUserAppComponent implements OnInit {
                     personal_id: this.user_app.personal_id,
                     address: this.user_app.address
                 });
-                this.status_search = false;
-            }else{
-                this.status_search = true;
-            }
-        });
+                this.errorMessage = '';
+            },
+            (error) => { this.errorMessage = error.message; } 
+        );
     }
 
     onSubmitApp(){
         let id = this.user_app.id;
         this.linkCardService.updateUserApp(this.appForm.value, id).subscribe(put_user => {
             console.log(put_user);
-            this.user_app = put_user;
         });
     }
 

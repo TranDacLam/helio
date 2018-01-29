@@ -33,7 +33,7 @@ import { PromotionDetailComponent } from './components/promotions/promotion-deta
     LinkCardDetailComponent,
     ListNotificationComponent,
     AddNotificationComponent,
-    EditNotificationComponent
+    EditNotificationComponent,
     UserMultiselectComponent,
     PromotionUsersComponent,
     PromotionsComponent,
