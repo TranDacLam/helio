@@ -20,9 +20,17 @@ class UserSerializer(serializers.ModelSerializer):
 		instance.save()
 		return instance
 
-class PromotionSerializer(serializers.ModelSerializer):
-    class Meta:
-		model = Promotion
-		fields=('id', 'name')
+	# create objects
+	# def create(self, validated_data):
+	# 	user = User.objects.create( **validated_data )
+	# 	return user
+
+	# custom method save value in serializer
+	# def save(self):
+	# 	email = self.validated_data['email']
+	# 	message = self.validated_data['full_name']
+	
+
+
 
 
