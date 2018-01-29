@@ -19,6 +19,7 @@ from django.db.models import Q
 
 """
     Get All Promotion
+    @author : diemnguyen
 """
 
 @permission_classes((AllowAny,))
@@ -37,6 +38,7 @@ class PromotionListView(APIView):
 
 """
     Get Promotion By Promotion ID
+    @author : diemnguyen
 """
 
 @permission_classes((AllowAny,))
@@ -58,6 +60,7 @@ class PromotionDetailView(APIView):
 
 """
     Get User List By Promotion
+    @author : diemnguyen
 """
 
 @permission_classes((AllowAny,))
@@ -204,6 +207,7 @@ class PromotionLabel(APIView):
 
 """
     Get Notification List
+    @author : diemnguyen
 """
 
 @permission_classes((AllowAny,))
@@ -220,6 +224,7 @@ class NotificationListView(APIView):
 
 """
     Get Notification Detail
+    @author : diemnguyen
 """
 
 @permission_classes((AllowAny,))
@@ -240,6 +245,7 @@ class NotificationDetailView(APIView):
 
 """
     Get User List By Notification
+    @author : diemnguyen
 """
 
 @permission_classes((AllowAny,))
@@ -264,3 +270,4 @@ class NotificationUserView(APIView):
             print 'NotificationUserView ',e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
+

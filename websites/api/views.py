@@ -642,7 +642,6 @@ def faqs(request):
 
 
 @api_view(['GET'])
-@permission_classes((AllowAny,))
 def card_information(request, card_id):
     print "API get card information"
     try:
