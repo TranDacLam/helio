@@ -22,7 +22,7 @@ export class PromotionService {
     getPromotionUsersDetail(id : string): Observable<User[]> {
         console.log(id);
 
-        return this.http.get(this.user_promotion, { params: { 'id': id }).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(this.user_promotion, {params: { 'id': id }}).map((res: Response) => res.json()).catch(this.handleError);
     }
 
 
