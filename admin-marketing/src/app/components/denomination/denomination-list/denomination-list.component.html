@@ -1,0 +1,38 @@
+<div class='row '>
+	<a class="pull-left" routerLink="/denomination-list">Mệnh giá nạp tiền</a>
+	<a class="pull-right" routerLink="/denomination-add">Thêm Mệnh giá nạp tiền</a>
+</div>
+<br>
+<div class="table card-list">
+	<div *ngIf="message" class="alert alert-success">
+		{{ message }}
+	</div>
+	<table id="table-denomination" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
+		<thead>
+	      	<tr>
+	      		<th><input type="checkbox" name="allCheckDeno" value="allCheckDeno"(change)="checkAllDeno($event)"/></th>
+	        	<th>Thêm Mệnh giá nạp tiền</th>
+	      	</tr>
+    	</thead>
+    	<tbody>
+   			<tr *ngFor ="let denomination of denominations">
+   				<td><input type="checkbox" [checked]="select_checkbox"
+   					value={{denomination.id}} name=""
+   					(change)="checkItemChange($event, denomination)"/></td>
+        		<td>{{ denomination.denomination }}</td>
+   			</tr>
+    	</tbody>
+	</table>
+	<hr>
+	<div class='row'>
+		<div class="col-md-3">
+			<select name="" class="form-control">
+				<option value="">Xóa các mệnh giá tiền được chọn</option>
+			</select>
+		</div>
+		<div class="col-md-3">
+			{{deno_selected.length}} của {{denominations.length}} được chọn
+			<button (click)="deleteDenominationCheckbox()" type="button" class="btn btn-danger">Thực hiện</button>
+		</div>
+	</div>
+</div>

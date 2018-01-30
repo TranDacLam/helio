@@ -33,4 +33,6 @@ urlpatterns = [
 
 	url(r'^promotion-type/$', views.PromotionTypeView.as_view(), name="promotion-type"),
 
+	url(r'^denomination/$', views.DenominationView.as_view(), name="denomination"),
+
 ]

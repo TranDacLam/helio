@@ -239,8 +239,41 @@ class PromotionTypeView(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields":""}
             return Response(error, status=500)
 """
-    Get Promotion
+    Get and Post Denomination
+    @author: Trangle
 """
+@permission_classes((AllowAny, ))
+class DenominationView(APIView):
+    def get(self, request, format=None):
+        """
+        Get all Denomination to list 
+        """
+        try:
+            deno_id = self.request.query_params.get('deno_id', None)
+            if deno_id:
+                deno_id_list = deno_id.split(',')
+                queryset = Denomination.objects.filter(pk__in =deno_id_list).delete()
+                # serializer = admin_serializers.DenominationSerializer(queryset, many=True)
+                # return Response(serializer.data)
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                list_denomination = Denomination.objects.all()
+                serializer = admin_serializers.DenominationSerializer(list_denomination, many=True)
+                return Response(serializer.data)
+        except Exception, e:
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+
+    def post(self, request, format=None):
+        """
+        Create a new Denomination
+        """
+        serializer = admin_serializers.DenominationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @permission_classes((AllowAny,))
 class NotificationList(APIView):

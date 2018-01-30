@@ -89,6 +89,9 @@ export class AdvertisementListComponent implements OnInit {
             this.isChecked = true;
         }else{
             this.isChecked = false;
+            this.advs.forEach((item, index) => {
+        		this.advs_delete.splice(index, this.advs.length);
+     		});
         }
 	}
 	changeCheckboxAdv(e, adv){
@@ -102,6 +105,7 @@ export class AdvertisementListComponent implements OnInit {
 
        this.advs_delete.splice(index, 1);
       }
+      console.log(this.advs_delete);
     }
     findIndexToUpdate(type) { 
         return type.id === this;

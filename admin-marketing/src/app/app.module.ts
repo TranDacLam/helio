@@ -27,12 +27,14 @@ import { AdvertisementListComponent } from './components/advertisement/advertise
 import { AdvertisementAddComponent } from './components/advertisement/advertisement-add/advertisement-add.component';
 import { AdvertisementDetailComponent } from './components/advertisement/advertisement-detail/advertisement-detail.component';
 import { PromotionTypeListComponent } from './components/promotion-type/promotion-type-list/promotion-type-list.component';
+import { DenominationListComponent } from './components/denomination/denomination-list/denomination-list.component';
+import { DenominationAddComponent } from './components/denomination/denomination-add/denomination-add.component';
 
 import { PromotionService } from './shared/services/promotion.service';
 import { PromotionLabelService } from './shared/services/promotion-label.service';
 import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
-
+import { DenominationService } from './shared/services/denomination.service';
 
 
 @NgModule({
@@ -56,6 +58,8 @@ import { PromotionTypeService } from './shared/services/promotion-type.service';
     AdvertisementAddComponent,
     AdvertisementDetailComponent,
     PromotionTypeListComponent,
+    DenominationListComponent,
+    DenominationAddComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,7 +75,8 @@ import { PromotionTypeService } from './shared/services/promotion-type.service';
     PromotionService,
     PromotionLabelService,
     AdvertisementService,
-    PromotionTypeService
+    PromotionTypeService,
+    DenominationService
   ],
   bootstrap: [AppComponent]
 })
