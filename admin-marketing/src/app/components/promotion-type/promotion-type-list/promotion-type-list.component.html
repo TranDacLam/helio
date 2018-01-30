@@ -1,0 +1,15 @@
+<a class="pull-left" routerLink="/promotion-label-list">Loại Khuyến Mãi</a>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Loại Khuyến Mãi</th>
+      </tr>
+    </thead>
+    <tbody>
+   		<tr *ngFor ="let proType of proTypes">
+   			<td>{{ proType.id }}</td>
+        <td>{{ proType.name }}</td>
+   		</tr>
+    </tbody>
+</table>

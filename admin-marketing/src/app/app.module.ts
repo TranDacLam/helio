@@ -24,12 +24,15 @@ import { PromotionDetailComponent } from './components/promotions/promotion-deta
 import { PromotionLabelListComponent } from './components/promotion-label/promotion-label-list/promotion-label-list.component';
 import { PromotionLabelAddComponent } from './components/promotion-label/promotion-label-add/promotion-label-add.component';
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
+import { AdvertisementAddComponent } from './components/advertisement/advertisement-add/advertisement-add.component';
+import { AdvertisementDetailComponent } from './components/advertisement/advertisement-detail/advertisement-detail.component';
+import { PromotionTypeListComponent } from './components/promotion-type/promotion-type-list/promotion-type-list.component';
 
 import { PromotionService } from './shared/services/promotion.service';
 import { PromotionLabelService } from './shared/services/promotion-label.service';
 import { AdvertisementService } from './shared/services/advertisement.service';
-import { AdvertisementAddComponent } from './components/advertisement/advertisement-add/advertisement-add.component';
-import { AdvertisementDetailComponent } from './components/advertisement/advertisement-detail/advertisement-detail.component';
+import { PromotionTypeService } from './shared/services/promotion-type.service';
+
 
 
 @NgModule({
@@ -52,6 +55,7 @@ import { AdvertisementDetailComponent } from './components/advertisement/adverti
     AdvertisementListComponent,
     AdvertisementAddComponent,
     AdvertisementDetailComponent,
+    PromotionTypeListComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +70,8 @@ import { AdvertisementDetailComponent } from './components/advertisement/adverti
   providers: [
     PromotionService,
     PromotionLabelService,
-    AdvertisementService
+    AdvertisementService,
+    PromotionTypeService
   ],
   bootstrap: [AppComponent]
 })

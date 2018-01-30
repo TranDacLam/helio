@@ -20,11 +20,24 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+
+	# create objects
+	# def create(self, validated_data):
+	# 	user = User.objects.create( **validated_data )
+	# 	return user
+
+	# custom method save value in serializer
+	# def save(self):
+	# 	email = self.validated_data['email']
+	# 	message = self.validated_data['full_name']
+	
+
+
 class PromotionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Promotion
-        fields=('id', 'name', 'image', 'image_thumbnail', 'apply_date', 'end_date', 'is_draft', 'created')
+        fields=('id', 'name', 'image', 'image_thumbnail', 'apply_date', 'end_date', 'is_draft', 'created', 'promotion_label', 'promotion_type')
 
 class AdvertisementSerializer(serializers.ModelSerializer):
     
@@ -38,9 +51,16 @@ class PromotionLabelSerializer(serializers.ModelSerializer):
         model = Promotion_Label
         fields= ('id', 'name')
 
+class PromotionTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Promotion_Type
+        fields = ('id', 'name')
+
 class NotificationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Notification
-        fields=('id', 'subject', 'image', 'sub_url', 'category', 'sent_date', 'sent_user', 'is_draft')
+        fields=('id', 'subject', 'image', 'sub_url', 'category', 'sent_date', 'sent_user', 'is_draft', 'location', 'is_QR_code')
+
 
