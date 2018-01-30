@@ -1,0 +1,39 @@
+<a class="pull-left" routerLink="/promotion-label-add">Thêm Quảng Cáo</a>
+<br>
+
+<form #addAdvForm="ngForm" class="add-type-promotion" accept-charset="utf-8" novalidate="">
+    <div *ngIf="messAdv" class="alert alert-success">
+        <strong>Thành công!</strong> {{ messAdv }}.
+    </div>
+	<div class="row">
+		<div class="col-md-7">
+			<label>Tên Quảng Cáo:</label>
+			<input class='form-control' name="name" 
+            ngModel
+            required 
+            placeholder="Nhập Tên Quảng Cáo" 
+            ([ngModel])="name"
+            #name = "ngModel"
+            />
+            <input type="checkbox" name="is_show" 
+            ngModel
+            [(ngModel)]="is_show"
+
+            />
+            <label>Hiển thị</label>
+            <div *ngIf="name.invalid && (name.dirty || name.touched)">
+                <em [ngStyle]="{'color': 'red'}" *ngIf="name.errors.required">
+                Trường không được bỏ trống.
+                </em>
+            </div>
+		</div>
+    </div>
+    <br>
+    <div class="row">
+    	<div class='col-md-7'>
+    		<button (click)="CreateAdv(addAdvForm.value)"
+            [disabled]="addAdvForm.invalid"
+            class="btn btn-info">Lưu lại</button>
+    	</div>
+    </div>
+</form>

@@ -1,0 +1,32 @@
+<div class='row '>
+	<a class="pull-left" routerLink="/advertisement-list">Quảng cáo</a>
+	<a class="pull-right" routerLink="/advertisement-add">Thêm Quảng cáo</a>
+</div>
+<br>
+<div class="table card-list">
+	<table id="table-denomination" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
+		<thead>
+	      	<tr>
+	      		<th><input type="checkbox" id="allAdvs" value="allAdvs" name="allAdvs" (change)="checkAllAdv($event)"></th>
+	        	<th>Quảng cáo</th>
+	      	</tr>
+    	</thead>
+    	<tbody>
+   			<tr *ngFor ="let adv of advs; let i=index " >
+   				<td><input type="checkbox" [checked]="isChecked" value="{{adv.id}}" name="" (click)="getItemAdvs(adv, i)"></td>
+        		<td><a routerLink="/advertisement-detail/{{adv.id}}" >{{ adv.name }}</a></td>
+   			</tr>
+    	</tbody>
+	</table>
+	<hr>
+	<div class='row'>
+		<div class="col-md-3">
+			<select name="" class="form-control">
+				<option value="">Xóa các mệnh giá tiền được chọn</option>
+			</select>
+		</div>
+		<div class="col-md-3">
+			<button (click)="deleteAllCheckAdvs()" type="button" class="btn btn-danger">Thực hiện</button>
+		</div>
+	</div>
+</div>

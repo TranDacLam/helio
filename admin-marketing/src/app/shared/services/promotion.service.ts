@@ -22,15 +22,13 @@ export class PromotionService {
     getPromotionUsersDetail(id : string): Observable<User[]> {
         console.log(id);
 
-        return this.http.get(this.user_promotion, { params: { 'id': id }).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(this.user_promotion, {params: { 'id': id }}).map((res: Response) => res.json()).catch(this.handleError);
     }
-
 
     getAllPromotion() {
         return this.http.get(this.promotion).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-   
     private handleError(error: Response) {
         alert("errrr");
         return Observable.throw(error.statusText);
