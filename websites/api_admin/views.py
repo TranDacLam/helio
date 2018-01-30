@@ -19,7 +19,6 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.db.models import Count
 from django.http import Http404
->>>>>>> develop
 
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
@@ -331,35 +330,35 @@ class SummaryAPI(APIView):
     def get(self, request, format=None):
 
         try:
-            # get value posiion fourth in url to filter data in DB
-            # url_field = status or rate
-            url_field = request.get_full_path().split('/')[4]
+            search_field = self.request.query_params.get('search_field', None)
 
-            start_date_req = self.request.query_params.get('start_date', None)
-            end_date_req = self.request.query_params.get('end_date', None)
+            if search_field == 'status' or search_field == 'rate':
+                start_date_req = self.request.query_params.get('start_date', None)
+                end_date_req = self.request.query_params.get('end_date', None)
 
-            kwargs = {}
-            #  data does not match format '%Y-%m-%d' return error
-            try:
-                if start_date_req:
-                    kwargs['created__gt'] = timezone.make_aware(datetime.strptime(
-                        start_date_req, "%Y-%m-%d"), timezone.get_current_timezone())
-                if end_date_req:
-                    kwargs['created__lt'] = timezone.make_aware(datetime.strptime(
-                        end_date_req, "%Y-%m-%d") + timedelta(days=1), timezone.get_current_timezone())
-            
-            except ValueError, e:
-                error = {"code": 400, "message": "%s" % e, "fields": ""}
-                return Response(error, status=400)
-            
-            if kwargs:
-                count_item = FeedBack.objects.filter(
-                    **kwargs).values(url_field).annotate(Count(url_field))
-            else:
-                count_item = FeedBack.objects.all().values(
-                    url_field).annotate(Count(url_field))
+                kwargs = {}
+                #  data does not match format '%Y-%m-%d' return error
+                try:
+                    if start_date_req:
+                        kwargs['created__gt'] = timezone.make_aware(datetime.strptime(
+                            start_date_req, "%Y-%m-%d"))
+                    if end_date_req:
+                        kwargs['created__lt'] = timezone.make_aware(datetime.strptime(
+                            end_date_req, "%Y-%m-%d") + timedelta(days=1))
+                except ValueError, e:
+                    error = {"code": 400, "message": "%s" % e, "fields": ""}
+                    return Response(error, status=400)
+                
+                if kwargs:
+                    count_item = FeedBack.objects.filter(
+                        **kwargs).values(search_field).annotate(Count(search_field))
+                else:
+                    count_item = FeedBack.objects.all().values(
+                        search_field).annotate(Count(search_field))
 
-            return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
+                return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
+
+            return Response({"code": 400, "message": "Not found search field", "fields": ""}, status=400)
 
         except Exception, e:
             print "SummaryAPI ", e
@@ -392,8 +391,7 @@ class UserEmbedDetail(APIView):
                     if item:
                         result = {}
                         result["barcode"] = barcode # barcode
-                        result["first_name"] = item[0] # Firstname
-                        result["surname"] = item[1] # Surname
+                        result["full_name"] = item[0] + item[1] # Firstname + Surname
                         result["birthday"] = item[2] # DOB
                         result["peronal_id"] = item[3] # PostCode
                         result["address"] = item[4] # Address1

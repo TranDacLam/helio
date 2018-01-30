@@ -16,8 +16,7 @@ urlpatterns = [
 	url(r'^user_embed/$', views.UserEmbedDetail.as_view(), name="user-embed"),
 	url(r'^user_embed/(?P<id>[0-9]+)/$', views.UserEmbedDetail.as_view(), name="user-embed-detail"),
 
-	url(r'^summary/status/$', views.SummaryAPI.as_view(), name="summary-status"),
-	url(r'^summary/rate/$', views.SummaryAPI.as_view(), name="summary-rate"),
+	url(r'^summary/$', views.SummaryAPI.as_view(), name="summary"),
 
 
 	url(r'^promotion_label/$', views.PromotionLabel.as_view(), name="promotion_label"),
