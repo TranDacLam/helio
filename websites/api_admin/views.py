@@ -141,9 +141,10 @@ class AdvertisementView(APIView):
             adv_id = self.request.query_params.get('adv_id', None)
             if adv_id:
                 adv_id_list = adv_id.split(',')
-                queryset = Advertisement.objects.filter(pk__in=adv_id_list)
-                serializer = admin_serializers.AdvertisementSerializer(queryset, many=True)
-                return Response(serializer.data)
+                queryset = Advertisement.objects.filter(pk__in=adv_id_list).delete()
+                # serializer = admin_serializers.AdvertisementSerializer(queryset, many=True)
+                # return Response(serializer.data).delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
             else:
                 adv_list = Advertisement.objects.all()
                 serializer = admin_serializers.AdvertisementSerializer(adv_list, many=True)
@@ -190,6 +191,11 @@ class AdvertisementDetail(APIView):
             serializer.save()
             return Response(request.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        advertisement = self.get_object(pk)
+        advertisement.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 """
 GET and POST Promotion_Label

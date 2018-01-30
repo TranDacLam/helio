@@ -48,7 +48,8 @@ export class AdvertisementService {
 		return this.http.put<Advertisement>(url,adv, httpOptions).catch(this.handleError);
 	}
 	deleteAllAdvsSelected(adv_id: Advertisement[]): Observable<Advertisement[]> {
-		return this.http.post<Advertisement[]>(this.urlAdv, adv_id, httpOptions)
+		const url = `${this.urlAdv}?adv_id=${adv_id}`;
+		return this.http.get<Advertisement[]>(url)
 		.catch(this.handleError)
 	}
 

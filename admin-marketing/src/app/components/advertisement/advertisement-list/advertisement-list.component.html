@@ -4,6 +4,9 @@
 </div>
 <br>
 <div class="table card-list">
+	<div *ngIf="message" class="alert alert-success">
+		{{ message }}
+	</div>
 	<table id="table-denomination" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>

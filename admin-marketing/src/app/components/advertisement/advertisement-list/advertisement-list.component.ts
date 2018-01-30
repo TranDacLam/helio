@@ -19,8 +19,9 @@ export class AdvertisementListComponent implements OnInit {
 
 	dtOptions: any = {};
 	advs : Advertisement[];
-	advs_delete: any;
-	isChecked = false;
+	advs_delete: any; // Contains all checkbox were selected
+	isChecked = false; // Default value chekbox
+	message: string = ""; // Display message
 
 	// Using trigger becase fetching the list of feedbacks can be quite long
     // thus we ensure the data is fetched before rensering
@@ -116,6 +117,7 @@ export class AdvertisementListComponent implements OnInit {
 	   					this.advs.splice(this.advs.indexOf(this.advs_delete[i]), 1);
 	   				}
 	   			}
+	   			this.message = "Xóa quảng cáo thành công";
 	   		});
 	}
 }
