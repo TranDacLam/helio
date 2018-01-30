@@ -141,11 +141,6 @@ class Category(models.Model):
 
 @python_2_unicode_compatible
 class Promotion(DateTimeModel):
-    TYPE = (
-        ('popular', _('Popular')),
-        ('users', _('Users')),
-        ('users_divece', _('Users Device'))
-    )
     name = models.CharField(max_length=255, unique=True)
     image = models.ImageField(
         _('Image'), max_length=1000, null=True, blank=True, upload_to="promotions")
@@ -158,8 +153,9 @@ class Promotion(DateTimeModel):
     promotion_label = models.ForeignKey(
         'Promotion_Label', related_name='promotion_label_rel', on_delete=models.CASCADE,
         null=True, blank=True)
-    promotion_type = models.CharField(
-        max_length=50, choices=TYPE, default="popular")
+
+    promotion_type = models.ForeignKey('Promotion_Type', related_name='promotion_type_rel', on_delete=models.CASCADE,
+                      null=True, blank=True)
     apply_date = models.DateField(_("Apply Date"), blank=True, null=True)
     end_date = models.DateField(_("End Date"), blank=True, null=True)
     QR_code = models.ImageField(upload_to='qrcode', blank=True, null=True)
@@ -378,3 +374,11 @@ class Denomination(DateTimeModel):
 
     def __str__(self):
         return '%s' % (self.fee)
+
+
+@python_2_unicode_compatible
+class Promotion_Type(DateTimeModel):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return '%s' % (self.name)
