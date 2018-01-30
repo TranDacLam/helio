@@ -17,13 +17,15 @@ from django.db import connections
 from django.db.models import Q
 from django.http import Http404
 
+from rest_framework.decorators import parser_classes
+from rest_framework.parsers import MultiPartParser
 """
     Get All Promotion
     @author : diemnguyen
 """
 
 @permission_classes((AllowAny,))
-class PromotionListView(APIView):
+class PromotionList(APIView):
     def get(self, request, format=None):
         try:
             # Get all promotion
@@ -42,7 +44,7 @@ class PromotionListView(APIView):
 """
 
 @permission_classes((AllowAny,))
-class PromotionDetailView(APIView):
+class PromotionDetail(APIView):
     def get_object(self, pk):
         try:
             return Promotion.objects.get(pk=pk)
@@ -65,7 +67,7 @@ class PromotionDetailView(APIView):
 """
 
 @permission_classes((AllowAny,))
-class PromotionUserView(APIView):
+class PromotionUser(APIView):
     def get(self, request, id):
         try:
             promotion_detail = Promotion.objects.get(pk=id)
@@ -125,7 +127,7 @@ class UserDetail(APIView):
 GET and POST Advertisement
 """     
 @permission_classes((AllowAny, ))
-class AdvertisementView(APIView):
+class Advertisement(APIView):
 
     def get(self, request, format=None):
         """
@@ -212,7 +214,7 @@ class PromotionLabel(APIView):
 """
 
 @permission_classes((AllowAny,))
-class NotificationListView(APIView):
+class NotificationList(APIView):
     def get(self, request, format=None):
         try:
             lst_item = Notification.objects.all()
@@ -229,7 +231,8 @@ class NotificationListView(APIView):
 """
 
 @permission_classes((AllowAny,))
-class NotificationDetailView(APIView):
+@parser_classes((MultiPartParser,))
+class NotificationDetail(APIView):
     def get_object(self, pk):
         try:
             return Notification.objects.get(pk=pk)
@@ -243,6 +246,18 @@ class NotificationDetailView(APIView):
             return Response(serializer.data)
         except Exception, e:
             print 'NotificationDetailView GET', e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def post(self, request, format=None):
+        try:
+            serializer = admin_serializers.NotificationSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception, e:
+            print 'NotificationDetailView PUT',e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
 
@@ -270,7 +285,7 @@ class NotificationDetailView(APIView):
 """
 
 @permission_classes((AllowAny,))
-class NotificationUserView(APIView):
+class NotificationUser(APIView):
     def get(self, request, id):
         try:
             notification_detail = Notification.objects.get(pk=id)

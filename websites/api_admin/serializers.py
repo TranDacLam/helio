@@ -39,19 +39,12 @@ class PromotionLabelSerializer(serializers.ModelSerializer):
         fields= ('id', 'name')
 
 class NotificationSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(
+        max_length=None, use_url=True,
+    )
 
     class Meta:
         model = Notification
         fields=('id', 'subject', 'image', 'sub_url', 'category', 'sent_date', 'sent_user', 'is_draft', 'location')
 
-    def update(self, instance, validated_data):
-        instance.subject = validated_data.get('subject', instance.subject)
-        instance.sub_url = validated_data.get('sub_url', instance.sub_url)
-        instance.category = validated_data.get('category', instance.category)
-        instance.sent_date = validated_data.get('sent_date', instance.sent_date)
-        instance.sent_user = validated_data.get('sent_user', instance.sent_user)
-        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
-        instance.location = validated_data.get('location', instance.location)
-        instance.save()
-        return instance
 
