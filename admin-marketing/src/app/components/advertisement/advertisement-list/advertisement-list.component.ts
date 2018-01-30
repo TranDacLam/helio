@@ -16,20 +16,22 @@ declare var $ :any;
   styleUrls: ['./advertisement-list.component.css']
 })
 export class AdvertisementListComponent implements OnInit {
-	@Output()
-    save: EventEmitter<number[]> = new EventEmitter<number[]>();
+
 	dtOptions: any = {};
 	advs : Advertisement[];
+	advs_delete: any;
 	isChecked = false;
-	selectedAdvs = [];
-	noDuplicate: boolean;
+
 	// Using trigger becase fetching the list of feedbacks can be quite long
     // thus we ensure the data is fetched before rensering
 	dtTrigger: Subject<any> = new Subject();
 
   	constructor(
   		private advertisementService: AdvertisementService
-  		) { }
+  		) {
+  			this.advs = [];
+  			this.advs_delete = [];
+  		 }
 
  	ngOnInit() {
  	 	this.dtOptions = {
@@ -67,7 +69,6 @@ export class AdvertisementListComponent implements OnInit {
 	  	};
 	  	this.getAllAdvertisement();
   	}
-
   	// Get All Advertisement
   	getAllAdvertisement() {
   		this.advertisementService.getAllAdvertisement().subscribe(
@@ -78,46 +79,43 @@ export class AdvertisementListComponent implements OnInit {
   	}
   	// Check all checkbox
   	checkAllAdv(event) {
-	    this.isChecked = !this.isChecked;
+        let listAdv_del = []; 
+        if(event.target.checked){
+            this.advs.forEach(function(element) {
+                listAdv_del.push(element.id);
+            });
+            this.advs_delete = listAdv_del;
+            this.isChecked = true;
+        }else{
+            this.isChecked = false;
+        }
 	}
+	changeCheckboxAdv(e, adv){
+      if(e.target.checked){
+        this.advs_delete.push(adv.id);
+      }
+      else{
+       let updateAdvItem = this.advs_delete.find(this.findIndexToUpdate, adv.id);
+
+       let index = this.advs_delete.indexOf(updateAdvItem);
+
+       this.advs_delete.splice(index, 1);
+      }
+    }
+    findIndexToUpdate(type) { 
+        return type.id === this;
+    }
 
 	// Delete all checkbox selected
 	deleteAllCheckAdvs() {
-	    if (this.isChecked) {
-	      	this.advs.forEach((item, index) => {
-	      		console.log(this.advs[index].id);
-	        	// this.advs.splice(index, this.advs.length);
-	      });
-	    }else {
-	      this.deleteItemAdvs();
-	    }
-  	}
-  	// Delete Each Checkbox chosen
-  	deleteItemAdvs() {
-	    this.advs.forEach((item, index) => {
-	        this.selectedAdvs.forEach((subitem, subindex)=>{
-	          if (item.id == subitem.id) {
-	           this.advs.splice(index, this.selectedAdvs.length);
-	          }
-	        })
-	      })
-  	}
-	getItemAdvs(item, i) {
-	    if (this.selectedAdvs.length == 0) {
-	      		this.selectedAdvs.push({id: item.id,isSlected: true});
-	    }else {
-	      this.selectedAdvs.forEach((newitem, index)=> {
-	        if(this.selectedAdvs[index].id == item.id) {
-	          	this.selectedAdvs.splice(index, 1);
-	          	this.noDuplicate = true;
-	        }else {
-	          	this.noDuplicate = false;
-	        }
-	      });
-	      if (!this.noDuplicate) {
-	        	this.selectedAdvs.push({id: item.id,isSlected: true});
-	      }
-	    }
-	    // console.log(this.selectedAdvs);
-	  }
+		this.advertisementService.deleteAllAdvsSelected(this.advs_delete).subscribe(
+			result => {
+	   			for(let i=0; i < this.advs_delete.length; i++){
+	   				if(this.advs.find(x => x=this.advs_delete[i]))
+	   				{
+	   					this.advs.splice(this.advs.indexOf(this.advs_delete[i]), 1);
+	   				}
+	   			}
+	   		});
+	}
 }
