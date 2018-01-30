@@ -243,7 +243,7 @@ class NotificationList(APIView):
 """
 
 @permission_classes((AllowAny,))
-@parser_classes((MultiPartParser,))
+@parser_classes((MultiPartParser,JSONParser))
 class NotificationDetail(APIView):
     def get_object(self, pk):
         try:
@@ -274,6 +274,7 @@ class NotificationDetail(APIView):
             return Response(error, status=500)
 
     def put(self, request, id, format=None):
+        print request.data;
         item = self.get_object(id)
         try:
             serializer = admin_serializers.NotificationSerializer(item, data=request.data)

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Notification } from '../../../shared/class/notification';
 import { NotificationService } from '../../../shared/services/notification.service';
 import 'rxjs/add/observable/throw';
+
 
 
 @Component({
@@ -12,16 +14,32 @@ import 'rxjs/add/observable/throw';
 })
 export class ListNotificationComponent implements OnInit {
 
-    notifications: Notification[];
-    notifications_del = [];
-    select_checked = false;
+    /*
+        Author: Lam
+    */
 
-    constructor(private notificationService: NotificationService) { }
+    notifications: Notification[];
+    notifications_del = []; // Get array id to delete all id notification
+    select_checked = false; // Check/uncheck all notification 
+    message_result = ''; // Message error
+
+    constructor(private notificationService: NotificationService, private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.getNotifications();
+        this.route.params.subscribe(params => {
+            if(params.message_put){
+                this.message_result = "Chình sửa "+ params.message_put + " thành công.";
+            }else if(params.message_post){
+                this.message_result = "Tạo mới "+ params.message_post + " thành công.";
+            }
+        });
     }
 
+    /*
+        Function getNotifications(): Callback service function getNotifications() get all Notification
+        Author: Lam
+    */
     getNotifications(){
         this.notificationService.getNotifications().subscribe(
             (data) => {
@@ -30,6 +48,10 @@ export class ListNotificationComponent implements OnInit {
         );
     }
 
+    /*
+        Function onSelectCKB(): checked/uncheck add/delete id to array notifications_del
+        Author: Lam
+    */
     onSelectCKB(event, noti){
         if(event.target.checked){
             this.notifications_del.push(noti.id);
@@ -38,6 +60,10 @@ export class ListNotificationComponent implements OnInit {
         }
     }
 
+    /*
+        Function onSelectAll(): checked/uncheck add/delete all id notification to array notifications_del
+        Author: Lam
+    */
     onSelectAll(event){
         this.notifications_del = [];
         let array_del = [];
@@ -52,8 +78,12 @@ export class ListNotificationComponent implements OnInit {
         }
     }
 
+    /*
+        Function onDelelteNoti(): Callback service function onDelNotiSelect() delete notification by array id
+        Author: Lam
+    */
     onDelelteNoti(){
-        this.notificationService.onDelelteNoti(this.notifications_del).subscribe();
+        this.notificationService.onDelNotiSelect(this.notifications_del).subscribe();
     }
 
 }

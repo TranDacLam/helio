@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { Notification } from '../../../shared/class/notification';
 
 @Component({
-    selector: 'app-add-notification',
+    selector: 'add-notification',
     templateUrl: './add-notification.component.html',
     styleUrls: ['./add-notification.component.css']
 })
 export class AddNotificationComponent implements OnInit {
+
+    noti: Notification = new Notification(); // create object notification
+    type_http = "post"; // type http to form notification component 
 
     constructor() { }
 

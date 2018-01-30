@@ -8,6 +8,9 @@
     <div class="col-xs-6 col-sm-6">
         <a class="btn btn-primary pull-right" routerLink="/notification/add">TẠO THÔNG BÁO MỚI</a>
     </div>
+    <div class="col-xs-12 col-sm-12 mt-15 messsage" *ngIf="message_result">
+        <h4>{{message_result}}</h4>
+    </div>
 </div>
 <div class="row">
     <table datatable class="row-border hover" *ngIf="notifications">
@@ -26,7 +29,7 @@
             <tr *ngFor="let noti of notifications">
                 <td><input type="checkbox" (change)="onSelectCKB($event, noti)" [checked]="select_checked"/></td>
                 <td>{{ noti.id }}</td>
-                <td><a routerLink="/notification/detail/{{ noti.id }}">{{ noti.subject }}</a></td>
+                <td><a routerLink="/notification/edit/{{ noti.id }}">{{ noti.subject }}</a></td>
                 <td *ngIf="noti.is_draft">Đã gửi</td>
                 <td *ngIf="!noti.is_draft">Chưa gửi</td>
                 <td>{{ noti.sent_date }}</td>

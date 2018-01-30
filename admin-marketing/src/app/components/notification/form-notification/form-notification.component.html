@@ -5,6 +5,7 @@
         </div>
         <div class="col-sm-6">
             <input type="text" class="form-control" formControlName="subject"/>
+            <show-error-valid [control]="formNotification.get('subject')"></show-error-valid>
         </div>
     </div>
 
@@ -14,6 +15,7 @@
         </div>
         <div class="col-sm-6">
             <textarea rows="5" class="form-control" formControlName="message"></textarea>
+            <show-error-valid [control]="formNotification.get('message')"></show-error-valid>
         </div>
     </div>
 
@@ -46,6 +48,7 @@
                 <option value="1" checked>100%</option>
                 <option value="2">200%</option>
             </select>
+            <show-error-valid [control]="formNotification.get('category')"></show-error-valid>
         </div>
     </div>
 
@@ -71,7 +74,10 @@
     </div>
 
     <hr/>
-    <button class="btn btn-primary" (click)="onSubmit()" [disabled]="formNotification.invalid">
+    <button class="btn btn-primary" (click)="onDelete()" *ngIf="type_http == 'put'">
+        XÓA
+    </button>
+    <button class="btn btn-primary pull-right" (click)="onSubmit()" [disabled]="formNotification.invalid">
         LƯU LẠI
     </button>
 </form>

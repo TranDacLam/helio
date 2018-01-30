@@ -33,6 +33,7 @@ import { AdvertisementDetailComponent } from './components/advertisement/adverti
 import { NotificationDetailComponent } from './components/notification/notification-detail/notification-detail.component';
 import { FormNotificationComponent } from './components/notification/form-notification/form-notification.component';
 import { PopupEditNotificationComponent } from './components/notification/popup-edit-notification/popup-edit-notification.component';
+import { ShowErrorValidComponent } from './components/show-error-valid/show-error-valid.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { PopupEditNotificationComponent } from './components/notification/popup-
     NotificationDetailComponent,
     FormNotificationComponent,
     PopupEditNotificationComponent,
+    ShowErrorValidComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 export class Notification {
     id: number;
     subject: string;
+    message: string;
     image: string|any;
     sub_url: string;
     category: string;
