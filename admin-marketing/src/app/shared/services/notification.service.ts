@@ -17,22 +17,35 @@ export class NotificationService {
 
     constructor(private http: Http) { }
 
-    // get all notification
+    /* 
+        function getNotifications(): Get all notification
+        author: Lam
+    */
     getNotifications(): Observable<any> {
         return this.http.get(this.url_notification).map((res: Response) => res.json()).catch(this.handleError);
     }
 
+    /* 
+        function getNotification(): Get notification by id
+        author: Lam
+    */
     getNotification(id): Observable<Notification> {
         let url_noti_detail = `${this.url_notification}${id}`
         return this.http.get(this.url_notification).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    // Delete all notifiaction selected
+    /* 
+        function onDelelteNoti(): Delete all notifiaction selected
+        author: Lam
+    */
     onDelelteNoti(notifications_del): Observable<any>{
         
     }
 
-    // Get user notification
+    /* 
+        function onDelelteNoti(): Get user notification by id
+        author: Lam
+    */
     getUserNotification(id):Observable<any> {
         let url_user_noti_detail = `${this.url_user_notification}?id=${id}`
         return this.http.get(url_user_noti_detail).map((res: Response) => res.json()).catch(this.handleError);

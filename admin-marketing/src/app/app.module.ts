@@ -23,6 +23,8 @@ import { PromotionsComponent } from './components/promotions/promotions/promotio
 import { PromotionService } from './shared/services/promotion.service';
 import { PromotionDetailComponent } from './components/promotions/promotion-detail/promotion-detail.component';
 import { NotificationDetailComponent } from './components/notification/notification-detail/notification-detail.component';
+import { FormNotificationComponent } from './components/notification/form-notification/form-notification.component';
+import { PopupEditNotificationComponent } from './components/notification/popup-edit-notification/popup-edit-notification.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { NotificationDetailComponent } from './components/notification/notificat
     PromotionUsersComponent,
     PromotionsComponent,
     PromotionDetailComponent,
-    NotificationDetailComponent
+    NotificationDetailComponent,
+    FormNotificationComponent,
+    PopupEditNotificationComponent
   ],
   imports: [
     BrowserModule,

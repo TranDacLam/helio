@@ -15,8 +15,8 @@ import 'rxjs/add/observable/throw';
 export class NotificationDetailComponent implements OnInit {
 
     notification: User;
-    user_all: User[];
-    user_promotion: User[];
+    user_list_left: User[];
+    user_list_right: User[];
 
     constructor(
         private notificationService: NotificationService, 
@@ -42,8 +42,8 @@ export class NotificationDetailComponent implements OnInit {
         this.notificationService.getUserNotification(id).subscribe(
             (data) => {
                 console.log(data);
-                this.user_all = data.user_all;
-                this.user_promotion = data.user_promotion;
+                this.user_list_left = data.user_all;
+                this.user_list_right = data.user_promotion;
             }
         );
 

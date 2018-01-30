@@ -18,26 +18,38 @@ export class LinkCardService {
 
     constructor(private http: Http) { }
 
-    // get email search
+    /* 
+        function getEmail(): Get user by email
+        author: Lam
+    */
     getEmail(email){
         const url_get_email = `${this.url_app}?email=${email}`;
         return this.http.get(url_get_email).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    // update user
+    /* 
+        function updateUserApp(): Update user
+        author: Lam
+    */
     updateUserApp(user_app: User, id: number): Observable<User>{
         const urlUser = `${this.url_app}${id}/`;
         return this.http.put(urlUser, JSON.stringify(user_app), httpOptions)
             .map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    // get barcode search
+    /* 
+        function getBarcode(): Get customer by barcode
+        author: Lam
+    */
     getBarcode(barcode): Observable<Customer>{
         const url_get_barcode = `${this.url_embed}/?barcode=${barcode}`;
         return this.http.get(url_get_barcode).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    // Update customer
+    /* 
+        function updateUserEmbed(): Update customer
+        author: Lam
+    */
     updateUserEmbed(user_embed: User): Observable<Customer>{     
         const id = user_embed.barcode;
         const urlUser = `${this.url_embed}${id}/`;
@@ -45,13 +57,19 @@ export class LinkCardService {
             .map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    // Get user
+    /* 
+        function getUserApp(): Get user by id
+        author: Lam
+    */
     getUserApp(id: number): Observable<User>{
         const url_app_id = `${this.url_app}${id}`;
         return this.http.get(url_app_id).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    // Get customer
+    /* 
+        function getUserEmbed(): Get customer by id
+        author: Lam
+    */
     getUserEmbed(id: number): Observable<Customer>{
         const url_embed_id = `${this.url_embed}${id}`;
         return this.http.get(url_embed_id).map((res: Response) => res.json()).catch(this.handleError);
