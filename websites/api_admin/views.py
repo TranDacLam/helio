@@ -15,7 +15,7 @@ from rest_framework.permissions import AllowAny, IsAdminUser
 from api_admin import serializers as admin_serializers
 from django.db import connections
 from django.db.models import Q
-
+from django.http import Http404
 
 """
     Get All Promotion
@@ -43,15 +43,16 @@ class PromotionListView(APIView):
 
 @permission_classes((AllowAny,))
 class PromotionDetailView(APIView):
-    def get(self, request, id):
+    def get_object(self, pk):
         try:
-            item = Promotion.objects.get(pk=id)
+            return Promotion.objects.get(pk=pk)
+        except Promotion.DoesNotExist, e:
+            raise Http404
+    def get(self, request, id, format=None):
+        item = get_object(id)
+        try:
             serializer = admin_serializers.PromotionSerializer(item, many=False)
             return Response(serializer.data)
-            
-        except Promotion.DoesNotExist, e:
-            error = {"code": 400, "message": "Id Not Found.", "fields": ""}
-            return Response(error, status=400)
         except Exception, e:
             print 'PromotionDetailView ',e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
@@ -229,18 +230,38 @@ class NotificationListView(APIView):
 
 @permission_classes((AllowAny,))
 class NotificationDetailView(APIView):
-    def get(self, request, id):
+    def get_object(self, pk):
         try:
-            item = Notification.objects.get(pk=id)
+            return Notification.objects.get(pk=pk)
+        except Notification.DoesNotExist, e:
+            raise Http404
+
+    def get(self, request, id, format=None):
+        item = self.get_object(id)
+        try:
             serializer = admin_serializers.NotificationSerializer(item, many=False)
             return Response(serializer.data)
-        except Notification.DoesNotExist, e:
-            error = {"code": 400, "message": "Id Not Found.", "fields": "email"}
-            return Response(error, status=400)
         except Exception, e:
-            print 'NotificationDetailView ',e
+            print 'NotificationDetailView GET', e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
+
+    def put(self, request, id, format=None):
+        item = self.get_object(id)
+        try:
+            serializer = admin_serializers.NotificationSerializer(snippet, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception, e:
+            print 'NotificationDetailView PUT',e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id, format=None):
+        item = self.get_object(id).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 """
