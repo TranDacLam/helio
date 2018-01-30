@@ -78,6 +78,11 @@ class PromotionUserView(APIView):
             return Response(error, status=500)
 
 
+"""
+    Get user
+    @author :Hoangnguyen
+
+"""
 @permission_classes((AllowAny,))
 class UserDetail(APIView):   
 
@@ -94,8 +99,8 @@ class UserDetail(APIView):
             error = {"code": 400, "message": "Email Not Found.", "fields": "email"}
             return Response(error, status=400)
         except Exception, e:
-            print e
-            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            print "UserDetail", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, id):
@@ -107,8 +112,11 @@ class UserDetail(APIView):
                 return Response({"code": 200, "status": "success", "fields": ""}, status=200)
             return Response({"code": 500, "message": serializer.errors, "fields": ""}, status=500)
         except Exception, e:
-            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            print "UserDetail", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
+
+
 
 
 """
@@ -166,6 +174,8 @@ class NotificationUserView(APIView):
 
 """
     Get Summary feedbacks
+    @author :Hoangnguyen
+
 """
 @permission_classes((AllowAny,))
 class SummaryAPI(APIView):
@@ -173,28 +183,86 @@ class SummaryAPI(APIView):
     def get(self, request, format=None):
 
         try:
-            # get value url to filter data in DB
+            # get value posiion fourth in url to filter data in DB
+            # url_field = status or rate
             url_field = request.get_full_path().split('/')[4]
 
             start_date_req = self.request.query_params.get('start_date', None)
             end_date_req = self.request.query_params.get('end_date', None)
 
             kwargs = {}
-            if start_date_req:
-                kwargs['created__gt'] = timezone.make_aware(datetime.strptime(
-                    start_date_req, "%Y-%m-%d"), timezone.get_current_timezone())
-            if end_date_req:
-                kwargs['created__lt'] = timezone.make_aware(datetime.strptime(
-                    end_date_req, "%Y-%m-%d") + timedelta(days=1), timezone.get_current_timezone())
+            #  data does not match format '%Y-%m-%d' return error
+            try:
+                if start_date_req:
+                    kwargs['created__gt'] = timezone.make_aware(datetime.strptime(
+                        start_date_req, "%Y-%m-%d"), timezone.get_current_timezone())
+                if end_date_req:
+                    kwargs['created__lt'] = timezone.make_aware(datetime.strptime(
+                        end_date_req, "%Y-%m-%d") + timedelta(days=1), timezone.get_current_timezone())
+            
+            except ValueError, e:
+                error = {"code": 400, "message": "%s" % e, "fields": ""}
+                return Response(error, status=400)
+            
             if kwargs:
                 count_item = FeedBack.objects.filter(
-                    **kwargs).values(url_field).order_by().annotate(Count(url_field))
+                    **kwargs).values(url_field).annotate(Count(url_field))
             else:
                 count_item = FeedBack.objects.all().values(
-                    url_field).order_by().annotate(Count(url_field))
+                    url_field).annotate(Count(url_field))
 
             return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
 
         except Exception, e:
-            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            print "SummaryAPI ", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
+
+"""
+    Get user embed 
+    @author :Hoangnguyen
+    - check barcode is None
+    - check barcode is numberric
+    - getdata from DB
+    - check item is none
+
+"""
+@permission_classes((AllowAny,))
+class UserEmbedDetail(APIView): 
+    def get(self, request, format=None):
+            try:
+
+                barcode_req = self.request.query_params.get('barcode', None)
+
+                if barcode_req:
+                    barcode = int(barcode_req)
+                    cursor = connections['sql_db'].cursor()
+                    query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id  FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id WHERE C.Card_Barcode = {0}"""
+                    cursor.execute(query_str.format(barcode))
+                    item = cursor.fetchone()
+
+                    if item:
+                        result = {}
+                        result["barcode"] = barcode # barcode
+                        result["first_name"] = item[0] # Firstname
+                        result["surname"] = item[1] # Surname
+                        result["birthday"] = item[2] # DOB
+                        result["peronal_id"] = item[3] # PostCode
+                        result["address"] = item[4] # Address1
+                        result["email"] = item[5] # EMail
+                        result["phone"] = item[6] # Phone
+                        return Response(result)
+                    return Response({"code": 400, "message": 'Barcode not found', "fields": ""}, status=400)
+                
+                return Response({"code": 400, "message": 'Bacode is required', "fields": ""}, status=400)
+            
+            # except if barcode is not number
+            except ValueError, e:
+                error = {"code": 400, "message": "Barcode is numberic", "fields": ""}
+                return Response(error, status=400)
+            except Exception, e:
+                print "UserEmbedDetail ", e
+                error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+                return Response(error, status=500)
+
+
