@@ -249,7 +249,7 @@ class NotificationDetailView(APIView):
     def put(self, request, id, format=None):
         item = self.get_object(id)
         try:
-            serializer = admin_serializers.NotificationSerializer(snippet, data=request.data)
+            serializer = admin_serializers.NotificationSerializer(item, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
@@ -285,7 +285,7 @@ class NotificationUserView(APIView):
             return Response(result)
             
         except Notification.DoesNotExist, e:
-            error = {"code": 400, "message": "Id Not Found.", "fields": "email"}
+            error = {"code": 400, "message": "Id Not Found.", "fields": ""}
             return Response(error, status=400)
         except Exception, e:
             print 'NotificationUserView ',e
