@@ -29,12 +29,16 @@ import { AdvertisementDetailComponent } from './components/advertisement/adverti
 import { PromotionTypeListComponent } from './components/promotion-type/promotion-type-list/promotion-type-list.component';
 import { DenominationListComponent } from './components/denomination/denomination-list/denomination-list.component';
 import { DenominationAddComponent } from './components/denomination/denomination-add/denomination-add.component';
+import { FeedbackListComponent } from './components/feedback/feedback-list/feedback-list.component';
+import { FeedbackDetailComponent } from './components/feedback/feedback-detail/feedback-detail.component';
 
 import { PromotionService } from './shared/services/promotion.service';
 import { PromotionLabelService } from './shared/services/promotion-label.service';
 import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
 import { DenominationService } from './shared/services/denomination.service';
+import { FeedbackService } from './shared/services/feedback.service';
+
 
 
 @NgModule({
@@ -60,6 +64,8 @@ import { DenominationService } from './shared/services/denomination.service';
     PromotionTypeListComponent,
     DenominationListComponent,
     DenominationAddComponent,
+    FeedbackListComponent,
+    FeedbackDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +82,8 @@ import { DenominationService } from './shared/services/denomination.service';
     PromotionLabelService,
     AdvertisementService,
     PromotionTypeService,
-    DenominationService
+    DenominationService,
+    FeedbackService
   ],
   bootstrap: [AppComponent]
 })

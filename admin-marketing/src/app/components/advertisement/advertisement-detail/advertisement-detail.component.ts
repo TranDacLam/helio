@@ -28,9 +28,6 @@ export class AdvertisementDetailComponent implements OnInit {
 			result => {
         	this.adv = result;
       },
-      // (error) => {
-      //   console.log(error);
-      // }
       );
 	}
 	goBack() {

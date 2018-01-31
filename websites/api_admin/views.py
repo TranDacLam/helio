@@ -24,6 +24,7 @@ from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
 """
     Get Promotion
+    @author: diemnguyen
 """
 
 @permission_classes((AllowAny,))
@@ -40,7 +41,8 @@ class PromotionList(APIView):
 
 
 """
-    Get Promotion
+    Get Promotion By Promotion ID
+    @author: diemnguyen
 """
 
 @permission_classes((AllowAny,))
@@ -62,7 +64,8 @@ class PromotionDetail(APIView):
 
 
 """
-    Get Promotion
+    Get User List By Promotion
+    @author: diemnguyen
 """
 
 @permission_classes((AllowAny,))
@@ -189,7 +192,7 @@ class AdvertisementDetail(APIView):
         serializer = admin_serializers.AdvertisementSerializer(advertisement, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(request.data)
+            return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
@@ -274,7 +277,81 @@ class DenominationView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+"""
+GET FeedBack
+@author: TrangLe
+"""
+@permission_classes((AllowAny, ))
+class FeedbackView(APIView):
+    def get(self, request, format=None):
+        """
+        Get all Feedback
+        Check id Feedback
+        """
+        try:
+            fed_id = self.request.query_params.get('fed_id', None)
+            status = self.request.query_params.get('status', None)
+            if fed_id:
+                fed_id_list = fed_id.split(',')
+                queryset = FeedBack.objects.filter(pk__in= fed_id_list).delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            if status:
+                status_list = FeedBack.objects.filter(status=status)
+                print status_list
+                serializer = admin_serializers.FeedBackSerializer(status_list, many=True)
+                return Response(serializer.data)
+            else:
+                list_feedback = FeedBack.objects.all()
+                serializer = admin_serializers.FeedBackSerializer(list_feedback, many=True)
+                return Response(serializer.data)
 
+        except FeedBack.DoesNotExist, e:
+            error = {"code": 400, "message": "Field Not Found.", "fields": ""}
+            return Response(error, status=400)
+        except Exception, e:
+            print e
+            error = {"code":500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+
+"""
+GET, PUT, DELETE Feedback by id
+@author: Trangle
+"""
+@permission_classes((AllowAny, ))
+class FeedbackDetailView(APIView):
+    def get_object(self, pk):
+        try:
+            queryset = FeedBack.objects.get(pk=pk)
+            return queryset
+        except Exception, e:
+            return Response(status=500)
+
+    def get(self, request, pk, format=None):
+        feedback = self.get_object(pk)
+        serializer = admin_serializers.FeedBackSerializer(feedback)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        feedback = self.get_object(pk)
+        serializer = admin_serializers.FeedBackSerializer(feedback, data=request.data)
+        try:
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception, e:
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, pk, format=None):
+        feedback = self.get_object(pk)
+        feedback.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+"""
+Get Notification List
+@author: diemnguyen
+"""
 @permission_classes((AllowAny,))
 class NotificationList(APIView):
     def get(self, request, format=None):
@@ -287,7 +364,9 @@ class NotificationList(APIView):
             return Response(error, status=500)
 
 """
-    Get Promotion
+    Get Notification Detail
+    @author : diemnguyen
+
 """
 
 @permission_classes((AllowAny,))
@@ -339,7 +418,9 @@ class NotificationDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 """
-    Get Promotion
+    Get User List By Notification
+    @author : diemnguyen
+
 """
 
 @permission_classes((AllowAny,))
