@@ -31,6 +31,10 @@ import { DenominationListComponent } from './components/denomination/denominatio
 import { DenominationAddComponent } from './components/denomination/denomination-add/denomination-add.component';
 import { FeedbackListComponent } from './components/feedback/feedback-list/feedback-list.component';
 import { FeedbackDetailComponent } from './components/feedback/feedback-detail/feedback-detail.component';
+import { NotificationDetailComponent } from './components/notification/notification-detail/notification-detail.component';
+import { FormNotificationComponent } from './components/notification/form-notification/form-notification.component';
+import { PopupEditNotificationComponent } from './components/notification/popup-edit-notification/popup-edit-notification.component';
+import { ShowErrorValidComponent } from './components/show-error-valid/show-error-valid.component';
 
 import { PromotionService } from './shared/services/promotion.service';
 import { PromotionLabelService } from './shared/services/promotion-label.service';
@@ -38,6 +42,7 @@ import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
 import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
+
 
 
 
@@ -66,6 +71,10 @@ import { FeedbackService } from './shared/services/feedback.service';
     DenominationAddComponent,
     FeedbackListComponent,
     FeedbackDetailComponent,
+    NotificationDetailComponent,
+    FormNotificationComponent,
+    PopupEditNotificationComponent,
+    ShowErrorValidComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,32 @@
+<div class="row text-center">
+    <h1>CHI TIẾT THÔNG BÁO</h1>
+</div>
+<div class="row mb-30" *ngIf="noti_detail">
+    <p><a class="btn btn-primary" routerLink="/notifications">TRỞ VỀ TRANG QUẢN LÝ THÔNG BÁO</a></p>
+    <p>ID: {{noti_detail.id}}</p>
+    <p>Tên thông báo: {{noti_detail.subject}}</p>
+    <p *ngIf="noti_detail.is_draft">Trạng thái: Đã gửi</p>
+    <p *ngIf="!noti_detail.is_draft">Trạng thái: Chưa gửi</p>
+    <p>Ngày gửi: {{noti_detail.sent_date}}</p>
+    <p>Người gửi: {{noti_detail.sent_user}}</p>
+    <p>Ngày update: </p>
+    <p><a class="btn btn-primary">GỬI THÔNG BÁO</a></p>
+    <p>
+        <input type="checkbox" (change)="isUpdateNoti($event)"/> 
+        Sửa thông báo đã gửi (Chức năng này chỉ dành cho System Admin)
+    </p>
+    <p *ngIf="is_update">
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#UpdateNoti">
+            SỬA THÔNG BÁO ĐÃ GỬI
+        </button>
+    </p>
+</div>
+<div class="row">
+    <app-user-multiselect 
+        [user_list_left]="user_list_left"
+        [user_list_right]="user_list_right"
+        (save)="update_user_noti($event)"
+    >
+    </app-user-multiselect>
+</div>
+<popup-edit-notification (update_noti)='updateNoti($event)'></popup-edit-notification>

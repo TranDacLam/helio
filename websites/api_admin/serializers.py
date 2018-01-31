@@ -3,6 +3,7 @@ from rest_framework.validators import UniqueValidator
 from core.models import *
 from core.custom_models import *
 from django.contrib.auth import get_user_model
+from datetime import datetime
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -73,6 +74,19 @@ class NotificationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Notification
-        fields=('id', 'subject', 'image', 'sub_url', 'category', 'sent_date', 'sent_user', 'is_draft', 'location', 'is_QR_code')
+        fields=('id', 'subject', 'image', 'sub_url', 'category', 'sent_date', 'sent_user', 'is_draft', 'location', 'is_QR_code', 'message')
 
+class UserEmbedSerializer(serializers.Serializer):
+    full_name = serializers.CharField(required=True)
+    birthday = serializers.DateField(required=True)
+    personal_id = serializers.IntegerField(required=True)
+    email = serializers.CharField(required=True)
+    address = serializers.CharField(required=True)
+    phone = serializers.IntegerField(required=True)
+    barcode = serializers.IntegerField(required=True)
+
+    def validate_birthday(self, value):
+        if value >= datetime.now().date():
+            raise serializers.ValidationError("Birthday must less then today")
+        return value
 
