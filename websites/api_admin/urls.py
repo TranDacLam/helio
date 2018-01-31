@@ -22,7 +22,7 @@ urlpatterns = [
 
 	url(r'^promotion_label/$', views.PromotionLabel.as_view(), name="promotion_label"),
 
-	url(r'^advertisement/$', views.Advertisement.as_view(), name="advertisement"),
+	url(r'^advertisement/$', views.AdvertisementView.as_view(), name="advertisement"),
 	url(r'^advertisement/(?P<pk>[0-9]+)/$', views.AdvertisementDetail.as_view(), name="advertisement-detail"),
 
 
@@ -31,5 +31,9 @@ urlpatterns = [
 	url(r'^notification/$', views.NotificationDetail.as_view(), name="notification"),
 	
 	url(r'^user_notification/(?P<id>[0-9]+)/$', views.NotificationUser.as_view(), name="user-promotion"),
+
+	url(r'^promotion-type/$', views.PromotionTypeView.as_view(), name="promotion-type"),
+
+	url(r'^denomination/$', views.DenominationView.as_view(), name="denomination"),
 
 ]
