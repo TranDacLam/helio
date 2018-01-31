@@ -19,7 +19,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.db.models import Count
 from django.http import Http404
-
+from django.db import DatabaseError
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
 """
@@ -376,39 +376,75 @@ class SummaryAPI(APIView):
 """
 @permission_classes((AllowAny,))
 class UserEmbedDetail(APIView): 
+
     def get(self, request, format=None):
             try:
 
-                barcode_req = self.request.query_params.get('barcode', None)
+                barcode = self.request.query_params.get('barcode', None)
 
-                if barcode_req:
-                    barcode = int(barcode_req)
+                if barcode:
+                    if not barcode.isdigit():
+                        return Response({"code": 400, "message": "Barcode is numberic", "fields": ""}, status=400)
                     cursor = connections['sql_db'].cursor()
                     query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id  FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id WHERE C.Card_Barcode = {0}"""
                     cursor.execute(query_str.format(barcode))
                     item = cursor.fetchone()
-
-                    if item:
+                    
+                    # check Customer_Id
+                    if item[7]:
                         result = {}
                         result["barcode"] = barcode # barcode
                         result["full_name"] = item[0] + item[1] # Firstname + Surname
-                        result["birthday"] = item[2] # DOB
-                        result["peronal_id"] = item[3] # PostCode
+                        result["birthday"] = item[2].date() # DOB
+                        result["personal_id"] = item[3] # PostCode
                         result["address"] = item[4] # Address1
                         result["email"] = item[5] # EMail
                         result["phone"] = item[6] # Phone
-                        return Response(result)
+                        return Response({"code": 200, "message": result, "fields": ""}, status=200)
                     return Response({"code": 400, "message": 'Barcode not found', "fields": ""}, status=400)
                 
                 return Response({"code": 400, "message": 'Bacode is required', "fields": ""}, status=400)
             
-            # except if barcode is not number
-            except ValueError, e:
-                error = {"code": 400, "message": "Barcode is numberic", "fields": ""}
-                return Response(error, status=400)
             except Exception, e:
                 print "UserEmbedDetail ", e
                 error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
                 return Response(error, status=500)
 
+    def put(self, request, barcode):
+        """
+            update user embed 
+            @author :Hoangnguyen
+            - check barcode is in DB
+            - validate form
+            - getdata from DB
 
+        """
+        try:
+            cursor = connections['sql_db'].cursor()
+
+            query_barcode = """SELECT Card_Barcode FROM Cards WHERE Cards.Card_Barcode = '{0}'"""
+            cursor.execute(query_barcode.format(barcode))
+            check_barcode = cursor.fetchone()
+            if not check_barcode:
+                return Response({"code": 400, "message": "Barcode not found", "fields": ""}, status=400)
+            
+            serializer = admin_serializers.UserEmbedSerializer(data = request.data)
+
+            if serializer.is_valid():
+                query_str = """UPDATE Customers SET Firstname = '{4}',Surname = '', Email = '{6}', Mobile_Phone = '{2}', DOB = '{1}', PostCode = '{3}', Address1 = '{5}'  WHERE Customers.Customer_Id IN (SELECT Cust.Customer_Id  FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id WHERE C.Card_Barcode = '{0}')"""
+
+                cursor.execute(query_str.format(barcode, serializer.data['birthday'] , serializer.data['phone'], serializer.data['personal_id'], serializer.data['full_name'], serializer.data['address'],serializer.data['email']))
+
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+        # catching db embed error
+        except DatabaseError, e:
+            print "UserEmbedDetail ", e
+            error = {"code": 500, "message": "Query to DB embed fail" , "fields": ""}
+            return Response(error, status=500)
+
+        except Exception, e:
+            print "UserEmbedDetail ", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
