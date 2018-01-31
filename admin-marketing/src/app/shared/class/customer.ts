@@ -1,10 +1,9 @@
 export class Customer {
-	customer_id: number;
-    barcode: string;
+    barcode: number;
     full_name: string;
     birth_date: string;
     email: string;
-    phone: string;
-    personal_id: string;
+    phone: number;
+    personal_id: number;
     address: string;
 }
