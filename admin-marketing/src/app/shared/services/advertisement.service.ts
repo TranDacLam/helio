@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of'; 
 import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/catch'
+import 'rxjs/add/operator/catch';
 
 import { Advertisement } from '../../shared/class/advertisement';
 
@@ -46,6 +46,11 @@ export class AdvertisementService {
 		var body = JSON.stringify(adv);
 		const url = `${this.urlAdv}${id}/`;
 		return this.http.put<Advertisement>(url,adv, httpOptions).catch(this.handleError);
+	}
+	deleteAllAdvsSelected(adv_id: Advertisement[]): Observable<Advertisement[]> {
+		const url = `${this.urlAdv}?adv_id=${adv_id}`;
+		return this.http.get<Advertisement[]>(url)
+		.catch(this.handleError)
 	}
 
 	// Handle error

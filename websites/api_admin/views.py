@@ -23,15 +23,13 @@ from django.http import Http404
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
 """
-    Get All Promotion
-    @author : diemnguyen
+    Get Promotion
 """
 
 @permission_classes((AllowAny,))
 class PromotionList(APIView):
     def get(self, request, format=None):
         try:
-            # Get all promotion
             lst_item = Promotion.objects.all()
             serializer = admin_serializers.PromotionSerializer(lst_item, many=True)
             return Response(serializer.data)
@@ -42,8 +40,7 @@ class PromotionList(APIView):
 
 
 """
-    Get Promotion By Promotion ID
-    @author : diemnguyen
+    Get Promotion
 """
 
 @permission_classes((AllowAny,))
@@ -65,29 +62,26 @@ class PromotionDetail(APIView):
 
 
 """
-    Get User List By Promotion
-    @author : diemnguyen
+    Get Promotion
 """
 
 @permission_classes((AllowAny,))
 class PromotionUser(APIView):
     def get(self, request, id):
         try:
-            promotion_detail = Promotion.objects.get(pk=id)
+            if id:
+                promotion_detail = Promotion.objects.get(pk=id)
+    
+                promotion_user_id_list = Gift.objects.filter(promotion_id=id).values_list('user_id', flat=True)
+                user_promotion_list = User.objects.filter(pk__in=promotion_user_id_list)
+                user_all_list = User.objects.filter(~Q(pk__in=promotion_user_id_list))
 
-            promotion_user_id_list = Gift.objects.filter(promotion_id=id).values_list('user_id', flat=True)
-            user_promotion_list = User.objects.filter(pk__in=promotion_user_id_list)
-            user_all_list = User.objects.filter(~Q(pk__in=promotion_user_id_list))
-
-            result = {}
-            result['promotion_detail'] = admin_serializers.PromotionSerializer(promotion_detail, many=False).data
-            result['user_all'] = admin_serializers.UserSerializer(user_all_list, many=True).data
-            result['user_promotion'] = admin_serializers.UserSerializer(user_promotion_list, many=True).data
+                result = {}
+                result['promotion_detail'] = admin_serializers.PromotionSerializer(promotion_detail, many=False).data
+                result['user_all'] = admin_serializers.UserSerializer(user_all_list, many=True).data
+                result['user_promotion'] = admin_serializers.UserSerializer(user_promotion_list, many=True).data
         
-            return Response(result)
-        except Promotion.DoesNotExist, e:
-            error = {"code": 400, "message": "Id Not Found.", "fields": "email"}
-            return Response(error, status=400)
+                return Response(result)
         except Exception, e:
             print 'PromotionUserView ',e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
@@ -134,18 +128,27 @@ class UserDetail(APIView):
 
 """
 GET and POST Advertisement
+@author: Trangle
 """     
 @permission_classes((AllowAny, ))
-class Advertisement(APIView):
+class AdvertisementView(APIView):
 
     def get(self, request, format=None):
         """
         Get all Advertisement
         """
         try:
-            adv_list = Advertisement.objects.all()
-            serializer = admin_serializers.AdvertisementSerializer(adv_list, many=True)
-            return Response(serializer.data)
+            adv_id = self.request.query_params.get('adv_id', None)
+            if adv_id:
+                adv_id_list = adv_id.split(',')
+                queryset = Advertisement.objects.filter(pk__in=adv_id_list).delete()
+                # serializer = admin_serializers.AdvertisementSerializer(queryset, many=True)
+                # return Response(serializer.data).delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                adv_list = Advertisement.objects.all()
+                serializer = admin_serializers.AdvertisementSerializer(adv_list, many=True)
+                return Response(serializer.data)
         except Exception, e:
             error = {"code":500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
@@ -160,10 +163,9 @@ class Advertisement(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
 """
 GET, PUT Advertisement Detail
+@author: Trangle
 """
 @permission_classes((AllowAny, ))
 class AdvertisementDetail(APIView):
@@ -189,6 +191,11 @@ class AdvertisementDetail(APIView):
             serializer.save()
             return Response(request.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        advertisement = self.get_object(pk)
+        advertisement.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 """
 GET and POST Promotion_Label
@@ -217,12 +224,56 @@ class PromotionLabel(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 """
-    Get Notification List
-    @author : diemnguyen
+Get PromotionType
+@author: Trangle
 """
+@permission_classes((AllowAny, ))
+class PromotionTypeView(APIView):
+    def get(self, request, format=None):
+        try:
+            list_pro_type = Promotion_Type.objects.all()
+            serializer = admin_serializers.PromotionTypeSerializer(list_pro_type, many=True)
+            return Response(serializer.data)
+        except Exception, e:
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+"""
+    Get and Post Denomination
+    @author: Trangle
+"""
+@permission_classes((AllowAny, ))
+class DenominationView(APIView):
+    def get(self, request, format=None):
+        """
+        Get all Denomination to list 
+        """
+        try:
+            deno_id = self.request.query_params.get('deno_id', None)
+            if deno_id:
+                deno_id_list = deno_id.split(',')
+                queryset = Denomination.objects.filter(pk__in =deno_id_list).delete()
+                # serializer = admin_serializers.DenominationSerializer(queryset, many=True)
+                # return Response(serializer.data)
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                list_denomination = Denomination.objects.all()
+                serializer = admin_serializers.DenominationSerializer(list_denomination, many=True)
+                return Response(serializer.data)
+        except Exception, e:
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+
+    def post(self, request, format=None):
+        """
+        Create a new Denomination
+        """
+        serializer = admin_serializers.DenominationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @permission_classes((AllowAny,))
 class NotificationList(APIView):
@@ -235,11 +286,8 @@ class NotificationList(APIView):
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
 
-
-
 """
-    Get Notification Detail
-    @author : diemnguyen
+    Get Promotion
 """
 
 @permission_classes((AllowAny,))
@@ -291,10 +339,8 @@ class NotificationDetail(APIView):
         item = self.get_object(id).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
 """
-    Get User List By Notification
-    @author : diemnguyen
+    Get Promotion
 """
 
 @permission_classes((AllowAny,))
@@ -375,41 +421,195 @@ class SummaryAPI(APIView):
     - check item is none
 
 """
+
+
 @permission_classes((AllowAny,))
-class UserEmbedDetail(APIView): 
+class UserEmbedDetail(APIView):
+
     def get(self, request, format=None):
-            try:
+        try:
 
-                barcode_req = self.request.query_params.get('barcode', None)
+            barcode = self.request.query_params.get('barcode', None)
 
-                if barcode_req:
-                    barcode = int(barcode_req)
-                    cursor = connections['sql_db'].cursor()
-                    query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id  FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id WHERE C.Card_Barcode = {0}"""
-                    cursor.execute(query_str.format(barcode))
-                    item = cursor.fetchone()
+            if barcode:
+                if not barcode.isdigit():
+                    return Response({"code": 400, "message": "Barcode is numberic", "fields": ""}, status=400)
+                cursor = connections['sql_db'].cursor()
+                query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, 
+                                    Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id  
+                                FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
+                                WHERE C.Card_Barcode = {0}"""
+                cursor.execute(query_str.format(barcode))
+                item = cursor.fetchone()
 
-                    if item:
-                        result = {}
-                        result["barcode"] = barcode # barcode
-                        result["full_name"] = item[0] + item[1] # Firstname + Surname
-                        result["birthday"] = item[2] # DOB
-                        result["peronal_id"] = item[3] # PostCode
-                        result["address"] = item[4] # Address1
-                        result["email"] = item[5] # EMail
-                        result["phone"] = item[6] # Phone
-                        return Response(result)
-                    return Response({"code": 400, "message": 'Barcode not found', "fields": ""}, status=400)
+                # check Customer_Id
+                if item[7]:
+                    result = {}
+                    result["barcode"] = barcode  # barcode
+                    result["full_name"] = item[0] + item[1]  # Firstname + Surname
+                    result["birthday"] = item[2].date()  # DOB
+                    result["personal_id"] = item[3]  # PostCode
+                    result["address"] = item[4]  # Address1
+                    result["email"] = item[5]  # EMail
+                    result["phone"] = item[6]  # Phone
+                    return Response({"code": 200, "message": result, "fields": ""}, status=200)
+                return Response({"code": 400, "message": 'Barcode not found', "fields": ""}, status=400)
+
+            return Response({"code": 400, "message": 'Bacode is required', "fields": ""}, status=400)
+
+        except Exception, e:
+            print "UserEmbedDetail ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def put(self, request, barcode):
+        """
+            update user embed 
+            @author :Hoangnguyen
+            - check barcode is in DB
+            - validate form
+            - getdata from DB
+
+        """
+        try:
+            cursor = connections['sql_db'].cursor()
+
+            query_barcode = """SELECT Card_Barcode FROM Cards WHERE Cards.Card_Barcode = '{0}'"""
+            cursor.execute(query_barcode.format(barcode))
+            check_barcode = cursor.fetchone()
+            if not check_barcode:
+                return Response({"code": 400, "message": "Barcode not found", "fields": ""}, status=400)
+
+            serializer = admin_serializers.UserEmbedSerializer(
+                data=request.data)
+
+            if serializer.is_valid():
+                query_str = """UPDATE Customers SET Firstname = '{4}',Surname = '', Email = '{6}',
+                 Mobile_Phone = '{2}', DOB = '{1}', PostCode = '{3}', Address1 = '{5}'  
+                WHERE Customers.Customer_Id IN (SELECT Cust.Customer_Id  
+                FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
+                WHERE C.Card_Barcode = '{0}')"""
+
+                cursor.execute(query_str.format(barcode, serializer.data['birthday'], serializer.data['phone'], serializer.data[
+                               'personal_id'], serializer.data['full_name'], serializer.data['address'], serializer.data['email']))
+
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+        # catching db embed error
+        except DatabaseError, e:
+            print "UserEmbedDetail ", e
+            error = {"code": 500,
+                     "message": "Query to DB embed fail", "fields": ""}
+            return Response(error, status=500)
+
+        except Exception, e:
+            print "UserEmbedDetail ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+"""
+    relate user with user embed 
+    @author :Hoangnguyen
+
+"""
+@permission_classes((AllowAny,))
+class RelateAPI(APIView):
+
+    def post(self, request, format=None):
+        """
+            - check user by email
+            - check user is related
+            - check user embed is exist
+            - check user embed is related
+
+        """
+        try:
+            barcode = self.request.query_params.get('barcode', None)
+            email = self.request.query_params.get('email', None)
+            if barcode and email:
+
+                # check user by email
+                user = User.objects.get(email=email)
+
+                # check user is related
+                if user.barcode:
+                    return Response({"code": 400, "message": "User is related.", "fields": ""}, status=400)
+
+                cursor = connections['sql_db'].cursor()
+                query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, 
+                                    Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id
+                    FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
+                    WHERE C.Card_Barcode = '{0}'"""
+                cursor.execute(query_str.format(barcode))
+                userembed_item = cursor.fetchone()
+
+                # check user embed is exist by check Customer_Id
+                if not userembed_item[7]:
+                    return Response({"code": 400, "message": "Not found Userembed.", "fields": ""}, status=400)
                 
-                return Response({"code": 400, "message": 'Bacode is required', "fields": ""}, status=400)
-            
-            # except if barcode is not number
-            except ValueError, e:
-                error = {"code": 400, "message": "Barcode is numberic", "fields": ""}
-                return Response(error, status=400)
-            except Exception, e:
-                print "UserEmbedDetail ", e
-                error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
-                return Response(error, status=500)
+                # check user embed is related
+                userembed_is_related = User.objects.filter(barcode=barcode)
+                if userembed_is_related:
+                    return Response({"code": 400, "message": "Userembed is related.", "fields": ""}, status=400)
 
+                user.barcode = barcode
+                user.username_mapping = request.user.username
+                user.date_mapping = datetime.now().date()
+                user.save()
+
+                # return data 
+                serializer = admin_serializers.UserSerializer(user)
+                result = {}
+                result['user'] =  serializer.data
+                result['user_embed'] ={}
+                result['user_embed']["barcode"] = barcode  # barcode
+                result['user_embed']["full_name"] = userembed_item[0] + userembed_item[1]  # Firstname + Surname
+                result['user_embed']["birthday"] = userembed_item[2].date()  # DOB
+                result['user_embed']["personal_id"] = userembed_item[3]  # PostCode
+                result['user_embed']["address"] = userembed_item[4]  # Address1
+                result['user_embed']["email"] = userembed_item[5]  # EMail
+                result['user_embed']["phone"] = userembed_item[6]  # Phone
+                return Response({"code": 200, "message": result, "fields": ""}, status=200)
+            
+            return Response({"code": 400, "message": "Email and barcode is required", "fields": ""}, status=400)
+
+        except User.DoesNotExist, e:
+            error = {"code": 400, "message": "Email Not Found.", "fields": ""}
+            return Response(error, status=400)
+
+        except Exception, e:
+            print "RelateAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+    
+    def delete(self, request, format=None):
+        """
+            - check user by email
+            - check user is related
+            - delete barcode, date_mapping, username_mapping
+
+        """
+        try:
+            email = self.request.query_params.get('email', None)
+            if email:
+                user = User.objects.get( email = email )
+                if user.barcode:
+                    user.barcode = None
+                    user.date_mapping = None
+                    user.username_mapping = None
+                    user.save()
+                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "User is not related", "fields": ""}, status=400)
+
+            return Response({"code": 400, "message": "Email is required", "fields": ""}, status=400)
+
+        except User.DoesNotExist, e:
+            error = {"code": 400, "message": "Email Not Found.", "fields": ""}
+            return Response(error, status=400)
+
+        except Exception, e:
+            print "RelateAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
 
