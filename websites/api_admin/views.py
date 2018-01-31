@@ -23,15 +23,13 @@ from django.http import Http404
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
 """
-    Get All Promotion
-    @author : diemnguyen
+    Get Promotion
 """
 
 @permission_classes((AllowAny,))
 class PromotionList(APIView):
     def get(self, request, format=None):
         try:
-            # Get all promotion
             lst_item = Promotion.objects.all()
             serializer = admin_serializers.PromotionSerializer(lst_item, many=True)
             return Response(serializer.data)
@@ -42,8 +40,7 @@ class PromotionList(APIView):
 
 
 """
-    Get Promotion By Promotion ID
-    @author : diemnguyen
+    Get Promotion
 """
 
 @permission_classes((AllowAny,))
@@ -65,29 +62,26 @@ class PromotionDetail(APIView):
 
 
 """
-    Get User List By Promotion
-    @author : diemnguyen
+    Get Promotion
 """
 
 @permission_classes((AllowAny,))
 class PromotionUser(APIView):
     def get(self, request, id):
         try:
-            promotion_detail = Promotion.objects.get(pk=id)
+            if id:
+                promotion_detail = Promotion.objects.get(pk=id)
+    
+                promotion_user_id_list = Gift.objects.filter(promotion_id=id).values_list('user_id', flat=True)
+                user_promotion_list = User.objects.filter(pk__in=promotion_user_id_list)
+                user_all_list = User.objects.filter(~Q(pk__in=promotion_user_id_list))
 
-            promotion_user_id_list = Gift.objects.filter(promotion_id=id).values_list('user_id', flat=True)
-            user_promotion_list = User.objects.filter(pk__in=promotion_user_id_list)
-            user_all_list = User.objects.filter(~Q(pk__in=promotion_user_id_list))
-
-            result = {}
-            result['promotion_detail'] = admin_serializers.PromotionSerializer(promotion_detail, many=False).data
-            result['user_all'] = admin_serializers.UserSerializer(user_all_list, many=True).data
-            result['user_promotion'] = admin_serializers.UserSerializer(user_promotion_list, many=True).data
+                result = {}
+                result['promotion_detail'] = admin_serializers.PromotionSerializer(promotion_detail, many=False).data
+                result['user_all'] = admin_serializers.UserSerializer(user_all_list, many=True).data
+                result['user_promotion'] = admin_serializers.UserSerializer(user_promotion_list, many=True).data
         
-            return Response(result)
-        except Promotion.DoesNotExist, e:
-            error = {"code": 400, "message": "Id Not Found.", "fields": "email"}
-            return Response(error, status=400)
+                return Response(result)
         except Exception, e:
             print 'PromotionUserView ',e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
@@ -134,18 +128,27 @@ class UserDetail(APIView):
 
 """
 GET and POST Advertisement
+@author: Trangle
 """     
 @permission_classes((AllowAny, ))
-class Advertisement(APIView):
+class AdvertisementView(APIView):
 
     def get(self, request, format=None):
         """
         Get all Advertisement
         """
         try:
-            adv_list = Advertisement.objects.all()
-            serializer = admin_serializers.AdvertisementSerializer(adv_list, many=True)
-            return Response(serializer.data)
+            adv_id = self.request.query_params.get('adv_id', None)
+            if adv_id:
+                adv_id_list = adv_id.split(',')
+                queryset = Advertisement.objects.filter(pk__in=adv_id_list).delete()
+                # serializer = admin_serializers.AdvertisementSerializer(queryset, many=True)
+                # return Response(serializer.data).delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                adv_list = Advertisement.objects.all()
+                serializer = admin_serializers.AdvertisementSerializer(adv_list, many=True)
+                return Response(serializer.data)
         except Exception, e:
             error = {"code":500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
@@ -160,10 +163,9 @@ class Advertisement(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
 """
 GET, PUT Advertisement Detail
+@author: Trangle
 """
 @permission_classes((AllowAny, ))
 class AdvertisementDetail(APIView):
@@ -189,6 +191,11 @@ class AdvertisementDetail(APIView):
             serializer.save()
             return Response(request.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        advertisement = self.get_object(pk)
+        advertisement.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 """
 GET and POST Promotion_Label
@@ -217,12 +224,56 @@ class PromotionLabel(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 """
-    Get Notification List
-    @author : diemnguyen
+Get PromotionType
+@author: Trangle
 """
+@permission_classes((AllowAny, ))
+class PromotionTypeView(APIView):
+    def get(self, request, format=None):
+        try:
+            list_pro_type = Promotion_Type.objects.all()
+            serializer = admin_serializers.PromotionTypeSerializer(list_pro_type, many=True)
+            return Response(serializer.data)
+        except Exception, e:
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+"""
+    Get and Post Denomination
+    @author: Trangle
+"""
+@permission_classes((AllowAny, ))
+class DenominationView(APIView):
+    def get(self, request, format=None):
+        """
+        Get all Denomination to list 
+        """
+        try:
+            deno_id = self.request.query_params.get('deno_id', None)
+            if deno_id:
+                deno_id_list = deno_id.split(',')
+                queryset = Denomination.objects.filter(pk__in =deno_id_list).delete()
+                # serializer = admin_serializers.DenominationSerializer(queryset, many=True)
+                # return Response(serializer.data)
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                list_denomination = Denomination.objects.all()
+                serializer = admin_serializers.DenominationSerializer(list_denomination, many=True)
+                return Response(serializer.data)
+        except Exception, e:
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+
+    def post(self, request, format=None):
+        """
+        Create a new Denomination
+        """
+        serializer = admin_serializers.DenominationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @permission_classes((AllowAny,))
 class NotificationList(APIView):
@@ -235,11 +286,8 @@ class NotificationList(APIView):
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
 
-
-
 """
-    Get Notification Detail
-    @author : diemnguyen
+    Get Promotion
 """
 
 @permission_classes((AllowAny,))
@@ -290,10 +338,8 @@ class NotificationDetail(APIView):
         item = self.get_object(id).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
 """
-    Get User List By Notification
-    @author : diemnguyen
+    Get Promotion
 """
 
 @permission_classes((AllowAny,))
@@ -410,5 +456,3 @@ class UserEmbedDetail(APIView):
                 print "UserEmbedDetail ", e
                 error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
                 return Response(error, status=500)
-
-

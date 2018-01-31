@@ -1,0 +1,32 @@
+<a class="pull-left" routerLink="/denomination-add">Thêm Mệnh giá nạp tiền</a>
+<br>
+<form #addDenominationForm="ngForm" class="" accept-charset="utf-8" novalidate="">
+	<div class="row">
+		<div class="col-md-7">
+			<label>Tên Mệnh giá nạp tiền:</label>
+			<input class='form-control' name="name" 
+            ngModel
+            required
+            pattern="[0-9]+"
+            placeholder="Tên Mệnh giá nạp tiền" 
+            #name="ngModel" 
+            >
+            <div *ngIf="name.invalid && (name.dirty || name.touched)">
+                <em [ngStyle]="{'color': 'red'}" *ngIf="name.errors.required">
+                Trường không được bỏ trống.
+                </em>
+                <em [ngStyle]="{'color': 'red'}" *ngIf="name.errors.pattern">
+                Vui lòng nhập số tiền hợp lệ.
+                </em>
+            </div>
+		</div>
+    </div>
+    <br>
+    <div class="row">
+    	<div class='col-md-7'>
+    		<button (click)="addDenomination(name.value)"
+            [disabled]="addDenominationForm.invalid"
+            class="btn btn-info">Lưu lại</button>
+    	</div>
+    </div>
+</form>

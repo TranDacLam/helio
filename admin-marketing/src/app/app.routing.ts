@@ -13,6 +13,9 @@ import { PromotionLabelAddComponent } from './components/promotion-label/promoti
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
 import { AdvertisementDetailComponent } from './components/advertisement/advertisement-detail/advertisement-detail.component';
 import { AdvertisementAddComponent } from './components/advertisement/advertisement-add/advertisement-add.component';
+import { PromotionTypeListComponent } from './components/promotion-type/promotion-type-list/promotion-type-list.component';
+import { DenominationAddComponent } from './components/denomination/denomination-add/denomination-add.component';
+import { DenominationListComponent } from './components/denomination/denomination-list/denomination-list.component';
 
 const routes: Routes = [
     { 
@@ -33,6 +36,12 @@ const routes: Routes = [
         path: 'advertisement-detail/:id', component: AdvertisementDetailComponent
     }, {
         path: 'advertisement-add', component: AdvertisementAddComponent
+    },{
+        path: 'promotion-type-list', component: PromotionTypeListComponent
+    },{
+        path: 'denomination-add', component: DenominationAddComponent
+    }, {
+        path: 'denomination-list', component: DenominationListComponent
     },
     { path: 'link-card/add', component: AddLinkCardComponent },
     { path: 'link-card/detail/:id', component: LinkCardDetailComponent },
