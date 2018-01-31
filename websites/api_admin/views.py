@@ -420,39 +420,195 @@ class SummaryAPI(APIView):
     - check item is none
 
 """
+
+
 @permission_classes((AllowAny,))
-class UserEmbedDetail(APIView): 
+class UserEmbedDetail(APIView):
+
     def get(self, request, format=None):
-            try:
+        try:
 
-                barcode_req = self.request.query_params.get('barcode', None)
+            barcode = self.request.query_params.get('barcode', None)
 
-                if barcode_req:
-                    barcode = int(barcode_req)
-                    cursor = connections['sql_db'].cursor()
-                    query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id  FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id WHERE C.Card_Barcode = {0}"""
-                    cursor.execute(query_str.format(barcode))
-                    item = cursor.fetchone()
+            if barcode:
+                if not barcode.isdigit():
+                    return Response({"code": 400, "message": "Barcode is numberic", "fields": ""}, status=400)
+                cursor = connections['sql_db'].cursor()
+                query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, 
+                                    Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id  
+                                FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
+                                WHERE C.Card_Barcode = {0}"""
+                cursor.execute(query_str.format(barcode))
+                item = cursor.fetchone()
 
-                    if item:
-                        result = {}
-                        result["barcode"] = barcode # barcode
-                        result["full_name"] = item[0] + item[1] # Firstname + Surname
-                        result["birthday"] = item[2] # DOB
-                        result["peronal_id"] = item[3] # PostCode
-                        result["address"] = item[4] # Address1
-                        result["email"] = item[5] # EMail
-                        result["phone"] = item[6] # Phone
-                        return Response(result)
-                    return Response({"code": 400, "message": 'Barcode not found', "fields": ""}, status=400)
+                # check Customer_Id
+                if item[7]:
+                    result = {}
+                    result["barcode"] = barcode  # barcode
+                    result["full_name"] = item[0] + item[1]  # Firstname + Surname
+                    result["birthday"] = item[2].date()  # DOB
+                    result["personal_id"] = item[3]  # PostCode
+                    result["address"] = item[4]  # Address1
+                    result["email"] = item[5]  # EMail
+                    result["phone"] = item[6]  # Phone
+                    return Response({"code": 200, "message": result, "fields": ""}, status=200)
+                return Response({"code": 400, "message": 'Barcode not found', "fields": ""}, status=400)
+
+            return Response({"code": 400, "message": 'Bacode is required', "fields": ""}, status=400)
+
+        except Exception, e:
+            print "UserEmbedDetail ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def put(self, request, barcode):
+        """
+            update user embed 
+            @author :Hoangnguyen
+            - check barcode is in DB
+            - validate form
+            - getdata from DB
+
+        """
+        try:
+            cursor = connections['sql_db'].cursor()
+
+            query_barcode = """SELECT Card_Barcode FROM Cards WHERE Cards.Card_Barcode = '{0}'"""
+            cursor.execute(query_barcode.format(barcode))
+            check_barcode = cursor.fetchone()
+            if not check_barcode:
+                return Response({"code": 400, "message": "Barcode not found", "fields": ""}, status=400)
+
+            serializer = admin_serializers.UserEmbedSerializer(
+                data=request.data)
+
+            if serializer.is_valid():
+                query_str = """UPDATE Customers SET Firstname = '{4}',Surname = '', Email = '{6}',
+                 Mobile_Phone = '{2}', DOB = '{1}', PostCode = '{3}', Address1 = '{5}'  
+                WHERE Customers.Customer_Id IN (SELECT Cust.Customer_Id  
+                FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
+                WHERE C.Card_Barcode = '{0}')"""
+
+                cursor.execute(query_str.format(barcode, serializer.data['birthday'], serializer.data['phone'], serializer.data[
+                               'personal_id'], serializer.data['full_name'], serializer.data['address'], serializer.data['email']))
+
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+        # catching db embed error
+        except DatabaseError, e:
+            print "UserEmbedDetail ", e
+            error = {"code": 500,
+                     "message": "Query to DB embed fail", "fields": ""}
+            return Response(error, status=500)
+
+        except Exception, e:
+            print "UserEmbedDetail ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+"""
+    relate user with user embed 
+    @author :Hoangnguyen
+
+"""
+@permission_classes((AllowAny,))
+class RelateAPI(APIView):
+
+    def post(self, request, format=None):
+        """
+            - check user by email
+            - check user is related
+            - check user embed is exist
+            - check user embed is related
+
+        """
+        try:
+            barcode = self.request.query_params.get('barcode', None)
+            email = self.request.query_params.get('email', None)
+            if barcode and email:
+
+                # check user by email
+                user = User.objects.get(email=email)
+
+                # check user is related
+                if user.barcode:
+                    return Response({"code": 400, "message": "User is related.", "fields": ""}, status=400)
+
+                cursor = connections['sql_db'].cursor()
+                query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, 
+                                    Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id
+                    FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
+                    WHERE C.Card_Barcode = '{0}'"""
+                cursor.execute(query_str.format(barcode))
+                userembed_item = cursor.fetchone()
+
+                # check user embed is exist by check Customer_Id
+                if not userembed_item[7]:
+                    return Response({"code": 400, "message": "Not found Userembed.", "fields": ""}, status=400)
                 
-                return Response({"code": 400, "message": 'Bacode is required', "fields": ""}, status=400)
+                # check user embed is related
+                userembed_is_related = User.objects.filter(barcode=barcode)
+                if userembed_is_related:
+                    return Response({"code": 400, "message": "Userembed is related.", "fields": ""}, status=400)
+
+                user.barcode = barcode
+                user.username_mapping = request.user.username
+                user.date_mapping = datetime.now().date()
+                user.save()
+
+                # return data 
+                serializer = admin_serializers.UserSerializer(user)
+                result = {}
+                result['user'] =  serializer.data
+                result['user_embed'] ={}
+                result['user_embed']["barcode"] = barcode  # barcode
+                result['user_embed']["full_name"] = userembed_item[0] + userembed_item[1]  # Firstname + Surname
+                result['user_embed']["birthday"] = userembed_item[2].date()  # DOB
+                result['user_embed']["personal_id"] = userembed_item[3]  # PostCode
+                result['user_embed']["address"] = userembed_item[4]  # Address1
+                result['user_embed']["email"] = userembed_item[5]  # EMail
+                result['user_embed']["phone"] = userembed_item[6]  # Phone
+                return Response({"code": 200, "message": result, "fields": ""}, status=200)
             
-            # except if barcode is not number
-            except ValueError, e:
-                error = {"code": 400, "message": "Barcode is numberic", "fields": ""}
-                return Response(error, status=400)
-            except Exception, e:
-                print "UserEmbedDetail ", e
-                error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
-                return Response(error, status=500)
+            return Response({"code": 400, "message": "Email and barcode is required", "fields": ""}, status=400)
+
+        except User.DoesNotExist, e:
+            error = {"code": 400, "message": "Email Not Found.", "fields": ""}
+            return Response(error, status=400)
+
+        except Exception, e:
+            print "RelateAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+    
+    def delete(self, request, format=None):
+        """
+            - check user by email
+            - check user is related
+            - delete barcode, date_mapping, username_mapping
+
+        """
+        try:
+            email = self.request.query_params.get('email', None)
+            if email:
+                user = User.objects.get( email = email )
+                if user.barcode:
+                    user.barcode = None
+                    user.date_mapping = None
+                    user.username_mapping = None
+                    user.save()
+                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "User is not related", "fields": ""}, status=400)
+
+            return Response({"code": 400, "message": "Email is required", "fields": ""}, status=400)
+
+        except User.DoesNotExist, e:
+            error = {"code": 400, "message": "Email Not Found.", "fields": ""}
+            return Response(error, status=400)
+
+        except Exception, e:
+            print "RelateAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
