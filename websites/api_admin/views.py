@@ -597,14 +597,14 @@ class UserEmbedDetail(APIView):
                                 FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
                                 WHERE C.Card_Barcode = {0}"""
                 cursor.execute(query_str.format(barcode))
+                item = {}
                 item = cursor.fetchone()
-
                 # check Customer_Id
-                if item[7]:
+                if item and item[7]:
                     result = {}
                     result["barcode"] = barcode  # barcode
                     result["full_name"] = item[0] + item[1]  # Firstname + Surname
-                    result["birthday"] = item[2].date()  # DOB
+                    result["birth_date"] = item[2].date()  # DOB
                     result["personal_id"] = item[3]  # PostCode
                     result["address"] = item[4]  # Address1
                     result["email"] = item[5]  # EMail
@@ -647,7 +647,7 @@ class UserEmbedDetail(APIView):
                 FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
                 WHERE C.Card_Barcode = '{0}')"""
 
-                cursor.execute(query_str.format(barcode, serializer.data['birthday'], serializer.data['phone'], serializer.data[
+                cursor.execute(query_str.format(barcode, serializer.data['birth_date'], serializer.data['phone'], serializer.data[
                                'personal_id'], serializer.data['full_name'], serializer.data['address'], serializer.data['email']))
 
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
@@ -682,8 +682,9 @@ class RelateAPI(APIView):
 
         """
         try:
-            barcode = self.request.query_params.get('barcode', None)
-            email = self.request.query_params.get('email', None)
+            barcode = request.data.get('barcode', None)
+            email = request.data.get('email', None)
+
             if barcode and email:
 
                 # check user by email
@@ -694,15 +695,13 @@ class RelateAPI(APIView):
                     return Response({"code": 400, "message": "User is related.", "fields": ""}, status=400)
 
                 cursor = connections['sql_db'].cursor()
-                query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, 
-                                    Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id
+                query_str = """SELECT Cust.Customer_Id
                     FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
                     WHERE C.Card_Barcode = '{0}'"""
                 cursor.execute(query_str.format(barcode))
                 userembed_item = cursor.fetchone()
-
                 # check user embed is exist by check Customer_Id
-                if not userembed_item[7]:
+                if not userembed_item or not userembed_item[0]:
                     return Response({"code": 400, "message": "Not found Userembed.", "fields": ""}, status=400)
                 
                 # check user embed is related
@@ -714,20 +713,7 @@ class RelateAPI(APIView):
                 user.username_mapping = request.user.username
                 user.date_mapping = datetime.now().date()
                 user.save()
-
-                # return data 
-                serializer = admin_serializers.UserSerializer(user)
-                result = {}
-                result['user'] =  serializer.data
-                result['user_embed'] ={}
-                result['user_embed']["barcode"] = barcode  # barcode
-                result['user_embed']["full_name"] = userembed_item[0] + userembed_item[1]  # Firstname + Surname
-                result['user_embed']["birthday"] = userembed_item[2].date()  # DOB
-                result['user_embed']["personal_id"] = userembed_item[3]  # PostCode
-                result['user_embed']["address"] = userembed_item[4]  # Address1
-                result['user_embed']["email"] = userembed_item[5]  # EMail
-                result['user_embed']["phone"] = userembed_item[6]  # Phone
-                return Response({"code": 200, "message": result, "fields": ""}, status=200)
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             
             return Response({"code": 400, "message": "Email and barcode is required", "fields": ""}, status=400)
 
@@ -740,29 +726,24 @@ class RelateAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
     
-    def delete(self, request, format=None):
+    def delete(self, request, id, format=None):
         """
-            - check user by email
             - check user is related
             - delete barcode, date_mapping, username_mapping
 
         """
         try:
-            email = self.request.query_params.get('email', None)
-            if email:
-                user = User.objects.get( email = email )
-                if user.barcode:
-                    user.barcode = None
-                    user.date_mapping = None
-                    user.username_mapping = None
-                    user.save()
-                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
-                return Response({"code": 400, "message": "User is not related", "fields": ""}, status=400)
-
-            return Response({"code": 400, "message": "Email is required", "fields": ""}, status=400)
+            user = User.objects.get( id = id )
+            if user.barcode:
+                user.barcode = None
+                user.date_mapping = None
+                user.username_mapping = None
+                user.save()
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 400, "message": "User is not related", "fields": ""}, status=400)
 
         except User.DoesNotExist, e:
-            error = {"code": 400, "message": "Email Not Found.", "fields": ""}
+            error = {"code": 400, "message": "Not Found User.", "fields": ""}
             return Response(error, status=400)
 
         except Exception, e:
@@ -770,3 +751,22 @@ class RelateAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
+"""
+    get all fee 
+    @author :Hoangnguyen
+
+"""
+@permission_classes((AllowAny,))
+class FeeAPI(APIView):
+
+    def get(self, request, format=None):
+        try:
+            fee = Fee.objects.all()
+            serializer = admin_serializers.FeeSerializer(fee, many = True)
+            return Response({"code": 200, "message": serializer.data, "fields": ""}, status=200)
+
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
