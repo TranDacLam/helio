@@ -1,18 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Notification } from '../../../shared/class/notification';
 import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
-    selector: 'app-edit-notification',
-    templateUrl: './edit-notification.component.html',
-    styleUrls: ['./edit-notification.component.css'],
+    selector: 'popup-edit-notification',
+    templateUrl: './popup-edit-notification.component.html',
+    styleUrls: ['./popup-edit-notification.component.css'],
     providers: [NotificationService]
 })
-export class EditNotificationComponent implements OnInit {
+export class PopupEditNotificationComponent implements OnInit {
+
+    /*
+        Author: Lam
+    */
+
+    // Return 1 object to parent
+    @Output() update_noti: EventEmitter<Notification> = new EventEmitter<Notification>();
 
     noti: Notification;
-    type_http = "put"; // type http to form notification component 
+    type_http = "put_popup"; // type http to form notification component 
 
     constructor(
         private notificationService: NotificationService,
@@ -34,6 +41,14 @@ export class EditNotificationComponent implements OnInit {
         this.notificationService.getNotification(id).subscribe(data => {
             this.noti = data;
         });
+    }
+
+    /*
+        Function updateNoti(): Get notification from component form-notification
+        Author: Lam
+    */
+    updateNoti(event){
+        this.update_noti.emit(event);
     }
 
 }
