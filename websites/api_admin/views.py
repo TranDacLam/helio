@@ -594,3 +594,22 @@ class RelateAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
+"""
+    get all fee 
+    @author :Hoangnguyen
+
+"""
+@permission_classes((AllowAny,))
+class FeeAPI(APIView):
+
+    def get(self, request, format=None):
+        try:
+            fee = Fee.objects.all()
+            serializer = admin_serializers.FeeSerializer(fee, many = True)
+            return Response({"code": 200, "message": serializer.data, "fields": ""}, status=200)
+
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
