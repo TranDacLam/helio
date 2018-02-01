@@ -24,6 +24,7 @@ from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
 """
     Get Promotion
+    @author: diemnguyen
 """
 
 @permission_classes((AllowAny,))
@@ -40,7 +41,8 @@ class PromotionList(APIView):
 
 
 """
-    Get Promotion
+    Get Promotion By Promotion ID
+    @author: diemnguyen
 """
 
 @permission_classes((AllowAny,))
@@ -62,7 +64,8 @@ class PromotionDetail(APIView):
 
 
 """
-    Get Promotion
+    Get User List By Promotion
+    @author: diemnguyen
 """
 
 @permission_classes((AllowAny,))
@@ -138,17 +141,9 @@ class AdvertisementView(APIView):
         Get all Advertisement
         """
         try:
-            adv_id = self.request.query_params.get('adv_id', None)
-            if adv_id:
-                adv_id_list = adv_id.split(',')
-                queryset = Advertisement.objects.filter(pk__in=adv_id_list).delete()
-                # serializer = admin_serializers.AdvertisementSerializer(queryset, many=True)
-                # return Response(serializer.data).delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
-            else:
-                adv_list = Advertisement.objects.all()
-                serializer = admin_serializers.AdvertisementSerializer(adv_list, many=True)
-                return Response(serializer.data)
+            adv_list = Advertisement.objects.all()
+            serializer = admin_serializers.AdvertisementSerializer(adv_list, many=True)
+            return Response(serializer.data)
         except Exception, e:
             error = {"code":500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
@@ -162,6 +157,22 @@ class AdvertisementView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        """
+        DELETE: multi checbox
+        """
+        try:
+            adv_id = self.request.query_params.get('adv_id', None)
+            if adv_id:
+                adv_id_list = adv_id.split(',')
+                queryset = Advertisement.objects.filter(pk__in = adv_id_list).delete()
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
+        except Exception, e:
+            print e
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
 
 """
 GET, PUT Advertisement Detail
@@ -189,7 +200,7 @@ class AdvertisementDetail(APIView):
         serializer = admin_serializers.AdvertisementSerializer(advertisement, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(request.data)
+            return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
@@ -249,17 +260,9 @@ class DenominationView(APIView):
         Get all Denomination to list 
         """
         try:
-            deno_id = self.request.query_params.get('deno_id', None)
-            if deno_id:
-                deno_id_list = deno_id.split(',')
-                queryset = Denomination.objects.filter(pk__in =deno_id_list).delete()
-                # serializer = admin_serializers.DenominationSerializer(queryset, many=True)
-                # return Response(serializer.data)
-                return Response(status=status.HTTP_204_NO_CONTENT)
-            else:
-                list_denomination = Denomination.objects.all()
-                serializer = admin_serializers.DenominationSerializer(list_denomination, many=True)
-                return Response(serializer.data)
+            list_denomination = Denomination.objects.all()
+            serializer = admin_serializers.DenominationSerializer(list_denomination, many=True)
+            return Response(serializer.data)
         except Exception, e:
             error = {"code": 500, "message": "Internal Server Error", "fields":""}
             return Response(error, status=500)
@@ -274,7 +277,157 @@ class DenominationView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def delete(self, request, format=None):
+        """
+        DELETE: Multi ids select
+        """
+        try:
+            deno_id = self.request.query_params.get('deno_id', None)
+            if deno_id:
+                deno_id_list = deno_id.split(',')
+                queryset = Denomination.objects.filter(pk__in = deno_id_list).delete()
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
+        except Exception, e:
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
 
+"""
+GET FeedBack
+@author: TrangLe
+"""
+@permission_classes((AllowAny, ))
+class FeedbackView(APIView):
+    def get(self, request, format=None):
+        """
+        Get all Feedback
+        Check status Feedback
+        """
+        try:
+            status = self.request.query_params.get('status', None)
+            rate = self.request.query_params.get('rate', None)
+            start_date = self.request.query_params.get('start_date', None)
+            end_date = self.request.query_params.get('end_date', None)
+
+            # Check start_date and end_date
+            if start_date and end_date and status :
+                print "++ start_date ++ end_date ++ status"
+                queryset = FeedBack.objects.filter(status = status,sent_date__range=(start_date, end_date))
+                print queryset
+                serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
+                return Response(serializer.data)
+
+            # Check start_date and status || end_date status
+            if start_date and status or end_date and status:
+                if start_date and status:
+                    print "start_date_status"
+                    queryset = FeedBack.objects.filter(status=status, sent_date=start_date)
+                    serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
+                    return Response(serializer.data)
+                else:
+                    print "end_date_status"
+                    queryset = FeedBack.objects.filter(status=status, sent_date=end_date)
+                    serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
+                    return Response(serializer.data)
+
+            # Check status 
+            if status:
+                print "status"
+                status_list = FeedBack.objects.filter(status=status)
+                serializer = admin_serializers.FeedBackSerializer(status_list, many=True)
+                return Response(serializer.data)
+
+            # Check start_date and end_date
+            if start_date and end_date and rate :
+                print "++ start_date ++ end_date ++ rate"
+                queryset = FeedBack.objects.filter(rate = rate,sent_date__range=(start_date, end_date))
+                print queryset
+                serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
+                return Response(serializer.data)
+
+            # Check start_date and status || end_date status
+            if start_date and rate or end_date and rate:
+                if start_date and rate:
+                    print "start_date_rate"
+                    queryset = FeedBack.objects.filter(rate=rate, sent_date=start_date)
+                    serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
+                    return Response(serializer.data)
+                else:
+                    print "end_date_rate"
+                    queryset = FeedBack.objects.filter(rate=rate, sent_date=end_date)
+                    serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
+                    return Response(serializer.data)
+
+            # Ckeck rate
+            if rate:
+                print "rate"
+                rate_list = FeedBack.objects.filter(rate=rate)
+                serializer = admin_serializers.FeedBackSerializer(rate_list, many=True)
+                return Response(serializer.data)
+
+            else:
+                list_feedback = FeedBack.objects.all()
+                serializer = admin_serializers.FeedBackSerializer(list_feedback, many=True)
+                return Response(serializer.data)
+
+        except FeedBack.DoesNotExist, e:
+            error = {"code": 400, "message": "Field Not Found.", "fields": ""}
+            return Response(error, status=400)
+        except Exception, e:
+            print e
+            error = {"code":500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+
+    def delete(self, request, format=None):
+        try: 
+            fed_id = self.request.query_params.get('fed_id', None)
+            if fed_id:
+                fed_id_list = fed_id.split(',')
+                queryset = FeedBack.objects.filter(pk__in = fed_id_list).delete()
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
+        except Exception, e:
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+"""
+GET, PUT, DELETE Feedback by id
+@author: Trangle
+"""
+@permission_classes((AllowAny, ))
+class FeedbackDetailView(APIView):
+    def get_object(self, pk):
+        try:
+            queryset = FeedBack.objects.get(pk=pk)
+            return queryset
+        except Exception, e:
+            return Response(status=500)
+
+    def get(self, request, pk, format=None):
+        feedback = self.get_object(pk)
+        serializer = admin_serializers.FeedBackSerializer(feedback)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        feedback = self.get_object(pk)
+        serializer = admin_serializers.FeedBackSerializer(feedback, data=request.data)
+        try:
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception, e:
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, pk, format=None):
+        feedback = self.get_object(pk)
+        feedback.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+"""
+Get Notification List
+@author: diemnguyen
+"""
 @permission_classes((AllowAny,))
 class NotificationList(APIView):
     def get(self, request, format=None):
@@ -287,7 +440,9 @@ class NotificationList(APIView):
             return Response(error, status=500)
 
 """
-    Get Promotion
+    Get Notification Detail
+    @author : diemnguyen
+
 """
 
 @permission_classes((AllowAny,))
@@ -340,7 +495,9 @@ class NotificationDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 """
-    Get Promotion
+    Get User List By Notification
+    @author : diemnguyen
+
 """
 
 @permission_classes((AllowAny,))
@@ -440,14 +597,14 @@ class UserEmbedDetail(APIView):
                                 FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
                                 WHERE C.Card_Barcode = {0}"""
                 cursor.execute(query_str.format(barcode))
+                item = {}
                 item = cursor.fetchone()
-
                 # check Customer_Id
-                if item[7]:
+                if item and item[7]:
                     result = {}
                     result["barcode"] = barcode  # barcode
                     result["full_name"] = item[0] + item[1]  # Firstname + Surname
-                    result["birthday"] = item[2].date()  # DOB
+                    result["birth_date"] = item[2].date()  # DOB
                     result["personal_id"] = item[3]  # PostCode
                     result["address"] = item[4]  # Address1
                     result["email"] = item[5]  # EMail
@@ -490,7 +647,7 @@ class UserEmbedDetail(APIView):
                 FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
                 WHERE C.Card_Barcode = '{0}')"""
 
-                cursor.execute(query_str.format(barcode, serializer.data['birthday'], serializer.data['phone'], serializer.data[
+                cursor.execute(query_str.format(barcode, serializer.data['birth_date'], serializer.data['phone'], serializer.data[
                                'personal_id'], serializer.data['full_name'], serializer.data['address'], serializer.data['email']))
 
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
@@ -525,8 +682,9 @@ class RelateAPI(APIView):
 
         """
         try:
-            barcode = self.request.query_params.get('barcode', None)
-            email = self.request.query_params.get('email', None)
+            barcode = request.data.get('barcode', None)
+            email = request.data.get('email', None)
+
             if barcode and email:
 
                 # check user by email
@@ -537,15 +695,13 @@ class RelateAPI(APIView):
                     return Response({"code": 400, "message": "User is related.", "fields": ""}, status=400)
 
                 cursor = connections['sql_db'].cursor()
-                query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, 
-                                    Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id
+                query_str = """SELECT Cust.Customer_Id
                     FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
                     WHERE C.Card_Barcode = '{0}'"""
                 cursor.execute(query_str.format(barcode))
                 userembed_item = cursor.fetchone()
-
                 # check user embed is exist by check Customer_Id
-                if not userembed_item[7]:
+                if not userembed_item or not userembed_item[0]:
                     return Response({"code": 400, "message": "Not found Userembed.", "fields": ""}, status=400)
                 
                 # check user embed is related
@@ -557,20 +713,7 @@ class RelateAPI(APIView):
                 user.username_mapping = request.user.username
                 user.date_mapping = datetime.now().date()
                 user.save()
-
-                # return data 
-                serializer = admin_serializers.UserSerializer(user)
-                result = {}
-                result['user'] =  serializer.data
-                result['user_embed'] ={}
-                result['user_embed']["barcode"] = barcode  # barcode
-                result['user_embed']["full_name"] = userembed_item[0] + userembed_item[1]  # Firstname + Surname
-                result['user_embed']["birthday"] = userembed_item[2].date()  # DOB
-                result['user_embed']["personal_id"] = userembed_item[3]  # PostCode
-                result['user_embed']["address"] = userembed_item[4]  # Address1
-                result['user_embed']["email"] = userembed_item[5]  # EMail
-                result['user_embed']["phone"] = userembed_item[6]  # Phone
-                return Response({"code": 200, "message": result, "fields": ""}, status=200)
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             
             return Response({"code": 400, "message": "Email and barcode is required", "fields": ""}, status=400)
 
@@ -583,29 +726,24 @@ class RelateAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
     
-    def delete(self, request, format=None):
+    def delete(self, request, id, format=None):
         """
-            - check user by email
             - check user is related
             - delete barcode, date_mapping, username_mapping
 
         """
         try:
-            email = self.request.query_params.get('email', None)
-            if email:
-                user = User.objects.get( email = email )
-                if user.barcode:
-                    user.barcode = None
-                    user.date_mapping = None
-                    user.username_mapping = None
-                    user.save()
-                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
-                return Response({"code": 400, "message": "User is not related", "fields": ""}, status=400)
-
-            return Response({"code": 400, "message": "Email is required", "fields": ""}, status=400)
+            user = User.objects.get( id = id )
+            if user.barcode:
+                user.barcode = None
+                user.date_mapping = None
+                user.username_mapping = None
+                user.save()
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 400, "message": "User is not related", "fields": ""}, status=400)
 
         except User.DoesNotExist, e:
-            error = {"code": 400, "message": "Email Not Found.", "fields": ""}
+            error = {"code": 400, "message": "Not Found User.", "fields": ""}
             return Response(error, status=400)
 
         except Exception, e:
@@ -613,3 +751,22 @@ class RelateAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
+"""
+    get all fee 
+    @author :Hoangnguyen
+
+"""
+@permission_classes((AllowAny,))
+class FeeAPI(APIView):
+
+    def get(self, request, format=None):
+        try:
+            fee = Fee.objects.all()
+            serializer = admin_serializers.FeeSerializer(fee, many = True)
+            return Response({"code": 200, "message": serializer.data, "fields": ""}, status=200)
+
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
