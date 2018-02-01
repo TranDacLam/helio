@@ -439,14 +439,14 @@ class UserEmbedDetail(APIView):
                                 FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
                                 WHERE C.Card_Barcode = {0}"""
                 cursor.execute(query_str.format(barcode))
+                item = {}
                 item = cursor.fetchone()
-
                 # check Customer_Id
-                if item[7]:
+                if item and item[7]:
                     result = {}
                     result["barcode"] = barcode  # barcode
                     result["full_name"] = item[0] + item[1]  # Firstname + Surname
-                    result["birthday"] = item[2].date()  # DOB
+                    result["birth_date"] = item[2].date()  # DOB
                     result["personal_id"] = item[3]  # PostCode
                     result["address"] = item[4]  # Address1
                     result["email"] = item[5]  # EMail
@@ -489,7 +489,7 @@ class UserEmbedDetail(APIView):
                 FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
                 WHERE C.Card_Barcode = '{0}')"""
 
-                cursor.execute(query_str.format(barcode, serializer.data['birthday'], serializer.data['phone'], serializer.data[
+                cursor.execute(query_str.format(barcode, serializer.data['birth_date'], serializer.data['phone'], serializer.data[
                                'personal_id'], serializer.data['full_name'], serializer.data['address'], serializer.data['email']))
 
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
@@ -564,7 +564,7 @@ class RelateAPI(APIView):
                 result['user_embed'] ={}
                 result['user_embed']["barcode"] = barcode  # barcode
                 result['user_embed']["full_name"] = userembed_item[0] + userembed_item[1]  # Firstname + Surname
-                result['user_embed']["birthday"] = userembed_item[2].date()  # DOB
+                result['user_embed']["birth_date"] = userembed_item[2].date()  # DOB
                 result['user_embed']["personal_id"] = userembed_item[3]  # PostCode
                 result['user_embed']["address"] = userembed_item[4]  # Address1
                 result['user_embed']["email"] = userembed_item[5]  # EMail
