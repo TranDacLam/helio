@@ -538,14 +538,13 @@ class RelateAPI(APIView):
                     return Response({"code": 400, "message": "User is related.", "fields": ""}, status=400)
 
                 cursor = connections['sql_db'].cursor()
-                query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, 
-                                    Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id
+                query_str = """SELECT Cust.Customer_Id
                     FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
                     WHERE C.Card_Barcode = '{0}'"""
                 cursor.execute(query_str.format(barcode))
                 userembed_item = cursor.fetchone()
                 # check user embed is exist by check Customer_Id
-                if not userembed_item or not userembed_item[7]:
+                if not userembed_item or not userembed_item[0]:
                     return Response({"code": 400, "message": "Not found Userembed.", "fields": ""}, status=400)
                 
                 # check user embed is related

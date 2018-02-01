@@ -16,7 +16,8 @@ urlpatterns = [
 	url(r'^user_embed/$', views.UserEmbedDetail.as_view(), name="user-embed"),
 	url(r'^user_embed/(?P<barcode>[0-9]+)/$', views.UserEmbedDetail.as_view(), name="user-embed-detail"),
 	url(r'^relate/$', views.RelateAPI.as_view(), name="relate-user"),
-	url(r'^delete_relate/(?P<id>[0-9]+)/$$', views.RelateAPI.as_view(), name="relate-user"),
+	url(r'^delete_relate/(?P<id>[0-9]+)/$', views.RelateAPI.as_view(), name="relate-user"),
+
 
 	url(r'^summary/$', views.SummaryAPI.as_view(), name="summary"),
 
@@ -36,5 +37,7 @@ urlpatterns = [
 	url(r'^promotion-type/$', views.PromotionTypeView.as_view(), name="promotion-type"),
 
 	url(r'^denomination/$', views.DenominationView.as_view(), name="denomination"),
+
+
 
 ]
