@@ -63,7 +63,13 @@ class DenominationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Denomination
         fields = ('id', 'denomination')
-        
+
+class FeedBackSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FeedBack
+        fields = ('id', 'name', 'email', 'phone', 'subject', 'message', 'rate', 'sent_date', 'feedback_type', 'status','answer', 'created')     
+
 class NotificationSerializer(serializers.ModelSerializer):
 
     class Meta:

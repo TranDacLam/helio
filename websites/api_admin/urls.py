@@ -36,4 +36,10 @@ urlpatterns = [
 
 	url(r'^denomination/$', views.DenominationView.as_view(), name="denomination"),
 
+	url(r'^feedback/$', views.FeedbackView.as_view(), name="feedback"),
+	url(r'^feedback/(?P<pk>[0-9]+)/$', views.FeedbackDetailView.as_view(), name="feedback-detail"),
+
+
+
+
 ]
