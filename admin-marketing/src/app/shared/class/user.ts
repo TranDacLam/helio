@@ -5,7 +5,7 @@ export class User {
     birth_date: string;
     email: string;
     phone: string;
-    barcode: string;
+    barcode: number;
     personal_id: string;
     address: string;
 }

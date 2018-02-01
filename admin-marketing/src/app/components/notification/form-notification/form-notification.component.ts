@@ -21,6 +21,7 @@ export class FormNotificationComponent implements OnInit {
         author: Lam
     */
 
+    // set inputImage property as a local variable, #inputImage on the tag input file
     @ViewChild('inputImage')
     inputImage: any;
 

@@ -12,6 +12,7 @@
                     <div class="col-sm-7">
                         <input type="text" class="form-control" formControlName="full_name"
                         [readonly]="dis_input_app.full_name" [class.error_user]="status_error.full_name"/>
+                        <show-error-valid [control]="appForm.get('full_name')"></show-error-valid>
                     </div>
                 </div>
 
@@ -24,6 +25,7 @@
                     <div class="col-sm-7">
                         <input type="text" class="form-control" formControlName="email"
                         [readonly]="dis_input_app.email" [class.error_user]="status_error.email"/>
+                        <show-error-valid [control]="appForm.get('email')"></show-error-valid>
                     </div>
                 </div>
 
@@ -36,6 +38,7 @@
                     <div class="col-sm-7">
                         <input type="text" class="form-control" formControlName="phone"
                         [readonly]="dis_input_app.phone" [class.error_user]="status_error.phone"/>
+                        <show-error-valid [control]="appForm.get('phone')"></show-error-valid>
                     </div>
                 </div>
 
@@ -48,6 +51,7 @@
                     <div class="col-sm-7">
                         <input type="text" class="form-control" formControlName="birth_date"
                         [readonly]="dis_input_app.birth_date" [class.error_user]="status_error.birth_date"/>
+                        <show-error-valid [control]="appForm.get('birth_date')"></show-error-valid>
                     </div>
                 </div>
 
@@ -60,6 +64,7 @@
                     <div class="col-sm-7">
                         <input type="text" class="form-control" formControlName="personal_id"
                         [readonly]="dis_input_app.personal_id" [class.error_user]="status_error.personal_id"/>
+                        <show-error-valid [control]="appForm.get('personal_id')"></show-error-valid>
                     </div>
                 </div>
 
@@ -72,6 +77,7 @@
                     <div class="col-sm-7">
                         <input type="text" class="form-control" formControlName="address"
                         [readonly]="dis_input_app.address" [class.error_user]="status_error.address"/>
+                        <show-error-valid [control]="appForm.get('address')"></show-error-valid>
                     </div>
                 </div>
           

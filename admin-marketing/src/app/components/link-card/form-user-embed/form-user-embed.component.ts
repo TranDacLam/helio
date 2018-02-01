@@ -12,16 +12,22 @@ import 'rxjs/add/observable/throw';
 })
 export class FormUserEmbedComponent implements OnInit {
 
+    /*
+        Author: Lam
+    */
+
+    // receive value from parrent add-link-card component
     @Input() status_error;
 
     embedForm: FormGroup;
 
     user_embed = new Customer();
 
+    // Enable/Disable input field when change input checkbox
     dis_input_embed = {barcode: true, full_name: true, email: true, phone: true, 
                         birth_date: true, personal_id: true, address: true};
 
-    errorMessage = '';
+    errorMessage = ''; // Message show error
 
     constructor(private fb: FormBuilder, private linkCardService: LinkCardService) { }
 
@@ -29,11 +35,15 @@ export class FormUserEmbedComponent implements OnInit {
         this.userEmbedForm();
     }
 
+    /*
+        Function userAppForm(): create form
+        Author: Lam
+    */
     userEmbedForm(){
         this.embedForm = this.fb.group({
             barcode: [this.user_embed.barcode, [Validators.required]],
             full_name: [this.user_embed.full_name, [Validators.required]],
-            email: [this.user_embed.email, [Validators.required, Validators.email]],
+            email: [this.user_embed.email, [Validators.email]],
             phone: [this.user_embed.phone, Validators.required],
             birth_date: [this.user_embed.birth_date, Validators.required],
             personal_id: [this.user_embed.personal_id, Validators.required],
@@ -41,6 +51,10 @@ export class FormUserEmbedComponent implements OnInit {
         });
     }
 
+    /*
+        Function searchBarcode(): call service function getBarcode() to get user embed by barcode
+        Author: Lam
+    */
     searchBarcode(value){
         let barcode = parseInt(value);
         this.linkCardService.getBarcode(barcode).subscribe(
@@ -61,7 +75,10 @@ export class FormUserEmbedComponent implements OnInit {
         );
     }
 
-
+    /*
+        Function onSubmitEmbed(): call service function updateUserEmbed() to update user embed
+        Author: Lam
+    */
     onSubmitEmbed(){
         this.linkCardService.updateUserEmbed(this.embedForm.value).subscribe(put_embed => {
             console.log(put_embed);

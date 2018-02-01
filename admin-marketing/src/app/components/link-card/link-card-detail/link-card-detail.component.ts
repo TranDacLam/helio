@@ -22,17 +22,19 @@ export class LinkCardDetailComponent implements OnInit {
         this.getUser();
     }
 
+    /*
+        Function getUser(): 
+         + Get email user app and barcode user emebed 
+         + Call service function getEmail() by email and function getBarcode() by barcode
+        Author: Lam
+    */
     getUser(): void{
-        const app_id = +this.route.snapshot.paramMap.get('id');
+        const email = this.route.snapshot.paramMap.get('email');
         const barcode = +this.route.snapshot.queryParamMap.get('barcode');
-        console.log(app_id);
-        console.log(barcode);
-        this.linkCardService.getUserApp(app_id).subscribe(data_app => {
-            console.log(data_app);
+        this.linkCardService.getEmail(email).subscribe(data_app => {
             this.user_app = data_app;
         });
-        this.linkCardService.getUserEmbed(barcode).subscribe(data_embed => {
-            console.log(data_embed);
+        this.linkCardService.getBarcode(barcode).subscribe(data_embed => {
             this.user_embed = data_embed;
         });
     }

@@ -26,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let noti of notifications">
+            <tr *ngFor="let noti of notifications" id="del-{{noti.id}}">
                 <td><input type="checkbox" (change)="onSelectCKB($event, noti)" [checked]="select_checked"/></td>
                 <td>{{ noti.id }}</td>
                 <td><a routerLink="/notification/edit/{{ noti.id }}">{{ noti.subject }}</a></td>
