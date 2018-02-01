@@ -9,7 +9,7 @@
             required
             pattern="[0-9]+"
             placeholder="Tên Mệnh giá nạp tiền" 
-            #name="ngModel" 
+            #name="ngModel"
             >
             <div *ngIf="name.invalid && (name.dirty || name.touched)">
                 <em [ngStyle]="{'color': 'red'}" *ngIf="name.errors.required">
@@ -27,6 +27,8 @@
     		<button (click)="addDenomination(name.value)"
             [disabled]="addDenominationForm.invalid"
             class="btn btn-info">Lưu lại</button>
+
+            <button (click)="logValue(addDenominationForm)" type="button" class="btn btn-default">button</button>
     	</div>
     </div>
 </form>

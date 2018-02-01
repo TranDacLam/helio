@@ -1,0 +1,13 @@
+.edit-feedback {
+	margin: 10px 15px;
+	border-bottom: 1px solid black;
+}
+a.title-feedback {
+	padding: 5px 0px;
+	color: black;
+	font-size: 15px;
+}
+.area-feedback ul, li {
+	list-style: none;
+	text-decoration: none;
+}

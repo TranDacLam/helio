@@ -19,6 +19,8 @@ import { AdvertisementAddComponent } from './components/advertisement/advertisem
 import { PromotionTypeListComponent } from './components/promotion-type/promotion-type-list/promotion-type-list.component';
 import { DenominationAddComponent } from './components/denomination/denomination-add/denomination-add.component';
 import { DenominationListComponent } from './components/denomination/denomination-list/denomination-list.component';
+import { FeedbackDetailComponent } from './components/feedback/feedback-detail/feedback-detail.component';
+import { FeedbackListComponent } from './components/feedback/feedback-list/feedback-list.component';
 
 const routes: Routes = [
     { 
@@ -45,6 +47,10 @@ const routes: Routes = [
         path: 'denomination-add', component: DenominationAddComponent
     }, {
         path: 'denomination-list', component: DenominationListComponent
+    }, {
+        path: 'feedback-list', component: FeedbackListComponent
+    }, {
+        path: 'feedback-detail/:id', component: FeedbackDetailComponent
     },
     { path: 'link-card/add', component: AddLinkCardComponent },
     { path: 'link-card/detail/:id', component: LinkCardDetailComponent },

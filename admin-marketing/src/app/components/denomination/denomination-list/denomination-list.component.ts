@@ -17,7 +17,8 @@ export class DenominationListComponent implements OnInit {
 	denominations: Denomination[];
 	select_checkbox = false; // Default checkbox false
 	deno_selected: any;
-	message: string = "";
+	message_success: string = ""; // Display message success
+  message_error: string = ""; // Display message error
 
 	// Using trigger becase fetching the list of feedbacks can be quite long
     // thus we ensure the data is fetched before rensering
@@ -76,6 +77,7 @@ export class DenominationListComponent implements OnInit {
             });
             this.deno_selected = array_del;
             this.select_checkbox = true;
+            this.message_error = "";
         }else{
             this.select_checkbox = false;
             this.denominations.forEach((item, index) => {
@@ -88,6 +90,7 @@ export class DenominationListComponent implements OnInit {
   	checkItemChange(event, deno) {
   		if(event.target.checked){
         	this.deno_selected.push(deno.id);
+          this.message_error = ""
       	}
       	else{
        		let updateDenoItem = this.deno_selected.find(this.findIndexToUpdate, deno.id);
@@ -102,16 +105,19 @@ export class DenominationListComponent implements OnInit {
     }
   	// Delete All select checkbox
   	deleteDenominationCheckbox() {
-  		console.log(this.deno_selected);
-  		this.denominationService.deleteAllDenosSelected(this.deno_selected).subscribe(
-			result => {
-	   			for(let i=0; i < this.deno_selected.length; i++){
-	   				if(this.denominations.find(x => x=this.deno_selected[i]))
-	   				{
-	   					this.denominations.splice(this.denominations.indexOf(this.deno_selected[i]), 1);
-	   				}
-	   			}
-	   			this.message = "Xóa quảng cáo thành công";
-	   		});
+  		if( this.deno_selected.length == 0) {
+        this.message_error = "Vui lòng chọn quảng cáo để xóa";
+      } else {
+        this.denominationService.deleteAllDenosSelected(this.deno_selected).subscribe(
+        result => {
+             for(let i=0; i < this.deno_selected.length; i++){
+               if(this.denominations.find(x => x=this.deno_selected[i]))
+               {
+                 this.denominations.splice(this.denominations.indexOf(this.deno_selected[i]), 1);
+               }
+             }
+             this.message_success = "Xóa quảng cáo thành công";
+           });
+      }
   	}
 }

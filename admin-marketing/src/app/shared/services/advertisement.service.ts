@@ -49,7 +49,7 @@ export class AdvertisementService {
 	}
 	deleteAllAdvsSelected(adv_id: Advertisement[]): Observable<Advertisement[]> {
 		const url = `${this.urlAdv}?adv_id=${adv_id}`;
-		return this.http.get<Advertisement[]>(url)
+		return this.http.delete<Advertisement[]>(url, httpOptions)
 		.catch(this.handleError)
 	}
 
