@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Location } from '@angular/common';
 
@@ -20,12 +20,14 @@ export class FeedbackDetailComponent implements OnInit {
 
   	feedbacks: Feedback[];
   	status = Status; // List rating
+    formFeed = new Feedback();
 
   	constructor(
   		private feedbackService: FeedbackService,
   		private route: ActivatedRoute,
   		private location: Location,
     	private fb: FormBuilder,
+      private router: Router
   		) {
   			this.createFormFeedback();
   		 }
@@ -36,22 +38,18 @@ export class FeedbackDetailComponent implements OnInit {
 
   	createFormFeedback() {
   		this.feedbackForm = this.fb.group({
-	        name: '',
-	        email: '',
-	        phone: '',
-	        subject: '',
-	        message: '',
-	        feedback_type: '',
-	        sent_date: '',
-	        rate: '',
-	        status: '',
-	        answer: '',     
+	        name: [this.formFeed.name],
+	        email: [this.formFeed.email],
+	        phone: [this.formFeed.phone],
+	        subject: [this.formFeed.subject],
+	        message: [this.formFeed.message],
+	        feedback_type: [this.formFeed.feedback_type],
+	        sent_date: [this.formFeed.sent_date],
+	        rate: [this.formFeed.rate],
+	        status: [this.formFeed.status],
+	        answer: [this.formFeed.answer],     
       })
   	}
-  	goBack() {
-    	this.location.back();
-    }
-
   	// Get Feedback By ID
   	getFeedback() {
     	const id = +this.route.snapshot.paramMap.get('id');
@@ -61,11 +59,11 @@ export class FeedbackDetailComponent implements OnInit {
 
     // Delete Feedback by ID
     deleteFeedback(feedback: Feedback) {
-    	this.feedbackService.deleteFeedbackById(feedback).subscribe(() => this.goBack());
+    	this.feedbackService.deleteFeedbackById(feedback).subscribe(() => this.router.navigate(['/feedback-list', { message_del: feedback.name} ]));
     }
     // Update Feedback by ID
     updateFeedback() {
     	this.feedbackService.updateFeedbackById(this.feedback)
-    	.subscribe(() => this.goBack())
+    	.subscribe(() => this.router.navigate(['/feedback-list', { message_put: this.feedback.name} ]))
     }
 }

@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 
 import { Subject } from 'rxjs/Subject';
+import { ActivatedRoute } from '@angular/router';
 
 import { Advertisement }  from '../../../shared/class/advertisement';
 
@@ -23,18 +24,19 @@ export class AdvertisementListComponent implements OnInit {
 	isChecked = false; // Default value chekbox
 	message_success: string = ""; // Display message success
 	message_error: string = ""; // Display message error
+	message_result = ''; // Message result
 
 	// Using trigger becase fetching the list of feedbacks can be quite long
-    // thus we ensure the data is fetched before rensering
+  // thus we ensure the data is fetched before rensering
 	dtTrigger: Subject<any> = new Subject();
 
   	constructor(
-  		private advertisementService: AdvertisementService
+  		private advertisementService: AdvertisementService,
+  		private route: ActivatedRoute
   		) {
   			this.advs = [];
   			this.advs_delete = [];
   		 }
-
  	ngOnInit() {
  	 	this.dtOptions = {
   			columnDefs: [{
@@ -70,6 +72,15 @@ export class AdvertisementListComponent implements OnInit {
 	          },
 	  	};
 	  	this.getAllAdvertisement();
+	  	this.route.params.subscribe(params => {
+            if(params.message_post){
+                this.message_result = " Thêm "+ params.message_post + " thành công.";
+            } else if (params.message_put) {
+            	this.message_result = "  Chỉnh sửa  "+ params.message_put + " thành công.";
+            } else {
+            	this.message_result = "";
+            }
+        });
   	}
   	// Get All Advertisement
   	getAllAdvertisement() {
@@ -89,6 +100,7 @@ export class AdvertisementListComponent implements OnInit {
             this.advs_delete = listAdv_del;
             this.isChecked = true;
             this.message_error = "";
+            this.message_result = "";
         }else{
             this.isChecked = false;
             this.advs.forEach((item, index) => {
@@ -100,6 +112,7 @@ export class AdvertisementListComponent implements OnInit {
       if(e.target.checked){
         this.advs_delete.push(adv.id);
         this.message_error = "";
+        this.message_result = "";
       }
       else{
        let updateAdvItem = this.advs_delete.find(this.findIndexToUpdate, adv.id);
@@ -108,7 +121,6 @@ export class AdvertisementListComponent implements OnInit {
 
        this.advs_delete.splice(index, 1);
       }
-      console.log(this.advs_delete);
     }
     findIndexToUpdate(type) { 
         return type.id === this;
@@ -118,6 +130,7 @@ export class AdvertisementListComponent implements OnInit {
 	deleteAllCheckAdvs() {
 		if (this.advs_delete.length == 0 ){
 			this.message_error = "Vui lòng chọn quảng cáo để xóa";
+			this.message_result = "";
 		} else {
 			this.advertisementService.deleteAllAdvsSelected(this.advs_delete).subscribe(
 				result => {

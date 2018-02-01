@@ -10,6 +10,9 @@
 	<div *ngIf="message_error" class="alert alert-danger">
 		{{ message_error }}
 	</div>
+	<div class="alert alert-success" *ngIf="message_result">
+        {{message_result}}
+    </div>
 	<table id="table-denomination" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
