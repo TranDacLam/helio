@@ -128,10 +128,11 @@ export class AdvertisementListComponent implements OnInit {
 
 	// Delete all checkbox selected
 	deleteAllCheckAdvs() {
-		if (this.advs_delete.length == 0 ){
-			this.message_error = "Vui lòng chọn quảng cáo để xóa";
-			this.message_result = "";
-		} else {
+		if (this.advs_delete !== null) {
+			if (this.advs_delete.length == 0 ){
+				this.message_error = "Vui lòng chọn quảng cáo để xóa";
+				this.message_result = "";
+			} else {
 			this.advertisementService.deleteAllAdvsSelected(this.advs_delete).subscribe(
 				result => {
 		   			for(let i=0; i < this.advs_delete.length; i++){
@@ -142,7 +143,9 @@ export class AdvertisementListComponent implements OnInit {
 		   			}
 		   			this.message_success = "Xóa quảng cáo thành công";
 		   		});
-		}
-		
+			}
+		} else {
+			return 0;
+		}	
 	}
 }

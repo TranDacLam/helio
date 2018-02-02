@@ -116,6 +116,7 @@ export class FeedbackListComponent implements OnInit {
         return feedback.id === this;
     }
     deleteFeedbackCheckbox() {
+      if (this.feedback_del !== null) {
         if( this.feedback_del.length == 0) {
           this.message_error = "Vui lòng chọn phản hồi để xóa";
           this.message_result = "";
@@ -129,7 +130,10 @@ export class FeedbackListComponent implements OnInit {
                    }
                 }
                 this.message_success = "Xóa phản hồi thành công";
-           });
+          });
+        }
+      } else {
+        return 0;
       }
     }
 }

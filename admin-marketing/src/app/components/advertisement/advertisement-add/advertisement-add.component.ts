@@ -25,9 +25,6 @@ export class AdvertisementAddComponent implements OnInit {
 
    	ngOnInit() {
    	}
-   	goBack() {
-   		this.location.back();
-   	}
    	CreateAdv(advForm: any) {
    		this.advertisementService.addAdvertisement( advForm )
    			.subscribe(

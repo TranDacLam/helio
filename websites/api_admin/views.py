@@ -306,65 +306,39 @@ class FeedbackView(APIView):
         try:
             status = self.request.query_params.get('status', None)
             rate = self.request.query_params.get('rate', None)
-            start_date = self.request.query_params.get('start_date', None)
-            end_date = self.request.query_params.get('end_date', None)
 
-            # Check start_date and end_date
-            if start_date and end_date and status :
-                print "++ start_date ++ end_date ++ status"
-                queryset = FeedBack.objects.filter(status = status,sent_date__range=(start_date, end_date))
-                print queryset
-                serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                return Response(serializer.data)
-
-            # Check start_date and status || end_date status
-            if start_date and status or end_date and status:
-                if start_date and status:
-                    print "start_date_status"
-                    queryset = FeedBack.objects.filter(status=status, sent_date=start_date)
-                    serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                    return Response(serializer.data)
-                else:
-                    print "end_date_status"
-                    queryset = FeedBack.objects.filter(status=status, sent_date=end_date)
-                    serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                    return Response(serializer.data)
-
-            # Check status 
-            if status:
+            # Verification status, rate exists or not
+            # If exists
+            if status or rate:
                 print "status"
-                status_list = FeedBack.objects.filter(status=status)
-                serializer = admin_serializers.FeedBackSerializer(status_list, many=True)
-                return Response(serializer.data)
+                start_date = self.request.query_params.get('start_date', None)
+                end_date = self.request.query_params.get('end_date', None)
 
-            # Check start_date and end_date
-            if start_date and end_date and rate :
-                print "++ start_date ++ end_date ++ rate"
-                queryset = FeedBack.objects.filter(rate = rate,sent_date__range=(start_date, end_date))
-                print queryset
-                serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                return Response(serializer.data)
+                kwargs = {}
+                try:
+                    if start_date:
+                        kwargs['sent_date__gte'] = start_date
+                        print kwargs['sent_date__gte']
+                    if end_date:
+                        kwargs['sent_date__lte'] = end_date
+                        print kwargs['sent_date__lte']
+                except ValueError, e:
+                    error = {"code": 400, "message": "%s" % e, "fields": ""}
+                    return Response(error, status=400)
 
-            # Check start_date and status || end_date status
-            if start_date and rate or end_date and rate:
-                if start_date and rate:
-                    print "start_date_rate"
-                    queryset = FeedBack.objects.filter(rate=rate, sent_date=start_date)
+                if kwargs:
+                    print "kwargs"
+                    queryset = FeedBack.objects.filter(
+                        **kwargs).filter(Q(status=status) | Q(rate=rate))
                     serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
                     return Response(serializer.data)
                 else:
-                    print "end_date_rate"
-                    queryset = FeedBack.objects.filter(rate=rate, sent_date=end_date)
+                    queryset = FeedBack.objects.filter(Q(status=status) | Q(rate=rate))
                     serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
                     return Response(serializer.data)
-
-            # Ckeck rate
-            if rate:
-                print "rate"
-                rate_list = FeedBack.objects.filter(rate=rate)
-                serializer = admin_serializers.FeedBackSerializer(rate_list, many=True)
-                return Response(serializer.data)
-
+                return Response({"code": 200, "message": queryset, "fields": ""}, status=200)
+                
+            # Status or rate not exist
             else:
                 list_feedback = FeedBack.objects.all()
                 serializer = admin_serializers.FeedBackSerializer(list_feedback, many=True)
