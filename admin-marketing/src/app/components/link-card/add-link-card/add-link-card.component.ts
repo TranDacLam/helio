@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators  } from '@angular/forms';
 import { User } from '../../../shared/class/user';
 import { LinkCardService } from '../../../shared/services/link-card.service';
@@ -28,9 +29,13 @@ export class AddLinkCardComponent implements OnInit {
 
     // Check input fields 2 form
     status_error = {full_name: false, email: false, phone: false, birth_date: false, personal_id: false, address: false};
-    status_card_link = false;
+    errorMessage = '';
 
-    constructor(private linkCardService: LinkCardService, private location: Location) { }
+    constructor(
+        private linkCardService: LinkCardService, 
+        private location: Location,
+        private router: Router,
+    ) { }
 
     ngOnInit() {
     }
@@ -47,24 +52,24 @@ export class AddLinkCardComponent implements OnInit {
         let user_app = this.userappComponent.user_app;
         let user_embed = this.userembedComponent.user_embed;
 
-        this.status_card_link = false;
-
         Object.entries(user_app).forEach(([key, val]) => {
             if(key !== 'id'){
                 if(user_app[key] !== user_embed[key]){
                     this.status_error[key] = true;
-                    this.status_card_link = true;
                 }else{
                     this.status_error[key] = false;
                 }
             }
         });
         
-        if(this.status_card_link == false){
-            this.linkCardService.relate(user_app.email, user_embed.barcode).subscribe(success_app => {
-                location.href = "/link-card/detail/"+user_app.id+"?email="+user_app.email+"&barcode="+user_embed.barcode;
-            });
-        }
+        this.linkCardService.relate(user_app.email, user_embed.barcode).subscribe(
+            (data) => {
+                this.router.navigate(['/link-card/detail/', user_app.id,{ email: user_app.email, barcode: user_embed.barcode}]);
+            },
+            (error) => {
+                this.errorMessage = error.message; 
+            }
+        );
     }
 
 }

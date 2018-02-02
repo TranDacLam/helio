@@ -59,7 +59,7 @@ export class FormUserEmbedComponent implements OnInit {
         let barcode = parseInt(value);
         this.linkCardService.getBarcode(barcode).subscribe(
             (data) => {
-                this.user_embed = data;
+                this.user_embed = data.message;
                 this.embedForm.setValue({
                     barcode: this.user_embed.barcode,
                     full_name: this.user_embed.full_name,
@@ -71,7 +71,18 @@ export class FormUserEmbedComponent implements OnInit {
                 });
                 this.errorMessage = '';
             },
-            (error) => { this.errorMessage = error.message; } 
+            (error) => { 
+                this.errorMessage = error.message; 
+                this.embedForm.setValue({
+                    barcode: null,
+                    full_name: null,
+                    email: null,
+                    phone: null,
+                    birth_date: null,
+                    personal_id: null,
+                    address: null
+                });
+            } 
         );
     }
 

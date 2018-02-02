@@ -15,7 +15,7 @@ export class LinkCardService {
 
     private url_app= "http://localhost:8000/api/user/";
     private url_embed= "http://localhost:8000/api/user_embed/";
-    private url_relate = "http://localhost:8000/api/relate/";
+    private url_relate = "http://localhost:8000/vi/api/relate/";
 
     constructor(private http: Http) { }
 
@@ -42,7 +42,7 @@ export class LinkCardService {
         function getBarcode(): Get user embed by barcode
         author: Lam
     */
-    getBarcode(barcode): Observable<Customer>{
+    getBarcode(barcode): Observable<any>{
         const url_get_barcode = `${this.url_embed}?barcode=${barcode}`;
         return this.http.get(url_get_barcode).map((res: Response) => res.json()).catch(this.handleError);
     }
@@ -82,7 +82,7 @@ export class LinkCardService {
     */
     relate(email, barcode): Observable<any>{
         let obj_relate = {email: email, barcode: barcode};
-        return this.http.post(this.url_relate, JSON.stringify(obj_relate), httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.post(this.url_relate, obj_relate, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
 

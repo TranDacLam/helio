@@ -69,7 +69,17 @@ export class FormUserAppComponent implements OnInit {
                 });
                 this.errorMessage = '';
             },
-            (error) => { this.errorMessage = error.message; } 
+            (error) => { 
+                this.errorMessage = error.message; 
+                this.appForm.setValue({
+                    full_name: null,
+                    email: null,
+                    phone: null,
+                    birth_date: null,
+                    personal_id: null,
+                    address: null
+                });
+            } 
         );
     }
 
@@ -79,9 +89,7 @@ export class FormUserAppComponent implements OnInit {
     */
     onSubmitApp(){
         let id = this.user_app.id;
-        this.linkCardService.updateUserApp(this.appForm.value, id).subscribe(put_user => {
-            console.log(put_user);
-        });
+        this.linkCardService.updateUserApp(this.appForm.value, id).subscribe();
     }
 
 }

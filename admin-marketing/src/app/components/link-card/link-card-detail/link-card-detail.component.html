@@ -4,7 +4,7 @@
             Chỉnh Sửa Thẻ Liên Kế
             <span class="pull-right"><i>Bạn đã thực hiện liên kết thẻ với tài khoản Helio thành công.</i></span>
         </legend>
-        <div class="col-xs-7 col-sm-7" *ngIf="user_app || user_embed">
+        <div class="col-xs-7 col-sm-7" *ngIf="user_app && user_embed">
             <form novalidate>
                 <legend class="scheduler-border">THÔNG TIN TÀI KHOẢN HELIO APP</legend>
                 <div class="form-group row">
@@ -12,7 +12,7 @@
                         <label class="col-form-label form-check-label">Họ Và Tên</label>
                     </div>
                     <div class="col-sm-7">
-                        {{ user_app.name }}
+                        {{ user_app.full_name }}
                     </div>
                 </div>
 
@@ -48,7 +48,7 @@
                         <label class="col-form-label form-check-label">Chứng Minh Nhân Dân</label>
                     </div>
                     <div class="col-sm-7">
-                        {{ user_app.government_id }}
+                        {{ user_app.personal_id }}
                     </div>
                 </div>
 
@@ -76,7 +76,7 @@
                         <label class="col-form-label form-check-label">Tên Chủ Thẻ</label>
                     </div>
                     <div class="col-sm-7">
-                        {{ user_embed.name }}
+                        {{ user_embed.full_name }}
                     </div>
                 </div>
 
@@ -112,7 +112,7 @@
                         <label class="col-form-label form-check-label">Chứng Minh Nhân Dân</label>
                     </div>
                     <div class="col-sm-7">
-                        {{ user_embed.government_id }}
+                        {{ user_embed.full_name }}
                     </div>
                 </div>
 
