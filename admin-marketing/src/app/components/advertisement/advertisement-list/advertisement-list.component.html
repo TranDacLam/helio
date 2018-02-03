@@ -21,7 +21,7 @@
 	      	</tr>
     	</thead>
     	<tbody>
-   			<tr *ngFor ="let adv of advs; let i=index " >
+   			<tr *ngFor ="let adv of advs" id="delete{{adv.id}}" >
    				<td><input type="checkbox" [checked]="isChecked" value="{{adv.id}}" name="" (change)="changeCheckboxAdv($event, adv)"></td>
         		<td><a routerLink="/advertisement-detail/{{adv.id}}" >{{ adv.name }}</a></td>
    			</tr>	

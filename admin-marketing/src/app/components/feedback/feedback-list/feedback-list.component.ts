@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Http, Response } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
@@ -25,12 +25,16 @@ export class FeedbackListComponent implements OnInit {
     message_error: string = ""; // Display message error
     message_result: string = ""; // Display message result
 
-	// Using trigger becase fetching the list of feedbacks can be quite long
-	// thus we ensure the data is fetched before rensering
-	dtTrigger: Subject<any> = new Subject();
-	constructor(
-    private feedbackService: FeedbackService,
-    private route: ActivatedRoute
+    // Inject the DataTableDirective into the dtElement property
+    @ViewChild(DataTableDirective)
+    dtElement: DataTableDirective;
+
+	  // Using trigger becase fetching the list of feedbacks can be quite long
+	  // thus we ensure the data is fetched before rensering
+	  dtTrigger: Subject<any> = new Subject();
+	  constructor(
+      private feedbackService: FeedbackService,
+      private route: ActivatedRoute
     ) {
     this.feedbacks = [];
     this.feedback_del = [];
@@ -123,13 +127,12 @@ export class FeedbackListComponent implements OnInit {
       } else {
         this.feedbackService.deleteAllFeedbackChecked(this.feedback_del).subscribe(
         result => {
-             for(let i=0; i < this.feedback_del.length; i++){
-                if(this.feedbacks.find(x => x=this.feedback_del[i]))
-                   {
-                    this.feedbacks.splice(this.feedbacks.indexOf(this.feedback_del[i]), 1);
-                   }
-                }
-                this.message_success = "Xóa phản hồi thành công";
+             this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+               this.feedback_del.forEach(function(e){
+                 dtInstance.rows('#delete'+e).remove().draw();
+               });
+             });
+            this.message_success = "Xóa phản hồi thành công";
           });
         }
       } else {

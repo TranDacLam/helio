@@ -1,4 +1,5 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DataTableDirective } from 'angular-datatables';
 
 import { Subject } from 'rxjs/Subject';
 import { ActivatedRoute } from '@angular/router';
@@ -26,8 +27,12 @@ export class AdvertisementListComponent implements OnInit {
 	message_error: string = ""; // Display message error
 	message_result = ''; // Message result
 
+	// Inject the DataTableDirective into the dtElement property
+    @ViewChild(DataTableDirective)
+    dtElement: DataTableDirective; 
+
 	// Using trigger becase fetching the list of feedbacks can be quite long
-  // thus we ensure the data is fetched before rensering
+  	// thus we ensure the data is fetched before rensering
 	dtTrigger: Subject<any> = new Subject();
 
   	constructor(
@@ -135,12 +140,11 @@ export class AdvertisementListComponent implements OnInit {
 			} else {
 			this.advertisementService.deleteAllAdvsSelected(this.advs_delete).subscribe(
 				result => {
-		   			for(let i=0; i < this.advs_delete.length; i++){
-		   				if(this.advs.find(x => x=this.advs_delete[i]))
-		   				{
-		   					this.advs.splice(this.advs.indexOf(this.advs_delete[i]), 1);
-		   				}
-		   			}
+		   			this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+               		this.advs_delete.forEach(function(e){
+                 	dtInstance.rows('#delete'+e).remove().draw();
+               		});
+             	});
 		   			this.message_success = "Xóa quảng cáo thành công";
 		   		});
 			}
