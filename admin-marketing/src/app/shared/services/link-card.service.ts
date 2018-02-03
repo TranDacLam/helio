@@ -77,6 +77,15 @@ export class LinkCardService {
     }
 
     /* 
+        function delLinkCard(): Delete link card by id
+        author: Lam
+    */
+    delLinkCard(id: number): Observable<any>{
+        const url_del_linkcard = `http://localhost:8000/vi/api/delete_relate/${id}`;
+        return this.http.delete(url_del_linkcard, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    }
+
+    /* 
         function relate(): check link card and create link card
         author: Lam
     */

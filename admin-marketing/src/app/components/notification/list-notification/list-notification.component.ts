@@ -31,6 +31,11 @@ export class ListNotificationComponent implements OnInit {
 
     ngOnInit() {
         this.getNotifications();
+
+        /*
+            Use route to get params from url
+            Author: Lam
+        */
         this.route.params.subscribe(params => {
             if(params.message_put){
                 this.message_result = "Chình sửa "+ params.message_put + " thành công.";
