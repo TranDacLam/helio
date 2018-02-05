@@ -1,0 +1,45 @@
+<div class='row '>
+	<a class="pull-left" routerLink="/denomination-list">Hot Advs</a>
+	<a class="pull-right" routerLink="/denomination-add">Thêm Hot Advs</a>
+</div>
+<br>
+<div class="table card-list">
+	<div *ngIf="message_success" class="alert alert-success">
+		{{ message_success }}
+	</div>
+	<div *ngIf="message_error" class="alert alert-danger">
+		{{ message_error }}
+	</div>
+	<div class="alert alert-success" *ngIf="message_result">
+        {{message_result}}
+    </div>
+	<table id="table-hot-advs" datatable [dtOptions]='dtOptions' class='row-border hover'>
+		<thead>
+	      	<tr>
+	      		<th><input type="checkbox" name="allCheckHotAdvs" value="allCheckHotAdvs"(change)="checkAllHotAdvs($event)"/></th>
+
+	        	<th>Hot Advs</th>
+	      	</tr>
+    	</thead>
+    	<tbody>
+   			<tr *ngFor ="let hot_adv of hot_advs" id="delete{{hot_adv.id}}">
+   				<td><input type="checkbox" [checked]="select_checkbox"
+   					value={{hot_adv.id}} name=""
+   					(change)="checkItemChange($event, hot_adv)"/></td>
+        		<td>{{ hot_adv.name }}</td>
+   			</tr>
+    	</tbody>
+	</table>
+	<hr>
+	<div class='row'>
+		<div class="col-md-3">
+			<select name="" class="form-control">
+				<option value="">Xóa các hot advs được chọn</option>
+			</select>
+		</div>
+		<div class="col-md-3">
+			{{hot_adv_selected.length}} của {{hot_advs.length}} được chọn
+			<button (click)="deleteHotAdvsCheckbox()" type="button" class="btn btn-danger">Thực hiện</button>
+		</div>
+	</div>
+</div>
