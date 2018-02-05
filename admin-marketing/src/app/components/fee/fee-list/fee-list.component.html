@@ -1,0 +1,37 @@
+	<div class="row head-content">
+		<div class="pull-left child-head">
+			Phí Giao Dịch
+		</div>
+		<div class="pull-right child-head">
+			<a href=""><span class="glyphicon glyphicon-plus"></span>
+			Thêm Phí Giao Dịch
+			</a>
+		</div>
+	</div>
+	<div class="row">
+		<div *ngIf="errorText" class="alert-danger">
+			{{errorText}}
+		</div>
+	</div>
+	
+	<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+		<thead>
+			<tr class="">
+				<th><input type="checkbox" name=""></th>
+				<th>Phí</th>
+				<th>Vị trí</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody *ngIf="fees">
+			<tr *ngFor="let fee of fees.message">
+				<td><input type="checkbox" name=""></td>
+				<td>{{fee.fee}} {{fee.fee_type}}</td>
+				<td>{{fee.position}}</td>
+				<td *ngIf="fee.is_apply"><div class="apply-fee text-center">Đang Áp dụng phí</div></td>
+				<td *ngIf="!fee.is_apply"><div class="apply-fee text-center">Áp dụng phí</div></td>
+			</tr>
+			<hr>
+		</tbody>
+	</table>
+	

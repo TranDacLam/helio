@@ -19,7 +19,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.db.models import Count
 from django.http import Http404
-
+from django.db import DatabaseError
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
 """
@@ -599,20 +599,31 @@ class UserEmbedDetail(APIView):
                 cursor.execute(query_str.format(barcode))
                 item = {}
                 item = cursor.fetchone()
-                # check Customer_Id
-                if item and item[7]:
-                    result = {}
-                    result["barcode"] = barcode  # barcode
-                    result["full_name"] = item[0] + item[1]  # Firstname + Surname
-                    result["birth_date"] = item[2].date()  # DOB
-                    result["personal_id"] = item[3]  # PostCode
-                    result["address"] = item[4]  # Address1
-                    result["email"] = item[5]  # EMail
-                    result["phone"] = item[6]  # Phone
-                    return Response({"code": 200, "message": result, "fields": ""}, status=200)
-                return Response({"code": 400, "message": 'Barcode not found', "fields": ""}, status=400)
+                # check item is exist
+                if not item:
+                    return Response({"code": 400, "message": "Barcode not found.", "fields": ""}, status=400)
+                # check Customer_Id is exist
+                if not item[7]:
+                    return Response({"code": 400, "message": "Tikets do not sign up with user", "fields": ""}, status=400)
+                
+                result = {}
+                first_name =  item[0] if item[0] else '' # Firstname 
+                surname = item[1] if item[1] else '' #Surname
+                result["full_name"] = first_name + surname
+                result["birth_date"] = item[2] if item[2] else None  # DOB
+                result["personal_id"] = item[3] if item[3] else None # PostCode
+                result["address"] = item[4] if item[4] else None # Address1
+                result["email"] = item[5] if item[5] else None # EMail
+                result["phone"] = item[6] if item[6] else None # Phone
+                return Response({"code": 200, "message": result, "fields": ""}, status=200)
 
             return Response({"code": 400, "message": 'Bacode is required', "fields": ""}, status=400)
+
+        # catching db embed error
+        except DatabaseError, e:
+            print "UserEmbedDetail ", e
+            error = {"code": 500,"message": "Query to DB embed fail", "fields": ""}
+            return Response(error, status=500)
 
         except Exception, e:
             print "UserEmbedDetail ", e
@@ -679,7 +690,7 @@ class RelateAPI(APIView):
             - check user is related
             - check user embed is exist
             - check user embed is related
-
+            
         """
         try:
             barcode = request.data.get('barcode', None)
@@ -701,16 +712,19 @@ class RelateAPI(APIView):
                 cursor.execute(query_str.format(barcode))
                 userembed_item = cursor.fetchone()
                 # check user embed is exist by check Customer_Id
-                if not userembed_item or not userembed_item[0]:
+                if not userembed_item:
                     return Response({"code": 400, "message": "Not found Userembed.", "fields": ""}, status=400)
                 
+                if not userembed_item[0]:
+                    return Response({"code": 400, "message": "Tikets do not sign up with user", "fields": ""}, status=400)
                 # check user embed is related
                 userembed_is_related = User.objects.filter(barcode=barcode)
                 if userembed_is_related:
                     return Response({"code": 400, "message": "Userembed is related.", "fields": ""}, status=400)
 
                 user.barcode = barcode
-                user.username_mapping = request.user.username
+                # TO DO
+                user.username_mapping = request.user.username 
                 user.date_mapping = datetime.now().date()
                 user.save()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
