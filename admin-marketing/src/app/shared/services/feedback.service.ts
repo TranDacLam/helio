@@ -30,7 +30,7 @@ export class FeedbackService {
   		return this.http.get<Feedback>(url, httpOptions).catch(this.handleError)
   	}
     // GET: Get Feedback by status
-    getFeedbackByStatus(status: Feedback): Observable<Feedback> {
+    getFeedbackByStatus(status: string): Observable<Feedback[]> {
       const url = `${this.urlFeedback}?status=${status}`;
       return this.http.get<Feedback[]>(url).catch(this.handleError)
     }
@@ -54,7 +54,7 @@ export class FeedbackService {
     }
 
     // GET: Get Feedback by rate
-    getFeedbackByRate(rate: Feedback): Observable<Feedback> {
+    getFeedbackByRate(rate: string): Observable<Feedback[]> {
       const url = `${this.urlFeedback}?rate=${rate}`;
       return this.http.get<Feedback[]>(url).catch(this.handleError)
     }
