@@ -38,8 +38,7 @@ export class FeeListComponent implements OnInit {
   	this.getFees();
   	this.dtOptions = {
       language: {
-            search: '',
-    
+            search: 'Tìm kiếm',
             searchPlaceholder: ' Nhập thông tin tìm kiếm',
             lengthMenu: 'Hiển thị _MENU_ Phí Giao Dịch',
             info: "Hiển thị _START_ tới _END_ của _TOTAL_ Phí",
