@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { UsersComponent } from './components/users/users.component';
 import { AddLinkCardComponent } from './components/link-card/add-link-card/add-link-card.component';
 import { LinkCardDetailComponent } from './components/link-card/link-card-detail/link-card-detail.component';
+import { LinkCardListComponent } from './components/link-card/link-card-list/link-card-list.component';
 import { ListNotificationComponent } from './components/notification/list-notification/list-notification.component';
 import { AddNotificationComponent } from './components/notification/add-notification/add-notification.component';
 import { EditNotificationComponent } from './components/notification/edit-notification/edit-notification.component';
@@ -21,6 +22,11 @@ import { DenominationAddComponent } from './components/denomination/denomination
 import { DenominationListComponent } from './components/denomination/denomination-list/denomination-list.component';
 import { FeedbackDetailComponent } from './components/feedback/feedback-detail/feedback-detail.component';
 import { FeedbackListComponent } from './components/feedback/feedback-list/feedback-list.component';
+import { HotAdvsAddComponent } from './components/hot-advs/hot-advs-add/hot-advs-add.component';
+import { HotAdvsListComponent } from './components/hot-advs/hot-advs-list/hot-advs-list.component';
+import { UserAddComponent } from './components/user/user-add/user-add.component';
+import { UserListComponent } from './components/user/user-list/user-list.component';
+import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
 
 const routes: Routes = [
     { 
@@ -51,6 +57,18 @@ const routes: Routes = [
         path: 'feedback-list', component: FeedbackListComponent
     }, {
         path: 'feedback-detail/:id', component: FeedbackDetailComponent
+    }, {
+        path: 'hot-advs-add', component: HotAdvsAddComponent
+    }, {
+        path: 'hot-advs-list', component: HotAdvsListComponent
+    }, {
+        path: 'user-add', component: UserAddComponent
+    }, {
+        path: 'user-list', component: UserListComponent
+    }, {
+        path: 'user-detail', component: UserDetailComponent
+    }, {
+        path: 'link-card-list', component: LinkCardListComponent
     },
     { path: 'link-card/add', component: AddLinkCardComponent },
     { path: 'link-card/detail/:id', component: LinkCardDetailComponent },
