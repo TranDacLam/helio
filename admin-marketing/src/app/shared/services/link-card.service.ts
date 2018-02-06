@@ -5,6 +5,7 @@ import { Customer } from '../class/customer';
 import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
+import { api } from '../utils/api';
 
 const httpOptions = {
     headers: new Headers({ 'Content-Type': 'application/json' })
@@ -94,6 +95,21 @@ export class LinkCardService {
         return this.http.post(this.url_relate, obj_relate, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
+    /* function getAllLinkedUsers(): Get all linked card users
+        author: Trangle
+    */
+    getAllLinkedUsers(): Observable<User[]> {
+       const url = `${api.user_link_card}`;
+       return this.http.get(url).map((res: Response) => res.json()).catch(this.handleError);
+    }
+    /* Delete All checkbox chosen
+        author: TrangLe
+    */
+
+    deleteAllUserLinkedSelected(user_linked_id: User[]): Observable<User[]> {
+        const url = `${api.user_link_card}?user_linked_id=${user_linked_id}`;
+        return this.http.delete(url, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    }
 
     // exception
     private handleError(error: Response) {
