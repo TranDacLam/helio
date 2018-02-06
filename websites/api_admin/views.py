@@ -310,7 +310,7 @@ class FeedbackView(APIView):
             # Verification status, rate exists or not
             # If exists
             if status or rate:
-                print "status"
+                print "status or rate"
                 start_date = self.request.query_params.get('start_date', None)
                 end_date = self.request.query_params.get('end_date', None)
 

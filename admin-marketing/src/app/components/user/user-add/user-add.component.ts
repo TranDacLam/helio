@@ -14,11 +14,13 @@ export class UserAddComponent implements OnInit {
 	user_form = new User();
 	users: User[];
 	roles_user = roles_user;
+  
+  @ViewChild('fileInput') fileInput: ElementRef;
 
-  	constructor(
-  		private fb: FormBuilder
-  		) {
-  	}
+	constructor(
+		private fb: FormBuilder
+		) {
+	}
 
  	ngOnInit() {
  	 	this.createForm();
@@ -39,6 +41,24 @@ export class UserAddComponent implements OnInit {
             role_user: [this.user_form.role_user, [Validators.required]]
         });
  	}
+   // upload image 
+    // FileReader: reading file contents
+    onFileChange(e) {
+      let reader = new FileReader();
+      if(e.target.files && e.target.files.length > 0) {
+        let file = e.target.files[0];
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          this.formUser.get('image').setValue(file)
+        };
+      }
+    }
+    // Clear file 
+    clearFile() {
+      this.formUser.get('image').setValue(null);
+      this.fileInput.nativeElement.value = '';
+    }
+
  	// Show pass word
  	showPassword(input: any): any {
  		input.type = input.type === 'password' ? 'text' : 'password';

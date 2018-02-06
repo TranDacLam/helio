@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -21,6 +22,7 @@ export class FeedbackDetailComponent implements OnInit {
   	feedbacks: Feedback[];
   	status = Status; // List rating
     formFeed = new Feedback();
+    errorMessage: String;
 
   	constructor(
   		private feedbackService: FeedbackService,
@@ -54,16 +56,26 @@ export class FeedbackDetailComponent implements OnInit {
   	getFeedback() {
     	const id = +this.route.snapshot.paramMap.get('id');
     	this.feedbackService.getFeedbackById(id)
-    	.subscribe(feedback => this.feedback = feedback);
+    	.subscribe(
+        feedback => this.feedback = feedback,
+        error =>  this.errorMessage = <any>error
+        );
     }
 
     // Delete Feedback by ID
     deleteFeedback(feedback: Feedback) {
-    	this.feedbackService.deleteFeedbackById(feedback).subscribe(() => this.router.navigate(['/feedback-list', { message_del: feedback.name} ]));
+    	this.feedbackService.deleteFeedbackById(feedback)
+        .subscribe(
+          () => this.router.navigate(['/feedback-list', { message_del: feedback.name} ]),
+          error =>  this.errorMessage = <any>error
+          );
     }
     // Update Feedback by ID
     updateFeedback() {
     	this.feedbackService.updateFeedbackById(this.feedback)
-    	.subscribe(() => this.router.navigate(['/feedback-list', { message_put: this.feedback.name} ]))
+    	  .subscribe(
+          () => this.router.navigate(['/feedback-list', { message_put: this.feedback.name} ]),
+          error =>  this.errorMessage = <any>error
+          )
     }
 }

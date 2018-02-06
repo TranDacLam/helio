@@ -24,6 +24,7 @@ export class FeedbackListComponent implements OnInit {
     message_success: string = ""; // Display message success
     message_error: string = ""; // Display message error
     message_result: string = ""; // Display message result
+    errorMessage: String;
 
     // Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
@@ -84,7 +85,9 @@ export class FeedbackListComponent implements OnInit {
 					this.feedbacks = feedbacks;
 					// Caling the DT trigger to manually render the table
 					this.dtTrigger.next();
-				});
+				},
+        error =>  this.errorMessage = <any>error
+        );
 	}
     selectAllCheckbox(event) {
         let arrFeedback_del = [];
@@ -133,7 +136,9 @@ export class FeedbackListComponent implements OnInit {
                });
              });
             this.message_success = "Xóa phản hồi thành công";
-          });
+          },
+          error =>  this.errorMessage = <any>error
+          );
         }
       } else {
         return 0;
