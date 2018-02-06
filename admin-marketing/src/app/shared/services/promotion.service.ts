@@ -6,7 +6,7 @@ import "rxjs/add/operator/catch";
 
 import { User } from '../class/user';
 import { Promotion } from '../class/promotion';
-import { api } from '../constants/api';
+import { api } from '../utils/api';
 
 const _options = {
     headers: new Headers({ 'Content-Type': 'application/json' })
