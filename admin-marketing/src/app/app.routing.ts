@@ -8,7 +8,7 @@ import { ListNotificationComponent } from './components/notification/list-notifi
 import { AddNotificationComponent } from './components/notification/add-notification/add-notification.component';
 import { EditNotificationComponent } from './components/notification/edit-notification/edit-notification.component';
 import { NotificationDetailComponent } from './components/notification/notification-detail/notification-detail.component';
-import { PromotionUsersComponent } from './components/promotions/promotion-users/promotion-users.component';
+import { UsersPromotionComponent } from './components/promotions/users-promotion/users-promotion.component';
 import { PromotionsComponent } from './components/promotions/promotions/promotions.component';
 import { PromotionDetailComponent } from './components/promotions/promotion-detail/promotion-detail.component';
 import { PromotionLabelListComponent } from './components/promotion-label/promotion-label-list/promotion-label-list.component';
@@ -26,9 +26,9 @@ const routes: Routes = [
     }, { 
      	path: 'promotions', component: PromotionsComponent
     }, { 
-     	path: 'promotion-users-detail/:id', component: PromotionUsersComponent
+     	path: 'users-promotions/:id', component: UsersPromotionComponent
     }, { 
-     	path: 'promotion-detail/:id', component: PromotionDetailComponent
+     	path: 'promotions/:id', component: PromotionDetailComponent
     }, {
         path: 'promotion-label-list', component: PromotionLabelListComponent
     }, {
