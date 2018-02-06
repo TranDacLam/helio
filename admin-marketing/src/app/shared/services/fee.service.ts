@@ -32,7 +32,8 @@ export class FeeService {
 		return Observable.throw(error);
 	}
 	createFee(fee: Fee ):Observable<Fee>{
-  		return this.http.post<Fee>(this.feeUrl, fee, httpOptions ).pipe(catchError(this.handleError)
+		let feeUrl = 'http://127.0.0.1:8000/vi/api/fee/add/';
+  		return this.http.post<Fee>(feeUrl, fee, httpOptions ).pipe(catchError(this.handleError)
     );
   }
 

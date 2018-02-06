@@ -62,7 +62,7 @@ const routes: Routes = [
     { path: 'notification/edit/:id', component: EditNotificationComponent },
     { path: 'notification/detail/:id', component: NotificationDetailComponent },
     { path: 'fees', component: FeeListComponent },
-    { path: 'fee-add', component: FeeAddComponent },
+    { path: 'fee/add', component: FeeAddComponent },
 
 
 ];

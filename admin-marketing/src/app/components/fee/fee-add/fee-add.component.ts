@@ -31,7 +31,8 @@ export class FeeAddComponent implements OnInit {
   	this.feeAddForm = this.formBuilder.group({
       fee: ['', Validators.required],
       position: ['', Validators.required],
-      is_apply: '',
+      fee_type: [ 'vnd', Validators.required],
+      is_apply: [false ],
     });
   }
 

@@ -95,3 +95,5 @@ class FeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fee
         exclude = ('created', 'modified')
+
+

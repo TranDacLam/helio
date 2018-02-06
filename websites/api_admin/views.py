@@ -795,11 +795,36 @@ class FeeAPI(APIView):
     def get(self, request, format=None):
         try:
             fee = Fee.objects.all()
-            serializer = admin_serializers.FeeSerializer(fee, many = True)
-            return Response({"code": 200, "message": serializer.data, "fields": ""}, status=200)
+            feeSerializer = admin_serializers.FeeSerializer(fee, many = True)
+            return Response({"code": 200, "message": feeSerializer.data, "fields": ""}, status=200)
 
         except Exception, e:
             print "FeeAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+    def post(self, request, format=None):
+        try:
+            feeSerializer = admin_serializers.FeeSerializer(data = request.data)
+            
+            if feeSerializer.is_valid():
+                if feeSerializer.validated_data['is_apply']:
+                    position = feeSerializer.validated_data['position']
+                    fee = Fee.objects.filter( position = position, is_apply = True )
+                    fee.update(is_apply = False ) 
+                feeSerializer.save()
+                return Response(feeSerializer.data)
+
+            return Response({"code": 200, "message": feeSerializer.errors, "fields": ""}, status=200)
+
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+
+
+
+
+
 
