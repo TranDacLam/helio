@@ -9,23 +9,34 @@ import "rxjs/add/operator/catch";
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable()
 export class FeeService {
 
   constructor( private http: HttpClient) { }
 
+
+
   private feeUrl = 'http://127.0.0.1:8000/vi/api/fees/';
 
-  getFees(): Observable<Fee[]>{
-  	return this.http.get<Fee[]>(this.feeUrl).pipe(
-      catchError(this.handleError)
-    );
-  }
+  	getFees(): Observable<Fee[]>{
+  		return this.http.get<Fee[]>(this.feeUrl).pipe(
+      	catchError(this.handleError)
+    	);
+  	}
  	// throw error
 	handleError(error: Response) {
 		return Observable.throw(error);
 	}
+	createFee(fee: Fee ):Observable<Fee>{
+  		return this.http.post<Fee>(this.feeUrl, fee, httpOptions ).pipe(catchError(this.handleError)
+    );
+  }
+
+
  //  private handleError<T> (operation = 'operation', result?: T) {
 	//   return (error: any): Observable<T> => {
 

@@ -44,6 +44,7 @@ import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeService } from './shared/services/fee.service';
+import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
 
 
 
@@ -78,6 +79,7 @@ import { FeeService } from './shared/services/fee.service';
     PopupEditNotificationComponent,
     ShowErrorValidComponent,
     FeeListComponent,
+    FeeAddComponent,
   ],
   imports: [
     BrowserModule,

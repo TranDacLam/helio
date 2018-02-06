@@ -536,33 +536,51 @@ class SummaryAPI(APIView):
         try:
             search_field = self.request.query_params.get('search_field', None)
 
-            if search_field == 'status' or search_field == 'rate':
-                start_date_req = self.request.query_params.get('start_date', None)
-                end_date_req = self.request.query_params.get('end_date', None)
+            if search_field:
+                if search_field == 'status' or search_field == 'rate':
+                    start_date_req = self.request.query_params.get('start_date', None)
+                    end_date_req = self.request.query_params.get('end_date', None)
 
-                kwargs = {}
-                #  data does not match format '%Y-%m-%d' return error
-                try:
-                    if start_date_req:
-                        kwargs['created__gt'] = timezone.make_aware(datetime.strptime(
-                            start_date_req, "%Y-%m-%d"))
-                    if end_date_req:
-                        kwargs['created__lt'] = timezone.make_aware(datetime.strptime(
-                            end_date_req, "%Y-%m-%d") + timedelta(days=1))
-                except ValueError, e:
-                    error = {"code": 400, "message": "%s" % e, "fields": ""}
-                    return Response(error, status=400)
+                    kwargs = {}
+                    #  data does not match format '%Y-%m-%d' return error
+                    try:
+                        if start_date_req:
+                            kwargs['created__gt'] = timezone.make_aware(datetime.strptime(
+                                start_date_req, "%Y-%m-%d"))
+                        if end_date_req:
+                            kwargs['created__lt'] = timezone.make_aware(datetime.strptime(
+                                end_date_req, "%Y-%m-%d") + timedelta(days=1))
+                    except ValueError, e:
+                        error = {"code": 400, "message": "%s" % e, "fields": ""}
+                        return Response(error, status=400)
+                    
+                    if kwargs:
+                        feedback = FeedBack.objects.filter(**kwargs).values(search_field)
+                    else:
+                        feedback = FeedBack.objects.all().values(search_field)
+
+                    count_item = {}
+                    status = feedback.values(search_field).annotate(Count(search_field))
+                    count_item[search_field] = { each[search_field]: each[search_field + '__count'] for each in status }
+                    count_item[search_field].update({'sum': feedback.values(search_field).count() })
+                    return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
                 
-                if kwargs:
-                    count_item = FeedBack.objects.filter(
-                        **kwargs).values(search_field).annotate(Count(search_field))
                 else:
-                    count_item = FeedBack.objects.all().values(
-                        search_field).annotate(Count(search_field))
+                    return Response({"code": 400, "message": "Not found search field", "fields": ""}, status=400)
+
+            if search_field is None:
+                feedback = FeedBack.objects.all()
+
+                count_item = {}
+                status = feedback.values('status').order_by('status').annotate(Count('status'))
+                count_item['status'] = { each['status']: each['status__count'] for each in status }
+                count_item['status'].update({'sum': feedback.values('status').count() })
+
+                rate = feedback.values('rate').order_by('rate').annotate(Count('rate'))
+                count_item['rate'] = { each['rate']: each['rate__count'] for each in rate}
+                count_item['rate'].update({'sum': feedback.values('rate').count()})
 
                 return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
-
-            return Response({"code": 400, "message": "Not found search field", "fields": ""}, status=400)
 
         except Exception, e:
             print "SummaryAPI ", e
@@ -784,3 +802,4 @@ class FeeAPI(APIView):
             print "FeeAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
