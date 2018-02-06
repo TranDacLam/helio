@@ -50,6 +50,15 @@ export class FeedbackService {
       .catch(this.handleError)
     }
 
+    /* 
+        function getStatisticFeedback(): get summary feedback status handle and rating
+        author: Lam
+    */
+    getStatisticFeedback(): Observable<any>{
+      let url_summary = `http://127.0.0.1:8000/vi/api/summary/`;
+      return this.http.get(url_summary).map((res: Response) => res.json()).catch(this.handleError);
+    }
+
   	// Handle error
   	handleError(error: Response) {
   		return Observable.throw(error);

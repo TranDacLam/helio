@@ -21,6 +21,7 @@ import { DenominationAddComponent } from './components/denomination/denomination
 import { DenominationListComponent } from './components/denomination/denomination-list/denomination-list.component';
 import { FeedbackDetailComponent } from './components/feedback/feedback-detail/feedback-detail.component';
 import { FeedbackListComponent } from './components/feedback/feedback-list/feedback-list.component';
+import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
 
 const routes: Routes = [
     { 
@@ -52,6 +53,7 @@ const routes: Routes = [
     }, {
         path: 'feedback-detail/:id', component: FeedbackDetailComponent
     },
+    { path: 'feedback/statistics', component: StatisticsFeedbackComponent },
     { path: 'link-card/add', component: AddLinkCardComponent },
     { path: 'link-card/detail/:id', component: LinkCardDetailComponent },
     { path: 'notifications', component: ListNotificationComponent },

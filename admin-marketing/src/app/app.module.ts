@@ -7,6 +7,7 @@ import { HttpModule } from "@angular/http";
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app.routing';
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from './components/users/users.component';
@@ -42,6 +43,7 @@ import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
 import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
+import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
 
 
 
@@ -75,6 +77,7 @@ import { FeedbackService } from './shared/services/feedback.service';
     FormNotificationComponent,
     PopupEditNotificationComponent,
     ShowErrorValidComponent,
+    StatisticsFeedbackComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,7 +87,8 @@ import { FeedbackService } from './shared/services/feedback.service';
     CKEditorModule,
     ReactiveFormsModule,
     DataTablesModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxMyDatePickerModule.forRoot()
   ],
   providers: [
     PromotionService,
