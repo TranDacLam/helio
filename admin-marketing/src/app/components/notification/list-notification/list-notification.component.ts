@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DataTableDirective } from 'angular-datatables';
 import { ActivatedRoute } from '@angular/router';
 import { Notification } from '../../../shared/class/notification';
 import { NotificationService } from '../../../shared/services/notification.service';
 import 'rxjs/add/observable/throw';
-
 
 
 @Component({
@@ -18,6 +18,10 @@ export class ListNotificationComponent implements OnInit {
         Author: Lam
     */
 
+    // Inject the DataTableDirective into the dtElement property
+    @ViewChild(DataTableDirective)
+    dtElement: DataTableDirective;
+
     notifications: Notification[];
     notifications_del = []; // Get array id to delete all id notification
     select_checked = false; // Check/uncheck all notification 
@@ -27,6 +31,11 @@ export class ListNotificationComponent implements OnInit {
 
     ngOnInit() {
         this.getNotifications();
+
+        /*
+            Use route to get params from url
+            Author: Lam
+        */
         this.route.params.subscribe(params => {
             if(params.message_put){
                 this.message_result = "Chình sửa "+ params.message_put + " thành công.";
@@ -79,11 +88,21 @@ export class ListNotificationComponent implements OnInit {
     }
 
     /*
-        Function onDelelteNoti(): Callback service function onDelNotiSelect() delete notification by array id
+        Function onDelelteNoti(): 
+         + Callback service function onDelNotiSelect() delete notification by array id
+         + Remove tr have del-{{id}} and draw tables
         Author: Lam
     */
     onDelelteNoti(){
-        this.notificationService.onDelNotiSelect(this.notifications_del).subscribe();
+        this.notificationService.onDelNotiSelect(this.notifications_del).subscribe(
+            (data) => {
+                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                    this.notifications_del.forEach(function(element) {
+                        dtInstance.rows('#del-'+element).remove().draw();
+                    });
+                });
+            }
+        );
     }
 
 }

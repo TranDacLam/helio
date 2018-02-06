@@ -1,0 +1,33 @@
+.row{
+    margin-bottom: 50px;
+}
+.row-border{
+    font-size: 12px;
+}
+.col-md-5{
+    width: 47%;
+}
+.col-md-2{
+    width: 6%;
+    margin-top: 20%;
+}
+.col-md-2 button{
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+table tr:hover{
+    cursor: pointer;
+}
+
+@media only screen and (max-width : 768px) {
+    .col-md-5{
+        width: 100%;
+    }
+    .col-md-2{
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+}
