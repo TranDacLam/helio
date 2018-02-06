@@ -397,6 +397,40 @@ class FeedbackDetailView(APIView):
         feedback = self.get_object(pk)
         feedback.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+"""
+GET all linked users
+DELETE all checkbox selected
+@author: Trangle
+"""
+@permission_classes((AllowAny,))
+class UserLinkCardList(APIView):
+    def get(self, request, format=None):
+        """
+        Get all user linked card
+        """
+        try:
+            lst_item = User.objects.exclude(barcode__isnull=True)
+            serializer = admin_serializers.UserSerializer(lst_item, many=True)
+            return Response(serializer.data)
+        except Exception, e:
+            error = {"code":500, "message": "%s" % e, "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, format=None):
+        """
+        DELETE: multi checbox
+        """
+        try:
+            user_linked_id = self.request.query_params.get('user_linked_id', None)
+            if user_linked_id:
+                user_linked_id_list = user_linked_id.split(',')
+                queryset = User.objects.filter(pk__in = user_linked_id_list).delete()
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
+        except Exception, e:
+            print e
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
 
 """
 Get Notification List

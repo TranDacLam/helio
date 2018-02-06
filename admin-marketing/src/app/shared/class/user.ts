@@ -13,6 +13,8 @@ export class User {
     image: string|any;
 	password: string;
 	role_user: string;
+    username_mapping: string;
+    date_mapping: string;
 }
 
 export const roles_user = ['System Admin', 'Manager', 'Author', 'Customer Care', 'Teller'];
