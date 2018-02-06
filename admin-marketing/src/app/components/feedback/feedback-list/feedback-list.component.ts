@@ -66,17 +66,66 @@ export class FeedbackListComponent implements OnInit {
         };
         this.getAllFeedbacks();
         this.route.params.subscribe(params => {
-            if(params.message_put){
-                this.message_result = " Chỉnh sửa "+ params.message_put + " thành công.";
-            } else if (params.message_del) {
-              this.message_result = "Xóa " +params.message_del + " thành công.";
-            }
-            else {
-              this.message_result = "";
-            }
+          if(params.status && params.start_date && params.end_date) {
+            this.feedbackService.getFeedbackByStatusStartAndEndDate(params.status, params.start_date, params.end_date)
+              .subscribe(
+                result => this.feedbacks = result,
+                error =>  this.errorMessage = <any>error
+              )
+          } else if(params.status && params.start_date){
+            this.feedbackService.getFeedbackByStatusAndStartDate(params.status, params.start_date)
+            .subscribe(
+              result => this.feedbacks = result,
+              error =>  this.errorMessage = <any>error
+              ) 
+          } else if (params.status && params.end_date) {
+              this.feedbackService.getFeedbackByStatusAndEndDate(params.status, params.end_date)
+                .subscribe(
+                  result => this.feedbacks = result,
+                  error =>  this.errorMessage = <any>error
+                  )
+          } else if (params.status) {
+            this.feedbackService.getFeedbackByStatus(params.status)
+              .subscribe(
+                result => this.feedbacks = result,
+                error =>  this.errorMessage = <any>error
+                ) 
+          }
+          if(params.rate && params.start_date && params.end_date) {
+            this.feedbackService.getFeedbackByRateStartAndEndDate(params.rate, params.start_date, params.end_date)
+              .subscribe(
+                result => this.feedbacks = result,
+                error =>  this.errorMessage = <any>error
+              )
+          } else if(params.rate && params.start_date){
+            this.feedbackService.getFeedbackByRateAndStartDate(params.rate, params.start_date)
+            .subscribe(
+              result => this.feedbacks = result,
+              error =>  this.errorMessage = <any>error
+              ) 
+          } else if (params.rate && params.end_date) {
+              this.feedbackService.getFeedbackByRateAndEndDate(params.rate, params.end_date)
+                .subscribe(
+                  result => this.feedbacks = result,
+                  error =>  this.errorMessage = <any>error
+                  )
+          } else if (params.rate) {
+            this.feedbackService.getFeedbackByRate(params.rate)
+              .subscribe(
+                result => this.feedbacks = result,
+                error =>  this.errorMessage = <any>error
+                ) 
+          }
+          if(params.message_put){
+              this.message_result = " Chỉnh sửa "+ params.message_put + " thành công.";
+          } else if (params.message_del) {
+            this.message_result = "Xóa " +params.message_del + " thành công.";
+          }
+          else {
+            this.message_result = "";
+          }
         });
     	}
-        
 	// Get All Feedback to show
 	getAllFeedbacks() {
 		this.feedbackService.getAllFeedback()
