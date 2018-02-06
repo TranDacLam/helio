@@ -4,11 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { UsersComponent } from './components/users/users.component';
 import { AddLinkCardComponent } from './components/link-card/add-link-card/add-link-card.component';
 import { LinkCardDetailComponent } from './components/link-card/link-card-detail/link-card-detail.component';
+import { LinkCardListComponent } from './components/link-card/link-card-list/link-card-list.component';
 import { ListNotificationComponent } from './components/notification/list-notification/list-notification.component';
 import { AddNotificationComponent } from './components/notification/add-notification/add-notification.component';
 import { EditNotificationComponent } from './components/notification/edit-notification/edit-notification.component';
 import { NotificationDetailComponent } from './components/notification/notification-detail/notification-detail.component';
-import { PromotionUsersComponent } from './components/promotions/promotion-users/promotion-users.component';
+import { UsersPromotionComponent } from './components/promotions/users-promotion/users-promotion.component';
 import { PromotionsComponent } from './components/promotions/promotions/promotions.component';
 import { PromotionDetailComponent } from './components/promotions/promotion-detail/promotion-detail.component';
 import { PromotionLabelListComponent } from './components/promotion-label/promotion-label-list/promotion-label-list.component';
@@ -22,6 +23,14 @@ import { DenominationListComponent } from './components/denomination/denominatio
 import { FeedbackDetailComponent } from './components/feedback/feedback-detail/feedback-detail.component';
 import { FeedbackListComponent } from './components/feedback/feedback-list/feedback-list.component';
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
+import { HotAdvsAddComponent } from './components/hot-advs/hot-advs-add/hot-advs-add.component';
+import { HotAdvsListComponent } from './components/hot-advs/hot-advs-list/hot-advs-list.component';
+import { UserAddComponent } from './components/user/user-add/user-add.component';
+import { UserListComponent } from './components/user/user-list/user-list.component';
+import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
+import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
+import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
+
 
 const routes: Routes = [
     { 
@@ -29,9 +38,9 @@ const routes: Routes = [
     }, { 
      	path: 'promotions', component: PromotionsComponent
     }, { 
-     	path: 'promotion-users-detail/:id', component: PromotionUsersComponent
+     	path: 'users-promotions/:id', component: UsersPromotionComponent
     }, { 
-     	path: 'promotion-detail/:id', component: PromotionDetailComponent
+     	path: 'promotions/:id', component: PromotionDetailComponent
     }, {
         path: 'promotion-label-list', component: PromotionLabelListComponent
     }, {
@@ -52,6 +61,18 @@ const routes: Routes = [
         path: 'feedback-list', component: FeedbackListComponent
     }, {
         path: 'feedback-detail/:id', component: FeedbackDetailComponent
+    }, {
+        path: 'hot-advs-add', component: HotAdvsAddComponent
+    }, {
+        path: 'hot-advs-list', component: HotAdvsListComponent
+    }, {
+        path: 'user-add', component: UserAddComponent
+    }, {
+        path: 'user-list', component: UserListComponent
+    }, {
+        path: 'user-detail', component: UserDetailComponent
+    }, {
+        path: 'link-card-list', component: LinkCardListComponent
     },
     { path: 'feedback/statistics', component: StatisticsFeedbackComponent },
     { path: 'link-card/add', component: AddLinkCardComponent },
@@ -60,6 +81,10 @@ const routes: Routes = [
     { path: 'notification/add', component: AddNotificationComponent },
     { path: 'notification/edit/:id', component: EditNotificationComponent },
     { path: 'notification/detail/:id', component: NotificationDetailComponent },
+    { path: 'fees', component: FeeListComponent },
+    { path: 'fee-add', component: FeeAddComponent },
+
+
 ];
 
 @NgModule({

@@ -10,6 +10,9 @@
 	<div *ngIf="message_error" class="alert alert-danger">
 		{{ message_error }}
 	</div>
+	<div class="alert alert-success" *ngIf="message_result">
+        {{message_result}}
+    </div>
 	<table id="table-denomination" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
@@ -18,7 +21,7 @@
 	      	</tr>
     	</thead>
     	<tbody>
-   			<tr *ngFor ="let denomination of denominations">
+   			<tr *ngFor ="let denomination of denominations" id="delete{{denomination.id}}">
    				<td><input type="checkbox" [checked]="select_checkbox"
    					value={{denomination.id}} name=""
    					(change)="checkItemChange($event, denomination)"/></td>

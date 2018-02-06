@@ -8,6 +8,9 @@
 <div *ngIf="message_error" class="alert alert-danger">
     {{ message_error }}
 </div>
+<div *ngIf="message_result" class="alert alert-success">
+    {{ message_result }}
+</div>
 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
 	<thead>
 		<tr class="tr-feedbacks">
@@ -23,7 +26,7 @@
         </tr>
 	</thead>
 	<tbody>
-        <tr *ngFor="let feedback of feedbacks">
+        <tr *ngFor="let feedback of feedbacks" id="delete{{feedback.id}}">
             <td class="tr-feedbacks">
                 <label class="checkboxSelect">
                 <input type="checkbox" 

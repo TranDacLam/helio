@@ -19,7 +19,7 @@ import { ListNotificationComponent } from './components/notification/list-notifi
 import { AddNotificationComponent } from './components/notification/add-notification/add-notification.component';
 import { EditNotificationComponent } from './components/notification/edit-notification/edit-notification.component';
 import { UserMultiselectComponent } from './components/user-multiselect/user-multiselect.component';
-import { PromotionUsersComponent } from './components/promotions/promotion-users/promotion-users.component';
+import { UsersPromotionComponent } from './components/promotions/users-promotion/users-promotion.component';
 import { PromotionsComponent } from './components/promotions/promotions/promotions.component';
 import { PromotionDetailComponent } from './components/promotions/promotion-detail/promotion-detail.component';
 import { PromotionLabelListComponent } from './components/promotion-label/promotion-label-list/promotion-label-list.component';
@@ -36,6 +36,8 @@ import { NotificationDetailComponent } from './components/notification/notificat
 import { FormNotificationComponent } from './components/notification/form-notification/form-notification.component';
 import { PopupEditNotificationComponent } from './components/notification/popup-edit-notification/popup-edit-notification.component';
 import { ShowErrorValidComponent } from './components/show-error-valid/show-error-valid.component';
+import { HotAdvsListComponent } from './components/hot-advs/hot-advs-list/hot-advs-list.component';
+import { HotAdvsAddComponent } from './components/hot-advs/hot-advs-add/hot-advs-add.component';
 
 import { PromotionService } from './shared/services/promotion.service';
 import { PromotionLabelService } from './shared/services/promotion-label.service';
@@ -45,7 +47,13 @@ import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
 
-
+import { UserListComponent } from './components/user/user-list/user-list.component';
+import { UserAddComponent } from './components/user/user-add/user-add.component';
+import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
+import { LinkCardListComponent } from './components/link-card/link-card-list/link-card-list.component';
+import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
+import { FeeService } from './shared/services/fee.service';
+import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
 
 
 @NgModule({
@@ -60,7 +68,7 @@ import { StatisticsFeedbackComponent } from './components/feedback/statistics-fe
     AddNotificationComponent,
     EditNotificationComponent,
     UserMultiselectComponent,
-    PromotionUsersComponent,
+    UsersPromotionComponent,
     PromotionsComponent,
     PromotionDetailComponent,
     PromotionLabelListComponent,
@@ -78,6 +86,14 @@ import { StatisticsFeedbackComponent } from './components/feedback/statistics-fe
     PopupEditNotificationComponent,
     ShowErrorValidComponent,
     StatisticsFeedbackComponent,
+    HotAdvsListComponent,
+    HotAdvsAddComponent,
+    UserListComponent,
+    UserAddComponent,
+    UserDetailComponent,
+    LinkCardListComponent,
+    FeeListComponent,
+    FeeAddComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,7 +112,8 @@ import { StatisticsFeedbackComponent } from './components/feedback/statistics-fe
     AdvertisementService,
     PromotionTypeService,
     DenominationService,
-    FeedbackService
+    FeedbackService,
+    FeeService,
   ],
   bootstrap: [AppComponent]
 })

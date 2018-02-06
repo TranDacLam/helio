@@ -19,7 +19,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.db.models import Count
 from django.http import Http404
-
+from django.db import DatabaseError
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
 """
@@ -306,65 +306,39 @@ class FeedbackView(APIView):
         try:
             status = self.request.query_params.get('status', None)
             rate = self.request.query_params.get('rate', None)
-            start_date = self.request.query_params.get('start_date', None)
-            end_date = self.request.query_params.get('end_date', None)
 
-            # Check start_date and end_date
-            if start_date and end_date and status :
-                print "++ start_date ++ end_date ++ status"
-                queryset = FeedBack.objects.filter(status = status,sent_date__range=(start_date, end_date))
-                print queryset
-                serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                return Response(serializer.data)
+            # Verification status, rate exists or not
+            # If exists
+            if status or rate:
+                print "status or rate"
+                start_date = self.request.query_params.get('start_date', None)
+                end_date = self.request.query_params.get('end_date', None)
 
-            # Check start_date and status || end_date status
-            if start_date and status or end_date and status:
-                if start_date and status:
-                    print "start_date_status"
-                    queryset = FeedBack.objects.filter(status=status, sent_date=start_date)
+                kwargs = {}
+                try:
+                    if start_date:
+                        kwargs['sent_date__gte'] = start_date
+                        print kwargs['sent_date__gte']
+                    if end_date:
+                        kwargs['sent_date__lte'] = end_date
+                        print kwargs['sent_date__lte']
+                except ValueError, e:
+                    error = {"code": 400, "message": "%s" % e, "fields": ""}
+                    return Response(error, status=400)
+
+                if kwargs:
+                    print "kwargs"
+                    queryset = FeedBack.objects.filter(
+                        **kwargs).filter(Q(status=status) | Q(rate=rate))
                     serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
                     return Response(serializer.data)
                 else:
-                    print "end_date_status"
-                    queryset = FeedBack.objects.filter(status=status, sent_date=end_date)
+                    queryset = FeedBack.objects.filter(Q(status=status) | Q(rate=rate))
                     serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
                     return Response(serializer.data)
-
-            # Check status 
-            if status:
-                print "status"
-                status_list = FeedBack.objects.filter(status=status)
-                serializer = admin_serializers.FeedBackSerializer(status_list, many=True)
-                return Response(serializer.data)
-
-            # Check start_date and end_date
-            if start_date and end_date and rate :
-                print "++ start_date ++ end_date ++ rate"
-                queryset = FeedBack.objects.filter(rate = rate,sent_date__range=(start_date, end_date))
-                print queryset
-                serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                return Response(serializer.data)
-
-            # Check start_date and status || end_date status
-            if start_date and rate or end_date and rate:
-                if start_date and rate:
-                    print "start_date_rate"
-                    queryset = FeedBack.objects.filter(rate=rate, sent_date=start_date)
-                    serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                    return Response(serializer.data)
-                else:
-                    print "end_date_rate"
-                    queryset = FeedBack.objects.filter(rate=rate, sent_date=end_date)
-                    serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                    return Response(serializer.data)
-
-            # Ckeck rate
-            if rate:
-                print "rate"
-                rate_list = FeedBack.objects.filter(rate=rate)
-                serializer = admin_serializers.FeedBackSerializer(rate_list, many=True)
-                return Response(serializer.data)
-
+                return Response({"code": 200, "message": queryset, "fields": ""}, status=200)
+                
+            # Status or rate not exist
             else:
                 list_feedback = FeedBack.objects.all()
                 serializer = admin_serializers.FeedBackSerializer(list_feedback, many=True)
@@ -536,33 +510,51 @@ class SummaryAPI(APIView):
         try:
             search_field = self.request.query_params.get('search_field', None)
 
-            if search_field == 'status' or search_field == 'rate':
-                start_date_req = self.request.query_params.get('start_date', None)
-                end_date_req = self.request.query_params.get('end_date', None)
+            if search_field:
+                if search_field == 'status' or search_field == 'rate':
+                    start_date_req = self.request.query_params.get('start_date', None)
+                    end_date_req = self.request.query_params.get('end_date', None)
 
-                kwargs = {}
-                #  data does not match format '%Y-%m-%d' return error
-                try:
-                    if start_date_req:
-                        kwargs['created__gt'] = timezone.make_aware(datetime.strptime(
-                            start_date_req, "%Y-%m-%d"))
-                    if end_date_req:
-                        kwargs['created__lt'] = timezone.make_aware(datetime.strptime(
-                            end_date_req, "%Y-%m-%d") + timedelta(days=1))
-                except ValueError, e:
-                    error = {"code": 400, "message": "%s" % e, "fields": ""}
-                    return Response(error, status=400)
+                    kwargs = {}
+                    #  data does not match format '%Y-%m-%d' return error
+                    try:
+                        if start_date_req:
+                            kwargs['created__gt'] = timezone.make_aware(datetime.strptime(
+                                start_date_req, "%Y-%m-%d"))
+                        if end_date_req:
+                            kwargs['created__lt'] = timezone.make_aware(datetime.strptime(
+                                end_date_req, "%Y-%m-%d") + timedelta(days=1))
+                    except ValueError, e:
+                        error = {"code": 400, "message": "%s" % e, "fields": ""}
+                        return Response(error, status=400)
+                    
+                    if kwargs:
+                        feedback = FeedBack.objects.filter(**kwargs).values(search_field)
+                    else:
+                        feedback = FeedBack.objects.all().values(search_field)
+
+                    count_item = {}
+                    status = feedback.values(search_field).annotate(Count(search_field))
+                    count_item[search_field] = { each[search_field]: each[search_field + '__count'] for each in status }
+                    count_item[search_field].update({'sum': feedback.values(search_field).count() })
+                    return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
                 
-                if kwargs:
-                    count_item = FeedBack.objects.filter(
-                        **kwargs).values(search_field).annotate(Count(search_field))
                 else:
-                    count_item = FeedBack.objects.all().values(
-                        search_field).annotate(Count(search_field))
+                    return Response({"code": 400, "message": "Not found search field", "fields": ""}, status=400)
+
+            if search_field is None:
+                feedback = FeedBack.objects.all()
+
+                count_item = {}
+                status = feedback.values('status').order_by('status').annotate(Count('status'))
+                count_item['status'] = { each['status']: each['status__count'] for each in status }
+                count_item['status'].update({'sum': feedback.values('status').count() })
+
+                rate = feedback.values('rate').order_by('rate').annotate(Count('rate'))
+                count_item['rate'] = { each['rate']: each['rate__count'] for each in rate}
+                count_item['rate'].update({'sum': feedback.values('rate').count()})
 
                 return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
-
-            return Response({"code": 400, "message": "Not found search field", "fields": ""}, status=400)
 
         except Exception, e:
             print "SummaryAPI ", e
@@ -599,20 +591,31 @@ class UserEmbedDetail(APIView):
                 cursor.execute(query_str.format(barcode))
                 item = {}
                 item = cursor.fetchone()
-                # check Customer_Id
-                if item and item[7]:
-                    result = {}
-                    result["barcode"] = barcode  # barcode
-                    result["full_name"] = item[0] + item[1]  # Firstname + Surname
-                    result["birth_date"] = item[2].date()  # DOB
-                    result["personal_id"] = item[3]  # PostCode
-                    result["address"] = item[4]  # Address1
-                    result["email"] = item[5]  # EMail
-                    result["phone"] = item[6]  # Phone
-                    return Response({"code": 200, "message": result, "fields": ""}, status=200)
-                return Response({"code": 400, "message": 'Barcode not found', "fields": ""}, status=400)
+                # check item is exist
+                if not item:
+                    return Response({"code": 400, "message": "Barcode not found.", "fields": ""}, status=400)
+                # check Customer_Id is exist
+                if not item[7]:
+                    return Response({"code": 400, "message": "Tikets do not sign up with user", "fields": ""}, status=400)
+                
+                result = {}
+                first_name =  item[0] if item[0] else '' # Firstname 
+                surname = item[1] if item[1] else '' #Surname
+                result["full_name"] = first_name + surname
+                result["birth_date"] = item[2] if item[2] else None  # DOB
+                result["personal_id"] = item[3] if item[3] else None # PostCode
+                result["address"] = item[4] if item[4] else None # Address1
+                result["email"] = item[5] if item[5] else None # EMail
+                result["phone"] = item[6] if item[6] else None # Phone
+                return Response({"code": 200, "message": result, "fields": ""}, status=200)
 
             return Response({"code": 400, "message": 'Bacode is required', "fields": ""}, status=400)
+
+        # catching db embed error
+        except DatabaseError, e:
+            print "UserEmbedDetail ", e
+            error = {"code": 500,"message": "Query to DB embed fail", "fields": ""}
+            return Response(error, status=500)
 
         except Exception, e:
             print "UserEmbedDetail ", e
@@ -679,7 +682,7 @@ class RelateAPI(APIView):
             - check user is related
             - check user embed is exist
             - check user embed is related
-
+            
         """
         try:
             barcode = request.data.get('barcode', None)
@@ -701,16 +704,19 @@ class RelateAPI(APIView):
                 cursor.execute(query_str.format(barcode))
                 userembed_item = cursor.fetchone()
                 # check user embed is exist by check Customer_Id
-                if not userembed_item or not userembed_item[0]:
+                if not userembed_item:
                     return Response({"code": 400, "message": "Not found Userembed.", "fields": ""}, status=400)
                 
+                if not userembed_item[0]:
+                    return Response({"code": 400, "message": "Tikets do not sign up with user", "fields": ""}, status=400)
                 # check user embed is related
                 userembed_is_related = User.objects.filter(barcode=barcode)
                 if userembed_is_related:
                     return Response({"code": 400, "message": "Userembed is related.", "fields": ""}, status=400)
 
                 user.barcode = barcode
-                user.username_mapping = request.user.username
+                # TO DO
+                user.username_mapping = request.user.username 
                 user.date_mapping = datetime.now().date()
                 user.save()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
@@ -770,3 +776,4 @@ class FeeAPI(APIView):
             print "FeeAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+

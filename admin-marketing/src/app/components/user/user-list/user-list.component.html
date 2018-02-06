@@ -1,0 +1,45 @@
+<div class='row '>
+	<a class="pull-left" routerLink="/user-list">User</a>
+	<a class="pull-right" routerLink="/user-add">Thêm user</a>
+</div>
+<br>
+<div class="table card-list">
+	<div *ngIf="message_success" class="alert alert-success">
+		{{ message_success }}
+	</div>
+	<div *ngIf="message_error" class="alert alert-danger">
+		{{ message_error }}
+	</div>
+	<div class="alert alert-success" *ngIf="message_result">
+        {{message_result}}
+    </div>
+	<table id="table-user" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
+		<thead>
+	      	<tr>
+	      		<th><input type="checkbox" name="allCheckUse" value="allCheckUser"(change)="checkAllUser($event)"/> Email</th>
+	        	<th>Loại User </th>
+	      	</tr>
+    	</thead>
+    	<tbody>
+   			<tr *ngFor ="let user of users" id="delete{{user.id}}">
+   				<td><input type="checkbox" [checked]="select_checkbox"
+   					value={{user.id}} name=""
+   					(change)="checkItemChange($event, user)"/> {{ user.email }}</td>
+        		<td>{{ user.role_user }}</td>
+   			</tr>
+    	</tbody>
+	</table>
+	<hr>
+	<div class='row'>
+		<div class="col-md-3">
+			<select name="" class="form-control">
+				<option value="">Xóa các user được chọn</option>
+			</select>
+		</div>
+		<div class="col-md-3">
+			{{user_selected.length}} của {{users.length}} được chọn
+			<button (click)="deleteUsersCheckbox()" type="button" class="btn btn-danger">Thực hiện</button>
+		</div>
+	</div>
+</div>
+

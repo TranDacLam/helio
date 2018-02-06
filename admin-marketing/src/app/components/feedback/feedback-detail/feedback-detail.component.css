@@ -1,6 +1,6 @@
 .edit-feedback {
 	margin: 10px 15px;
-	border-bottom: 1px solid black;
+	border-bottom: 2px solid black;
 }
 a.title-feedback {
 	padding: 5px 0px;
@@ -10,4 +10,12 @@ a.title-feedback {
 .area-feedback ul, li {
 	list-style: none;
 	text-decoration: none;
+}
+.area-form-feedback {
+	border: 2px solid #111111;
+}
+.button-feedback {
+	margin: 10px 15px;
+	padding-top: 10px;
+	border-top: 2px solid #111111;
 }
