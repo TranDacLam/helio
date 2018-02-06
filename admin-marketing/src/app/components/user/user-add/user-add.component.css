@@ -1,0 +1,13 @@
+button.clear-file.btn.btn-danger {
+	margin-top: 10px;
+}
+.input-password {
+	padding: 5px 50px 5px 10px;
+}
+.file-icon {
+	float: right;
+	position: absolute;
+	top: 0%;
+	right: 15px;
+	cursor: pointer;
+}

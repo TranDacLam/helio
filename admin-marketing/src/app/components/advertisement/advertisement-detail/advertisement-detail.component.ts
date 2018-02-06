@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute , Router} from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Advertisement } from '../../../shared/class/advertisement';
@@ -15,7 +15,8 @@ export class AdvertisementDetailComponent implements OnInit {
 	constructor(
 		private advertisementService: AdvertisementService,
 		private route: ActivatedRoute,
-		private location: Location
+		private location: Location,
+		private router: Router
 		) { }
 
 	ngOnInit() {
@@ -34,6 +35,7 @@ export class AdvertisementDetailComponent implements OnInit {
 		this.location.back();
 	}
 	EditAdv() {
-		this.advertisementService.updateAdv(this.adv).subscribe(() => this.goBack());
+		this.advertisementService.updateAdv(this.adv)
+			.subscribe(() => this.router.navigate(['/advertisement-list', { message_put: this.adv.name} ]));
 	}
 }

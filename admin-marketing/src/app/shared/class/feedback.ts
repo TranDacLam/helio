@@ -2,6 +2,7 @@ export class Feedback {
 	id: number;
 	name: string;
 	phone: string;
+	email: string;
 	subject: string;
 	message: string;
 	rate: string;

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DataTableDirective } from 'angular-datatables';
 import { Http, Response } from '@angular/http';
+import { ActivatedRoute } from '@angular/router';
 
 import { Feedback } from '../../../shared/class/feedback';
 
@@ -21,18 +23,26 @@ export class FeedbackListComponent implements OnInit {
     feedback_del: any;
     message_success: string = ""; // Display message success
     message_error: string = ""; // Display message error
+    message_result: string = ""; // Display message result
+    errorMessage: String;
 
-	// Using trigger becase fetching the list of feedbacks can be quite long
-	// thus we ensure the data is fetched before rensering
-	dtTrigger: Subject<any> = new Subject();
-	constructor(private feedbackService: FeedbackService) {
+    // Inject the DataTableDirective into the dtElement property
+    @ViewChild(DataTableDirective)
+    dtElement: DataTableDirective;
+
+	  // Using trigger becase fetching the list of feedbacks can be quite long
+	  // thus we ensure the data is fetched before rensering
+	  dtTrigger: Subject<any> = new Subject();
+	  constructor(
+      private feedbackService: FeedbackService,
+      private route: ActivatedRoute
+    ) {
     this.feedbacks = [];
     this.feedback_del = [];
    }
 
 	ngOnInit() {
 		this.dtOptions = {
-          // Declare the use of the extension in the dom parameter
           language: {
             sSearch: '',
             searchPlaceholder: ' Nhập thông tin tìm kiếm',
@@ -55,8 +65,67 @@ export class FeedbackListComponent implements OnInit {
           pagingType: "full_numbers",
         };
         this.getAllFeedbacks();
+        this.route.params.subscribe(params => {
+          if(params.status && params.start_date && params.end_date) {
+            this.feedbackService.getFeedbackByStatusStartAndEndDate(params.status, params.start_date, params.end_date)
+              .subscribe(
+                result => this.feedbacks = result,
+                error =>  this.errorMessage = <any>error
+              )
+          } else if(params.status && params.start_date){
+            this.feedbackService.getFeedbackByStatusAndStartDate(params.status, params.start_date)
+            .subscribe(
+              result => this.feedbacks = result,
+              error =>  this.errorMessage = <any>error
+              ) 
+          } else if (params.status && params.end_date) {
+              this.feedbackService.getFeedbackByStatusAndEndDate(params.status, params.end_date)
+                .subscribe(
+                  result => this.feedbacks = result,
+                  error =>  this.errorMessage = <any>error
+                  )
+          } else if (params.status) {
+            this.feedbackService.getFeedbackByStatus(params.status)
+              .subscribe(
+                result => this.feedbacks = result,
+                error =>  this.errorMessage = <any>error
+                ) 
+          }
+          if(params.rate && params.start_date && params.end_date) {
+            this.feedbackService.getFeedbackByRateStartAndEndDate(params.rate, params.start_date, params.end_date)
+              .subscribe(
+                result => this.feedbacks = result,
+                error =>  this.errorMessage = <any>error
+              )
+          } else if(params.rate && params.start_date){
+            this.feedbackService.getFeedbackByRateAndStartDate(params.rate, params.start_date)
+            .subscribe(
+              result => this.feedbacks = result,
+              error =>  this.errorMessage = <any>error
+              ) 
+          } else if (params.rate && params.end_date) {
+              this.feedbackService.getFeedbackByRateAndEndDate(params.rate, params.end_date)
+                .subscribe(
+                  result => this.feedbacks = result,
+                  error =>  this.errorMessage = <any>error
+                  )
+          } else if (params.rate) {
+            this.feedbackService.getFeedbackByRate(params.rate)
+              .subscribe(
+                result => this.feedbacks = result,
+                error =>  this.errorMessage = <any>error
+                ) 
+          }
+          if(params.message_put){
+              this.message_result = " Chỉnh sửa "+ params.message_put + " thành công.";
+          } else if (params.message_del) {
+            this.message_result = "Xóa " +params.message_del + " thành công.";
+          }
+          else {
+            this.message_result = "";
+          }
+        });
     	}
-        
 	// Get All Feedback to show
 	getAllFeedbacks() {
 		this.feedbackService.getAllFeedback()
@@ -65,22 +134,24 @@ export class FeedbackListComponent implements OnInit {
 					this.feedbacks = feedbacks;
 					// Caling the DT trigger to manually render the table
 					this.dtTrigger.next();
-				});
+				},
+        error =>  this.errorMessage = <any>error
+        );
 	}
-
     selectAllCheckbox(event) {
         let arrFeedback_del = [];
         if (event.target.checked) {
-                this.feedbacks.forEach(function(element) {
-                    arrFeedback_del.push(element.id)
+            this.feedbacks.forEach(function(element) {
+            arrFeedback_del.push(element.id)
           });
             this.feedback_del = arrFeedback_del
             this.feedback_selected = true;
             this.message_error = "";
+            this.message_result = "";
         } else {
             this.feedback_selected = false;
             this.feedbacks.forEach((item, index) => {
-                this.feedback_del.splice(index, this.feedbacks.length);
+            this.feedback_del.splice(index, this.feedbacks.length);
         });
     }
     }
@@ -88,6 +159,7 @@ export class FeedbackListComponent implements OnInit {
         if(event.target.checked) {
             this.feedback_del.push(feedback.id)
             this.message_error ='';
+            this.message_result = "";
         } else {
             let updateDenoItem = this.feedback_del.find(this.findIndexToUpdate, feedback.id);
 
@@ -99,21 +171,26 @@ export class FeedbackListComponent implements OnInit {
     findIndexToUpdate(feedback) { 
         return feedback.id === this;
     }
-
     deleteFeedbackCheckbox() {
+      if (this.feedback_del !== null) {
         if( this.feedback_del.length == 0) {
-        this.message_error = "Vui lòng chọn phản hồi để xóa";
+          this.message_error = "Vui lòng chọn phản hồi để xóa";
+          this.message_result = "";
       } else {
         this.feedbackService.deleteAllFeedbackChecked(this.feedback_del).subscribe(
         result => {
-             for(let i=0; i < this.feedback_del.length; i++){
-                if(this.feedbacks.find(x => x=this.feedback_del[i]))
-                   {
-                    this.feedbacks.splice(this.feedbacks.indexOf(this.feedback_del[i]), 1);
-                   }
-                }
-                this.message_success = "Xóa phản hồi thành công";
-           });
+             this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+               this.feedback_del.forEach(function(e){
+                 dtInstance.rows('#delete'+e).remove().draw();
+               });
+             });
+            this.message_success = "Xóa phản hồi thành công";
+          },
+          error =>  this.errorMessage = <any>error
+          );
+        }
+      } else {
+        return 0;
       }
     }
 }

@@ -35,6 +35,8 @@ import { NotificationDetailComponent } from './components/notification/notificat
 import { FormNotificationComponent } from './components/notification/form-notification/form-notification.component';
 import { PopupEditNotificationComponent } from './components/notification/popup-edit-notification/popup-edit-notification.component';
 import { ShowErrorValidComponent } from './components/show-error-valid/show-error-valid.component';
+import { HotAdvsListComponent } from './components/hot-advs/hot-advs-list/hot-advs-list.component';
+import { HotAdvsAddComponent } from './components/hot-advs/hot-advs-add/hot-advs-add.component';
 
 import { PromotionService } from './shared/services/promotion.service';
 import { PromotionLabelService } from './shared/services/promotion-label.service';
@@ -42,11 +44,14 @@ import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
 import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
+
+import { UserListComponent } from './components/user/user-list/user-list.component';
+import { UserAddComponent } from './components/user/user-add/user-add.component';
+import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
+import { LinkCardListComponent } from './components/link-card/link-card-list/link-card-list.component';
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeService } from './shared/services/fee.service';
 import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
-
-
 
 
 @NgModule({
@@ -78,6 +83,12 @@ import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
     FormNotificationComponent,
     PopupEditNotificationComponent,
     ShowErrorValidComponent,
+    HotAdvsListComponent,
+    HotAdvsAddComponent,
+    UserListComponent,
+    UserAddComponent,
+    UserDetailComponent,
+    LinkCardListComponent,
     FeeListComponent,
     FeeAddComponent,
   ],
