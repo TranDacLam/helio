@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DataTableDirective } from 'angular-datatables';
 
 import { Subject } from 'rxjs/Subject';
+import { ActivatedRoute } from '@angular/router';
 
 import { Denomination }  from '../../../shared/class/denomination';
 
@@ -19,12 +21,20 @@ export class DenominationListComponent implements OnInit {
 	deno_selected: any;
 	message_success: string = ""; // Display message success
   message_error: string = ""; // Display message error
+  message_result = ''; // Message result
+
+  // Inject the DataTableDirective into the dtElement property
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
 
 	// Using trigger becase fetching the list of feedbacks can be quite long
-    // thus we ensure the data is fetched before rensering
+  // thus we ensure the data is fetched before rensering
 	dtTrigger: Subject<any> = new Subject();
 
-  	constructor(private denominationService: DenominationService) {
+  	constructor(
+      private denominationService: DenominationService,
+      private route: ActivatedRoute
+      ) {
   		this.denominations = [];
   		this.deno_selected = [];
   	 }
@@ -58,6 +68,13 @@ export class DenominationListComponent implements OnInit {
 	          },
 	  	};
 	  	this.getAllDenomination();
+      this.route.params.subscribe(params => {
+            if(params.message_post){
+                this.message_result = " Thêm "+ params.message_post + " thành công.";
+            } else {
+              this.message_result = "";
+            }
+        });
   	}
   	// Get All Denomination
   	getAllDenomination() {
@@ -78,6 +95,7 @@ export class DenominationListComponent implements OnInit {
             this.deno_selected = array_del;
             this.select_checkbox = true;
             this.message_error = "";
+            this.message_result = "";
         }else{
             this.select_checkbox = false;
             this.denominations.forEach((item, index) => {
@@ -90,7 +108,8 @@ export class DenominationListComponent implements OnInit {
   	checkItemChange(event, deno) {
   		if(event.target.checked){
         	this.deno_selected.push(deno.id);
-          this.message_error = ""
+          this.message_error = "";
+          this.message_result = "";
       	}
       	else{
        		let updateDenoItem = this.deno_selected.find(this.findIndexToUpdate, deno.id);
@@ -107,15 +126,15 @@ export class DenominationListComponent implements OnInit {
   	deleteDenominationCheckbox() {
   		if( this.deno_selected.length == 0) {
         this.message_error = "Vui lòng chọn quảng cáo để xóa";
+        this.message_result = "";
       } else {
         this.denominationService.deleteAllDenosSelected(this.deno_selected).subscribe(
         result => {
-             for(let i=0; i < this.deno_selected.length; i++){
-               if(this.denominations.find(x => x=this.deno_selected[i]))
-               {
-                 this.denominations.splice(this.denominations.indexOf(this.deno_selected[i]), 1);
-               }
-             }
+             this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+               this.deno_selected.forEach(function(e){
+                 dtInstance.rows('#delete'+e).remove().draw();
+               });
+             });
              this.message_success = "Xóa quảng cáo thành công";
            });
       }
