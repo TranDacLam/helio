@@ -44,10 +44,14 @@ import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
 import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
+
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserAddComponent } from './components/user/user-add/user-add.component';
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
 import { LinkCardListComponent } from './components/link-card/link-card-list/link-card-list.component';
+import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
+import { FeeService } from './shared/services/fee.service';
+import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
 
 
 @NgModule({
@@ -85,6 +89,8 @@ import { LinkCardListComponent } from './components/link-card/link-card-list/lin
     UserAddComponent,
     UserDetailComponent,
     LinkCardListComponent,
+    FeeListComponent,
+    FeeAddComponent,
   ],
   imports: [
     BrowserModule,
@@ -102,7 +108,8 @@ import { LinkCardListComponent } from './components/link-card/link-card-list/lin
     AdvertisementService,
     PromotionTypeService,
     DenominationService,
-    FeedbackService
+    FeedbackService,
+    FeeService,
   ],
   bootstrap: [AppComponent]
 })

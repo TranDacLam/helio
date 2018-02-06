@@ -27,6 +27,8 @@ import { HotAdvsListComponent } from './components/hot-advs/hot-advs-list/hot-ad
 import { UserAddComponent } from './components/user/user-add/user-add.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
+import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
+import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
 
 const routes: Routes = [
     { 
@@ -76,6 +78,10 @@ const routes: Routes = [
     { path: 'notification/add', component: AddNotificationComponent },
     { path: 'notification/edit/:id', component: EditNotificationComponent },
     { path: 'notification/detail/:id', component: NotificationDetailComponent },
+    { path: 'fees', component: FeeListComponent },
+    { path: 'fee-add', component: FeeAddComponent },
+
+
 ];
 
 @NgModule({
