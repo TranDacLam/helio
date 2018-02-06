@@ -21,6 +21,9 @@ import { DenominationAddComponent } from './components/denomination/denomination
 import { DenominationListComponent } from './components/denomination/denomination-list/denomination-list.component';
 import { FeedbackDetailComponent } from './components/feedback/feedback-detail/feedback-detail.component';
 import { FeedbackListComponent } from './components/feedback/feedback-list/feedback-list.component';
+import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
+import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
+
 
 const routes: Routes = [
     { 
@@ -58,6 +61,10 @@ const routes: Routes = [
     { path: 'notification/add', component: AddNotificationComponent },
     { path: 'notification/edit/:id', component: EditNotificationComponent },
     { path: 'notification/detail/:id', component: NotificationDetailComponent },
+    { path: 'fees', component: FeeListComponent },
+    { path: 'fee-add', component: FeeAddComponent },
+
+
 ];
 
 @NgModule({

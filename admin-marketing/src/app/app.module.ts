@@ -42,6 +42,9 @@ import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
 import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
+import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
+import { FeeService } from './shared/services/fee.service';
+import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
 
 
 
@@ -75,6 +78,8 @@ import { FeedbackService } from './shared/services/feedback.service';
     FormNotificationComponent,
     PopupEditNotificationComponent,
     ShowErrorValidComponent,
+    FeeListComponent,
+    FeeAddComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,7 +97,8 @@ import { FeedbackService } from './shared/services/feedback.service';
     AdvertisementService,
     PromotionTypeService,
     DenominationService,
-    FeedbackService
+    FeedbackService,
+    FeeService,
   ],
   bootstrap: [AppComponent]
 })
