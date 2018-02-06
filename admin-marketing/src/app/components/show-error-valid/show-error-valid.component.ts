@@ -17,7 +17,6 @@ export class ShowErrorValidComponent implements OnInit {
     private static readonly errorMessages = {
        'email': () => 'Email invalid format',
        'required': () => 'This field is required',
-       'email': () => 'Email is valid format',
        'minlength': (params) => 'The min number of characters is ' + params.requiredLength,
        'maxlength': (params) => 'The max allowed number of characters is ' + params.requiredLength,
        'pattern': (params) => 'The required pattern is: ' + params.requiredPattern,
