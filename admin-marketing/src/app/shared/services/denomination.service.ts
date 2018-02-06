@@ -33,7 +33,7 @@ export class DenominationService {
 
     deleteAllDenosSelected(deno_id: Denomination[]): Observable<Denomination[]> {
       const url = `${this.urlDeno}?deno_id=${deno_id}`;
-      return this.http.get<Denomination[]>(url)
+      return this.http.delete<Denomination[]>(url, httpOptions)
       .catch(this.handleError)
     }
 

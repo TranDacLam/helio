@@ -63,7 +63,13 @@ class DenominationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Denomination
         fields = ('id', 'denomination')
-        
+
+class FeedBackSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FeedBack
+        fields = ('id', 'name', 'email', 'phone', 'subject', 'message', 'rate', 'sent_date', 'feedback_type', 'status','answer', 'created')     
+
 class NotificationSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -72,15 +78,20 @@ class NotificationSerializer(serializers.ModelSerializer):
 
 class UserEmbedSerializer(serializers.Serializer):
     full_name = serializers.CharField(required=True)
-    birthday = serializers.DateField(required=True)
+    birth_date = serializers.DateField(required=True)
     personal_id = serializers.IntegerField(required=True)
     email = serializers.CharField(required=True)
     address = serializers.CharField(required=True)
     phone = serializers.IntegerField(required=True)
     barcode = serializers.IntegerField(required=True)
 
-    def validate_birthday(self, value):
+    def validate_birth_date(self, value):
         if value >= datetime.now().date():
             raise serializers.ValidationError("Birthday must less then today")
         return value
 
+class FeeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Fee
+        exclude = ('created', 'modified')

@@ -28,5 +28,8 @@ export class DenominationAddComponent implements OnInit {
 			});
 			this.router.navigate(['/denomination-list'])
 	}
+  logValue(value: any) {
+    console.log(value);
+  }
 
 }

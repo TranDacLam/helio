@@ -1,0 +1,57 @@
+<div class='row title-feedback'>
+	<a class="pull-left" routerLink="/feedback-list">Phản hồi</a>
+	<a class="pull-right" routerLink="">Thống kê tình trạng phản hồi</a>
+</div>
+<div *ngIf="message_success" class="alert alert-success">
+    {{ message_success }}
+</div>
+<div *ngIf="message_error" class="alert alert-danger">
+    {{ message_error }}
+</div>
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+	<thead>
+		<tr class="tr-feedbacks">
+            <th><input type="checkbox" 
+                name="allFeedbacks" value="allFeedbacks" (change)="selectAllCheckbox($event);"/>
+            </th>
+            <th>Phản hồi </th>
+            <th>Người gửi</th>
+            <th>Ngày nhận</th>
+            <th>Rating</th>
+            <th>Trạng thái xử lý</th>
+            <th>Ngày xử lý </th>
+        </tr>
+	</thead>
+	<tbody>
+        <tr *ngFor="let feedback of feedbacks">
+            <td class="tr-feedbacks">
+                <label class="checkboxSelect">
+                <input type="checkbox" 
+                name="{{ feedback.id }}"
+                value="{{ feedback.id }}"
+                [checked]="feedback_selected"
+                (change)="changeCheckboxFeedback($event, feedback)"
+                />
+                </label>
+            </td>
+            <td><a routerLink="/feedback-detail/{{ feedback.id }}">{{ feedback.subject }}</a></td>
+            <td><a routerLink="/feedback-detail/{{ feedback.id }}">{{ feedback.name }}</a></td>
+            <td>{{ feedback.sent_date }}</td>
+            <td>{{ feedback.rate }}</td>
+            <td>{{ feedback.status }}</td>
+            <td>{{ feedback.sent_date }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class='row'>
+	<div class="col-md-3">
+		<select name="" class="form-control">
+			<option value="">Xóa các phản hồi được chọn</option>
+		</select>
+	</div>
+	<div class="col-md-3">
+		{{feedback_del.length}} của {{feedbacks.length}} được chọn
+		<button (click)="deleteFeedbackCheckbox()" type="button" class="btn btn-danger">Thực hiện</button>
+	</div>
+</div>

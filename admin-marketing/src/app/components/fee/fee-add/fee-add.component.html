@@ -1,0 +1,39 @@
+<div class="container">
+	<div class="row">
+		<p>Thêm Phí Giao Dịch</p>
+	</div>
+	<hr>
+	<form [formGroup]="feeAddForm">
+		<div class="form-group row">
+	        <div class="col-sm-1">
+	            <label>Phí</label>
+	        </div>
+	        <div class="col-sm-6">
+	            <input type="number" formControlName="fee">
+            	<show-error-valid [control]="feeAddForm.get('fee')"></show-error-valid>
+	        </div>
+	    </div>
+		<div class="form-group row">
+	        <div class="col-sm-1">
+	            <label>Vị trí</label>
+	        </div>
+	        <div class="col-sm-6">
+	            <input type="radio" value="male" formControlName="position">Phí Chuyển Ticket
+				<input type="radio" value="female" formControlName="position"> Phí Nạp Tiền
+            	<show-error-valid [control]="feeAddForm.get('position')"></show-error-valid>
+	        </div>
+	    </div>
+	    <div class="form-group row">
+	        <div class="col-sm-offset-1 col-sm-6">
+	            <input type="checkbox" formControlName="is_apply">Áp Dụng Phí
+	            <div *ngIf="feeAddForm.controls['is_apply'].errors">
+					haofdnsd
+				</div>
+            	<show-error-valid [control]="feeAddForm.get('is_apply')"></show-error-valid>
+	        </div>
+	    </div>
+	    <button class="btn btn-primary pull-right" (click)="createFee()" [disabled]="feeAddForm.invalid" >
+        LƯU LẠI
+    </button>
+	</form>
+</div>

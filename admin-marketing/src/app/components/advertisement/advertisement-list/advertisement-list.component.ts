@@ -21,7 +21,8 @@ export class AdvertisementListComponent implements OnInit {
 	advs : Advertisement[];
 	advs_delete: any; // Contains all checkbox were selected
 	isChecked = false; // Default value chekbox
-	message: string = ""; // Display message
+	message_success: string = ""; // Display message success
+	message_error: string = ""; // Display message error
 
 	// Using trigger becase fetching the list of feedbacks can be quite long
     // thus we ensure the data is fetched before rensering
@@ -87,6 +88,7 @@ export class AdvertisementListComponent implements OnInit {
             });
             this.advs_delete = listAdv_del;
             this.isChecked = true;
+            this.message_error = "";
         }else{
             this.isChecked = false;
             this.advs.forEach((item, index) => {
@@ -97,6 +99,7 @@ export class AdvertisementListComponent implements OnInit {
 	changeCheckboxAdv(e, adv){
       if(e.target.checked){
         this.advs_delete.push(adv.id);
+        this.message_error = "";
       }
       else{
        let updateAdvItem = this.advs_delete.find(this.findIndexToUpdate, adv.id);
@@ -113,15 +116,20 @@ export class AdvertisementListComponent implements OnInit {
 
 	// Delete all checkbox selected
 	deleteAllCheckAdvs() {
-		this.advertisementService.deleteAllAdvsSelected(this.advs_delete).subscribe(
-			result => {
-	   			for(let i=0; i < this.advs_delete.length; i++){
-	   				if(this.advs.find(x => x=this.advs_delete[i]))
-	   				{
-	   					this.advs.splice(this.advs.indexOf(this.advs_delete[i]), 1);
-	   				}
-	   			}
-	   			this.message = "Xóa quảng cáo thành công";
-	   		});
+		if (this.advs_delete.length == 0 ){
+			this.message_error = "Vui lòng chọn quảng cáo để xóa";
+		} else {
+			this.advertisementService.deleteAllAdvsSelected(this.advs_delete).subscribe(
+				result => {
+		   			for(let i=0; i < this.advs_delete.length; i++){
+		   				if(this.advs.find(x => x=this.advs_delete[i]))
+		   				{
+		   					this.advs.splice(this.advs.indexOf(this.advs_delete[i]), 1);
+		   				}
+		   			}
+		   			this.message_success = "Xóa quảng cáo thành công";
+		   		});
+		}
+		
 	}
 }

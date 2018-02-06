@@ -1,11 +1,14 @@
-<div class='row '>
+<div class='row title-adv'>
 	<a class="pull-left" routerLink="/advertisement-list">Quảng cáo</a>
 	<a class="pull-right" routerLink="/advertisement-add">Thêm Quảng cáo</a>
 </div>
 <br>
 <div class="table card-list">
-	<div *ngIf="message" class="alert alert-success">
-		{{ message }}
+	<div *ngIf="message_success" class="alert alert-success">
+		{{ message_success }}
+	</div>
+	<div *ngIf="message_error" class="alert alert-danger">
+		{{ message_error }}
 	</div>
 	<table id="table-denomination" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
