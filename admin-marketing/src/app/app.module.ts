@@ -75,6 +75,7 @@ import { EditPromotionLabelComponent } from './components/promotion-labels/edit-
 import { FormEventComponent } from './components/events/form-event/form-event.component';
 import { FormGameComponent } from './components/games/form-game/form-game.component';
 import { FormPostComponent } from './components/posts/form-post/form-post.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -136,6 +137,7 @@ import { FormPostComponent } from './components/posts/form-post/form-post.compon
     FormEventComponent,
     FormGameComponent,
     FormPostComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

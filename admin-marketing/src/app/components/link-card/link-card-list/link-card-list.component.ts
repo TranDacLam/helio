@@ -3,24 +3,28 @@ import { DataTableDirective } from 'angular-datatables';
 import { Http, Response } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
 
+import { LinkCardService } from '../../../shared/services/link-card.service';
+import { User } from '../../../shared/class/user';
+
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-link-card-list',
   templateUrl: './link-card-list.component.html',
-  styleUrls: ['./link-card-list.component.css']
+  styleUrls: ['./link-card-list.component.css'],
+  providers: [LinkCardService]
 })
 export class LinkCardListComponent implements OnInit {
 
-	dtOptions: any = {};
-	link_cards = [];
-	checkbox_selected = false; // Default feedback selected false
+	 dtOptions: any = {};
+	 link_cards: User[];
+	 checkbox_selected = false; // Default feedback selected false
     link_card_del: any;
     message_success: string = ""; // Display message success
     message_error: string = ""; // Display message error
     message_result: string = ""; // Display message result
-
+    errorMessage: String;
 
     // Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
@@ -28,11 +32,13 @@ export class LinkCardListComponent implements OnInit {
 
 	  // Using trigger becase fetching the list of feedbacks can be quite long
 	  // thus we ensure the data is fetched before rensering
-	  // dtTrigger: Subject<any> = new Subject();
+	  dtTrigger: Subject<any> = new Subject();
   	constructor(
-  		private route: ActivatedRoute
+  		private route: ActivatedRoute,
+      private linkCardService: LinkCardService,
   		) { 
   		this.link_card_del = [];
+      this.link_cards = [];
   	}
 
   	ngOnInit() {
@@ -62,6 +68,14 @@ export class LinkCardListComponent implements OnInit {
   	}
 
   	getAllLinkCards() {
+      this.linkCardService.getAllLinkedUsers().subscribe(
+        result => {
+          this.link_cards = result,
+          // Caling the DT trigger to manually render the table
+          this.dtTrigger.next();
+        },
+        error =>  this.errorMessage = <any>error
+        )
 
   	}
   	selectAllCheckbox(event) {
@@ -100,6 +114,24 @@ export class LinkCardListComponent implements OnInit {
     }
 
   	deleteLinkCardCheckbox() {
+      if (this.link_card_del !== null) {
+      if (this.link_card_del.length == 0 ){
+        this.message_error = "Vui lòng chọn thẻ liên kết để xóa";
+        this.message_result = "";
+      } else {
+      this.linkCardService.deleteAllUserLinkedSelected(this.link_card_del).subscribe(
+        result => {
+             this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                   this.link_card_del.forEach(function(e){
+                   dtInstance.rows('#delete'+e).remove().draw();
+                   });
+               });
+             this.message_success = "Xóa thẻ liên kết thành công";
+           });
+      }
+    } else {
+      return 0;
+    }  
   	}
 
 }

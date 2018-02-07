@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of'; 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
+import { api } from '../utils/api';
 
 import { Denomination } from '../../shared/class/denomination';
 
@@ -17,7 +18,7 @@ const httpOptions = {
 @Injectable()
 export class DenominationService {
 
-	private urlDeno = "http://127.0.0.1:8000/vi/api/denomination/";
+	private urlDeno = `${api.denomination}`;
 
   	constructor(private http: HttpClient) { }
 

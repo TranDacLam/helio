@@ -16,9 +16,9 @@ const httpOptions = {
 
 @Injectable()
 export class FeedbackService {
-
-	private urlFeedback = "http://127.0.0.1:8000/vi/api/feedback/";
-  private url_summary = api.summary;
+  
+    private url_summary = api.summary;
+	  private urlFeedback = `${api.feedback}`;
 
   	constructor(private http: HttpClient) { }
 

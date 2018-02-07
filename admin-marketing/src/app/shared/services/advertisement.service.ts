@@ -9,6 +9,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 
 import { Advertisement } from '../../shared/class/advertisement';
+import { api } from '../utils/api';
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -16,8 +17,7 @@ const httpOptions = {
 
 @Injectable()
 export class AdvertisementService {
-
-  	private urlAdv = 'http://127.0.0.1:8000/vi/api/advertisement/';
+  	private urlAdv = `${api.advertisement}`;
 
 	constructor(private http: HttpClient) 
 	{

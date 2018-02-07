@@ -48,10 +48,13 @@ import { EditPostComponent } from './components/posts/edit-post/edit-post.compon
 import { ListPromotionLabelComponent } from './components/promotion-labels/list-promotion-label/list-promotion-label.component';
 import { AddPromotionLabelComponent } from './components/promotion-labels/add-promotion-label/add-promotion-label.component';
 import { EditPromotionLabelComponent } from './components/promotion-labels/edit-promotion-label/edit-promotion-label.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 const routes: Routes = [
     { 
+        path: '', component: HomeComponent
+    }, { 
         path: 'users', component: UsersComponent
     }, { 
      	path: 'promotions', component: PromotionsComponent

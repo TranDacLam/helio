@@ -16,9 +16,9 @@
 </div>
 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class=" row hover">
 	<thead>
-		<tr class="tr-feedbacks">
+		<tr class="tr-link-card">
             <th><input type="checkbox" 
-                name="allFeedbacks" value="allFeedbacks" (change)="selectAllCheckbox($event);"/>
+                name="allLinkCards" value="allLinkCards" (change)="selectAllCheckbox($event);"/>
                 Card Bardoce
             </th>
             <th>Họ và Tên </th>
@@ -30,11 +30,11 @@
 	</thead>
 	<tbody>
         <tr *ngFor="let link_card of link_cards" id="delete{{link_card.id}}">
-            <td class="tr-feedbacks">
+            <td class="tr-link-card">
                 <label class="checkboxSelect">
                     <input type="checkbox" 
-                    name="{{ feedback.id }}"
-                    value="{{ feedback.id }}"
+                    name="{{ link_card.id }}"
+                    value="{{ link_card.id }}"
                     [checked]="checkbox_selected"
                     (change)="changeCheckboxLinkCard($event, link_card)"
                     />
@@ -45,7 +45,7 @@
             <td>{{ link_card.phone }}</td>
             <td>{{ link_card.birth_date }}</td>
             <td>{{ link_card.date_mapping }}</td>
-            <td>{{ link_card.user_mapping }}</td>
+            <td>{{ link_card.username_mapping }}</td>
         </tr>
     </tbody>
 </table>

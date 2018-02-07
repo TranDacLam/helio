@@ -19,6 +19,7 @@ export class DenominationListComponent implements OnInit {
 	denominations: Denomination[];
 	select_checkbox = false; // Default checkbox false
 	deno_selected: any;
+  selectedAll: any;
 	message_success: string = ""; // Display message success
   message_error: string = ""; // Display message error
   message_result = ''; // Message result
