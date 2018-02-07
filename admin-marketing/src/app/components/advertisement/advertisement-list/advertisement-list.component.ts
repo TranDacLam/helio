@@ -137,6 +137,7 @@ export class AdvertisementListComponent implements OnInit {
 			if (this.advs_delete.length == 0 ){
 				this.message_error = "Vui lòng chọn quảng cáo để xóa";
 				this.message_result = "";
+        this.message_success = "";
 			} else {
 			this.advertisementService.deleteAllAdvsSelected(this.advs_delete).subscribe(
 				result => {
@@ -144,6 +145,7 @@ export class AdvertisementListComponent implements OnInit {
                		this.advs_delete.forEach(function(e){
                  	dtInstance.rows('#delete'+e).remove().draw();
                		});
+                this.advs_delete = [];
              	});
 		   			this.message_success = "Xóa quảng cáo thành công";
 		   		});

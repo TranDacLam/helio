@@ -19,15 +19,17 @@ export class BannerListComponent implements OnInit {
 	dtOptions: any = {};
 	banners: Banner[];
 
-	banner_del: any;
-    message_success: string = ""; // Display message success
-    message_error: string = ""; // Display message error
-    message_result: string = ""; // Display message result
-    errorMessage: String;
+  banner_del: any;
+  isChecked = false;
+  message_success: string = ""; // Display message success
+  message_error: string = ""; // Display message error
+  message_result: string = ""; // Display message result
+  errorMessage: String;
+  checkAll= false;
 
-    // Inject the DataTableDirective into the dtElement property
-    @ViewChild(DataTableDirective)
-    dtElement: DataTableDirective;
+  // Inject the DataTableDirective into the dtElement property
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
 
 
     // Using trigger becase fetching the list of feedbacks can be quite long
@@ -67,16 +69,23 @@ export class BannerListComponent implements OnInit {
         };
         this.getAllBanners();
   	}
-
-  	isAllChecked() {
-  		// return this.banners.every(_ => _.position);
+  	checkAllBanner(event) {
+      let arr_del = []; 
+        if(event.target.checked){
+            this.banners.forEach(function(element) {
+                arr_del.push(element.id);
+            });
+            this.banner_del = arr_del;
+            this.isChecked = true;
+            this.message_error = "";
+            this.message_result = "";
+        }else{
+            this.isChecked = false;
+            this.banners.forEach((item, index) => {
+              this.banner_del.splice(index, this.banners.length);
+         });
+        }
   	}
-
-  	checkAllBanner(ev) {
-      // console.log(ev.target.checked);
-  		this.banners.forEach(x => x.position = ev.target.checked)
-  	}
-
   	getAllBanners() {
       this.bannerService.getAllBanner().subscribe(
         result => {
@@ -85,5 +94,22 @@ export class BannerListComponent implements OnInit {
         error =>  this.errorMessage = <any>error
           )
   	}
+    checkItemChange(event, banner) {
+       if(event.target.checked){
+        this.banner_del.push(banner.id);
+        this.message_error = "";
+        this.message_result = "";
+      }
+      else{
+       let updateBannerItem = this.banner_del.find(this.findIndexToUpdate, banner.id);
+
+       let index = this.banner_del.indexOf(updateBannerItem);
+
+       this.banner_del.splice(index, 1);
+      }
+    }
+    findIndexToUpdate(type) { 
+        return type.id === this;
+    }
 
 }

@@ -128,6 +128,7 @@ export class DenominationListComponent implements OnInit {
   		if( this.deno_selected.length == 0) {
         this.message_error = "Vui lòng chọn quảng cáo để xóa";
         this.message_result = "";
+        this.message_success = "";
       } else {
         this.denominationService.deleteAllDenosSelected(this.deno_selected).subscribe(
         result => {
@@ -135,6 +136,7 @@ export class DenominationListComponent implements OnInit {
                this.deno_selected.forEach(function(e){
                  dtInstance.rows('#delete'+e).remove().draw();
                });
+               this.deno_selected = [];
              });
              this.message_success = "Xóa quảng cáo thành công";
            });

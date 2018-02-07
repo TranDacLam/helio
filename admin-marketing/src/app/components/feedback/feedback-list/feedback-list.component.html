@@ -39,10 +39,10 @@
             </td>
             <td><a routerLink="/feedback-detail/{{ feedback.id }}">{{ feedback.subject }}</a></td>
             <td><a routerLink="/feedback-detail/{{ feedback.id }}">{{ feedback.name }}</a></td>
-            <td>{{ feedback.sent_date }}</td>
+            <td>{{ feedback.sent_date |date: 'dd/MM/yyyy'}}</td>
             <td>{{ feedback.rate }}</td>
             <td>{{ feedback.status }}</td>
-            <td>{{ feedback.sent_date }}</td>
+            <td>{{ feedback.sent_date|date: 'dd/MM/yyyy' }}</td>
         </tr>
     </tbody>
 </table>

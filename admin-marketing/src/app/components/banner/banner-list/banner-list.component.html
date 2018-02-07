@@ -1,6 +1,17 @@
+<!-- breadcrumbs -->
+<nav id="banner-breadcrumbs">
+	<div class="row">
+		<ul class="banner-horizontal-list">
+			<li><a routerLink="/home">Trang chủ  > </a> </li> 
+			<li><a routerLink="/banner-list">Banner</a></li>
+		</ul>
+	</div>
+</nav>
+<!-- end breadcrumbs -->
+<hr>
 <div class='row '>
-	<a class="pull-left" routerLink="/user-list">User</a>
-	<a class="pull-right" routerLink="/user-add">Thêm user</a>
+	<a class="pull-left" routerLink="/banner-list">Banner</a>
+	<a class="pull-right" routerLink="/banner-add">Thêm banner</a>
 </div>
 <br>
 <div class="table card-list">
@@ -16,13 +27,13 @@
 	<table id="table-user" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
-	      		<th><input type="checkbox" [checked]="isAllChecked()" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/>  Banner</th>
+	      		<th><input type="checkbox" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/>  Banner</th>
 	      	</tr>
     	</thead>
     	<tbody>
    			<tr *ngFor ="let banner of banners" id="delete{{banner.id}}">
    				<td><input type="checkbox"
-   					value={{banner.id}} name="banner[]" [(ngModel)]="banner.position"
+   					value={{banner.id}} name="banner[]" [checked]="isChecked"
    					(change)="checkItemChange($event, banner)"/> {{ banner.sub_url }}</td>
    			</tr>
     	</tbody>

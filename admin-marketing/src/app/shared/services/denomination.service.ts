@@ -18,28 +18,28 @@ const httpOptions = {
 @Injectable()
 export class DenominationService {
 
-	private urlDeno = `${api.denomination}`;
+	constructor(private http: HttpClient) { }
 
-  	constructor(private http: HttpClient) { }
+	// Get all Denomination
+	getAllDenomination(): Observable<Denomination[]> {
+    let urlDeno = `${api.denomination}`;
+		return this.http.get<Denomination[]>(urlDeno).catch(this.handleError)
+	}
 
-  	// Get all Denomination
-  	getAllDenomination(): Observable<Denomination[]> {
-  		return this.http.get<Denomination[]>(this.urlDeno).catch(this.handleError)
-  	}
+	// POST: Create a new denomination
+	createDenomination(deno: Denomination): Observable<Denomination> {
+    let urlDeno = `${api.denomination}`;
+		return this.http.post<Denomination>(urlDeno, deno, httpOptions).catch(this.handleError)
+	}
 
-  	// POST: Create a new denomination
-  	createDenomination(deno: Denomination): Observable<Denomination> {
-  		return this.http.post<Denomination>(this.urlDeno, deno, httpOptions).catch(this.handleError)
-  	}
+  deleteAllDenosSelected(deno_id: Denomination[]): Observable<Denomination[]> {
+    const url = `${api.denomination}?deno_id=${deno_id}`;
+    return this.http.delete<Denomination[]>(url, httpOptions)
+    .catch(this.handleError)
+  }
 
-    deleteAllDenosSelected(deno_id: Denomination[]): Observable<Denomination[]> {
-      const url = `${this.urlDeno}?deno_id=${deno_id}`;
-      return this.http.delete<Denomination[]>(url, httpOptions)
-      .catch(this.handleError)
-    }
-
-  	// Handle error
-  	handleError(error:Response) {
-  		return Observable.throw(error);
-  	}
+	// Handle error
+	handleError(error:Response) {
+		return Observable.throw(error);
+	}
 }
