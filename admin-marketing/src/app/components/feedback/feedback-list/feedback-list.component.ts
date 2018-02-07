@@ -177,6 +177,7 @@ export class FeedbackListComponent implements OnInit {
         if( this.feedback_del.length == 0) {
           this.message_error = "Vui lòng chọn phản hồi để xóa";
           this.message_result = "";
+          this.message_success = "";
       } else {
         this.feedbackService.deleteAllFeedbackChecked(this.feedback_del).subscribe(
         result => {
@@ -184,6 +185,7 @@ export class FeedbackListComponent implements OnInit {
                this.feedback_del.forEach(function(e){
                  dtInstance.rows('#delete'+e).remove().draw();
                });
+               this.feedback_del = [];
              });
             this.message_success = "Xóa phản hồi thành công";
           },

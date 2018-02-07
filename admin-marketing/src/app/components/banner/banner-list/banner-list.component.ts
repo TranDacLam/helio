@@ -32,10 +32,11 @@ export class BannerListComponent implements OnInit {
 
     // Using trigger becase fetching the list of feedbacks can be quite long
 	// thus we ensure the data is fetched before rensering
-	// dtTrigger: Subject<any> = new Subject();
+	dtTrigger: Subject<any> = new Subject();
 
   	constructor(
   		private route: ActivatedRoute,
+      private bannerService: BannerService
   		) { 
   		this.banner_del = [];
       	this.banners = [];
@@ -72,11 +73,17 @@ export class BannerListComponent implements OnInit {
   	}
 
   	checkAllBanner(ev) {
-  		// this.banners.forEach(x => x.position = ev.target.checked)
+      // console.log(ev.target.checked);
+  		this.banners.forEach(x => x.position = ev.target.checked)
   	}
 
   	getAllBanners() {
-
+      this.bannerService.getAllBanner().subscribe(
+        result => {
+          this.banners = result;
+          this.dtTrigger.next(); },
+        error =>  this.errorMessage = <any>error
+          )
   	}
 
 }

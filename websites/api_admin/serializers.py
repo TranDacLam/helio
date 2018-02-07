@@ -95,3 +95,9 @@ class FeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fee
         exclude = ('created', 'modified')
+
+class BannerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Banner
+        fields = ('id', 'image', 'sub_url', 'position')

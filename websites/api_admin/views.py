@@ -811,3 +811,22 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
+"""
+    GET: get all banner
+    @author: TrangLe
+"""
+@permission_classes((AllowAny,))
+class BannerView(APIView):
+    """
+    Method: Get all Banner
+    """
+    def get(self, request, format=None):
+        try:
+            banner = Banner.objects.all()
+            serializer = admin_serializers.BannerSerializer(banner, many=True)
+            return Response(serializer.data)
+
+        except Exception, e:
+            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            return Response(error, status=500)
