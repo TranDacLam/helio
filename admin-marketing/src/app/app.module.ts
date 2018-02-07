@@ -44,6 +44,7 @@ import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
 import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
+import { BannerService } from './shared/services/banner.service';
 
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserAddComponent } from './components/user/user-add/user-add.component';
@@ -52,6 +53,9 @@ import { LinkCardListComponent } from './components/link-card/link-card-list/lin
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeService } from './shared/services/fee.service';
 import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
+import { BannerListComponent } from './components/banner/banner-list/banner-list.component';
+import { BannerDetailComponent } from './components/banner/banner-detail/banner-detail.component';
+import { BannerAddComponent } from './components/banner/banner-add/banner-add.component';
 
 
 @NgModule({
@@ -91,6 +95,9 @@ import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
     LinkCardListComponent,
     FeeListComponent,
     FeeAddComponent,
+    BannerListComponent,
+    BannerDetailComponent,
+    BannerAddComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,6 +117,7 @@ import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
     DenominationService,
     FeedbackService,
     FeeService,
+    BannerService
   ],
   bootstrap: [AppComponent]
 })

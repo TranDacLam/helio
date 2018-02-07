@@ -1,0 +1,43 @@
+<div class='row '>
+	<a class="pull-left" routerLink="/user-list">User</a>
+	<a class="pull-right" routerLink="/user-add">Thêm user</a>
+</div>
+<br>
+<div class="table card-list">
+	<div *ngIf="message_success" class="alert alert-success">
+		{{ message_success }}
+	</div>
+	<div *ngIf="message_error" class="alert alert-danger">
+		{{ message_error }}
+	</div>
+	<div class="alert alert-success" *ngIf="message_result">
+        {{message_result}}
+    </div>
+	<table id="table-user" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
+		<thead>
+	      	<tr>
+	      		<th><input type="checkbox" [checked]="isAllChecked()" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/>  Banner</th>
+	      	</tr>
+    	</thead>
+    	<tbody>
+   			<tr *ngFor ="let banner of banners" id="delete{{banner.id}}">
+   				<td><input type="checkbox"
+   					value={{banner.id}} name="banner[]" [(ngModel)]="banner.position"
+   					(change)="checkItemChange($event, banner)"/> {{ banner.sub_url }}</td>
+   			</tr>
+    	</tbody>
+	</table>
+	<hr>
+	<div class='row'>
+		<div class="col-md-3">
+			<select name="" class="form-control">
+				<option value="">Xóa các banner được chọn</option>
+			</select>
+		</div>
+		<div class="col-md-3">
+			{{banner_del.length}} của {{banners.length}} được chọn
+			<button (click)="deleteBannersCheckbox()" type="button" class="btn btn-danger">Thực hiện</button>
+		</div>
+	</div>
+</div>
+

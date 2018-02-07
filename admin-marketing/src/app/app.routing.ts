@@ -29,7 +29,10 @@ import { UserListComponent } from './components/user/user-list/user-list.compone
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
-
+import { BannerAddComponent } from './components/banner/banner-add/banner-add.component';
+import { BannerListComponent } from './components/banner/banner-list/banner-list.component';
+import { BannerDetailComponent } from './components/banner/banner-detail/banner-detail.component';
+ 
 const routes: Routes = [
     { 
         path: 'users', component: UsersComponent
@@ -71,6 +74,12 @@ const routes: Routes = [
         path: 'user-detail', component: UserDetailComponent
     }, {
         path: 'link-card-list', component: LinkCardListComponent
+    },{
+        path: 'banner-add', component: BannerAddComponent
+    }, {
+        path: 'banner-list', component: BannerListComponent
+    }, {
+        path: 'banner-detail', component: BannerDetailComponent
     },
     { path: 'link-card/add', component: AddLinkCardComponent },
     { path: 'link-card/detail/:id', component: LinkCardDetailComponent },
