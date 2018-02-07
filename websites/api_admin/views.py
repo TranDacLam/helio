@@ -445,8 +445,12 @@ class NotificationList(APIView):
 
             # Check list id is valid
             if list_id_str:
+                list_id = []
                 # convert list id string to list
-                list_id = eval(list_id_str)
+                try:
+                    list_id = eval(list_id_str)
+                except SyntaxError:
+                    return Response({"code": 400, "message": "List ID must be format is '[1, 2, 3]' ", "fields": ""}, status=400)
 
                 queryset = Notification.objects.filter(pk__in = list_id).delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
@@ -550,7 +554,7 @@ class NotificationUser(APIView):
             if not list_id_str:
                 return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
             list_id  = []
-            
+
             # Convert string to list 
             try:
                 list_id = eval(list_id_str)
