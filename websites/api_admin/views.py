@@ -903,3 +903,21 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+"""
+    Get All CategoryNotifications
+    @author :diemnguyen
+
+"""
+@permission_classes((AllowAny,))
+class CategoryNotifications(APIView):
+
+    def get(self, request, format=None):
+        try:
+            category_noti_list = Category_Notification.objects.all()
+            serializer = admin_serializers.CategoryNotificationSerializer(category_noti_list, many = True)
+            return Response({"code": 200, "message": serializer.data, "fields": ""}, status=200)
+
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)

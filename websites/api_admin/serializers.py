@@ -95,3 +95,9 @@ class FeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fee
         exclude = ('created', 'modified')
+
+class CategoryNotificationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category_Notification
+        fields = ('id', 'name')
