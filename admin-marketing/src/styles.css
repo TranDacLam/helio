@@ -1,1 +1,162 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'Cabin';
+    src: url('/assets/fonts/Cabin-Regular.eot');
+    src: url('/assets/fonts/Cabin-Regular.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/Cabin-Regular.woff') format('woff'),
+        url('/assets/fonts/Cabin-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cabin';
+    src: url('/assets/fonts/Cabin-Regular_1.eot');
+    src: url('/assets/fonts/Cabin-Regular_1.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/Cabin-Regular_1.woff') format('woff'),
+        url('/assets/fonts/Cabin-Regular_1.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cabin';
+    src: url('/assets/fonts/Cabin-Regular_2.eot');
+    src: url('/assets/fonts/Cabin-Regular_2.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/Cabin-Regular_2.woff') format('woff'),
+        url('/assets/fonts/Cabin-Regular_2.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*Yanone facefont */
+
+@font-face {
+    font-family: 'Yanone Kaffeesatz';
+    src: url('/assets/fonts/YanoneKaffeesatz-Regular_1.eot');
+    src: url('/assets/fonts/YanoneKaffeesatz-Regular_1.eot?#iefix') format('embedded-opentype'),
+         url('/assets/fonts/YanoneKaffeesatz-Regular_1.woff') format('woff'),
+         url('/assets/fonts/YanoneKaffeesatz-Regular_1.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Yanone Kaffeesatz';
+    src: url('/assets/fonts/YanoneKaffeesatz-Regular_2.eot');
+    src: url('/assets/fonts/YanoneKaffeesatz-Regular_2.eot?#iefix') format('embedded-opentype'),
+         url('/assets/fonts/YanoneKaffeesatz-Regular_2.woff') format('woff'),
+         url('/assets/fonts/YanoneKaffeesatz-Regular_2.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Yanone Kaffeesatz';
+    src: url('/assets/fonts/YanoneKaffeesatz-Regular_3.eot');
+    src: url('/assets/fonts/YanoneKaffeesatz-Regular_3.eot?#iefix') format('embedded-opentype'),
+         url('/assets/fonts/YanoneKaffeesatz-Regular_3.woff') format('woff'),
+         url('/assets/fonts/YanoneKaffeesatz-Regular_3.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: "Cabin";
+    /*background-color: #15062b;
+    color: #fff;*/
+}
+
+p {
+    font-family: "Cabin";
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+}
+
+/* START HEADER*/
+#header-wrapper {
+    background-color: #15062b;
+}
+#header-wrapper .logo {
+    padding: 0px;
+    height: 100px;
+}
+#header-wrapper .logo img{
+    height: 100%;
+    width: auto;
+}
+#header-wrapper .navbar-default.navbar-header-section {
+    margin: 0px;
+    background: none;
+    border: 0px;
+}
+#header-wrapper .navbar-default .navbar-nav>li>a {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #fff;
+}
+#header-wrapper .navbar-default .navbar-nav>.active>a, 
+#header-wrapper .navbar-default .navbar-nav>.active>a:focus, 
+#header-wrapper .navbar-default .navbar-nav>.active>a:hover {
+    background: none;
+    color: #fff;
+}
+
+/* END HEADER*/
+/* START FOOTER*/
+#footer-wrapper {
+    color: #fff;
+    background-image: linear-gradient(347deg, #07487b, #3c0034);
+}
+#footer-wrapper .menuwidget a:hover{
+    color: #da139a;
+    text-decoration: underline;
+}
+#footer-wrapper #email-contact{
+    color: #fff;
+}
+#footer-wrapper #email-contact:hover{
+    color: #da139a;
+    text-decoration: underline;
+}
+.footer-contact {
+    margin-bottom: 35px;
+}
+
+.box_footer {
+    padding-top: 25px;
+}
+
+.footer-contact img {
+    width: 160px;
+}
+
+.menuwidget.nav li {
+    width: 100%;
+} 
+.menuwidget.nav li a {
+    font-size: 18px;
+    font-family: "Yanone Kaffeesatz";
+    color: #fff;
+}
+.menuwidget.nav li a:hover {
+    background: transparent;
+}
+.helio-footer-info p, 
+.contact-text p {
+    font-size: 14px;
+}
+/* END FOOTER*/
+
+@media (min-width: 768px) {
+    /* START HEADER*/
+    #header-wrapper .navbar-default .navbar-nav>li>a {
+        padding: 40px 15px;
+    }
+
+    #header-wrapper .navbar-default .navbar-nav>li>a:last-child {
+        padding-right: 0px;
+    }
+    /* END HEADER*/
+}

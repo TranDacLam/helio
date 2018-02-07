@@ -29,9 +29,12 @@ import { UserListComponent } from './components/user/user-list/user-list.compone
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
     { 
+        path: '', component: HomeComponent
+    }, { 
         path: 'users', component: UsersComponent
     }, { 
      	path: 'promotions', component: PromotionsComponent

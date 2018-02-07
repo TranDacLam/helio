@@ -52,6 +52,7 @@ import { LinkCardListComponent } from './components/link-card/link-card-list/lin
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeService } from './shared/services/fee.service';
 import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -91,6 +92,7 @@ import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
     LinkCardListComponent,
     FeeListComponent,
     FeeAddComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
