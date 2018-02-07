@@ -8,6 +8,7 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Feedback } from '../../shared/class/feedback';
+import { api } from '../utils/api';
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -16,7 +17,7 @@ const httpOptions = {
 @Injectable()
 export class FeedbackService {
 
-	private urlFeedback = "http://127.0.0.1:8000/vi/api/feedback/";
+	  private urlFeedback = `${api.feedback}`;
 
   	constructor(private http: HttpClient) { }
 

@@ -16,7 +16,7 @@
 	<table id="table-denomination" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
-	      		<th><input type="checkbox" name="allCheckDeno" value="allCheckDeno"(change)="checkAllDeno($event)"/></th>
+	      		<th><input type="checkbox" [(ngModel)]="selectedAll" name="allCheckDeno" value="allCheckDeno"(change)="checkAllDeno($event)"/></th>
 	        	<th>Thêm Mệnh giá nạp tiền</th>
 	      	</tr>
     	</thead>

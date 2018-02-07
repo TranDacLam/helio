@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of'; 
 
 import { PromotionLabel } from '../../shared/class/promotion-label';
+import { api } from '../utils/api';
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,7 +16,7 @@ const httpOptions = {
 @Injectable()
 export class PromotionLabelService {
 
-  	private urlPromotionLabel = 'http://127.0.0.1:8000/vi/api/promotion_label/';
+  	private urlPromotionLabel = `${api.promotion_label}`;
 
 	constructor(private http: HttpClient) 
 	{
