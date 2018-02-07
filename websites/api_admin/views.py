@@ -90,6 +90,26 @@ class PromotionUser(APIView):
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
 
+    def post(self, request, id):
+        try:
+            if id:
+                list_user = Gift.objects.filter(pk=id)
+    
+                promotion_user_id_list = Gift.objects.filter(promotion_id=id).values_list('user_id', flat=True)
+                user_promotion_list = User.objects.filter(pk__in=promotion_user_id_list)
+                user_all_list = User.objects.filter(~Q(pk__in=promotion_user_id_list))
+
+                result = {}
+                result['promotion_detail'] = admin_serializers.PromotionSerializer(promotion_detail, many=False).data
+                result['user_all'] = admin_serializers.UserSerializer(user_all_list, many=True).data
+                result['user_promotion'] = admin_serializers.UserSerializer(user_promotion_list, many=True).data
+        
+                return Response(result)
+        except Exception, e:
+            print 'PromotionUserView ',e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
 
 """
     Get user
@@ -413,6 +433,33 @@ class NotificationList(APIView):
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
 
+    def delete(self, request, format=None):
+        """
+        DELETE: Multi ids select
+        """
+        try:
+            # Get list id to delete
+            list_id_str = self.request.data.get('list_id', '')
+
+            print "LIST NOTIFICATION ID DELETE : ", list_id_str
+
+            # Check list id is valid
+            if list_id_str:
+                # convert list id string to list
+                list_id = eval(list_id_str)
+
+                queryset = Notification.objects.filter(pk__in = list_id).delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+
+            return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
+        except ValueError:
+            #Handle the exception
+            print 'Please enter an integer'
+        except Exception, e:
+            print e
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+
 """
     Get Notification Detail
     @author : diemnguyen
@@ -492,6 +539,47 @@ class NotificationUser(APIView):
         except Notification.DoesNotExist, e:
             error = {"code": 400, "message": "Id Not Found.", "fields": ""}
             return Response(error, status=400)
+        except Exception, e:
+            print 'NotificationUserView ',e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def post(self, request, id):
+        try:
+            list_id_str = self.request.data.get('list_id', '')
+            if not list_id_str:
+                return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
+            list_id  = []
+            
+            # Convert string to list 
+            try:
+                list_id = eval(list_id_str)
+            except SyntaxError:
+                return Response({"code": 400, "message": "List ID must be format is '[1, 2, 3]' ", "fields": ""}, status=400)
+
+            # Get list user by notification_id
+            user_notification_list = User_Notification.objects.filter(notification_id=id).values_list('user_id', flat=True)
+            
+            # List add new ( exist in params + not exist in database)
+            list_add = set(list_id) - set(user_notification_list)
+            # List delete item ( not exist in params + exist in database)
+            list_delete = set(user_notification_list) - set(list_id)
+
+            # Check list add is not empty then add to database
+            if list_add:
+                for user_id in list_add:
+                    print user_id
+                    item = User_Notification()
+                    item.notification_id = id
+                    item.user_id = user_id
+                    item.save()
+
+            # Check list_delete is not empty then delete from database
+            if list_delete:
+                User_Notification.objects.filter(notification_id=id, user_id__in=list_delete).delete()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
         except Exception, e:
             print 'NotificationUserView ',e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
