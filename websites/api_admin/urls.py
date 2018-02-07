@@ -17,7 +17,7 @@ urlpatterns = [
 	url(r'^user_embed/(?P<barcode>[0-9]+)/$', views.UserEmbedDetail.as_view(), name="user-embed-detail"),
 	url(r'^relate/$', views.RelateAPI.as_view(), name="relate-user"),
 	url(r'^delete_relate/(?P<id>[0-9]+)/$', views.RelateAPI.as_view(), name="delete-relate-user"),
-
+	url(r'^user_link_card', views.UserLinkCardList.as_view(), name="user-link-card"),
 
 	url(r'^summary/$', views.SummaryAPI.as_view(), name="summary"),
 

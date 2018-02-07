@@ -15,7 +15,7 @@
 	<thead>
 		<tr class="tr-feedbacks">
             <th><input type="checkbox" 
-                name="allFeedbacks" value="allFeedbacks" (change)="selectAllCheckbox($event);"/>
+                name="allFeedbacks" [(ngModel)]="allFeedbacks" value="allFeedbacks" (change)="selectAllCheckbox($event);"/>
             </th>
             <th>Phản hồi </th>
             <th>Người gửi</th>

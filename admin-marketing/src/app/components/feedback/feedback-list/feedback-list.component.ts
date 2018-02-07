@@ -21,6 +21,7 @@ export class FeedbackListComponent implements OnInit {
     feedbacks: Feedback[];
     feedback_selected = false; // Default feedback selected false
     feedback_del: any;
+    allFeedbacks: any;
     message_success: string = ""; // Display message success
     message_error: string = ""; // Display message error
     message_result: string = ""; // Display message result
@@ -142,7 +143,7 @@ export class FeedbackListComponent implements OnInit {
         let arrFeedback_del = [];
         if (event.target.checked) {
             this.feedbacks.forEach(function(element) {
-            arrFeedback_del.push(element.id)
+              arrFeedback_del.push(element.id)
           });
             this.feedback_del = arrFeedback_del
             this.feedback_selected = true;
@@ -151,7 +152,7 @@ export class FeedbackListComponent implements OnInit {
         } else {
             this.feedback_selected = false;
             this.feedbacks.forEach((item, index) => {
-            this.feedback_del.splice(index, this.feedbacks.length);
+              this.feedback_del.splice(index, this.feedbacks.length);
         });
     }
     }
