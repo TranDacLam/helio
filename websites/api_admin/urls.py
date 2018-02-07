@@ -41,6 +41,7 @@ urlpatterns = [
 	url(r'^fees/$', views.FeeAPI.as_view(), name="fees"),
 	url(r'^feedback/$', views.FeedbackView.as_view(), name="feedback"),
 	url(r'^feedback/(?P<pk>[0-9]+)/$', views.FeedbackDetailView.as_view(), name="feedback-detail"),
+	url(r'^category_notifications/$', views.CategoryNotifications.as_view(), name="category-notifications"),
 
 
 ]
