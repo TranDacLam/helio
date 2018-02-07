@@ -72,6 +72,9 @@ import { EditPostComponent } from './components/posts/edit-post/edit-post.compon
 import { ListPromotionLabelComponent } from './components/promotion-labels/list-promotion-label/list-promotion-label.component';
 import { AddPromotionLabelComponent } from './components/promotion-labels/add-promotion-label/add-promotion-label.component';
 import { EditPromotionLabelComponent } from './components/promotion-labels/edit-promotion-label/edit-promotion-label.component';
+import { FormEventComponent } from './components/events/form-event/form-event.component';
+import { FormGameComponent } from './components/games/form-game/form-game.component';
+import { FormPostComponent } from './components/posts/form-post/form-post.component';
 
 
 @NgModule({
@@ -130,6 +133,9 @@ import { EditPromotionLabelComponent } from './components/promotion-labels/edit-
     ListPromotionLabelComponent,
     AddPromotionLabelComponent,
     EditPromotionLabelComponent,
+    FormEventComponent,
+    FormGameComponent,
+    FormPostComponent,
   ],
   imports: [
     BrowserModule,
