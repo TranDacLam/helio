@@ -8,6 +8,7 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Feedback } from '../../shared/class/feedback';
+import { api } from '../utils/api';
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,6 +18,7 @@ const httpOptions = {
 export class FeedbackService {
 
 	private urlFeedback = "http://127.0.0.1:8000/vi/api/feedback/";
+  private url_summary = api.summary;
 
   	constructor(private http: HttpClient) { }
 
@@ -102,8 +104,7 @@ export class FeedbackService {
         author: Lam
     */
     getStatisticFeedback(): Observable<any>{
-      let url_summary = `http://127.0.0.1:8000/vi/api/summary/`;
-      return this.http.get(url_summary).map((res: Response) => res.json()).catch(this.handleError);
+      return this.http.get(this.url_summary).map((res: Response) => res.json()).catch(this.handleError);
     }
 
   	// Handle error

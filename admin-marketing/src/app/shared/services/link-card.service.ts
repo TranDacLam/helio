@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { User } from '../class/user';
 import { Customer } from '../class/customer';
 import { Http, Response, Headers } from '@angular/http';
+import { api } from '../utils/api';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
@@ -13,9 +14,10 @@ const httpOptions = {
 @Injectable()
 export class LinkCardService {
 
-    private url_app= "http://localhost:8000/api/user/";
-    private url_embed= "http://localhost:8000/api/user_embed/";
-    private url_relate = "http://localhost:8000/vi/api/relate/";
+    private url_app= api.user;
+    private url_embed= api.user_embed;
+    private url_relate = api.relate;
+    private url_delete_relate = api.delete_relate;
 
     constructor(private http: Http) { }
 
@@ -81,7 +83,7 @@ export class LinkCardService {
         author: Lam
     */
     delLinkCard(id: number): Observable<any>{
-        const url_del_linkcard = `http://localhost:8000/vi/api/delete_relate/${id}`;
+        const url_del_linkcard = `${this.url_delete_relate}${id}`;
         return this.http.delete(url_del_linkcard, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 

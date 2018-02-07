@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Notification } from '../class/notification';
 import { Http, Response, Headers } from '@angular/http';
+import { api } from '../utils/api';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
@@ -12,8 +13,9 @@ const httpOptions = {
 @Injectable()
 export class NotificationService {
 
-    private url_notification= "http://localhost:8000/vi/api/notification/";
-    private url_user_notification= "http://localhost:8000/api/user_notification/";
+    private url_notification = api.notification;
+    private url_user_notification = api.user_notification;
+    private url_notification_list = api.notification_list;
 
     constructor(private http: Http) { }
 
@@ -31,8 +33,7 @@ export class NotificationService {
         author: Lam
     */
     getNotifications(): Observable<any> {
-        let url_notification_list = "http://localhost:8000/api/notification_list/";
-        return this.http.get(url_notification_list).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(this.url_notification_list).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 

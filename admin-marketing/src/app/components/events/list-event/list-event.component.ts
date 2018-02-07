@@ -3,6 +3,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { ActivatedRoute } from '@angular/router';
 import { Event } from '../../../shared/class/event';
 import { EventService } from '../../../shared/services/event.service';
+import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
 
 @Component({
@@ -37,9 +38,9 @@ export class ListEventComponent implements OnInit {
         */
         this.route.params.subscribe(params => {
             if(params.message_put){
-                this.message_result = "Chình sửa "+ params.message_put + " thành công.";
+                this.message_result = `${message.edit} ${params.message_put} ${message.success}`;
             }else if(params.message_post){
-                this.message_result = "Tạo mới "+ params.message_post + " thành công.";
+                this.message_result = `${message.create_new} ${params.message_post} ${message.success}`;
             }
         });
     }
