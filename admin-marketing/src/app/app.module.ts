@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +8,8 @@ import { HttpModule } from "@angular/http";
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app.routing';
-import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker'; // will change after
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime'; // date and time
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from './components/users/users.component';
@@ -141,6 +143,7 @@ import { HomeComponent } from './components/home/home.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     HttpClientModule,
@@ -148,7 +151,9 @@ import { HomeComponent } from './components/home/home.component';
     ReactiveFormsModule,
     DataTablesModule,
     AppRoutingModule,
-    NgxMyDatePickerModule.forRoot()
+    NgxMyDatePickerModule.forRoot(),
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule,
   ],
   providers: [
     PromotionService,

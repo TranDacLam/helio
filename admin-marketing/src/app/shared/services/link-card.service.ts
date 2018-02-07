@@ -6,7 +6,6 @@ import { Http, Response, Headers } from '@angular/http';
 import { api } from '../utils/api';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
-import { api } from '../utils/api';
 
 const httpOptions = {
     headers: new Headers({ 'Content-Type': 'application/json' })
