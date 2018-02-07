@@ -31,6 +31,18 @@ export class EventService {
         return this.http.delete(url_del_events, httpOptions).catch(this.handleError);
     }
 
+    addEvent(value): Observable<any>{
+        return;
+    }
+
+    updateEvent(value, id): Observable<any>{
+        return;
+    }
+
+    onDelNoti(id): Observable<any>{
+        return;
+    }
+
     // exception
     private handleError(error: Response) {
         return Observable.throw(error.json());
