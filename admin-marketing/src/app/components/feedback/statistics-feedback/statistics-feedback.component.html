@@ -1,0 +1,137 @@
+<div class="row sf-title mt-30 mb-30">
+    <h3>Thống Kê</h3>
+    <p>Tổng quan thống kê về trạng thái của phản hồi</p>
+</div>
+<div class="row sf-content">
+    <h5 *ngIf="message_status">{{ message_status }}</h5>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-4 col-sm-4 text-center">
+                    <h5>Trạng thái xử lý của phản hồi</h5>
+                </div>
+                <div class="col-xs-2 col-sm-1">
+                    <h5>Thời gian</h5>
+                </div>
+                <div class="col-xs-3 col-sm-2 input-group">
+             
+                    <input type="text" class="form-control" [(ngModel)]="date_status_start"
+                        ngx-mydatepicker [options]="myOptions" #dp1="ngx-mydatepicker"
+                        placeholder="Start date"
+                     />
+                     <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" (click)="dp1.toggleCalendar()">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+                <div class="col-xs-3 col-sm-2 input-group">
+                    <input type="text" class="form-control" [(ngModel)]="date_status_end"
+                        ngx-mydatepicker [options]="myOptions" #dp2="ngx-mydatepicker"
+                        placeholder="End date"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" (click)="dp2.toggleCalendar()">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                    
+                </div>
+                <div class="col-xs-2 col-sm-3">
+                    <button class="btn btn-primary" (click)="onSubmitStatus()">Hiển Thị</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row text-center">
+                <h1>TỔNG SỐ</h1>
+                <h4>80</h4>
+            </div>
+            <div class="row text-center">
+                <div class="col-xs-4 col-sm-4">
+                    <h4>Chưa trả lời</h4>
+                    <p><a routerLink="/">30</a></p>
+                </div>
+                <div class="col-xs-3 col-sm-3">
+                    <h4>Đã trả lời</h4>
+                    <p>30</p>
+                </div>
+                <div class="col-xs-5 col-sm-5">
+                    <h4>Đã chuyển đến bộ phận liên quan</h4>
+                    <p>40</p>
+                </div>
+            </div>
+        </div> 
+    </div>  
+</div>
+
+<div class="row sf-content">
+    <h5 *ngIf="message_rate">{{ message_rate }}</h5>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-4 col-sm-4 text-center">
+                    <h5>Trạng thái Rating của phản hồi</h5>
+                </div>
+                <div class="col-xs-2 col-sm-1">
+                    <h5>Thời gian</h5>
+                </div>
+                <div class="col-xs-3 col-sm-2 input-group">
+             
+                    <input type="text" class="form-control" [(ngModel)]="date_rate_start"
+                        ngx-mydatepicker [options]="myOptions" #dp3="ngx-mydatepicker"
+                        placeholder="Start date"
+                     />
+                     <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" (click)="dp3.toggleCalendar()">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+                <div class="col-xs-3 col-sm-2 input-group">
+                    <input type="text" class="form-control" [(ngModel)]="date_rate_end"
+                        ngx-mydatepicker [options]="myOptions" #dp4="ngx-mydatepicker"
+                        placeholder="End date"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" (click)="dp4.toggleCalendar()">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                    
+                </div>
+                <div class="col-xs-2 col-sm-3">
+                    <button class="btn btn-primary" (click)="onSubmitRate()">Hiển Thị</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row text-center">
+                <h1>TỔNG SỐ</h1>
+                <h4>80</h4>
+            </div>
+            <div class="row text-center">
+                <div class="col-xs-3 col-sm-3">
+                    <h4>Tuyệt vời</h4>
+                    <p>40</p>
+                </div>
+                <div class="col-xs-2 col-sm-2">
+                    <h4>Tốt</h4>
+                    <p>20</p>
+                </div>
+                <div class="col-xs-2 col-sm-2">
+                    <h4>Bình thường</h4>
+                    <p>30</p>
+                </div>
+                <div class="col-xs-2 col-sm-2">
+                    <h4>Xấu</h4>
+                    <p>5</p>
+                </div>
+                <div class="col-xs-2 col-sm-2">
+                    <h4>Không có gì</h4>
+                    <p>15</p>
+                </div>
+            </div>
+        </div> 
+    </div>  
+</div>

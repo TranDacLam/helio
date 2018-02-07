@@ -7,6 +7,7 @@ import { HttpModule } from "@angular/http";
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app.routing';
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from './components/users/users.component';
@@ -44,6 +45,7 @@ import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
 import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
+import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
 
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserAddComponent } from './components/user/user-add/user-add.component';
@@ -52,6 +54,27 @@ import { LinkCardListComponent } from './components/link-card/link-card-list/lin
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeService } from './shared/services/fee.service';
 import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
+import { ListEventComponent } from './components/events/list-event/list-event.component';
+import { AddEventComponent } from './components/events/add-event/add-event.component';
+import { EditEventComponent } from './components/events/edit-event/edit-event.component';
+import { ListFaqComponent } from './components/faqs/list-faq/list-faq.component';
+import { AddFaqComponent } from './components/faqs/add-faq/add-faq.component';
+import { EditFaqComponent } from './components/faqs/edit-faq/edit-faq.component';
+import { ListGameComponent } from './components/games/list-game/list-game.component';
+import { AddGameComponent } from './components/games/add-game/add-game.component';
+import { EditGameComponent } from './components/games/edit-game/edit-game.component';
+import { ListHotComponent } from './components/hots/list-hot/list-hot.component';
+import { AddHotComponent } from './components/hots/add-hot/add-hot.component';
+import { EditHotComponent } from './components/hots/edit-hot/edit-hot.component';
+import { ListPostComponent } from './components/posts/list-post/list-post.component';
+import { AddPostComponent } from './components/posts/add-post/add-post.component';
+import { EditPostComponent } from './components/posts/edit-post/edit-post.component';
+import { ListPromotionLabelComponent } from './components/promotion-labels/list-promotion-label/list-promotion-label.component';
+import { AddPromotionLabelComponent } from './components/promotion-labels/add-promotion-label/add-promotion-label.component';
+import { EditPromotionLabelComponent } from './components/promotion-labels/edit-promotion-label/edit-promotion-label.component';
+import { FormEventComponent } from './components/events/form-event/form-event.component';
+import { FormGameComponent } from './components/games/form-game/form-game.component';
+import { FormPostComponent } from './components/posts/form-post/form-post.component';
 import { HomeComponent } from './components/home/home.component';
 
 
@@ -84,6 +107,7 @@ import { HomeComponent } from './components/home/home.component';
     FormNotificationComponent,
     PopupEditNotificationComponent,
     ShowErrorValidComponent,
+    StatisticsFeedbackComponent,
     HotAdvsListComponent,
     HotAdvsAddComponent,
     UserListComponent,
@@ -92,6 +116,27 @@ import { HomeComponent } from './components/home/home.component';
     LinkCardListComponent,
     FeeListComponent,
     FeeAddComponent,
+    ListEventComponent,
+    AddEventComponent,
+    EditEventComponent,
+    ListFaqComponent,
+    AddFaqComponent,
+    EditFaqComponent,
+    ListGameComponent,
+    AddGameComponent,
+    EditGameComponent,
+    ListHotComponent,
+    AddHotComponent,
+    EditHotComponent,
+    ListPostComponent,
+    AddPostComponent,
+    EditPostComponent,
+    ListPromotionLabelComponent,
+    AddPromotionLabelComponent,
+    EditPromotionLabelComponent,
+    FormEventComponent,
+    FormGameComponent,
+    FormPostComponent,
     HomeComponent,
   ],
   imports: [
@@ -102,7 +147,8 @@ import { HomeComponent } from './components/home/home.component';
     CKEditorModule,
     ReactiveFormsModule,
     DataTablesModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxMyDatePickerModule.forRoot()
   ],
   providers: [
     PromotionService,

@@ -16,7 +16,8 @@ const httpOptions = {
 
 @Injectable()
 export class FeedbackService {
-
+  
+    private url_summary = api.summary;
 	  private urlFeedback = `${api.feedback}`;
 
   	constructor(private http: HttpClient) { }
@@ -96,6 +97,14 @@ export class FeedbackService {
       const url = `${this.urlFeedback}?fed_id=${fed_id}`;
       return this.http.delete<Feedback[]>(url, httpOptions)
       .catch(this.handleError)
+    }
+
+    /* 
+        function getStatisticFeedback(): get summary feedback status handle and rating
+        author: Lam
+    */
+    getStatisticFeedback(): Observable<any>{
+      return this.http.get(this.url_summary).map((res: Response) => res.json()).catch(this.handleError);
     }
 
   	// Handle error
