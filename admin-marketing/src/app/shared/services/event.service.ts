@@ -13,7 +13,23 @@ export class EventService {
 
     constructor(private http: Http) { }
 
+    /* 
+        function getEvents(): Get all notification
+        author: Lam
+    */
+    getEvents(): Observable<any>{
+        let url_events = '';
+        return this.http.get(url_events).map((res: Response) => res.json()).catch(this.handleError);
+    }
 
+    /* 
+        function onDelEventSelect(): Delete all event selected
+        author: Lam
+    */
+    onDelEventSelect(arr): Observable<any>{
+        let url_del_events = '';
+        return this.http.delete(url_del_events, httpOptions).catch(this.handleError);
+    }
 
     // exception
     private handleError(error: Response) {
