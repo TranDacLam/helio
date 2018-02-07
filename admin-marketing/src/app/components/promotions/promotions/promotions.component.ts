@@ -26,7 +26,8 @@ export class PromotionsComponent implements OnInit {
 
     	this.dtOptions = {
 	      	pagingType: 'full_numbers',
-	      	pageLength: 10
+	      	pageLength: 10,
+            responsive: true
 	    };
     }
 

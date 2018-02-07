@@ -33,8 +33,13 @@ import { BannerAddComponent } from './components/banner/banner-add/banner-add.co
 import { BannerListComponent } from './components/banner/banner-list/banner-list.component';
 import { BannerDetailComponent } from './components/banner/banner-detail/banner-detail.component';
  
+import { HomeComponent } from './components/home/home.component';
+
+
 const routes: Routes = [
     { 
+        path: '', component: HomeComponent
+    }, { 
         path: 'users', component: UsersComponent
     }, { 
      	path: 'promotions', component: PromotionsComponent
