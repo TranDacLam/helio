@@ -98,6 +98,8 @@ class FeeSerializer(serializers.ModelSerializer):
 
 class BannerSerializer(serializers.ModelSerializer):
 
+    image = serializers.ImageField(max_length=None, use_url=True)
+
     class Meta:
         model = Banner
         fields = ('id', 'image', 'sub_url', 'position')

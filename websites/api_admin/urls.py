@@ -42,6 +42,6 @@ urlpatterns = [
 	url(r'^feedback/$', views.FeedbackView.as_view(), name="feedback"),
 	url(r'^feedback/(?P<pk>[0-9]+)/$', views.FeedbackDetailView.as_view(), name="feedback-detail"),
 
-	url(r'^banner/$', views.BannerView.as_view(), name="banner")
+	url(r'^banner/$', views.BannerView.as_view(), name="banner"),
 
 ]

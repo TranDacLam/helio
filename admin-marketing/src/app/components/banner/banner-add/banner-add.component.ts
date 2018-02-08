@@ -13,7 +13,7 @@ export class BannerAddComponent implements OnInit {
 	formBanner: FormGroup;
 	banner_form = new Banner();
 	banners: Banner[];
-	positions = positions
+	positions = positions;
 
 	@ViewChild('fileInput') fileInput: ElementRef;
 	
@@ -31,25 +31,25 @@ export class BannerAddComponent implements OnInit {
             image: [this.banner_form.image, [Validators.required]],
             sub_url: [this.banner_form.sub_url, [Validators.required]],
             position: [this.banner_form.position, [Validators.required]],
-            is_show: [this.banner_form.is_show]
+            is_show: [false]
         });
  	}
 
  	// upload image 
     // FileReader: reading file contents
     onFileChange(e) {
-      let reader = new FileReader();
       if(e.target.files && e.target.files.length > 0) {
         let file = e.target.files[0];
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          this.formBanner.get('image').setValue(file)
-        };
+        this.formBanner.get('image').setValue(file);
       }
     }
     // Clear file 
     clearFile() {
       this.formBanner.get('image').setValue(null);
       this.fileInput.nativeElement.value = '';
+    }
+
+    onSubmit() {
+
     }
 }

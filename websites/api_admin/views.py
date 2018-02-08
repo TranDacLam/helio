@@ -817,7 +817,7 @@ class FeeAPI(APIView):
 @permission_classes((AllowAny,))
 class BannerView(APIView):
 
-    # parser_classes = (MultiPartParser, FormParser)
+    parser_classes = (FileUploadParser, MultiPartParser, FormParser)
 
     def get(self, request, format=None):
         try:
@@ -828,4 +828,13 @@ class BannerView(APIView):
         except Exception, e:
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
+        
+    def post(self, request, format=None):
+        print "post"
+        serializer = admin_serializers.BannerSerializer(data=request.data)
+        print serializer
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
