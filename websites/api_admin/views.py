@@ -585,8 +585,6 @@ class NotificationUser(APIView):
     def post(self, request, id):
         try:
             list_id_str = self.request.data.get('list_id', '')
-            if not list_id_str:
-                return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
             list_id  = []
 
             # Convert string to list 
@@ -597,7 +595,7 @@ class NotificationUser(APIView):
 
             # Get list user by notification_id
             user_notification_list = User_Notification.objects.filter(notification_id=id).values_list('user_id', flat=True)
-            
+
             # List add new ( exist in params + not exist in database)
             list_add = set(list_id) - set(user_notification_list)
             # List delete item ( not exist in params + exist in database)
