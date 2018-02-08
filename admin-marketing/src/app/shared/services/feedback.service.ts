@@ -36,7 +36,6 @@ export class FeedbackService {
     return this.http.get<Feedback[]>(url).catch(this.handleError)
   }
 
-
 	// PUT: Edit Feedback by id
 	updateFeedbackById(feedback: Feedback): Observable<any> {
 		const id = feedback.id;
