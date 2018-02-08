@@ -49,7 +49,14 @@
         </tbody>
     </table>
 </div>
-<div class="row" *ngIf="notifications">
-    <p>Xóa những thông báo đã chọn {{ notifications_del.length }} của {{ notifications.length }} được chọn 
-    <button class="btn btn-danger" (click)="onDelelteNoti()">Thực hiện</button></p>
+<div class="row dels-noti" *ngIf="notifications">
+    <div class="col-md-3">
+        <select name="" class="form-control">
+            <option value="1">Xóa các phản hồi được chọn</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        {{ notifications_del.length }} của {{ notifications.length }} được chọn
+        <button class="btn btn-danger" (click)="onDelelteNoti()">Thực hiện</button>
+    </div>
 </div>

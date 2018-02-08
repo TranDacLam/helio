@@ -38,7 +38,14 @@
         </tbody>
     </table>
 </div>
-<div class="row" *ngIf="events">
-    <p>Xóa những sự kiện đã chọn {{ events_del.length }} của {{ events.length }} được chọn 
-    <button class="btn btn-danger" (click)="onDelelteEvent()">Thực hiện</button></p>
+<div class="row dels-event" *ngIf="events">
+    <div class="col-md-3">
+        <select name="" class="form-control">
+            <option value="1">Xóa các phản hồi được chọn</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        {{ events_del.length }} của {{ events.length }} được chọn 
+        <button class="btn btn-danger" (click)="onDelelteEvent()">Thực hiện</button>
+    </div>
 </div>

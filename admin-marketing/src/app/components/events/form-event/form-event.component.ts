@@ -42,10 +42,6 @@ export class FormEventComponent implements OnInit {
         this.creatForm();
     }
 
-    onCkeditor(event){
-        console.log(event)
-    }
-
     /*
         function creatForm(): Create Reactive Form
         author: Lam
