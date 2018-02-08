@@ -98,7 +98,7 @@ const routes: Routes = [
     { path: 'feedback/statistics', component: StatisticsFeedbackComponent },
     { path: 'link-card/add', component: AddLinkCardComponent },
     { path: 'link-card/detail/:id', component: LinkCardDetailComponent },
-    { path: 'notifications', component: ListNotificationComponent },
+    { path: 'notification/list', component: ListNotificationComponent },
     { path: 'notification/add', component: AddNotificationComponent },
     { path: 'notification/edit/:id', component: EditNotificationComponent },
     { path: 'notification/detail/:id', component: NotificationDetailComponent },
