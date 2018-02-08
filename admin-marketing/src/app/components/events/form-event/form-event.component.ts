@@ -23,11 +23,8 @@ export class FormEventComponent implements OnInit {
     @ViewChild('inputImage')
     inputImage: any;
 
-    @Input() event: Event; // Get notification from component parent
+    @Input() event: Event; // Get event from component parent
     @Input() type_http; // Get type http from component parent
-    
-    // Return 1 object to parent
-    @Output() update_noti: EventEmitter<Event> = new EventEmitter<Event>();
 
     formEvent: FormGroup;
 
@@ -93,13 +90,12 @@ export class FormEventComponent implements OnInit {
 
     /*
         Function onSubmit():
-         + Step 1: Check type_http add notification (post), edit notification (put), edit use modal (put_popup)
+         + Step 1: Check type_http add event (post), edit event (put)
          + Step 2:  
-            * TH1:  + Type_http = post, callback service function addNoti() to add Notification, 
-                    + Later, redirect list notification with message
-            * TH2:  + Type_http = put or put_popup, callback service function updateNoti() to update Notification
-                    + Type_http = put then redirect list notification with message
-                    + Type_http = put_popup then update Notification show and hidden modal  
+            * TH1:  + Type_http = post, call service function addEvent() to add event, 
+                    + Later, redirect list event with message
+            * TH2:  + Type_http = put call service function updateEvent() to update Event
+                    + Later, redirect list event with message
         author: Lam
     */ 
     onSubmit(): void{
@@ -129,13 +125,13 @@ export class FormEventComponent implements OnInit {
     /*
         Function onDelete():
          + Get id from url path
-         + Callback service function onDelNoti() by id to delete notification
+         + Call service function onDelEvent() by id to delete event
         Author: Lam
     */
     onDelete(): void {
         const id = this.event.id;
-        this.eventService.onDelNoti(id).subscribe();
-        this.router.navigate(['/notifications']);
+        this.eventService.onDelEvent(id).subscribe();
+        this.router.navigate(['/event/list']);
     }
 
 }

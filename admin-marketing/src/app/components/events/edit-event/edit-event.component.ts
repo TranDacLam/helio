@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Event } from '../../../shared/class/event';
+import { EventService } from '../../../shared/services/event.service';
 
 @Component({
   selector: 'app-edit-event',
@@ -7,9 +10,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditEventComponent implements OnInit {
 
-  constructor() { }
+    event: Event;
+    type_http = "put"; // type http to form event component 
 
-  ngOnInit() {
-  }
+    constructor(
+        private eventService: EventService,
+        private route: ActivatedRoute
+    ) { }
+
+    ngOnInit() {
+        this.getEvent();
+    }
+
+    /*
+        Function getEvent():
+         + Get id from url path
+         + Callback service function getEvent() by id
+        Author: Lam
+    */
+    getEvent(){
+        const id = +this.route.snapshot.paramMap.get('id');
+        this.eventService.getEvent(id).subscribe(data => {
+            this.event = data;
+        });
+    }
 
 }

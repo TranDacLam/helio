@@ -1,3 +1,5 @@
-<p>
-  edit-event works!
-</p>
+<div class="row mt-30 mb-30">
+    <h3>Chỉnh Sửa Sự Kiện</h3>
+    <hr/>
+</div>
+<form-event *ngIf="event" [event]="event" [type_http]="type_http"></form-event>
