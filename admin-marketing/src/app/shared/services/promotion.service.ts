@@ -6,6 +6,7 @@ import "rxjs/add/operator/catch";
 
 import { User } from '../class/user';
 import { Promotion } from '../class/promotion';
+import { api } from '../utils/api';
 
 const _options = {
     headers: new Headers({ 'Content-Type': 'application/json' })
@@ -14,23 +15,20 @@ const _options = {
 @Injectable()
 export class PromotionService {
 
-   	private user_promotion = "http://localhost:8000/api/user_promotion";
-   	private promotion = "http://localhost:8000/api/promotion";
-
     constructor(private http: Http) { }
 
-    getPromotionUsersDetail(id : string): Observable<User[]> {
-        console.log(id);
+    getUsersPromotionDetail(id: number): Observable<any> {
 
-        return this.http.get(this.user_promotion, {params: { 'id': id }}).map((res: Response) => res.json()).catch(this.handleError);
+        let url_user_promotion_detail = `${api.user_promotion}${id}`
+        return this.http.get(url_user_promotion_detail).map((res: Response) => res.json()).catch(this.handleError);
+
     }
 
     getAllPromotion() {
-        return this.http.get(this.promotion).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(api.promotion_list).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     private handleError(error: Response) {
-        alert("errrr");
         return Observable.throw(error.statusText);
     }
 

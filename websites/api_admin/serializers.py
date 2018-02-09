@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields=('id' ,'full_name', 'email', 'phone','birth_date', 'personal_id', 'address')
+        fields=('id' ,'full_name', 'email', 'phone','barcode','birth_date', 'personal_id', 'address', 'username_mapping', 'date_mapping')
 
     def update(self, instance, validated_data):
         instance.full_name = validated_data.get('full_name', instance.full_name)
@@ -96,4 +96,9 @@ class FeeSerializer(serializers.ModelSerializer):
         model = Fee
         exclude = ('created', 'modified')
 
+class CategoryNotificationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category_Notification
+        fields = ('id', 'name')
 

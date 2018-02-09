@@ -91,6 +91,26 @@ class PromotionUser(APIView):
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
 
+    def post(self, request, id):
+        try:
+            if id:
+                list_user = Gift.objects.filter(pk=id)
+    
+                promotion_user_id_list = Gift.objects.filter(promotion_id=id).values_list('user_id', flat=True)
+                user_promotion_list = User.objects.filter(pk__in=promotion_user_id_list)
+                user_all_list = User.objects.filter(~Q(pk__in=promotion_user_id_list))
+
+                result = {}
+                result['promotion_detail'] = admin_serializers.PromotionSerializer(promotion_detail, many=False).data
+                result['user_all'] = admin_serializers.UserSerializer(user_all_list, many=True).data
+                result['user_promotion'] = admin_serializers.UserSerializer(user_promotion_list, many=True).data
+        
+                return Response(result)
+        except Exception, e:
+            print 'PromotionUserView ',e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
 
 """
     Get user
@@ -307,65 +327,39 @@ class FeedbackView(APIView):
         try:
             status = self.request.query_params.get('status', None)
             rate = self.request.query_params.get('rate', None)
-            start_date = self.request.query_params.get('start_date', None)
-            end_date = self.request.query_params.get('end_date', None)
 
-            # Check start_date and end_date
-            if start_date and end_date and status :
-                print "++ start_date ++ end_date ++ status"
-                queryset = FeedBack.objects.filter(status = status,sent_date__range=(start_date, end_date))
-                print queryset
-                serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                return Response(serializer.data)
+            # Verification status, rate exists or not
+            # If exists
+            if status or rate:
+                print "status or rate"
+                start_date = self.request.query_params.get('start_date', None)
+                end_date = self.request.query_params.get('end_date', None)
 
-            # Check start_date and status || end_date status
-            if start_date and status or end_date and status:
-                if start_date and status:
-                    print "start_date_status"
-                    queryset = FeedBack.objects.filter(status=status, sent_date=start_date)
+                kwargs = {}
+                try:
+                    if start_date:
+                        kwargs['sent_date__gte'] = start_date
+                        print kwargs['sent_date__gte']
+                    if end_date:
+                        kwargs['sent_date__lte'] = end_date
+                        print kwargs['sent_date__lte']
+                except ValueError, e:
+                    error = {"code": 400, "message": "%s" % e, "fields": ""}
+                    return Response(error, status=400)
+
+                if kwargs:
+                    print "kwargs"
+                    queryset = FeedBack.objects.filter(
+                        **kwargs).filter(Q(status=status) | Q(rate=rate))
                     serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
                     return Response(serializer.data)
                 else:
-                    print "end_date_status"
-                    queryset = FeedBack.objects.filter(status=status, sent_date=end_date)
+                    queryset = FeedBack.objects.filter(Q(status=status) | Q(rate=rate))
                     serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
                     return Response(serializer.data)
-
-            # Check status 
-            if status:
-                print "status"
-                status_list = FeedBack.objects.filter(status=status)
-                serializer = admin_serializers.FeedBackSerializer(status_list, many=True)
-                return Response(serializer.data)
-
-            # Check start_date and end_date
-            if start_date and end_date and rate :
-                print "++ start_date ++ end_date ++ rate"
-                queryset = FeedBack.objects.filter(rate = rate,sent_date__range=(start_date, end_date))
-                print queryset
-                serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                return Response(serializer.data)
-
-            # Check start_date and status || end_date status
-            if start_date and rate or end_date and rate:
-                if start_date and rate:
-                    print "start_date_rate"
-                    queryset = FeedBack.objects.filter(rate=rate, sent_date=start_date)
-                    serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                    return Response(serializer.data)
-                else:
-                    print "end_date_rate"
-                    queryset = FeedBack.objects.filter(rate=rate, sent_date=end_date)
-                    serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                    return Response(serializer.data)
-
-            # Ckeck rate
-            if rate:
-                print "rate"
-                rate_list = FeedBack.objects.filter(rate=rate)
-                serializer = admin_serializers.FeedBackSerializer(rate_list, many=True)
-                return Response(serializer.data)
-
+                return Response({"code": 200, "message": queryset, "fields": ""}, status=200)
+                
+            # Status or rate not exist
             else:
                 list_feedback = FeedBack.objects.all()
                 serializer = admin_serializers.FeedBackSerializer(list_feedback, many=True)
@@ -424,6 +418,40 @@ class FeedbackDetailView(APIView):
         feedback = self.get_object(pk)
         feedback.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+"""
+GET all linked users
+DELETE all checkbox selected
+@author: Trangle
+"""
+@permission_classes((AllowAny,))
+class UserLinkCardList(APIView):
+    def get(self, request, format=None):
+        """
+        Get all user linked card
+        """
+        try:
+            lst_item = User.objects.exclude(barcode__isnull=True)
+            serializer = admin_serializers.UserSerializer(lst_item, many=True)
+            return Response(serializer.data)
+        except Exception, e:
+            error = {"code":500, "message": "%s" % e, "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, format=None):
+        """
+        DELETE: multi checbox
+        """
+        try:
+            user_linked_id = self.request.query_params.get('user_linked_id', None)
+            if user_linked_id:
+                user_linked_id_list = user_linked_id.split(',')
+                queryset = User.objects.filter(pk__in = user_linked_id_list).delete()
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
+        except Exception, e:
+            print e
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
 
 """
 Get Notification List
@@ -438,6 +466,37 @@ class NotificationList(APIView):
             return Response(serializer.data)
         except Exception, e:
             error = {"code": 500, "message": "%s" % e, "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, format=None):
+        """
+        DELETE: Multi ids select
+        """
+        try:
+            # Get list id to delete
+            list_id_str = self.request.data.get('list_id', '')
+
+            print "LIST NOTIFICATION ID DELETE : ", list_id_str
+
+            # Check list id is valid
+            if list_id_str:
+                list_id = []
+                # convert list id string to list
+                try:
+                    list_id = eval(list_id_str)
+                except SyntaxError:
+                    return Response({"code": 400, "message": "List ID must be format is '[1, 2, 3]' ", "fields": ""}, status=400)
+
+                queryset = Notification.objects.filter(pk__in = list_id).delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+
+            return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
+        except ValueError:
+            #Handle the exception
+            print 'Please enter an integer'
+        except Exception, e:
+            print e
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
             return Response(error, status=500)
 
 """
@@ -519,6 +578,45 @@ class NotificationUser(APIView):
         except Notification.DoesNotExist, e:
             error = {"code": 400, "message": "Id Not Found.", "fields": ""}
             return Response(error, status=400)
+        except Exception, e:
+            print 'NotificationUserView ',e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def post(self, request, id):
+        try:
+            list_id_str = self.request.data.get('list_id', '')
+            list_id  = []
+
+            # Convert string to list 
+            try:
+                list_id = eval(list_id_str)
+            except SyntaxError:
+                return Response({"code": 400, "message": "List ID must be format is '[1, 2, 3]' ", "fields": ""}, status=400)
+
+            # Get list user by notification_id
+            user_notification_list = User_Notification.objects.filter(notification_id=id).values_list('user_id', flat=True)
+
+            # List add new ( exist in params + not exist in database)
+            list_add = set(list_id) - set(user_notification_list)
+            # List delete item ( not exist in params + exist in database)
+            list_delete = set(user_notification_list) - set(list_id)
+
+            # Check list add is not empty then add to database
+            if list_add:
+                for user_id in list_add:
+                    print user_id
+                    item = User_Notification()
+                    item.notification_id = id
+                    item.user_id = user_id
+                    item.save()
+
+            # Check list_delete is not empty then delete from database
+            if list_delete:
+                User_Notification.objects.filter(notification_id=id, user_id__in=list_delete).delete()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
         except Exception, e:
             print 'NotificationUserView ',e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
@@ -886,3 +984,21 @@ class FeeAPI(APIView):
 
 
 
+"""
+    Get All CategoryNotifications
+    @author :diemnguyen
+
+"""
+@permission_classes((AllowAny,))
+class CategoryNotifications(APIView):
+
+    def get(self, request, format=None):
+        try:
+            category_noti_list = Category_Notification.objects.all()
+            serializer = admin_serializers.CategoryNotificationSerializer(category_noti_list, many = True)
+            return Response({"code": 200, "message": serializer.data, "fields": ""}, status=200)
+
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)

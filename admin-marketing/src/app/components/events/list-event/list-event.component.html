@@ -1,0 +1,34 @@
+<div class="row text-center">
+    <h1>QUẢN LÝ SỰ KIỆN</h1>
+</div>
+<div class="row mt-50 mb-30">
+    <div class="col-xs-6 col-sm-6">
+        <a class="btn btn-primary" routerLink="/">TRỞ VỀ TRANG QUẢN TRỊ</a>
+    </div>
+    <div class="col-xs-6 col-sm-6">
+        <a class="btn btn-primary pull-right" routerLink="/event/add">TẠO SỰ KIỆN MỚI</a>
+    </div>
+    <div class="col-xs-12 col-sm-12 mt-15 messsage" *ngIf="message_result">
+        <h4>{{message_result}}</h4>
+    </div>
+</div>
+<div class="row">
+    <table datatable class="row-border hover" *ngIf="events">
+        <thead>
+            <tr>
+                <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
+                <th>Sự kiện</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let event of events" id="del-{{event.id}}">
+                <td><input type="checkbox" (change)="onSelectCKB($event, event)" [checked]="select_checked"/></td>
+                <td><a routerLink="/event/edit/{{ event.id }}">{{ event.subject }}</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row" *ngIf="events">
+    <p>Xóa những sự kiện đã chọn {{ events_del.length }} của {{ events.length }} được chọn 
+    <button class="btn btn-danger" (click)="onDelelteEvent()">Thực hiện</button></p>
+</div>

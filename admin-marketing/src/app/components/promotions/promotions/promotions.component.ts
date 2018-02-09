@@ -6,6 +6,8 @@ import 'rxjs/add/operator/map';
 
 import { PromotionService } from '../../../shared/services/promotion.service';
 import { Promotion } from '../../../shared/class/promotion';
+import { datatable_config } from '../../../shared/commons/datatable_config';
+
 
 @Component({
     selector: 'app-promotions',
@@ -24,10 +26,7 @@ export class PromotionsComponent implements OnInit {
     ngOnInit() {
     	this.getAllPromotion();
 
-    	this.dtOptions = {
-	      	pagingType: 'full_numbers',
-	      	pageLength: 10
-	    };
+    	this.dtOptions = datatable_config.dtOptions;
     }
 
     getAllPromotion(){

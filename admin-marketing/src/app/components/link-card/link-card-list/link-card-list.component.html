@@ -1,0 +1,63 @@
+<div class='row title-link-card'>
+	<a class="pull-left" routerLink="/link-card-list">Thẻ Liên Kết</a>
+    <div class='pull-right'>
+        <a class=" btn btn-primary pull-right" routerLink="/link-card/add">Thêm Thẻ Liên Kết</a>
+        <i class="fa fas fa-plus icon-button"></i>
+    </div>
+</div>
+<div *ngIf="message_success" class="alert alert-success">
+    {{ message_success }}
+</div>
+<div *ngIf="message_error" class="alert alert-danger">
+    {{ message_error }}
+</div>
+<div *ngIf="message_result" class="alert alert-success">
+    {{ message_result }}
+</div>
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class=" row hover">
+	<thead>
+		<tr class="tr-link-card">
+            <th><input type="checkbox" 
+                name="allLinkCards" value="allLinkCards" (change)="selectAllCheckbox($event);"/>
+                Card Bardoce
+            </th>
+            <th>Họ và Tên </th>
+            <th>Số điện thoại</th>
+            <th>Ngày sinh</th>
+            <th>Ngày mapping</th>
+            <th>Tài Khoản Thực Hiện Mapping</th>
+        </tr>
+	</thead>
+	<tbody>
+        <tr *ngFor="let link_card of link_cards" id="delete{{link_card.id}}">
+            <td class="tr-link-card">
+                <label class="checkboxSelect">
+                    <input type="checkbox" 
+                    name="{{ link_card.id }}"
+                    value="{{ link_card.id }}"
+                    [checked]="checkbox_selected"
+                    (change)="changeCheckboxLinkCard($event, link_card)"
+                    />
+                    {{ link_card.barcode }}
+                </label>
+            </td>
+            <td>{{ link_card.full_name }}</td>
+            <td>{{ link_card.phone }}</td>
+            <td>{{ link_card.birth_date }}</td>
+            <td>{{ link_card.date_mapping }}</td>
+            <td>{{ link_card.username_mapping }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class='row'>
+	<div class="col-md-3">
+		<select name="" class="form-control">
+			<option value="">Xóa các thẻ liên kết được chọn</option>
+		</select>
+	</div>
+	<div class="col-md-3">
+		{{link_card_del.length}} của {{link_cards.length}} được chọn
+		<button (click)="deleteLinkCardCheckbox()" type="button" class="btn btn-danger">Thực hiện</button>
+	</div>
+</div>

@@ -8,6 +8,7 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Feedback } from '../../shared/class/feedback';
+import { api } from '../utils/api';
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,8 +16,9 @@ const httpOptions = {
 
 @Injectable()
 export class FeedbackService {
-
-	private urlFeedback = "http://127.0.0.1:8000/vi/api/feedback/";
+  
+    private url_summary = api.summary;
+	  private urlFeedback = `${api.feedback}`;
 
   	constructor(private http: HttpClient) { }
 
@@ -28,8 +30,55 @@ export class FeedbackService {
   	getFeedbackById(id: number): Observable<Feedback> {
   		const url = `${this.urlFeedback}${id}/`;
   		return this.http.get<Feedback>(url, httpOptions).catch(this.handleError)
-
   	}
+    // GET: Get Feedback by status
+    getFeedbackByStatus(status: string): Observable<Feedback[]> {
+      const url = `${this.urlFeedback}?status=${status}`;
+      return this.http.get<Feedback[]>(url).catch(this.handleError)
+    }
+
+    // GET: get Feedback by status and start_date
+    getFeedbackByStatusAndStartDate(status: string, start_date: string): Observable<Feedback[]> {
+      const url = `${this.urlFeedback}?status=${status}&start_date=${start_date}`;
+      return this.http.get<Feedback[]>(url).catch(this.handleError)
+    }
+
+    // GET: get Feedback by status and end_date
+    getFeedbackByStatusAndEndDate(status: string, end_date: string): Observable<Feedback[]> {
+      const url = `${this.urlFeedback}?status=${status}&end_date=${end_date}`;
+      return this.http.get<Feedback[]>(url).catch(this.handleError)
+    }
+
+    // GET: get Feedback by status, start_date and end_date
+    getFeedbackByStatusStartAndEndDate(status: string, start_date: string, end_date:string): Observable<Feedback[]> {
+      const url = `${this.urlFeedback}?status=${status}&start_date=${start_date}&end_date=${end_date}`;
+      return this.http.get<Feedback[]>(url).catch(this.handleError)
+    }
+
+    // GET: Get Feedback by rate
+    getFeedbackByRate(rate: string): Observable<Feedback[]> {
+      const url = `${this.urlFeedback}?rate=${rate}`;
+      return this.http.get<Feedback[]>(url).catch(this.handleError)
+    }
+
+    // GET: get Feedback by rate and start_date
+    getFeedbackByRateAndStartDate(rate: string, start_date: string): Observable<Feedback[]> {
+      const url = `${this.urlFeedback}?rate=${rate}&start_date=${start_date}`;
+      return this.http.get<Feedback[]>(url).catch(this.handleError)
+    }
+
+    // GET: get Feedback by rate and end_date
+    getFeedbackByRateAndEndDate(rate: string, end_date: string): Observable<Feedback[]> {
+      const url = `${this.urlFeedback}?rate=${rate}&end_date=${end_date}`;
+      return this.http.get<Feedback[]>(url).catch(this.handleError)
+    }
+
+    // GET: get Feedback by rate, start_date and end_date
+    getFeedbackByRateStartAndEndDate(rate: string, start_date: string, end_date:string): Observable<Feedback[]> {
+      const url = `${this.urlFeedback}?rate=${rate}&start_date=${start_date}&end_date=${end_date}`;
+      return this.http.get<Feedback[]>(url).catch(this.handleError)
+    }
+
   	// PUT: Edit Feedback by id
   	updateFeedbackById(feedback: Feedback): Observable<any> {
   		const id = feedback.id;
@@ -46,8 +95,16 @@ export class FeedbackService {
   	
   	deleteAllFeedbackChecked(fed_id: Feedback[]): Observable<Feedback[]> {
       const url = `${this.urlFeedback}?fed_id=${fed_id}`;
-      return this.http.get<Feedback[]>(url)
+      return this.http.delete<Feedback[]>(url, httpOptions)
       .catch(this.handleError)
+    }
+
+    /* 
+        function getStatisticFeedback(): get summary feedback status handle and rating
+        author: Lam
+    */
+    getStatisticFeedback(): Observable<any>{
+      return this.http.get(this.url_summary).map((res: Response) => res.json()).catch(this.handleError);
     }
 
   	// Handle error
