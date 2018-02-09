@@ -1,3 +1,14 @@
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="/advertisement-list">Quảng cáo</a></li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+
 <div class='row title-adv'>
 	<a class="pull-left" routerLink="/advertisement-list">Quảng cáo</a>
 	<a class="pull-right" routerLink="/advertisement-add">Thêm Quảng cáo</a>
@@ -13,10 +24,10 @@
 	<div class="alert alert-success" *ngIf="message_result">
         {{message_result}}
     </div>
-	<table id="table-denomination" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
+	<table id="table-adv" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
-	      		<th><input type="checkbox" id="allAdvs" value="allAdvs" name="allAdvs" (change)="checkAllAdv($event)"></th>
+	      		<th class="checkbox-adv"><input type="checkbox" id="allAdvs" value="allAdvs" name="allAdvs" (change)="checkAllAdv($event)"></th>
 	        	<th>Quảng cáo</th>
 	      	</tr>
     	</thead>

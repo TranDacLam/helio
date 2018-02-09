@@ -22,18 +22,25 @@ export class AdvertisementDetailComponent implements OnInit {
 	ngOnInit() {
 		this.getAdv();
 	}
-	// Get adv by id
+	/*
+		GET: Get Advertiment By Id
+		@author: TrangLe
+	 */
 	getAdv() {
 		const id = +this.route.snapshot.paramMap.get('id');
 		this.advertisementService.getAdvertisement(id).subscribe(
 			result => {
         	this.adv = result;
-      },
-      );
+      		},
+        );
 	}
 	goBack() {
 		this.location.back();
 	}
+	/*
+		PUT: Update Advertiment Detail
+		@author: TrangLe
+	 */
 	EditAdv() {
 		this.advertisementService.updateAdv(this.adv)
 			.subscribe(() => this.router.navigate(['/advertisement-list', { message_put: this.adv.name} ]));
