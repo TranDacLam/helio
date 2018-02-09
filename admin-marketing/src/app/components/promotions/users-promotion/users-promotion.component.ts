@@ -28,8 +28,9 @@ export class UsersPromotionComponent implements OnInit {
         const id = +this.route.snapshot.paramMap.get('id');
 
         this.promotionService.getUsersPromotionDetail(id).subscribe(data=> {
-            this.user_list_left = data.user_all
-            this.user_list_right = data.user_promotion
+            this.promotion = data.promotion_detail;
+            this.user_list_left = data.user_all;
+            this.user_list_right = data.user_promotion;
         });
     }
 

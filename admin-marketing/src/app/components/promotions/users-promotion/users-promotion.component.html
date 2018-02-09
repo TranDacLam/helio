@@ -1,15 +1,25 @@
 <div class="row text-center">
     <h1>CHI TIẾT KHUYÊN MÃI</h1>
 </div>
-<div class="row mt-50 mb-30">
-    <div class="col-xs-7 col-sm-7">
-        <a class="btn btn-primary" routerLink="/promotions">TRỞ VỀ QUẢN LÝ KHUYẾN MÃI</a>
+<div class="row">
+    <div class="col-sm-7 col-sm-8">
+        <a class="btn btn-primary mb-15" routerLink="/promotions">TRỞ VỀ QUẢN LÝ KHUYẾN MÃI</a>
+        <div *ngIf="promotion">
+            <p><label>ID : </label>{{promotion.id}}</p>
+            <p><label>Tên Khuyến Mãi : </label>{{promotion.name}}</p>
+            <p><label>Tình Trạng : </label>{{promotion.id}}</p>
+            <p><label>Ngày Tạo : </label>{{promotion.created | date : 'dd/MM/yyyy'}}</p>
+            <p><label>Người Triển Khai :</label>{{promotion.id}}</p>
+            <p><label>Loại Khuyến Mãi : </label>{{promotion.promotion_type}}</p>
+        </div>
+        
     </div>
-    <div class="col-xs-5 col-sm-5 ">
-        <a class="btn btn-primary btn-block pull-right" routerLink="/notification/add">CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI</a>
-        <a class="btn btn-primary btn-block pull-right" routerLink="/notification/add">TỔNG HỢP TRIỂN KHAI KHUYẾN MÃI</a>
+    <div class="col-sm-5 col-sm-4 pull-right">
+        <a class="btn btn-primary btn-block" routerLink="/notification/add">CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI</a>
+        <a class="btn btn-primary btn-block" routerLink="/notification/add">TỔNG HỢP TRIỂN KHAI KHUYẾN MÃI</a>
     </div>
 </div>
+
 <app-user-multiselect 
 	[user_list_left]="user_list_left" 
 	[user_list_right]="user_list_right" 
