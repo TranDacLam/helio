@@ -21,13 +21,18 @@ export class BannerService {
 
   constructor(private http: HttpClient) { }
 
-  	// Get All Feedack
+  	/*
+        GET: Get All Banner From Service
+        @author: TrangLe  
+    */
   	getAllBanner(): Observable<Banner[]> {
   		let url_banner = `${api.banner}`
   		return this.http.get<Banner[]>(url_banner).catch(this.handleError)
   	}
 
-  	// Handle error
+  	/* 
+      Handle error
+    */
   	handleError(error: Response) {
   		return Observable.throw(error);
   	}

@@ -20,25 +20,36 @@ export class DenominationService {
 
 	constructor(private http: HttpClient) { }
 
-	// Get all Denomination
+	/*
+		GET: Get All Denomination From Server
+		@author: TrangLe
+	 */
 	getAllDenomination(): Observable<Denomination[]> {
-    let urlDeno = `${api.denomination}`;
+    	let urlDeno = `${api.denomination}`;
 		return this.http.get<Denomination[]>(urlDeno).catch(this.handleError)
 	}
 
-	// POST: Create a new denomination
+	/*
+		POST: Create a new denomination
+		Author: TrangLe
+	*/
 	createDenomination(deno: Denomination): Observable<Denomination> {
-    let urlDeno = `${api.denomination}`;
+    	let urlDeno = `${api.denomination}`;
 		return this.http.post<Denomination>(urlDeno, deno, httpOptions).catch(this.handleError)
 	}
 
-  deleteAllDenosSelected(deno_id: Denomination[]): Observable<Denomination[]> {
-    const url = `${api.denomination}?deno_id=${deno_id}`;
-    return this.http.delete<Denomination[]>(url, httpOptions)
-    .catch(this.handleError)
-  }
+	/*
+		DELETE: Delete All Denomination Which Checked box
+	 */
+  	deleteAllDenosSelected(deno_id: Denomination[]): Observable<Denomination[]> {
+    	const url = `${api.denomination}?deno_id=${deno_id}`;
+    	return this.http.delete<Denomination[]>(url, httpOptions)
+    		.catch(this.handleError)
+  	}
 
-	// Handle error
+	/* 
+		Handle error
+	*/
 	handleError(error:Response) {
 		return Observable.throw(error);
 	}

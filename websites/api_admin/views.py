@@ -333,11 +333,11 @@ class FeedbackView(APIView):
             try:
                 if start_date:
                     kwargs['sent_date__gte'] = timezone.make_aware(datetime.strptime(
-                                start_date, "%d-%m-%Y"))                   
+                                start_date, "%Y-%m-%d"))                   
                     print kwargs['sent_date__gte']
                 if end_date:
                     kwargs['sent_date__lte'] = timezone.make_aware(datetime.strptime(
-                                end_date, "%d-%m-%Y") + timedelta(days=1))
+                                end_date, "%Y-%m-%d") + timedelta(days=1))
                     print kwargs['sent_date__lte']
                 if status:
                     kwargs['status'] = status
