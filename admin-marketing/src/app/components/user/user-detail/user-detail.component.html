@@ -1,7 +1,14 @@
-<div class='row edit-user'>
-	<a class="pull-left title-user">User > Chỉnh sửa user </a>
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="/user-list">User</a></li>
+            <li class="breadcrumb-item"><a routerLink="/user-detail">Chỉnh sửa user</a></li>
+        </ol>
+    </nav>
 </div>
-<hr>
+<!-- End breadcrumb -->
 <!-- <div *ngIf="user"> -->
 	<form [formGroup]="formUser" novalidate>
 		<div class="row">
