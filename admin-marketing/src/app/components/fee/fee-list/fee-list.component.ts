@@ -15,9 +15,11 @@ export class FeeListComponent implements OnInit {
 
    }
    fees: Fee[];
+   // fee: Fee;
    errorText: string;
    dtTrigger: Subject<any> = new Subject();
    dtOptions: DataTables.Settings = {};
+   list_id = [];
 
 
 
@@ -31,6 +33,54 @@ export class FeeListComponent implements OnInit {
 		error => {
 			this.errorText = error.statusText;
 		});
+   }
+   
+   selectAll(event){
+     if(event.target.checked){
+        for (var i in this.fees){
+            this.getId(true, this.fees[i].id);
+            this.fees[i].selected = true;
+        }
+
+     }else{
+       for (var i in this.fees){
+          this.getId(false, this.fees[i].id);
+          this.fees[i].selected = false;
+        }
+     }
+   }
+
+    getId( checked: boolean, id: any){
+       if(checked){
+         for (var i in this.list_id){
+           if ( id == this.list_id[i] ){
+             return false;
+           }
+         }
+         this.list_id.push(id);
+       }else{
+         var index = this.list_id.indexOf(id);
+         this.list_id.splice(index, 1);
+       }
+       console.log(this.list_id)
+    }
+
+   submit(){
+     var fee_temp: Fee;
+     for (var i in this.list_id){
+       fee_temp = this.fees.find( fee => fee.id == this.list_id[i] );
+       this.fees = this.fees.filter( fees => fees !== fee_temp  );
+     }
+     // this.feeService.deleteListFee(this.list_id).subscribe();
+   }
+   apply_fee(id: number){
+     var fee = this.fees.find( fee => fee.id == id);
+     this.fees.filter( item =>{ 
+       if(item.is_apply == true && item.position == fee.position) 
+         item.is_apply = false;  
+     });
+     fee.is_apply = true;
+     this.feeService.applyFee(id).subscribe();
    }
 
 

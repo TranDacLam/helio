@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.conf import settings
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -536,7 +537,7 @@ class SummaryAPI(APIView):
         try:
             search_field = self.request.query_params.get('search_field', None)
 
-            if search_field:
+            if search_field is not None:
                 if search_field == 'status' or search_field == 'rate':
                     start_date_req = self.request.query_params.get('start_date', None)
                     end_date_req = self.request.query_params.get('end_date', None)
@@ -546,10 +547,10 @@ class SummaryAPI(APIView):
                     try:
                         if start_date_req:
                             kwargs['created__gt'] = timezone.make_aware(datetime.strptime(
-                                start_date_req, "%Y-%m-%d"))
+                                start_date_req, "%d/%m/%Y"))
                         if end_date_req:
                             kwargs['created__lt'] = timezone.make_aware(datetime.strptime(
-                                end_date_req, "%Y-%m-%d") + timedelta(days=1))
+                                end_date_req, "%d/%m/%Y") + timedelta(days=1))
                     except ValueError, e:
                         error = {"code": 400, "message": "%s" % e, "fields": ""}
                         return Response(error, status=400)
@@ -560,27 +561,48 @@ class SummaryAPI(APIView):
                         feedback = FeedBack.objects.all().values(search_field)
 
                     count_item = {}
-                    status = feedback.values(search_field).annotate(Count(search_field))
-                    count_item[search_field] = { each[search_field]: each[search_field + '__count'] for each in status }
-                    count_item[search_field].update({'sum': feedback.values(search_field).count() })
+                    if search_field == 'status':
+                        count_item['status'] = { 'answered': 0, 'moved': 0, 'no_process': 0}
+                        count_status = feedback.values('status').order_by('status').annotate(Count('status'))
+                        # access again count_item, if item of count_item exist in count_status, override this item
+                        for item in count_status :
+                            count_item['status'][item['status']] =item['status__count'] 
+                        count_item['status_sum'] = feedback.values('status').count() 
+                    else:
+                        count_item['rate'] = {'Bình thường': 0, 'Không có gì': 0, 'Tốt': 0, 'Tuyệt vời': 0, 'Xấu': 0}
+                        count_rate = feedback.values('rate').annotate(Count('rate'))
+                        # access again count_item, if item of count_item exist in count_rate, override this item
+                        for item in count_rate:
+                            if item['rate'] == 'Bình thường':
+                                count_item['rate']['Bình thường'] = item['rate__count'] 
+                            count_item['rate'][item['rate']] = item['rate__count']
+                        count_item['rate_sum'] =feedback.values('rate').count() 
+                    
                     return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
-                
-                else:
-                    return Response({"code": 400, "message": "Not found search field", "fields": ""}, status=400)
-
+                return Response({"code": 400, "message": "Not found search field", "fields": ""}, status=400)
+            
             if search_field is None:
                 feedback = FeedBack.objects.all()
 
                 count_item = {}
-                status = feedback.values('status').order_by('status').annotate(Count('status'))
-                count_item['status'] = { each['status']: each['status__count'] for each in status }
-                count_item['status'].update({'sum': feedback.values('status').count() })
+                count_item['status'] = { 'answered': 0, 'moved': 0, 'no_process': 0}
+                count_status = feedback.values('status').order_by('status').annotate(Count('status'))
+                # access again count_item, if item of count_item exist in count_status, override this item
+                for item in count_status :
+                    count_item['status'][item['status']] = item['status__count'] 
+                count_item['status_sum'] = feedback.values('status').count() 
 
-                rate = feedback.values('rate').order_by('rate').annotate(Count('rate'))
-                count_item['rate'] = { each['rate']: each['rate__count'] for each in rate}
-                count_item['rate'].update({'sum': feedback.values('rate').count()})
+                count_item['rate'] = {'Bình thường': 0, 'Không có gì': 0, 'Tốt': 0, 'Tuyệt vời': 0, 'Xấu': 0}
+                count_rate = feedback.values('rate').annotate(Count('rate'))
+                # access again count_item, if item of count_item exist in count_rate, override this item
+                for item in count_rate:
+                    if item['rate'] == 'Bình thường':
+                        count_item['rate']['Bình thường'] = item['rate__count'] 
+                    count_item['rate'][item['rate']] = item['rate__count']
+                count_item['rate_sum'] =feedback.values('rate').count() 
+                    
+                return Response({"code": 200, "message": count_item , "fields": ""}, status=200)
 
-                return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
 
         except Exception, e:
             print "SummaryAPI ", e
@@ -796,7 +818,7 @@ class FeeAPI(APIView):
         try:
             fee = Fee.objects.all()
             feeSerializer = admin_serializers.FeeSerializer(fee, many = True)
-            return Response({"code": 200, "message": feeSerializer.data, "fields": ""}, status=200)
+            return Response(feeSerializer.data)
 
         except Exception, e:
             print "FeeAPI ", e
@@ -811,7 +833,8 @@ class FeeAPI(APIView):
                 if feeSerializer.validated_data['is_apply']:
                     position = feeSerializer.validated_data['position']
                     fee = Fee.objects.filter( position = position, is_apply = True )
-                    fee.update(is_apply = False ) 
+                    if fee: 
+                        fee.update(is_apply = False ) 
                 feeSerializer.save()
                 return Response(feeSerializer.data)
 
@@ -822,7 +845,42 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+    def put(self, request, id, format=None):
+        try:
+            fee = Fee.objects.get( id = id )
+            list_fee = Fee.objects.filter( position = fee.position, is_apply = True )
+            if list_fee:
+                list_fee.update( is_apply = False )
+            fee.is_apply = True
+            fee.save()
+            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+        
+        except Fee.DoesNotExist, e:
+            error = {"code": 400, "message": "Not Found Fee.", "fields": ""}
+            return Response(error, status=400)
 
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+    # hoang TO DO
+    def delete(self, request, format=None):
+        try:
+            list_req = self.request.query_params.get('list_id', None)
+            list_id = [item for item in list_req.split(',')]
+            if list_id:
+                fees = Fee.objects.filter( id__in = list_id )
+                if fees:
+                    fees.delete()
+                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "Not Found Fee", "fields": ""}, status=400)
+            return Response({"code": 400, "message": "List_id field is required", "fields": ""}, status=400)
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+        
 
 
 

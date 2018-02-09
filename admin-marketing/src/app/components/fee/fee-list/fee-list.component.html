@@ -2,11 +2,13 @@
 		<div class="pull-left child-head">
 			Phí Giao Dịch
 		</div>
-		<div class="pull-right child-head">
-			<a routerLink="/fee/add"><span class="glyphicon glyphicon-plus"></span>
-			Thêm Phí Giao Dịch
-			</a>
-		</div>
+		<a routerLink="/fee/add">
+			<div class="pull-right child-head btn btn-primary">
+				<span class="glyphicon glyphicon-plus"></span>
+				Thêm Phí Giao Dịch
+			</div>
+		</a>
+
 	</div>
 	<div class="row">
 		<div *ngIf="errorText else noneError" class="alert-danger">
@@ -21,22 +23,33 @@
 		<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
 		<thead>
 			<tr class="">
-				<th><input type="checkbox" name=""></th>
+				<th><input type="checkbox" name="" (change)="selectAll($event);"></th>
 				<th>Phí</th>
 				<th>Vị trí</th>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody *ngIf="fees">
-			<tr *ngFor="let fee of fees.message">
-				<td class="checkbox-tb"><input type="checkbox" name=""></td>
+			<tr *ngFor="let fee of fees">
+				<td class="checkbox-tb"><input type="checkbox" name="{{fee.id}}" [checked]="fee.selected" [value]=fee.id (change)="getId($event.target.checked, fee.id);" ></td>
 				<td class="fee-tb">{{fee.fee}} {{fee.fee_type}}</td>
 				<td class="position-tb">{{fee.position}}</td>
-				<td *ngIf="fee.is_apply"><div class="apply-fee text-center">Đang Áp dụng phí</div></td>
-				<td *ngIf="!fee.is_apply"><div class="apply-fee text-center">Áp dụng phí</div></td>
+				<td *ngIf="fee.is_apply"><div class="btn btn-primary text-center">Đang Áp dụng phí</div></td>
+				<td *ngIf="!fee.is_apply"><div class="btn btn-primary text-center" (click)="apply_fee(fee.id)">Áp dụng phí</div></td>
 			</tr>
 			<hr>
 		</tbody>
 	</table>
+	</div>
+	<div class='row'>
+		<div class="col-md-3">
+			<select name="" class="form-control">
+				<option value="">Xóa các phản hồi được chọn</option>
+			</select>
+		</div>
+		<div class="col-md-3" *ngIf="fees" >
+			 {{list_id.length}} của {{fees.length}} được chọn
+			<button type="button" class="btn btn-danger" (click)="submit()">Thực hiện</button>
+		</div>
 	</div>
 </ng-template>
