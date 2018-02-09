@@ -1,3 +1,9 @@
-table.dataTable tbody th,table.dataTable tbody td {
-	padding: 10px 18px;
+/*Begin content-denomination*/
+.check-denomi {
+	padding: 10px;
 }
+.title-denomination {
+	margin: 15px 0px;
+	border-bottom: 1px solid black;
+}
+/*End content-denomination*/
