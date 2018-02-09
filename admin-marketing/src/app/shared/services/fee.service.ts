@@ -23,7 +23,6 @@ export class FeeService {
   private feeUrl = 'http://127.0.0.1:8000/vi/api/fees/';
 
   	getFees(): Observable<Fee[]>{
-  		console.log('hoang');
   		return this.http.get<Fee[]>(this.feeUrl, httpOptions ).pipe(catchError(this.handleError));
   	}
  	// throw error

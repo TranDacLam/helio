@@ -35,22 +35,31 @@ export class FeeListComponent implements OnInit {
 		});
    }
    
+   /*
+    for loop in fees, call triggerItem
+   */
    selectAll(event){
      if(event.target.checked){
         for (var i in this.fees){
-            this.getId(true, this.fees[i].id);
+            this.triggerItem(true, this.fees[i].id);
             this.fees[i].selected = true;
         }
 
      }else{
        for (var i in this.fees){
-          this.getId(false, this.fees[i].id);
+          this.triggerItem(false, this.fees[i].id);
           this.fees[i].selected = false;
         }
      }
    }
 
-    getId( checked: boolean, id: any){
+   /*
+      when check checkbox
+      check id in list_id, if false add id to list_id, if true, no add
+      when uncheck checkbox
+      remove id in list_id 
+   */
+    triggerItem( checked: boolean, id: any){
        if(checked){
          for (var i in this.list_id){
            if ( id == this.list_id[i] ){
@@ -62,17 +71,33 @@ export class FeeListComponent implements OnInit {
          var index = this.list_id.indexOf(id);
          this.list_id.splice(index, 1);
        }
-       console.log(this.list_id)
     }
 
-   submit(){
+
+    /*
+      list_id has list of id to remove
+      for in list_id, 
+      find fee has id in list_id
+      fees remove found fee
+    */
+   deleteFee(){
      var fee_temp: Fee;
      for (var i in this.list_id){
        fee_temp = this.fees.find( fee => fee.id == this.list_id[i] );
        this.fees = this.fees.filter( fees => fees !== fee_temp  );
      }
+     // TODO
      // this.feeService.deleteListFee(this.list_id).subscribe();
    }
+
+
+   /*
+      find fee which clicked
+      filter in fees
+      if item is apply and same position with found fee, remove apply
+      found fee add apply
+
+   */
    apply_fee(id: number){
      var fee = this.fees.find( fee => fee.id == id);
      this.fees.filter( item =>{ 
