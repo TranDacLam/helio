@@ -3,49 +3,49 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Quản Lý Câu Hỏi Thường Gặp</li>
+            <li class="breadcrumb-item active" aria-current="page">Quản Lý Trò Chơi</li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
 <div class="row text-center">
-    <h1>QUẢN LÝ CÂU HỎI THƯỜNG GẶP</h1>
+    <h1>QUẢN LÝ TRÒ CHƠI</h1>
 </div>
 <div class="row mt-50 mb-30">
     <div class="col-xs-6 col-sm-6">
         <a class="btn btn-primary" routerLink="/">TRỞ VỀ TRANG QUẢN TRỊ</a>
     </div>
     <div class="col-xs-6 col-sm-6">
-        <a class="btn btn-primary pull-right" routerLink="/faq/add">TẠO CÂU HỎI MỚI</a>
+        <a class="btn btn-primary pull-right" routerLink="/game/add">TẠO TRÒ CHƠI MỚI</a>
     </div>
     <div class="col-xs-12 col-sm-12 mt-15 messsage" *ngIf="message_result">
         <h4>{{message_result}}</h4>
     </div>
 </div>
 <div class="row">
-    <table datatable class="row-border hover" *ngIf="faqs">
+    <table datatable class="row-border hover" *ngIf="games">
         <thead>
             <tr>
                 <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
-                <th>Sự kiện</th>
+                <th>Trò Chơi</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let faq of faqs" id="del-{{faq.id}}">
-                <td><input type="checkbox" (change)="onSelectCKB($event, faq)" [checked]="select_checked"/></td>
-                <td><a routerLink="/faq/edit/{{ faq.id }}">{{ faq.question }}</a></td>
+            <tr *ngFor="let game of games" id="del-{{game.id}}">
+                <td><input type="checkbox" (change)="onSelectCKB($event, game)" [checked]="select_checked"/></td>
+                <td><a routerLink="/game/edit/{{ game.id }}">{{ game.question }}</a></td>
             </tr>
         </tbody>
     </table>
 </div>
-<div class="row dels-faq" *ngIf="faqs">
+<div class="row dels-game" *ngIf="games">
     <div class="col-md-3">
         <select name="" class="form-control">
             <option value="1">Xóa các phản hồi được chọn</option>
         </select>
     </div>
     <div class="col-md-3">
-        {{ faqs_del.length }} của {{ faqs.length }} được chọn 
-        <button class="btn btn-danger" (click)="onDelelteFaq()">Thực hiện</button>
+        {{ games_del.length }} của {{ games.length }} được chọn 
+        <button class="btn btn-danger" (click)="deleteGameEvent()">Thực hiện</button>
     </div>
 </div>
