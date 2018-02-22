@@ -11,14 +11,13 @@
 
 	</div>
 	<div class="row">
-		<div *ngIf="errorText else noneError" class="alert-danger">
+		<div *ngIf="errorText" class="alert-danger">
 			<div class="alert alert-danger" role="alert">
 			  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 			  {{errorText}}
 			</div>
 		</div>
 	</div>
-<ng-template #noneError>
 	<div class="wrapper-table">
 		<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
 		<thead>
@@ -49,7 +48,6 @@
 		</div>
 		<div class="col-md-3" *ngIf="fees" >
 			 {{list_id.length}} của {{fees.length}} được chọn
-			<button type="button" class="btn btn-danger" (click)="deleteFee()">Thực hiện</button>
+			<button type="button" class="btn btn-danger" (click)="deleteFee();">Thực hiện</button>
 		</div>
 	</div>
-</ng-template>

@@ -672,8 +672,9 @@ class SummaryAPI(APIView):
                         # access again count_item, if item of count_item exist in count_rate, override this item
                         for item in count_rate:
                             if item['rate'] == 'Bình thường':
-                                count_item['rate']['Bình thường'] = item['rate__count'] 
-                            count_item['rate'][item['rate']] = item['rate__count']
+                                count_item['rate']['Bình thường'] = item['rate__count']
+                            else: 
+                                count_item['rate'][item['rate']] = item['rate__count']
                         count_item['rate_sum'] =feedback.values('rate').count() 
                     
                     return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
@@ -696,7 +697,8 @@ class SummaryAPI(APIView):
                 for item in count_rate:
                     if item['rate'] == 'Bình thường':
                         count_item['rate']['Bình thường'] = item['rate__count'] 
-                    count_item['rate'][item['rate']] = item['rate__count']
+                    else:
+                        count_item['rate'][item['rate']] = item['rate__count']
                 count_item['rate_sum'] =feedback.values('rate').count() 
                     
                 return Response({"code": 200, "message": count_item , "fields": ""}, status=200)
@@ -946,11 +948,15 @@ class FeeAPI(APIView):
     def put(self, request, id, format=None):
         try:
             fee = Fee.objects.get( id = id )
-            list_fee = Fee.objects.filter( position = fee.position, is_apply = True )
-            if list_fee:
-                list_fee.update( is_apply = False )
-            fee.is_apply = True
-            fee.save()
+            if fee.is_apply:
+                fee.is_apply = False
+                fee.save()
+            else:
+                list_fee = Fee.objects.filter( position = fee.position, is_apply = True )
+                if list_fee:
+                    list_fee.update( is_apply = False )
+                fee.is_apply = True
+                fee.save()
             return Response({"code": 200, "message": "success", "fields": ""}, status=200)
         
         except Fee.DoesNotExist, e:
@@ -961,17 +967,21 @@ class FeeAPI(APIView):
             print "FeeAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
-    # hoang TO DO
+
+    """
+        list_id is array in body request
+    """
     def delete(self, request, format=None):
         try:
-            list_req = self.request.query_params.get('list_id', None)
-            list_id = [item for item in list_req.split(',')]
+            list_id = request.data.get('list_id', None)
             if list_id:
+                
                 fees = Fee.objects.filter( id__in = list_id )
                 if fees:
                     fees.delete()
                     return Response({"code": 200, "message": "success", "fields": ""}, status=200)
                 return Response({"code": 400, "message": "Not Found Fee", "fields": ""}, status=400)
+            
             return Response({"code": 400, "message": "List_id field is required", "fields": ""}, status=400)
         except Exception, e:
             print "FeeAPI ", e
@@ -1002,3 +1012,26 @@ class CategoryNotifications(APIView):
             print "FeeAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
+
+"""
+    Event
+    @author :Hoangnguyen
+
+"""
+@permission_classes((AllowAny,))
+class EventAPI(APIView):
+
+    def get(self, request, format=None):
+        try:
+            events = Event.objects.all()
+            eventSerializer = admin_serializers.EventSerializer(events, many = True)
+            return Response(eventSerializer.data)
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+   

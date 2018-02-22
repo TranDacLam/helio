@@ -10,36 +10,39 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import {RequestOptions, Request, RequestMethod, RequestOptionsArgs} from '@angular/http'
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new Headers({ 'Content-Type': 'application/json' })
 };
 
 @Injectable()
 export class FeeService {
 
-  constructor( private http: HttpClient) { }
+  constructor( private http: Http) { }
 
 
 
-  private feeUrl = 'http://127.0.0.1:8000/vi/api/fees/';
+  private feeUrl = 'http://127.0.0.1:8000/vi/api/fee/';
 
   	getFees(): Observable<Fee[]>{
-  		return this.http.get<Fee[]>(this.feeUrl, httpOptions ).pipe(catchError(this.handleError));
+  		return this.http.get(this.feeUrl, httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
   	}
  	// throw error
 	handleError(error: Response) {
 		return Observable.throw(error);
 	}
 	createFee(fee: Fee ):Observable<Fee>{
-		let feeUrl = 'http://127.0.0.1:8000/vi/api/fee/add/';
-  		return this.http.post<Fee>(feeUrl, fee, httpOptions ).pipe(catchError(this.handleError));
+  		return this.http.post(this.feeUrl, fee, httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
   	}
   	deleteListFee(list_id: number[] ):Observable<Fee>{
-		
-  		return this.http.delete<Fee>( this.feeUrl, httpOptions  ).pipe(catchError(this.handleError));
+		let options = new RequestOptions({ 
+		    body: {'list_id': list_id},
+		    headers: new Headers({ 'Content-Type': 'application/json' }),
+		    method: RequestMethod.Delete,
+		  })
+  		return this.http.delete( this.feeUrl, options  ).map((res: Response) => res.json()).catch(this.handleError);
 	}
 	applyFee(id: number):Observable<Fee>{
 		let feeUrl = `http://127.0.0.1:8000/vi/api/fee/${id}/`;
-  		return this.http.put<Fee>( feeUrl, httpOptions  ).pipe(catchError(this.handleError));
+  		return this.http.put( feeUrl, httpOptions  ).map((res: Response) => res.json()).catch(this.handleError);
 
 	}
 

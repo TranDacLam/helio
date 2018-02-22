@@ -3,7 +3,6 @@ import { Fee } from '../../../shared/class/fee';
 import { FeeService } from '../../../shared/services/fee.service';
 import { Subject } from 'rxjs/Subject';
 
-
 @Component({
   selector: 'app-fee-list',
   templateUrl: './fee-list.component.html',
@@ -20,14 +19,12 @@ export class FeeListComponent implements OnInit {
    dtTrigger: Subject<any> = new Subject();
    dtOptions: DataTables.Settings = {};
    list_id = [];
-
-
-
    // when get data, set value for fees, trigger data table
    getFees(){
    	return this.feeService.getFees().subscribe(
-   		result => {
-   			this.fees = result; 
+   		success => {
+        this.errorText = null;
+   			this.fees = success; 
    			this.dtTrigger.next();
    		},
 		error => {
@@ -55,7 +52,7 @@ export class FeeListComponent implements OnInit {
 
    /*
       when check checkbox
-      check id in list_id, if false add id to list_id, if true, no add
+      check id exist in list_id, if false add id to list_id, if true, no add
       when uncheck checkbox
       remove id in list_id 
    */
@@ -72,8 +69,6 @@ export class FeeListComponent implements OnInit {
          this.list_id.splice(index, 1);
        }
     }
-
-
     /*
       list_id has list of id to remove
       for in list_id, 
@@ -81,16 +76,22 @@ export class FeeListComponent implements OnInit {
       fees remove found fee
     */
    deleteFee(){
-     var fee_temp: Fee;
-     for (var i in this.list_id){
-       fee_temp = this.fees.find( fee => fee.id == this.list_id[i] );
-       this.fees = this.fees.filter( fees => fees !== fee_temp  );
-     }
-     // TODO
-     // this.feeService.deleteListFee(this.list_id).subscribe();
+     
+     this.feeService.deleteListFee(this.list_id).subscribe( 
+       success => {
+         this.errorText = null;
+         var fee_temp: Fee;
+         for (var i in this.list_id){
+           fee_temp = this.fees.find( fee => fee.id == this.list_id[i] );
+           this.fees = this.fees.filter( fees => fees !== fee_temp  );
+         }
+           this.list_id = [];
+         },
+       error =>{
+        this.errorText = error.json().message;
+      }
+       );
    }
-
-
    /*
       find fee which clicked
       filter in fees
@@ -99,15 +100,20 @@ export class FeeListComponent implements OnInit {
 
    */
    apply_fee(id: number){
-     var fee = this.fees.find( fee => fee.id == id);
-     this.fees.filter( item =>{ 
-       if(item.is_apply == true && item.position == fee.position) 
-         item.is_apply = false;  
-     });
-     fee.is_apply = true;
-     this.feeService.applyFee(id).subscribe();
+     
+     this.feeService.applyFee(id).subscribe(
+       success => {
+         this.errorText = null;
+          var fee = this.fees.find( fee => fee.id == id);
+               this.fees.filter( item =>{ 
+                 if(item.is_apply == true && item.position == fee.position) 
+                   item.is_apply = false;  
+               });
+          fee.is_apply = true;
+       },
+       error => this.errorText = error.json().message
+       );
    }
-
 
   ngOnInit() {
   	this.getFees();
