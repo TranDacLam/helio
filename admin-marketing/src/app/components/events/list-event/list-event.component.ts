@@ -93,7 +93,7 @@ export class ListEventComponent implements OnInit {
          + Remove tr have del-{{id}} and draw tables
         Author: Lam
     */
-    onDelelteEvent(){
+    onDeleteEvent(){
         this.eventService.onDelEventSelect(this.events_del).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {

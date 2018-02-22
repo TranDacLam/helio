@@ -1,3 +1,16 @@
-<p>
-  add-hot works!
-</p>
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="/event/list">Quản Lý Hot</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thêm Hot</li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class="row mt-30 mb-30">
+    <h3>Thêm Hot</h3>
+    <hr/>
+</div>
+<form-hot [hot]="hot"></form-hot>
