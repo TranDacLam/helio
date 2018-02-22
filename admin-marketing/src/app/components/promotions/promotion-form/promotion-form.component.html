@@ -47,12 +47,58 @@
             <show-error-valid [control]="promotionForm.get('content')"></show-error-valid>
         </div>
     </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Danh Mục Khuyến Mãi</label>
+        </div>
+        <div class="col-sm-10">
+            <select class="form-control" formControlName="promotion_category">
+                <option value="1" checked>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select>
+            <show-error-valid [control]="promotionForm.get('promotion_category')"></show-error-valid>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Nhãn Khuyến Mãi</label>
+        </div>
+        <div class="col-sm-10">
+            <select class="form-control" formControlName="promotion_label">
+                <option value="1" checked>1</option>
+                <option value="2">2</option>
+            </select>
+            <show-error-valid [control]="promotionForm.get('promotion_label')"></show-error-valid>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Loại Khuyến Mãi</label>
+        </div>
+        <div class="col-sm-10">
+            <select class="form-control" formControlName="promotion_type">
+                <option value="1" checked>1</option>
+                <option value="2">2</option>
+            </select>
+            <show-error-valid [control]="promotionForm.get('promotion_type')"></show-error-valid>
+        </div>
+    </div>
+
     <div class="form-group row">
     	<div class="col-sm-12">
-		    <button class="btn btn-primary" (click)="onDelete()" *ngIf="promotion.id">
+		    <button class="btn btn-primary" (click)="deletePromotionEvent()" *ngIf="promotion.id">
 		        XÓA
 		    </button>
-		    <button class="btn btn-primary pull-right" (click)="onSubmit()" [disabled]="promotionForm.invalid">
+		    <button class="btn btn-primary pull-right" (click)="saveEvent()" [disabled]="promotionForm.invalid">
 		        LƯU LẠI
 		    </button>
 		</div>

@@ -42,7 +42,7 @@ export class PromotionService {
         @author: diemnguyen
     */
     getPromotionById(id: number) {
-        let promotion_detail_url = `${api.promotions}${id}`;
+        let promotion_detail_url = `${api.promotion}${id}`;
         return this.http.get(promotion_detail_url).map((res: Response) => res.json()).catch(this.handleError);
     }
 
@@ -52,7 +52,7 @@ export class PromotionService {
         @author: diemnguyen
     */
     deletePromotionById(id: number) {
-        let promotion_detail_url = `${api.promotions}${id}`;
+        let promotion_detail_url = `${api.promotion}${id}`;
         return this.http.delete(promotion_detail_url).map((res: Response) => res.json()).catch(this.handleError);
     }
 
@@ -65,7 +65,7 @@ export class PromotionService {
             headers: _headers
         });
 
-        return this.http.post(api.promotions, JSON.stringify(promotion), _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.post(api.promotion, JSON.stringify(promotion), _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /*  
@@ -73,7 +73,7 @@ export class PromotionService {
         @author: diemnguyen
     */
     updatePromotion(promotion: Promotion) {
-        let promotion_detail_url = `${api.promotions}${promotion.id}`;
+        let promotion_detail_url = `${api.promotion}${promotion.id}/`;
         let _options = new RequestOptions({
             headers: _headers
         });

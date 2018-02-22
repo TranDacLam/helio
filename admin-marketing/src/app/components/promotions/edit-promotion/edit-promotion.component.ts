@@ -35,8 +35,10 @@ export class EditPromotionComponent implements OnInit {
     */
     getPromotion() {
         const id = +this.route.snapshot.paramMap.get('id');
-        this.promotionService.getPromotionById(id).subscribe(result => {
-            this.promotion = result;
+        this.promotionService.getPromotionById(id).subscribe((data) => {
+            this.promotion = data;
+        }, (error) => {
+        
         });
     }
 }

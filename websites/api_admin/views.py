@@ -74,6 +74,7 @@ class PromotionList(APIView):
 """
 
 @permission_classes((AllowAny,))
+@parser_classes((MultiPartParser,JSONParser))
 class PromotionDetail(APIView):
     def get_object(self, pk):
         try:
@@ -92,6 +93,7 @@ class PromotionDetail(APIView):
 
     def post(self, request, format=None):
         try:
+            print request.data
             serializer = admin_serializers.PromotionSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
