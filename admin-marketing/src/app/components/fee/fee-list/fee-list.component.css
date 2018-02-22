@@ -1,19 +1,14 @@
+
+/* custom data table */
 .head-content{
 	margin: 15px 0px;
 	font-size: 15px;
 	padding: 5px 0;
 }
-.pull-right.child-head{
-    border: 1px solid #000000;
-    padding: 0px 7px;
-	box-shadow: 2px 3px;
-    
-}
 .pull-right.child-head a{
-	color: #000;
+	color: #ffffff;
 }
 .pull-right.child-head a:hover{
-	color: #000;
     text-decoration: none;
 
 }
