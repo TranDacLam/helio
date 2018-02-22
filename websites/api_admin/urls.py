@@ -6,8 +6,8 @@ from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token
 urlpatterns = [
 
 	url(r'^promotion_list/$', views.PromotionList.as_view(), name="promotion-list"),
-	url(r'^promotion/(?P<id>[0-9]+)/$', views.PromotionDetail.as_view(), name="promotion"),
-
+	url(r'^promotions/(?P<id>[0-9]+)/$', views.PromotionDetail.as_view(), name="promotion"),
+	url(r'^promotions/$', views.PromotionDetail.as_view(), name="promotion-add"),
 
 	url(r'^user_promotion/(?P<id>[0-9]+)/$', views.PromotionUser.as_view(), name="user-promotion"),
 	

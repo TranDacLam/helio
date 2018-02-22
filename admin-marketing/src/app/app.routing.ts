@@ -9,9 +9,6 @@ import { ListNotificationComponent } from './components/notification/list-notifi
 import { AddNotificationComponent } from './components/notification/add-notification/add-notification.component';
 import { EditNotificationComponent } from './components/notification/edit-notification/edit-notification.component';
 import { NotificationDetailComponent } from './components/notification/notification-detail/notification-detail.component';
-import { UsersPromotionComponent } from './components/promotions/users-promotion/users-promotion.component';
-import { PromotionsComponent } from './components/promotions/promotions/promotions.component';
-import { PromotionDetailComponent } from './components/promotions/promotion-detail/promotion-detail.component';
 import { PromotionLabelListComponent } from './components/promotion-label/promotion-label-list/promotion-label-list.component';
 import { PromotionLabelAddComponent } from './components/promotion-label/promotion-label-add/promotion-label-add.component';
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
@@ -54,6 +51,10 @@ import { AddPromotionLabelComponent } from './components/promotion-labels/add-pr
 import { EditPromotionLabelComponent } from './components/promotion-labels/edit-promotion-label/edit-promotion-label.component';
 
 import { HomeComponent } from './components/home/home.component';
+import { AddPromotionComponent } from './components/promotions/add-promotion/add-promotion.component';
+import { EditPromotionComponent } from './components/promotions/edit-promotion/edit-promotion.component';
+import { ListPromotionComponent } from './components/promotions/list-promotion/list-promotion.component';
+import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
 
 
 const routes: Routes = [
@@ -62,11 +63,13 @@ const routes: Routes = [
     }, { 
         path: 'users', component: UsersComponent
     }, { 
-     	path: 'promotions', component: PromotionsComponent
+     	path: 'promotions', component: ListPromotionComponent
     }, { 
-     	path: 'users-promotions/:id', component: UsersPromotionComponent
+     	path: 'users-promotions/:id', component: UserPromotionComponent
     }, { 
-     	path: 'promotions/:id', component: PromotionDetailComponent
+     	path: 'promotions/:id/change', component: EditPromotionComponent
+    }, { 
+        path: 'promotions/add', component: AddPromotionComponent
     }, {
         path: 'promotion-label-list', component: PromotionLabelListComponent
     }, {

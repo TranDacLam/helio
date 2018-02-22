@@ -15,6 +15,8 @@ export class User {
 	role_user: string;
     username_mapping: string;
     date_mapping: string;
+
+    isChecked: boolean;
 }
 
 export const roles_user = ['System Admin', 'Manager', 'Author', 'Customer Care', 'Teller'];
