@@ -1,3 +1,51 @@
-<p>
-  list-faq works!
-</p>
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Quản Lý Câu Hỏi Thường Gặp</li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class="row text-center">
+    <h1>QUẢN LÝ CÂU HỎI THƯỜNG GẶP</h1>
+</div>
+<div class="row mt-50 mb-30">
+    <div class="col-xs-6 col-sm-6">
+        <a class="btn btn-primary" routerLink="/">TRỞ VỀ TRANG QUẢN TRỊ</a>
+    </div>
+    <div class="col-xs-6 col-sm-6">
+        <a class="btn btn-primary pull-right" routerLink="/faq/add">TẠO CÂU HỎI MỚI</a>
+    </div>
+    <div class="col-xs-12 col-sm-12 mt-15 messsage" *ngIf="message_result">
+        <h4>{{message_result}}</h4>
+    </div>
+</div>
+<div class="row">
+    <table datatable class="row-border hover" *ngIf="faqs">
+        <thead>
+            <tr>
+                <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
+                <th>Sự kiện</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let faq of faqs" id="del-{{faq.id}}">
+                <td><input type="checkbox" (change)="onSelectCKB($event, faq)" [checked]="select_checked"/></td>
+                <td><a routerLink="/faq/edit/{{ faq.id }}">{{ faq.question }}</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row dels-faq" *ngIf="faqs">
+    <div class="col-md-3">
+        <select name="" class="form-control">
+            <option value="1">Xóa các phản hồi được chọn</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        {{ faqs_del.length }} của {{ faqs.length }} được chọn 
+        <button class="btn btn-danger" (click)="onDelelteFaq()">Thực hiện</button>
+    </div>
+</div>

@@ -13,7 +13,39 @@ export class FaqService {
 
     constructor(private http: Http) { }
 
+    /* 
+        function getEvents(): Get all notification
+        author: Lam
+    */
+    getFaqs(): Observable<any>{
+        let url_faqs = '';
+        return this.http.get(url_faqs).map((res: Response) => res.json()).catch(this.handleError);
+    }
 
+    getFaq(id: number): Observable<any>{
+        return;
+    }
+
+    /* 
+        function onDelEventSelect(): Delete all event selected
+        author: Lam
+    */
+    onDelFaqSelect(arr): Observable<any>{
+        let url_del_faqs = '';
+        return this.http.delete(url_del_faqs, httpOptions).catch(this.handleError);
+    }
+
+    addFaq(value): Observable<any>{
+        return;
+    }
+
+    updateFaq(value, id): Observable<any>{
+        return;
+    }
+
+    onDelFaq(id): Observable<any>{
+        return;
+    }
 
     // exception
     private handleError(error: Response) {

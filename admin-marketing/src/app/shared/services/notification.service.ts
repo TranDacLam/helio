@@ -68,8 +68,8 @@ export class NotificationService {
         function onDelelteNoti(): Delete all notifiaction selected
         author: Lam
     */
-    onDelNotiSelect(notifications_del): Observable<any>{
-        return;
+    onDelNotiSelect(notis_del): Observable<any>{
+        return ;
     }
 
     /* 
