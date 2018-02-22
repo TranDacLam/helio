@@ -10,6 +10,7 @@ import { CategoryNotificationService } from '../../../shared/services/category-n
 import 'rxjs/add/observable/throw';
 
 declare var $ :any; // declare Jquery
+declare var bootbox:any;
 
 @Component({
     selector: 'form-notification',
@@ -169,6 +170,31 @@ export class FormNotificationComponent implements OnInit {
     }
 
     /*
+        Function deleteNotificationEvent(): confirm delete
+        @author: Lam
+    */
+    deleteNotificationEvent(){
+        let that = this;
+        bootbox.confirm({
+            title: "Bạn có chắc chắn",
+            message: "Bạn muốn xóa thông báo này?",
+            buttons: {
+                cancel: {
+                    label: "Hủy"
+                },
+                confirm: {
+                    label: "Xóa"
+                }
+            },
+            callback: function (result) {
+                if(result) {
+                    that.onDelete();
+                }
+            }
+        });
+    }
+
+    /*
         Function onDelete():
          + Get id from url path
          + Callback service function onDelNoti() by id to delete notification
@@ -176,8 +202,11 @@ export class FormNotificationComponent implements OnInit {
     */
     onDelete(): void {
         const id = this.noti.id;
-        this.notificationService.onDelNoti(id).subscribe();
-        this.router.navigate(['/notification/list']);
+        this.notificationService.onDelNoti(id).subscribe(
+            (data) => {
+                this.router.navigate(['/notification/list', { message_del: 'success'}]);
+            }
+        );
     }
 
     /*

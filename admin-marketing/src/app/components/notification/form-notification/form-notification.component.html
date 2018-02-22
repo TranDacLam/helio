@@ -77,7 +77,7 @@
     </div>
 
     <hr/>
-    <button class="btn btn-primary" (click)="onDelete()" *ngIf="type_http == 'put'">
+    <button class="btn btn-primary" (click)="deleteNotificationEvent()" *ngIf="type_http == 'put'">
         XÓA
     </button>
     <button class="btn btn-primary pull-right" (click)="onSubmit()" [disabled]="formNotification.invalid">
