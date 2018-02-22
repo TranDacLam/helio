@@ -4,7 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Notification } from '../../../shared/class/notification';
+import { CategoryNotification } from '../../../shared/class/category-notification';
 import { NotificationService } from '../../../shared/services/notification.service';
+import { CategoryNotificationService } from '../../../shared/services/category-notification.service';
 import 'rxjs/add/observable/throw';
 
 declare var $ :any; // declare Jquery
@@ -13,7 +15,10 @@ declare var $ :any; // declare Jquery
     selector: 'form-notification',
     templateUrl: './form-notification.component.html',
     styleUrls: ['./form-notification.component.css'],
-    providers: [NotificationService]
+    providers: [
+        NotificationService,
+        CategoryNotificationService
+    ]
 })
 export class FormNotificationComponent implements OnInit {
 
@@ -33,12 +38,15 @@ export class FormNotificationComponent implements OnInit {
 
     formNotification: FormGroup;
 
+    categories: CategoryNotification[];
+
     check_QR: boolean = true; // Check enable/disable input Location
 
     errorMessage = ''; // Messages error
 
     constructor(
         private notificationService: NotificationService,
+        private categoryNotificationService: CategoryNotificationService,
         private fb: FormBuilder,
         private location: Location,
         private router: Router,
@@ -46,6 +54,7 @@ export class FormNotificationComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.getCategory();
         this.creatForm();
     }
 
@@ -55,14 +64,29 @@ export class FormNotificationComponent implements OnInit {
     */ 
     creatForm(): void{
         this.formNotification = this.fb.group({
-            subject: [this.noti.subject, [Validators.required, Validators.minLength(4)]],
+            subject: [this.noti.subject, [Validators.required]],
             message: [this.noti.message, [Validators.required]],
             image: [this.noti.image],
             sub_url: [this.noti.sub_url, Validators.required],
-            category: [1, Validators.required],
+            category: [this.noti.category, Validators.required],
             is_QR_code: [false],
             location: [this.noti.location],
         });
+    }
+
+    /*
+        function getCategory(): get all category nitofication
+        author: Lam
+    */ 
+    getCategory(): void{
+        this.categoryNotificationService.getCategoryNotifications().subscribe(
+            (data) => {
+                this.categories = data.message;
+            },
+            (error) => {
+                this.errorMessage = error.message; 
+            }
+        );
     }
 
     /*
@@ -101,6 +125,7 @@ export class FormNotificationComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(): void{
+        this.formNotification.value.category = parseInt(this.formNotification.value.category);
         if(this.type_http == 'post'){
             this.notificationService.addNoti(this.formNotification.value).subscribe(
                 (data) => {

@@ -27,6 +27,8 @@ export const api = {
 
   	promotion_type: env.api_domain + 'promotion-type/',
 
+    category_notifications: env.api_domain +'category_notifications/'
+
 
 
 

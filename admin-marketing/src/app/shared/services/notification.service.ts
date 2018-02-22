@@ -69,7 +69,7 @@ export class NotificationService {
         author: Lam
     */
     onDelNotiSelect(notis_del): Observable<any>{
-        return ;
+        return this.http.delete(this.url_notification_list).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
