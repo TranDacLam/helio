@@ -28,6 +28,9 @@ export const api = {
     promotion_type: env.api_domain + 'promotion-type/',
 
 
+    banner: env.api_domain + 'banner/',
+
+
 
 
 };

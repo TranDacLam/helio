@@ -1,3 +1,15 @@
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="/feedback-list">Phản hồi</a></li>
+            <li class="breadcrumb-item"><a routerLink="/feedback-detail">{{feedback?.name}}</a></li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+
 <div class=' row area-form-feedback' >
     <div class='row edit-feedback'>
     	<a class="pull-left title-feedback">Chỉnh sửa phản hồi</a>

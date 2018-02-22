@@ -43,5 +43,6 @@ urlpatterns = [
 	url(r'^feedback/(?P<pk>[0-9]+)/$', views.FeedbackDetailView.as_view(), name="feedback-detail"),
 	url(r'^category_notifications/$', views.CategoryNotifications.as_view(), name="category-notifications"),
 
+	url(r'^banner/$', views.BannerView.as_view(), name="banner"),
 
 ]

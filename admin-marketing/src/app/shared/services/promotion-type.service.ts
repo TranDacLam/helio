@@ -18,16 +18,21 @@ const httpOptions = {
 @Injectable()
 export class PromotionTypeService {
 
-	private urlPromotionType = `${api.promotion_type}`;
   	constructor(private http: HttpClient) {
   	 }
 
-  	// Get All Promotion Label from server
+  	/*
+  		GET: Get All Promorion Type From Server
+  		@author: TrangLe
+  	 */
 	getAllPromotionsType(): Observable<PromotionType[]>{
-		return this.http.get<PromotionType[]>(this.urlPromotionType).catch(this.handleError);
+		let urlPromotionType = `${api.promotion_type}`;
+		return this.http.get<PromotionType[]>(urlPromotionType).catch(this.handleError);
 	}
 
-	// Handle error
+	/*
+		Handle error
+	*/
 	handleError(error: Response) {
 	    return Observable.throw(error);
 	}

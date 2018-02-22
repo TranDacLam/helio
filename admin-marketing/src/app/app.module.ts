@@ -44,6 +44,9 @@ import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
 import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
+
+import { BannerService } from './shared/services/banner.service';
+
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
 
 import { UserListComponent } from './components/user/user-list/user-list.component';
@@ -53,6 +56,11 @@ import { LinkCardListComponent } from './components/link-card/link-card-list/lin
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeService } from './shared/services/fee.service';
 import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
+
+import { BannerListComponent } from './components/banner/banner-list/banner-list.component';
+import { BannerDetailComponent } from './components/banner/banner-detail/banner-detail.component';
+import { BannerAddComponent } from './components/banner/banner-add/banner-add.component';
+
 import { ListEventComponent } from './components/events/list-event/list-event.component';
 import { AddEventComponent } from './components/events/add-event/add-event.component';
 import { EditEventComponent } from './components/events/edit-event/edit-event.component';
@@ -74,12 +82,14 @@ import { EditPromotionLabelComponent } from './components/promotion-labels/edit-
 import { FormEventComponent } from './components/events/form-event/form-event.component';
 import { FormGameComponent } from './components/games/form-game/form-game.component';
 import { FormPostComponent } from './components/posts/form-post/form-post.component';
+
 import { HomeComponent } from './components/home/home.component';
 import { AddPromotionComponent } from './components/promotions/add-promotion/add-promotion.component';
 import { EditPromotionComponent } from './components/promotions/edit-promotion/edit-promotion.component';
 import { PromotionFormComponent } from './components/promotions/promotion-form/promotion-form.component';
 import { ListPromotionComponent } from './components/promotions/list-promotion/list-promotion.component';
 import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
+
 
 
 @NgModule({
@@ -117,6 +127,9 @@ import { UserPromotionComponent } from './components/promotions/user-promotion/u
     LinkCardListComponent,
     FeeListComponent,
     FeeAddComponent,
+    BannerListComponent,
+    BannerDetailComponent,
+    BannerAddComponent,
     ListEventComponent,
     AddEventComponent,
     EditEventComponent,
@@ -167,6 +180,7 @@ import { UserPromotionComponent } from './components/promotions/user-promotion/u
     DenominationService,
     FeedbackService,
     FeeService,
+    BannerService
   ],
   bootstrap: [AppComponent]
 })

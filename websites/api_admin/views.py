@@ -398,43 +398,41 @@ class FeedbackView(APIView):
         try:
             status = self.request.query_params.get('status', None)
             rate = self.request.query_params.get('rate', None)
+            start_date = self.request.query_params.get('start_date', None)
+            end_date = self.request.query_params.get('end_date', None)
 
-            # Verification status, rate exists or not
-            # If exists
-            if status or rate:
-                print "status or rate"
-                start_date = self.request.query_params.get('start_date', None)
-                end_date = self.request.query_params.get('end_date', None)
+            kwargs = {}
+            try:
+                if start_date:
+                    kwargs['sent_date__gte'] = timezone.make_aware(datetime.strptime(
+                                start_date, "%Y-%m-%d"))                   
+                    print kwargs['sent_date__gte']
+                if end_date:
+                    kwargs['sent_date__lte'] = timezone.make_aware(datetime.strptime(
+                                end_date, "%Y-%m-%d") + timedelta(days=1))
+                    print kwargs['sent_date__lte']
+                if status:
+                    kwargs['status'] = status
+                    print kwargs['status']
+                if rate:
+                    kwargs['rate'] = rate
+                    print kwargs['rate']
 
-                kwargs = {}
-                try:
-                    if start_date:
-                        kwargs['sent_date__gte'] = start_date
-                        print kwargs['sent_date__gte']
-                    if end_date:
-                        kwargs['sent_date__lte'] = end_date
-                        print kwargs['sent_date__lte']
-                except ValueError, e:
-                    error = {"code": 400, "message": "%s" % e, "fields": ""}
-                    return Response(error, status=400)
+            except ValueError, e:
+                error = {"code": 400, "message": "%s" % e, "fields": ""}
+                return Response(error, status=400)
 
-                if kwargs:
-                    print "kwargs"
-                    queryset = FeedBack.objects.filter(
-                        **kwargs).filter(Q(status=status) | Q(rate=rate))
-                    serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                    return Response(serializer.data)
-                else:
-                    queryset = FeedBack.objects.filter(Q(status=status) | Q(rate=rate))
-                    serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                    return Response(serializer.data)
-                return Response({"code": 200, "message": queryset, "fields": ""}, status=200)
-                
-            # Status or rate not exist
-            else:
-                list_feedback = FeedBack.objects.all()
-                serializer = admin_serializers.FeedBackSerializer(list_feedback, many=True)
+            if kwargs:
+                print "kwargs"
+                queryset = FeedBack.objects.filter(
+                    **kwargs)
+                serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
                 return Response(serializer.data)
+            else:
+                queryset = FeedBack.objects.all()
+                serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
+                return Response(serializer.data)
+            return Response({"code": 200, "message": queryset, "fields": ""}, status=200)
 
         except FeedBack.DoesNotExist, e:
             error = {"code": 400, "message": "Field Not Found.", "fields": ""}
@@ -958,6 +956,35 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
+"""
+    GET: get all banner
+    @author: TrangLe
+"""
+@permission_classes((AllowAny,))
+class BannerView(APIView):
+
+    parser_classes = (FileUploadParser, MultiPartParser, FormParser)
+
+    def get(self, request, format=None):
+        try:
+            banner = Banner.objects.all()
+            serializer = admin_serializers.BannerSerializer(banner, many=True)
+            return Response(serializer.data)
+
+        except Exception, e:
+            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            return Response(error, status=500)
+        
+    def post(self, request, format=None):
+        print "post"
+        serializer = admin_serializers.BannerSerializer(data=request.data)
+        print serializer
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 """
     Get All CategoryNotifications
     @author :diemnguyen

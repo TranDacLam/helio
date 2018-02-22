@@ -27,6 +27,10 @@ import { UserListComponent } from './components/user/user-list/user-list.compone
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
+import { BannerAddComponent } from './components/banner/banner-add/banner-add.component';
+import { BannerListComponent } from './components/banner/banner-list/banner-list.component';
+import { BannerDetailComponent } from './components/banner/banner-detail/banner-detail.component';
+
 import { ListEventComponent } from './components/events/list-event/list-event.component';
 import { AddEventComponent } from './components/events/add-event/add-event.component';
 import { EditEventComponent } from './components/events/edit-event/edit-event.component';
@@ -45,6 +49,7 @@ import { EditPostComponent } from './components/posts/edit-post/edit-post.compon
 import { ListPromotionLabelComponent } from './components/promotion-labels/list-promotion-label/list-promotion-label.component';
 import { AddPromotionLabelComponent } from './components/promotion-labels/add-promotion-label/add-promotion-label.component';
 import { EditPromotionLabelComponent } from './components/promotion-labels/edit-promotion-label/edit-promotion-label.component';
+
 import { HomeComponent } from './components/home/home.component';
 import { AddPromotionComponent } from './components/promotions/add-promotion/add-promotion.component';
 import { EditPromotionComponent } from './components/promotions/edit-promotion/edit-promotion.component';
@@ -97,6 +102,12 @@ const routes: Routes = [
         path: 'user-detail', component: UserDetailComponent
     }, {
         path: 'link-card-list', component: LinkCardListComponent
+    },{
+        path: 'banner-add', component: BannerAddComponent
+    }, {
+        path: 'banner-list', component: BannerListComponent
+    }, {
+        path: 'banner-detail', component: BannerDetailComponent
     },
     { path: 'feedback/statistics', component: StatisticsFeedbackComponent },
     { path: 'link-card/add', component: AddLinkCardComponent },
