@@ -1,5 +1,6 @@
-table.dataTable tbody th,table.dataTable tbody td {
-	padding: 10px 18px;
+/* Begin Content advertiment*/
+.checkbox-adv {
+	padding: 10px;
 }
 .title-adv {
 	margin: 15px 0px;
@@ -9,3 +10,5 @@ table.dataTable tbody th,table.dataTable tbody td {
 	font-size: 15px;
 	padding: 5px 0;
 }
+
+/*End Content advertiment*/

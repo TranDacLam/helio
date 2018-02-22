@@ -1,5 +1,6 @@
-table.dataTable tbody th,table.dataTable tbody td {
-	padding: 10px 18px;
+/*Begin content link-card users*/
+.checkbox-link-card {
+	padding: 10px;
 }
 .title-link-card {
 	margin: 20px 0;
@@ -9,6 +10,4 @@ table.dataTable tbody th,table.dataTable tbody td {
 	font-size: 18px;
 	padding: 10px;
 }
-table.dataTable.no-footer {
-	border-top: 2px solid #111111;
-}
+/*End contetn link-card users*/

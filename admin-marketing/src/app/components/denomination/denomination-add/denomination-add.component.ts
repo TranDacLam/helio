@@ -6,30 +6,34 @@ import { DenominationService } from '../../../shared/services/denomination.servi
 import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-denomination-add',
-  templateUrl: './denomination-add.component.html',
-  styleUrls: ['./denomination-add.component.css']
+    selector: 'app-denomination-add',
+    templateUrl: './denomination-add.component.html',
+    styleUrls: ['./denomination-add.component.css']
 })
 export class DenominationAddComponent implements OnInit {
 
-  	denominations: Denomination[] = [];
+    denominations: Denomination[] = [];
     errorMessage: String;
-  	constructor(
-  		private router: Router,
-		  private denominationService: DenominationService,
-  	) { }
+    constructor(
+        private router: Router,
+        private denominationService: DenominationService,
+        ) { }
 
-  	ngOnInit() {
-  	}
+    ngOnInit() {
+    }
 
-  	addDenomination(denomination: number) {
-		  this.denominationService.createDenomination({ denomination } as Denomination )
-			  .subscribe(
-          denomination => {
-			  	this.denominations.push(denomination);
-			  },
-        error =>  this.errorMessage = <any>error);
-			  this.router.navigate(['/denomination-list', { message_post: denomination} ])
-	}
+    addDenomination(denomination: number) {
+        this.denominationService.createDenomination({ denomination } as Denomination )
+        .subscribe(
+            denomination => {
+                this.denominations.push(denomination);
+            },
+            error =>  this.errorMessage = <any>error);
+        this.router.navigate(['/denomination-list', { message_post: denomination} ])
+    }
+
+    verifyDuplicate() {
+        
+    }
 
 }

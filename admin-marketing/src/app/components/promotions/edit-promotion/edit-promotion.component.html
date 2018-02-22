@@ -4,8 +4,10 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
             <li class="breadcrumb-item"><a routerLink="/promotions">Quản Lý Khuyến Mãi</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Chi Tiết Khuyến Mãi</li>
+            <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa Khuyến Mãi</li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
+
+<app-promotion-form *ngIf="promotion" [promotion]="promotion"></app-promotion-form>

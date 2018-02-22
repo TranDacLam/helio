@@ -1,0 +1,16 @@
+/*Begin title-ad*/
+.title-adv {
+	border-bottom: 2px solid #ccc;
+	margin: 10px 0 20px 0;
+	padding: 10px 0;
+}
+/*End title-ad*/
+.form-adv-add {
+	padding: 0 15px;
+}
+/*Begin content-adv*/
+.content-adv {
+	border-bottom: 2px solid #ccc;
+	margin-bottom: 10px;
+}
+/*End content-adv*/

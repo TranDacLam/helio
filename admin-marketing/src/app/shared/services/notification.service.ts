@@ -85,8 +85,12 @@ export class NotificationService {
         function updateUserNoti(): update user notification by array id
         author: Lam
     */
-    updateUserNoti(user_noti): Observable<any>{
-        return;
+    updateUserNoti(id, user_noti): Observable<any>{
+        let url_user_noti_detail = `${this.url_user_notification}${id}/`
+        let param = {
+            list_user_id: user_noti
+        }
+        return this.http.post(url_user_noti_detail, JSON.stringify(param), httpOptions).catch(this.handleError);
     }
 
 

@@ -1,0 +1,14 @@
+/*Begin Content Denomination Add*/
+.title-denomi {
+	border-bottom: 2px solid #ccc;
+	margin: 10px 0 20px 0;
+	padding: 10px 0;
+}
+.form-add-denomi {
+	padding: 0 15px;
+}
+.content-denomi {
+	border-bottom: 2px solid #ccc;
+	margin-bottom: 10px;
+}
+/*End Content Denomination Add*/

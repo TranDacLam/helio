@@ -1,3 +1,4 @@
-table.dataTable tbody th,table.dataTable tbody td {
-	padding: 10px 18px;
+.title-hot-advs {
+	margin: 15px 0px;
+	border-bottom: 1px solid black;
 }

@@ -1,6 +1,20 @@
+/*Begin content add User*/
 button.clear-file.btn.btn-danger {
 	margin-top: 10px;
 }
+.title-user {
+	margin: 10px 0;
+}
+.title-user a {
+	text-decoration: none;
+	list-style-type: none;
+}
+.content-form-add-user {
+	border-bottom: 2px solid #ccc;
+	margin: 10px 0 15px 0;
+}
+
+/* == css for input password == */
 .input-password {
 	padding: 5px 50px 5px 10px;
 }
@@ -11,3 +25,4 @@ button.clear-file.btn.btn-danger {
 	right: 15px;
 	cursor: pointer;
 }
+/*End content add User*/
