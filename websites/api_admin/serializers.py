@@ -111,3 +111,10 @@ class CategoryNotificationSerializer(serializers.ModelSerializer):
         model = Category_Notification
         fields = ('id', 'name')
 
+
+class EventSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Event
+        fields = '__all__'
+
