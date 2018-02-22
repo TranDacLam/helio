@@ -21,9 +21,6 @@ import { ListNotificationComponent } from './components/notification/list-notifi
 import { AddNotificationComponent } from './components/notification/add-notification/add-notification.component';
 import { EditNotificationComponent } from './components/notification/edit-notification/edit-notification.component';
 import { UserMultiselectComponent } from './components/user-multiselect/user-multiselect.component';
-import { UsersPromotionComponent } from './components/promotions/users-promotion/users-promotion.component';
-import { PromotionsComponent } from './components/promotions/promotions/promotions.component';
-import { PromotionDetailComponent } from './components/promotions/promotion-detail/promotion-detail.component';
 import { PromotionLabelListComponent } from './components/promotion-label/promotion-label-list/promotion-label-list.component';
 import { PromotionLabelAddComponent } from './components/promotion-label/promotion-label-add/promotion-label-add.component';
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
@@ -78,6 +75,11 @@ import { FormEventComponent } from './components/events/form-event/form-event.co
 import { FormGameComponent } from './components/games/form-game/form-game.component';
 import { FormPostComponent } from './components/posts/form-post/form-post.component';
 import { HomeComponent } from './components/home/home.component';
+import { AddPromotionComponent } from './components/promotions/add-promotion/add-promotion.component';
+import { EditPromotionComponent } from './components/promotions/edit-promotion/edit-promotion.component';
+import { PromotionFormComponent } from './components/promotions/promotion-form/promotion-form.component';
+import { ListPromotionComponent } from './components/promotions/list-promotion/list-promotion.component';
+import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
 
 
 @NgModule({
@@ -92,9 +94,6 @@ import { HomeComponent } from './components/home/home.component';
     AddNotificationComponent,
     EditNotificationComponent,
     UserMultiselectComponent,
-    UsersPromotionComponent,
-    PromotionsComponent,
-    PromotionDetailComponent,
     PromotionLabelListComponent,
     PromotionLabelAddComponent,
     AdvertisementListComponent,
@@ -140,6 +139,11 @@ import { HomeComponent } from './components/home/home.component';
     FormGameComponent,
     FormPostComponent,
     HomeComponent,
+    AddPromotionComponent,
+    EditPromotionComponent,
+    PromotionFormComponent,
+    ListPromotionComponent,
+    UserPromotionComponent,
   ],
   imports: [
     BrowserModule,

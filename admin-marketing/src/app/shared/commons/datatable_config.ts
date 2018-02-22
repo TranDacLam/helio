@@ -19,7 +19,6 @@ export const datatable_config = {
                 'next': "Sau",
                 'previous': "Trước"
             }
-        },
-        scrollX: true
+        }
     }
 }

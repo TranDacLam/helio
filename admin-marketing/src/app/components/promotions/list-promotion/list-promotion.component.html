@@ -8,6 +8,14 @@
     </nav>
 </div>
 <!-- End breadcrumb -->
+<div *ngIf="message_error" class="row">
+    <div class="col-md-12">
+        <div class="alert alert-danger">
+            {{ message_error }}
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-12" *ngIf="promotion_list">
         <div class="datatable-content">
@@ -29,7 +37,7 @@
                     <tr *ngFor="let promotion of promotion_list">
                         <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
                         <td>{{ promotion.id }}</td>
-                        <td><a routerLink="/promotions/{{ promotion.id }}">{{ promotion.name }}</a></td>
+                        <td><a routerLink="/promotions/{{ promotion.id }}/change">{{ promotion.name }}</a></td>
                         <td *ngIf="promotion.is_draft; else public">Draft</td>
                         <ng-template #public>
                            <td>Đã Triển Khai</td>
@@ -43,5 +51,17 @@
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+
+<div class='row'>
+    <div class="col-md-3">
+        <select name="" class="form-control">
+            <option value="">Xóa các khuyến mãi được chọn</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        {{length_selected}} của {{length_all}} được chọn
+        <button (click)="deletePromotionListEvent()" type="button" class="btn btn-danger">Thực hiện</button>
     </div>
 </div>

@@ -76,7 +76,8 @@ export class NotificationDetailComponent implements OnInit {
         Author: Lam
     */
     update_user_noti(event){
-        this.notificationService.updateUserNoti(event).subscribe();
+        const id = +this.route.snapshot.paramMap.get('id');
+        this.notificationService.updateUserNoti(id, event).subscribe();
     }
 
 }
