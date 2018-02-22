@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Hot } from '../../../shared/class/hot';
-import { HotService } from '../../../shared/services/hot.service'
+import { HotService } from '../../../shared/services/hot.service';
 
 @Component({
     selector: 'app-edit-hot',
