@@ -29,7 +29,7 @@ export class FeedbackDetailComponent implements OnInit {
   		private route: ActivatedRoute,
   		private location: Location,
     	private fb: FormBuilder,
-      private router: Router
+        private router: Router
   		) {
   			this.createFormFeedback();
   		 }
@@ -38,6 +38,10 @@ export class FeedbackDetailComponent implements OnInit {
   		this.getFeedback()
   	}
 
+    /*
+        Function: Create Form Feedback
+        @author: TrangLe
+     */
   	createFormFeedback() {
   		this.feedbackForm = this.fb.group({
 	        name: [this.formFeed.name],
@@ -52,7 +56,10 @@ export class FeedbackDetailComponent implements OnInit {
 	        answer: [this.formFeed.answer],     
       })
   	}
-  	// Get Feedback By ID
+  	/*
+        Function: Get Feedback By Id
+        @author: Trangle      
+    */
   	getFeedback() {
     	const id = +this.route.snapshot.paramMap.get('id');
     	this.feedbackService.getFeedbackById(id)
@@ -62,20 +69,25 @@ export class FeedbackDetailComponent implements OnInit {
         );
     }
 
-    // Delete Feedback by ID
+    /*
+        DELETE: Delete Feedback By Id
+        @author: TrangLe
+    */
     deleteFeedback(feedback: Feedback) {
     	this.feedbackService.deleteFeedbackById(feedback)
-        .subscribe(
-          () => this.router.navigate(['/feedback-list', { message_del: feedback.name} ]),
-          error =>  this.errorMessage = <any>error
-          );
+            .subscribe(
+                () => this.router.navigate(['/feedback-list', { message_del: feedback.name} ]),
+                error =>  this.errorMessage = <any>error
+           );
     }
-    // Update Feedback by ID
+    /* 
+        PUT: Update Feedback by ID
+    */
     updateFeedback() {
     	this.feedbackService.updateFeedbackById(this.feedback)
-    	  .subscribe(
-          () => this.router.navigate(['/feedback-list', { message_put: this.feedback.name} ]),
-          error =>  this.errorMessage = <any>error
-          )
+    	    .subscribe(
+                () => this.router.navigate(['/feedback-list', { message_put: this.feedback.name} ]),
+                error =>  this.errorMessage = <any>error
+            )
     }
 }

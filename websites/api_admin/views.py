@@ -23,6 +23,7 @@ from django.http import Http404
 from django.db import DatabaseError
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
+
 """
     Get Promotion
     @author: diemnguyen
@@ -40,6 +41,33 @@ class PromotionList(APIView):
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
 
+    def delete(self, request, format=None):
+        print "delete"
+
+        """
+        DELETE: Multi ids select
+        """
+        try:
+            # Get list id to delete
+            list_promotion_id = self.request.data.get('list_promotion_id', [])
+
+            print list_promotion_id
+            # Check list id is empty
+            if list_promotion_id:
+                # Delete list objects 
+                Promotion.objects.filter(pk__in = list_promotion_id).delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+
+            return Response({"code": 400, "message": "List ID must be not empty ", "fields": ""}, status=400)
+        except ValueError:
+            #Handle the exception
+            print 'Please enter an integer'
+        except Exception, e:
+            print e
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+
+
 
 """
     Get Promotion By Promotion ID
@@ -54,7 +82,7 @@ class PromotionDetail(APIView):
         except Promotion.DoesNotExist, e:
             raise Http404
     def get(self, request, id, format=None):
-        item = get_object(id)
+        item = self.get_object(id)
         try:
             serializer = admin_serializers.PromotionSerializer(item, many=False)
             return Response(serializer.data)
@@ -62,6 +90,36 @@ class PromotionDetail(APIView):
             print 'PromotionDetailView ',e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
+
+    def post(self, request, format=None):
+        try:
+            serializer = admin_serializers.PromotionSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception, e:
+            print 'NotificationDetailView PUT',e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def put(self, request, id, format=None):
+        print request.data;
+        item = self.get_object(id)
+        try:
+            serializer = admin_serializers.PromotionSerializer(item, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception, e:
+            print 'NotificationDetailView PUT',e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id, format=None):
+        item = self.get_object(id).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 """
@@ -71,7 +129,7 @@ class PromotionDetail(APIView):
 
 @permission_classes((AllowAny,))
 class PromotionUser(APIView):
-    def get(self, request, id):
+    def get(self, request, id, format=None):
         try:
             if id:
                 promotion_detail = Promotion.objects.get(pk=id)
@@ -91,21 +149,35 @@ class PromotionUser(APIView):
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
 
-    def post(self, request, id):
+    def post(self, request, id, format=None):
         try:
-            if id:
-                list_user = Gift.objects.filter(pk=id)
-    
-                promotion_user_id_list = Gift.objects.filter(promotion_id=id).values_list('user_id', flat=True)
-                user_promotion_list = User.objects.filter(pk__in=promotion_user_id_list)
-                user_all_list = User.objects.filter(~Q(pk__in=promotion_user_id_list))
+            
+            list_user_id = self.request.data.get('list_user_id', '')
+     
+            # Get list user by promotion_id
+            user_promotion_list = Gift.objects.filter(promotion_id=id).values_list('user_id', flat=True)
+            # converts ValuesQuerySet into Python list
+            list_user_id_db = [str(user_id) for user_id in user_promotion_list] 
 
-                result = {}
-                result['promotion_detail'] = admin_serializers.PromotionSerializer(promotion_detail, many=False).data
-                result['user_all'] = admin_serializers.UserSerializer(user_all_list, many=True).data
-                result['user_promotion'] = admin_serializers.UserSerializer(user_promotion_list, many=True).data
-        
-                return Response(result)
+            # List add new ( exist in params + not exist in database )
+            list_add = set(list_user_id) - set(list_user_id_db)
+            # List delete item ( not exist in params + exist in database)
+            list_delete = set(list_user_id_db) - set(list_user_id)
+
+            # Check list add is not empty then add to database
+            if list_add:
+                for user_id in list_add:
+                    item = Gift()
+                    item.promotion_id = id
+                    item.user_id = user_id
+                    item.save()
+
+            # Check list_delete is not empty then delete from database
+            if list_delete:
+                Gift.objects.filter(promotion_id=id, user_id__in=list_delete).delete()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
         except Exception, e:
             print 'PromotionUserView ',e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
@@ -327,43 +399,41 @@ class FeedbackView(APIView):
         try:
             status = self.request.query_params.get('status', None)
             rate = self.request.query_params.get('rate', None)
+            start_date = self.request.query_params.get('start_date', None)
+            end_date = self.request.query_params.get('end_date', None)
 
-            # Verification status, rate exists or not
-            # If exists
-            if status or rate:
-                print "status or rate"
-                start_date = self.request.query_params.get('start_date', None)
-                end_date = self.request.query_params.get('end_date', None)
+            kwargs = {}
+            try:
+                if start_date:
+                    kwargs['sent_date__gte'] = timezone.make_aware(datetime.strptime(
+                                start_date, "%Y-%m-%d"))                   
+                    print kwargs['sent_date__gte']
+                if end_date:
+                    kwargs['sent_date__lte'] = timezone.make_aware(datetime.strptime(
+                                end_date, "%Y-%m-%d") + timedelta(days=1))
+                    print kwargs['sent_date__lte']
+                if status:
+                    kwargs['status'] = status
+                    print kwargs['status']
+                if rate:
+                    kwargs['rate'] = rate
+                    print kwargs['rate']
 
-                kwargs = {}
-                try:
-                    if start_date:
-                        kwargs['sent_date__gte'] = start_date
-                        print kwargs['sent_date__gte']
-                    if end_date:
-                        kwargs['sent_date__lte'] = end_date
-                        print kwargs['sent_date__lte']
-                except ValueError, e:
-                    error = {"code": 400, "message": "%s" % e, "fields": ""}
-                    return Response(error, status=400)
+            except ValueError, e:
+                error = {"code": 400, "message": "%s" % e, "fields": ""}
+                return Response(error, status=400)
 
-                if kwargs:
-                    print "kwargs"
-                    queryset = FeedBack.objects.filter(
-                        **kwargs).filter(Q(status=status) | Q(rate=rate))
-                    serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                    return Response(serializer.data)
-                else:
-                    queryset = FeedBack.objects.filter(Q(status=status) | Q(rate=rate))
-                    serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
-                    return Response(serializer.data)
-                return Response({"code": 200, "message": queryset, "fields": ""}, status=200)
-                
-            # Status or rate not exist
-            else:
-                list_feedback = FeedBack.objects.all()
-                serializer = admin_serializers.FeedBackSerializer(list_feedback, many=True)
+            if kwargs:
+                print "kwargs"
+                queryset = FeedBack.objects.filter(
+                    **kwargs)
+                serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
                 return Response(serializer.data)
+            else:
+                queryset = FeedBack.objects.all()
+                serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
+                return Response(serializer.data)
+            return Response({"code": 200, "message": queryset, "fields": ""}, status=200)
 
         except FeedBack.DoesNotExist, e:
             error = {"code": 400, "message": "Field Not Found.", "fields": ""}
@@ -474,20 +544,12 @@ class NotificationList(APIView):
         """
         try:
             # Get list id to delete
-            list_id_str = self.request.data.get('list_id', '')
+            list_notification_id = self.request.data.get('list_notification_id', [])
 
-            print "LIST NOTIFICATION ID DELETE : ", list_id_str
+            # Check list id is empty
+            if list_notification_id:
 
-            # Check list id is valid
-            if list_id_str:
-                list_id = []
-                # convert list id string to list
-                try:
-                    list_id = eval(list_id_str)
-                except SyntaxError:
-                    return Response({"code": 400, "message": "List ID must be format is '[1, 2, 3]' ", "fields": ""}, status=400)
-
-                queryset = Notification.objects.filter(pk__in = list_id).delete()
+                Notification.objects.filter(pk__in = list_notification_id).delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
 
             return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
@@ -585,27 +647,20 @@ class NotificationUser(APIView):
 
     def post(self, request, id):
         try:
-            list_id_str = self.request.data.get('list_id', '')
-            list_id  = []
-
-            # Convert string to list 
-            try:
-                list_id = eval(list_id_str)
-            except SyntaxError:
-                return Response({"code": 400, "message": "List ID must be format is '[1, 2, 3]' ", "fields": ""}, status=400)
+            list_user_id = self.request.data.get('list_user_id', '')
 
             # Get list user by notification_id
             user_notification_list = User_Notification.objects.filter(notification_id=id).values_list('user_id', flat=True)
+            list_user_id_db = [str(user_id) for user_id in user_notification_list] 
 
             # List add new ( exist in params + not exist in database)
-            list_add = set(list_id) - set(user_notification_list)
+            list_add = set(list_user_id) - set(list_user_id_db)
             # List delete item ( not exist in params + exist in database)
-            list_delete = set(user_notification_list) - set(list_id)
+            list_delete = set(list_user_id_db) - set(list_user_id)
 
             # Check list add is not empty then add to database
             if list_add:
                 for user_id in list_add:
-                    print user_id
                     item = User_Notification()
                     item.notification_id = id
                     item.user_id = user_id
@@ -988,12 +1043,35 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
+"""
+    GET: get all banner
+    @author: TrangLe
+"""
+@permission_classes((AllowAny,))
+class BannerView(APIView):
+
+    parser_classes = (FileUploadParser, MultiPartParser, FormParser)
+
+    def get(self, request, format=None):
+        try:
+            banner = Banner.objects.all()
+            serializer = admin_serializers.BannerSerializer(banner, many=True)
+            return Response(serializer.data)
+
+        except Exception, e:
+            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            return Response(error, status=500)
         
-
-
-
-
-
+    def post(self, request, format=None):
+        print "post"
+        serializer = admin_serializers.BannerSerializer(data=request.data)
+        print serializer
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 """
     Get All CategoryNotifications
     @author :diemnguyen

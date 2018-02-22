@@ -104,7 +104,7 @@ export class FormNotificationComponent implements OnInit {
         if(this.type_http == 'post'){
             this.notificationService.addNoti(this.formNotification.value).subscribe(
                 (data) => {
-                    this.router.navigate(['/notifications', { message_post: this.formNotification.value.subject}]);
+                    this.router.navigate(['/notification/list', { message_post: this.formNotification.value.subject}]);
                 },
                 (error) => {
                     { this.errorMessage = error.message; } 
@@ -115,7 +115,7 @@ export class FormNotificationComponent implements OnInit {
                 (data) => {
                     this.noti = data;
                     if(this.type_http == "put"){
-                        this.router.navigate(['/notifications', { message_put: this.formNotification.value.subject}]);
+                        this.router.navigate(['/notification/list', { message_put: this.formNotification.value.subject}]);
                     }else if(this.type_http == 'put_popup'){
                         this.getNotification();
                         $('#UpdateNoti').modal('toggle');
@@ -152,7 +152,7 @@ export class FormNotificationComponent implements OnInit {
     onDelete(): void {
         const id = this.noti.id;
         this.notificationService.onDelNoti(id).subscribe();
-        this.router.navigate(['/notifications']);
+        this.router.navigate(['/notification/list']);
     }
 
     /*

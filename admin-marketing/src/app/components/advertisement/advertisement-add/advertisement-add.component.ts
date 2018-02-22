@@ -16,7 +16,7 @@ export class AdvertisementAddComponent implements OnInit {
    	constructor(
    		private advertisementService: AdvertisementService,
    		private location: Location,
-      private router: Router,
+        private router: Router,
    	){ }
 
    	advs: Advertisement[] = [];
@@ -25,6 +25,10 @@ export class AdvertisementAddComponent implements OnInit {
 
    	ngOnInit() {
    	}
+    /*
+        POST: Create New Advertiment
+        @author: TrangLe
+     */
    	CreateAdv(advForm: any) {
    		this.advertisementService.addAdvertisement( advForm )
    			.subscribe(

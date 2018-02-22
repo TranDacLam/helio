@@ -1,136 +1,154 @@
-<a class="pull-left" routerLink="/user-add">User > Thêm User</a>
-<br>
-<hr>
-<div class="col-md-8 col-md-offset-2">
-	<form [formGroup]="formUser" (ngSubmit)="onSubmit()">
-		<div class="form-group row">
-			<div class="col-sm-3">
-				<label class="center-block"> Email:</label>
-			</div>
-        	<div class="col-sm-8">	
-				<input class='form-control' name="email" 
-				formControlName="email" type="email"
-				>
-				<show-error-valid [control]="formUser.get('email')"></show-error-valid>	
-        	</div>
-        </div>
-        <div class="form-group row">
-			<div class="col-sm-3">
-				<label class="center-block">Họ và Tên:</label>
-			</div>
-        	<div class="col-sm-8">	
-				<input class='form-control' name="full_name" 
-				formControlName="full_name" type="text"
-				>
-				<show-error-valid [control]="formUser.get('full_name')"></show-error-valid>	
-        	</div>
-        </div>
-        <div class="form-group row">
-			<div class="col-sm-3">
-				<label class="center-block">Ngày sinh:</label>
-			</div>
-        	<div class="col-sm-8">	
-				<input class='form-control' name="birth_date" 
-				formControlName="birth_date" type="date"
-				>
-				<show-error-valid [control]="formUser.get('birth_date')"></show-error-valid>	
-        	</div>
-        </div>
-		<div class="form-group row">
-			<div class="col-sm-3">
-				<label class="center-block">Số điện thoại:</label>
-			</div>
-        	<div class="col-sm-8">	
-				<input class='form-control' name="phone" 
-				formControlName="phone"
-				>
-				<show-error-valid [control]="formUser.get('phone')"></show-error-valid>	
-        	</div>
-        </div>
-		<div class="form-group row">
-			<div class="col-sm-3">
-				<label class="center-block">Chứng minh nhân dân:</label>
-			</div>
-        	<div class="col-sm-8">	
-				<input class='form-control' name="personal_id" 
-				formControlName="personal_id"
-				>
-				<show-error-valid [control]="formUser.get('personal_id')"></show-error-valid>	
-        	</div>
-        </div>
-        <div class="form-group row">
-			<div class="col-sm-3">
-				<label class="center-block">Quốc gia :</label>
-			</div>
-        	<div class="col-sm-8">	
-				<input class='form-control' name="country" 
-				formControlName="country"
-				>
-				<show-error-valid [control]="formUser.get('country')"></show-error-valid>	
-        	</div>
-        </div>
-        <div class="form-group row">
-			<div class="col-sm-3">
-				<label class="center-block">Địa chỉ:</label>
-			</div>
-        	<div class="col-sm-8">	
-				<input class='form-control' name="address" 
-				formControlName="address"
-				>
-				<show-error-valid [control]="formUser.get('address')"></show-error-valid>	
-        	</div>
-        </div>
-        <div class="form-group row">
-			<div class="col-sm-3">
-				<label class="center-block">Thành phố:</label>
-			</div>
-        	<div class="col-sm-8">	
-				<input class='form-control' name="city" 
-				formControlName="city"
-				>
-				<show-error-valid [control]="formUser.get('city')"></show-error-valid>	
-        	</div>
-        </div>
-        <div class="form-group row">
-	        <div class="col-sm-3">
-	            <label class="center-block">Hình Ảnh:</label>
-	        </div>
-	        <div class="col-sm-8">
-            	<input type="file" formControlName="image" class="form-control" accept="image/*"
-            (change)="onFileChange($event)" #inputImage/>
-            	<show-error-valid [control]="formUser.get('image')"></show-error-valid>
-            	<button type="button" class=" clear-file btn btn-danger" (click)="clearFile()">Clear file</button>
-        	</div>
-        	
-    	</div>
-        <div class="form-group row">
-			<div class="col-sm-3">
-				<label class="center-block"> Mật khẩu:</label>
-			</div>
-        	<div class="col-sm-8">	
-				<input class='input-password form-control' type="password" name="password" 
-				formControlName="password"
-				#input
-				>
-				<button (click)="showPassword(input)" type="button" class="file-icon btn btn-default"><span class="fa fa-eye"></span></button>
-				<show-error-valid [control]="formUser.get('password')"></show-error-valid>	
-        	</div>
-        </div>
-        <div class="form-group row">
-        	<div class="col-sm-3">
-				<label class="center-block"> Loại User:</label>
-			</div>
-			<div class="col-sm-8">
-                <select class='form-control' name="role_user" 
-                formControlName="role_user">
-                    <option *ngFor="let role_user of roles_user">
-                        {{role_user}}
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group row">
-         	<button [disabled]="formUser.invalid" type="submit" class="btn btn-info">Lưu lại</button>
-        </div>
-	</form>
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="/user-list">User</a></li>
+            <li class="breadcrumb-item"><a routerLink="/user-add">Thêm User</a></li>
+        </ol>
+    </nav>
 </div>
+<!-- End breadcrumb -->
+<div class='title-user row'>
+    <a class="pull-left" routerLink="/user-add">Thêm User</a>
+</div>
+
+<form [formGroup]="formUser" (ngSubmit)="onSubmit()">
+	<div class='content-form-add-user row'>
+		<div class="col-md-8 col-md-offset-2">
+			<div class="form-group row">
+				<div class="col-sm-3">
+					<label class="center-block"> Email:</label>
+				</div>
+	        	<div class="col-sm-8">	
+					<input class='form-control' name="email" 
+					formControlName="email" type="email"
+					>
+					<show-error-valid [control]="formUser.get('email')"></show-error-valid>	
+	        	</div>
+	        </div>
+	        <div class="form-group row">
+				<div class="col-sm-3">
+					<label class="center-block">Họ và Tên:</label>
+				</div>
+	        	<div class="col-sm-8">	
+					<input class='form-control' name="full_name" 
+					formControlName="full_name" type="text"
+					>
+					<show-error-valid [control]="formUser.get('full_name')"></show-error-valid>	
+	        	</div>
+	        </div>
+	        <div class="form-group row">
+				<div class="col-sm-3">
+					<label class="center-block">Ngày sinh:</label>
+				</div>
+	        	<div class="col-sm-8">	
+					<input class='form-control' name="birth_date" 
+					formControlName="birth_date" type="date"
+					>
+					<show-error-valid [control]="formUser.get('birth_date')"></show-error-valid>	
+	        	</div>
+	        </div>
+			<div class="form-group row">
+				<div class="col-sm-3">
+					<label class="center-block">Số điện thoại:</label>
+				</div>
+	        	<div class="col-sm-8">	
+					<input class='form-control' name="phone" 
+					formControlName="phone"
+					>
+					<show-error-valid [control]="formUser.get('phone')"></show-error-valid>	
+	        	</div>
+	        </div>
+			<div class="form-group row">
+				<div class="col-sm-3">
+					<label class="center-block">Chứng minh nhân dân:</label>
+				</div>
+	        	<div class="col-sm-8">	
+					<input class='form-control' name="personal_id" 
+					formControlName="personal_id"
+					>
+					<show-error-valid [control]="formUser.get('personal_id')"></show-error-valid>	
+	        	</div>
+	        </div>
+	        <div class="form-group row">
+				<div class="col-sm-3">
+					<label class="center-block">Quốc gia :</label>
+				</div>
+	        	<div class="col-sm-8">	
+					<input class='form-control' name="country" 
+					formControlName="country"
+					>
+					<show-error-valid [control]="formUser.get('country')"></show-error-valid>	
+	        	</div>
+	        </div>
+	        <div class="form-group row">
+				<div class="col-sm-3">
+					<label class="center-block">Địa chỉ:</label>
+				</div>
+	        	<div class="col-sm-8">	
+					<input class='form-control' name="address" 
+					formControlName="address"
+					>
+					<show-error-valid [control]="formUser.get('address')"></show-error-valid>	
+	        	</div>
+	        </div>
+	        <div class="form-group row">
+				<div class="col-sm-3">
+					<label class="center-block">Thành phố:</label>
+				</div>
+	        	<div class="col-sm-8">	
+					<input class='form-control' name="city" 
+					formControlName="city"
+					>
+					<show-error-valid [control]="formUser.get('city')"></show-error-valid>	
+	        	</div>
+	        </div>
+	        <div class="form-group row">
+		        <div class="col-sm-3">
+		            <label class="center-block">Hình Ảnh:</label>
+		        </div>
+		        <div class="col-sm-8">
+	            	<input type="file" formControlName="image" class="form-control" accept="image/*"
+	            (change)="onFileChange($event)" #inputImage/>
+	            	<show-error-valid [control]="formUser.get('image')"></show-error-valid>
+	            	<button type="button" class=" clear-file btn btn-danger" (click)="clearFile()">Clear file</button>
+	        	</div>
+	        	
+	    	</div>
+	        <div class="form-group row">
+				<div class="col-sm-3">
+					<label class="center-block"> Mật khẩu:</label>
+				</div>
+	        	<div class="col-sm-8">	
+					<input class='input-password form-control' type="password" name="password" 
+					formControlName="password"
+					#input
+					>
+					<button (click)="showPassword(input)" type="button" class="file-icon btn btn-default"><span class="fa fa-eye"></span></button>
+					<show-error-valid [control]="formUser.get('password')"></show-error-valid>	
+	        	</div>
+	        </div>
+	        <div class="form-group row">
+	        	<div class="col-sm-3">
+					<label class="center-block"> Loại User:</label>
+				</div>
+				<div class="col-sm-8">
+	                <select class='form-control' name="role_user" 
+	                formControlName="role_user">
+	                    <option *ngFor="let role_user of roles_user">
+	                        {{role_user}}
+	                    </option>
+	                </select>
+	            </div>
+	        </div>
+		</div>
+	</div>
+	<div class='clearfix'></div>
+	<div class="col-md-8 col-md-offset-2">
+		<div class="form-group row">
+		    <button [disabled]="formUser.invalid" type="submit" class="pull-right btn btn-info">Lưu lại</button>
+		</div>
+	</div>
+</form>
+

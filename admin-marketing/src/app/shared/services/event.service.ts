@@ -22,6 +22,10 @@ export class EventService {
         return this.http.get(url_events).map((res: Response) => res.json()).catch(this.handleError);
     }
 
+    getEvent(id: number): Observable<any>{
+        return;
+    }
+
     /* 
         function onDelEventSelect(): Delete all event selected
         author: Lam
@@ -39,7 +43,7 @@ export class EventService {
         return;
     }
 
-    onDelNoti(id): Observable<any>{
+    onDelEvent(id): Observable<any>{
         return;
     }
 

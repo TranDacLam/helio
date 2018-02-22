@@ -1,6 +1,13 @@
-table.dataTable tbody th,table.dataTable tbody td {
-	padding: 10px 18px;
+/*Begin content feedback*/
+
+/*=== Customize table feedback ==*/
+.checkbox-feedback {
+	padding: 10px;
 }
+#table_feedback_wrapper {
+	overflow: scroll;
+}
+/*=== End customize table feedback ==*/
 .title-feedback {
 	margin: 15px 0px;
 	border-bottom: 1px solid black;
@@ -9,3 +16,11 @@ table.dataTable tbody th,table.dataTable tbody td {
 	font-size: 15px;
 	padding: 5px 0;
 }
+/*css for feedback list footer*/
+.area-feedback-footer {
+	margin:10px 0px 15px -15px;
+}
+.button-feedback {
+	margin-left: 15px;
+}
+/*End content feedback*/

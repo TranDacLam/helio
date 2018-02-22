@@ -118,6 +118,7 @@ export class LinkCardListComponent implements OnInit {
       if (this.link_card_del.length == 0 ){
         this.message_error = "Vui lòng chọn thẻ liên kết để xóa";
         this.message_result = "";
+        this.message_success = "";
       } else {
       this.linkCardService.deleteAllUserLinkedSelected(this.link_card_del).subscribe(
         result => {
@@ -125,6 +126,7 @@ export class LinkCardListComponent implements OnInit {
                    this.link_card_del.forEach(function(e){
                    dtInstance.rows('#delete'+e).remove().draw();
                    });
+                   this.link_card_del = [];
                });
              this.message_success = "Xóa thẻ liên kết thành công";
            });
