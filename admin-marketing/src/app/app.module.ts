@@ -87,6 +87,7 @@ import { PromotionFormComponent } from './components/promotions/promotion-form/p
 import { ListPromotionComponent } from './components/promotions/list-promotion/list-promotion.component';
 import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
 import { FormHotComponent } from './components/hots/form-hot/form-hot.component';
+import { ErrorComponent } from './components/error/error.component';
 
 
 
@@ -154,6 +155,7 @@ import { FormHotComponent } from './components/hots/form-hot/form-hot.component'
     ListPromotionComponent,
     UserPromotionComponent,
     FormHotComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,

@@ -37,15 +37,17 @@ export class UserPromotionComponent implements OnInit {
     updateUserPromotion(list_user_id) {
         const promotion_id = +this.route.snapshot.paramMap.get('id');
 
-        this.promotionService.updateUserPromotion(promotion_id, list_user_id).subscribe((data)=> {
-            if (data.status == 204) {
-                console.log('Success');
-            } else {
-                console.log('Error');
-            }
-        }, (error) => {
-            console.log("Internal Server Error")
-        });
+        this.promotionService.updateUserPromotion(promotion_id, list_user_id).subscribe(
+            (data)=> {
+                if (data.status == 204) {
+                    console.log('Success');
+                } else {
+                    console.log('Error');
+                }
+            }, 
+            (error) => {
+                console.log("Internal Server Error")
+            });
 	}
 
 }
