@@ -2,17 +2,17 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import { Post } from '../../../shared/class/post';
-import { PostService } from '../../../shared/services/post.service';
+import { Hot } from '../../../shared/class/hot';
+import { HotService } from '../../../shared/services/hot.service';
 import 'rxjs/add/observable/throw';
 
 @Component({
-    selector: 'form-post',
-    templateUrl: './form-post.component.html',
-    styleUrls: ['./form-post.component.css'],
-    providers: [PostService]
+    selector: 'form-hot',
+    templateUrl: './form-hot.component.html',
+    styleUrls: ['./form-hot.component.css'],
+    providers: [HotService]
 })
-export class FormPostComponent implements OnInit {
+export class FormHotComponent implements OnInit {
 
     /*
         author: Lam
@@ -22,14 +22,14 @@ export class FormPostComponent implements OnInit {
     @ViewChild('inputImage')
     inputImage: any;
 
-    @Input() post: Post; // Get post from component parent
+    @Input() hot: Hot; // Get hot from component parent
 
-    formPost: FormGroup;
+    formHot: FormGroup;
 
     errorMessage = ''; // Messages error
 
     constructor(
-        private postService: PostService,
+        private hotService: HotService,
         private fb: FormBuilder,
         private location: Location,
         private router: Router,
@@ -45,14 +45,11 @@ export class FormPostComponent implements OnInit {
         author: Lam
     */ 
     creatForm(): void{
-        this.formPost = this.fb.group({
-            name: [this.post.name, Validators.required],
-            image: [this.post.image, Validators.required],
-            short_description: [this.post.short_description, Validators.required],
-            content: [this.post.content, Validators.required],
-            post_type_id: [this.post.post_type_id, Validators.required],
-            pin_to_top: [this.post.pin_to_top],
-            key_query: [this.post.key_query, Validators.required],
+        this.formHot = this.fb.group({
+            name: [this.hot.name, Validators.required],
+            image: [this.hot.image],
+            sub_url: [this.hot.sub_url],
+            is_show: [this.hot.is_show],
         });
     }
 
@@ -66,7 +63,7 @@ export class FormPostComponent implements OnInit {
             let file = event.target.files[0];
             reader.readAsDataURL(file);
             reader.onload = () => {
-                this.formPost.get('image').setValue(reader.result.split(',')[1]);
+                this.formHot.get('image').setValue(reader.result.split(',')[1]);
             };
         }
     }
@@ -76,35 +73,35 @@ export class FormPostComponent implements OnInit {
         author: Lam
     */ 
     clearFile(): void {
-        this.formPost.get('image').setValue(null);
+        this.formHot.get('image').setValue(null);
         this.inputImage.nativeElement.value = "";
     }
 
     /*
         Function onSubmit():
-         + Step 1: Check post id
+         + Step 1: Check hot id
          + Step 2:  
-            * TH1:  + Id empty then call service function addHPost() to add Post, 
-                    + Later, redirect list post with message
-            * TH2:  + Id exist then call service function updatePost() to update Post
-                    + Later, redirect list post with message
+            * TH1:  + Id empty then call service function addHot() to add hot, 
+                    + Later, redirect list hot with message
+            * TH2:  + Id exist then call service function updateHot() to update Event
+                    + Later, redirect list hot with message
         author: Lam
     */
     onSubmit(): void{
-        if(!this.post.id){
-            this.postService.addPost(this.formPost.value).subscribe(
+        if(!this.hot.id){
+            this.hotService.addHot(this.formHot.value).subscribe(
                 (data) => {
-                    this.router.navigate(['/post/list', { message_post: this.formPost.value.name}]);
+                    this.router.navigate(['/hot/list', { message_post: this.formHot.value.name}]);
                 },
                 (error) => {
                     { this.errorMessage = error.message; } 
                 }
             );
-        }else {
-            this.postService.updatePost(this.formPost.value, this.post.id).subscribe(
+        }else{
+            this.hotService.updateHot(this.formHot.value, this.hot.id).subscribe(
                 (data) => {
-                    this.post = data;
-                    this.router.navigate(['/post/list', { message_put: this.formPost.value.name}]);
+                    this.hot = data;
+                    this.router.navigate(['/hot/list', { message_put: this.formHot.value.name}]);
                 },
                 (error) => {
                     { this.errorMessage = error.message; } 

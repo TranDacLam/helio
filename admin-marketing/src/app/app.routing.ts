@@ -9,8 +9,6 @@ import { ListNotificationComponent } from './components/notification/list-notifi
 import { AddNotificationComponent } from './components/notification/add-notification/add-notification.component';
 import { EditNotificationComponent } from './components/notification/edit-notification/edit-notification.component';
 import { NotificationDetailComponent } from './components/notification/notification-detail/notification-detail.component';
-import { PromotionLabelListComponent } from './components/promotion-label/promotion-label-list/promotion-label-list.component';
-import { PromotionLabelAddComponent } from './components/promotion-label/promotion-label-add/promotion-label-add.component';
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
 import { AdvertisementDetailComponent } from './components/advertisement/advertisement-detail/advertisement-detail.component';
 import { AdvertisementAddComponent } from './components/advertisement/advertisement-add/advertisement-add.component';
@@ -76,12 +74,6 @@ const routes: Routes = [{
     }, {
         path: 'promotions/add',
         component: AddPromotionComponent
-    }, {
-        path: 'promotion-label-list',
-        component: PromotionLabelListComponent
-    }, {
-        path: 'promotion-label-add',
-        component: PromotionLabelAddComponent
     }, {
         path: 'advertisement-list',
         component: AdvertisementListComponent

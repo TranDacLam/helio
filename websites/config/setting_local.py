@@ -43,3 +43,5 @@ PUSH_NOTIFICATIONS_SETTINGS = {
 }
 # access control allow origin
 CORS_ORIGIN_ALLOW_ALL = True
+
+X_FRAME_OPTIONS = 'ALLOW-FROM http://localhost:4200'

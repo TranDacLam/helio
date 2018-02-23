@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Notification } from '../class/notification';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { api } from '../utils/api';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
@@ -61,7 +61,7 @@ export class NotificationService {
     */
     onDelNoti(id: number): Observable<any>{
         const url_del_noti = `${this.url_notification}${id}/`;
-        return this.http.delete(url_del_noti, httpOptions).catch(this.handleError);
+        return this.http.delete(url_del_noti, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -69,7 +69,16 @@ export class NotificationService {
         author: Lam
     */
     onDelNotiSelect(notis_del): Observable<any>{
-        return ;
+        let param = {
+            list_notification_id: notis_del
+        }
+
+        let _options = new RequestOptions({
+            headers: httpOptions.headers,
+            body: JSON.stringify(param)
+        });
+
+        return this.http.delete(this.url_notification_list, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 

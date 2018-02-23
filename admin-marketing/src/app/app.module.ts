@@ -21,8 +21,6 @@ import { ListNotificationComponent } from './components/notification/list-notifi
 import { AddNotificationComponent } from './components/notification/add-notification/add-notification.component';
 import { EditNotificationComponent } from './components/notification/edit-notification/edit-notification.component';
 import { UserMultiselectComponent } from './components/user-multiselect/user-multiselect.component';
-import { PromotionLabelListComponent } from './components/promotion-label/promotion-label-list/promotion-label-list.component';
-import { PromotionLabelAddComponent } from './components/promotion-label/promotion-label-add/promotion-label-add.component';
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
 import { AdvertisementAddComponent } from './components/advertisement/advertisement-add/advertisement-add.component';
 import { AdvertisementDetailComponent } from './components/advertisement/advertisement-detail/advertisement-detail.component';
@@ -39,7 +37,6 @@ import { HotAdvsListComponent } from './components/hot-advs/hot-advs-list/hot-ad
 import { HotAdvsAddComponent } from './components/hot-advs/hot-advs-add/hot-advs-add.component';
 
 import { PromotionService } from './shared/services/promotion.service';
-import { PromotionLabelService } from './shared/services/promotion-label.service';
 import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
 import { DenominationService } from './shared/services/denomination.service';
@@ -89,6 +86,7 @@ import { EditPromotionComponent } from './components/promotions/edit-promotion/e
 import { PromotionFormComponent } from './components/promotions/promotion-form/promotion-form.component';
 import { ListPromotionComponent } from './components/promotions/list-promotion/list-promotion.component';
 import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
+import { FormHotComponent } from './components/hots/form-hot/form-hot.component';
 import { ErrorComponent } from './components/error/error.component';
 
 
@@ -105,8 +103,6 @@ import { ErrorComponent } from './components/error/error.component';
     AddNotificationComponent,
     EditNotificationComponent,
     UserMultiselectComponent,
-    PromotionLabelListComponent,
-    PromotionLabelAddComponent,
     AdvertisementListComponent,
     AdvertisementAddComponent,
     AdvertisementDetailComponent,
@@ -158,6 +154,7 @@ import { ErrorComponent } from './components/error/error.component';
     PromotionFormComponent,
     ListPromotionComponent,
     UserPromotionComponent,
+    FormHotComponent,
     ErrorComponent,
   ],
   imports: [
@@ -176,7 +173,6 @@ import { ErrorComponent } from './components/error/error.component';
   ],
   providers: [
     PromotionService,
-    PromotionLabelService,
     AdvertisementService,
     PromotionTypeService,
     DenominationService,
