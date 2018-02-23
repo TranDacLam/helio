@@ -29,21 +29,21 @@ from rest_framework.parsers import MultiPartParser
     @author: diemnguyen
 """
 
-@permission_classes((AllowAny,))
+
 class PromotionList(APIView):
+
     def get(self, request, format=None):
         try:
             lst_item = Promotion.objects.all()
-            serializer = admin_serializers.PromotionSerializer(lst_item, many=True)
+            serializer = admin_serializers.PromotionSerializer(
+                lst_item, many=True)
             return Response(serializer.data)
         except Exception, e:
-            print 'PromotionListView ',e
-            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            print 'PromotionListView ', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, format=None):
-        print "delete"
-
         """
         DELETE: Multi ids select
         """
@@ -51,22 +51,20 @@ class PromotionList(APIView):
             # Get list id to delete
             list_promotion_id = self.request.data.get('list_promotion_id', [])
 
-            print list_promotion_id
             # Check list id is empty
             if list_promotion_id:
-                # Delete list objects 
-                Promotion.objects.filter(pk__in = list_promotion_id).delete()
+                # Delete list objects
+                Promotion.objects.filter(pk__in=list_promotion_id).delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
 
             return Response({"code": 400, "message": "List ID must be not empty ", "fields": ""}, status=400)
         except ValueError:
-            #Handle the exception
+            # Handle the exception
             print 'Please enter an integer'
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
-
 
 
 """
@@ -74,47 +72,54 @@ class PromotionList(APIView):
     @author: diemnguyen
 """
 
-@permission_classes((AllowAny,))
+
+@parser_classes((MultiPartParser, JSONParser))
 class PromotionDetail(APIView):
+
     def get_object(self, pk):
         try:
             return Promotion.objects.get(pk=pk)
         except Promotion.DoesNotExist, e:
             raise Http404
+
     def get(self, request, id, format=None):
         item = self.get_object(id)
         try:
-            serializer = admin_serializers.PromotionSerializer(item, many=False)
+            serializer = admin_serializers.PromotionSerializer(
+                item, many=False)
             return Response(serializer.data)
         except Exception, e:
-            print 'PromotionDetailView ',e
-            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            print 'PromotionDetailView ', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
         try:
-            serializer = admin_serializers.PromotionSerializer(data=request.data)
+            print request.data
+            serializer = admin_serializers.PromotionSerializer(
+                data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
-            print 'NotificationDetailView PUT',e
-            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            print 'PromotionDetailView POST', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, id, format=None):
-        print request.data;
+        print request.data
         item = self.get_object(id)
         try:
-            serializer = admin_serializers.PromotionSerializer(item, data=request.data)
+            serializer = admin_serializers.PromotionSerializer(
+                item, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
-            print 'NotificationDetailView PUT',e
-            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            print 'PromotionDetailView PUT', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, id, format=None):
@@ -127,37 +132,45 @@ class PromotionDetail(APIView):
     @author: diemnguyen
 """
 
-@permission_classes((AllowAny,))
+
 class PromotionUser(APIView):
+
     def get(self, request, id, format=None):
         try:
             if id:
                 promotion_detail = Promotion.objects.get(pk=id)
-    
-                promotion_user_id_list = Gift.objects.filter(promotion_id=id).values_list('user_id', flat=True)
-                user_promotion_list = User.objects.filter(pk__in=promotion_user_id_list)
-                user_all_list = User.objects.filter(~Q(pk__in=promotion_user_id_list))
+
+                promotion_user_id_list = Gift.objects.filter(
+                    promotion_id=id).values_list('user_id', flat=True)
+                user_promotion_list = User.objects.filter(
+                    pk__in=promotion_user_id_list)
+                user_all_list = User.objects.filter(
+                    ~Q(pk__in=promotion_user_id_list))
 
                 result = {}
-                result['promotion_detail'] = admin_serializers.PromotionSerializer(promotion_detail, many=False).data
-                result['user_all'] = admin_serializers.UserSerializer(user_all_list, many=True).data
-                result['user_promotion'] = admin_serializers.UserSerializer(user_promotion_list, many=True).data
-        
+                result['promotion_detail'] = admin_serializers.PromotionSerializer(
+                    promotion_detail, many=False).data
+                result['user_all'] = admin_serializers.UserSerializer(
+                    user_all_list, many=True).data
+                result['user_promotion'] = admin_serializers.UserSerializer(
+                    user_promotion_list, many=True).data
+
                 return Response(result)
         except Exception, e:
-            print 'PromotionUserView ',e
-            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            print 'PromotionUserView ', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, id, format=None):
         try:
-            
+
             list_user_id = self.request.data.get('list_user_id', '')
-     
+
             # Get list user by promotion_id
-            user_promotion_list = Gift.objects.filter(promotion_id=id).values_list('user_id', flat=True)
+            user_promotion_list = Gift.objects.filter(
+                promotion_id=id).values_list('user_id', flat=True)
             # converts ValuesQuerySet into Python list
-            list_user_id_db = [str(user_id) for user_id in user_promotion_list] 
+            list_user_id_db = [str(user_id) for user_id in user_promotion_list]
 
             # List add new ( exist in params + not exist in database )
             list_add = set(list_user_id) - set(list_user_id_db)
@@ -174,13 +187,14 @@ class PromotionUser(APIView):
 
             # Check list_delete is not empty then delete from database
             if list_delete:
-                Gift.objects.filter(promotion_id=id, user_id__in=list_delete).delete()
+                Gift.objects.filter(
+                    promotion_id=id, user_id__in=list_delete).delete()
 
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         except Exception, e:
-            print 'PromotionUserView ',e
-            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            print 'PromotionUserView ', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
 
@@ -189,8 +203,10 @@ class PromotionUser(APIView):
     @author :Hoangnguyen
 
 """
+
+
 @permission_classes((AllowAny,))
-class UserDetail(APIView):   
+class UserDetail(APIView):
 
     def get(self, request, format=None):
         try:
@@ -200,19 +216,21 @@ class UserDetail(APIView):
                 serializer = admin_serializers.UserSerializer(user)
                 return Response(serializer.data)
             return Response({"code": 400, "message": "Email is required", "fields": ""}, status=400)
-        
+
         except User.DoesNotExist, e:
-            error = {"code": 400, "message": "Email Not Found.", "fields": "email"}
+            error = {"code": 400, "message": "Email Not Found.",
+                     "fields": "email"}
             return Response(error, status=400)
         except Exception, e:
             print "UserDetail", e
-            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, id):
         try:
             user = User.objects.get(id=id)
-            serializer = admin_serializers.UserSerializer(instance=user, data = request.data)
+            serializer = admin_serializers.UserSerializer(
+                instance=user, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response({"code": 200, "status": "success", "fields": ""}, status=200)
@@ -223,13 +241,15 @@ class UserDetail(APIView):
 
         except Exception, e:
             print "UserDetail", e
-            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
 """
 GET and POST Advertisement
 @author: Trangle
-"""     
+"""
+
+
 @permission_classes((AllowAny, ))
 class AdvertisementView(APIView):
 
@@ -239,17 +259,19 @@ class AdvertisementView(APIView):
         """
         try:
             adv_list = Advertisement.objects.all()
-            serializer = admin_serializers.AdvertisementSerializer(adv_list, many=True)
+            serializer = admin_serializers.AdvertisementSerializer(
+                adv_list, many=True)
             return Response(serializer.data)
         except Exception, e:
-            error = {"code":500, "message": "%s" % e, "fields": ""}
+            error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
         """
         POST: Create a new Advertisement
         """
-        serializer = admin_serializers.AdvertisementSerializer(data=request.data)
+        serializer = admin_serializers.AdvertisementSerializer(
+            data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -263,23 +285,27 @@ class AdvertisementView(APIView):
             adv_id = self.request.query_params.get('adv_id', None)
             if adv_id:
                 adv_id_list = adv_id.split(',')
-                queryset = Advertisement.objects.filter(pk__in = adv_id_list).delete()
+                queryset = Advertisement.objects.filter(
+                    pk__in=adv_id_list).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
 """
 GET, PUT Advertisement Detail
 @author: Trangle
 """
+
+
 @permission_classes((AllowAny, ))
 class AdvertisementDetail(APIView):
     """
     Retrieve, update or delete a advertisement instance
     """
+
     def get_object(self, pk):
         try:
             adv = Advertisement.objects.get(pk=pk)
@@ -294,7 +320,8 @@ class AdvertisementDetail(APIView):
 
     def put(self, request, pk, format=None):
         advertisement = self.get_object(pk)
-        serializer = admin_serializers.AdvertisementSerializer(advertisement, data=request.data)
+        serializer = admin_serializers.AdvertisementSerializer(
+            advertisement, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -308,16 +335,19 @@ class AdvertisementDetail(APIView):
 """
 GET and POST Promotion_Label
 """
+
+
 @permission_classes((AllowAny, ))
 class PromotionLabel(APIView):
-    
+
     def get(self, request, format=None):
         """
             Get all promotion_label
         """
         try:
             promotion_label_list = Promotion_Label.objects.all()
-            serializer = admin_serializers.PromotionLabelSerializer(promotion_label_list, many=True)
+            serializer = admin_serializers.PromotionLabelSerializer(
+                promotion_label_list, many=True)
             return Response(serializer.data)
         except Exception, e:
             error = {"code": 500, "message": "%s" % e, "fields": ""}
@@ -327,7 +357,8 @@ class PromotionLabel(APIView):
         """
             POST: Create a new Promotion_Label
         """
-        serializer = admin_serializers.PromotionLabelSerializer(data=request.data)
+        serializer = admin_serializers.PromotionLabelSerializer(
+            data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -336,39 +367,48 @@ class PromotionLabel(APIView):
 Get PromotionType
 @author: Trangle
 """
+
+
 @permission_classes((AllowAny, ))
 class PromotionTypeView(APIView):
+
     def get(self, request, format=None):
         try:
             list_pro_type = Promotion_Type.objects.all()
-            serializer = admin_serializers.PromotionTypeSerializer(list_pro_type, many=True)
+            serializer = admin_serializers.PromotionTypeSerializer(
+                list_pro_type, many=True)
             return Response(serializer.data)
         except Exception, e:
-            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 """
     Get and Post Denomination
     @author: Trangle
 """
+
+
 @permission_classes((AllowAny, ))
 class DenominationView(APIView):
+
     def get(self, request, format=None):
         """
         Get all Denomination to list 
         """
         try:
             list_denomination = Denomination.objects.all()
-            serializer = admin_serializers.DenominationSerializer(list_denomination, many=True)
+            serializer = admin_serializers.DenominationSerializer(
+                list_denomination, many=True)
             return Response(serializer.data)
         except Exception, e:
-            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
         """
         Create a new Denomination
         """
-        serializer = admin_serializers.DenominationSerializer(data=request.data)
+        serializer = admin_serializers.DenominationSerializer(
+            data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -382,19 +422,23 @@ class DenominationView(APIView):
             deno_id = self.request.query_params.get('deno_id', None)
             if deno_id:
                 deno_id_list = deno_id.split(',')
-                queryset = Denomination.objects.filter(pk__in = deno_id_list).delete()
+                queryset = Denomination.objects.filter(
+                    pk__in=deno_id_list).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
-            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
 """
 GET FeedBack
 @author: TrangLe
 """
+
+
 @permission_classes((AllowAny, ))
 class FeedbackView(APIView):
+
     def get(self, request, format=None):
         """
         Get all Feedback
@@ -410,11 +454,11 @@ class FeedbackView(APIView):
             try:
                 if start_date:
                     kwargs['sent_date__gte'] = timezone.make_aware(datetime.strptime(
-                                start_date, "%Y-%m-%d"))                   
+                        start_date, "%Y-%m-%d"))
                     print kwargs['sent_date__gte']
                 if end_date:
                     kwargs['sent_date__lte'] = timezone.make_aware(datetime.strptime(
-                                end_date, "%Y-%m-%d") + timedelta(days=1))
+                        end_date, "%Y-%m-%d") + timedelta(days=1))
                     print kwargs['sent_date__lte']
                 if status:
                     kwargs['status'] = status
@@ -431,11 +475,13 @@ class FeedbackView(APIView):
                 print "kwargs"
                 queryset = FeedBack.objects.filter(
                     **kwargs)
-                serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
+                serializer = admin_serializers.FeedBackSerializer(
+                    queryset, many=True)
                 return Response(serializer.data)
             else:
                 queryset = FeedBack.objects.all()
-                serializer = admin_serializers.FeedBackSerializer(queryset, many=True)
+                serializer = admin_serializers.FeedBackSerializer(
+                    queryset, many=True)
                 return Response(serializer.data)
             return Response({"code": 200, "message": queryset, "fields": ""}, status=200)
 
@@ -444,26 +490,29 @@ class FeedbackView(APIView):
             return Response(error, status=400)
         except Exception, e:
             print e
-            error = {"code":500, "message": "Internal Server Error", "fields":""}
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, format=None):
-        try: 
+        try:
             fed_id = self.request.query_params.get('fed_id', None)
             if fed_id:
                 fed_id_list = fed_id.split(',')
-                queryset = FeedBack.objects.filter(pk__in = fed_id_list).delete()
+                queryset = FeedBack.objects.filter(pk__in=fed_id_list).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
-            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 """
 GET, PUT, DELETE Feedback by id
 @author: Trangle
 """
+
+
 @permission_classes((AllowAny, ))
 class FeedbackDetailView(APIView):
+
     def get_object(self, pk):
         try:
             queryset = FeedBack.objects.get(pk=pk)
@@ -478,14 +527,15 @@ class FeedbackDetailView(APIView):
 
     def put(self, request, pk, format=None):
         feedback = self.get_object(pk)
-        serializer = admin_serializers.FeedBackSerializer(feedback, data=request.data)
+        serializer = admin_serializers.FeedBackSerializer(
+            feedback, data=request.data)
         try:
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
-            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, pk, format=None):
@@ -497,8 +547,11 @@ GET all linked users
 DELETE all checkbox selected
 @author: Trangle
 """
+
+
 @permission_classes((AllowAny,))
 class UserLinkCardList(APIView):
+
     def get(self, request, format=None):
         """
         Get all user linked card
@@ -508,7 +561,7 @@ class UserLinkCardList(APIView):
             serializer = admin_serializers.UserSerializer(lst_item, many=True)
             return Response(serializer.data)
         except Exception, e:
-            error = {"code":500, "message": "%s" % e, "fields": ""}
+            error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, format=None):
@@ -516,27 +569,33 @@ class UserLinkCardList(APIView):
         DELETE: multi checbox
         """
         try:
-            user_linked_id = self.request.query_params.get('user_linked_id', None)
+            user_linked_id = self.request.query_params.get(
+                'user_linked_id', None)
             if user_linked_id:
                 user_linked_id_list = user_linked_id.split(',')
-                queryset = User.objects.filter(pk__in = user_linked_id_list).delete()
+                queryset = User.objects.filter(
+                    pk__in=user_linked_id_list).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
 """
 Get Notification List
 @author: diemnguyen
 """
+
+
 @permission_classes((AllowAny,))
 class NotificationList(APIView):
+
     def get(self, request, format=None):
         try:
             lst_item = Notification.objects.all()
-            serializer = admin_serializers.NotificationSerializer(lst_item, many=True)
+            serializer = admin_serializers.NotificationSerializer(
+                lst_item, many=True)
             return Response(serializer.data)
         except Exception, e:
             error = {"code": 500, "message": "%s" % e, "fields": ""}
@@ -548,21 +607,23 @@ class NotificationList(APIView):
         """
         try:
             # Get list id to delete
-            list_notification_id = self.request.data.get('list_notification_id', [])
+            list_notification_id = self.request.data.get(
+                'list_notification_id', [])
 
             # Check list id is empty
             if list_notification_id:
 
-                Notification.objects.filter(pk__in = list_notification_id).delete()
+                Notification.objects.filter(
+                    pk__in=list_notification_id).delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
 
             return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
         except ValueError:
-            #Handle the exception
+            # Handle the exception
             print 'Please enter an integer'
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
 """
@@ -571,9 +632,11 @@ class NotificationList(APIView):
 
 """
 
+
 @permission_classes((AllowAny,))
-@parser_classes((MultiPartParser,JSONParser))
+@parser_classes((MultiPartParser, JSONParser))
 class NotificationDetail(APIView):
+
     def get_object(self, pk):
         try:
             return Notification.objects.get(pk=pk)
@@ -583,37 +646,40 @@ class NotificationDetail(APIView):
     def get(self, request, id, format=None):
         item = self.get_object(id)
         try:
-            serializer = admin_serializers.NotificationSerializer(item, many=False)
+            serializer = admin_serializers.NotificationSerializer(
+                item, many=False)
             return Response(serializer.data)
         except Exception, e:
             print 'NotificationDetailView GET', e
-            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
         try:
-            serializer = admin_serializers.NotificationSerializer(data=request.data)
+            serializer = admin_serializers.NotificationSerializer(
+                data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
-            print 'NotificationDetailView PUT',e
-            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            print 'NotificationDetailView PUT', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, id, format=None):
-        print request.data;
+        print request.data
         item = self.get_object(id)
         try:
-            serializer = admin_serializers.NotificationSerializer(item, data=request.data)
+            serializer = admin_serializers.NotificationSerializer(
+                item, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
-            print 'NotificationDetailView PUT',e
-            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            print 'NotificationDetailView PUT', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, id, format=None):
@@ -626,27 +692,35 @@ class NotificationDetail(APIView):
 
 """
 
+
 @permission_classes((AllowAny,))
 class NotificationUser(APIView):
+
     def get(self, request, id):
         try:
             notification_detail = Notification.objects.get(pk=id)
-            notification_user_id_list = User_Notification.objects.filter(notification_id=id).values_list('user_id', flat=True)
-            user_notification_list = User.objects.filter(pk__in=notification_user_id_list)
-            user_all_list = User.objects.filter(~Q(pk__in=notification_user_id_list))
+            notification_user_id_list = User_Notification.objects.filter(
+                notification_id=id).values_list('user_id', flat=True)
+            user_notification_list = User.objects.filter(
+                pk__in=notification_user_id_list)
+            user_all_list = User.objects.filter(
+                ~Q(pk__in=notification_user_id_list))
             result = {}
-            result['notification_detail'] = admin_serializers.NotificationSerializer(notification_detail, many=False).data
-            result['user_all'] = admin_serializers.UserSerializer(user_all_list, many=True).data
-            result['user_notification'] = admin_serializers.UserSerializer(user_notification_list, many=True).data
-    
+            result['notification_detail'] = admin_serializers.NotificationSerializer(
+                notification_detail, many=False).data
+            result['user_all'] = admin_serializers.UserSerializer(
+                user_all_list, many=True).data
+            result['user_notification'] = admin_serializers.UserSerializer(
+                user_notification_list, many=True).data
+
             return Response(result)
-            
+
         except Notification.DoesNotExist, e:
             error = {"code": 400, "message": "Id Not Found.", "fields": ""}
             return Response(error, status=400)
         except Exception, e:
-            print 'NotificationUserView ',e
-            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            print 'NotificationUserView ', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, id):
@@ -654,8 +728,10 @@ class NotificationUser(APIView):
             list_user_id = self.request.data.get('list_user_id', '')
 
             # Get list user by notification_id
-            user_notification_list = User_Notification.objects.filter(notification_id=id).values_list('user_id', flat=True)
-            list_user_id_db = [str(user_id) for user_id in user_notification_list] 
+            user_notification_list = User_Notification.objects.filter(
+                notification_id=id).values_list('user_id', flat=True)
+            list_user_id_db = [str(user_id)
+                               for user_id in user_notification_list]
 
             # List add new ( exist in params + not exist in database)
             list_add = set(list_user_id) - set(list_user_id_db)
@@ -672,13 +748,14 @@ class NotificationUser(APIView):
 
             # Check list_delete is not empty then delete from database
             if list_delete:
-                User_Notification.objects.filter(notification_id=id, user_id__in=list_delete).delete()
+                User_Notification.objects.filter(
+                    notification_id=id, user_id__in=list_delete).delete()
 
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         except Exception, e:
-            print 'NotificationUserView ',e
-            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            print 'NotificationUserView ', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
 """
@@ -690,6 +767,8 @@ class NotificationUser(APIView):
 
 
 """
+
+
 @permission_classes((AllowAny,))
 class SummaryAPI(APIView):
 
@@ -752,6 +831,7 @@ class SummaryAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
 
+
 """
     Get user embed 
     @author :Hoangnguyen
@@ -788,16 +868,17 @@ class UserEmbedDetail(APIView):
                 # check Customer_Id is exist
                 if not item[7]:
                     return Response({"code": 400, "message": "Tikets do not sign up with user", "fields": ""}, status=400)
-                
+
                 result = {}
-                first_name =  item[0] if item[0] else '' # Firstname 
-                surname = item[1] if item[1] else '' #Surname
+                first_name = item[0] if item[0] else ''  # Firstname
+                surname = item[1] if item[1] else ''  # Surname
                 result["full_name"] = first_name + surname
                 result["birth_date"] = item[2] if item[2] else None  # DOB
-                result["personal_id"] = item[3] if item[3] else None # PostCode
-                result["address"] = item[4] if item[4] else None # Address1
-                result["email"] = item[5] if item[5] else None # EMail
-                result["phone"] = item[6] if item[6] else None # Phone
+                result["personal_id"] = item[
+                    3] if item[3] else None  # PostCode
+                result["address"] = item[4] if item[4] else None  # Address1
+                result["email"] = item[5] if item[5] else None  # EMail
+                result["phone"] = item[6] if item[6] else None  # Phone
                 return Response({"code": 200, "message": result, "fields": ""}, status=200)
 
             return Response({"code": 400, "message": 'Bacode is required', "fields": ""}, status=400)
@@ -805,7 +886,8 @@ class UserEmbedDetail(APIView):
         # catching db embed error
         except DatabaseError, e:
             print "UserEmbedDetail ", e
-            error = {"code": 500,"message": "Query to DB embed fail", "fields": ""}
+            error = {"code": 500,
+                     "message": "Query to DB embed fail", "fields": ""}
             return Response(error, status=500)
 
         except Exception, e:
@@ -864,6 +946,8 @@ class UserEmbedDetail(APIView):
     @author :Hoangnguyen
 
 """
+
+
 @permission_classes((AllowAny,))
 class RelateAPI(APIView):
 
@@ -873,7 +957,7 @@ class RelateAPI(APIView):
             - check user is related
             - check user embed is exist
             - check user embed is related
-            
+
         """
         try:
             barcode = request.data.get('barcode', None)
@@ -897,7 +981,7 @@ class RelateAPI(APIView):
                 # check user embed is exist by check Customer_Id
                 if not userembed_item:
                     return Response({"code": 400, "message": "Not found Userembed.", "fields": ""}, status=400)
-                
+
                 if not userembed_item[0]:
                     return Response({"code": 400, "message": "Tikets do not sign up with user", "fields": ""}, status=400)
                 # check user embed is related
@@ -907,11 +991,11 @@ class RelateAPI(APIView):
 
                 user.barcode = barcode
                 # TO DO
-                user.username_mapping = request.user.username 
+                user.username_mapping = request.user.username
                 user.date_mapping = datetime.now().date()
                 user.save()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
-            
+
             return Response({"code": 400, "message": "Email and barcode is required", "fields": ""}, status=400)
 
         except User.DoesNotExist, e:
@@ -922,7 +1006,7 @@ class RelateAPI(APIView):
             print "RelateAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
-    
+
     def delete(self, request, id, format=None):
         """
             - check user is related
@@ -930,7 +1014,7 @@ class RelateAPI(APIView):
 
         """
         try:
-            user = User.objects.get( id = id )
+            user = User.objects.get(id=id)
             if user.barcode:
                 user.barcode = None
                 user.date_mapping = None
@@ -954,13 +1038,15 @@ class RelateAPI(APIView):
     @author :Hoangnguyen
 
 """
+
+
 @permission_classes((AllowAny,))
 class FeeAPI(APIView):
 
     def get(self, request, format=None):
         try:
             fee = Fee.objects.all()
-            feeSerializer = admin_serializers.FeeSerializer(fee, many = True)
+            feeSerializer = admin_serializers.FeeSerializer(fee, many=True)
             return Response(feeSerializer.data)
 
         except Exception, e:
@@ -970,14 +1056,14 @@ class FeeAPI(APIView):
 
     def post(self, request, format=None):
         try:
-            feeSerializer = admin_serializers.FeeSerializer(data = request.data)
-            
+            feeSerializer = admin_serializers.FeeSerializer(data=request.data)
+
             if feeSerializer.is_valid():
                 if feeSerializer.validated_data['is_apply']:
                     position = feeSerializer.validated_data['position']
-                    fee = Fee.objects.filter( position = position, is_apply = True )
-                    if fee: 
-                        fee.update(is_apply = False ) 
+                    fee = Fee.objects.filter(position=position, is_apply=True)
+                    if fee:
+                        fee.update(is_apply=False)
                 feeSerializer.save()
                 return Response(feeSerializer.data)
 
@@ -990,18 +1076,19 @@ class FeeAPI(APIView):
 
     def put(self, request, id, format=None):
         try:
-            fee = Fee.objects.get( id = id )
+            fee = Fee.objects.get(id=id)
             if fee.is_apply:
                 fee.is_apply = False
                 fee.save()
             else:
-                list_fee = Fee.objects.filter( position = fee.position, is_apply = True )
+                list_fee = Fee.objects.filter(
+                    position=fee.position, is_apply=True)
                 if list_fee:
-                    list_fee.update( is_apply = False )
+                    list_fee.update(is_apply=False)
                 fee.is_apply = True
                 fee.save()
             return Response({"code": 200, "message": "success", "fields": ""}, status=200)
-        
+
         except Fee.DoesNotExist, e:
             error = {"code": 400, "message": "Not Found Fee.", "fields": ""}
             return Response(error, status=400)
@@ -1014,17 +1101,18 @@ class FeeAPI(APIView):
     """
         list_id is array in body request
     """
+
     def delete(self, request, format=None):
         try:
             list_id = request.data.get('list_id', None)
             if list_id:
-                
-                fees = Fee.objects.filter( id__in = list_id )
+
+                fees = Fee.objects.filter(id__in=list_id)
                 if fees:
                     fees.delete()
                     return Response({"code": 200, "message": "success", "fields": ""}, status=200)
                 return Response({"code": 400, "message": "Not Found Fee", "fields": ""}, status=400)
-            
+
             return Response({"code": 400, "message": "List_id field is required", "fields": ""}, status=400)
         except Exception, e:
             print "FeeAPI ", e
@@ -1036,6 +1124,8 @@ class FeeAPI(APIView):
     GET: get all banner
     @author: TrangLe
 """
+
+
 @permission_classes((AllowAny,))
 class BannerView(APIView):
 
@@ -1050,7 +1140,7 @@ class BannerView(APIView):
         except Exception, e:
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
-        
+
     def post(self, request, format=None):
         print "post"
         serializer = admin_serializers.BannerSerializer(data=request.data)
@@ -1059,26 +1149,28 @@ class BannerView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
 """
     Get All CategoryNotifications
     @author :diemnguyen
 
 """
+
+
 @permission_classes((AllowAny,))
 class CategoryNotifications(APIView):
 
     def get(self, request, format=None):
         try:
             category_noti_list = Category_Notification.objects.all()
-            serializer = admin_serializers.CategoryNotificationSerializer(category_noti_list, many = True)
+            serializer = admin_serializers.CategoryNotificationSerializer(
+                category_noti_list, many=True)
             return Response({"code": 200, "message": serializer.data, "fields": ""}, status=200)
 
         except Exception, e:
             print "FeeAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
-
 
 
 """
@@ -1151,6 +1243,3 @@ class EventAPI(APIView):
             print "EventAPI", e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
-
-
-        

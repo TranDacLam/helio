@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Subject } from 'rxjs/Subject';
 import { DataTableDirective } from 'angular-datatables';
 import 'rxjs/add/operator/map';
+import { Router } from '@angular/router';
 
 import { PromotionService } from '../../../shared/services/promotion.service';
 import { Promotion } from '../../../shared/class/promotion';
@@ -35,7 +36,10 @@ export class ListPromotionComponent implements OnInit {
 
     message_error: string = "";
 
-    constructor(private promotionService: PromotionService) { }
+    constructor(
+        private promotionService: PromotionService,
+        private router: Router,
+        ) { }
 
     ngOnInit() {
     	this.getAllPromotion();
@@ -46,13 +50,15 @@ export class ListPromotionComponent implements OnInit {
         @author: diemnguyen 
     */
     getAllPromotion() {
-        this.promotionService.getAllPromotion().subscribe((data) => {
-            this.promotion_list = data;
-            this.length_all = data.length
-            this.dtTrigger.next();
-        }, (error) => {
-            this.message_error = "Internal server error";
-        });
+        this.promotionService.getAllPromotion().subscribe(
+            (data) => {
+                this.promotion_list = data;
+                this.length_all = data.length
+                this.dtTrigger.next();
+            }, 
+            (error) => {
+                this.router.navigate(['/error']);
+            });
     }
     /*
         Event select checbox on row
@@ -97,7 +103,7 @@ export class ListPromotionComponent implements OnInit {
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa những " + this.length_selected + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " phần tử đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -129,19 +135,21 @@ export class ListPromotionComponent implements OnInit {
             let list_id_selected = dtInstance.cells('.selected', 1).data().toArray();
 
             // Call API remove list promotion selected
-            this.promotionService.deletePromotionList(list_id_selected).subscribe((data) => {
-                if (data.status == 204) {
-                    // Remove all promotion selected on UI
-                    dtInstance.rows('.selected').remove().draw();
-                    // Reset count promotion
-                    this.length_all =  dtInstance.rows().count();
-                    this.length_selected = 0;
-                } else {
-                    this.message_error = "Xóa không thành công";
-                }
-            }, (error) => {
-                this.message_error = "Internal server error";
-            });
+            this.promotionService.deletePromotionList(list_id_selected).subscribe(
+                (data) => {
+                    if (data.status == 204) {
+                        // Remove all promotion selected on UI
+                        dtInstance.rows('.selected').remove().draw();
+                        // Reset count promotion
+                        this.length_all =  dtInstance.rows().count();
+                        this.length_selected = 0;
+                    } else {
+                        this.message_error = "Xóa không thành công";
+                    }
+                }, 
+                (error) => {
+                    this.router.navigate(['/error']);
+                });
         });
     }
 

@@ -31,13 +31,13 @@ export class StatisticsFeedbackComponent implements OnInit {
     }
 
     getStatisticFeedback(){
-        this.feedbackService.getStatisticFeedback().subscribe(
-            (data) => {
-                console.log(data.message);
-                this.fb_status = data.message.status;
-                this.fb_rate = data.message.rate;
-            }
-        );
+        // this.feedbackService.getStatisticFeedback().subscribe(
+        //     (data) => {
+        //         console.log(data.message);
+        //         this.fb_status = data.message.status;
+        //         this.fb_rate = data.message.rate;
+        //     }
+        // );
     }
 
     onSubmitStatus(){
