@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Subject } from 'rxjs/Subject';
 import { DataTableDirective } from 'angular-datatables';
 import 'rxjs/add/operator/map';
+import { Router } from '@angular/router';
 
 import { PromotionService } from '../../../shared/services/promotion.service';
 import { Promotion } from '../../../shared/class/promotion';
@@ -35,7 +36,10 @@ export class ListPromotionComponent implements OnInit {
 
     message_error: string = "";
 
-    constructor(private promotionService: PromotionService) { }
+    constructor(
+        private promotionService: PromotionService,
+        private router: Router,
+        ) { }
 
     ngOnInit() {
     	this.getAllPromotion();
@@ -53,7 +57,7 @@ export class ListPromotionComponent implements OnInit {
                 this.dtTrigger.next();
             }, 
             (error) => {
-                that.router.navigate(['/error']);
+                this.router.navigate(['/error']);
             });
     }
     /*
@@ -144,7 +148,7 @@ export class ListPromotionComponent implements OnInit {
                     }
                 }, 
                 (error) => {
-                    that.router.navigate(['/error']);
+                    this.router.navigate(['/error']);
                 });
         });
     }

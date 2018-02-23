@@ -12,7 +12,7 @@ import { api } from '../utils/api';
 const _headers = new Headers({
     'Content-Type': 'application/json', 
     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng'
-}), 
+});
 
 const _options = new RequestOptions({
     headers: _headers
@@ -100,7 +100,7 @@ export class PromotionService {
 
         const _options_delete = _options.merge({
             body: JSON.stringify(param)
-        }
+        })
         return this.http.delete(api.promotion_list, _options_delete).catch(this.handleError);
     }
 
