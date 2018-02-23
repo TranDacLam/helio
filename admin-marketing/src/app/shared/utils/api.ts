@@ -29,7 +29,7 @@ export const api = {
 
 
     banner: env.api_domain + 'banner/',
-
+    fee: env.api_domain + 'fee/',
 
 
 

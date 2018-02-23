@@ -21,7 +21,6 @@ urlpatterns = [
 
 	url(r'^summary/$', views.SummaryAPI.as_view(), name="summary"),
 
-
 	url(r'^promotion_label/$', views.PromotionLabel.as_view(), name="promotion_label"),
 
 	url(r'^advertisement/$', views.AdvertisementView.as_view(), name="advertisement"),

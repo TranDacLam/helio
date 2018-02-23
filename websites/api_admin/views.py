@@ -680,85 +680,69 @@ class NotificationUser(APIView):
 """
     Get Summary feedbacks
     @author :Hoangnguyen
+    if search_field is none then get status and rate feedback
+    if search_field is rate then get rate feedback
+    if search_field is status then get status feedback
+
 
 """
 @permission_classes((AllowAny,))
 class SummaryAPI(APIView):
 
     def get(self, request, format=None):
-
         try:
-            search_field = self.request.query_params.get('search_field', None)
-
-            if search_field is not None:
-                if search_field == 'status' or search_field == 'rate':
-                    start_date_req = self.request.query_params.get('start_date', None)
-                    end_date_req = self.request.query_params.get('end_date', None)
-
-                    kwargs = {}
-                    #  data does not match format '%Y-%m-%d' return error
-                    try:
-                        if start_date_req:
-                            kwargs['created__gt'] = timezone.make_aware(datetime.strptime(
-                                start_date_req, "%d/%m/%Y"))
-                        if end_date_req:
-                            kwargs['created__lt'] = timezone.make_aware(datetime.strptime(
-                                end_date_req, "%d/%m/%Y") + timedelta(days=1))
-                    except ValueError, e:
-                        error = {"code": 400, "message": "%s" % e, "fields": ""}
-                        return Response(error, status=400)
-                    
-                    if kwargs:
-                        feedback = FeedBack.objects.filter(**kwargs).values(search_field)
-                    else:
-                        feedback = FeedBack.objects.all().values(search_field)
-
-                    count_item = {}
-                    if search_field == 'status':
-                        count_item['status'] = { 'answered': 0, 'moved': 0, 'no_process': 0}
-                        count_status = feedback.values('status').order_by('status').annotate(Count('status'))
-                        # access again count_item, if item of count_item exist in count_status, override this item
-                        for item in count_status :
-                            count_item['status'][item['status']] =item['status__count'] 
-                        count_item['status_sum'] = feedback.values('status').count() 
-                    else:
-                        count_item['rate'] = {'Bình thường': 0, 'Không có gì': 0, 'Tốt': 0, 'Tuyệt vời': 0, 'Xấu': 0}
-                        count_rate = feedback.values('rate').annotate(Count('rate'))
-                        # access again count_item, if item of count_item exist in count_rate, override this item
-                        for item in count_rate:
-                            if item['rate'] == 'Bình thường':
-                                count_item['rate']['Bình thường'] = item['rate__count']
-                            else: 
-                                count_item['rate'][item['rate']] = item['rate__count']
-                        count_item['rate_sum'] =feedback.values('rate').count() 
-                    
-                    return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
-                return Response({"code": 400, "message": "Not found search field", "fields": ""}, status=400)
-            
-            if search_field is None:
+            start_date_req = self.request.query_params.get('start_date', None)
+            end_date_req = self.request.query_params.get('end_date', None)
+            kwargs = {}
+            if start_date_req:
+                kwargs['created__gt'] = timezone.make_aware(datetime.strptime(
+                    start_date_req, "%d/%m/%Y"))
+            if end_date_req:
+                kwargs['created__lt'] = timezone.make_aware(datetime.strptime(
+                    end_date_req, "%d/%m/%Y") + timedelta(days=1))
+            if kwargs:
+                feedback = FeedBack.objects.filter(**kwargs)
+            else:
                 feedback = FeedBack.objects.all()
+            # search_field is status or rate or None
+            search_field = self.request.query_params.get('search_field', None)
+            count_item = {}
+            get_all = False
 
-                count_item = {}
+            if search_field is None:
+                get_all = True
+            
+            if search_field == 'status' or get_all:
                 count_item['status'] = { 'answered': 0, 'moved': 0, 'no_process': 0}
                 count_status = feedback.values('status').order_by('status').annotate(Count('status'))
-                # access again count_item, if item of count_item exist in count_status, override this item
+                count_item['status_sum'] = 0
                 for item in count_status :
+                    if item['status'] == '': break
                     count_item['status'][item['status']] = item['status__count'] 
-                count_item['status_sum'] = feedback.values('status').count() 
-
-                count_item['rate'] = {'Bình thường': 0, 'Không có gì': 0, 'Tốt': 0, 'Tuyệt vời': 0, 'Xấu': 0}
+                    count_item['status_sum'] = count_item['status_sum'] + item['status__count']
+            
+            if search_field == 'rate' or get_all:
+                count_item['rate'] = {'nomal': 0, 'notbad': 0, 'good': 0, 'great': 0, 'bad': 0}
                 count_rate = feedback.values('rate').annotate(Count('rate'))
-                # access again count_item, if item of count_item exist in count_rate, override this item
+                count_item['rate_sum'] = 0
                 for item in count_rate:
+                    if item['rate'] == '': break
                     if item['rate'] == 'Bình thường':
-                        count_item['rate']['Bình thường'] = item['rate__count'] 
-                    else:
-                        count_item['rate'][item['rate']] = item['rate__count']
-                count_item['rate_sum'] =feedback.values('rate').count() 
-                    
-                return Response({"code": 200, "message": count_item , "fields": ""}, status=200)
-
-
+                        count_item['rate']['nomal'] = item['rate__count']
+                    if item['rate'] == 'Không có gì':
+                        count_item['rate']['notbad'] = item['rate__count']
+                    if item['rate'] == 'Tốt':
+                        count_item['rate']['good'] = item['rate__count']
+                    if item['rate'] == 'Tuyệt vời':
+                        count_item['rate']['great'] = item['rate__count']
+                    if item['rate'] == 'Xấu':
+                        count_item['rate']['bad'] = item['rate__count']
+                    count_item['rate_sum'] = count_item['rate_sum'] + item['rate__count']
+            
+            if search_field is not None and search_field != 'rate' and search_field != 'status':
+                return Response({"code": 400, "message": "Not found search field" , "fields": ""}, status=400)
+            
+            return Response({"code": 200, "message": count_item , "fields": ""}, status=200)
         except Exception, e:
             print "SummaryAPI ", e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
