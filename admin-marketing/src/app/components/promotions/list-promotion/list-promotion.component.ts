@@ -53,7 +53,7 @@ export class ListPromotionComponent implements OnInit {
                 this.dtTrigger.next();
             }, 
             (error) => {
-                this.message_error = "Internal server error";
+                that.router.navigate(['/error']);
             });
     }
     /*
@@ -144,7 +144,7 @@ export class ListPromotionComponent implements OnInit {
                     }
                 }, 
                 (error) => {
-                    this.message_error = "Internal server error";
+                    that.router.navigate(['/error']);
                 });
         });
     }

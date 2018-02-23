@@ -14,8 +14,11 @@
             <label class="col-form-label form-check-label">Hình Ảnh</label>
         </div>
         <div class="col-sm-10">
-            <input type="file" class="form-control form-control-file" accept="image/*" id="image" (change)="onFileChange($event)" #fileInput>
-    		<button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
+<!--             <input type="file" class="form-control form-control-file" accept="image/*" id="image" (change)="onFileChange($event)" #fileInput>
+    		<button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button> -->
+
+            <input type="file" accept="image/*" id="image" name="image"/>
+            <input formControlName="image" type="hidden"/>
         </div>
     </div>
 

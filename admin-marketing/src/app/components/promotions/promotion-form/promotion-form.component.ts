@@ -71,25 +71,23 @@ export class PromotionFormComponent implements OnInit {
     }
 
     saveEvent(): void {
-
-    	console.log(this.promotionForm.value);
-
+        const that = this;
         if(this.promotion.id) {
             this.promotionService.updatePromotion(this.promotionForm.value).subscribe(
                 (data) => {
-                    this.router.navigate(['/promotions']);
+                    that.router.navigate(['/promotions']);
                 },
                 (error) => {
-                    
+                    that.router.navigate(['/error']);
                 }
             );
         } else {
             this.promotionService.savePromotion(this.promotionForm.value).subscribe(
                 (data) => {
-                    this.router.navigate(['/promotions']);
+                    that.router.navigate(['/promotions']);
                 }, 
                 (error) => {
-                    console.log(error)
+                    that.router.navigate(['/error']);
                 }
             );
         }
@@ -97,6 +95,7 @@ export class PromotionFormComponent implements OnInit {
 
     deletePromotionEvent(event) {
         const id = this.promotion.id;
+        const that = this;
         if (id) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
@@ -111,12 +110,16 @@ export class PromotionFormComponent implements OnInit {
                 },
                 callback: function (result) {
                     if(result) {
-                        this.promotionService.deletePromotionById(id).subscribe(
+                        that.promotionService.deletePromotionById(id).subscribe(
                             (data) => {
-                                this.router.navigate(['/promotions'])
+                                if (data.status == 204) {
+                                    that.router.navigate(['/promotions'])
+                                } else {
+                                    console.log("Xoa khong thanh cong");
+                                }
                             }, 
                             (error) => {
-
+                                that.router.navigate(['/error']);
                             });
                     }
                 }

@@ -6,7 +6,7 @@ export const datatable_config = {
             className: "dt-center",
             targets: 0
         }], 
-        order: [[ 1, 'asc' ]],
+        order: [[ 1, 'desc' ]],
         language: {
             sSearch: "",
             searchPlaceholder: "Nhập thông tin tìm kiếm",

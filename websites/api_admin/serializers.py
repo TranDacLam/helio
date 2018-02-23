@@ -32,10 +32,13 @@ class UserSerializer(serializers.ModelSerializer):
 	# 	email = self.validated_data['email']
 	# 	message = self.validated_data['full_name']
 	
+class CategorySerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Category
 
 class PromotionSerializer(serializers.ModelSerializer):
-
+    # promotion_category = serializers.StringRelatedField(many=False)
     class Meta:
         model = Promotion
         fields=('id', 'name', 'short_description', 'content', 'image', 'image_thumbnail', 'apply_date', 'end_date', 'is_draft', 'created', 'promotion_category', 'promotion_label', 'promotion_type')
