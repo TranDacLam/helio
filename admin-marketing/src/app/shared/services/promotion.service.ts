@@ -32,7 +32,7 @@ export class PromotionService {
     */
     getUsersPromotion(id: number): Observable<any> {
         let user_promotion_url = `${api.user_promotion}${id}`
-        return this.http.get(user_promotion_url).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(user_promotion_url, _options).map((res: Response) => res.json()).catch(this.handleError);
 
     }
 
@@ -67,17 +67,15 @@ export class PromotionService {
         Save Promotion
         @author: diemnguyen
     */
-    savePromotion(promotion: Promotion) {
-        let headers = new Headers({
-            'Content-Type': 'multipart/form-data' 
-        });
-        let _options = new RequestOptions({
-            headers: headers
+    savePromotion(promotion: any) {
+        _headers.set('Content-Type', 'multipart/form-data');
+        let _options_save = new RequestOptions({
+            headers: _headers
         });
 
 
 
-        return this.http.post(api.promotion, JSON.stringify(promotion), _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.post(api.promotion, JSON.stringify(promotion), _options_save).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /*  
