@@ -30,6 +30,8 @@ export const api = {
 
     banner: env.api_domain + 'banner/',
 
+    category_notifications: env.api_domain +'category_notifications/'
+
 
 
 

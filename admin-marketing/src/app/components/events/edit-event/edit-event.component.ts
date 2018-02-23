@@ -6,7 +6,8 @@ import { EventService } from '../../../shared/services/event.service';
 @Component({
   selector: 'app-edit-event',
   templateUrl: './edit-event.component.html',
-  styleUrls: ['./edit-event.component.css']
+  styleUrls: ['./edit-event.component.css'],
+  providers: [EventService]
 })
 export class EditEventComponent implements OnInit {
 

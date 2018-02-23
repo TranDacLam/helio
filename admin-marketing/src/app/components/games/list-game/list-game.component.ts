@@ -6,6 +6,8 @@ import { GameService } from '../../../shared/services/game.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
 
+declare var bootbox:any;
+
 @Component({
     selector: 'app-list-game',
     templateUrl: './list-game.component.html',
@@ -85,6 +87,37 @@ export class ListGameComponent implements OnInit {
         }else{
             this.select_checked = false;
         }
+    }
+
+    /*
+        Function deleteGameEvent(): confirm delete
+        @author: Lam
+    */
+    deleteGameEvent(){
+        let that = this;
+        if ( this.games_del.length > 0 ) {
+            bootbox.confirm({
+                title: "Bạn có chắc chắn",
+                message: "Bạn muốn xóa " + this.games_del.length + " phần tử đã chọn",
+                buttons: {
+                    cancel: {
+                        label: "Hủy"
+                    },
+                    confirm: {
+                        label: "Xóa"
+                    }
+                },
+                callback: function (result) {
+                    if(result) {
+                        that.onDelelteGame();
+                    }
+                }
+            });
+
+        } else  {
+            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+        }
+        
     }
 
     /*

@@ -1,3 +1,16 @@
-<p>
-  edit-game works!
-</p>
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="/game/list">Quản Lý Trò Chơi</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chỉnh Sửa Trò Chơi</li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class="row mt-30 mb-30">
+    <h3>Chỉnh Sửa Trò Chơi</h3>
+    <hr/>
+</div>
+<form-game *ngIf="game" [game]="game"></form-game>

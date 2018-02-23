@@ -1,3 +1,82 @@
-<p>
-  form-post works!
-</p>
+<h4 class="message_error" *ngIf="errorMessage">{{ errorMessage }}</h4>
+<form [formGroup]="formPost" novalidate>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Tên</label>
+        </div>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="name"/>
+            <show-error-valid [control]="formPost.get('name')"></show-error-valid>
+        </div>
+    </div>
+
+    <div class="form-group row noti-image">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Hình Ảnh</label>
+        </div>
+        <div class="col-sm-8">
+            <input type="file" class="form-control" accept="image/*"
+            (change)="onFileChange($event)" #inputImage/>
+            <button type="button" class="btn btn-sm btn-danger" (click)="clearFile()">clear file</button>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Mô Tả</label>
+        </div>
+        <div class="col-sm-8">
+            <textarea rows="3" class="form-control" formControlName="short_description"></textarea>
+            <show-error-valid [control]="formPost.get('short_description')"></show-error-valid>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Nội Dung</label>
+        </div>
+        <div class="col-sm-8">
+            <ckeditor formControlName="content"></ckeditor>
+            <show-error-valid [control]="formPost.get('content')"></show-error-valid>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Loại Bài Viết</label>
+        </div>
+        <div class="col-sm-6">
+            <select class="form-control" formControlName="post_type_id">
+                <option value='1'
+                >
+                1</option>
+            </select>
+            <show-error-valid [control]="formPost.get('post_type_id')"></show-error-valid>
+        </div>
+    </div>
+
+    <div class="form-group row noti-image">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Pin To Top</label>
+        </div>
+        <div class="col-sm-8">
+            <input type="checkbox" value="" formControlName="pin_to_top" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Key query</label>
+        </div>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="key_query"/>
+            <show-error-valid [control]="formPost.get('key_query')"></show-error-valid>
+        </div>
+    </div>
+
+
+    <hr/>
+    <button class="btn btn-primary pull-right" (click)="onSubmit()" [disabled]="formPost.invalid">
+        LƯU LẠI
+    </button>
+</form>
