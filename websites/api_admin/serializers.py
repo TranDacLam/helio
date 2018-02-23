@@ -116,5 +116,24 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = '__all__'
+        fields = ('name', 'image', 'short_description', 'content', 'start_date', 'end_date', 'start_time', 'end_time', 'is_draft')
 
+    def validate(self, data):
+        if data['start_date'] > data['end_date']:
+            raise serializers.ValidationError("Start day is before than End day")
+        if data['start_date'] == data['end_date'] and data['start_time'] >= data['end_time']:
+            raise serializers.ValidationError("Start time is before than End time")
+        return data
+    # override mehod update because name field is unique
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.image = validated_data.get('image', instance.image)
+        instance.short_description = validated_data.get('short_description', instance.short_description)
+        instance.content = validated_data.get('content', instance.content)
+        instance.start_date = validated_data.get('start_date', instance.start_date)
+        instance.end_date = validated_data.get('end_date', instance.end_date)
+        instance.start_time = validated_data.get('start_time', instance.start_time)
+        instance.end_time = validated_data.get('end_time', instance.end_time)
+        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
+        instance.save()
+        return instance

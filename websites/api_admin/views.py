@@ -217,6 +217,10 @@ class UserDetail(APIView):
                 serializer.save()
                 return Response({"code": 200, "status": "success", "fields": ""}, status=200)
             return Response({"code": 500, "message": serializer.errors, "fields": ""}, status=500)
+
+        except User.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not found user" , "fields": ""}, status=400)
+
         except Exception, e:
             print "UserDetail", e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
@@ -1082,18 +1086,71 @@ class CategoryNotifications(APIView):
     @author :Hoangnguyen
 
 """
+@parser_classes((MultiPartParser,))
 @permission_classes((AllowAny,))
 class EventAPI(APIView):
 
-    def get(self, request, format=None):
+    def get(self, request, id = None):
         try:
-            events = Event.objects.all()
-            eventSerializer = admin_serializers.EventSerializer(events, many = True)
+            if id:
+                event = Event.objects.get(id = id)
+                eventSerializer = admin_serializers.EventSerializer(event)
+            else:
+                events = Event.objects.all()
+                eventSerializer = admin_serializers.EventSerializer(events, many = True)
             return Response(eventSerializer.data)
+
+        except Event.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
 
         except Exception, e:
             print "EventAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
-   
+    def post(self, request, format=None):
+        try:
+            eventSerializer = admin_serializers.EventSerializer( data = request.data )
+            if eventSerializer.is_valid():
+                eventSerializer.save()
+                return Response(eventSerializer.data)
+            return Response({"code": 400, "message": eventSerializer.errors, "fields": ""}, status = 400 )
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+    
+    def put(self, request, id):
+        try:
+            event = Event.objects.get(id = id)
+            eventSerializer = admin_serializers.EventSerializer( instance = event, data = request.data)
+            if eventSerializer.is_valid():
+                eventSerializer.save()
+                return Response(eventSerializer.data)
+            return Response({"code": 400, "message": eventSerializer.errors, "fields": ""}, status=400)
+        
+        except Event.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id, format=None):
+        try:
+            event = Event.objects.get(id = id)
+            event.delete()
+            return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+
+        except Event.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+
+        
