@@ -143,3 +143,9 @@ class EventSerializer(serializers.ModelSerializer):
         instance.is_draft = validated_data.get('is_draft', instance.is_draft)
         instance.save()
         return instance
+
+class PromotionLabelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Promotion_Label
+        fields = ('id', 'name', )

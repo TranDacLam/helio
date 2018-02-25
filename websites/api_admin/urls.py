@@ -46,8 +46,9 @@ urlpatterns = [
 	url(r'^category_notifications/$', views.CategoryNotifications.as_view(), name="category-notifications"),
 	
 	url(r'^event/$', views.EventAPI.as_view(), name="event"),
-	url(r'^event/(?P<id>[0-9]+)/$', views.EventAPI.as_view(), name="event-update"),
+	url(r'^event/(?P<id>[0-9]+)/$', views.EventAPI.as_view(), name="event-detail"),
 
 	url(r'^banner/$', views.BannerView.as_view(), name="banner"),
-
+	url(r'^promotion_label/$', views.PromotionLabelAPI.as_view(), name="promotion-label"),
+	url(r'^promotion_label/(?P<id>[0-9]+)/$', views.PromotionLabelAPI.as_view(), name="promotion-label-detail"),
 ]
