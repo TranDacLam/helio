@@ -101,9 +101,11 @@ export class PromotionFormComponent implements OnInit {
             image_thumbnail: [this.promotion.image_thumbnail],
             short_description: [this.promotion.short_description, [Validators.required]],
             content: [this.promotion.content, [Validators.required]],
-            
+            promotion_category: [this.promotion.promotion_category],
             promotion_label: [this.promotion.promotion_label],
             promotion_type: [this.promotion.promotion_type],
+            apply_date: [this.promotion.apply_date],
+            end_date: [this.promotion.end_date],
         });
     }
     onFileUploadRequest(event) {

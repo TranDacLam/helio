@@ -4,8 +4,7 @@ from core.models import *
 from core.custom_models import *
 from django.contrib.auth import get_user_model
 from datetime import datetime
-from rest_framework.response import Response
-from rest_framework import status
+
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -53,14 +52,21 @@ class PromotionLabelSerializer(serializers.ModelSerializer):
 
 class PromotionSerializer(serializers.ModelSerializer):
     promotion_type = PromotionTypeSerializer(many=False, required=False)
+    apply_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
+    end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
     class Meta:
         model = Promotion
         fields = '__all__'
 
+    def validate(self, data):
+        if data['apply_date'] > data['end_date']:
+            raise serializers.ValidationError("Apply Date must be less than End Date")
+        return data
+
     def update(self, instance, validated_data):
         print validated_data['promotion_type']
         instance.save()
-        return Response(status=status.HTTP_202_ACCEPTED)
+        return instance
 
 class AdvertisementSerializer(serializers.ModelSerializer):
     

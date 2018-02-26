@@ -55,7 +55,7 @@
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Danh Mục Khuyến Mãi</label>
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-4">
             <select class="form-control" formControlName="promotion_category">
                 <option value="1" checked>1</option>
                 <option value="2">2</option>
@@ -74,7 +74,7 @@
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Nhãn Khuyến Mãi</label>
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-4">
             <select class="form-control" formControlName="promotion_label" *ngIf="promotionLabels">
                 <option *ngFor="let label of promotionLabels" value="{{ label.id }}" [selected]="label.id === promotion.promotion_label">{{ label.name }}</option>
             </select>
@@ -86,11 +86,42 @@
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Loại Khuyến Mãi</label>
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-4">
             <select class="form-control" formControlName="promotion_type" [(ngModel)]="promotion.promotion_type" *ngIf="promotionTypes">
                 <option *ngFor="let type of promotionTypes" value="{{ type }}">{{ type.name }}</option>
             </select>
             <show-error-valid [control]="promotionForm.get('promotion_type')"></show-error-valid>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Ngày Áp Dụng</label>
+        </div>
+        <div class="col-sm-4">
+            <div class="input-group">
+                <span class="input-group-addon" [owlDateTimeTrigger]="dtApplyDate">
+                    <i class="fa fa-calendar"></i>
+                </span>
+                <input type="text" class="form-control event-date" formControlName="apply_date" [owlDateTime]="dtApplyDate"/>         
+                <owl-date-time [pickerType]="'calendar'" #dtApplyDate></owl-date-time>
+                <show-error-valid [control]="promotionForm.get('apply_date')"></show-error-valid>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Ngày Kết Thúc</label>
+        </div>
+        <div class="col-sm-4">
+            <div class="input-group">
+                <span class="input-group-addon" [owlDateTimeTrigger]="dtEndDate">
+                    <i class="fa fa-calendar"></i>
+                </span>
+                <input type="text" class="form-control event-date" formControlName="end_date" [owlDateTime]="dtEndDate"/>         
+                <owl-date-time [pickerType]="'calendar'" #dtEndDate></owl-date-time>
+                <show-error-valid [control]="promotionForm.get('end_date')"></show-error-valid>
+            </div>
         </div>
     </div>
 

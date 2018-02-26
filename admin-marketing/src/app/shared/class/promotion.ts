@@ -10,4 +10,6 @@ export class Promotion {
     promotion_category: string;
     promotion_label: string;
     promotion_type: PromotionType;
+    apply_date: string;
+    end_date: string;
 }
