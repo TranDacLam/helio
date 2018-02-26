@@ -7,7 +7,7 @@ urlpatterns = [
 
 	url(r'^promotion_list/$', views.PromotionList.as_view(), name="promotion-list"),
 	url(r'^promotion/(?P<id>[0-9]+)/$', views.PromotionDetail.as_view(), name="promotion"),
-
+	url(r'^promotion/$', views.PromotionDetail.as_view(), name="promotion-add"),
 
 	url(r'^user_promotion/(?P<id>[0-9]+)/$', views.PromotionUser.as_view(), name="user-promotion"),
 	
@@ -38,10 +38,16 @@ urlpatterns = [
 
 	url(r'^denomination/$', views.DenominationView.as_view(), name="denomination"),
 
-	url(r'^fees/$', views.FeeAPI.as_view(), name="fees"),
+	url(r'^fee/$', views.FeeAPI.as_view(), name="fees"),
+	url(r'^fee/(?P<id>[0-9]+)/$', views.FeeAPI.as_view(), name="fee-update"),
+	url(r'^apply_fee/(?P<id>[0-9]+)/$', views.FeeAPI.as_view(), name="fee-apply"),
+
 	url(r'^feedback/$', views.FeedbackView.as_view(), name="feedback"),
 	url(r'^feedback/(?P<pk>[0-9]+)/$', views.FeedbackDetailView.as_view(), name="feedback-detail"),
 	url(r'^category_notifications/$', views.CategoryNotifications.as_view(), name="category-notifications"),
+	
+	url(r'^event/$', views.EventAPI.as_view(), name="event"),
+	url(r'^event/(?P<id>[0-9]+)/$', views.EventAPI.as_view(), name="event-update"),
 
 	url(r'^banner/$', views.BannerView.as_view(), name="banner"),
 

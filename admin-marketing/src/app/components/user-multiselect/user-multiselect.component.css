@@ -20,6 +20,10 @@ table tr:hover{
     cursor: pointer;
 }
 
+#DataTables_Table_1_wrapper {
+    overflow: scroll !important;
+}
+
 @media only screen and (max-width : 768px) {
     .col-md-5{
         width: 100%;

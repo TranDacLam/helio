@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Hot } from '../../../shared/class/hot';
 
 @Component({
   selector: 'app-add-hot',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddHotComponent implements OnInit {
 
-  constructor() { }
+    hot: Hot = new Hot(); // create object event
 
-  ngOnInit() {
-  }
+    constructor() { }
+
+    ngOnInit() {
+    }
 
 }

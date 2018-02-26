@@ -5,6 +5,8 @@ import { LinkCardService } from '../../../shared/services/link-card.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
+declare var bootbox:any;
+
 @Component({
     selector: 'app-link-card-detail',
     templateUrl: './link-card-detail.component.html',
@@ -45,6 +47,31 @@ export class LinkCardDetailComponent implements OnInit {
         });
         this.linkCardService.getBarcode(barcode).subscribe(data_embed => {
             this.user_embed = data_embed.message;
+        });
+    }
+
+    /*
+        Function deleteLinkCardEvent(): confirm delete
+        @author: Lam
+    */
+    deleteLinkCardEvent(){
+        let that = this;
+        bootbox.confirm({
+            title: "Bạn có chắc chắn",
+            message: "Bạn muốn xóa liên kết này?",
+            buttons: {
+                cancel: {
+                    label: "Hủy"
+                },
+                confirm: {
+                    label: "Xóa"
+                }
+            },
+            callback: function (result) {
+                if(result) {
+                    that.onDelete();
+                }
+            }
         });
     }
 

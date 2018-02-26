@@ -61,11 +61,11 @@ export class ListEventComponent implements OnInit {
         Function onSelectCKB(): checked/uncheck add/delete id to array events_del
         Author: Lam
     */
-    onSelectCKB(event, noti){
+    onSelectCKB(event, value){
         if(event.target.checked){
-            this.events_del.push(noti.id);
+            this.events_del.push(value.id);
         }else{
-            this.events_del = this.events_del.filter(k => k !== noti.id);
+            this.events_del = this.events_del.filter(k => k !== value.id);
         }
     }
 
@@ -93,7 +93,7 @@ export class ListEventComponent implements OnInit {
          + Remove tr have del-{{id}} and draw tables
         Author: Lam
     */
-    onDelelteEvent(){
+    onDeleteEvent(){
         this.eventService.onDelEventSelect(this.events_del).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {

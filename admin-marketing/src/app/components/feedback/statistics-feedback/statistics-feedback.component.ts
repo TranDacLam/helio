@@ -6,7 +6,8 @@ import 'rxjs/add/observable/throw';
 @Component({
     selector: 'app-statistics-feedback',
     templateUrl: './statistics-feedback.component.html',
-    styleUrls: ['./statistics-feedback.component.css']
+    styleUrls: ['./statistics-feedback.component.css'],
+    providers: [FeedbackService]
 })
 export class StatisticsFeedbackComponent implements OnInit {
 
@@ -31,13 +32,13 @@ export class StatisticsFeedbackComponent implements OnInit {
     }
 
     getStatisticFeedback(){
-        this.feedbackService.getStatisticFeedback().subscribe(
-            (data) => {
-                console.log(data.message);
-                this.fb_status = data.message.status;
-                this.fb_rate = data.message.rate;
-            }
-        );
+        // this.feedbackService.getStatisticFeedback().subscribe(
+        //     (data) => {
+        //         console.log(data.message);
+        //         this.fb_status = data.message.status;
+        //         this.fb_rate = data.message.rate;
+        //     }
+        // );
     }
 
     onSubmitStatus(){

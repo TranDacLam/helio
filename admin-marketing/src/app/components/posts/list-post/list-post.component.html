@@ -1,3 +1,51 @@
-<p>
-  list-post works!
-</p>
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Quản Lý Bài Viết</li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class="row text-center">
+    <h1>QUẢN LÝ BÀI VIẾT</h1>
+</div>
+<div class="row mt-50 mb-30">
+    <div class="col-xs-6 col-sm-6">
+        <a class="btn btn-primary" routerLink="/">TRỞ VỀ TRANG QUẢN TRỊ</a>
+    </div>
+    <div class="col-xs-6 col-sm-6">
+        <a class="btn btn-primary pull-right" routerLink="/post/add">TẠO BÀI VIẾT MỚI</a>
+    </div>
+    <div class="col-xs-12 col-sm-12 mt-15 messsage" *ngIf="message_result">
+        <h4>{{message_result}}</h4>
+    </div>
+</div>
+<div class="row">
+    <table datatable class="row-border hover" *ngIf="posts">
+        <thead>
+            <tr>
+                <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
+                <th>Bài Viết</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let post of posts" id="del-{{post.id}}">
+                <td><input type="checkbox" (change)="onSelectCKB($event, post)" [checked]="select_checked"/></td>
+                <td><a routerLink="/post/edit/{{ post.id }}">{{ post.subject }}</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row dels-post" *ngIf="posts">
+    <div class="col-md-3">
+        <select name="" class="form-control">
+            <option value="1">Xóa các phản hồi được chọn</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        {{ posts_del.length }} của {{ posts.length }} được chọn 
+        <button class="btn btn-danger" (click)="onDeletePost()">Thực hiện</button>
+    </div>
+</div>

@@ -8,8 +8,8 @@ import { Event } from '../../../shared/class/event';
 })
 export class AddEventComponent implements OnInit {
 
-    event: Event = new Event(); // create object notification
-    type_http = "post"; // type http to form notification component 
+    event: Event = new Event(); // create object event
+    type_http = "post"; // type http to form event component 
 
     constructor() { }
 

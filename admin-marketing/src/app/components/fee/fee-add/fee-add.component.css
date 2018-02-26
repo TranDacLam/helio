@@ -1,0 +1,11 @@
+
+
+#fee_type{
+	width: 90px;
+}
+/* hidden arrow in number input */
+.no-arrow::-webkit-inner-spin-button, 
+.no-arrow::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

@@ -4,7 +4,7 @@ export class Notification {
     message: string;
     image: string|any;
     sub_url: string;
-    category: string;
+    category: number;
     sent_date: string;
     sent_user: string;
     is_QR_code: boolean;

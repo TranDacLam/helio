@@ -9,11 +9,6 @@ import { ListNotificationComponent } from './components/notification/list-notifi
 import { AddNotificationComponent } from './components/notification/add-notification/add-notification.component';
 import { EditNotificationComponent } from './components/notification/edit-notification/edit-notification.component';
 import { NotificationDetailComponent } from './components/notification/notification-detail/notification-detail.component';
-import { UsersPromotionComponent } from './components/promotions/users-promotion/users-promotion.component';
-import { PromotionsComponent } from './components/promotions/promotions/promotions.component';
-import { PromotionDetailComponent } from './components/promotions/promotion-detail/promotion-detail.component';
-import { PromotionLabelListComponent } from './components/promotion-label/promotion-label-list/promotion-label-list.component';
-import { PromotionLabelAddComponent } from './components/promotion-label/promotion-label-add/promotion-label-add.component';
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
 import { AdvertisementDetailComponent } from './components/advertisement/advertisement-detail/advertisement-detail.component';
 import { AdvertisementAddComponent } from './components/advertisement/advertisement-add/advertisement-add.component';
@@ -54,86 +49,195 @@ import { AddPromotionLabelComponent } from './components/promotion-labels/add-pr
 import { EditPromotionLabelComponent } from './components/promotion-labels/edit-promotion-label/edit-promotion-label.component';
 
 import { HomeComponent } from './components/home/home.component';
+import { AddPromotionComponent } from './components/promotions/add-promotion/add-promotion.component';
+import { EditPromotionComponent } from './components/promotions/edit-promotion/edit-promotion.component';
+import { ListPromotionComponent } from './components/promotions/list-promotion/list-promotion.component';
+import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
+import { ErrorComponent } from './components/error/error.component';
 
 
-const routes: Routes = [
-    { 
-        path: '', component: HomeComponent
-    }, { 
-        path: 'users', component: UsersComponent
-    }, { 
-     	path: 'promotions', component: PromotionsComponent
-    }, { 
-     	path: 'users-promotions/:id', component: UsersPromotionComponent
-    }, { 
-     	path: 'promotions/:id', component: PromotionDetailComponent
+const routes: Routes = [{
+        path: '',
+        component: HomeComponent
     }, {
-        path: 'promotion-label-list', component: PromotionLabelListComponent
+        path: 'users',
+        component: UsersComponent
     }, {
-        path: 'promotion-label-add', component: PromotionLabelAddComponent
+        path: 'promotions',
+        component: ListPromotionComponent
     }, {
-        path: 'advertisement-list', component: AdvertisementListComponent
+        path: 'users-promotions/:id',
+        component: UserPromotionComponent
     }, {
-        path: 'advertisement-detail/:id', component: AdvertisementDetailComponent
+        path: 'promotions/:id/change',
+        component: EditPromotionComponent
     }, {
-        path: 'advertisement-add', component: AdvertisementAddComponent
-    },{
-        path: 'promotion-type-list', component: PromotionTypeListComponent
-    },{
-        path: 'denomination-add', component: DenominationAddComponent
+        path: 'promotions/add',
+        component: AddPromotionComponent
     }, {
-        path: 'denomination-list', component: DenominationListComponent
+        path: 'advertisement-list',
+        component: AdvertisementListComponent
     }, {
-        path: 'feedback-list', component: FeedbackListComponent
+        path: 'advertisement-detail/:id',
+        component: AdvertisementDetailComponent
     }, {
-        path: 'feedback-detail/:id', component: FeedbackDetailComponent
+        path: 'advertisement-add',
+        component: AdvertisementAddComponent
     }, {
-        path: 'hot-advs-add', component: HotAdvsAddComponent
+        path: 'promotion-type-list',
+        component: PromotionTypeListComponent
     }, {
-        path: 'hot-advs-list', component: HotAdvsListComponent
+        path: 'denomination-add',
+        component: DenominationAddComponent
     }, {
-        path: 'user-add', component: UserAddComponent
+        path: 'denomination-list',
+        component: DenominationListComponent
     }, {
-        path: 'user-list', component: UserListComponent
+        path: 'feedback-list',
+        component: FeedbackListComponent
     }, {
-        path: 'user-detail', component: UserDetailComponent
+        path: 'feedback-detail/:id',
+        component: FeedbackDetailComponent
     }, {
-        path: 'link-card-list', component: LinkCardListComponent
-    },{
-        path: 'banner-add', component: BannerAddComponent
+        path: 'hot-advs-add',
+        component: HotAdvsAddComponent
     }, {
-        path: 'banner-list', component: BannerListComponent
+        path: 'hot-advs-list',
+        component: HotAdvsListComponent
     }, {
-        path: 'banner-detail', component: BannerDetailComponent
+        path: 'user-add',
+        component: UserAddComponent
+    }, {
+        path: 'user-list',
+        component: UserListComponent
+    }, {
+        path: 'user-detail',
+        component: UserDetailComponent
+    }, {
+        path: 'link-card-list',
+        component: LinkCardListComponent
+    }, {
+        path: 'banner-add',
+        component: BannerAddComponent
+    }, {
+        path: 'banner-list',
+        component: BannerListComponent
+    }, {
+        path: 'banner-detail',
+        component: BannerDetailComponent
     },
-    { path: 'feedback/statistics', component: StatisticsFeedbackComponent },
-    { path: 'link-card/add', component: AddLinkCardComponent },
-    { path: 'link-card/detail/:id', component: LinkCardDetailComponent },
-    { path: 'notifications', component: ListNotificationComponent },
-    { path: 'notification/add', component: AddNotificationComponent },
-    { path: 'notification/edit/:id', component: EditNotificationComponent },
-    { path: 'notification/detail/:id', component: NotificationDetailComponent },
-    { path: 'fees', component: FeeListComponent },
-    { path: 'fee-add', component: FeeAddComponent },
-    { path: 'event/list', component: ListEventComponent },
-    { path: 'event/add', component: AddEventComponent },
-    { path: 'event/edit', component: EditEventComponent },
-    { path: 'faq/list', component: ListFaqComponent },
-    { path: 'faq/add', component: AddFaqComponent },
-    { path: 'faq/edit', component: EditFaqComponent },
-    { path: 'game/list', component: ListGameComponent },
-    { path: 'game/add', component: AddGameComponent },
-    { path: 'game/edit', component: EditGameComponent },
-    { path: 'hot/list', component: ListHotComponent },
-    { path: 'hot/add', component: AddHotComponent },
-    { path: 'hot/edit', component: EditHotComponent },
-    { path: 'post/list', component: ListPostComponent },
-    { path: 'post/add', component: AddPostComponent },
-    { path: 'post/edit', component: EditPostComponent },
-    { path: 'promotion-label/list', component: ListPromotionLabelComponent },
-    { path: 'promotion-label/add', component: AddPromotionLabelComponent },
-    { path: 'promotion-label/edit', component: EditPromotionLabelComponent },
-
+    {
+        path: 'feedback/statistics',
+        component: StatisticsFeedbackComponent
+    },
+    {
+        path: 'link-card/add',
+        component: AddLinkCardComponent
+    },
+    {
+        path: 'link-card/detail/:id',
+        component: LinkCardDetailComponent
+    },
+    {
+        path: 'notification/list',
+        component: ListNotificationComponent
+    },
+    {
+        path: 'notification/add',
+        component: AddNotificationComponent
+    },
+    {
+        path: 'notification/edit/:id',
+        component: EditNotificationComponent
+    },
+    {
+        path: 'notification/detail/:id',
+        component: NotificationDetailComponent
+    },
+    {
+        path: 'fee',
+        component: FeeListComponent
+    },
+    {
+        path: 'fee/add',
+        component: FeeAddComponent
+    },
+    {
+        path: 'event/list',
+        component: ListEventComponent
+    },
+    {
+        path: 'event/add',
+        component: AddEventComponent
+    },
+    {
+        path: 'event/edit',
+        component: EditEventComponent
+    },
+    {
+        path: 'faq/list',
+        component: ListFaqComponent
+    },
+    {
+        path: 'faq/add',
+        component: AddFaqComponent
+    },
+    {
+        path: 'faq/edit',
+        component: EditFaqComponent
+    },
+    {
+        path: 'game/list',
+        component: ListGameComponent
+    },
+    {
+        path: 'game/add',
+        component: AddGameComponent
+    },
+    {
+        path: 'game/edit',
+        component: EditGameComponent
+    },
+    {
+        path: 'hot/list',
+        component: ListHotComponent
+    },
+    {
+        path: 'hot/add',
+        component: AddHotComponent
+    },
+    {
+        path: 'hot/edit',
+        component: EditHotComponent
+    },
+    {
+        path: 'post/list',
+        component: ListPostComponent
+    },
+    {
+        path: 'post/add',
+        component: AddPostComponent
+    },
+    {
+        path: 'post/edit',
+        component: EditPostComponent
+    },
+    {
+        path: 'promotion-label/list',
+        component: ListPromotionLabelComponent
+    },
+    {
+        path: 'promotion-label/add',
+        component: AddPromotionLabelComponent
+    },
+    {
+        path: 'promotion-label/edit',
+        component: EditPromotionLabelComponent
+    },
+    {
+        path: 'error',
+        component: ErrorComponent
+    },
 ];
 
 @NgModule({

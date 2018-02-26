@@ -1,6 +1,12 @@
 export const datatable_config = {
     dtOptions : {
         pagingType: "full_numbers",
+        columnDefs: [{
+            orderable: false,
+            className: "dt-center",
+            targets: 0
+        }], 
+        order: [[ 1, 'desc' ]],
         language: {
             sSearch: "",
             searchPlaceholder: "Nhập thông tin tìm kiếm",
