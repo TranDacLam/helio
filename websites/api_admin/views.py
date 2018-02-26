@@ -495,8 +495,7 @@ class FeedbackView(APIView):
             fed_id = request.data.get('fed_id', None)
             print "Fed_id:", fed_id
             if fed_id:
-                fed_id_list = fed_id.split(',')
-                # queryset = FeedBack.objects.filter(pk__in = fed_id_list).delete()
+                queryset = FeedBack.objects.filter(pk__in = fed_id).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ID ", "fields": "id"}, status=400)
         except Exception, e:

@@ -45,7 +45,6 @@ export class DenominationService {
     	let param = {
             deno_id: deno_id
         }
-        console.log(param);
         let _options = new RequestOptions({
             headers: httpOptions.headers,
             body: JSON.stringify(param)
