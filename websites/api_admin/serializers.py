@@ -166,6 +166,7 @@ class HotSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
 
     post_type = serializers.SlugRelatedField(queryset = Post_Type.objects.all(), read_only=False, slug_field = 'name' )
+
     class Meta:
         model = Post
         fields = ('name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
