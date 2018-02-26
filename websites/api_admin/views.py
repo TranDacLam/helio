@@ -278,11 +278,11 @@ class AdvertisementView(APIView):
         DELETE: multi checbox
         """
         try:
-            adv_id = self.request.query_params.get('adv_id', None)
+            adv_id = self.request.data.get('adv_id', None)
+            print "Adv_id", adv_id
             if adv_id:
-                adv_id_list = adv_id.split(',')
                 queryset = Advertisement.objects.filter(
-                    pk__in=adv_id_list).delete()
+                    pk__in=adv_id).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
