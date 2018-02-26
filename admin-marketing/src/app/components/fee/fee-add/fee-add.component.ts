@@ -20,7 +20,6 @@ export class FeeAddComponent implements OnInit {
   		result => {
    			this.messageResult = "success"; 
         this.router.navigate(['/fee']);
-
    		},
 		error => {
 			this.messageResult = error.statusText;
