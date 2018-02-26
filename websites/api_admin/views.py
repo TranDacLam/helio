@@ -235,6 +235,10 @@ class UserDetail(APIView):
                 serializer.save()
                 return Response({"code": 200, "status": "success", "fields": ""}, status=200)
             return Response({"code": 500, "message": serializer.errors, "fields": ""}, status=500)
+
+        except User.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not found user" , "fields": ""}, status=400)
+
         except Exception, e:
             print "UserDetail", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -328,37 +332,6 @@ class AdvertisementDetail(APIView):
         advertisement.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-"""
-GET and POST Promotion_Label
-"""
-
-
-@permission_classes((AllowAny, ))
-class PromotionLabel(APIView):
-
-    def get(self, request, format=None):
-        """
-            Get all promotion_label
-        """
-        try:
-            promotion_label_list = Promotion_Label.objects.all()
-            serializer = admin_serializers.PromotionLabelSerializer(
-                promotion_label_list, many=True)
-            return Response(serializer.data)
-        except Exception, e:
-            error = {"code": 500, "message": "%s" % e, "fields": ""}
-            return Response(error, status=500)
-
-    def post(self, request, format=None):
-        """
-            POST: Create a new Promotion_Label
-        """
-        serializer = admin_serializers.PromotionLabelSerializer(
-            data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 """
 Get PromotionType
 @author: Trangle
@@ -757,6 +730,10 @@ class NotificationUser(APIView):
 """
     Get Summary feedbacks
     @author :Hoangnguyen
+    if search_field is none then get status and rate feedback
+    if search_field is rate then get rate feedback
+    if search_field is status then get status feedback
+
 
 """
 
@@ -765,103 +742,64 @@ class NotificationUser(APIView):
 class SummaryAPI(APIView):
 
     def get(self, request, format=None):
-
         try:
+            start_date_req = self.request.query_params.get('start_date', None)
+            end_date_req = self.request.query_params.get('end_date', None)
+            kwargs = {}
+            if start_date_req:
+                kwargs['created__gt'] = timezone.make_aware(datetime.strptime(
+                    start_date_req, "%d/%m/%Y"))
+            if end_date_req:
+                kwargs['created__lt'] = timezone.make_aware(datetime.strptime(
+                    end_date_req, "%d/%m/%Y") + timedelta(days=1))
+            if kwargs:
+                feedback = FeedBack.objects.filter(**kwargs)
+            else:
+                feedback = FeedBack.objects.all()
+            # search_field is status or rate or None
             search_field = self.request.query_params.get('search_field', None)
-
-            if search_field is not None:
-                if search_field == 'status' or search_field == 'rate':
-                    start_date_req = self.request.query_params.get(
-                        'start_date', None)
-                    end_date_req = self.request.query_params.get(
-                        'end_date', None)
-
-                    kwargs = {}
-                    #  data does not match format '%Y-%m-%d' return error
-                    try:
-                        if start_date_req:
-                            kwargs['created__gt'] = timezone.make_aware(datetime.strptime(
-                                start_date_req, "%d/%m/%Y"))
-                        if end_date_req:
-                            kwargs['created__lt'] = timezone.make_aware(datetime.strptime(
-                                end_date_req, "%d/%m/%Y") + timedelta(days=1))
-                    except ValueError, e:
-                        error = {"code": 400, "message": "%s" %
-                                 e, "fields": ""}
-                        return Response(error, status=400)
-
-                    if kwargs:
-                        feedback = FeedBack.objects.filter(
-                            **kwargs).values(search_field)
-                    else:
-                        feedback = FeedBack.objects.all().values(search_field)
-
-                    count_item = {}
-                    if search_field == 'status':
-                        count_item['status'] = {
-                            'answered': 0, 'moved': 0, 'no_process': 0}
-                        count_status = feedback.values('status').order_by(
-                            'status').annotate(Count('status'))
-                        # access again count_item, if item of count_item exist
-                        # in count_status, override this item
-                        for item in count_status:
-                            count_item['status'][
-                                item['status']] = item['status__count']
-                        count_item['status_sum'] = feedback.values(
-                            'status').count()
-                    else:
-                        count_item['rate'] = {
-                            'Bình thường': 0, 'Không có gì': 0, 'Tốt': 0, 'Tuyệt vời': 0, 'Xấu': 0}
-                        count_rate = feedback.values(
-                            'rate').annotate(Count('rate'))
-                        # access again count_item, if item of count_item exist
-                        # in count_rate, override this item
-                        for item in count_rate:
-                            if item['rate'] == 'Bình thường':
-                                count_item['rate'][
-                                    'Bình thường'] = item['rate__count']
-                            else:
-                                count_item['rate'][
-                                    item['rate']] = item['rate__count']
-                        count_item['rate_sum'] = feedback.values(
-                            'rate').count()
-
-                    return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
-                return Response({"code": 400, "message": "Not found search field", "fields": ""}, status=400)
+            count_item = {}
+            get_all = False
 
             if search_field is None:
-                feedback = FeedBack.objects.all()
-
-                count_item = {}
-                count_item['status'] = {
-                    'answered': 0, 'moved': 0, 'no_process': 0}
-                count_status = feedback.values('status').order_by(
-                    'status').annotate(Count('status'))
-                # access again count_item, if item of count_item exist in
-                # count_status, override this item
-                for item in count_status:
-                    count_item['status'][
-                        item['status']] = item['status__count']
-                count_item['status_sum'] = feedback.values('status').count()
-
-                count_item['rate'] = {
-                    'Bình thường': 0, 'Không có gì': 0, 'Tốt': 0, 'Tuyệt vời': 0, 'Xấu': 0}
+                get_all = True
+            
+            if search_field == 'status' or get_all:
+                count_item['status'] = { 'answered': 0, 'moved': 0, 'no_process': 0}
+                count_status = feedback.values('status').order_by('status').annotate(Count('status'))
+                count_item['status_sum'] = 0
+                for item in count_status :
+                    if item['status'] == '': break
+                    count_item['status'][item['status']] = item['status__count'] 
+                    count_item['status_sum'] = count_item['status_sum'] + item['status__count']
+            
+            if search_field == 'rate' or get_all:
+                count_item['rate'] = {'nomal': 0, 'notbad': 0, 'good': 0, 'great': 0, 'bad': 0}
                 count_rate = feedback.values('rate').annotate(Count('rate'))
-                # access again count_item, if item of count_item exist in
-                # count_rate, override this item
+                count_item['rate_sum'] = 0
                 for item in count_rate:
+                    if item['rate'] == '': break
                     if item['rate'] == 'Bình thường':
-                        count_item['rate']['Bình thường'] = item['rate__count']
-                    else:
-                        count_item['rate'][item['rate']] = item['rate__count']
-                count_item['rate_sum'] = feedback.values('rate').count()
-
-                return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
-
+                        count_item['rate']['nomal'] = item['rate__count']
+                    if item['rate'] == 'Không có gì':
+                        count_item['rate']['notbad'] = item['rate__count']
+                    if item['rate'] == 'Tốt':
+                        count_item['rate']['good'] = item['rate__count']
+                    if item['rate'] == 'Tuyệt vời':
+                        count_item['rate']['great'] = item['rate__count']
+                    if item['rate'] == 'Xấu':
+                        count_item['rate']['bad'] = item['rate__count']
+                    count_item['rate_sum'] = count_item['rate_sum'] + item['rate__count']
+            
+            if search_field is not None and search_field != 'rate' and search_field != 'status':
+                return Response({"code": 400, "message": "Not found search field" , "fields": ""}, status=400)
+            
+            return Response({"code": 200, "message": count_item , "fields": ""}, status=200)
         except Exception, e:
             print "SummaryAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
+
 
 """
     Get user embed 
@@ -1209,19 +1147,241 @@ class CategoryNotifications(APIView):
     @author :Hoangnguyen
 
 """
-
-
+@parser_classes((MultiPartParser,JSONParser ))
 @permission_classes((AllowAny,))
 class EventAPI(APIView):
 
-    def get(self, request, format=None):
+    def get(self, request, id = None):
         try:
-            events = Event.objects.all()
-            eventSerializer = admin_serializers.EventSerializer(
-                events, many=True)
+            if id:
+                event = Event.objects.get(id = id)
+                eventSerializer = admin_serializers.EventSerializer(event)
+            else:
+                events = Event.objects.all()
+                eventSerializer = admin_serializers.EventSerializer(events, many = True)
             return Response(eventSerializer.data)
+
+        except Event.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
 
         except Exception, e:
             print "EventAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+    def post(self, request, format=None):
+        try:
+            eventSerializer = admin_serializers.EventSerializer( data = request.data )
+            if eventSerializer.is_valid():
+                eventSerializer.save()
+                return Response(eventSerializer.data)
+            return Response({"code": 400, "message": eventSerializer.errors, "fields": ""}, status = 400 )
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+    
+    def put(self, request, id):
+        try:
+            event = Event.objects.get(id = id)
+            eventSerializer = admin_serializers.EventSerializer( instance = event, data = request.data)
+            if eventSerializer.is_valid():
+                eventSerializer.save()
+                return Response(eventSerializer.data)
+            return Response({"code": 400, "message": eventSerializer.errors, "fields": ""}, status=400)
+        
+        except Event.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id=None, format=None):
+        try:
+            if id:
+                event = Event.objects.get(id = id)
+                event.delete()
+                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+
+            list_id = request.data.get('list_id', None)
+            if list_id:
+                events = Event.objects.filter(id__in = list_id)
+                if events:  
+                    events.delete() 
+                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
+
+        except Event.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+"""
+    PromotionLabel
+    @author :Hoangnguyen
+
+"""
+@parser_classes((JSONParser,))
+@permission_classes((AllowAny,))
+class PromotionLabelAPI(APIView):
+
+    def get_object(self, id):
+        try:
+            return Promotion_Label.objects.get(id = id)
+
+        except Promotion_Label.DoesNotExist, e:
+            raise Http404
+
+    def get(self, request, id = None):
+        try:
+            if id:
+                promotionLabel = Promotion_Label.objects.get(id = id)
+                promotionLabelSerializer = admin_serializers.PromotionLabelSerializer(promotionLabel)
+            else:
+                promotionLabels = Promotion_Label.objects.all()
+                promotionLabelSerializer = admin_serializers.PromotionLabelSerializer(promotionLabels, many = True)
+            return Response(promotionLabelSerializer.data)
+
+        except Promotion_Label.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def post(self, request, format=None):
+        try:
+            promotionLabelSerializer = admin_serializers.PromotionLabelSerializer( data = request.data )
+            if promotionLabelSerializer.is_valid():
+                promotionLabelSerializer.save()
+                return Response(promotionLabelSerializer.data)
+            return Response({"code": 400, "message": promotionLabelSerializer.errors, "fields": ""}, status = 400 )
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+    
+    def put(self, request, id):
+        promotionLabel = self.get_object(id)
+        try:
+            promotionLabelSerializer = admin_serializers.PromotionLabelSerializer( instance = promotionLabel, data = request.data)
+            if promotionLabelSerializer.is_valid():
+                promotionLabelSerializer.save()
+                return Response(promotionLabelSerializer.data)
+            return Response({"code": 400, "message": promotionLabelSerializer.errors, "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id = None, format=None):
+        try:
+            if id:
+                promotionLabel = Promotion_Label.objects.get(id = id)
+                promotionLabel.delete()
+                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+
+            list_id = request.data.get('list_id', None)
+            if list_id:
+                promotionLabels = Promotion_Label.objects.filter(id__in = list_id)
+                if promotionLabels:  
+                    promotionLabels.delete() 
+                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
+
+        except Promotion_Label.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+"""
+    Hot
+    @author :Hoangnguyen
+
+"""
+@parser_classes((MultiPartParser, JSONParser))
+@permission_classes((AllowAny,))
+class HotAPI(APIView):
+
+    def get(self, request, id = None):
+        try:
+            if id:
+                hot = Hot.objects.get(id = id)
+                hotSerializer = admin_serializers.HotSerializer(hot)
+            else:
+                hots = Hot.objects.all()
+                hotSerializer = admin_serializers.HotSerializer(hots, many = True)
+            return Response(hotSerializer.data)
+
+        except Hot.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def post(self, request, format=None):
+        try:
+            hotSerializer = admin_serializers.HotSerializer( data = request.data )
+            if hotSerializer.is_valid():
+                hotSerializer.save()
+                return Response(hotSerializer.data)
+            return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status = 400 )
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+    
+    def put(self, request, id):
+        try:
+            hot = Hot.objects.get(id = id)
+            hotSerializer = admin_serializers.HotSerializer( instance = hot, data = request.data)
+            if hotSerializer.is_valid():
+                hotSerializer.save()
+                return Response(hotSerializer.data)
+            return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
+        
+        except Hot.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id = None, format=None):
+        try:
+            if id:
+                hot = Hot.objects.get(id = id)
+                hot.delete()
+                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+
+            list_id = request.data.get('list_id', None)
+            if list_id:
+                hots = Hot.objects.filter(id__in = list_id)
+                if hots:  
+                    hots.delete() 
+                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Hot.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
