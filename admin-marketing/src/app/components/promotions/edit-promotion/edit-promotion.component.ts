@@ -9,7 +9,10 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 @Component({
     selector: 'app-edit-promotion',
     templateUrl: './edit-promotion.component.html',
-    styleUrls: ['./edit-promotion.component.css']
+    styleUrls: ['./edit-promotion.component.css'],
+    providers: [
+        PromotionService
+    ]
 })
 
 /*

@@ -75,9 +75,8 @@
             <label class="col-form-label form-check-label">Nhãn Khuyến Mãi</label>
         </div>
         <div class="col-sm-10">
-            <select class="form-control" formControlName="promotion_label">
-                <option value="1" checked>1</option>
-                <option value="2">2</option>
+            <select class="form-control" formControlName="promotion_label" *ngIf="promotionLabels">
+                <option *ngFor="let label of promotionLabels" value="{{ label.id }}" [selected]="label.id === promotion.promotion_label">{{ label.name }}</option>
             </select>
             <show-error-valid [control]="promotionForm.get('promotion_label')"></show-error-valid>
         </div>
@@ -88,9 +87,8 @@
             <label class="col-form-label form-check-label">Loại Khuyến Mãi</label>
         </div>
         <div class="col-sm-10">
-            <select class="form-control" formControlName="promotion_type">
-                <option value="1" checked>1</option>
-                <option value="2">2</option>
+            <select class="form-control" formControlName="promotion_type" [(ngModel)]="promotion.promotion_type" *ngIf="promotionTypes">
+                <option *ngFor="let type of promotionTypes" value="{{ type }}">{{ type.name }}</option>
             </select>
             <show-error-valid [control]="promotionForm.get('promotion_type')"></show-error-valid>
         </div>

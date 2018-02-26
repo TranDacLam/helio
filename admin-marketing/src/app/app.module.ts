@@ -36,7 +36,6 @@ import { ShowErrorValidComponent } from './components/show-error-valid/show-erro
 import { HotAdvsListComponent } from './components/hot-advs/hot-advs-list/hot-advs-list.component';
 import { HotAdvsAddComponent } from './components/hot-advs/hot-advs-add/hot-advs-add.component';
 
-import { PromotionService } from './shared/services/promotion.service';
 import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
 import { DenominationService } from './shared/services/denomination.service';
@@ -172,7 +171,6 @@ import { ErrorComponent } from './components/error/error.component';
     OwlNativeDateTimeModule,
   ],
   providers: [
-    PromotionService,
     AdvertisementService,
     PromotionTypeService,
     DenominationService,

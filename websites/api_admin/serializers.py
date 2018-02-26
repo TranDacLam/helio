@@ -4,7 +4,8 @@ from core.models import *
 from core.custom_models import *
 from django.contrib.auth import get_user_model
 from datetime import datetime
-
+from rest_framework.response import Response
+from rest_framework import status
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -37,17 +38,11 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
 
-class PromotionSerializer(serializers.ModelSerializer):
-    # promotion_category = serializers.StringRelatedField(many=False)
-    class Meta:
-        model = Promotion
-        fields=('id', 'name', 'short_description', 'content', 'image', 'image_thumbnail', 'apply_date', 'end_date', 'is_draft', 'created', 'promotion_category', 'promotion_label', 'promotion_type')
+class PromotionTypeSerializer(serializers.ModelSerializer):
 
-class AdvertisementSerializer(serializers.ModelSerializer):
-    
     class Meta:
-        model = Advertisement
-        fields = ('id', 'name', 'is_show')
+        model = Promotion_Type
+        fields = ('id', 'name')
 
 class PromotionLabelSerializer(serializers.ModelSerializer):
 
@@ -55,11 +50,23 @@ class PromotionLabelSerializer(serializers.ModelSerializer):
         model = Promotion_Label
         fields= ('id', 'name')
 
-class PromotionTypeSerializer(serializers.ModelSerializer):
 
+class PromotionSerializer(serializers.ModelSerializer):
+    promotion_type = PromotionTypeSerializer(many=False, required=False)
     class Meta:
-        model = Promotion_Type
-        fields = ('id', 'name')
+        model = Promotion
+        fields = '__all__'
+
+    def update(self, instance, validated_data):
+        print validated_data['promotion_type']
+        instance.save()
+        return Response(status=status.HTTP_202_ACCEPTED)
+
+class AdvertisementSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Advertisement
+        fields = ('id', 'name', 'is_show')
 
 class DenominationSerializer(serializers.ModelSerializer):
 

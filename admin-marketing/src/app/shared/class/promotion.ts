@@ -1,3 +1,5 @@
+import { PromotionType } from './promotion-type';
+
 export class Promotion {
 	id: number;
     name: string;
@@ -7,5 +9,5 @@ export class Promotion {
     content: string;
     promotion_category: string;
     promotion_label: string;
-    promotion_type: string;
+    promotion_type: PromotionType;
 }

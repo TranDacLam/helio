@@ -3,30 +3,44 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import { Promotion } from '../../../shared/class/promotion';
-import { PromotionService } from '../../../shared/services/promotion.service';
 import 'rxjs/add/observable/throw';
+
+import { Promotion } from '../../../shared/class/promotion';
+import { PromotionType } from '../../../shared/class/promotion-type';
+import { PromotionLabel } from '../../../shared/class/promotion-label';
+import { PromotionService } from '../../../shared/services/promotion.service';
+/*import { CategoryService } from '../../../shared/services/category.service';*/
+import { PromotionTypeService } from '../../../shared/services/promotion-type.service';
+import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
 
 declare var bootbox:any;
 
 @Component({
-  selector: 'app-promotion-form',
-  templateUrl: './promotion-form.component.html',
-  styleUrls: ['./promotion-form.component.css']
+    selector: 'app-promotion-form',
+    templateUrl: './promotion-form.component.html',
+    styleUrls: ['./promotion-form.component.css'],
+    providers: [
+        PromotionService,
+        PromotionLabelService
+    ]
 })
 
 export class PromotionFormComponent implements OnInit {
 
     @Input() 
     promotion: Promotion;
+
+    promotionTypes: PromotionType[];
+    promotionLabels: PromotionLabel[];
     
     promotionForm: FormGroup;
 
     ckEditorConfig:any;
 
-
     constructor(
         private promotionService: PromotionService,
+        private promotionTypeService: PromotionTypeService,
+        private promotionLabelService: PromotionLabelService,
         private fb: FormBuilder,
         private location: Location,
         private router: Router,
@@ -34,12 +48,45 @@ export class PromotionFormComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.getPromotionTypes();
+        this.getPromotionLabels();
+
         this.ckEditorConfig = {
             uiColor: '#337ab7', 
             filebrowserUploadUrl: 'http://127.0.0.1:8000/ckeditor/upload/'
 
         };
         this.creatPromotionForm();
+    }
+
+    /*
+        function getPromotionType(): get all promotion type
+        @author: diemnguyen
+    */ 
+    getPromotionTypes(): void{
+        this.promotionTypeService.getAllPromotionsType().subscribe(
+            (data) => {
+                this.promotionTypes = data;
+            },
+            (error) => {
+                this.router.navigate(['/error']);
+            }
+        );
+    }
+
+    /*
+        function getPromotionLabel(): get all promotion label
+        @author: diemnguyen
+    */ 
+    getPromotionLabels(): void{
+        this.promotionLabelService.getPromotionLabels().subscribe(
+            (data) => {
+                this.promotionLabels = data;
+            },
+            (error) => {
+                this.router.navigate(['/error']);
+            }
+        );
     }
 
     /*
@@ -54,7 +101,7 @@ export class PromotionFormComponent implements OnInit {
             image_thumbnail: [this.promotion.image_thumbnail],
             short_description: [this.promotion.short_description, [Validators.required]],
             content: [this.promotion.content, [Validators.required]],
-            promotion_category: [this.promotion.promotion_type],
+            
             promotion_label: [this.promotion.promotion_label],
             promotion_type: [this.promotion.promotion_type],
         });

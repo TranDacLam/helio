@@ -98,6 +98,9 @@ class PromotionDetail(APIView):
             print request.data
             serializer = admin_serializers.PromotionSerializer(
                 data=request.data)
+
+
+            print "serializer", serializer
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
