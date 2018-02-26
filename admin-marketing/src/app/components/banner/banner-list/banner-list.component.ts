@@ -21,11 +21,11 @@ export class BannerListComponent implements OnInit {
 
     banner_del: any;
     isChecked = false;
-  message_success: string = ""; // Display message success
-  message_error: string = ""; // Display message error
-  message_result: string = ""; // Display message result
-  errorMessage: String;
-  checkAll= false;
+    message_success: string = ""; // Display message success
+    message_error: string = ""; // Display message error
+    message_result: string = ""; // Display message result
+    errorMessage: String;
+    checkAll= false;
 
   // Inject the DataTableDirective into the dtElement property
   @ViewChild(DataTableDirective)
@@ -125,4 +125,15 @@ export class BannerListComponent implements OnInit {
         return type.id === this;
     }
 
+    deleteBannersCheckbox() {
+        this.bannerService.deleteBannerSelected(this.banner_del).subscribe(
+            (data) => {
+                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                    this.banner_del.forEach(function(element) {
+                        dtInstance.rows('#delete'+element).remove().draw();
+                    });
+                });
+            }
+        );
+    }
 }

@@ -371,14 +371,17 @@ class FeedbackView(APIView):
             return Response(error, status=500)
 
     def delete(self, request, format=None):
+        print "Delete"
         try: 
-            fed_id = self.request.query_params.get('fed_id', None)
+            fed_id = request.data.get('fed_id', None)
+            print "Fed_id:", fed_id
             if fed_id:
                 fed_id_list = fed_id.split(',')
-                queryset = FeedBack.objects.filter(pk__in = fed_id_list).delete()
+                # queryset = FeedBack.objects.filter(pk__in = fed_id_list).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
-            return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
+            return Response({"code": 400, "message": "Not found ID ", "fields": "id"}, status=400)
         except Exception, e:
+            print e
             error = {"code": 500, "message": "Internal Server Error", "fields":""}
             return Response(error, status=500)
 """
@@ -901,7 +904,9 @@ class FeeAPI(APIView):
 
 
 """
-    GET: get all banner
+    GET: Get All Banner
+    POST: Add New Banner
+    DELETE: Delete All Banner Selected
     @author: TrangLe
 """
 @permission_classes((AllowAny,))
@@ -910,6 +915,10 @@ class BannerView(APIView):
     parser_classes = (FileUploadParser, MultiPartParser, FormParser)
 
     def get(self, request, format=None):
+        """
+        Get All Banner
+        """
+        print "Method GET"
         try:
             banner = Banner.objects.all()
             serializer = admin_serializers.BannerSerializer(banner, many=True)
@@ -920,14 +929,48 @@ class BannerView(APIView):
             return Response(error, status=500)
         
     def post(self, request, format=None):
-        print "post"
+        """
+        Add New Banner
+        """
+        print "Method POST"
         serializer = admin_serializers.BannerSerializer(data=request.data)
         print serializer
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+    
+    def delete(self, request, format=None):
+        """
+        Delete All Banner Selected
+        """
+        print "Method DELETE"
+        try:
+            # Get list id banner to delete
+            list_id_str = self.request.query_params.get('list_id', '')
+            print "LIST NOTIFICATION ID DELETE : ", list_id_str
+
+            # Check list id banner is valid
+            if list_id_str:
+                list_id = []
+                # convert list id string to list
+                try:
+                    list_id = eval(list_id_str)
+                except SyntaxError:
+                    return Response({"code": 400, "message": "List ID must be format is '[1, 2, 3]' ", "fields": ""}, status=400)
+
+                # BannerSerializer.objects.filter(pk__in = list_id).delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+
+            return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
+        except ValueError:
+            #Handle the exception
+            print 'Please enter an integer'
+        except Exception, e:
+            print e
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+
 """
     Get All CategoryNotifications
     @author :diemnguyen

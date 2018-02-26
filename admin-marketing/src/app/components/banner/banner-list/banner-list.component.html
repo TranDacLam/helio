@@ -8,8 +8,7 @@
     </nav>
 </div>
 <!-- End breadcrumb -->
-<hr>
-<div class='row '>
+<div class='row content-banner'>
 	<a class="pull-left" routerLink="/banner-list">Banner</a>
 	<a class="pull-right" routerLink="/banner-add">Thêm banner</a>
 </div>
@@ -27,7 +26,7 @@
 	<table id="table-user" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
-	      		<th><input type="checkbox" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/>  Banner</th>
+	      		<th class='checkbox-banner'><input type="checkbox" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/>  Banner</th>
 	      	</tr>
     	</thead>
     	<tbody>
@@ -47,7 +46,7 @@
 		</div>
 		<div class="col-md-3">
 			{{banner_del.length}} của {{banners.length}} được chọn
-			<button (click)="deleteBannersCheckbox()" type="button" class="btn btn-danger">Thực hiện</button>
+			<button (click)="deleteBannersCheckbox()" type="button" class="button-banner btn btn-danger">Thực hiện</button>
 		</div>
 	</div>
 </div>

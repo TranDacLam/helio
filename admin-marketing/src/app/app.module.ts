@@ -87,6 +87,7 @@ import { FormGameComponent } from './components/games/form-game/form-game.compon
 import { FormPostComponent } from './components/posts/form-post/form-post.component';
 
 import { HomeComponent } from './components/home/home.component';
+import { FormBannerComponent } from './components/banner/form-banner/form-banner.component';
 
 
 
@@ -153,6 +154,7 @@ import { HomeComponent } from './components/home/home.component';
     FormGameComponent,
     FormPostComponent,
     HomeComponent,
+    FormBannerComponent,
 
   ],
   imports: [

@@ -16,7 +16,7 @@ const httpOptions = {
 
 @Injectable()
 export class FeedbackService {
-	// filter = new Filter();
+
 	constructor(private http: HttpClient) { }
 
 	/*
@@ -61,8 +61,8 @@ export class FeedbackService {
 		DELETE: Delete All Feedback chosen
 	 */
 	deleteAllFeedbackChecked(fed_id: Feedback[]): Observable<Feedback[]> {
-    	const url = `${api.feedback}?fed_id=${fed_id}`;
-    	return this.http.delete<Feedback[]>(url, httpOptions)
+    	// const url = `${api.feedback}?fed_id=${fed_id}`;
+    	return this.http.delete<Feedback[]>(api.feedback, httpOptions)
     		.catch(this.handleError)
   	}
 
