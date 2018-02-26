@@ -18,7 +18,6 @@ export class FeeListComponent implements OnInit {
    dtElement: DataTableDirective;
    fees: Fee[];
    errorText: string;
-   dtTrigger: Subject<any> = new Subject();
    dtOptions: DataTables.Settings = {};
    list_id = [];
    // when get data, set value for fees, trigger data table
@@ -27,7 +26,6 @@ export class FeeListComponent implements OnInit {
    		success => {
         this.errorText = null;
    			this.fees = success; 
-   			this.dtTrigger.next();
    		},
 		error => {
 			this.errorText = error.statusText;
@@ -84,22 +82,18 @@ export class FeeListComponent implements OnInit {
        this.errorText = 'Chưa chọn phí nào để xóa.';
        return false;
      }
-     this.feeService.deleteListFee(this.list_id).subscribe( 
-       success => {
-         this.errorText = null;
-         var fee_temp: Fee;
-            
-           for (var i in this.list_id){
-                fee_temp = this.fees.find( fee => fee.id == this.list_id[i] );
-                this.fees = this.fees.filter( fees => fees !== fee_temp  );
-              }
-           console.log(this.fees);
 
-           this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-            dtInstance.destroy();
-            this.dtTrigger.next();
-           });
-           this.list_id = [];
+     this.feeService.deleteListFee(this.list_id).subscribe( 
+       (success) => {
+             this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                for (var id in this.list_id){
+                    console.log('foreach', id);
+                    dtInstance.row('#'+this.list_id[id]).remove();
+                    dtInstance.draw();
+                    var fee_temp = this.fees.find( fee => fee.id == this.list_id[id] );
+                    this.fees = this.fees.filter( fees => fees !== fee_temp  );
+                };
+            });
          },
        error =>{
         this.errorText = error.json().message;
