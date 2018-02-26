@@ -16,10 +16,22 @@ export class FeeListComponent implements OnInit {
    }
    @ViewChild(DataTableDirective)
    dtElement: DataTableDirective;
-   fees: Fee[];
-   errorText: string;
    dtOptions: DataTables.Settings = {};
+   // data for datatable render
+   fees: Fee[];
+   // text error
+   errorText: string;
+   // list consist of id to delete list 
    list_id = [];
+
+   // action when hover
+   hoverIn(fee){
+     fee.isHover = true;
+   }
+    hoverOut(fee){
+     fee.isHover = false;
+   }
+
    // when get data, set value for fees, trigger data table
    getFees(){
    	return this.feeService.getFees().subscribe(
@@ -52,16 +64,16 @@ export class FeeListComponent implements OnInit {
 
    /*
       when check checkbox
-      check id exist in list_id, if false add id to list_id, if true, no add
+      check id exist in list_id ( avoid duplicate when select all) 
+          if false add id to list_id, if true, no add
       when uncheck checkbox
       remove id in list_id 
    */
     triggerItem( checked: boolean, id: any){
        if(checked){
-         for (var i in this.list_id){
-           if ( id == this.list_id[i] ){
+         var fee = this.list_id.find( item => item == id);
+         if (fee){
              return false;
-           }
          }
          this.list_id.push(id);
        }else{
@@ -70,10 +82,11 @@ export class FeeListComponent implements OnInit {
        }
     }
     /*
-      list_id has list of id to remove
-      for in list_id, 
-      find fee has id in list_id
-      fees remove found fee
+      part 1:
+         delete fee in this.fees
+      part 2:
+         delete row in datatable
+         set list_id empty
     */
 
    deleteFee(){
@@ -82,44 +95,57 @@ export class FeeListComponent implements OnInit {
        this.errorText = 'Chưa chọn phí nào để xóa.';
        return false;
      }
-
      this.feeService.deleteListFee(this.list_id).subscribe( 
        (success) => {
-             this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                for (var id in this.list_id){
-                    console.log('foreach', id);
-                    dtInstance.row('#'+this.list_id[id]).remove();
-                    dtInstance.draw();
-                    var fee_temp = this.fees.find( fee => fee.id == this.list_id[id] );
-                    this.fees = this.fees.filter( fees => fees !== fee_temp  );
-                };
+             for (var item in this.list_id){
+                this.fees = this.fees.filter( fee => fee.id !== this.list_id[item]  );
+            }
+            this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                this.list_id.forEach(function(item){
+                      dtInstance.rows('#'+item).remove().draw();
+                });
+               this.list_id = []
             });
          },
        error =>{
         this.errorText = error.json().message;
       });
-
-
    }
    
    /*
       find fee which clicked
-      filter in fees
-      if item is apply and same position with found fee, remove apply
-      found fee add apply
+      for item in fees
+        if item is apply and same position with found fee, cancel apply
+      set found fee is apply
 
    */
    apply_fee(id: number){
      
      this.feeService.applyFee(id).subscribe(
        success => {
-         this.errorText = null;
-          var fee = this.fees.find( fee => fee.id == id);
-               this.fees.filter( item =>{ 
-                 if(item.is_apply == true && item.position == fee.position) 
-                   item.is_apply = false;  
-               });
+           this.errorText = null;
+           var fee = this.fees.find( fee => fee.id == id);
+           this.fees.filter( item =>{ 
+             if(item.is_apply == true && item.position == fee.position) 
+               item.is_apply = false;  
+           });
           fee.is_apply = true;
+       },
+       error => this.errorText = error.json().message
+       );
+   }
+
+   /*
+      cancel appply fee
+   */
+   cancel_apply_fee(id: number){
+     this.feeService.applyFee(id).subscribe(
+       success => {
+          this.errorText = null;
+          var fee = this.fees.find( fee => fee.id == id);
+          if(fee.is_apply){
+            fee.is_apply = false;
+          }
        },
        error => this.errorText = error.json().message
        );
