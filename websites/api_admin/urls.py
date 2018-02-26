@@ -21,8 +21,6 @@ urlpatterns = [
 
 	url(r'^summary/$', views.SummaryAPI.as_view(), name="summary"),
 
-	url(r'^promotion_label/$', views.PromotionLabel.as_view(), name="promotion_label"),
-
 	url(r'^advertisement/$', views.AdvertisementView.as_view(), name="advertisement"),
 	url(r'^advertisement/(?P<pk>[0-9]+)/$', views.AdvertisementDetail.as_view(), name="advertisement-detail"),
 
@@ -51,4 +49,8 @@ urlpatterns = [
 	url(r'^banner/$', views.BannerView.as_view(), name="banner"),
 	url(r'^promotion_label/$', views.PromotionLabelAPI.as_view(), name="promotion-label"),
 	url(r'^promotion_label/(?P<id>[0-9]+)/$', views.PromotionLabelAPI.as_view(), name="promotion-label-detail"),
+	url(r'^hot/$', views.HotAPI.as_view(), name="hot"),
+	url(r'^hot/(?P<id>[0-9]+)/$', views.HotAPI.as_view(), name="hot-detail"),
+	url(r'^post/$', views.PostAPI.as_view(), name="post"),
+	url(r'^post/(?P<id>[0-9]+)/$', views.PostAPI.as_view(), name="post-detail"),
 ]

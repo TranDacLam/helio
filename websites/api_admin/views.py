@@ -333,37 +333,6 @@ class AdvertisementDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 """
-GET and POST Promotion_Label
-"""
-
-
-@permission_classes((AllowAny, ))
-class PromotionLabel(APIView):
-
-    def get(self, request, format=None):
-        """
-            Get all promotion_label
-        """
-        try:
-            promotion_label_list = Promotion_Label.objects.all()
-            serializer = admin_serializers.PromotionLabelSerializer(
-                promotion_label_list, many=True)
-            return Response(serializer.data)
-        except Exception, e:
-            error = {"code": 500, "message": "%s" % e, "fields": ""}
-            return Response(error, status=500)
-
-    def post(self, request, format=None):
-        """
-            POST: Create a new Promotion_Label
-        """
-        serializer = admin_serializers.PromotionLabelSerializer(
-            data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-"""
 Get PromotionType
 @author: Trangle
 """
@@ -1178,7 +1147,7 @@ class CategoryNotifications(APIView):
     @author :Hoangnguyen
 
 """
-@parser_classes((MultiPartParser,))
+@parser_classes((MultiPartParser,JSONParser ))
 @permission_classes((AllowAny,))
 class EventAPI(APIView):
 
@@ -1230,11 +1199,20 @@ class EventAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
 
-    def delete(self, request, id, format=None):
+    def delete(self, request, id=None, format=None):
         try:
-            event = Event.objects.get(id = id)
-            event.delete()
-            return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+            if id:
+                event = Event.objects.get(id = id)
+                event.delete()
+                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+
+            list_id = request.data.get('list_id', None)
+            if list_id:
+                events = Event.objects.filter(id__in = list_id)
+                if events:  
+                    events.delete() 
+                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
 
         except Event.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
@@ -1305,11 +1283,103 @@ class PromotionLabelAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
 
-    def delete(self, request, id, format=None):
-        promotionLabel = self.get_object(id)
+    def delete(self, request, id = None, format=None):
         try:
-            promotionLabel.delete()
-            return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+            if id:
+                promotionLabel = Promotion_Label.objects.get(id = id)
+                promotionLabel.delete()
+                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+
+            list_id = request.data.get('list_id', None)
+            if list_id:
+                promotionLabels = Promotion_Label.objects.filter(id__in = list_id)
+                if promotionLabels:  
+                    promotionLabels.delete() 
+                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
+
+        except Promotion_Label.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+"""
+    Hot
+    @author :Hoangnguyen
+
+"""
+@parser_classes((MultiPartParser, JSONParser))
+@permission_classes((AllowAny,))
+class HotAPI(APIView):
+
+    def get(self, request, id = None):
+        try:
+            if id:
+                hot = Hot.objects.get(id = id)
+                hotSerializer = admin_serializers.HotSerializer(hot)
+            else:
+                hots = Hot.objects.all()
+                hotSerializer = admin_serializers.HotSerializer(hots, many = True)
+            return Response(hotSerializer.data)
+
+        except Hot.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def post(self, request, format=None):
+        try:
+            hotSerializer = admin_serializers.HotSerializer( data = request.data )
+            if hotSerializer.is_valid():
+                hotSerializer.save()
+                return Response(hotSerializer.data)
+            return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status = 400 )
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+    
+    def put(self, request, id):
+        try:
+            hot = Hot.objects.get(id = id)
+            hotSerializer = admin_serializers.HotSerializer( instance = hot, data = request.data)
+            if hotSerializer.is_valid():
+                hotSerializer.save()
+                return Response(hotSerializer.data)
+            return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
+        
+        except Hot.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id = None, format=None):
+        try:
+            if id:
+                hot = Hot.objects.get(id = id)
+                hot.delete()
+                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+
+            list_id = request.data.get('list_id', None)
+            if list_id:
+                hots = Hot.objects.filter(id__in = list_id)
+                if hots:  
+                    hots.delete() 
+                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Hot.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
         except Exception, e:
             print "EventAPI", e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}

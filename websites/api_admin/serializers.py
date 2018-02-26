@@ -144,8 +144,15 @@ class EventSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class PromotionLabelSerializer(serializers.ModelSerializer):
+class HotSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Promotion_Label
-        fields = ('id', 'name', )
+        model = Hot
+        fields = ('id', 'name', 'sub_url', 'image', 'is_show')
+
+class PostSerializer(serializers.ModelSerializer):
+
+    post_type = serializers.SlugRelatedField(queryset = Post_Type.objects.all(), read_only=False, slug_field = 'name' )
+    class Meta:
+        model = Post
+        fields = ('name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
