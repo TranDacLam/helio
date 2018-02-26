@@ -566,12 +566,14 @@ class UserLinkCardList(APIView):
         DELETE: multi checbox
         """
         try:
-            user_linked_id = self.request.query_params.get(
+            user_linked_id = self.request.data.get(
                 'user_linked_id', None)
+            
+            print "USER_LINKED_ID", user_linked_id
+
             if user_linked_id:
-                user_linked_id_list = user_linked_id.split(',')
                 queryset = User.objects.filter(
-                    pk__in=user_linked_id_list).delete()
+                    pk__in=user_linked_id).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
