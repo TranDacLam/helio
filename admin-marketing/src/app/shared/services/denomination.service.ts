@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Http, Headers, Response } from '@angular/http';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of'; 
@@ -12,13 +11,13 @@ import { api } from '../utils/api';
 import { Denomination } from '../../shared/class/denomination';
 
 const httpOptions = {
-	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+	headers: new Headers({ 'Content-Type': 'application/json' })
 };
 
 @Injectable()
 export class DenominationService {
 
-	constructor(private http: HttpClient) { }
+	constructor(private http: Http) { }
 
 	/*
 		GET: Get All Denomination From Server
@@ -26,7 +25,7 @@ export class DenominationService {
 	 */
 	getAllDenomination(): Observable<Denomination[]> {
     	let urlDeno = `${api.denomination}`;
-		return this.http.get<Denomination[]>(urlDeno).catch(this.handleError)
+		return this.http.get(urlDeno).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	/*
@@ -35,16 +34,24 @@ export class DenominationService {
 	*/
 	createDenomination(deno: Denomination): Observable<Denomination> {
     	let urlDeno = `${api.denomination}`;
-		return this.http.post<Denomination>(urlDeno, deno, httpOptions).catch(this.handleError)
+		return this.http.post(urlDeno, deno, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	/*
 		DELETE: Delete All Denomination Which Checked box
 	 */
-  	deleteAllDenosSelected(deno_id: Denomination[]): Observable<Denomination[]> {
-    	const url = `${api.denomination}?deno_id=${deno_id}`;
-    	return this.http.delete<Denomination[]>(url, httpOptions)
-    		.catch(this.handleError)
+  	deleteAllDenosSelected(deno_id): Observable<any> {
+    	const url = `${api.denomination}`;
+    	let param = {
+            deno_id: deno_id
+        }
+        console.log(param);
+        let _options = new RequestOptions({
+            headers: httpOptions.headers,
+            body: JSON.stringify(param)
+        });
+
+        return this.http.delete(url, _options).map((res: Response) => res.json()).catch(this.handleError);
   	}
 
 	/* 

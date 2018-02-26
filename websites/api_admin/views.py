@@ -415,11 +415,11 @@ class DenominationView(APIView):
         DELETE: Multi ids select
         """
         try:
-            deno_id = self.request.query_params.get('deno_id', None)
+            deno_id = self.request.data.get('deno_id', None)
+            print "DENO ID", deno_id
             if deno_id:
-                deno_id_list = deno_id.split(',')
                 queryset = Denomination.objects.filter(
-                    pk__in=deno_id_list).delete()
+                    pk__in=deno_id).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
@@ -507,7 +507,6 @@ class FeedbackView(APIView):
 GET, PUT, DELETE Feedback by id
 @author: Trangle
 """
-
 
 @permission_classes((AllowAny, ))
 class FeedbackDetailView(APIView):
@@ -1192,7 +1191,6 @@ class BannerView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-<<<<<<< HEAD
     
     def delete(self, request, format=None):
         """
@@ -1201,31 +1199,18 @@ class BannerView(APIView):
         print "Method DELETE"
         try:
             # Get list id banner to delete
-            list_id_str = self.request.query_params.get('list_id', '')
-            print "LIST NOTIFICATION ID DELETE : ", list_id_str
+            list_id = self.request.data.get('list_id', '')
+            print "LIST BANNER ID DELETE : ", list_id
 
             # Check list id banner is valid
             if list_id_str:
-                list_id = []
-                # convert list id string to list
-                try:
-                    list_id = eval(list_id_str)
-                except SyntaxError:
-                    return Response({"code": 400, "message": "List ID must be format is '[1, 2, 3]' ", "fields": ""}, status=400)
-
                 # BannerSerializer.objects.filter(pk__in = list_id).delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
-
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
-        except ValueError:
-            #Handle the exception
-            print 'Please enter an integer'
         except Exception, e:
             print e
             error = {"code": 500, "message": "Internal Server Error", "fields":""}
             return Response(error, status=500)
-=======
->>>>>>> develop
 
 """
     Get All CategoryNotifications
