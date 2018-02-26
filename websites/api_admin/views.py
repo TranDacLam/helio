@@ -1165,7 +1165,7 @@ class FeeAPI(APIView):
 @permission_classes((AllowAny,))
 class BannerView(APIView):
 
-    parser_classes = (FileUploadParser, MultiPartParser, FormParser)
+    # parser_classes = (FileUploadParser, MultiPartParser, FormParser)
 
     def get(self, request, format=None):
         """
@@ -1200,12 +1200,12 @@ class BannerView(APIView):
         print "Method DELETE"
         try:
             # Get list id banner to delete
-            list_id = self.request.data.get('list_id', '')
-            print "LIST BANNER ID DELETE : ", list_id
+            banner_id = self.request.data.get('banner_id', None)
+            print "LIST BANNER ID DELETE : ", banner_id
 
             # Check list id banner is valid
-            if list_id_str:
-                # BannerSerializer.objects.filter(pk__in = list_id).delete()
+            if banner_id:
+                Banner.objects.filter(pk__in = banner_id).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
         except Exception, e:

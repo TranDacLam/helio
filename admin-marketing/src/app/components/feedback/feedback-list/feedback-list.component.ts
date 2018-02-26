@@ -156,6 +156,11 @@ export class FeedbackListComponent implements OnInit {
         @author: Trangle
      */
     deleteFeedbackCheckbox() {
+        /*
+            Check feedback_del not Null
+            if feedback.length == 0, return message
+            else if delete id selected
+         */
         if (this.feedback_del !== null) {
             if( this.feedback_del.length == 0) {
                 this.message_error = "Vui lòng chọn phản hồi để xóa";

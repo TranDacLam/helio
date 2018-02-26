@@ -126,14 +126,25 @@ export class BannerListComponent implements OnInit {
     }
 
     deleteBannersCheckbox() {
-        this.bannerService.deleteBannerSelected(this.banner_del).subscribe(
+        if (this.banner_del !== null) { 
+            if( this.banner_del.length == 0) {
+                this.message_error = "Vui lòng chọn feedback để xóa";
+                this.message_result = "";
+                this.message_success = "";
+        } else {
+            this.bannerService.deleteBannerSelected(this.banner_del).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     this.banner_del.forEach(function(element) {
                         dtInstance.rows('#delete'+element).remove().draw();
                     });
+                    this.banner_del = [];
                 });
-            }
-        );
+                this.message_success = "Xóa banner thành công";
+            },
+            (error) =>  this.errorMessage = <any>error
+            );
+            }  
+        }
     }
 }
