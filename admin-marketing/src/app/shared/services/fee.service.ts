@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Fee } from '../class/fee';
-import { Customer } from '../class/customer';
+// import { Customer } from '../class/customer';
 import { Http, Response, Headers } from '@angular/http';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-// import 'rxjs/add/operator/map';
-import "rxjs/add/operator/catch";
+// import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+// import "rxjs/add/operator/catch";
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import {RequestOptions, Request, RequestMethod, RequestOptionsArgs} from '@angular/http'
+import { api } from '../utils/api';
+
+
 const httpOptions = {
   headers: new Headers({ 'Content-Type': 'application/json' })
 };
@@ -20,7 +22,7 @@ export class FeeService {
 
 
 
-  private feeUrl = 'http://127.0.0.1:8000/vi/api/fee/';
+  private feeUrl = api.fee;
 
   	getFees(): Observable<Fee[]>{
   		return this.http.get(this.feeUrl, httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
@@ -41,8 +43,9 @@ export class FeeService {
   		return this.http.delete( this.feeUrl, options  ).map((res: Response) => res.json()).catch(this.handleError);
 	}
 	applyFee(id: number):Observable<Fee>{
-		let feeUrl = `http://127.0.0.1:8000/vi/api/fee/${id}/`;
-  		return this.http.put( feeUrl, httpOptions  ).map((res: Response) => res.json()).catch(this.handleError);
+		// let feeUrl = `http://127.0.0.1:8000/vi/api/fee/${id}/`;
+		let feeDetailUrl = this.feeUrl + `${id}/`;
+  		return this.http.put( feeDetailUrl, httpOptions  ).map((res: Response) => res.json()).catch(this.handleError);
 
 	}
 

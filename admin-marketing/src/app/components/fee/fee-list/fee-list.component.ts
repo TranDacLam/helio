@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Fee } from '../../../shared/class/fee';
 import { FeeService } from '../../../shared/services/fee.service';
 import { Subject } from 'rxjs/Subject';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-fee-list',
@@ -10,11 +11,12 @@ import { Subject } from 'rxjs/Subject';
 })
 export class FeeListComponent implements OnInit {
 
-  constructor( private feeService: FeeService) {
+  constructor( private feeService: FeeService ) {
 
    }
+   @ViewChild(DataTableDirective)
+   dtElement: DataTableDirective;
    fees: Fee[];
-   // fee: Fee;
    errorText: string;
    dtTrigger: Subject<any> = new Subject();
    dtOptions: DataTables.Settings = {};
@@ -75,23 +77,37 @@ export class FeeListComponent implements OnInit {
       find fee has id in list_id
       fees remove found fee
     */
+
    deleteFee(){
-     
+     // check list_id exist
+     if( this.list_id.length == 0 ){
+       this.errorText = 'Chưa chọn phí nào để xóa.';
+       return false;
+     }
      this.feeService.deleteListFee(this.list_id).subscribe( 
        success => {
          this.errorText = null;
          var fee_temp: Fee;
-         for (var i in this.list_id){
-           fee_temp = this.fees.find( fee => fee.id == this.list_id[i] );
-           this.fees = this.fees.filter( fees => fees !== fee_temp  );
-         }
+            
+           for (var i in this.list_id){
+                fee_temp = this.fees.find( fee => fee.id == this.list_id[i] );
+                this.fees = this.fees.filter( fees => fees !== fee_temp  );
+              }
+           console.log(this.fees);
+
+           this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+            this.dtTrigger.next();
+           });
            this.list_id = [];
          },
        error =>{
         this.errorText = error.json().message;
-      }
-       );
+      });
+
+
    }
+   
    /*
       find fee which clicked
       filter in fees
