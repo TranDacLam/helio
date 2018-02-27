@@ -59,5 +59,9 @@ urlpatterns = [
 	url(r'^post/$', views.PostAPI.as_view(), name="post"),
 	url(r'^post/(?P<id>[0-9]+)/$', views.PostAPI.as_view(), name="post-detail"),
 	url(r'^post_list/$', views.PostListAPI.as_view(), name="post-list"),
+	url(r'^post_type_list/$', views.PostTypeListAPI.as_view(), name="post-type-list"),
 
+	url(r'^faq/$', views.FAQAPI.as_view(), name="faq"),
+	url(r'^faq/(?P<id>[0-9]+)/$', views.FAQAPI.as_view(), name="faq-detail"),
+	url(r'^faq_list/$', views.FAQListAPI.as_view(), name="faq-list"),
 ]

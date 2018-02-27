@@ -1535,3 +1535,118 @@ class PostListAPI(APIView):
             print "HotListAPI", e
             error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
             return Response(error, status=500)
+
+"""
+    PostTypeList
+    @author :Hoangnguyen
+ 
+"""
+@permission_classes((AllowAny,))
+class PostTypeListAPI(APIView):
+
+    def get(self, request):
+        try:
+            post_Type = Post_Type.objects.all()
+            postSerializer = admin_serializers.PostTypeSerializer(post_Type, many = True)
+            return Response(postSerializer.data)
+        except Exception, e:
+            print "PostTypeListAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+"""
+    FAQ 
+    @author :Hoangnguyen
+    TODO upload image 
+"""
+@parser_classes((JSONParser,))
+@permission_classes((AllowAny,))
+class FAQAPI(APIView):
+
+    def get(self, request, id):
+        try:
+            faq = FAQ.objects.get(id = id)
+            faqSerializer = admin_serializers.FAQSerializer(faq)
+            return Response(faqSerializer.data)
+
+        except FAQ.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found FAQ.", "fields": ""}, status=400)
+        except Exception, e:
+            print "FAQAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def post(self, request, format=None):
+        try:
+            faqSerializer = admin_serializers.FAQSerializer( data = request.data )
+            if faqSerializer.is_valid():
+                faqSerializer.save()
+                return Response(faqSerializer.data)
+            return Response({"code": 400, "message": faqSerializer.errors, "fields": ""}, status = 400 )
+
+        except Exception, e:
+            print "FAQAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+    
+    def put(self, request, id):
+        try:
+            faq = FAQ.objects.get(id = id)
+            faqSerializer = admin_serializers.FAQSerializer( instance = faq, data = request.data)
+            if faqSerializer.is_valid():
+                faqSerializer.save()
+                return Response(faqSerializer.data)
+            return Response({"code": 400, "message": faqSerializer.errors, "fields": ""}, status=400)
+        
+        except FAQ.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found FAQ.", "fields": ""}, status=400)
+        except Exception, e:
+            print "FAQAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id, format=None):
+        try:
+            faq = FAQ.objects.get(id = id)
+            faq.delete()
+            return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+
+        except FAQ.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found FAQ.", "fields": ""}, status=400)
+        except Exception, e:
+            print "FAQAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+"""
+    FAQList
+    @author :Hoangnguyen
+ 
+"""
+@permission_classes((AllowAny,))
+class FAQListAPI(APIView):
+
+    def get(self, request):
+        try:
+            faq = FAQ.objects.all()
+            faqSerializer = admin_serializers.FAQSerializer(faq, many = True)
+            return Response(faqSerializer.data)
+        except Exception, e:
+            print "FAQListAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request):
+        try:
+            list_id = request.data.get('list_id', None)
+            if list_id:
+                faqs = FAQ.objects.filter(id__in = list_id)
+                if faqs:  
+                    faqs.delete() 
+                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "Not Found FAQs.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
+        
+        except Exception, e:
+            print "HotListAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
