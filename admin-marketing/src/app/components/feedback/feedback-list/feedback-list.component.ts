@@ -93,6 +93,7 @@ export class FeedbackListComponent implements OnInit {
 
 	/*
         GET: Get all Feedback To Show
+        Call api from service feedback
         @author: TrangLe
      */
 	getAllFeedbacks() {
@@ -142,7 +143,6 @@ export class FeedbackListComponent implements OnInit {
             let updateDenoItem = this.feedback_del.find(this.findIndexToUpdate, feedback.id);
 
             let index = this.feedback_del.indexOf(updateDenoItem);
-            console.log(index);
 
             this.feedback_del.splice(index, 1);
         }

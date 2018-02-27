@@ -32,7 +32,7 @@ export class BannerListComponent implements OnInit {
   dtElement: DataTableDirective;
 
 
-    // Using trigger becase fetching the list of feedbacks can be quite long
+    // Using trigger becase fetching the list of banners can be quite long
 	// thus we ensure the data is fetched before rensering
 	dtTrigger: Subject<any> = new Subject();
 
@@ -125,6 +125,11 @@ export class BannerListComponent implements OnInit {
         return type.id === this;
     }
 
+    /*
+        Function: Delete All Banner Selected
+
+        @author: TrangLe
+     */
     deleteBannersCheckbox() {
         if (this.banner_del !== null) { 
             if( this.banner_del.length == 0) {
@@ -135,8 +140,11 @@ export class BannerListComponent implements OnInit {
             this.bannerService.deleteBannerSelected(this.banner_del).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                    var self = this;
                     this.banner_del.forEach(function(element) {
                         dtInstance.rows('#delete'+element).remove().draw();
+                        var banner_item = self.banners.find(banner => banner.id == element);
+                        self.banners = self.banners.filter(banners => banners !== banner_item);
                     });
                     this.banner_del = [];
                 });

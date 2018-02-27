@@ -82,8 +82,6 @@ import { FormPostComponent } from './components/posts/form-post/form-post.compon
 
 import { HomeComponent } from './components/home/home.component';
 
-import { FormBannerComponent } from './components/banner/form-banner/form-banner.component';
-
 import { AddPromotionComponent } from './components/promotions/add-promotion/add-promotion.component';
 import { EditPromotionComponent } from './components/promotions/edit-promotion/edit-promotion.component';
 import { PromotionFormComponent } from './components/promotions/promotion-form/promotion-form.component';
@@ -153,7 +151,6 @@ import { ErrorComponent } from './components/error/error.component';
     FormGameComponent,
     FormPostComponent,
     HomeComponent,
-    FormBannerComponent,
     AddPromotionComponent,
     EditPromotionComponent,
     PromotionFormComponent,
