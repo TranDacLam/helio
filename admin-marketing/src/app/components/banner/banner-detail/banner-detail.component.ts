@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Banner } from '../../../shared/class/banner';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Banner, positions } from '../../../shared/class/banner';
 import { BannerService } from '../../../shared/services/banner.service';
 
 @Component({
@@ -11,17 +12,38 @@ import { BannerService } from '../../../shared/services/banner.service';
 export class BannerDetailComponent implements OnInit {
 
 	banner: Banner;
-	method: 'PUT'; // type method from form-banner component 
+    formBanner: FormGroup;
+    banner_form = new Banner();
 	errorMessage: String;
+    positions = positions;
+    // set inputImage property as a local variable, #inputImage on the tag input file
+    @ViewChild('inputImage')
+    inputImage: any;
 
   	constructor( 
   		private bannerService: BannerService,
-  		private route: ActivatedRoute
-  	) { }
+  		private route: ActivatedRoute,
+        private fb: FormBuilder,
+  	) {
+        this.createForm();
+       }
 
   	ngOnInit() {
   		this.getBannerById();
   	}
+
+      /* 
+      Create form to add banner
+      @author: Trangle
+    */
+    createForm() {
+        this.formBanner = this.fb.group({
+            image: [this.banner_form.image, [Validators.required]],
+            sub_url: [this.banner_form.sub_url, [Validators.required]],
+            position: [this.banner_form.position, [Validators.required]],
+            is_show: [false]
+        });
+    }
 
   	/*
   		Get Banner By Id
@@ -36,5 +58,25 @@ export class BannerDetailComponent implements OnInit {
         	error =>  this.errorMessage = <any>error
         );
   	}
+
+    /*
+        Upload image
+        FileReader: reading file contents
+        @author: TrangLe
+    */
+    onFileChange(e) {
+      if(e.target.files && e.target.files.length > 0) {
+        let file = e.target.files[0];
+        this.formBanner.get('image').setValue(file);
+      }
+    }
+    /*
+        Clear file upload
+        @author: Trangle
+     */
+    clearFile() {
+      this.formBanner.get('image').setValue(null);
+      this.inputImage.nativeElement.value = "";
+    }
 
 }
