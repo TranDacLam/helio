@@ -4,6 +4,8 @@ import { FeeService } from '../../../shared/services/fee.service';
 import { Subject } from 'rxjs/Subject';
 import { DataTableDirective } from 'angular-datatables';
 
+declare var bootbox:any;
+
 @Component({
   selector: 'app-fee-list',
   templateUrl: './fee-list.component.html',
@@ -14,6 +16,9 @@ export class FeeListComponent implements OnInit {
   constructor( private feeService: FeeService ) {
 
    }
+
+  // author: Hoangnguyen
+
    @ViewChild(DataTableDirective)
    dtElement: DataTableDirective;
    dtOptions: DataTables.Settings = {};
@@ -45,7 +50,9 @@ export class FeeListComponent implements OnInit {
    }
    
    /*
-    for loop in fees, call triggerItem
+    selectAll FUNCTION
+    for loop in fees, call triggerItem to add id to list_id
+    author: Hoangnguyen
    */
    selectAll(event){
      if(event.target.checked){
@@ -63,11 +70,13 @@ export class FeeListComponent implements OnInit {
    }
 
    /*
+      triggerItem FUNCTION
       when check checkbox
       check id exist in list_id ( avoid duplicate when select all) 
           if false add id to list_id, if true, no add
       when uncheck checkbox
       remove id in list_id 
+      author: Hoangnguyen
    */
     triggerItem( checked: boolean, id: any){
        if(checked){
@@ -81,42 +90,66 @@ export class FeeListComponent implements OnInit {
          this.list_id.splice(index, 1);
        }
     }
+
     /*
+      confirm_delete FUNCTION
+      if list_id exist show popup confirm
+      else show popup alert
+      author: Hoangnguyen
+    */
+    confirm_delete(){
+      let self = this;
+      if( this.list_id.length > 0 ){
+          bootbox.confirm({ 
+            title: "Bạn có chắc chắn",
+            message: "Bạn muốn xóa " + this.list_id.length + " phần tử đã chọn",
+            callback: function(result){ 
+              /* result is a boolean; true = OK, false = Cancel*/
+              if (result){
+                self.deleteFee();
+              }
+            }
+          })
+      }else{
+          bootbox.alert("Vui lòng chọn phần tử cần xóa");
+      }
+    }
+    /*
+      deleteFee FUNCTION
       part 1:
          delete fee in this.fees
       part 2:
          delete row in datatable
          set list_id empty
+      author: Hoangnguyen
     */
-
-   deleteFee(){
-     // check list_id exist
-     if( this.list_id.length == 0 ){
-       this.errorText = 'Chưa chọn phí nào để xóa.';
-       return false;
-     }
-     this.feeService.deleteListFee(this.list_id).subscribe( 
-       (success) => {
-             for (var item in this.list_id){
-                this.fees = this.fees.filter( fee => fee.id !== this.list_id[item]  );
-            }
-            this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                this.list_id.forEach(function(item){
+     deleteFee(){
+       this.feeService.deleteListFee(this.list_id).subscribe( 
+         (success) => {
+              let self = this;
+              this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                  this.list_id.forEach(function(item){
+                      // delete fee in this.fees
+                      self.fees = self.fees.filter( fee => fee.id !== item  );
+                      // delete row in datatable
                       dtInstance.rows('#'+item).remove().draw();
-                });
-               this.list_id = []
-            });
-         },
-       error =>{
-        this.errorText = error.json().message;
-      });
-   }
+                  });
+                 this.list_id = []
+              });
+           },
+         error =>{
+          this.errorText = error.json().message;
+        });
+       return true;
+     }
    
    /*
+      apply_fee FUNCTION
       find fee which clicked
       for item in fees
         if item is apply and same position with found fee, cancel apply
       set found fee is apply
+      author: Hoangnguyen
 
    */
    apply_fee(id: number){
@@ -136,7 +169,9 @@ export class FeeListComponent implements OnInit {
    }
 
    /*
+      cancel_apply_fee FUNCTION
       cancel appply fee
+      author: Hoangnguyen
    */
    cancel_apply_fee(id: number){
      this.feeService.applyFee(id).subscribe(

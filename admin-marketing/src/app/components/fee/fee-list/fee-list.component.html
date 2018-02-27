@@ -34,7 +34,7 @@
 				<td class="fee-tb">{{fee.fee}} {{fee.fee_type}}</td>
 				<td class="position-tb">{{fee.position}}</td>
 				<td *ngIf="fee.is_apply">
-					<div (mouseover)="hoverIn(fee);" (mouseleave)="hoverOut(fee);" class="btn btn-primary text-center" (click)="fee.isHover? cancel_apply_fee(fee.id): apply_fee(fee.id)" >
+					<div (mouseover)="hoverIn(fee);" (mouseleave)="hoverOut(fee);" class="btn btn-success text-center" (click)="fee.isHover? cancel_apply_fee(fee.id): apply_fee(fee.id)" >
 						<span *ngIf="fee.isHover">Hủy Áp dụng phí</span>
 						<span *ngIf="!fee.isHover" >Đang Áp dụng phí</span>
 					</div>
@@ -53,6 +53,6 @@
 		</div>
 		<div class="col-md-3" *ngIf="fees" >
 			 {{list_id.length}} của {{fees.length}} được chọn
-			<button type="button" class="btn btn-danger" (click)="deleteFee();">Thực hiện</button>
+			<button type="button" class="btn btn-danger" (click)="confirm_delete();">Thực hiện</button>
 		</div>
 	</div>
