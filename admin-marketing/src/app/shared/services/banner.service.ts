@@ -29,6 +29,22 @@ export class BannerService {
   	}
 
     /*
+      GET: Get Banner By Id
+      @author: TrangLe
+     */
+    getBannerById(id: number): Observable<Banner> {
+      const url = `${api.banner}${id}/`;
+      return this.http.get(url, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    }
+    /*
+        PUT: Update Banner By Id
+        @author: Trangle
+     */
+    updateBanner(banner: Banner, id:number): Observable<Banner> {
+        const url = `${api.feedback}${id}/`;
+        return this.http.put(url, banner, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    }
+    /*
       POST: Create a New Banner
       @author: TrangLe
     */

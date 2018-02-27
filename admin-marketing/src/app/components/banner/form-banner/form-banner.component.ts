@@ -81,7 +81,13 @@ export class FormBannerComponent implements OnInit {
     				error => this.errorMessage = <any>error
     				);
     		this.router.navigate(['/banner-list', { message_post: this.banner_form.sub_url} ])
-    	}
+    	} else if(this.method = 'PUT') {
+            this.bannerService.updateBanner(this.formBanner.value, this.banner.id)
+                .subscribe(
+                    () => this.router.navigate(['/feedback-list', { message_put: this.banner_form.sub_url} ]),
+                    error =>  this.errorMessage = <any>error
+                    );
+      }
     }
 
 }

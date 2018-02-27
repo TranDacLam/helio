@@ -10,3 +10,9 @@
     </nav>
 </div>
 <!-- End breadcrumb -->
+<a class="pull-left" routerLink="/banner-add">Chỉnh sửa Banner</a>
+<br>
+<hr>
+<div class="col-md-8 col-md-offset-2">
+	<app-form-banner *ngIf="banner" [banner]="banner" [method]="method"></app-form-banner>
+</div>

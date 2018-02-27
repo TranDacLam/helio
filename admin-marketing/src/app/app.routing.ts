@@ -123,7 +123,7 @@ const routes: Routes = [{
         path: 'banner-list',
         component: BannerListComponent
     }, {
-        path: 'banner-detail',
+        path: 'banner-detail/:id',
         component: BannerDetailComponent
     },
     {
