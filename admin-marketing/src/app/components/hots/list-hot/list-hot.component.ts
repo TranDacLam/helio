@@ -6,6 +6,8 @@ import { HotService } from '../../../shared/services/hot.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
 
+declare var bootbox:any;
+
 @Component({
     selector: 'app-list-hot',
     templateUrl: './list-hot.component.html',
@@ -41,6 +43,8 @@ export class ListHotComponent implements OnInit {
                 this.message_result = `${message.edit} ${params.message_put} ${message.success}`;
             }else if(params.message_post){
                 this.message_result = `${message.create_new} ${params.message_post} ${message.success}`;
+            }else if(params.message_del){
+                this.message_result = 'Xóa thành công.';
             }
         });
     }
@@ -52,6 +56,7 @@ export class ListHotComponent implements OnInit {
     getHots(){
         this.hotService.getHots().subscribe(
             (data) => {
+                console.log(data);
                 this.hots = data;
             } 
         );
@@ -68,6 +73,7 @@ export class ListHotComponent implements OnInit {
             this.hots_del = this.hots_del.filter(k => k !== value.id);
         }
     }
+
 
     /*
         Function onSelectAll(): checked/uncheck add/delete all id hot to array hots_del
@@ -88,6 +94,37 @@ export class ListHotComponent implements OnInit {
     }
 
     /*
+        Function deleteHotEvent(): confirm delete
+        @author: Lam
+    */
+    deleteHotEvent(){
+        let that = this;
+        if ( this.hots.length > 0 ) {
+            bootbox.confirm({
+                title: "Bạn có chắc chắn",
+                message: "Bạn muốn xóa " + this.hots.length + " phần tử đã chọn",
+                buttons: {
+                    cancel: {
+                        label: "Hủy"
+                    },
+                    confirm: {
+                        label: "Xóa"
+                    }
+                },
+                callback: function (result) {
+                    if(result) {
+                        that.onDeleteHot();
+                    }
+                }
+            });
+
+        } else  {
+            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+        }
+        
+    }
+
+    /*
         Function onDelelteHot(): 
          + Callback service function onDelelteHot() delete hot by array id
          + Remove tr have del-{{id}} and draw tables
@@ -100,7 +137,9 @@ export class ListHotComponent implements OnInit {
                     this.hots_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.hots_del = [];
                 });
+                this.message_result = 'Xóa thành công.';
             }
         );
     }

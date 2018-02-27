@@ -100,6 +100,7 @@ export class ListEventComponent implements OnInit {
                     this.events_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.events_del = [];
                 });
             }
         );

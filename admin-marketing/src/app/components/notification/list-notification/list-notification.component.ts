@@ -135,6 +135,7 @@ export class ListNotificationComponent implements OnInit {
                     this.notifications_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.notifications_del = [];
                 });
             }
         );

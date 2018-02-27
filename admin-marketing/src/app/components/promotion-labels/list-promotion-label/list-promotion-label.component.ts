@@ -135,7 +135,9 @@ export class ListPromotionLabelComponent implements OnInit {
                     this.promotion_labels_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.promotion_labels_del = [];
                 });
+                this.message_result = 'Xóa thành công.';
             }
         );
     }

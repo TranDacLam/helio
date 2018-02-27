@@ -100,7 +100,9 @@ export class ListFaqComponent implements OnInit {
                     this.faqs_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.faqs_del = [];
                 });
+                this.message_result = "Xóa thành công."
             }
         );
     }
