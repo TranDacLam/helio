@@ -47,6 +47,8 @@ urlpatterns = [
 	url(r'^event/(?P<id>[0-9]+)/$', views.EventAPI.as_view(), name="event-detail"),
 
 	url(r'^banner/$', views.BannerView.as_view(), name="banner"),
+	url(r'^banner/(?P<pk>[0-9]+)/$', views.BannerViewDetail.as_view(), name="banner-detail"),
+
 	url(r'^promotion_label/$', views.PromotionLabelAPI.as_view(), name="promotion-label"),
 	url(r'^promotion_label/(?P<id>[0-9]+)/$', views.PromotionLabelAPI.as_view(), name="promotion-label-detail"),
 	url(r'^hot/$', views.HotAPI.as_view(), name="hot"),

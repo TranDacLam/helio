@@ -1098,12 +1098,9 @@ class FeeAPI(APIView):
     DELETE: Delete All Banner Selected
     @author: TrangLe
 """
-
-
+@parser_classes((MultiPartParser, JSONParser))
 @permission_classes((AllowAny,))
 class BannerView(APIView):
-
-    # parser_classes = (FileUploadParser, MultiPartParser, FormParser)
 
     def get(self, request, format=None):
         """
@@ -1111,25 +1108,28 @@ class BannerView(APIView):
         """
         print "Method GET"
         try:
-            banner = Banner.objects.all()
-            serializer = admin_serializers.BannerSerializer(banner, many=True)
+            banners = Banner.objects.all()
+            serializer = admin_serializers.BannerSerializer(banners, many=True)
             return Response(serializer.data)
 
         except Exception, e:
+            print e
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
-        """
-        Add New Banner
-        """
         print "Method POST"
-        serializer = admin_serializers.BannerSerializer(data=request.data)
-        print serializer
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            serializer = admin_serializers.BannerSerializer( data = request.data )
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status = 400 )
+
+        except Exception, e:
+            print "banner ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
     
     def delete(self, request, format=None):
         """
@@ -1150,6 +1150,44 @@ class BannerView(APIView):
             print e
             error = {"code": 500, "message": "Internal Server Error", "fields":""}
             return Response(error, status=500)
+
+"""
+    GET, PUT, DELETE Banner by id
+    @author: Trangle
+"""
+@parser_classes((MultiPartParser, JSONParser))
+@permission_classes((AllowAny,))
+class BannerViewDetail(APIView):
+
+    def get_object(self, pk):
+        try:
+            queryset = Banner.objects.get(pk=pk)
+            return queryset
+        except Exception, e:
+            return Response(status=500)
+
+    def get(self, request, pk, format=None):
+        banner = self.get_object(pk)
+        serializer = admin_serializers.BannerSerializer(banner)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        banner = self.get_object(pk)
+        serializer = admin_serializers.BannerSerializer(
+            banner, data=request.data)
+        try:
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception, e:
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, pk, format=None):
+        banner = self.get_object(pk)
+        banner.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 """
     Get All CategoryNotifications
