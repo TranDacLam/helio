@@ -2,7 +2,7 @@ import { env } from '../../../environments/environment';
 
 export const api = {
     promotion: env.api_domain + 'promotion/',
-    promotion_list: env.api_domain + 'promotion_list',
+    promotion_list: env.api_domain + 'promotion_list/',
     user_promotion: env.api_domain + 'user_promotion/',
     notification: env.api_domain + 'notification/',
     user_notification: env.api_domain + 'user_notification/',
