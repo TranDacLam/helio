@@ -170,9 +170,13 @@ export class FeedbackListComponent implements OnInit {
             this.feedbackService.deleteAllFeedbackChecked(this.feedback_del).subscribe(
             result => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                    var self = this;
                     this.feedback_del.forEach(function(e){
                         dtInstance.rows('#delete'+e).remove().draw();
-                });
+                        var fed_item = self.feedbacks.find(feedback => feedback.id == e);
+                        self.feedbacks = self.feedbacks.filter(feedbacks => feedbacks !== fed_item);
+                    });
+                    
                 this.feedback_del = [];
             });
             this.message_success = "Xóa phản hồi thành công";
