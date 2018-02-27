@@ -15,14 +15,15 @@
 <br>
 <hr>
 <div class="col-md-8 col-md-offset-2">
-	<form [formGroup]="formBanner" (ngSubmit)="onSubmit()">
+	<form [formGroup]="formBanner" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
     <div class="form-group row">
         <div class="col-sm-3">
             <label class="center-block">Hình Ảnh:</label>
         </div>
         <div class="col-sm-8">
         	<input type="file" id="image" class="form-control" accept="image/*"
-        (change)="onFileChange($event)" #inputImage/>
+        (change)="onFileChange($event)" #inputImage
+        />
         	<show-error-valid [control]="formBanner.get('image')"></show-error-valid>
         	<button type="button" class=" clear-file btn btn-danger" (click)="clearFile()">Clear file</button>
     	</div>
@@ -63,7 +64,8 @@
     </div>
     <hr>
     <div class="form-group row">
-    	<button [disabled]="formBanner.invalid" type="submit" class="pull-right btn btn-info">Lưu lại</button>
+    	<button [disabled]="formBanner.invalid" type="submit" class="pull-right btn btn-info" (click)="createBanner(formBanner.value); logValue(formBanner.value)" >Lưu lại</button>
     </div>
+    {{formBanner.value | json }}
 </form>
 </div>

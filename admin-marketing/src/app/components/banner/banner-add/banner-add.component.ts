@@ -1,6 +1,8 @@
 import { Component,ElementRef,Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { Router } from "@angular/router";
+
 import { BannerService } from '../../../shared/services/banner.service';
 import { Banner, positions } from '../../../shared/class/banner';
 
@@ -11,7 +13,7 @@ import { Banner, positions } from '../../../shared/class/banner';
 })
 export class BannerAddComponent implements OnInit {
     
-    banner: Banner;
+    banners: Banner[] =[];
     formBanner: FormGroup;
     banner_form = new Banner();
     errorMessage: String;
@@ -25,6 +27,7 @@ export class BannerAddComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private bannerService: BannerService,
+        private router: Router,
           ) { 
         this.createForm();
     }
@@ -44,5 +47,43 @@ export class BannerAddComponent implements OnInit {
             is_show: [false]
         });
     }
+
+    /*
+        Upload image
+        FileReader: reading file contents
+        @author: TrangLe
+    */
+    onFileChange(e) {
+      if(e.target.files && e.target.files.length > 0) {
+        let file = e.target.files[0];
+        console.log(file);
+        this.formBanner.get('image').setValue(file);
+      }
+    }
+    /*
+        Clear file upload
+        @author: Trangle
+     */
+    clearFile() {
+      this.formBanner.get('image').setValue(null);
+      this.inputImage.nativeElement.value = "";
+    }
+
     onSubmit() { }
+        /*
+        POST: Create New Advertiment
+        @author: TrangLe
+     */
+    createBanner(formBanner){
+           this.bannerService.CreateBanner( formBanner )
+               .subscribe(
+                    result => {
+                       this.banners.push(result);
+                    error =>  this.errorMessage = <any>error
+               });
+        this.router.navigate(['/banner-list', { message_post: formBanner.sub_url} ])
+   }
+   logValue(formBanner) {
+       console.log(formBanner)
+   }
 }
