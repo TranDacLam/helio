@@ -5,6 +5,8 @@ import { PromotionLabel } from '../../../shared/class/promotion-label';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
 import 'rxjs/add/observable/throw';
 
+declare var bootbox:any;
+
 @Component({
     selector: 'app-edit-promotion-label',
     templateUrl: './edit-promotion-label.component.html',
@@ -17,7 +19,7 @@ export class EditPromotionLabelComponent implements OnInit {
         author: Lam
     */
 
-    promotion_label: PromotionLabel = new PromotionLabel();
+    promotion_label: PromotionLabel;
 
     formPromotionLabel: FormGroup;
 
@@ -43,10 +45,16 @@ export class EditPromotionLabelComponent implements OnInit {
     */
     getPromotionLabel(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.promotionLabelService.getPromotionLabel(id).subscribe(data => {
-            this.promotion_label = data;
-            this.creatForm();
-        });
+        this.promotionLabelService.getPromotionLabel(id).subscribe(
+            (data) => {
+                console.log(data);
+                this.promotion_label = data;
+                this.creatForm();
+            },
+            (error) => {
+                this.errorMessage = error.message; 
+            }
+        );
     }
 
     /*
@@ -72,6 +80,46 @@ export class EditPromotionLabelComponent implements OnInit {
             },
             (error) => {
                 { this.errorMessage = error.message; } 
+            }
+        );
+    }
+
+    /*
+        Function deleteNotificationEvent(): confirm delete
+        @author: Lam
+    */
+    deletePromotionLabelEvent(){
+        let that = this;
+        bootbox.confirm({
+            title: "Bạn có chắc chắn",
+            message: "Bạn muốn xóa Nhãn Khuyến Mãi này?",
+            buttons: {
+                cancel: {
+                    label: "Hủy"
+                },
+                confirm: {
+                    label: "Xóa"
+                }
+            },
+            callback: function (result) {
+                if(result) {
+                    that.onDelete();
+                }
+            }
+        });
+    }
+
+    /*
+        Function onDelete():
+         + Get id from url path
+         + Callback service function onDelNoti() by id to delete notification
+        Author: Lam
+    */
+    onDelete(): void {
+        const id = this.promotion_label.id;
+        this.promotionLabelService.onDelPromotionLabel(id).subscribe(
+            (data) => {
+                this.router.navigate(['/promotion-label/list', { message_del: 'success'}]);
             }
         );
     }

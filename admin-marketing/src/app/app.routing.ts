@@ -171,7 +171,7 @@ const routes: Routes = [{
         component: AddEventComponent
     },
     {
-        path: 'event/edit',
+        path: 'event/edit/:id',
         component: EditEventComponent
     },
     {
@@ -183,7 +183,7 @@ const routes: Routes = [{
         component: AddFaqComponent
     },
     {
-        path: 'faq/edit',
+        path: 'faq/edit/:id',
         component: EditFaqComponent
     },
     {
@@ -195,7 +195,7 @@ const routes: Routes = [{
         component: AddGameComponent
     },
     {
-        path: 'game/edit',
+        path: 'game/edit/:id',
         component: EditGameComponent
     },
     {
@@ -207,7 +207,7 @@ const routes: Routes = [{
         component: AddHotComponent
     },
     {
-        path: 'hot/edit',
+        path: 'hot/edit/:id',
         component: EditHotComponent
     },
     {
@@ -219,7 +219,7 @@ const routes: Routes = [{
         component: AddPostComponent
     },
     {
-        path: 'post/edit',
+        path: 'post/edit/:id',
         component: EditPostComponent
     },
     {
@@ -231,7 +231,7 @@ const routes: Routes = [{
         component: AddPromotionLabelComponent
     },
     {
-        path: 'promotion-label/edit',
+        path: 'promotion-label/edit/:id',
         component: EditPromotionLabelComponent
     },
     {

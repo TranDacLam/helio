@@ -6,6 +6,7 @@ import { PromotionLabelService } from '../../../shared/services/promotion-label.
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
 
+declare var bootbox:any;
 
 @Component({
     selector: 'app-list-promotion-label',
@@ -42,6 +43,8 @@ export class ListPromotionLabelComponent implements OnInit {
                 this.message_result = `${message.edit} ${params.message_put} ${message.success}`;
             }else if(params.message_post){
                 this.message_result = `${message.create_new} ${params.message_post} ${message.success}`;
+            }else if(params.message_del){
+                this.message_result = 'Xóa thành công.';
             }
         });
     }
@@ -86,6 +89,37 @@ export class ListPromotionLabelComponent implements OnInit {
         }else{
             this.select_checked = false;
         }
+    }
+
+    /*
+        Function deletePormotionLabelEvent(): confirm delete
+        @author: Lam
+    */
+    deletePormotionLabelEvent(){
+        let that = this;
+        if ( this.promotion_labels.length > 0 ) {
+            bootbox.confirm({
+                title: "Bạn có chắc chắn",
+                message: "Bạn muốn xóa " + this.promotion_labels.length + " phần tử đã chọn",
+                buttons: {
+                    cancel: {
+                        label: "Hủy"
+                    },
+                    confirm: {
+                        label: "Xóa"
+                    }
+                },
+                callback: function (result) {
+                    if(result) {
+                        that.onDeletePromotionLabel();
+                    }
+                }
+            });
+
+        } else  {
+            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+        }
+        
     }
 
     /*
