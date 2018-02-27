@@ -8,7 +8,6 @@ import { HttpModule } from "@angular/http";
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app.routing';
-import { NgxMyDatePickerModule } from 'ngx-mydatepicker'; // will change after
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime'; // date and time
 
 import { AppComponent } from './app.component';
@@ -167,7 +166,6 @@ import { ErrorComponent } from './components/error/error.component';
     ReactiveFormsModule,
     DataTablesModule,
     AppRoutingModule,
-    NgxMyDatePickerModule.forRoot(),
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
   ],

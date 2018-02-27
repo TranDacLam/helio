@@ -74,7 +74,16 @@ export class FeedbackService {
         author: Lam
     */
     getStatisticFeedback(): Observable<any>{
-        return this.http.get(this.url_summary).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(this.url_summary).catch(this.handleError);
+    }
+
+    /* 
+        function getStatisticFeedback(): get summary feedback status handle and rating by search_field, date start, end
+        author: Lam
+    */
+    searchStatisticFeedback(name, start, end): Observable<any>{
+        let url_search = `${this.url_summary}search_field=${name}&start_date=${start}&end_date=${end}`;
+        return this.http.get(this.url_summary).catch(this.handleError);
     }
 
 
