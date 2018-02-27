@@ -1481,6 +1481,149 @@ class PostAPI(APIView):
             print "EventAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+    
+    def put(self, request, id):
+        promotionLabel = self.get_object(id)
+        try:
+            promotionLabelSerializer = admin_serializers.PromotionLabelSerializer( instance = promotionLabel, data = request.data)
+            if promotionLabelSerializer.is_valid():
+                promotionLabelSerializer.save()
+                return Response(promotionLabelSerializer.data)
+            return Response({"code": 400, "message": promotionLabelSerializer.errors, "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id = None, format=None):
+        try:
+            if id:
+                promotionLabel = Promotion_Label.objects.get(id = id)
+                promotionLabel.delete()
+                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+
+            list_id = request.data.get('list_id', None)
+            if list_id:
+                promotionLabels = Promotion_Label.objects.filter(id__in = list_id)
+                if promotionLabels:  
+                    promotionLabels.delete() 
+                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
+
+        except Promotion_Label.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+"""
+    Hot
+    @author :Hoangnguyen
+
+"""
+@parser_classes((MultiPartParser, JSONParser))
+@permission_classes((AllowAny,))
+class HotAPI(APIView):
+
+    def get(self, request, id = None):
+        try:
+            if id:
+                hot = Hot.objects.get(id = id)
+                hotSerializer = admin_serializers.HotSerializer(hot)
+            else:
+                hots = Hot.objects.all()
+                hotSerializer = admin_serializers.HotSerializer(hots, many = True)
+            return Response(hotSerializer.data)
+
+        except Hot.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def post(self, request, format=None):
+        try:
+            hotSerializer = admin_serializers.HotSerializer( data = request.data )
+            if hotSerializer.is_valid():
+                hotSerializer.save()
+                return Response(hotSerializer.data)
+            return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status = 400 )
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+    
+    def put(self, request, id):
+        try:
+            hot = Hot.objects.get(id = id)
+            hotSerializer = admin_serializers.HotSerializer( instance = hot, data = request.data)
+            if hotSerializer.is_valid():
+                hotSerializer.save()
+                return Response(hotSerializer.data)
+            return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
+        
+        except Hot.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id = None, format=None):
+        try:
+            if id:
+                hot = Hot.objects.get(id = id)
+                hot.delete()
+                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+
+            list_id = request.data.get('list_id', None)
+            if list_id:
+                hots = Hot.objects.filter(id__in = list_id)
+                if hots:  
+                    hots.delete() 
+                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Hot.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+"""
+    Post 
+    @author :Hoangnguyen
+    TODO
+"""
+@parser_classes((MultiPartParser,))
+@permission_classes((AllowAny,))
+class PostAPI(APIView):
+
+    def get(self, request, id = None):
+        try:
+            if id:
+                post = Post.objects.get(id = id)
+                postSerializer = admin_serializers.PostSerializer(post)
+            else:
+                posts = Post.objects.all()
+                postSerializer = admin_serializers.PostSerializer(posts, many = True)
+            return Response(postSerializer.data)
+
+        except Post.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Post.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
 
     def post(self, request, format=None):
         try:
