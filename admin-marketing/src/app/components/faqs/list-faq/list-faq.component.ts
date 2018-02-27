@@ -41,6 +41,8 @@ export class ListFaqComponent implements OnInit {
                 this.message_result = `${message.edit} ${params.message_put} ${message.success}`;
             }else if(params.message_post){
                 this.message_result = `${message.create_new} ${params.message_post} ${message.success}`;
+            }else if(params.message_del){
+                this.message_result = 'Xóa thành công.';
             }
         });
     }

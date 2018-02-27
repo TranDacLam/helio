@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DateTimeAdapter } from 'ng-pick-datetime';
 import { FeedbackService } from '../../../shared/services/feedback.service'
 import 'rxjs/add/observable/throw';
 
@@ -22,7 +23,9 @@ export class StatisticsFeedbackComponent implements OnInit {
     message_status = '';
     message_rate = '';
 
-    constructor(private feedbackService: FeedbackService) { }
+    constructor(private feedbackService: FeedbackService, private dateTimeAdapter: DateTimeAdapter<any>) {
+        dateTimeAdapter.setLocale('en-GB'); 
+    }
 
     ngOnInit() {
         this.getStatisticFeedback();

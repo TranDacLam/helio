@@ -6,6 +6,8 @@ import { PostService } from '../../../shared/services/post.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
 
+declare var bootbox:any;
+
 @Component({
     selector: 'app-list-post',
     templateUrl: './list-post.component.html',
@@ -41,6 +43,8 @@ export class ListPostComponent implements OnInit {
                 this.message_result = `${message.edit} ${params.message_put} ${message.success}`;
             }else if(params.message_post){
                 this.message_result = `${message.create_new} ${params.message_post} ${message.success}`;
+            }else if(params.message_del){
+                this.message_result = 'Xóa thành công.';
             }
         });
     }
@@ -88,6 +92,37 @@ export class ListPostComponent implements OnInit {
     }
 
     /*
+        Function deletePostEvent(): confirm delete
+        @author: Lam
+    */
+    deletePostEvent(){
+        let that = this;
+        if ( this.posts.length > 0 ) {
+            bootbox.confirm({
+                title: "Bạn có chắc chắn",
+                message: "Bạn muốn xóa " + this.posts_del.length + " phần tử đã chọn",
+                buttons: {
+                    cancel: {
+                        label: "Hủy"
+                    },
+                    confirm: {
+                        label: "Xóa"
+                    }
+                },
+                callback: function (result) {
+                    if(result) {
+                        that.onDeletePost();
+                    }
+                }
+            });
+
+        } else  {
+            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+        }
+        
+    }
+
+    /*
         Function onDeletePost(): 
          + Callback service function onDeletePost() delete post by array id
          + Remove tr have del-{{id}} and draw tables
@@ -100,7 +135,9 @@ export class ListPostComponent implements OnInit {
                     this.posts_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.posts_del = [];
                 });
+                this.message_result = "Xóa thành công.";
             }
         );
     }

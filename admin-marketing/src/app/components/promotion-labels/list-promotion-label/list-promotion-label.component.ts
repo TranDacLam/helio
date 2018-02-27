@@ -100,7 +100,7 @@ export class ListPromotionLabelComponent implements OnInit {
         if ( this.promotion_labels.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.promotion_labels.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.promotion_labels_del.length + " phần tử đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"

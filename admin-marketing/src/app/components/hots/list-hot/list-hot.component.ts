@@ -102,7 +102,7 @@ export class ListHotComponent implements OnInit {
         if ( this.hots.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.hots.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.hots_del.length + " phần tử đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"

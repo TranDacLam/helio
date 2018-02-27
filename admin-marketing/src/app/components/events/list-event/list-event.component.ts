@@ -6,6 +6,8 @@ import { EventService } from '../../../shared/services/event.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
 
+declare var bootbox:any;
+
 @Component({
     selector: 'app-list-event',
     templateUrl: './list-event.component.html',
@@ -41,6 +43,8 @@ export class ListEventComponent implements OnInit {
                 this.message_result = `${message.edit} ${params.message_put} ${message.success}`;
             }else if(params.message_post){
                 this.message_result = `${message.create_new} ${params.message_post} ${message.success}`;
+            }else if(params.message_del){
+                this.message_result = 'Xóa thành công.';
             }
         });
     }
@@ -88,6 +92,37 @@ export class ListEventComponent implements OnInit {
     }
 
     /*
+        Function deleteEvent(): confirm delete
+        @author: Lam
+    */
+    deleteEvent(){
+        let that = this;
+        if ( this.events.length > 0 ) {
+            bootbox.confirm({
+                title: "Bạn có chắc chắn",
+                message: "Bạn muốn xóa " + this.events_del.length + " phần tử đã chọn",
+                buttons: {
+                    cancel: {
+                        label: "Hủy"
+                    },
+                    confirm: {
+                        label: "Xóa"
+                    }
+                },
+                callback: function (result) {
+                    if(result) {
+                        that.onDeleteEvent();
+                    }
+                }
+            });
+
+        } else  {
+            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+        }
+        
+    }
+
+    /*
         Function onDelelteEvent(): 
          + Callback service function onDelelteEvent() delete event by array id
          + Remove tr have del-{{id}} and draw tables
@@ -102,6 +137,7 @@ export class ListEventComponent implements OnInit {
                     });
                     this.events_del = [];
                 });
+                this.message_result = 'Xóa thành công.';
             }
         );
     }

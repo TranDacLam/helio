@@ -35,7 +35,9 @@ export const api = {
 
     hot: env.api_domain + 'hot/',
 
+    post: env.api_domain + 'post/',
 
+    event: env.api_domain + 'event/',
 
 
 };
