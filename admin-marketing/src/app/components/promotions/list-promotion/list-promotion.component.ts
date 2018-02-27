@@ -4,6 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { DataTableDirective } from 'angular-datatables';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { PromotionService } from '../../../shared/services/promotion.service';
 import { Promotion } from '../../../shared/class/promotion';
@@ -34,16 +35,24 @@ export class ListPromotionComponent implements OnInit {
     length_all: Number = 0;
     length_selected: Number = 0;
 
-    message_error: string = "";
+    message_result: string = "";
 
     constructor(
         private promotionService: PromotionService,
         private router: Router,
+        private route: ActivatedRoute
         ) { }
 
     ngOnInit() {
     	this.getAllPromotion();
     	this.dtOptions = datatable_config.dtOptions;
+
+        this.route.params.subscribe(params => {
+            console.log(params);
+            if (params.action && params.promotion_name) {
+                this.message_result = params.action + params.promotion_name + '" thành công.';
+            }
+        });
     }
     /*
         Call Service get all promotion
@@ -138,13 +147,15 @@ export class ListPromotionComponent implements OnInit {
             this.promotionService.deletePromotionList(list_id_selected).subscribe(
                 (data) => {
                     if (data.status == 204) {
+                        this.message_result = "Xóa "+ this.length_selected + " phần tử thành công"
+
                         // Remove all promotion selected on UI
                         dtInstance.rows('.selected').remove().draw();
                         // Reset count promotion
                         this.length_all =  dtInstance.rows().count();
                         this.length_selected = 0;
                     } else {
-                        this.message_error = "Xóa không thành công";
+                        this.router.navigate(['/error']);
                     }
                 }, 
                 (error) => {

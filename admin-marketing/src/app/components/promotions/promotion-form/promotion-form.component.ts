@@ -22,6 +22,8 @@ export class PromotionFormComponent implements OnInit {
     
     promotionForm: FormGroup;
 
+    ckEditorConfig:any;
+
 
     constructor(
         private promotionService: PromotionService,
@@ -32,6 +34,11 @@ export class PromotionFormComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.ckEditorConfig = {
+            uiColor: '#337ab7', 
+            filebrowserUploadUrl: 'http://127.0.0.1:8000/ckeditor/upload/'
+
+        };
         this.creatPromotionForm();
     }
 
@@ -52,7 +59,9 @@ export class PromotionFormComponent implements OnInit {
             promotion_type: [this.promotion.promotion_type],
         });
     }
-
+    onFileUploadRequest(event) {
+        console.log("aaaaa");
+    }
     onFileChange(event) {
         let reader = new FileReader();
         if(event.target.files && event.target.files.length > 0) {
@@ -75,7 +84,8 @@ export class PromotionFormComponent implements OnInit {
         if(this.promotion.id) {
             this.promotionService.updatePromotion(this.promotionForm.value).subscribe(
                 (data) => {
-                    that.router.navigate(['/promotions']);
+                    //TO DO : check is success
+                    that.router.navigate(['/promotions', {'action': 'Sửa "', 'promotion_name': that.promotion.name}]);
                 },
                 (error) => {
                     that.router.navigate(['/error']);
@@ -84,7 +94,8 @@ export class PromotionFormComponent implements OnInit {
         } else {
             this.promotionService.savePromotion(this.promotionForm.value).subscribe(
                 (data) => {
-                    that.router.navigate(['/promotions']);
+                    //TO DO : check is success
+                    that.router.navigate(['/promotions', {'action': 'Tạo mới "', 'promotion_name': that.promotion.name}]);
                 }, 
                 (error) => {
                     that.router.navigate(['/error']);
@@ -113,7 +124,7 @@ export class PromotionFormComponent implements OnInit {
                         that.promotionService.deletePromotionById(id).subscribe(
                             (data) => {
                                 if (data.status == 204) {
-                                    that.router.navigate(['/promotions'])
+                                    that.router.navigate(['/promotions', {'action': 'Xóa "', 'promotion_name': that.promotion.name}]);
                                 } else {
                                     console.log("Xoa khong thanh cong");
                                 }
