@@ -5,6 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import { ActivatedRoute } from '@angular/router';
 
 import { HotAdvs } from '../../../shared/class/hot-advs';
+import { data_config } from '../../../shared/commons/datatable_config';
 
 @Component({
   selector: 'app-hot-advs-list',
@@ -36,29 +37,7 @@ export class HotAdvsListComponent implements OnInit {
   		}
 
   	ngOnInit() {
-  		this.dtOptions = {
-  			// Declare the use of the extension in the dom parameter
-	        language: {
-	        	sSearch: '',
-	        	searchPlaceholder: ' Nhập thông tin tìm kiếm',
-	        	lengthMenu: 'Hiển thị _MENU_ Hot Advs',
-	        	info: "Hiển thị _START_ tới _END_ của _TOTAL_ Hot Advs",
-	        	paginate: {
-		        "first":      "Đầu",
-		        "last":       "Cuối",
-		        "next":       "Sau",
-		        "previous":   "Trước"
-		    	},
-		    	select: {
-		    		rows: ''
-		    	},
-		    	sInfoFiltered: "",
-		    	zeroRecords: 'Không có Hot Advs nào để hiển thị',
-		    	infoEmpty: ""
-	        },
-	        responsive: true,
-	        pagingType: "full_numbers",
-	  	};
+  		this.dtOptions = data_config.dtOptions;
 	  	this.getAllHotAdvs();
   	}
 
