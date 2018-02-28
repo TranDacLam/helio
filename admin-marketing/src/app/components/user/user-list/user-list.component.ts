@@ -5,6 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import { ActivatedRoute } from '@angular/router';
 
 import { User } from '../../../shared/class/user';
+import { data_config } from '../../../shared/commons/datatable_config';
 
 @Component({
   selector: 'app-user-list',
@@ -34,29 +35,9 @@ export class UserListComponent implements OnInit {
   		 }
 
   	ngOnInit() {
-  		this.dtOptions = {
-  			// Declare the use of the extension in the dom parameter
-	        language: {
-	        	sSearch: '',
-	        	searchPlaceholder: ' Nhập thông tin tìm kiếm',
-	        	lengthMenu: 'Hiển thị _MENU_ user',
-	        	info: "Hiển thị _START_ tới _END_ của _TOTAL_ user",
-	        	paginate: {
-		        "first":      "Đầu",
-		        "last":       "Cuối",
-		        "next":       "Sau",
-		        "previous":   "Trước"
-		    	},
-		    	select: {
-		    		rows: ''
-		    	},
-		    	sInfoFiltered: "",
-		    	zeroRecords: 'Không có user nào để hiển thị',
-		    	infoEmpty: ""
-	        },
-	        responsive: true,
-	        pagingType: "full_numbers",
-	  	};
+        // Call data_config
+        data_config.record = 'newRecord';
+  		this.dtOptions = data_config.dtOptions;
 	  	this.getAllUser()
   	}
 
