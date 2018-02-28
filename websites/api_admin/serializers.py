@@ -132,7 +132,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ('name', 'image', 'short_description', 'content', 'start_date', 'end_date', 'start_time', 'end_time', 'is_draft')
+        fields = ('id','name', 'image', 'short_description', 'content', 'start_date', 'end_date', 'start_time', 'end_time', 'is_draft')
 
     def validate(self, data):
         if data['start_date'] > data['end_date']:
@@ -166,4 +166,16 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
+        fields = ('id', 'name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
+
+class PostTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Post_Type
+        fields = ('id', 'name', 'description')
+
+class FAQSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FAQ
+        fields = ('id', 'question', 'answer', 'category')

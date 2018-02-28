@@ -45,14 +45,25 @@ urlpatterns = [
 	
 	url(r'^event/$', views.EventAPI.as_view(), name="event"),
 	url(r'^event/(?P<id>[0-9]+)/$', views.EventAPI.as_view(), name="event-detail"),
+	url(r'^event_list/$', views.EventListAPI.as_view(), name="event-list"),
 
 	url(r'^banner/$', views.BannerView.as_view(), name="banner"),
 	url(r'^banner/(?P<pk>[0-9]+)/$', views.BannerViewDetail.as_view(), name="banner-detail"),
 
 	url(r'^promotion_label/$', views.PromotionLabelAPI.as_view(), name="promotion-label"),
 	url(r'^promotion_label/(?P<id>[0-9]+)/$', views.PromotionLabelAPI.as_view(), name="promotion-label-detail"),
+	url(r'^promotion_label_list/$', views.PromotionLabelListAPI.as_view(), name="promotion-label-list"),
+	
 	url(r'^hot/$', views.HotAPI.as_view(), name="hot"),
 	url(r'^hot/(?P<id>[0-9]+)/$', views.HotAPI.as_view(), name="hot-detail"),
+	url(r'^hot_list/$', views.HotListAPI.as_view(), name="hot-list"),
+
 	url(r'^post/$', views.PostAPI.as_view(), name="post"),
 	url(r'^post/(?P<id>[0-9]+)/$', views.PostAPI.as_view(), name="post-detail"),
+	url(r'^post_list/$', views.PostListAPI.as_view(), name="post-list"),
+	url(r'^post_type_list/$', views.PostTypeListAPI.as_view(), name="post-type-list"),
+
+	url(r'^faq/$', views.FAQAPI.as_view(), name="faq"),
+	url(r'^faq/(?P<id>[0-9]+)/$', views.FAQAPI.as_view(), name="faq-detail"),
+	url(r'^faq_list/$', views.FAQListAPI.as_view(), name="faq-list"),
 ]
