@@ -8,8 +8,7 @@ import { Feedback } from '../../../shared/class/feedback';
 import { FeedbackService } from '../../../shared/services/feedback.service';
 
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
+import { datatable_config } from '../../../shared/commons/datatable_config';
 
 
 @Component({
@@ -48,28 +47,29 @@ export class FeedbackListComponent implements OnInit {
             Customize: DataTable 
             @author: TrangLe
          */
-		this.dtOptions = {
-            language: {
-                sSearch: '',
-                searchPlaceholder: ' Nhập thông tin tìm kiếm',
-                lengthMenu: 'Hiển thị _MENU_ Phản hồi',
-                info: "Hiển thị _START_ tới _END_ của _TOTAL_ Phản hồi",
-                paginate: {
-                "first":      "Đầu",
-                "last":       "Cuối",
-                "next":       "Sau",
-                "previous":   "Trước"
-            },
-            select: {
-                rows: ''
-            },
-            sInfoFiltered: "",
-            zeroRecords: 'Không có phản hồi nào để hiển thị',
-            infoEmpty: ""
-           },
-            responsive: true,
-            pagingType: "full_numbers",
-        };
+		// this.dtOptions = {
+  //           language: {
+  //               sSearch: '',
+  //               searchPlaceholder: ' Nhập thông tin tìm kiếm',
+  //               lengthMenu: 'Hiển thị _MENU_ Phản hồi',
+  //               info: "Hiển thị _START_ tới _END_ của _TOTAL_ Phản hồi",
+  //               paginate: {
+  //               "first":      "Đầu",
+  //               "last":       "Cuối",
+  //               "next":       "Sau",
+  //               "previous":   "Trước"
+  //           },
+  //           select: {
+  //               rows: ''
+  //           },
+  //           sInfoFiltered: "",
+  //           zeroRecords: 'Không có phản hồi nào để hiển thị',
+  //           infoEmpty: ""
+  //          },
+  //           responsive: true,
+  //           pagingType: "full_numbers",
+  //       };
+        this.dtOptions = datatable_config.dtOptions;
         this.getAllFeedbacks();
         this.route.queryParams
             .subscribe(params => {
@@ -139,7 +139,6 @@ export class FeedbackListComponent implements OnInit {
             this.message_success = "";
         } else {
             let updateDenoItem = this.feedback_del.find(this.findIndexToUpdate, feedback.id);
-
             let index = this.feedback_del.indexOf(updateDenoItem);
 
             this.feedback_del.splice(index, 1);
@@ -185,26 +184,26 @@ export class FeedbackListComponent implements OnInit {
         } 
     }
 
-/*
-    DELETE: Delete All Selected Checkbox
-    Call service feedback
-    @author: Trangle
- */
-deleteFeedbackCheckbox() {
-    this.feedbackService.deleteAllFeedbackChecked(this.feedback_del).subscribe(
-        result => {
-            this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                var self = this;
-                this.feedback_del.forEach(function(e){
-                    dtInstance.rows('#delete'+e).remove().draw();
-                    var fed_item = self.feedbacks.find(feedback => feedback.id == e);
-                    self.feedbacks = self.feedbacks.filter(feedbacks => feedbacks !== fed_item);
-                });
-            this.feedback_del = [];
-        });
-        this.message_success = "Xóa phản hồi thành công";
-       },
-        error =>  this.errorMessage = <any>error
-        );
-    }
+    /*
+        DELETE: Delete All Selected Checkbox
+        Call service feedback
+        @author: Trangle
+     */
+    deleteFeedbackCheckbox() {
+        this.feedbackService.deleteAllFeedbackChecked(this.feedback_del).subscribe(
+            result => {
+                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                    var self = this;
+                    this.feedback_del.forEach(function(e){
+                        dtInstance.rows('#delete'+e).remove().draw();
+                        var fed_item = self.feedbacks.find(feedback => feedback.id == e);
+                        self.feedbacks = self.feedbacks.filter(feedbacks => feedbacks !== fed_item);
+                    });
+                this.feedback_del = [];
+            });
+            this.message_success = "Xóa phản hồi thành công";
+           },
+            error =>  this.errorMessage = <any>error
+            );
+        }
 }
