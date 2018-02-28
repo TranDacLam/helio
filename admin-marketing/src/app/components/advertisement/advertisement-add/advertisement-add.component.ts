@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 
 import { Advertisement } from '../../../shared/class/advertisement';
 import { AdvertisementService } from '../../../shared/services/advertisement.service';
@@ -15,7 +14,6 @@ export class AdvertisementAddComponent implements OnInit {
 
    	constructor(
    		private advertisementService: AdvertisementService,
-   		private location: Location,
         private router: Router,
    	){ }
 

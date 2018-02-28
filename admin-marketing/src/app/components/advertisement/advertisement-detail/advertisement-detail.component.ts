@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute , Router} from '@angular/router';
-import { Location } from '@angular/common';
 
 import { Advertisement } from '../../../shared/class/advertisement';
 import { AdvertisementService } from '../../../shared/services/advertisement.service';
@@ -15,7 +14,6 @@ export class AdvertisementDetailComponent implements OnInit {
 	constructor(
 		private advertisementService: AdvertisementService,
 		private route: ActivatedRoute,
-		private location: Location,
 		private router: Router
 		) { }
 
@@ -24,6 +22,7 @@ export class AdvertisementDetailComponent implements OnInit {
 	}
 	/*
 		GET: Get Advertiment By Id
+		Call service advertiment
 		@author: TrangLe
 	 */
 	getAdv() {
@@ -34,11 +33,9 @@ export class AdvertisementDetailComponent implements OnInit {
       		},
         );
 	}
-	goBack() {
-		this.location.back();
-	}
 	/*
 		PUT: Update Advertiment Detail
+		Call service advertiment
 		@author: TrangLe
 	 */
 	EditAdv() {
