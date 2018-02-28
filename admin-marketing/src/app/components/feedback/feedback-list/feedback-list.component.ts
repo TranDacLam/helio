@@ -25,7 +25,6 @@ export class FeedbackListComponent implements OnInit {
     feedback_del: any;
     allFeedbacks: any;
     message_success: string = ""; // Display message success
-    message_error: string = ""; // Display message error
     message_result: string = ""; // Display message result
     errorMessage: String;
 
@@ -97,14 +96,13 @@ export class FeedbackListComponent implements OnInit {
         @author: TrangLe
      */
 	getAllFeedbacks() {
-		this.feedbackService.getAllFeedback()
-			.subscribe(
-				feedbacks => {
-					this.feedbacks = feedbacks;
-					// Caling the DT trigger to manually render the table
-					this.dtTrigger.next();
-				},
-        error =>  this.errorMessage = <any>error
+		this.feedbackService.getAllFeedback().subscribe(
+			feedbacks => {
+				this.feedbacks = feedbacks;
+				// Caling the DT trigger to manually render the table
+				this.dtTrigger.next();
+			},
+            error =>  this.errorMessage = <any>error
         );
 	}
     /*
@@ -121,8 +119,8 @@ export class FeedbackListComponent implements OnInit {
                 });
             this.feedback_del = arrFeedback_del
             this.feedback_selected = true;
-            this.message_error = "";
             this.message_result = "";
+            this.message_success = "";
         } else {
             this.feedback_selected = false;
             this.feedbacks.forEach((item, index) => {
@@ -137,8 +135,8 @@ export class FeedbackListComponent implements OnInit {
     changeCheckboxFeedback(event, feedback) {
         if(event.target.checked) {
             this.feedback_del.push(feedback.id)
-            this.message_error ='';
             this.message_result = "";
+            this.message_success = "";
         } else {
             let updateDenoItem = this.feedback_del.find(this.findIndexToUpdate, feedback.id);
 
@@ -152,40 +150,61 @@ export class FeedbackListComponent implements OnInit {
     }
 
     /*
-        DELETE: Delete All Selected Checkbox
+        Confirm Delete Checkbox Selected
+        Using bootbox plugin
         @author: Trangle
      */
-    deleteFeedbackCheckbox() {
-        /*
-            Check feedback_del not Null
-            if feedback.length == 0, return message
-            else if delete id selected
-         */
-        if (this.feedback_del !== null) {
-            if( this.feedback_del.length == 0) {
-                this.message_error = "Vui lòng chọn phản hồi để xóa";
-                this.message_result = "";
-                this.message_success = "";
-        } else {
-            this.feedbackService.deleteAllFeedbackChecked(this.feedback_del).subscribe(
-            result => {
-                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                    var self = this;
-                    this.feedback_del.forEach(function(e){
-                        dtInstance.rows('#delete'+e).remove().draw();
-                        var fed_item = self.feedbacks.find(feedback => feedback.id == e);
-                        self.feedbacks = self.feedbacks.filter(feedbacks => feedbacks !== fed_item);
-                    });
-                    
-                this.feedback_del = [];
+    confirmDelete() {
+        /* Check feedback_del not null and length >0
+            True: Show confirm and call function deleteFeedbackCheckbox 
+            False: show alert
+        */
+        if(this.feedback_del !== null && this.feedback_del.length > 0 ){
+            bootbox.confirm({
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.feedback_del.length + " phần tử đã chọn",
+                buttons: {
+                    confirm: {
+                        label: 'Xóa',
+                        className: 'btn-success',
+                    },
+                    cancel: {
+                        label: 'Hủy',
+                        className: 'pull-left btn-danger',
+                    }
+                },
+                callback: (result)=> {
+                    if(result) {
+                        // Check result = true. call function
+                        this.deleteFeedbackCheckbox()
+                    }
+                }
             });
-            this.message_success = "Xóa phản hồi thành công";
-           },
-            error =>  this.errorMessage = <any>error
-            );
-        }
-      } else {
-        return 0;
-      }
+        } else {
+            bootbox.alert("Vui lòng chọn phản hồi để xóa");
+        } 
+    }
+
+/*
+    DELETE: Delete All Selected Checkbox
+    Call service feedback
+    @author: Trangle
+ */
+deleteFeedbackCheckbox() {
+    this.feedbackService.deleteAllFeedbackChecked(this.feedback_del).subscribe(
+        result => {
+            this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                var self = this;
+                this.feedback_del.forEach(function(e){
+                    dtInstance.rows('#delete'+e).remove().draw();
+                    var fed_item = self.feedbacks.find(feedback => feedback.id == e);
+                    self.feedbacks = self.feedbacks.filter(feedbacks => feedbacks !== fed_item);
+                });
+            this.feedback_del = [];
+        });
+        this.message_success = "Xóa phản hồi thành công";
+       },
+        error =>  this.errorMessage = <any>error
+        );
     }
 }

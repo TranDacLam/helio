@@ -24,7 +24,6 @@ export class AdvertisementListComponent implements OnInit {
 	advs_delete: any; // Contains all checkbox were selected
 	isChecked = false; // Default value chekbox
 	message_success: string = ""; // Display message success
-	message_error: string = ""; // Display message error
 	message_result = ''; // Message result
 
 	// Inject the DataTableDirective into the dtElement property
@@ -77,10 +76,6 @@ export class AdvertisementListComponent implements OnInit {
                },
                 responsive: true,
                 pagingType: "full_numbers",
-                select: {
-                    style: 'multi',
-                    selector: 'td:first-child'
-                },
             };
             this.getAllAdvertisement();
             this.route.params.subscribe(params => {
@@ -116,7 +111,7 @@ export class AdvertisementListComponent implements OnInit {
               });
                 this.advs_delete = listAdv_del;
                 this.isChecked = true;
-                this.message_error = "";
+                this.message_success = "";
                 this.message_result = "";
             }else{
                 this.isChecked = false;
@@ -132,7 +127,7 @@ export class AdvertisementListComponent implements OnInit {
     changeCheckboxAdv(e, adv){
         if( e.target.checked ){
             this.advs_delete.push(adv.id);
-            this.message_error = "";
+            this.message_success = "";
             this.message_result = "";
         } else{
             let updateAdvItem = this.advs_delete.find(this.findIndexToUpdate, adv.id);
@@ -145,29 +140,56 @@ export class AdvertisementListComponent implements OnInit {
     findIndexToUpdate(type) { 
         return type.id === this;
     }
-	/*
+
+        /*
+        Confirm Delete Checkbox Selected
+        Using bootbox plugin
+        @author: Trangle
+     */
+    confirmDelete() {
+        /* Check advs_delete not null and length >0
+            True: Show confirm and call function deleteFeedbackCheckbox 
+            False: show alert
+        */
+        if(this.advs_delete !== null && this.advs_delete.length > 0 ){
+            bootbox.confirm({
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.advs_delete.length + " phần tử đã chọn",
+                buttons: {
+                    confirm: {
+                        label: 'Xóa',
+                        className: 'btn-success',
+                    },
+                    cancel: {
+                        label: 'Hủy',
+                        className: 'pull-left btn-danger',
+                    }
+                },
+                callback: (result)=> {
+                    if(result) {
+                        // Check result = true. call function
+                        this.deleteAllCheckAdvs()
+                    }
+                }
+            });
+        } else {
+            bootbox.alert("Vui lòng chọn quảng cáo để xóa");
+        } 
+    }
+
+    /*
         DELETE: Delete All Select Box Checked   
      */
-	deleteAllCheckAdvs() {
-		if (this.advs_delete !== null) {
-			if ( this.advs_delete.length == 0 ){
-				this.message_error = "Vui lòng chọn quảng cáo để xóa";
-				this.message_result = "";
-                this.message_success = "";
-            } else {
-                this.advertisementService.deleteAllAdvsSelected(this.advs_delete).subscribe(
-                    result => {
-                        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                            this.advs_delete.forEach(function(e){
-                                dtInstance.rows('#delete'+e).remove().draw();
-                            });
-                            this.advs_delete = [];
-                        });
-                        this.message_success = "Xóa quảng cáo thành công";
+    deleteAllCheckAdvs() {
+        this.advertisementService.deleteAllAdvsSelected(this.advs_delete).subscribe(
+            result => {
+                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                    this.advs_delete.forEach(function(e){
+                        dtInstance.rows('#delete'+e).remove().draw();
                     });
-            }
-        } else {
-            return 0;
-        }	
+                    this.advs_delete = [];
+                });
+                this.message_success = "Xóa quảng cáo thành công";
+            });
     }
 }

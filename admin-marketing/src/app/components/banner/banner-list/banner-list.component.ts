@@ -22,7 +22,6 @@ export class BannerListComponent implements OnInit {
     banner_del: any;
     isChecked = false;
     message_success: string = ""; // Display message success
-    message_error: string = ""; // Display message error
     message_result: string = ""; // Display message result
     errorMessage: String;
     checkAll= false;
@@ -85,7 +84,7 @@ export class BannerListComponent implements OnInit {
             });
             this.banner_del = arr_del;
             this.isChecked = true;
-            this.message_error = "";
+            this.message_success = "";
             this.message_result = "";
         }else{
             this.isChecked = false;
@@ -110,7 +109,7 @@ export class BannerListComponent implements OnInit {
     checkItemChange(event, banner) {
         if(event.target.checked){
             this.banner_del.push(banner.id);
-            this.message_error = "";
+            this.message_success = "";
             this.message_result = "";
         }
         else{
@@ -125,19 +124,42 @@ export class BannerListComponent implements OnInit {
         return type.id === this;
     }
 
+    confirmDelete() {
+        /* Check banner_del not null and length >0
+            True: Show confirm and call function deleteFeedbackCheckbox 
+            False: show alert
+        */
+        if(this.banner_del !== null && this.banner_del.length > 0 ){
+            bootbox.confirm({
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.banner_del.length + " phần tử đã chọn",
+                buttons: {
+                    confirm: {
+                        label: 'Xóa',
+                        className: 'btn-success',
+                    },
+                    cancel: {
+                        label: 'Hủy',
+                        className: 'pull-left btn-danger',
+                    }
+                },
+                callback: (result)=> {
+                    if(result) {
+                        // Check result = true. call function
+                        this.deleteBannersCheckbox()
+                    }
+                }
+            });
+        } else {
+            bootbox.alert("Vui lòng chọn banner để xóa");
+        } 
+    }
     /*
         Function: Delete All Banner Selected
-
         @author: TrangLe
      */
     deleteBannersCheckbox() {
-        if (this.banner_del !== null) { 
-            if( this.banner_del.length == 0) {
-                this.message_error = "Vui lòng chọn feedback để xóa";
-                this.message_result = "";
-                this.message_success = "";
-        } else {
-            this.bannerService.deleteBannerSelected(this.banner_del).subscribe(
+        this.bannerService.deleteBannerSelected(this.banner_del).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     var self = this;
@@ -149,10 +171,6 @@ export class BannerListComponent implements OnInit {
                     this.banner_del = [];
                 });
                 this.message_success = "Xóa banner thành công";
-            },
-            (error) =>  this.errorMessage = <any>error
-            );
-            }  
-        }
-    }
+            },(error) =>  this.errorMessage = <any>error);
+    }  
 }

@@ -17,9 +17,6 @@
 	<div *ngIf="message_success" class="alert alert-success">
 		{{ message_success }}
 	</div>
-	<div *ngIf="message_error" class="alert alert-danger">
-		{{ message_error }}
-	</div>
 	<div class="alert alert-success" *ngIf="message_result">
         {{message_result}}
     </div>
@@ -46,7 +43,7 @@
 		</div>
 		<div class="col-md-3">
 			{{banner_del.length}} của {{banners.length}} được chọn
-			<button (click)="deleteBannersCheckbox()" type="button" class="button-banner btn btn-danger">Thực hiện</button>
+			<button (click)="confirmDelete()" type="button" class="button-banner btn btn-danger">Thực hiện</button>
 		</div>
 	</div>
 </div>

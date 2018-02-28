@@ -18,9 +18,6 @@
 	<div *ngIf="message_success" class="alert alert-success">
 		{{ message_success }}
 	</div>
-	<div *ngIf="message_error" class="alert alert-danger">
-		{{ message_error }}
-	</div>
 	<div class="alert alert-success" *ngIf="message_result">
         {{message_result}}
     </div>
@@ -49,7 +46,7 @@
 		</div>
 		<div class="col-md-3">
 			{{deno_selected.length}} của {{denominations.length}} được chọn
-			<button (click)="deleteDenominationCheckbox()" type="button" class="btn btn-danger">Thực hiện</button>
+			<button (click)="confirmDelete()" type="button" class="btn btn-danger">Thực hiện</button>
 		</div>
 	</div>
 </div>

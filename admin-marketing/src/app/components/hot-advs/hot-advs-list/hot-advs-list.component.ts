@@ -18,7 +18,6 @@ export class HotAdvsListComponent implements OnInit {
 	hot_adv_selected: any;
 	hot_advs : HotAdvs [];
 	message_success: string = ""; // Display message success
-  	message_error: string = ""; // Display message error
   	message_result = ''; // Message result
 
   	// Inject the DataTableDirective into the dtElement property
@@ -75,7 +74,7 @@ export class HotAdvsListComponent implements OnInit {
             });
             this.hot_adv_selected = array_del;
             this.select_checkbox = true;
-            this.message_error = "";
+            this.message_success = "";
             this.message_result = "";
         }else{
             this.select_checkbox = false;
@@ -89,7 +88,7 @@ export class HotAdvsListComponent implements OnInit {
   	checkItemChange(event, deno) {
   		if(event.target.checked){
         	this.hot_adv_selected.push(deno.id);
-          this.message_error = "";
+          this.message_success = "";
           this.message_result = "";
       	}
       	else{
@@ -104,6 +103,36 @@ export class HotAdvsListComponent implements OnInit {
         return type.id === this;
     }
 
+    confirmDelete() {
+        /* Check hot_adv_selected not null and length >0
+            True: Show confirm and call function deleteFeedbackCheckbox 
+            False: show alert
+        */
+        if(this.hot_adv_selected !== null && this.hot_adv_selected.length > 0 ){
+            bootbox.confirm({
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.hot_adv_selected.length + " phần tử đã chọn",
+                buttons: {
+                    confirm: {
+                        label: 'Xóa',
+                        className: 'btn-success',
+                    },
+                    cancel: {
+                        label: 'Hủy',
+                        className: 'pull-left btn-danger',
+                    }
+                },
+                callback: (result)=> {
+                    if(result) {
+                        // Check result = true. call function
+                        this.deleteHotAdvsCheckbox()
+                    }
+                }
+            });
+        } else {
+            bootbox.alert("Vui lòng chọn banner để xóa");
+        } 
+    }
     deleteHotAdvsCheckbox() {
 
     }

@@ -21,7 +21,6 @@ export class DenominationListComponent implements OnInit {
     deno_selected: any;
     selectedAll: any;
     message_success: string = ""; // Display message success
-    message_error: string = ""; // Display message error
     message_result = ''; // Message result
 
     // Inject the DataTableDirective into the dtElement property
@@ -63,10 +62,6 @@ export class DenominationListComponent implements OnInit {
                 },
                 responsive: true,
                 pagingType: "full_numbers",
-                select: {
-                    style: 'multi',
-                    selector: 'td:first-child'
-                },
             };
             this.getAllDenomination();
             this.route.params.subscribe(params => {
@@ -95,7 +90,7 @@ export class DenominationListComponent implements OnInit {
             });
             this.deno_selected = array_del;
             this.select_checkbox = true;
-            this.message_error = "";
+            this.message_success = "";
             this.message_result = "";
         }else{
             this.select_checkbox = false;
@@ -109,7 +104,7 @@ export class DenominationListComponent implements OnInit {
 	checkItemChange(event, deno) {
 		if(event.target.checked){
             this.deno_selected.push(deno.id);
-            this.message_error = "";
+            this.message_success = "";
             this.message_result = "";
         }
         else{
@@ -123,26 +118,50 @@ export class DenominationListComponent implements OnInit {
     findIndexToUpdate(type) { 
         return type.id === this;
     }
+    confirmDelete() {
+        /* Check deno_selected not null and length >0
+            True: Show confirm and call function deleteFeedbackCheckbox 
+            False: show alert
+        */
+        if(this.deno_selected !== null && this.deno_selected.length > 0 ){
+            bootbox.confirm({
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.deno_selected.length + " phần tử đã chọn",
+                buttons: {
+                    confirm: {
+                        label: 'Xóa',
+                        className: 'btn-success',
+                    },
+                    cancel: {
+                        label: 'Hủy',
+                        className: 'pull-left btn-danger',
+                    }
+                },
+                callback: (result)=> {
+                    if(result) {
+                        // Check result = true. call function
+                        this.deleteDenominationCheckbox()
+                    }
+                }
+            });
+        } else {
+            bootbox.alert("Vui lòng chọn mệnh giá nạp tiền để xóa");
+        } 
+    }
 	// Delete All select checkbox
 	deleteDenominationCheckbox() {
-		if( this.deno_selected.length == 0) {
-            this.message_error = "Vui lòng chọn mệnh giá nạp tiền để xóa";
-            this.message_result = "";
-            this.message_success = "";
-        } else {
-            this.denominationService.deleteAllDenosSelected(this.deno_selected).subscribe(
-                result => {
-                    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                        var self = this;
-                        this.deno_selected.forEach(function(e){
-                            dtInstance.rows('#delete'+e).remove().draw();
-                            var deno_item = self.denominations.find(deno => deno.id == e);
-                            self.denominations = self.denominations.filter(denominations => denominations !== deno_item);
-                        });
-                        this.deno_selected = [];
+        this.denominationService.deleteAllDenosSelected(this.deno_selected).subscribe(
+            result => {
+                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                    var self = this;
+                    this.deno_selected.forEach(function(e){
+                        dtInstance.rows('#delete'+e).remove().draw();
+                        var deno_item = self.denominations.find(deno => deno.id == e);
+                        self.denominations = self.denominations.filter(denominations => denominations !== deno_item);
                     });
-                    this.message_success = "Xóa mệnh giá nạp tiền thành công";
+                    this.deno_selected = [];
                 });
-        }
+                this.message_success = "Xóa mệnh giá nạp tiền thành công";
+            });
     }
 }
