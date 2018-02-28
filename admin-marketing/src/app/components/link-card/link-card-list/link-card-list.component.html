@@ -26,8 +26,8 @@
 		<tr class="tr-link-card">
             <th class="checkbox-link-card"><input type="checkbox" 
                 name="allLinkCards" value="allLinkCards" (change)="selectAllCheckbox($event);"/>
-                Card Bardoce
             </th>
+            <th>Card Bardoce</th>
             <th>Họ và Tên </th>
             <th>Số điện thoại</th>
             <th>Ngày sinh</th>
@@ -45,9 +45,9 @@
                     [checked]="checkbox_selected"
                     (change)="changeCheckboxLinkCard($event, link_card)"
                     />
-                    {{ link_card.barcode }}
                 </label>
             </td>
+            <td>{{ link_card.barcode }}</td>
             <td>{{ link_card.full_name }}</td>
             <td>{{ link_card.phone }}</td>
             <td>{{ link_card.birth_date }}</td>

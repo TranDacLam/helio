@@ -8,6 +8,7 @@ import { User } from '../../../shared/class/user';
 
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
+import { datatable_config } from '../../../shared/commons/datatable_config';
 
 @Component({
   selector: 'app-link-card-list',
@@ -42,28 +43,7 @@ export class LinkCardListComponent implements OnInit {
 
   	ngOnInit() {
          // Customize DataTable
-  		this.dtOptions = {
-          language: {
-            sSearch: '',
-            searchPlaceholder: ' Nhập thông tin tìm kiếm',
-            lengthMenu: 'Hiển thị _MENU_ Thẻ Liên Kết',
-            info: "Hiển thị _START_ tới _END_ của _TOTAL_ Thẻ Liên Kết",
-            paginate: {
-            "first":      "Đầu",
-            "last":       "Cuối",
-            "next":       "Sau",
-            "previous":   "Trước"
-          },
-          select: {
-            rows: ''
-          },
-          sInfoFiltered: "",
-          zeroRecords: 'Không có Thẻ Liên Kết nào để hiển thị',
-          infoEmpty: ""
-          },
-          responsive: true,
-          pagingType: "full_numbers",
-        };
+  		this.dtOptions = datatable_config.dtOptions;
         this.getAllLinkCards();
   	}
 
