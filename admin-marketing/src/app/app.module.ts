@@ -8,7 +8,6 @@ import { HttpModule } from "@angular/http";
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app.routing';
-import { NgxMyDatePickerModule } from 'ngx-mydatepicker'; // will change after
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime'; // date and time
 
 import { AppComponent } from './app.component';
@@ -80,6 +79,7 @@ import { FormGameComponent } from './components/games/form-game/form-game.compon
 import { FormPostComponent } from './components/posts/form-post/form-post.component';
 
 import { HomeComponent } from './components/home/home.component';
+
 import { AddPromotionComponent } from './components/promotions/add-promotion/add-promotion.component';
 import { EditPromotionComponent } from './components/promotions/edit-promotion/edit-promotion.component';
 import { PromotionFormComponent } from './components/promotions/promotion-form/promotion-form.component';
@@ -87,6 +87,7 @@ import { ListPromotionComponent } from './components/promotions/list-promotion/l
 import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
 import { FormHotComponent } from './components/hots/form-hot/form-hot.component';
 import { ErrorComponent } from './components/error/error.component';
+
 
 
 
@@ -166,7 +167,6 @@ import { ErrorComponent } from './components/error/error.component';
     ReactiveFormsModule,
     DataTablesModule,
     AppRoutingModule,
-    NgxMyDatePickerModule.forRoot(),
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
   ],

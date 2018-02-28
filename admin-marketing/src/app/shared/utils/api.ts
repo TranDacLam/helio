@@ -1,8 +1,11 @@
 import { env } from '../../../environments/environment';
 
 export const api = {
+    /* URL Promotion Detail Page*/
     promotion: env.api_domain + 'promotion/',
+    /* URL Promotion List ( GET, DELETE list promotion )*/
     promotion_list: env.api_domain + 'promotion_list/',
+    /* URL User Promotion ( GET, PUT list promotion )*/
     user_promotion: env.api_domain + 'user_promotion/',
     notification: env.api_domain + 'notification/',
     user_notification: env.api_domain + 'user_notification/',
@@ -31,9 +34,15 @@ export const api = {
     banner: env.api_domain + 'banner/',
     fee: env.api_domain + 'fee/',
 
-    category_notifications: env.api_domain +'category_notifications/'
+    category_notifications: env.api_domain +'category_notifications/',
 
+    hot: env.api_domain + 'hot/',
 
+    post: env.api_domain + 'post/',
+
+    event: env.api_domain + 'event/',
+    /* URL generator QR Code from Promotion ID ( POST )*/
+    generator_QR_code: env.api_domain + 'generator_QR_code/',
 
 
 };

@@ -114,9 +114,15 @@ export class PromotionService {
         return this.http.post(user_promotion_url, JSON.stringify(param), _options).catch(this.handleError);
     }
 
+    generator_QR_code(id: number): Observable<any>{
+        let generator_QR_code_url = `${api.generator_QR_code}${id}/`
+        return this.http.post(generator_QR_code_url, _options).catch(this.handleError);
+    }
+
     private handleError(error: Response) {
         return Observable.throw(error.statusText);
     }
+
 
 
 }

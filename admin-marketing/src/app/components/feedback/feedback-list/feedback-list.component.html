@@ -63,7 +63,7 @@
 			<option value="">Xóa các phản hồi được chọn</option>
 		</select>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-3" *ngIf="feedbacks">
 		{{feedback_del.length}} của {{feedbacks.length}} được chọn
 		<button (click)="deleteFeedbackCheckbox()" type="button" class="button-feedback btn btn-danger">Thực hiện</button>
 	</div>

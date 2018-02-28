@@ -33,7 +33,7 @@
         <tbody>
             <tr *ngFor="let post of posts" id="del-{{post.id}}">
                 <td><input type="checkbox" (change)="onSelectCKB($event, post)" [checked]="select_checked"/></td>
-                <td><a routerLink="/post/edit/{{ post.id }}">{{ post.subject }}</a></td>
+                <td><a routerLink="/post/edit/{{ post.id }}">{{ post.name }}</a></td>
             </tr>
         </tbody>
     </table>
@@ -46,6 +46,6 @@
     </div>
     <div class="col-md-3">
         {{ posts_del.length }} của {{ posts.length }} được chọn 
-        <button class="btn btn-danger" (click)="onDeletePost()">Thực hiện</button>
+        <button class="btn btn-danger" (click)="deletePostEvent()">Thực hiện</button>
     </div>
 </div>

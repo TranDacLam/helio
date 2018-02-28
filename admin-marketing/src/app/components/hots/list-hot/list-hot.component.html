@@ -3,7 +3,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Quản Lý Sự Hot</li>
+            <li class="breadcrumb-item active" aria-current="page">Quản Lý Hot</li>
         </ol>
     </nav>
 </div>
@@ -46,6 +46,6 @@
     </div>
     <div class="col-md-3">
         {{ hots_del.length }} của {{ hots.length }} được chọn 
-        <button class="btn btn-danger" (click)="onDelelteHot()">Thực hiện</button>
+        <button class="btn btn-danger" (click)="deleteHotEvent()">Thực hiện</button>
     </div>
 </div>

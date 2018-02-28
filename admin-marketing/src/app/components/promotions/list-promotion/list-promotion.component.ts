@@ -143,6 +143,16 @@ export class ListPromotionComponent implements OnInit {
         
     }
 
+    generator_QR_code(id: number) {
+        this.promotionService.deletePromotionList(list_id_selected).subscribe(
+            (data) => {
+                console.log(data);
+            }, 
+            (error) => {
+                console.log(error);
+            });
+    }
+
     /*
         Delete promotion selected list
         @author: diemnguyen

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../class/user';
 import { Customer } from '../class/customer';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { api } from '../utils/api';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
@@ -107,9 +107,16 @@ export class LinkCardService {
         author: TrangLe
     */
 
-    deleteAllUserLinkedSelected(user_linked_id: User[]): Observable<User[]> {
-        const url = `${api.user_link_card}?user_linked_id=${user_linked_id}`;
-        return this.http.delete(url, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    deleteAllUserLinkedSelected(user_linked_id): Observable<any> {
+        const url = `${api.user_link_card}`;
+        let param = {
+            user_linked_id: user_linked_id
+        }
+        let _options = new RequestOptions({
+            headers: httpOptions.headers,
+            body: JSON.stringify(param)
+        });
+        return this.http.delete(url, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     // exception

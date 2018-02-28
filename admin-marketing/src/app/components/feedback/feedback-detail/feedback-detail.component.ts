@@ -9,6 +9,9 @@ import { Location } from '@angular/common';
 import { FeedbackService } from '../../../shared/services/feedback.service';
 import { Feedback, Status  } from '../../../shared/class/feedback';
 
+// Using bootbox 
+declare var bootbox:any;
+
 @Component({
   selector: 'app-feedback-detail',
   templateUrl: './feedback-detail.component.html',
@@ -82,6 +85,7 @@ export class FeedbackDetailComponent implements OnInit {
     }
     /* 
         PUT: Update Feedback by ID
+        @author: TrangLe
     */
     updateFeedback() {
     	this.feedbackService.updateFeedbackById(this.feedback)
@@ -89,5 +93,33 @@ export class FeedbackDetailComponent implements OnInit {
                 () => this.router.navigate(['/feedback-list', { message_put: this.feedback.name} ]),
                 error =>  this.errorMessage = <any>error
             )
+    }
+
+    /* 
+        Confirm delete feedback detail
+        Using: bootbox plugin
+        @author: Trangle
+    */
+    confirmDeleteFeedback(feedback: Feedback) {
+        bootbox.confirm({
+            title: "Bạn có chắc chắn?",
+            message: "Bạn muốn xóa phản hồi này.",
+            buttons: {
+                confirm: {
+                    label: 'Xóa',
+                    className: 'btn-success',
+                },
+                cancel: {
+                    label: 'Hủy',
+                    className: 'pull-left btn-danger',
+                }
+            },
+            callback: (result)=> {
+                if(result) {
+                    // Check result = true. call function callback
+                    this.deleteFeedback(feedback)
+                }
+            }
+        });
     }
 }

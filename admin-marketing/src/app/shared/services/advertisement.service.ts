@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Http, Headers, Response } from "@angular/http";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Http, Headers, Response, RequestOptions } from "@angular/http";
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of'; 
@@ -12,20 +11,20 @@ import { Advertisement } from '../../shared/class/advertisement';
 import { api } from '../utils/api';
 
 const httpOptions = {
-	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+	headers: new Headers({ 'Content-Type': 'application/json' })
 };
 
 @Injectable()
 export class AdvertisementService {
 
-	constructor(private http: HttpClient){}
+	constructor(private http: Http){}
 	/*
 		GET: Get All Advertiment From Service
 		@author: TrangLe
 	 */
-	getAllAdvertisement(): Observable<Advertisement[]>{
+	getAllAdvertisement(): Observable<any>{
 		let urlAdv = `${api.advertisement}`;
-		return this.http.get<Advertisement[]>(urlAdv);
+		return this.http.get(urlAdv).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	/*
@@ -34,8 +33,8 @@ export class AdvertisementService {
 	 */ 
 	addAdvertisement(adv: Advertisement): Observable<Advertisement> {
 		let urlAdv = `${api.advertisement}`;
-		return this.http.post<Advertisement>(urlAdv, adv, httpOptions)
-		.catch(this.handleError);		
+		return this.http.post(urlAdv, adv, httpOptions)
+		.map((res: Response) => res.json()).catch(this.handleError);		
 	}
 
 	/*
@@ -44,7 +43,7 @@ export class AdvertisementService {
 	 */
 	getAdvertisement(id: number): Observable<Advertisement> {
 		const url = `${api.advertisement}${id}/`;
-		return this.http.get<Advertisement>(url).catch(this.handleError)
+		return this.http.get(url).map((res: Response) => res.json()).catch(this.handleError);
 	}
 	
 	/*
@@ -55,16 +54,23 @@ export class AdvertisementService {
 		const id = adv.id;
 		var body = JSON.stringify(adv);
 		const url = `${api.advertisement}${id}/`;
-		return this.http.put<Advertisement>(url,adv, httpOptions).catch(this.handleError);
+		return this.http.put(url,adv, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 	/*
 		DELETE: Delete All Advertiment which checked box
 		@author: TrangLe
 	 */
-	deleteAllAdvsSelected(adv_id: Advertisement[]): Observable<Advertisement[]> {
-		const url = `${api.advertisement}?adv_id=${adv_id}`;
-		return this.http.delete<Advertisement[]>(url, httpOptions)
-		.catch(this.handleError)
+	deleteAllAdvsSelected(adv_id): Observable<any> {
+		const url = `${api.advertisement}`;
+		let param = {
+            adv_id: adv_id
+        }
+        let _options = new RequestOptions({
+            headers: httpOptions.headers,
+            body: JSON.stringify(param)
+        });
+		return this.http.delete(url, _options)
+		.map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	// Handle error

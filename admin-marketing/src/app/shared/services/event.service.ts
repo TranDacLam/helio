@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { api } from '../utils/api';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
@@ -11,6 +12,8 @@ const httpOptions = {
 @Injectable()
 export class EventService {
 
+    private urlEvent= api.event;
+
     constructor(private http: Http) { }
 
     /* 
@@ -18,8 +21,7 @@ export class EventService {
         author: Lam
     */
     getEvents(): Observable<any>{
-        let url_events = '';
-        return this.http.get(url_events).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(this.urlEvent).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     getEvent(id: number): Observable<any>{
@@ -31,8 +33,16 @@ export class EventService {
         author: Lam
     */
     onDelEventSelect(arr): Observable<any>{
-        let url_del_events = '';
-        return this.http.delete(url_del_events, httpOptions).catch(this.handleError);
+        let param = {
+            list_id: arr
+        }
+
+        let _options = new RequestOptions({
+            headers: httpOptions.headers,
+            body: JSON.stringify(param)
+        });
+
+        return this.http.delete(this.urlEvent, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     addEvent(value): Observable<any>{

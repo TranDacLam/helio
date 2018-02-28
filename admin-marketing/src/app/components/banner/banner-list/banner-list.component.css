@@ -1,1 +1,11 @@
-
+/*Begin content banner*/
+.content-banner {
+	margin: 15px 0px;
+	border-bottom: 1px solid black;
+}
+.checkbox-banner {
+	padding: 10px;
+}
+.button-banner {
+	margin-left: 15px;
+}

@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Input, Output, ViewChild } from '@angu
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { DateTimeAdapter } from 'ng-pick-datetime';
 import { Event } from '../../../shared/class/event';
 import { EventService } from '../../../shared/services/event.service';
 import 'rxjs/add/observable/throw';
@@ -35,8 +36,11 @@ export class FormEventComponent implements OnInit {
         private fb: FormBuilder,
         private location: Location,
         private router: Router,
-        private route: ActivatedRoute
-    ) { }
+        private route: ActivatedRoute,
+        private dateTimeAdapter: DateTimeAdapter<any>
+    ) {
+        dateTimeAdapter.setLocale('en-GB'); 
+    }
 
     ngOnInit() {
         this.creatForm();

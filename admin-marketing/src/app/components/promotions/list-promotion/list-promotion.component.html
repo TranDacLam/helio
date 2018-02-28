@@ -52,7 +52,7 @@
                         <td>{{ promotion.created | date : 'dd/MM/yyyy'}}</td>
                         <td></td>
                         <td><span *ngIf="promotion.promotion_type">{{ promotion.promotion_type.name }}</span></td>
-                        <td><button class="btn btn-primary text-center">Tạo QR Code</button></td>
+                        <td><button class="btn btn-primary text-center" (click)="generator_QR_code()">)">Tạo QR Code</button></td>
                         <td><a class = "btn btn-primary" routerLink="/users-promotions/{{ promotion.id }}">Danh sách user</a></td>
                     </tr>
                 </tbody>

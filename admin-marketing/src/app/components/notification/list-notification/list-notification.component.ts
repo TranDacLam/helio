@@ -135,7 +135,11 @@ export class ListNotificationComponent implements OnInit {
                     this.notifications_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.notifications_del = [];
+                    
                 });
+                this.getNotifications();
+                this.message_result = 'Xóa thành công.';
             }
         );
     }

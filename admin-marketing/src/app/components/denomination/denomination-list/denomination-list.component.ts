@@ -28,7 +28,7 @@ export class DenominationListComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
-    // Using trigger becase fetching the list of feedbacks can be quite long
+    // Using trigger becase fetching the list of denominations can be quite long
     // thus we ensure the data is fetched before rensering
     dtTrigger: Subject<any> = new Subject();
 
@@ -126,19 +126,22 @@ export class DenominationListComponent implements OnInit {
 	// Delete All select checkbox
 	deleteDenominationCheckbox() {
 		if( this.deno_selected.length == 0) {
-            this.message_error = "Vui lòng chọn quảng cáo để xóa";
+            this.message_error = "Vui lòng chọn mệnh giá nạp tiền để xóa";
             this.message_result = "";
             this.message_success = "";
         } else {
             this.denominationService.deleteAllDenosSelected(this.deno_selected).subscribe(
                 result => {
                     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                        var self = this;
                         this.deno_selected.forEach(function(e){
                             dtInstance.rows('#delete'+e).remove().draw();
+                            var deno_item = self.denominations.find(deno => deno.id == e);
+                            self.denominations = self.denominations.filter(denominations => denominations !== deno_item);
                         });
                         this.deno_selected = [];
                     });
-                    this.message_success = "Xóa quảng cáo thành công";
+                    this.message_success = "Xóa mệnh giá nạp tiền thành công";
                 });
         }
     }
