@@ -137,6 +137,7 @@ export class ListPromotionLabelComponent implements OnInit {
                     });
                     this.promotion_labels_del = [];
                 });
+                this.getPromotionLabels();
                 this.message_result = 'Xóa thành công.';
             }
         );

@@ -137,6 +137,7 @@ export class ListPostComponent implements OnInit {
                     });
                     this.posts_del = [];
                 });
+                this.getPosts();
                 this.message_result = "Xóa thành công.";
             }
         );

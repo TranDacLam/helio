@@ -137,6 +137,7 @@ export class ListEventComponent implements OnInit {
                     });
                     this.events_del = [];
                 });
+                this.getEvents();
                 this.message_result = 'Xóa thành công.';
             }
         );

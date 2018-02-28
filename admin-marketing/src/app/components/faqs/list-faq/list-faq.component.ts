@@ -104,6 +104,7 @@ export class ListFaqComponent implements OnInit {
                     });
                     this.faqs_del = [];
                 });
+                this.getFaqs();
                 this.message_result = "Xóa thành công."
             }
         );

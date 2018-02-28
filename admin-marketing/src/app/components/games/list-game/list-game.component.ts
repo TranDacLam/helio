@@ -137,6 +137,7 @@ export class ListGameComponent implements OnInit {
                     });
                     this.games_del = [];
                 });
+                this.getGames();
                 this.message_result = 'Xóa thành công.';
             }
         );

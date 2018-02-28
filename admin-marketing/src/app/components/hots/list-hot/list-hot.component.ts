@@ -56,7 +56,6 @@ export class ListHotComponent implements OnInit {
     getHots(){
         this.hotService.getHots().subscribe(
             (data) => {
-                console.log(data);
                 this.hots = data;
             } 
         );
@@ -139,6 +138,7 @@ export class ListHotComponent implements OnInit {
                     });
                     this.hots_del = [];
                 });
+                this.getHots();
                 this.message_result = 'Xóa thành công.';
             }
         );
