@@ -25,27 +25,23 @@
                     <h5>Thời gian</h5>
                 </div>
                 <div class="col-xs-3 col-sm-2 input-group">
-             
-                    <input type="text" class="form-control" [(ngModel)]="date_status_start"
-                        ngx-mydatepicker [options]="myOptions" #dp1="ngx-mydatepicker"
-                        placeholder="Start date"
-                     />
-                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" (click)="dp1.toggleCalendar()">
-                            <i class="glyphicon glyphicon-calendar"></i>
-                        </button>
-                    </span>
-                </div>
-                <div class="col-xs-3 col-sm-2 input-group">
-                    <input type="text" class="form-control" [(ngModel)]="date_status_end"
-                        ngx-mydatepicker [options]="myOptions" #dp2="ngx-mydatepicker"
-                        placeholder="End date"
+                    <input type="text" class="form-control event-date" [(ngModel)]="date_status_start"
+                        [owlDateTime]="dt1" placeholder="Start date"
                     />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" (click)="dp2.toggleCalendar()">
-                            <i class="glyphicon glyphicon-calendar"></i>
-                        </button>
+                    <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
+                        <i class="fa fa-calendar"></i>
                     </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                </div>
+
+                <div class="col-xs-3 col-sm-2 input-group">
+                    <input type="text" class="form-control event-date" [(ngModel)]="date_status_end"
+                        [owlDateTime]="dt2" placeholder="Start date"
+                    />
+                    <span class="input-group-addon" [owlDateTimeTrigger]="dt2">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
                     
                 </div>
                 <div class="col-xs-2 col-sm-3">
@@ -54,22 +50,22 @@
             </div>
         </div>
         <div class="panel-body">
-            <div class="row text-center">
+            <div class="row text-center" *ngIf="status_sum >= 0">
                 <h1>TỔNG SỐ</h1>
-                <h4>80</h4>
+                <h4>{{ status_sum }}</h4>
             </div>
-            <div class="row text-center">
+            <div class="row text-center" *ngIf="fb_status">
                 <div class="col-xs-4 col-sm-4">
                     <h4>Chưa trả lời</h4>
-                    <p><a routerLink="/">30</a></p>
+                    <p><a routerLink="/">{{ fb_status.no_process }}</a></p>
                 </div>
                 <div class="col-xs-3 col-sm-3">
                     <h4>Đã trả lời</h4>
-                    <p>30</p>
+                    <p>{{ fb_status.answered }}</p>
                 </div>
                 <div class="col-xs-5 col-sm-5">
                     <h4>Đã chuyển đến bộ phận liên quan</h4>
-                    <p>40</p>
+                    <p>{{ fb_status.moved }}</p>
                 </div>
             </div>
         </div> 
@@ -88,27 +84,22 @@
                     <h5>Thời gian</h5>
                 </div>
                 <div class="col-xs-3 col-sm-2 input-group">
-             
-                    <input type="text" class="form-control" [(ngModel)]="date_rate_start"
-                        ngx-mydatepicker [options]="myOptions" #dp3="ngx-mydatepicker"
-                        placeholder="Start date"
-                     />
-                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" (click)="dp3.toggleCalendar()">
-                            <i class="glyphicon glyphicon-calendar"></i>
-                        </button>
+                    <input type="text" class="form-control event-date" [(ngModel)]="date_rate_start"
+                        [owlDateTime]="dt3" placeholder="Start date"
+                    />
+                    <span class="input-group-addon" [owlDateTimeTrigger]="dt3">
+                        <i class="fa fa-calendar"></i>
                     </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
                 </div>
                 <div class="col-xs-3 col-sm-2 input-group">
-                    <input type="text" class="form-control" [(ngModel)]="date_rate_end"
-                        ngx-mydatepicker [options]="myOptions" #dp4="ngx-mydatepicker"
-                        placeholder="End date"
+                    <input type="text" class="form-control event-date" [(ngModel)]="date_rate_end"
+                        [owlDateTime]="dt4" placeholder="Start date"
                     />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" (click)="dp4.toggleCalendar()">
-                            <i class="glyphicon glyphicon-calendar"></i>
-                        </button>
+                    <span class="input-group-addon" [owlDateTimeTrigger]="dt4">
+                        <i class="fa fa-calendar"></i>
                     </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
                     
                 </div>
                 <div class="col-xs-2 col-sm-3">
@@ -117,30 +108,30 @@
             </div>
         </div>
         <div class="panel-body">
-            <div class="row text-center">
+            <div class="row text-center" *ngIf="rate_sum >= 0" >
                 <h1>TỔNG SỐ</h1>
-                <h4>80</h4>
+                <h4>{{ rate_sum }}</h4>
             </div>
-            <div class="row text-center">
+            <div class="row text-center" *ngIf="fb_rate">
                 <div class="col-xs-3 col-sm-3">
                     <h4>Tuyệt vời</h4>
-                    <p>40</p>
+                    <p>{{ fb_rate.great }}</p>
                 </div>
                 <div class="col-xs-2 col-sm-2">
                     <h4>Tốt</h4>
-                    <p>20</p>
+                    <p>{{ fb_rate.good }}</p>
                 </div>
                 <div class="col-xs-2 col-sm-2">
                     <h4>Bình thường</h4>
-                    <p>30</p>
+                    <p>{{ fb_rate.nomal }}</p>
                 </div>
                 <div class="col-xs-2 col-sm-2">
                     <h4>Xấu</h4>
-                    <p>5</p>
+                    <p>{{ fb_rate.bad }}</p>
                 </div>
                 <div class="col-xs-2 col-sm-2">
                     <h4>Không có gì</h4>
-                    <p>15</p>
+                    <p>{{ fb_rate.notbad }}</p>
                 </div>
             </div>
         </div> 

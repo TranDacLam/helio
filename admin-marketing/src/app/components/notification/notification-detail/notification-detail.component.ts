@@ -23,6 +23,7 @@ export class NotificationDetailComponent implements OnInit {
     user_list_right: User[]; // List user selected
 
     is_update: boolean = false; // Check input checkbox Update Notification
+    messageSuccess = '';
 
     constructor(
         private notificationService: NotificationService, 
@@ -77,7 +78,17 @@ export class NotificationDetailComponent implements OnInit {
     */
     update_user_noti(event){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.notificationService.updateUserNoti(id, event).subscribe();
+        this.notificationService.updateUserNoti(id, event).subscribe(
+            (data) => {
+                this.messageSuccess = "Lưu thành công.";
+                setTimeout(()=>{
+                      this.messageSuccess = '';
+                },5000);
+            },
+            (error) => {
+                this.messageSuccess = error.message;
+            }
+        );
     }
 
 }
