@@ -8,7 +8,10 @@ import { Promotion } from '../../../shared/class/promotion'
 @Component({
   	selector: 'app-user-promotion',
   	templateUrl: './user-promotion.component.html',
-  	styleUrls: ['./user-promotion.component.css']
+  	styleUrls: ['./user-promotion.component.css'],
+    providers: [
+        PromotionService
+    ]
 })
 export class UserPromotionComponent implements OnInit {
 
@@ -16,7 +19,10 @@ export class UserPromotionComponent implements OnInit {
 	user_list_left: User[];
     user_list_right: User[];
 
-    constructor(private route: ActivatedRoute, private promotionService: PromotionService) { }
+    constructor(
+        private route: ActivatedRoute, 
+        private promotionService: PromotionService
+    ) { }
 
     ngOnInit() {
     	this.getUsersPromotion();
@@ -25,13 +31,15 @@ export class UserPromotionComponent implements OnInit {
     getUsersPromotion(){
         const promotion_id = +this.route.snapshot.paramMap.get('id');
 
-        this.promotionService.getUsersPromotion(promotion_id).subscribe((data)=> {
-            this.promotion = data.promotion_detail;
-            this.user_list_left = data.user_all;
-            this.user_list_right = data.user_promotion;
-        }, (error) => {
-            console.log("Internal Server Error")
-        });
+        this.promotionService.getUsersPromotion(promotion_id).subscribe(
+            (data)=> {
+                this.promotion = data.promotion_detail;
+                this.user_list_left = data.user_all;
+                this.user_list_right = data.user_promotion;
+            }, 
+            (error) => {
+                console.log("Internal Server Error")
+            });
     }
 
     updateUserPromotion(list_user_id) {

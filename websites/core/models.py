@@ -382,3 +382,6 @@ class Promotion_Type(DateTimeModel):
 
     def __str__(self):
         return '%s' % (self.name)
+        
+    def __unicode__(self):
+        return self.name +' '+ self.name

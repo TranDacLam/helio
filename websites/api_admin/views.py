@@ -119,6 +119,7 @@ class PromotionDetail(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
+            print serializer.errors
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
             print 'PromotionDetailView PUT', e

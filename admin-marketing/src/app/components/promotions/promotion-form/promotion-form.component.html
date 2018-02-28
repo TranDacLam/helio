@@ -76,7 +76,7 @@
         </div>
         <div class="col-sm-4">
             <select class="form-control" formControlName="promotion_label" *ngIf="promotionLabels">
-                <option *ngFor="let label of promotionLabels" value="{{ label.id }}" [selected]="label.id === promotion.promotion_label">{{ label.name }}</option>
+                <option *ngFor="let label of promotionLabels" value="{{ label.id }}">{{ label.name }}</option>
             </select>
             <show-error-valid [control]="promotionForm.get('promotion_label')"></show-error-valid>
         </div>
@@ -87,8 +87,8 @@
             <label class="col-form-label form-check-label">Loại Khuyến Mãi</label>
         </div>
         <div class="col-sm-4">
-            <select class="form-control" formControlName="promotion_type" [(ngModel)]="promotion.promotion_type" *ngIf="promotionTypes">
-                <option *ngFor="let type of promotionTypes" value="{{ type }}">{{ type.name }}</option>
+            <select  [compareWith]="equalsObject" class="form-control" formControlName="promotion_type" *ngIf="promotionTypes">
+                <option *ngFor="let type of promotionTypes" [ngValue] ="type">{{ type.name }}</option>
             </select>
             <show-error-valid [control]="promotionForm.get('promotion_type')"></show-error-valid>
         </div>

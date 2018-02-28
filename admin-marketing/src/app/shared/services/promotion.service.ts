@@ -40,7 +40,7 @@ export class PromotionService {
         Get all promotion
         @author: diemnguyen
     */
-    getAllPromotion() {
+    getAllPromotion(): Observable<any> {
         return this.http.get(api.promotion_list, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
@@ -48,7 +48,7 @@ export class PromotionService {
         Get promotion by Id
         @author: diemnguyen
     */
-    getPromotionById(id: number) {
+    getPromotionById(id: number): Observable<any> {
         let promotion_detail_url = `${api.promotion}${id}`;
         return this.http.get(promotion_detail_url, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
@@ -58,7 +58,7 @@ export class PromotionService {
         Delete promotion by Id
         @author: diemnguyen
     */
-    deletePromotionById(id: number) {
+    deletePromotionById(id: number): Observable<any> {
         let promotion_detail_url = `${api.promotion}${id}`;
         return this.http.delete(promotion_detail_url, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
@@ -67,7 +67,7 @@ export class PromotionService {
         Save Promotion
         @author: diemnguyen
     */
-    savePromotion(promotion: any) {
+    savePromotion(promotion: any): Observable<any> {
         _headers.set('Content-Type', 'multipart/form-data');
         let _options_save = new RequestOptions({
             headers: _headers
@@ -82,7 +82,7 @@ export class PromotionService {
         Delete promotion by Id
         @author: diemnguyen
     */
-    updatePromotion(promotion: Promotion) {
+    updatePromotion(promotion: Promotion): Observable<any> {
         let promotion_detail_url = `${api.promotion}${promotion.id}/`;
         return this.http.put(promotion_detail_url, JSON.stringify(promotion), _options).map((res: Response) => res.json()).catch(this.handleError);
     }

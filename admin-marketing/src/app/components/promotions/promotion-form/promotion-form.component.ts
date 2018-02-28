@@ -37,6 +37,7 @@ export class PromotionFormComponent implements OnInit {
 
     ckEditorConfig:any;
 
+    selected = true;
     constructor(
         private promotionService: PromotionService,
         private promotionTypeService: PromotionTypeService,
@@ -52,13 +53,19 @@ export class PromotionFormComponent implements OnInit {
         this.getPromotionLabels();
 
         this.ckEditorConfig = {
-            uiColor: '#337ab7', 
             filebrowserUploadUrl: 'http://127.0.0.1:8000/ckeditor/upload/'
 
         };
         this.creatPromotionForm();
     }
 
+    /*
+        Compare 2 object. Use for selected of select element.
+    */
+    equalsObject(o1: any, o2: any) { 
+        return o1.id === o2.id; 
+    }
+    
     /*
         function getPromotionType(): get all promotion type
         @author: diemnguyen
@@ -108,6 +115,8 @@ export class PromotionFormComponent implements OnInit {
             end_date: [this.promotion.end_date],
         });
     }
+
+
     onFileUploadRequest(event) {
         console.log("aaaaa");
     }

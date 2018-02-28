@@ -30,7 +30,6 @@ export class ListPromotionComponent implements OnInit {
 
 	promotion_list: Promotion[] = [];
 
-	dtTrigger: Subject<any> = new Subject();
 
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
@@ -39,6 +38,12 @@ export class ListPromotionComponent implements OnInit {
     length_selected: Number = 0;
 
     message_result: string = "";
+
+    /*
+        Using trigger becase fetching the list of feedbacks can be quite long
+        thus we ensure the data is fetched before rensering
+    */ 
+    dtTrigger: Subject<any> = new Subject();
 
     constructor(
         private promotionService: PromotionService,
@@ -51,12 +56,13 @@ export class ListPromotionComponent implements OnInit {
     	this.dtOptions = datatable_config.dtOptions;
 
         this.route.params.subscribe(params => {
-            console.log(params);
-            if (params.action && params.promotion_name) {
+            if (params && params.action) {
                 this.message_result = params.action + params.promotion_name + '" thành công.';
             }
         });
+        
     }
+
     /*
         Call Service get all promotion
         @author: diemnguyen 
@@ -65,7 +71,7 @@ export class ListPromotionComponent implements OnInit {
         this.promotionService.getAllPromotion().subscribe(
             (data) => {
                 this.promotion_list = data;
-                this.length_all = data.length
+                this.length_all = data.length;
                 this.dtTrigger.next();
             }, 
             (error) => {
