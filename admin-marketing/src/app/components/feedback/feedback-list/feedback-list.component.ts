@@ -93,6 +93,7 @@ export class FeedbackListComponent implements OnInit {
 
 	/*
         GET: Get all Feedback To Show
+        Call api from service feedback
         @author: TrangLe
      */
 	getAllFeedbacks() {
@@ -142,7 +143,6 @@ export class FeedbackListComponent implements OnInit {
             let updateDenoItem = this.feedback_del.find(this.findIndexToUpdate, feedback.id);
 
             let index = this.feedback_del.indexOf(updateDenoItem);
-            console.log(index);
 
             this.feedback_del.splice(index, 1);
         }
@@ -156,6 +156,11 @@ export class FeedbackListComponent implements OnInit {
         @author: Trangle
      */
     deleteFeedbackCheckbox() {
+        /*
+            Check feedback_del not Null
+            if feedback.length == 0, return message
+            else if delete id selected
+         */
         if (this.feedback_del !== null) {
             if( this.feedback_del.length == 0) {
                 this.message_error = "Vui lòng chọn phản hồi để xóa";
@@ -165,9 +170,13 @@ export class FeedbackListComponent implements OnInit {
             this.feedbackService.deleteAllFeedbackChecked(this.feedback_del).subscribe(
             result => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                    var self = this;
                     this.feedback_del.forEach(function(e){
                         dtInstance.rows('#delete'+e).remove().draw();
-                });
+                        var fed_item = self.feedbacks.find(feedback => feedback.id == e);
+                        self.feedbacks = self.feedbacks.filter(feedbacks => feedbacks !== fed_item);
+                    });
+                    
                 this.feedback_del = [];
             });
             this.message_success = "Xóa phản hồi thành công";

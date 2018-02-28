@@ -1,6 +1,9 @@
-import { Component,ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component,ElementRef,Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { Router } from "@angular/router";
+
+import { BannerService } from '../../../shared/services/banner.service';
 import { Banner, positions } from '../../../shared/class/banner';
 
 @Component({
@@ -9,47 +12,78 @@ import { Banner, positions } from '../../../shared/class/banner';
   styleUrls: ['./banner-add.component.css']
 })
 export class BannerAddComponent implements OnInit {
+    
+    banners: Banner[] =[];
+    formBanner: FormGroup;
+    banner_form = new Banner();
+    errorMessage: String;
+    positions = positions;
+    isSelected = true; // Set value default selcted 
 
-	formBanner: FormGroup;
-	banner_form = new Banner();
-	banners: Banner[];
-	positions = positions;
+    // set inputImage property as a local variable, #inputImage on the tag input file
+    @ViewChild('inputImage')
+    inputImage: any;
 
-	@ViewChild('fileInput') fileInput: ElementRef;
-	
-  	constructor(
-  		private fb: FormBuilder
-  		) { }
+    constructor(
+        private fb: FormBuilder,
+        private bannerService: BannerService,
+        private router: Router,
+          ) { 
+        this.createForm();
+    }
+    ngOnInit() {
+          
+    }
 
-  	ngOnInit() {
-  		this.createForm();
-  	}
-
-  	// Create form to add banner
-  	createForm() {
- 		this.formBanner = this.fb.group({
+    /* 
+      Create form to add banner
+      @author: Trangle
+    */
+    createForm() {
+        this.formBanner = this.fb.group({
             image: [this.banner_form.image, [Validators.required]],
             sub_url: [this.banner_form.sub_url, [Validators.required]],
             position: [this.banner_form.position, [Validators.required]],
             is_show: [false]
         });
- 	}
+    }
 
- 	// upload image 
-    // FileReader: reading file contents
+    /*
+        Upload image
+        FileReader: reading file contents
+        @author: TrangLe
+    */
     onFileChange(e) {
       if(e.target.files && e.target.files.length > 0) {
         let file = e.target.files[0];
+        console.log(file);
         this.formBanner.get('image').setValue(file);
       }
     }
-    // Clear file 
+    /*
+        Clear file upload
+        @author: Trangle
+     */
     clearFile() {
       this.formBanner.get('image').setValue(null);
-      this.fileInput.nativeElement.value = '';
+      this.inputImage.nativeElement.value = "";
     }
 
-    onSubmit() {
-
-    }
+    onSubmit() { }
+        /*
+        POST: Create New Advertiment
+        @author: TrangLe
+     */
+    createBanner(formBanner){
+           this.bannerService.CreateBanner( formBanner )
+               .subscribe(
+                    result => {
+                       this.banners.push(result);
+                    error =>  this.errorMessage = <any>error
+               });
+        this.router.navigate(['/banner-list', { message_post: formBanner.sub_url} ])
+   }
+   logValue(formBanner) {
+       console.log(formBanner)
+   }
 }

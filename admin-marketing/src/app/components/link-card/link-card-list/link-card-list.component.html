@@ -24,7 +24,7 @@
 <div *ngIf="message_result" class="alert alert-success">
     {{ message_result }}
 </div>
-<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class=" row hover">
+<table id="table_link_card" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class=" row hover">
 	<thead>
 		<tr class="tr-link-card">
             <th class="checkbox-link-card"><input type="checkbox" 
@@ -60,7 +60,7 @@
     </tbody>
 </table>
 
-<div class='row'>
+<div class='row area-link-card-footer'>
 	<div class="col-md-3">
 		<select name="" class="form-control">
 			<option value="">Xóa các thẻ liên kết được chọn</option>
@@ -68,6 +68,6 @@
 	</div>
 	<div class="col-md-3">
 		{{link_card_del.length}} của {{link_cards.length}} được chọn
-		<button (click)="deleteLinkCardCheckbox()" type="button" class="btn btn-danger">Thực hiện</button>
+		<button (click)="deleteLinkCardCheckbox()" type="button" class="btn-link-card btn btn-danger">Thực hiện</button>
 	</div>
 </div>

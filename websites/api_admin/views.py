@@ -285,11 +285,11 @@ class AdvertisementView(APIView):
         DELETE: multi checbox
         """
         try:
-            adv_id = self.request.query_params.get('adv_id', None)
+            adv_id = self.request.data.get('adv_id', None)
+            print "Adv_id", adv_id
             if adv_id:
-                adv_id_list = adv_id.split(',')
                 queryset = Advertisement.objects.filter(
-                    pk__in=adv_id_list).delete()
+                    pk__in=adv_id).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
@@ -391,11 +391,11 @@ class DenominationView(APIView):
         DELETE: Multi ids select
         """
         try:
-            deno_id = self.request.query_params.get('deno_id', None)
+            deno_id = self.request.data.get('deno_id', None)
+            print "DENO ID", deno_id
             if deno_id:
-                deno_id_list = deno_id.split(',')
                 queryset = Denomination.objects.filter(
-                    pk__in=deno_id_list).delete()
+                    pk__in=deno_id).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
@@ -466,21 +466,22 @@ class FeedbackView(APIView):
             return Response(error, status=500)
 
     def delete(self, request, format=None):
-        try:
-            fed_id = self.request.query_params.get('fed_id', None)
+        print "Delete"
+        try: 
+            fed_id = request.data.get('fed_id', None)
+            print "Fed_id:", fed_id
             if fed_id:
-                fed_id_list = fed_id.split(',')
-                queryset = FeedBack.objects.filter(pk__in=fed_id_list).delete()
+                queryset = FeedBack.objects.filter(pk__in = fed_id).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
-            return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
+            return Response({"code": 400, "message": "Not found ID ", "fields": "id"}, status=400)
         except Exception, e:
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            print e
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
             return Response(error, status=500)
 """
 GET, PUT, DELETE Feedback by id
 @author: Trangle
 """
-
 
 @permission_classes((AllowAny, ))
 class FeedbackDetailView(APIView):
@@ -541,12 +542,14 @@ class UserLinkCardList(APIView):
         DELETE: multi checbox
         """
         try:
-            user_linked_id = self.request.query_params.get(
+            user_linked_id = self.request.data.get(
                 'user_linked_id', None)
+            
+            print "USER_LINKED_ID", user_linked_id
+
             if user_linked_id:
-                user_linked_id_list = user_linked_id.split(',')
                 queryset = User.objects.filter(
-                    pk__in=user_linked_id_list).delete()
+                    pk__in=user_linked_id).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
@@ -1093,34 +1096,101 @@ class FeeAPI(APIView):
 
 
 """
-    GET: get all banner
+    GET: Get All Banner
+    POST: Add New Banner
+    DELETE: Delete All Banner Selected
     @author: TrangLe
 """
-
-
+@parser_classes((MultiPartParser, JSONParser))
 @permission_classes((AllowAny,))
 class BannerView(APIView):
 
-    parser_classes = (FileUploadParser, MultiPartParser, FormParser)
-
     def get(self, request, format=None):
+        """
+        Get All Banner
+        """
+        print "Method GET"
         try:
-            banner = Banner.objects.all()
-            serializer = admin_serializers.BannerSerializer(banner, many=True)
+            banners = Banner.objects.all()
+            serializer = admin_serializers.BannerSerializer(banners, many=True)
             return Response(serializer.data)
 
         except Exception, e:
+            print e
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
-        print "post"
-        serializer = admin_serializers.BannerSerializer(data=request.data)
-        print serializer
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        print "Method POST"
+        try:
+            serializer = admin_serializers.BannerSerializer( data = request.data )
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status = 400 )
+
+        except Exception, e:
+            print "banner ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+    
+    def delete(self, request, format=None):
+        """
+        Delete All Banner Selected
+        """
+        print "Method DELETE"
+        try:
+            # Get list id banner to delete
+            banner_id = self.request.data.get('banner_id', None)
+            print "LIST BANNER ID DELETE : ", banner_id
+
+            # Check list id banner is valid
+            if banner_id:
+                Banner.objects.filter(pk__in = banner_id).delete()
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
+        except Exception, e:
+            print e
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+
+"""
+    GET, PUT, DELETE Banner by id
+    @author: Trangle
+"""
+@parser_classes((MultiPartParser, JSONParser))
+@permission_classes((AllowAny,))
+class BannerViewDetail(APIView):
+
+    def get_object(self, pk):
+        try:
+            queryset = Banner.objects.get(pk=pk)
+            return queryset
+        except Exception, e:
+            return Response(status=500)
+
+    def get(self, request, pk, format=None):
+        banner = self.get_object(pk)
+        serializer = admin_serializers.BannerSerializer(banner)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        banner = self.get_object(pk)
+        serializer = admin_serializers.BannerSerializer(
+            banner, data=request.data)
+        try:
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception, e:
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, pk, format=None):
+        banner = self.get_object(pk)
+        banner.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 """
     Get All CategoryNotifications
@@ -1266,6 +1336,149 @@ class PromotionLabelAPI(APIView):
                 promotionLabelSerializer.save()
                 return Response(promotionLabelSerializer.data)
             return Response(promotionLabelSerializer.errors, status=status.HTTP_400_BAD_REQUEST )
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+    
+    def put(self, request, id):
+        promotionLabel = self.get_object(id)
+        try:
+            promotionLabelSerializer = admin_serializers.PromotionLabelSerializer( instance = promotionLabel, data = request.data)
+            if promotionLabelSerializer.is_valid():
+                promotionLabelSerializer.save()
+                return Response(promotionLabelSerializer.data)
+            return Response({"code": 400, "message": promotionLabelSerializer.errors, "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id = None, format=None):
+        try:
+            if id:
+                promotionLabel = Promotion_Label.objects.get(id = id)
+                promotionLabel.delete()
+                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+
+            list_id = request.data.get('list_id', None)
+            if list_id:
+                promotionLabels = Promotion_Label.objects.filter(id__in = list_id)
+                if promotionLabels:  
+                    promotionLabels.delete() 
+                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
+
+        except Promotion_Label.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+"""
+    Hot
+    @author :Hoangnguyen
+
+"""
+@parser_classes((MultiPartParser, JSONParser))
+@permission_classes((AllowAny,))
+class HotAPI(APIView):
+
+    def get(self, request, id = None):
+        try:
+            if id:
+                hot = Hot.objects.get(id = id)
+                hotSerializer = admin_serializers.HotSerializer(hot)
+            else:
+                hots = Hot.objects.all()
+                hotSerializer = admin_serializers.HotSerializer(hots, many = True)
+            return Response(hotSerializer.data)
+
+        except Hot.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def post(self, request, format=None):
+        try:
+            hotSerializer = admin_serializers.HotSerializer( data = request.data )
+            if hotSerializer.is_valid():
+                hotSerializer.save()
+                return Response(hotSerializer.data)
+            return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status = 400 )
+
+        except Exception, e:
+            print "EventAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+    
+    def put(self, request, id):
+        try:
+            hot = Hot.objects.get(id = id)
+            hotSerializer = admin_serializers.HotSerializer( instance = hot, data = request.data)
+            if hotSerializer.is_valid():
+                hotSerializer.save()
+                return Response(hotSerializer.data)
+            return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
+        
+        except Hot.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id = None, format=None):
+        try:
+            if id:
+                hot = Hot.objects.get(id = id)
+                hot.delete()
+                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+
+            list_id = request.data.get('list_id', None)
+            if list_id:
+                hots = Hot.objects.filter(id__in = list_id)
+                if hots:  
+                    hots.delete() 
+                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Hot.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "EventAPI", e
+            error = {"code": 500, "message": "Internal Server Error" , "fields": ""}
+            return Response(error, status=500)
+
+"""
+    Post 
+    @author :Hoangnguyen
+    TODO
+"""
+@parser_classes((MultiPartParser,))
+@permission_classes((AllowAny,))
+class PostAPI(APIView):
+
+    def get(self, request, id = None):
+        try:
+            if id:
+                post = Post.objects.get(id = id)
+                postSerializer = admin_serializers.PostSerializer(post)
+            else:
+                posts = Post.objects.all()
+                postSerializer = admin_serializers.PostSerializer(posts, many = True)
+            return Response(postSerializer.data)
+
+        except Post.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Post.", "fields": ""}, status=400)
 
         except Exception, e:
             print "EventAPI ", e

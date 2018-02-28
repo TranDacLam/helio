@@ -1,10 +1,19 @@
 /*Begin content link-card users*/
+#table_link_card_wrapper {
+	overflow: scroll;
+}
 .checkbox-link-card {
 	padding: 10px;
 }
 .title-link-card {
 	margin: 20px 0;
 	border-bottom: 2px solid #111111;
+}
+.area-link-card-footer {
+	margin:10px 0px 15px -15px;
+}
+.btn-link-card {
+	margin-left: 15px;
 }
 .icon-button {
 	font-size: 18px;

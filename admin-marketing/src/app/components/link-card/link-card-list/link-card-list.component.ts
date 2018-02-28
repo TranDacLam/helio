@@ -17,9 +17,9 @@ import 'rxjs/add/operator/map';
 })
 export class LinkCardListComponent implements OnInit {
 
-	 dtOptions: any = {};
-	 link_cards: User[];
-	 checkbox_selected = false; // Default feedback selected false
+	dtOptions: any = {};
+	link_cards: User[];
+	checkbox_selected = false; // Default feedback selected false
     link_card_del: any;
     message_success: string = ""; // Display message success
     message_error: string = ""; // Display message error
@@ -30,18 +30,19 @@ export class LinkCardListComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
-	  // Using trigger becase fetching the list of feedbacks can be quite long
-	  // thus we ensure the data is fetched before rensering
-	  dtTrigger: Subject<any> = new Subject();
+	// Using trigger becase fetching the list of link_cards can be quite long
+	// thus we ensure the data is fetched before rensering
+	dtTrigger: Subject<any> = new Subject();
   	constructor(
   		private route: ActivatedRoute,
-      private linkCardService: LinkCardService,
+        private linkCardService: LinkCardService,
   		) { 
   		this.link_card_del = [];
-      this.link_cards = [];
+        this.link_cards = [];
   	}
 
   	ngOnInit() {
+         // Customize DataTable
   		this.dtOptions = {
           language: {
             sSearch: '',
@@ -67,6 +68,11 @@ export class LinkCardListComponent implements OnInit {
         this.getAllLinkCards();
   	}
 
+    /*
+        GET: get all link_card
+        Call api service link.card
+        @author: TrangLe
+     */
   	getAllLinkCards() {
       this.linkCardService.getAllLinkedUsers().subscribe(
         result => {
@@ -76,8 +82,14 @@ export class LinkCardListComponent implements OnInit {
         },
         error =>  this.errorMessage = <any>error
         )
-
   	}
+    /*
+        Function: Select all Checkbox
+        Step: Check event checked
+        True: Push id to arr, checkbox_selected = True
+        False: checkbox_selected = False
+        @author: TrangLe
+     */
   	selectAllCheckbox(event) {
         let arr = [];
         if (event.target.checked) {
@@ -91,7 +103,7 @@ export class LinkCardListComponent implements OnInit {
         } else {
             this.checkbox_selected = false;
             this.link_cards.forEach((item, index) => {
-            this.link_card_del.splice(index, this.link_cards.length);
+                this.link_card_del.splice(index, this.link_cards.length);
         });
     }
     }
@@ -113,27 +125,36 @@ export class LinkCardListComponent implements OnInit {
         return linkCard.id === this;
     }
 
-  	deleteLinkCardCheckbox() {
-      if (this.link_card_del !== null) {
-      if (this.link_card_del.length == 0 ){
-        this.message_error = "Vui lòng chọn thẻ liên kết để xóa";
-        this.message_result = "";
-        this.message_success = "";
-      } else {
-      this.linkCardService.deleteAllUserLinkedSelected(this.link_card_del).subscribe(
-        result => {
-             this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                   this.link_card_del.forEach(function(e){
-                   dtInstance.rows('#delete'+e).remove().draw();
-                   });
-                   this.link_card_del = [];
-               });
-             this.message_success = "Xóa thẻ liên kết thành công";
-           });
-      }
-    } else {
-      return 0;
-    }  
-  	}
+    /*
+        Function: Delete all selected
+        Step: Check link_card !== null
+            True: check link_card_del.length == 0
+            False: Delete link_card By Id Selected
+        @author: TrangLe
+     */
 
+  	deleteLinkCardCheckbox() {
+        if (this.link_card_del !== null) {
+            if (this.link_card_del.length == 0 ){
+                this.message_error = "Vui lòng chọn thẻ liên kết để xóa";
+                this.message_result = "";
+                this.message_success = "";
+            } else {
+                this.linkCardService.deleteAllUserLinkedSelected(this.link_card_del).subscribe(
+                    result => {
+                        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                                var self = this;
+                                this.link_card_del.forEach(function(e){
+                                    dtInstance.rows('#delete'+e).remove().draw();
+                                    var link_card_item = self.link_cards.find(link_card => link_card.id == e);
+                                    self.link_cards = self.link_cards.filter(link_cards => link_cards !== link_card_item);
+                                });
+                                this.link_card_del = [];
+                           });
+                         this.message_success = "Xóa thẻ liên kết thành công";
+                       });
+                    }
+        } else {
+          return 0;
+        }}
 }
