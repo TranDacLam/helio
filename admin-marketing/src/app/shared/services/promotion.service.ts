@@ -73,9 +73,7 @@ export class PromotionService {
             headers: _headers
         });
 
-
-
-        return this.http.post(api.promotion, JSON.stringify(promotion), _options_save).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.post(api.promotion, promotion, _options_save).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /*  
@@ -116,7 +114,7 @@ export class PromotionService {
 
     generator_QR_code(id: number): Observable<any>{
         let generator_QR_code_url = `${api.generator_QR_code}${id}/`
-        return this.http.post(generator_QR_code_url, _options).catch(this.handleError);
+        return this.http.post(generator_QR_code_url, JSON.stringify({'vo':'promotion'}), _options).catch(this.handleError);
     }
 
     private handleError(error: Response) {

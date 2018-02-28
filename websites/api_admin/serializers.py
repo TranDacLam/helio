@@ -5,6 +5,59 @@ from core.custom_models import *
 from django.contrib.auth import get_user_model
 from datetime import datetime
 
+from rest_framework import serializers    
+
+
+
+class Base64ImageField(serializers.ImageField):
+    """
+    A Django REST framework field for handling image-uploads through raw post data.
+    It uses base64 for encoding and decoding the contents of the file.
+
+    Heavily based on
+    https://github.com/tomchristie/django-rest-framework/pull/1268
+
+    Updated for Django REST framework 3.
+    """
+
+    def to_internal_value(self, data):
+        from django.core.files.base import ContentFile
+        import base64
+        import six
+        import uuid
+
+        # Check if this is a base64 string
+        if isinstance(data, six.string_types):
+            # Check if the base64 string is in the "data:" format
+            if 'data:' in data and ';base64,' in data:
+                # Break out the header from the base64 content
+                header, data = data.split(';base64,')
+
+            # Try to decode the file. Return validation error if it fails.
+            try:
+                decoded_file = base64.b64decode(data)
+            except TypeError:
+                self.fail('invalid_image')
+
+            # Generate file name:
+            file_name = str(uuid.uuid4())[:12] # 12 characters are more than enough.
+            # Get the file name extension:
+            file_extension = self.get_file_extension(file_name, decoded_file)
+
+            complete_file_name = "%s.%s" % (file_name, file_extension, )
+
+            data = ContentFile(decoded_file, name=complete_file_name)
+
+        return super(Base64ImageField, self).to_internal_value(data)
+
+    def get_file_extension(self, file_name, decoded_file):
+        import imghdr
+
+        extension = imghdr.what(file_name, decoded_file)
+        extension = "jpg" if extension == "jpeg" else extension
+
+        return extension
+
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -54,14 +107,17 @@ class PromotionSerializer(serializers.ModelSerializer):
     promotion_type = PromotionTypeSerializer(many=False, required=False, read_only=False)
     apply_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
     end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
+    image = Base64ImageField(
+        max_length=None, use_url=True,
+    )
     class Meta:
         model = Promotion
         fields = '__all__'
 
-    def validate(self, data):
-        if data['apply_date'] > data['end_date']:
-            raise serializers.ValidationError("Apply Date must be less than End Date")
-        return data
+    # def validate(self, data):
+    #     if data['apply_date'] > data['end_date']:
+    #         raise serializers.ValidationError("Apply Date must be less than End Date")
+    #     return data
 
     def update(self, instance, validated_data):
 
@@ -82,15 +138,13 @@ class PromotionSerializer(serializers.ModelSerializer):
 
         instance.promotion_type = validated_data.get('promotion_type', instance.promotion_type)
 
-        print instance.promotion_type
         instance.apply_date = validated_data.get('apply_date', instance.apply_date)
         instance.end_date = validated_data.get('end_date', instance.end_date)
 
-
-        print "validated_data['promotion_type']", validated_data['promotion_type']
         # PromotionTypeSerializer
         instance.save()
         return instance
+
 
 class AdvertisementSerializer(serializers.ModelSerializer):
     
@@ -138,9 +192,12 @@ class FeeSerializer(serializers.ModelSerializer):
 
 
 class BannerSerializer(serializers.ModelSerializer):
+
+    image = serializers.ImageField(max_length=None, use_url=True)
+
     class Meta:
         model = Banner
-        fields = ('id', 'image', 'sub_url', 'position', 'is_show')
+        fields = ('id', 'image', 'sub_url', 'position')
 
 class CategoryNotificationSerializer(serializers.ModelSerializer):
 
@@ -156,7 +213,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ('id','name', 'image', 'short_description', 'content', 'start_date', 'end_date', 'start_time', 'end_time', 'is_draft')
+        fields = ('name', 'image', 'short_description', 'content', 'start_date', 'end_date', 'start_time', 'end_time', 'is_draft')
 
     def validate(self, data):
         if data['start_date'] > data['end_date']:
@@ -190,16 +247,4 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id', 'name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
-
-class PostTypeSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Post_Type
-        fields = ('id', 'name', 'description')
-
-class FAQSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = FAQ
-        fields = ('id', 'question', 'answer', 'category')
+        fields = ('name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')

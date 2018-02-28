@@ -10,6 +10,8 @@ import { PromotionService } from '../../../shared/services/promotion.service';
 import { Promotion } from '../../../shared/class/promotion';
 import { datatable_config } from '../../../shared/commons/datatable_config';
 
+import { env } from '../../../../environments/environment';
+
 declare var bootbox:any;
 
 @Component({
@@ -39,6 +41,8 @@ export class ListPromotionComponent implements OnInit {
 
     message_result: string = "";
 
+    api_domain:string = "";
+
     /*
         Using trigger becase fetching the list of feedbacks can be quite long
         thus we ensure the data is fetched before rensering
@@ -52,6 +56,7 @@ export class ListPromotionComponent implements OnInit {
         ) { }
 
     ngOnInit() {
+        this.api_domain = env.api_domain_1;
     	this.getAllPromotion();
     	this.dtOptions = datatable_config.dtOptions;
 
@@ -143,14 +148,20 @@ export class ListPromotionComponent implements OnInit {
         
     }
 
-    generator_QR_code(id: number) {
-        console.log(id);
+    generator_QR_code(event , id: number) {
+        var $this = $(event.target);
+        $this.button('loading');
         this.promotionService.generator_QR_code(id).subscribe(
             (data) => {
-                console.log(data);
+                if(data.status == 200) {
+                    let body = data.json(); 
+                    var promotion = this.promotion_list.find( promotion => promotion.id == id);
+                    promotion.QR_code = "/media/qrcode/promotion-qrcode-20_tuElWMQ.png";
+                }
+                $this.button('reset');
             }, 
             (error) => {
-                console.log(error);
+                this.router.navigate(['/error']);
             });
     }
 

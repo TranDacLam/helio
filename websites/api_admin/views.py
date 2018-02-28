@@ -23,7 +23,7 @@ from django.http import Http404
 from django.db import DatabaseError
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
-
+import json
 """
     Get Promotion
     @author: diemnguyen
@@ -1701,15 +1701,10 @@ class HotAPI(APIView):
 @permission_classes((AllowAny,))
 class PostAPI(APIView):
 
-    def get(self, request, id=None):
+    def get(self, request, id):
         try:
-            if id:
-                post = Post.objects.get(id=id)
-                postSerializer = admin_serializers.PostSerializer(post)
-            else:
-                posts = Post.objects.all()
-                postSerializer = admin_serializers.PostSerializer(
-                    posts, many=True)
+            post = Post.objects.get(id = id)
+            postSerializer = admin_serializers.PostSerializer(post)
             return Response(postSerializer.data)
 
         except Post.DoesNotExist, e:
@@ -1926,12 +1921,16 @@ class FAQListAPI(APIView):
 
 
 class GeneratorQRCode(APIView):
-    def get_object(self, pk):
-        try:
-            return Promotion.objects.get(pk=pk)
-        except Promotion.DoesNotExist, e:
-            raise Http404
     def post(self, request, id, format=None):
-        promotion = self.get_object(get_object)
-        print "Promotion", promotion
-        return Response(request.data)
+        try:
+            promotion = Promotion.objects.get(pk=id)
+            promotion.generate_qrcode()
+
+            if promotion.QR_code:
+                return Response({"qr_code_url": promotion.QR_code.url}, status=200)
+
+
+            return Response(status=400)
+        except Promotion.DoesNotExist, e:
+            return Response(status=400)
+        

@@ -6,6 +6,9 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import AbstractUser
 import custom_models
 import constants as const
+import qrcode
+import StringIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 # Create your models here.
 
@@ -163,6 +166,24 @@ class Promotion(DateTimeModel):
 
     def __str__(self):
         return '%s' % (self.name)
+
+    def generate_qrcode(self):
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=6,
+            border=0,
+        )
+        qr.add_data("promotion-%s" % (self.id))
+        qr.make(fit=True)
+        img = qr.make_image()
+        buffer = StringIO.StringIO()
+        img.save(buffer)
+
+        filename = 'promotion-qrcode-%s.png' % (self.id)
+        filebuffer = InMemoryUploadedFile(
+            buffer, None, filename, 'image/png', buffer.len, None)
+        self.QR_code.save(filename, filebuffer)
 
 
 @python_2_unicode_compatible

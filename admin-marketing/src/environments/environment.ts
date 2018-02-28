@@ -5,5 +5,6 @@
 
 export const env = {
   	production: false, 
-  	api_domain: 'http://127.0.0.1:8000/vi/api/'
+  	api_domain: 'http://127.0.0.1:8000/vi/api/',
+  	api_domain_1: 'http://127.0.0.1:8000'
 };

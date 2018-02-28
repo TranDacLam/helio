@@ -12,4 +12,5 @@ export class Promotion {
     promotion_type: PromotionType;
     apply_date: string;
     end_date: string;
+    QR_code: string;
 }

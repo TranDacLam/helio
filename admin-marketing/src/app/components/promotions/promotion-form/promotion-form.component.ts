@@ -63,9 +63,9 @@ export class PromotionFormComponent implements OnInit {
         Compare 2 object. Use for selected of select element.
     */
     equalsObject(o1: any, o2: any) { 
-        return o1.id === o2.id; 
+        return o1 && o2 && o1.id === o2.id; 
     }
-    
+
     /*
         function getPromotionType(): get all promotion type
         @author: diemnguyen
@@ -126,11 +126,8 @@ export class PromotionFormComponent implements OnInit {
             let file = event.target.files[0];
             reader.readAsDataURL(file);
             reader.onload = () => {
-                this.promotionForm.get('image').setValue({
-                    filename: file.name,
-                    filetype: file.type,
-                    value: reader.result.split(',')[1]
-                })
+                console.log(reader.result);
+                this.promotionForm.get('image').setValue(reader.result)
             };
         }
 
