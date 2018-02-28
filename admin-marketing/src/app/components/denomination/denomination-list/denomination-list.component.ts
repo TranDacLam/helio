@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Denomination }  from '../../../shared/class/denomination';
 
 import { DenominationService } from '../../../shared/services/denomination.service';
+import { datatable_config, data_config } from '../../../shared/commons/datatable_config';
 
 @Component({
     selector: 'app-denomination-list',
@@ -40,29 +41,7 @@ export class DenominationListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.dtOptions = {
-    			// Declare the use of the extension in the dom parameter
-                language: {
-                    sSearch: '',
-                    searchPlaceholder: ' Nhập thông tin tìm kiếm',
-                    lengthMenu: 'Hiển thị _MENU_ Mệnh giá nạp tiền',
-                    info: "Hiển thị _START_ tới _END_ của _TOTAL_ Mệnh giá nạp tiền",
-                    paginate: {
-                        "first":      "Đầu",
-                        "last":       "Cuối",
-                        "next":       "Sau",
-                        "previous":   "Trước"
-                    },
-                    select: {
-                        rows: ''
-                    },
-                    sInfoFiltered: "",
-                    zeroRecords: 'Không có mệnh giá nạp tiền nào để hiển thị',
-                    infoEmpty: ""
-                },
-                responsive: true,
-                pagingType: "full_numbers",
-            };
+        this.dtOptions = data_config.dtOptions;
             this.getAllDenomination();
             this.route.params.subscribe(params => {
                 if(params.message_post){
@@ -72,7 +51,10 @@ export class DenominationListComponent implements OnInit {
                 }
             });
         }
-	// Get All Denomination
+	/* 
+        Get All Denomination
+        Call service Denomination
+    */
 	getAllDenomination() {
 		this.denominationService.getAllDenomination().subscribe(
 			result => {
@@ -80,8 +62,12 @@ export class DenominationListComponent implements OnInit {
 				this.dtTrigger.next();
 			});
 	}
-
-	// Checkbox all
+	/*
+        Check all denomination selected
+        Check deno checked
+        True: push id selected in array, select_checkbox = true, message is null
+        False: select_checkbox = false   
+     */
 	checkAllDeno(event){
         let array_del = [];
         if(event.target.checked){
@@ -100,7 +86,12 @@ export class DenominationListComponent implements OnInit {
         }
     }
 
-	// Change checkbox item
+	/*
+        Check each item selected
+        @author: TrangLe
+        True: Push id selected to array
+        False: Remove id in array   
+     */
 	checkItemChange(event, deno) {
 		if(event.target.checked){
             this.deno_selected.push(deno.id);
@@ -109,7 +100,6 @@ export class DenominationListComponent implements OnInit {
         }
         else{
             let updateDenoItem = this.deno_selected.find(this.findIndexToUpdate, deno.id);
-
             let index = this.deno_selected.indexOf(updateDenoItem);
 
             this.deno_selected.splice(index, 1);
