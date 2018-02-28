@@ -1384,6 +1384,7 @@ class PromotionLabelAPI(APIView):
     @author :Hoangnguyen
 
 """
+@permission_classes((AllowAny,))
 class PromotionLabelListAPI(APIView):
 
     def get(self, request):
@@ -1480,7 +1481,7 @@ class HotAPI(APIView):
     HotListAPI
     @author :Hoangnguyen
 """
-
+@permission_classes((AllowAny,))
 class HotListAPI(APIView):
 
     def get(self, request):
@@ -1656,14 +1657,10 @@ class HotAPI(APIView):
 @permission_classes((AllowAny,))
 class PostAPI(APIView):
 
-    def get(self, request, id = None):
+    def get(self, request, id):
         try:
-            if id:
-                post = Post.objects.get(id = id)
-                postSerializer = admin_serializers.PostSerializer(post)
-            else:
-                posts = Post.objects.all()
-                postSerializer = admin_serializers.PostSerializer(posts, many = True)
+            post = Post.objects.get(id = id)
+            postSerializer = admin_serializers.PostSerializer(post)
             return Response(postSerializer.data)
 
         except Post.DoesNotExist, e:

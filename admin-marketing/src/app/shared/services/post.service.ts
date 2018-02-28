@@ -13,6 +13,7 @@ const httpOptions = {
 export class PostService {
 
     private urlPost = api.post;
+    private urlPostLIst = api.post_list;
 
     constructor(private http: Http) { }
 
@@ -21,7 +22,7 @@ export class PostService {
         author: Lam
     */
     getPosts(): Observable<any>{
-        return this.http.get(this.urlPost).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(this.urlPostLIst).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     getPost(id: number): Observable<any>{
@@ -43,7 +44,7 @@ export class PostService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(this.urlPost, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(this.urlPostLIst, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     addPost(value): Observable<any>{

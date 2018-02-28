@@ -24,7 +24,7 @@ export const api = {
     hot_adv: env.api_domain + 'hot_adv/',
 
     promotion_label: env.api_domain + 'promotion_label/',
-
+    promotion_label_list: env.api_domain + 'promotion_label_list/',
     promotion_type: env.api_domain + 'promotion-type/',
 
 
@@ -34,10 +34,13 @@ export const api = {
     category_notifications: env.api_domain +'category_notifications/',
 
     hot: env.api_domain + 'hot/',
+    hot_list: env.api_domain + 'hot_list/',
 
     post: env.api_domain + 'post/',
+    post_list: env.api_domain + 'post_list/',
 
     event: env.api_domain + 'event/',
+    event_list: env.api_domain + 'event_list/',
 
 
 };
