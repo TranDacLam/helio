@@ -13,9 +13,12 @@ import { datatable_config } from '../../../shared/commons/datatable_config';
 declare var bootbox:any;
 
 @Component({
-  selector: 'app-list-promotion',
-  templateUrl: './list-promotion.component.html',
-  styleUrls: ['./list-promotion.component.css']
+    selector: 'app-list-promotion',
+    templateUrl: './list-promotion.component.html',
+    styleUrls: ['./list-promotion.component.css'],
+    providers: [
+        PromotionService
+    ]
 })
 
 /*

@@ -7,7 +7,10 @@ import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
 const httpOptions = {
-    headers: new Headers({ 'Content-Type': 'application/json' })
+    headers: new Headers({ 
+        'Content-Type': 'application/json',
+        'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxhbXRyYW4yMTA1QGdtYWlsLmNvbSIsIm9yaWdfaWF0IjoxNTE5Mzc2NTE2LCJ1c2VyX2lkIjozNjEsImVtYWlsIjoibGFtdHJhbjIxMDVAZ21haWwuY29tIiwiZXhwIjoxNTE5Mzc2ODE2fQ.qo8FfKm5-5Q2PXHtgLKBbQIO9L5YwYKRo4aTioIsgyU'
+    })
 };
 
 @Injectable()

@@ -57,7 +57,7 @@ export class UserMultiselectComponent implements OnInit {
                 }
             },
             rowCallback: (row: Node, data: any[] | Object, index: number) => {
-                $('td', row).find('input:checkbox').bind('change', event => {
+                $('td', row).find('input:checkbox').off().bind('change', event => {
                     this.selectCheckboxLeft(event);
                 });
                 return row;
@@ -87,7 +87,7 @@ export class UserMultiselectComponent implements OnInit {
                 }
             },
             rowCallback: (row: Node, data: any[] | Object, index: number) => {
-                $('td', row).find('input:checkbox').bind('change', () => {
+                $('td', row).find('input:checkbox').off().bind('change', () => {
                     this.selectCheckboxRight(event);
                 });
                 return row;

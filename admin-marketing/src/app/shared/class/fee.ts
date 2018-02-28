@@ -5,4 +5,6 @@ export class Fee {
     position: string;
     is_apply: boolean;
     selected: boolean = false;
+    isHover: boolean = false;
+
 }

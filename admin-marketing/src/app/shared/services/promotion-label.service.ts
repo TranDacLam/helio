@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { api } from '../utils/api';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
@@ -31,7 +31,8 @@ export class PromotionLabelService {
 	}
 
 	getPromotionLabel(id: number): Observable<any>{
-        return;
+        let url_promotion_label = `${this.urlPromotionLabel}${id}`;
+        return this.http.get(url_promotion_label).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -39,16 +40,27 @@ export class PromotionLabelService {
         author: Lam
     */
     onDelPromotionLabelSelect(arr): Observable<any>{
-        let url_del_events = '';
-        return this.http.delete(url_del_events, httpOptions).catch(this.handleError);
+        let param = {
+            list_id: arr
+        }
+
+        let _options = new RequestOptions({
+            headers: httpOptions.headers,
+            body: JSON.stringify(param)
+        });
+
+        return this.http.delete(this.urlPromotionLabel, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     updatePromotionLabel(value, id): Observable<any>{
-        return;
+        let url_update_promotion_label = `${this.urlPromotionLabel}${id}/`;
+        return this.http.put(url_update_promotion_label, JSON.stringify(value), httpOptions)
+            .map((res: Response) => res.json()).catch(this.handleError);
     }
 
     onDelPromotionLabel(id): Observable<any>{
-        return;
+        const url_del = `${this.urlPromotionLabel}${id}/`;
+        return this.http.delete(url_del, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
 	// exception

@@ -37,17 +37,11 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
 
-class PromotionSerializer(serializers.ModelSerializer):
-    # promotion_category = serializers.StringRelatedField(many=False)
-    class Meta:
-        model = Promotion
-        fields=('id', 'name', 'short_description', 'content', 'image', 'image_thumbnail', 'apply_date', 'end_date', 'is_draft', 'created', 'promotion_category', 'promotion_label', 'promotion_type')
+class PromotionTypeSerializer(serializers.ModelSerializer):
 
-class AdvertisementSerializer(serializers.ModelSerializer):
-    
     class Meta:
-        model = Advertisement
-        fields = ('id', 'name', 'is_show')
+        model = Promotion_Type
+        fields = ('id', 'name')
 
 class PromotionLabelSerializer(serializers.ModelSerializer):
 
@@ -55,11 +49,30 @@ class PromotionLabelSerializer(serializers.ModelSerializer):
         model = Promotion_Label
         fields= ('id', 'name')
 
-class PromotionTypeSerializer(serializers.ModelSerializer):
 
+class PromotionSerializer(serializers.ModelSerializer):
+    promotion_type = PromotionTypeSerializer(many=False, required=False)
+    apply_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
+    end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
     class Meta:
-        model = Promotion_Type
-        fields = ('id', 'name')
+        model = Promotion
+        fields = '__all__'
+
+    def validate(self, data):
+        if data['apply_date'] > data['end_date']:
+            raise serializers.ValidationError("Apply Date must be less than End Date")
+        return data
+
+    def update(self, instance, validated_data):
+        print validated_data['promotion_type']
+        instance.save()
+        return instance
+
+class AdvertisementSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Advertisement
+        fields = ('id', 'name', 'is_show')
 
 class DenominationSerializer(serializers.ModelSerializer):
 
@@ -119,7 +132,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ('name', 'image', 'short_description', 'content', 'start_date', 'end_date', 'start_time', 'end_time', 'is_draft')
+        fields = ('id','name', 'image', 'short_description', 'content', 'start_date', 'end_date', 'start_time', 'end_time', 'is_draft')
 
     def validate(self, data):
         if data['start_date'] > data['end_date']:
@@ -153,4 +166,16 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
+        fields = ('id', 'name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
+
+class PostTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Post_Type
+        fields = ('id', 'name', 'description')
+
+class FAQSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FAQ
+        fields = ('id', 'question', 'answer', 'category')

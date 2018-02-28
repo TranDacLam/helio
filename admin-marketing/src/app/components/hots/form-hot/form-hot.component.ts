@@ -6,6 +6,8 @@ import { Hot } from '../../../shared/class/hot';
 import { HotService } from '../../../shared/services/hot.service';
 import 'rxjs/add/observable/throw';
 
+declare var bootbox:any;
+
 @Component({
     selector: 'form-hot',
     templateUrl: './form-hot.component.html',
@@ -47,8 +49,8 @@ export class FormHotComponent implements OnInit {
     creatForm(): void{
         this.formHot = this.fb.group({
             name: [this.hot.name, Validators.required],
-            image: [this.hot.image],
-            sub_url: [this.hot.sub_url],
+            image: [this.hot.image, Validators.required],
+            sub_url: [this.hot.sub_url, Validators.required],
             is_show: [this.hot.is_show],
         });
     }
@@ -83,7 +85,7 @@ export class FormHotComponent implements OnInit {
          + Step 2:  
             * TH1:  + Id empty then call service function addHot() to add hot, 
                     + Later, redirect list hot with message
-            * TH2:  + Id exist then call service function updateHot() to update Event
+            * TH2:  + Id exist then call service function updateHot() to update hot
                     + Later, redirect list hot with message
         author: Lam
     */
@@ -109,6 +111,46 @@ export class FormHotComponent implements OnInit {
             );
         }
         
+    }
+
+    /*
+        Function deleteNotificationEvent(): confirm delete
+        @author: Lam
+    */
+    deleteHotEvent(){
+        let that = this;
+        bootbox.confirm({
+            title: "Bạn có chắc chắn",
+            message: "Bạn muốn xóa Hot này?",
+            buttons: {
+                cancel: {
+                    label: "Hủy"
+                },
+                confirm: {
+                    label: "Xóa"
+                }
+            },
+            callback: function (result) {
+                if(result) {
+                    that.onDelete();
+                }
+            }
+        });
+    }
+
+    /*
+        Function onDelete():
+         + Get id from url path
+         + Callback service function onDelNoti() by id to delete notification
+        Author: Lam
+    */
+    onDelete(): void {
+        const id = this.hot.id;
+        this.hotService.onDelHot(id).subscribe(
+            (data) => {
+                this.router.navigate(['/hot/list', { message_del: 'success'}]);
+            }
+        );
     }
 
 }
