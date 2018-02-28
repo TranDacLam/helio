@@ -410,8 +410,9 @@ class FeedbackView(APIView):
 
     def get(self, request, format=None):
         """
-        Get all Feedback
-        Check status Feedback
+        Get Feedback
+        if exist fields in (status, rate, end_date, start_date) then get it
+        else return all feedback
         """
         try:
             status = self.request.query_params.get('status', None)
@@ -467,6 +468,7 @@ class FeedbackView(APIView):
         try: 
             fed_id = request.data.get('fed_id', None)
             print "Fed_id:", fed_id
+            # Check if exist fed_id
             if fed_id:
                 queryset = FeedBack.objects.filter(pk__in = fed_id).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
