@@ -1413,6 +1413,7 @@ class PromotionLabelAPI(APIView):
 """
 
 
+@permission_classes((AllowAny,))
 class PromotionLabelListAPI(APIView):
 
     def get(self, request):
@@ -1515,6 +1516,7 @@ class HotAPI(APIView):
 """
 
 
+@permission_classes((AllowAny,))
 class HotListAPI(APIView):
 
     def get(self, request):
