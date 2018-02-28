@@ -1017,17 +1017,7 @@ class RelateAPI(APIView):
 @permission_classes((AllowAny,))
 class FeeAPI(APIView):
 
-    def get(self, request, format=None):
-        try:
-            fee = Fee.objects.all()
-            feeSerializer = admin_serializers.FeeSerializer(fee, many=True)
-            return Response(feeSerializer.data)
-
-        except Exception, e:
-            print "FeeAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
-            return Response(error, status=500)
-
+    
     def post(self, request, format=None):
         try:
             feeSerializer = admin_serializers.FeeSerializer(data=request.data)
@@ -1071,10 +1061,21 @@ class FeeAPI(APIView):
             print "FeeAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+    
 
-    """
-        list_id is array in body request
-    """
+@permission_classes((AllowAny,))
+class FeeListAPI(APIView):
+
+    def get(self, request, format=None):
+        try:
+            fee = Fee.objects.all()
+            feeSerializer = admin_serializers.FeeSerializer(fee, many=True)
+            return Response(feeSerializer.data)
+
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
 
     def delete(self, request, format=None):
         try:
@@ -1086,14 +1087,12 @@ class FeeAPI(APIView):
                     fees.delete()
                     return Response({"code": 200, "message": "success", "fields": ""}, status=200)
                 return Response({"code": 400, "message": "Not Found Fee", "fields": ""}, status=400)
-
             return Response({"code": 400, "message": "List_id field is required", "fields": ""}, status=400)
+        
         except Exception, e:
             print "FeeAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
-
-
 """
     GET: Get All Banner
     POST: Add New Banner
