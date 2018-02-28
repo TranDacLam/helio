@@ -1384,6 +1384,7 @@ class PromotionLabelAPI(APIView):
     @author :Hoangnguyen
 
 """
+@permission_classes((AllowAny,))
 class PromotionLabelListAPI(APIView):
 
     def get(self, request):
@@ -1480,7 +1481,7 @@ class HotAPI(APIView):
     HotListAPI
     @author :Hoangnguyen
 """
-
+@permission_classes((AllowAny,))
 class HotListAPI(APIView):
 
     def get(self, request):
