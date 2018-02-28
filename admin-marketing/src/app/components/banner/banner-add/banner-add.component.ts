@@ -37,6 +37,7 @@ export class BannerAddComponent implements OnInit {
 
     /* 
       Create form to add banner
+      Call service Banner
       @author: Trangle
     */
     createForm() {
@@ -82,8 +83,5 @@ export class BannerAddComponent implements OnInit {
                     error =>  this.errorMessage = <any>error
                });
         this.router.navigate(['/banner-list', { message_post: formBanner.sub_url} ])
-   }
-   logValue(formBanner) {
-       console.log(formBanner)
    }
 }

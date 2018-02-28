@@ -23,14 +23,16 @@
 	<table id="table-user" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
-	      		<th class='checkbox-banner'><input type="checkbox" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/>  Banner</th>
+	      		<th class='checkbox-banner'><input type="checkbox" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/></th>
+	      		<th>Banner</th>
 	      	</tr>
     	</thead>
     	<tbody>
    			<tr *ngFor ="let banner of banners" id="delete{{banner.id}}">
    				<td><input type="checkbox"
    					value={{banner.id}} name="banner[]" [checked]="isChecked"
-   					(change)="checkItemChange($event, banner)"/><a routerLink="/banner-detail/{{ banner.id }}"> {{ banner.sub_url }}</a></td>
+   					(change)="checkItemChange($event, banner)"/></td>
+   				<td><a routerLink="/banner-detail/{{ banner.id }}"> {{ banner.sub_url }}</a></td>
    			</tr>
     	</tbody>
 	</table>

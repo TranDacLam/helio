@@ -4,10 +4,10 @@ import { Http, Response } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/map';
 
 import { Banner } from '../../../shared/class/banner';
 import { BannerService } from '../../../shared/services/banner.service';
+import { data_config } from '../../../shared/commons/datatable_config';
 
 @Component({
     selector: 'app-banner-list',
@@ -44,36 +44,15 @@ export class BannerListComponent implements OnInit {
     }
 
     ngOnInit() {
-        /*
-            Customize: DataTable
-            @author: TrangLe
-         */
-        this.dtOptions = {
-            language: {
-                sSearch: '',
-                searchPlaceholder: ' Nhập thông tin tìm kiếm',
-                lengthMenu: 'Hiển thị _MENU_ Banner',
-                info: "Hiển thị _START_ tới _END_ của _TOTAL_ Banner",
-                paginate: {
-                    "first":      "Đầu",
-                    "last":       "Cuối",
-                    "next":       "Sau",
-                    "previous":   "Trước"
-                },
-                select: {
-                    rows: ''
-                },
-                sInfoFiltered: "",
-                zeroRecords: 'Không có Banner nào để hiển thị',
-                infoEmpty: ""
-            },
-            responsive: true,
-            pagingType: "full_numbers",
-        };
+        this.dtOptions = data_config.dtOptions;
+        // Call function getAllBanners()
         this.getAllBanners();
     }
     /*
         Function: Select All Banner
+        Check checkbox all selected
+        True: push id in array, isChecked = True
+        False: isChecked = False, remove id
         @author: TrangLe
      */
     checkAllBanner(event) {
@@ -96,6 +75,7 @@ export class BannerListComponent implements OnInit {
 
     /*
         GET: Get All Banner
+        Call service banner
         @author: TrangLe
      */
     getAllBanners() {
@@ -106,6 +86,13 @@ export class BannerListComponent implements OnInit {
                 error =>  this.errorMessage = <any>error
                 )
     }
+    /*
+        Function: Check each item checkbox
+        Check item checkbox is checked
+        True: push id in array
+        False: remove id in array
+        @author: Trangle
+     */
     checkItemChange(event, banner) {
         if(event.target.checked){
             this.banner_del.push(banner.id);
