@@ -13,6 +13,7 @@ const httpOptions = {
 export class HotService {
 
     private urlHot = api.hot;
+    private urlHotList = api.hot_list;
 
     constructor(private http: Http) { }
 
@@ -21,7 +22,7 @@ export class HotService {
         author: Lam
     */
     getHots(): Observable<any>{
-        return this.http.get(this.urlHot).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(this.urlHotList).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     getHot(id: number): Observable<any>{
@@ -43,7 +44,7 @@ export class HotService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(this.urlHot, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(this.urlHotList, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     addHot(value): Observable<any>{
