@@ -22,3 +22,29 @@ export const datatable_config = {
         }
     }
 }
+
+export const data_config = {
+    dtOptions : {
+        // Declare the use of the extension in the dom parameter
+        language: {
+            sSearch: '',
+            searchPlaceholder: ' Nhập thông tin tìm kiếm',
+            lengthMenu: `Hiển thị _MENU_ dòng`,
+            info: `Hiển thị _START_ tới _END_ của _TOTAL_ `,
+            paginate: {
+                "first":      "Đầu",
+                "last":       "Cuối",
+                "next":       "Sau",
+                "previous":   "Trước"
+            },
+            select: {
+                rows: ''
+            },
+            sInfoFiltered: "",
+            zeroRecords: `Không có dòng nào để hiển thị`,
+            infoEmpty: ""
+        },
+        responsive: true,
+        pagingType: "full_numbers",
+    }
+}
