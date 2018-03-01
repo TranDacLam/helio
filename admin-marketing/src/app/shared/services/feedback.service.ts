@@ -4,7 +4,6 @@ import { Http, Headers, Response, RequestOptions } from "@angular/http";
 import { HttpClient, HttpHeaders,HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Feedback } from '../../shared/class/feedback';

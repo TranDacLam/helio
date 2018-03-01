@@ -9,6 +9,8 @@ import { Denomination }  from '../../../shared/class/denomination';
 import { DenominationService } from '../../../shared/services/denomination.service';
 import { datatable_config, data_config } from '../../../shared/commons/datatable_config';
 
+declare var bootbox:any;
+
 @Component({
     selector: 'app-denomination-list',
     templateUrl: './denomination-list.component.html',

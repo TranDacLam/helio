@@ -10,6 +10,8 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import { datatable_config } from '../../../shared/commons/datatable_config';
 
+declare var bootbox:any;
+
 @Component({
   selector: 'app-link-card-list',
   templateUrl: './link-card-list.component.html',

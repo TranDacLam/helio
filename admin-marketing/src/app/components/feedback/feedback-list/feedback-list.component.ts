@@ -10,6 +10,7 @@ import { FeedbackService } from '../../../shared/services/feedback.service';
 import { Subject } from 'rxjs/Subject';
 import { datatable_config } from '../../../shared/commons/datatable_config';
 
+declare var bootbox:any;
 
 @Component({
   selector: 'app-feedback-list',

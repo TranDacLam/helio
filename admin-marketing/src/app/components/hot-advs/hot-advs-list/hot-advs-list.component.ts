@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { HotAdvs } from '../../../shared/class/hot-advs';
 import { data_config } from '../../../shared/commons/datatable_config';
 
+declare var bootbox:any;
+
 @Component({
   selector: 'app-hot-advs-list',
   templateUrl: './hot-advs-list.component.html',

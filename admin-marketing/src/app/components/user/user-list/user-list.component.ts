@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { User } from '../../../shared/class/user';
 import { data_config } from '../../../shared/commons/datatable_config';
 
+declare var bootbox:any;
+
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -36,7 +38,6 @@ export class UserListComponent implements OnInit {
 
   	ngOnInit() {
         // Call data_config
-        data_config.record = 'newRecord';
   		this.dtOptions = data_config.dtOptions;
 	  	this.getAllUser()
   	}

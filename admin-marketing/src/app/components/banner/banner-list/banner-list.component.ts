@@ -9,6 +9,8 @@ import { Banner } from '../../../shared/class/banner';
 import { BannerService } from '../../../shared/services/banner.service';
 import { data_config } from '../../../shared/commons/datatable_config';
 
+declare var bootbox:any;
+
 @Component({
     selector: 'app-banner-list',
     templateUrl: './banner-list.component.html',

@@ -12,6 +12,8 @@ import { data_config } from '../../../shared/commons/datatable_config';
 declare var jquery:any;
 declare var $ :any;
 
+declare var bootbox:any;
+
 @Component({
     selector: 'app-advertisement-list',
     templateUrl: './advertisement-list.component.html',
