@@ -12,6 +12,7 @@ import { data_config } from '../../../shared/commons/datatable_config';
 declare var jquery:any;
 declare var $ :any;
 
+// Using bootbox plugin
 declare var bootbox:any;
 
 @Component({
@@ -22,12 +23,17 @@ declare var bootbox:any;
 export class AdvertisementListComponent implements OnInit {
 
 	dtOptions: any = {};
-	advs : Advertisement[];
-	advs_delete: any; // Contains all checkbox were selected
-	isChecked = false; // Default value chekbox
-	message_success: string = ""; // Display message success
-	message_result = ''; // Message result
 
+	advs : Advertisement[];
+
+	advs_delete: any; // Contains all checkbox were selected
+
+	isChecked = false; // Default value chekbox
+
+	message_success: string = ""; // Display message success
+	message_result: string = ''; // Message result
+    record: string = "Quảng Cáo";
+    
 	// Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
@@ -46,8 +52,13 @@ export class AdvertisementListComponent implements OnInit {
         this.advs_delete = [];
     }
     ngOnInit() {
-        this.dtOptions = data_config.dtOptions;
+
+        // Call dataTable 
+        this.dtOptions = data_config(this.record).dtOptions;
+
+        // Call function get all adv
         this.getAllAdvertisement();
+
         this.route.params.subscribe(params => {
             if( params.message_post ){
                 this.message_result = " Thêm "+ params.message_post + " thành công.";

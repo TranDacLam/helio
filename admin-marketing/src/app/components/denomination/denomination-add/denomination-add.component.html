@@ -33,6 +33,11 @@
                     Vui lòng nhập số tiền hợp lệ.
                     </em>
                 </div>
+                <div *ngIf='errorMessage'>
+                    <em [ngStyle]="{'color': 'red'}">
+                    Trường đã tồn tại.
+                    </em>
+                </div>
             </div>
         </div>
     </div>

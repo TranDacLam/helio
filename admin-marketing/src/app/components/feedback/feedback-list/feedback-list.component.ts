@@ -8,7 +8,7 @@ import { Feedback } from '../../../shared/class/feedback';
 import { FeedbackService } from '../../../shared/services/feedback.service';
 
 import { Subject } from 'rxjs/Subject';
-import { datatable_config } from '../../../shared/commons/datatable_config';
+import { data_config } from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -21,12 +21,16 @@ export class FeedbackListComponent implements OnInit {
 
 	dtOptions: any = {};
     feedbacks: Feedback[];
+
     feedback_selected = false; // Default feedback selected false
+
     feedback_del: any;
     allFeedbacks: any;
+
     message_success: string = ""; // Display message success
     message_result: string = ""; // Display message result
-    errorMessage: String;
+    errorMessage: string;
+    record: string = "Phản Hồi";
 
     // Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
@@ -44,33 +48,10 @@ export class FeedbackListComponent implements OnInit {
     }
 
 	ngOnInit() {
-        /*
-            Customize: DataTable 
-            @author: TrangLe
-         */
-		// this.dtOptions = {
-  //           language: {
-  //               sSearch: '',
-  //               searchPlaceholder: ' Nhập thông tin tìm kiếm',
-  //               lengthMenu: 'Hiển thị _MENU_ Phản hồi',
-  //               info: "Hiển thị _START_ tới _END_ của _TOTAL_ Phản hồi",
-  //               paginate: {
-  //               "first":      "Đầu",
-  //               "last":       "Cuối",
-  //               "next":       "Sau",
-  //               "previous":   "Trước"
-  //           },
-  //           select: {
-  //               rows: ''
-  //           },
-  //           sInfoFiltered: "",
-  //           zeroRecords: 'Không có phản hồi nào để hiển thị',
-  //           infoEmpty: ""
-  //          },
-  //           responsive: true,
-  //           pagingType: "full_numbers",
-  //       };
-        this.dtOptions = datatable_config.dtOptions;
+        // Call dataTable
+        this.dtOptions = data_config(this.record).dtOptions;
+        
+        // Call get all feedback
         this.getAllFeedbacks();
         this.route.queryParams
             .subscribe(params => {

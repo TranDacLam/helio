@@ -25,6 +25,7 @@ export class DenominationListComponent implements OnInit {
     selectedAll: any;
     message_success: string = ""; // Display message success
     message_result = ''; // Message result
+    record: String = "Mệnh Giá Nạp Tiền";
 
     // Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
@@ -43,16 +44,17 @@ export class DenominationListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.dtOptions = data_config.dtOptions;
-            this.getAllDenomination();
-            this.route.params.subscribe(params => {
-                if(params.message_post){
-                    this.message_result = " Thêm "+ params.message_post + " thành công.";
-                } else {
-                    this.message_result = "";
-                }
-            });
-        }
+        // Call data_config 
+        this.dtOptions = data_config(this.record).dtOptions;
+        this.getAllDenomination();
+        this.route.params.subscribe(params => {
+            if(params.message_post){
+                this.message_result = " Thêm "+ params.message_post + " thành công.";
+            } else {
+                this.message_result = "";
+            }
+        });
+    }
 	/* 
         Get All Denomination
         Call service Denomination

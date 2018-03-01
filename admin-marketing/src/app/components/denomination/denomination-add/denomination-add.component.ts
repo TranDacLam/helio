@@ -13,7 +13,7 @@ import { Router } from "@angular/router";
 export class DenominationAddComponent implements OnInit {
 
     denominations: Denomination[] = [];
-    errorMessage: String;
+    errorMessage: string;
     constructor(
         private router: Router,
         private denominationService: DenominationService,
@@ -25,15 +25,11 @@ export class DenominationAddComponent implements OnInit {
     addDenomination(denomination: number) {
         this.denominationService.createDenomination({ denomination } as Denomination )
         .subscribe(
-            denomination => {
-                this.denominations.push(denomination);
+            (denomination) => {
+                this.denominations.push(denomination); 
+                this.router.navigate(['/denomination-list', { message_post: denomination.denomination} ])   
             },
             error =>  this.errorMessage = <any>error);
-        this.router.navigate(['/denomination-list', { message_post: denomination} ])
-    }
-
-    verifyDuplicate() {
-        
     }
 
 }

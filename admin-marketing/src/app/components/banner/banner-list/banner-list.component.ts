@@ -19,18 +19,21 @@ declare var bootbox:any;
 export class BannerListComponent implements OnInit {
 
 	dtOptions: any = {};
+
 	banners: Banner[];
 
     banner_del: any;
+
     isChecked = false;
+
     message_success: string = ""; // Display message success
     message_result: string = ""; // Display message result
-    errorMessage: String;
-    checkAll= false;
+    errorMessage: string; // Show error from server
+    record: string ="Banner";
 
-  // Inject the DataTableDirective into the dtElement property
-  @ViewChild(DataTableDirective)
-  dtElement: DataTableDirective;
+    // Inject the DataTableDirective into the dtElement property
+    @ViewChild(DataTableDirective)
+    dtElement: DataTableDirective;
 
 
     // Using trigger becase fetching the list of banners can be quite long
@@ -46,7 +49,8 @@ export class BannerListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.dtOptions = data_config.dtOptions;
+        // Call dataTable
+        this.dtOptions = data_config(this.record).dtOptions;
         // Call function getAllBanners()
         this.getAllBanners();
     }
@@ -82,12 +86,12 @@ export class BannerListComponent implements OnInit {
      */
     getAllBanners() {
         this.bannerService.getAllBanner().subscribe(
-            result => {
+            (result) => {
                 this.banners = result;
-                this.dtTrigger.next(); },
-                error =>  this.errorMessage = <any>error
-                )
-    }
+                this.dtTrigger.next(); 
+            },
+            (error) =>  this.errorMessage = <any>error
+        )};
     /*
         Function: Check each item checkbox
         Check item checkbox is checked
@@ -160,6 +164,7 @@ export class BannerListComponent implements OnInit {
                     this.banner_del = [];
                 });
                 this.message_success = "Xóa banner thành công";
-            },(error) =>  this.errorMessage = <any>error);
+            },
+            (error) =>  this.errorMessage = <any>error);
     }  
 }
