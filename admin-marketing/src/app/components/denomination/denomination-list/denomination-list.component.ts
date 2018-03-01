@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 
 import { Subject } from 'rxjs/Subject';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Denomination }  from '../../../shared/class/denomination';
 
@@ -23,9 +23,10 @@ export class DenominationListComponent implements OnInit {
     select_checkbox = false; // Default checkbox false
     deno_selected: any;
     selectedAll: any;
+
     message_success: string = ""; // Display message success
     message_result = ''; // Message result
-    record: String = "Mệnh Giá Nạp Tiền";
+    record: string = "Mệnh Giá Nạp Tiền";
 
     // Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
@@ -37,7 +38,8 @@ export class DenominationListComponent implements OnInit {
 
     constructor(
         private denominationService: DenominationService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router;
         ) {
         this.denominations = [];
         this.deno_selected = [];
@@ -58,19 +60,25 @@ export class DenominationListComponent implements OnInit {
 	/* 
         Get All Denomination
         Call service Denomination
+        @author: Trangle
     */
 	getAllDenomination() {
 		this.denominationService.getAllDenomination().subscribe(
-			result => {
+			(result) => {
 				this.denominations = result;
 				this.dtTrigger.next();
-			});
+			},
+            (error) => {
+                this.router.navigate(['/error', { message: error }]);
+            }
+            );
 	}
 	/*
         Check all denomination selected
         Check deno checked
         True: push id selected in array, select_checkbox = true, message is null
-        False: select_checkbox = false   
+        False: select_checkbox = false
+        @author: Trangle   
      */
 	checkAllDeno(event){
         let array_del = [];
@@ -145,7 +153,7 @@ export class DenominationListComponent implements OnInit {
 	// Delete All select checkbox
 	deleteDenominationCheckbox() {
         this.denominationService.deleteAllDenosSelected(this.deno_selected).subscribe(
-            result => {
+            (result) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     var self = this;
                     this.deno_selected.forEach(function(e){
@@ -156,6 +164,10 @@ export class DenominationListComponent implements OnInit {
                     this.deno_selected = [];
                 });
                 this.message_success = "Xóa mệnh giá nạp tiền thành công";
-            });
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error }]);
+            }
+            );
     }
 }

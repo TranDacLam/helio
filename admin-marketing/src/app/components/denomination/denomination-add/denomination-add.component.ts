@@ -14,6 +14,7 @@ export class DenominationAddComponent implements OnInit {
 
     denominations: Denomination[] = [];
     errorMessage: string;
+    
     constructor(
         private router: Router,
         private denominationService: DenominationService,
@@ -22,6 +23,11 @@ export class DenominationAddComponent implements OnInit {
     ngOnInit() {
     }
 
+    /* 
+        Add Denomination
+        Call service denomination
+        @author: Trangle
+    */
     addDenomination(denomination: number) {
         this.denominationService.createDenomination({ denomination } as Denomination )
         .subscribe(
@@ -29,7 +35,20 @@ export class DenominationAddComponent implements OnInit {
                 this.denominations.push(denomination); 
                 this.router.navigate(['/denomination-list', { message_post: denomination.denomination} ])   
             },
-            error =>  this.errorMessage = <any>error);
+            (error) =>  {
+                if(error.status == 400) {
+                    this.errorMessage = error;
+                } else {
+                    this.router.navigate(['/error', { message: error }]);
+                }
+            })
     }
-
+    /* 
+        Return errorMessage = '', when click input tag 
+        @author: Trangle
+    */
+    removeMessage(er) {
+       this.errorMessage = '';
+    }
+    
 }
