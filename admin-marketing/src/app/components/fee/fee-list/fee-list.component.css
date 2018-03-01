@@ -1,20 +1,9 @@
 
 /* custom data table */
-.head-content{
-	margin: 15px 0px;
-	font-size: 15px;
-	padding: 5px 0;
-}
-.pull-right.child-head a{
-	color: #ffffff;
-}
-.pull-right.child-head a:hover{
-    text-decoration: none;
 
-}
 .wrapper-table{
 	padding: 10px;
-	border: 1px solid #000;
+	/* border: 1px solid #000; */
 	margin-bottom: 30px;
 }
 .fee-tb{
@@ -23,7 +12,15 @@
 }
 .checkbox-tb{
 	width: 70px;
-	
+}
+.mt-30{
+    margin-top: 30px;
+}
+.mb-30{
+    margin-bottom: 30px;
+}
+.mt-15{
+    margin-top: 15px;
 }
 table.dataTable thead .sorting_asc{
 	width: 70px;
