@@ -39,7 +39,7 @@ import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
 import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
-
+import { CategoryService } from './shared/services/category.service';
 import { BannerService } from './shared/services/banner.service';
 
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
@@ -176,7 +176,8 @@ import { ErrorComponent } from './components/error/error.component';
     DenominationService,
     FeedbackService,
     FeeService,
-    BannerService
+    BannerService,
+    CategoryService
   ],
   bootstrap: [AppComponent]
 })

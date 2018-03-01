@@ -40,7 +40,7 @@ export class PromotionService {
         Get all promotion
         @author: diemnguyen
     */
-    getAllPromotion() {
+    getAllPromotion(): Observable<any> {
         return this.http.get(api.promotion_list, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
@@ -48,7 +48,7 @@ export class PromotionService {
         Get promotion by Id
         @author: diemnguyen
     */
-    getPromotionById(id: number) {
+    getPromotionById(id: number): Observable<any> {
         let promotion_detail_url = `${api.promotion}${id}`;
         return this.http.get(promotion_detail_url, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
@@ -58,7 +58,7 @@ export class PromotionService {
         Delete promotion by Id
         @author: diemnguyen
     */
-    deletePromotionById(id: number) {
+    deletePromotionById(id: number): Observable<any> {
         let promotion_detail_url = `${api.promotion}${id}`;
         return this.http.delete(promotion_detail_url, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
@@ -67,24 +67,29 @@ export class PromotionService {
         Save Promotion
         @author: diemnguyen
     */
-    savePromotion(promotion: any) {
+    savePromotion(promotion: any): Observable<any> {
         _headers.set('Content-Type', 'multipart/form-data');
         let _options_save = new RequestOptions({
             headers: _headers
         });
 
-
-
-        return this.http.post(api.promotion, JSON.stringify(promotion), _options_save).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.post(api.promotion, promotion, _options_save).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /*  
-        Delete promotion by Id
+        Update promotion by Id
         @author: diemnguyen
     */
-    updatePromotion(promotion: Promotion) {
-        let promotion_detail_url = `${api.promotion}${promotion.id}/`;
-        return this.http.put(promotion_detail_url, JSON.stringify(promotion), _options).map((res: Response) => res.json()).catch(this.handleError);
+  
+     updatePromotion(promotionFormData:FormData, id: number): Observable<any> { 
+        console.log(promotionFormData);
+
+
+        let promotion_detail_url = `${api.promotion}${id}/`;
+        let request = new XMLHttpRequest();
+        request.open('PUT', promotion_detail_url);
+        request.send(promotionFormData);
+        return;
     }
 
     /*  
@@ -114,9 +119,15 @@ export class PromotionService {
         return this.http.post(user_promotion_url, JSON.stringify(param), _options).catch(this.handleError);
     }
 
+    generator_QR_code(id: number): Observable<any>{
+        let generator_QR_code_url = `${api.generator_QR_code}${id}/`
+        return this.http.post(generator_QR_code_url, JSON.stringify({'vo':'promotion'}), _options).catch(this.handleError);
+    }
+
     private handleError(error: Response) {
         return Observable.throw(error.statusText);
     }
+
 
 
 }

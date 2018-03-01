@@ -6,6 +6,9 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import AbstractUser
 import custom_models
 import constants as const
+import qrcode
+import StringIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 # Create your models here.
 
@@ -155,14 +158,34 @@ class Promotion(DateTimeModel):
         null=True, blank=True)
 
     promotion_type = models.ForeignKey('Promotion_Type', related_name='promotion_type_rel', on_delete=models.CASCADE,
-                      null=True, blank=True)
+                                       null=True, blank=True)
     apply_date = models.DateField(_("Apply Date"), blank=True, null=True)
     end_date = models.DateField(_("End Date"), blank=True, null=True)
     QR_code = models.ImageField(upload_to='qrcode', blank=True, null=True)
     is_draft = models.BooleanField(default=False)
+    user_implementer = models.ForeignKey('User', related_name='user_implementer_rel',
+                                         null=True, blank=True)
 
     def __str__(self):
         return '%s' % (self.name)
+
+    def generate_qrcode(self):
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=6,
+            border=0,
+        )
+        qr.add_data("promotion-%s" % (self.id))
+        qr.make(fit=True)
+        img = qr.make_image()
+        buffer = StringIO.StringIO()
+        img.save(buffer)
+
+        filename = 'promotion-qrcode-%s.png' % (self.id)
+        filebuffer = InMemoryUploadedFile(
+            buffer, None, filename, 'image/png', buffer.len, None)
+        self.QR_code.save(filename, filebuffer)
 
 
 @python_2_unicode_compatible
@@ -312,6 +335,8 @@ class Notification(DateTimeModel):
     sent_date = models.DateField(_('Sent Date'), null=True, blank=True)
     sent_user = models.ForeignKey('User', related_name='notification_user_rel',
                                   null=True, blank=True)
+    promotion = models.OneToOneField(
+        Promotion, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return '%s' % (self.subject)
@@ -382,3 +407,6 @@ class Promotion_Type(DateTimeModel):
 
     def __str__(self):
         return '%s' % (self.name)
+
+    def __unicode__(self):
+        return self.name + ' ' + self.name

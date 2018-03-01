@@ -13,6 +13,8 @@ const httpOptions = {
 export class EventService {
 
     private urlEvent= api.event;
+    private urlEventList= api.event_list;
+    
 
     constructor(private http: Http) { }
 
@@ -21,7 +23,7 @@ export class EventService {
         author: Lam
     */
     getEvents(): Observable<any>{
-        return this.http.get(this.urlEvent).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(this.urlEventList).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     getEvent(id: number): Observable<any>{
@@ -42,7 +44,7 @@ export class EventService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(this.urlEvent, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(this.urlEventList, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     addEvent(value): Observable<any>{

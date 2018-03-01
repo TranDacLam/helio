@@ -6,13 +6,15 @@ import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
 const httpOptions = {
-    headers: new Headers({ 'Content-Type': 'application/json' })
+    headers: new Headers({ 
+        'Content-Type': 'application/json',
+    })
 };
-
 @Injectable()
 export class PromotionLabelService {
 
   	private urlPromotionLabel = `${api.promotion_label}`;
+    private urlPromotionLabelList = `${api.promotion_label_list}`;
 
 	constructor(private http: Http) 
 	{
@@ -20,7 +22,7 @@ export class PromotionLabelService {
 	
 	// Get All Promotion Label from server
 	getPromotionLabels(): Observable<any>{
-		return this.http.get(this.urlPromotionLabel).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(this.urlPromotionLabelList).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	// POST: Add new Promotion Label to the server 
@@ -49,7 +51,7 @@ export class PromotionLabelService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(this.urlPromotionLabel, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(this.urlPromotionLabelList, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     updatePromotionLabel(value, id): Observable<any>{
