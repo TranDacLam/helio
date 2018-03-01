@@ -23,6 +23,8 @@ export class HotAdvsListComponent implements OnInit {
 	message_success: string = ""; // Display message success
   	message_result = ''; // Message result
 
+    record: String = "Hot Advs";
+    
   	// Inject the DataTableDirective into the dtElement property
   	@ViewChild(DataTableDirective)
   	dtElement: DataTableDirective;
@@ -39,7 +41,7 @@ export class HotAdvsListComponent implements OnInit {
   		}
 
   	ngOnInit() {
-  		this.dtOptions = data_config.dtOptions;
+  		this.dtOptions = data_config(this.record).dtOptions;
 	  	this.getAllHotAdvs();
   	}
 
@@ -111,7 +113,7 @@ export class HotAdvsListComponent implements OnInit {
                 }
             });
         } else {
-            bootbox.alert("Vui lòng chọn banner để xóa");
+            bootbox.alert("Vui lòng chọn hot advs để xóa");
         } 
     }
     deleteHotAdvsCheckbox() {

@@ -8,7 +8,7 @@ import { User } from '../../../shared/class/user';
 
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
-import { datatable_config } from '../../../shared/commons/datatable_config';
+import { data_config } from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -22,11 +22,15 @@ export class LinkCardListComponent implements OnInit {
 
 	dtOptions: any = {};
 	link_cards: User[];
+
 	checkbox_selected = false; // Default feedback selected false
+
     link_card_del: any;
+    
     message_success: string = ""; // Display message success
     message_result: string = ""; // Display message result
-    errorMessage: String;
+    errorMessage: string;
+    record: string = "Thẻ Liên Kết";
 
     // Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
@@ -44,8 +48,8 @@ export class LinkCardListComponent implements OnInit {
   	}
 
   	ngOnInit() {
-         // Customize DataTable
-  		this.dtOptions = datatable_config.dtOptions;
+        // Customize DataTable
+  		this.dtOptions = data_config(this.record).dtOptions;
         this.getAllLinkCards();
   	}
 

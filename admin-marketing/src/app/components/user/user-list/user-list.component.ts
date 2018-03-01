@@ -15,12 +15,18 @@ declare var bootbox:any;
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
+
 	dtOptions: any = {};
+
 	users: User[];
+
 	select_checkbox = false; // Default checkbox false
+
 	user_selected: any;
+
 	message_success: string = ""; // Display message success
-  	message_result = ''; // Message result
+  	message_result: string = ''; // Message result
+    record: string = "User";
 
  	// Inject the DataTableDirective into the dtElement property
   	@ViewChild(DataTableDirective)
@@ -38,7 +44,7 @@ export class UserListComponent implements OnInit {
 
   	ngOnInit() {
         // Call data_config
-  		this.dtOptions = data_config.dtOptions;
+  		this.dtOptions = data_config(this.record).dtOptions;
 	  	this.getAllUser()
   	}
 
