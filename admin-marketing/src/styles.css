@@ -71,9 +71,9 @@ body {
 
 p {
     font-family: "Cabin";
-    font-size: 18px;
+   /* font-size: 18px;
     line-height: 24px;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.5px;*/
 }
 
 /* START HEADER*/
@@ -150,7 +150,19 @@ p {
     font-size: 14px;
 }
 /* END FOOTER*/
-
+/* START BREADCRUMB */
+.breadcrumb {
+    background: none;
+}
+.breadcrumb>li+li:before {
+    content: "\003e";
+}
+/* END BREADCRUMB */
+/* CONTENT */
+.container.main {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
 /* START DATATABLE */
 
 /* END DATATABLE */

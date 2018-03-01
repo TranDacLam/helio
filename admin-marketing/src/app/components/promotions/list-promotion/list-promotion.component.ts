@@ -10,7 +10,10 @@ import { PromotionService } from '../../../shared/services/promotion.service';
 import { Promotion } from '../../../shared/class/promotion';
 import { datatable_config } from '../../../shared/commons/datatable_config';
 
+import { env } from '../../../../environments/environment';
+
 declare var bootbox:any;
+declare var $: any;
 
 @Component({
     selector: 'app-list-promotion',
@@ -30,7 +33,6 @@ export class ListPromotionComponent implements OnInit {
 
 	promotion_list: Promotion[] = [];
 
-	dtTrigger: Subject<any> = new Subject();
 
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
@@ -40,6 +42,14 @@ export class ListPromotionComponent implements OnInit {
 
     message_result: string = "";
 
+    api_domain:string = "";
+
+    /*
+        Using trigger becase fetching the list of feedbacks can be quite long
+        thus we ensure the data is fetched before rensering
+    */ 
+    dtTrigger: Subject<any> = new Subject();
+
     constructor(
         private promotionService: PromotionService,
         private router: Router,
@@ -47,16 +57,18 @@ export class ListPromotionComponent implements OnInit {
         ) { }
 
     ngOnInit() {
+        this.api_domain = env.api_domain_1;
     	this.getAllPromotion();
     	this.dtOptions = datatable_config.dtOptions;
 
         this.route.params.subscribe(params => {
-            console.log(params);
-            if (params.action && params.promotion_name) {
+            if (params && params.action) {
                 this.message_result = params.action + params.promotion_name + '" thành công.';
             }
         });
+        
     }
+
     /*
         Call Service get all promotion
         @author: diemnguyen 
@@ -65,7 +77,7 @@ export class ListPromotionComponent implements OnInit {
         this.promotionService.getAllPromotion().subscribe(
             (data) => {
                 this.promotion_list = data;
-                this.length_all = data.length
+                this.length_all = data.length;
                 this.dtTrigger.next();
             }, 
             (error) => {
@@ -135,6 +147,23 @@ export class ListPromotionComponent implements OnInit {
             bootbox.alert("Vui lòng chọn phần tử cần xóa");
         }
         
+    }
+
+    generator_QR_code(event , id: number) {
+        let element = $(event.target);
+        element.button('loading');
+        this.promotionService.generator_QR_code(id).subscribe(
+            (data) => {
+                if(data.status == 200) {
+                    let body = data.json(); 
+                    var promotion = this.promotion_list.find( promotion => promotion.id == id);
+                    promotion.QR_code = body.qr_code_url;
+                }
+                element.button('reset');
+            }, 
+            (error) => {
+                this.router.navigate(['/error']);
+            });
     }
 
     /*

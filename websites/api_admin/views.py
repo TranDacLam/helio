@@ -23,7 +23,7 @@ from django.http import Http404
 from django.db import DatabaseError
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser
-
+import json
 """
     Get Promotion
     @author: diemnguyen
@@ -73,7 +73,8 @@ class PromotionList(APIView):
 """
 
 
-@parser_classes((MultiPartParser, JSONParser))
+@parser_classes((MultiPartParser, FormParser))
+@permission_classes((AllowAny,))
 class PromotionDetail(APIView):
 
     def get_object(self, pk):
@@ -85,7 +86,7 @@ class PromotionDetail(APIView):
     def get(self, request, id, format=None):
         item = self.get_object(id)
         try:
-            serializer = admin_serializers.PromotionSerializer(
+            serializer = admin_serializers.PromotionDisplaySerializer(
                 item, many=False)
             return Response(serializer.data)
         except Exception, e:
@@ -118,6 +119,7 @@ class PromotionDetail(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
+            print serializer.errors
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
             print 'PromotionDetailView PUT', e
@@ -792,10 +794,10 @@ class SummaryAPI(APIView):
                 for item in count_status:
                     if item['status'] == '':
                         break
-                    count_item['status'][item['status']
-                                         ] = item['status__count']
-                    count_item['status_sum'] = count_item['status_sum'] + \
-                        item['status__count']
+                    count_item['status'][
+                        item['status']] = item['status__count']
+                    count_item['status_sum'] = count_item[
+                        'status_sum'] + item['status__count']
 
             # get rate json
             if search_field == 'rate' or get_all:
@@ -816,8 +818,8 @@ class SummaryAPI(APIView):
                         count_item['rate']['great'] = item['rate__count']
                     if item['rate'] == 'Xấu':
                         count_item['rate']['bad'] = item['rate__count']
-                    count_item['rate_sum'] = count_item['rate_sum'] + \
-                        item['rate__count']
+                    count_item['rate_sum'] = count_item[
+                        'rate_sum'] + item['rate__count']
 
             # if search_field is not status and rate
             if search_field is not None and search_field != 'rate' and search_field != 'status':
@@ -828,6 +830,7 @@ class SummaryAPI(APIView):
             print "SummaryAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
 
 
 """
@@ -1952,3 +1955,41 @@ class FAQListAPI(APIView):
             print "HotListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
+class GeneratorQRCode(APIView):
+
+    def post(self, request, id, format=None):
+        try:
+            promotion = Promotion.objects.get(pk=id)
+            promotion.generate_qrcode()
+
+            if promotion.QR_code:
+                return Response({"qr_code_url": promotion.QR_code.url}, status=200)
+
+            return Response(status=400)
+        except Promotion.DoesNotExist, e:
+            return Response(status=400)
+
+"""
+    Get All Category
+    @author :diemnguyen
+
+"""
+
+
+@permission_classes((AllowAny,))
+class CategoryList(APIView):
+
+    def get(self, request, format=None):
+        try:
+            category_list = Category.objects.all()
+            serializer = admin_serializers.CategorySerializer(
+                category_list, many=True)
+            return Response(serializer.data)
+
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
