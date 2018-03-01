@@ -13,6 +13,7 @@ import { datatable_config } from '../../../shared/commons/datatable_config';
 import { env } from '../../../../environments/environment';
 
 declare var bootbox:any;
+declare var $: any;
 
 @Component({
     selector: 'app-list-promotion',
@@ -149,16 +150,16 @@ export class ListPromotionComponent implements OnInit {
     }
 
     generator_QR_code(event , id: number) {
-        var $this = $(event.target);
-        $this.button('loading');
+        let element = $(event.target);
+        element.button('loading');
         this.promotionService.generator_QR_code(id).subscribe(
             (data) => {
                 if(data.status == 200) {
                     let body = data.json(); 
                     var promotion = this.promotion_list.find( promotion => promotion.id == id);
-                    promotion.QR_code = "/media/qrcode/promotion-qrcode-20_tuElWMQ.png";
+                    promotion.QR_code = body.qr_code_url;
                 }
-                $this.button('reset');
+                element.button('reset');
             }, 
             (error) => {
                 this.router.navigate(['/error']);

@@ -67,4 +67,5 @@ urlpatterns = [
 	url(r'^faq/(?P<id>[0-9]+)/$', views.FAQAPI.as_view(), name="faq-detail"),
 	url(r'^faq_list/$', views.FAQListAPI.as_view(), name="faq-list"),
 	url(r'^generator_QR_code/(?P<id>[0-9]+)/$', views.GeneratorQRCode.as_view(), name="generator-QR-code"),
+	url(r'^category_list/$', views.CategoryList.as_view(), name="category-list"),
 ]

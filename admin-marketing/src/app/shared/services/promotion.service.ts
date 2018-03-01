@@ -77,12 +77,19 @@ export class PromotionService {
     }
 
     /*  
-        Delete promotion by Id
+        Update promotion by Id
         @author: diemnguyen
     */
-    updatePromotion(promotion: Promotion): Observable<any> {
-        let promotion_detail_url = `${api.promotion}${promotion.id}/`;
-        return this.http.put(promotion_detail_url, JSON.stringify(promotion), _options).map((res: Response) => res.json()).catch(this.handleError);
+  
+     updatePromotion(promotionFormData:FormData, id: number): Observable<any> { 
+        console.log(promotionFormData);
+
+
+        let promotion_detail_url = `${api.promotion}${id}/`;
+        let request = new XMLHttpRequest();
+        request.open('PUT', promotion_detail_url);
+        request.send(promotionFormData);
+        return;
     }
 
     /*  

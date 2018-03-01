@@ -89,6 +89,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
+        fields = '__all__'
 
 class PromotionTypeSerializer(serializers.ModelSerializer):
 
@@ -102,14 +103,21 @@ class PromotionLabelSerializer(serializers.ModelSerializer):
         model = Promotion_Label
         fields= ('id', 'name')
 
-
-class PromotionSerializer(serializers.ModelSerializer):
+class PromotionDisplaySerializer(serializers.ModelSerializer):
     promotion_type = PromotionTypeSerializer(many=False, required=False, read_only=False)
     apply_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
     end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
-    image = Base64ImageField(
-        max_length=None, use_url=True,
-    )
+    user_implementer = UserSerializer(many=False, required=False, read_only=False)
+    # image = Base64ImageField(
+    #     max_length=None, use_url=True,
+    # )
+    class Meta:
+        model = Promotion
+        fields = '__all__'
+
+class PromotionSerializer(serializers.ModelSerializer):
+    apply_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
+    end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
     class Meta:
         model = Promotion
         fields = '__all__'
@@ -120,28 +128,27 @@ class PromotionSerializer(serializers.ModelSerializer):
     #     return data
 
     def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        image_thumbnail = validated_data.get('image_thumbnail', instance.image_thumbnail)
+        if image_thumbnail:
+            instance.image_thumbnail = image_thumbnail
 
-        promotion_type_data = validated_data.pop('promotion_type', None)
-        if promotion_type_data:
-            promotion_type = Promotion_Type.objects.get_or_create(**promotion_type_data)[0]
-            validated_data['promotion_type'] = promotion_type
-
-        # return Promotion.objects.create(**validated_data)
+        # if promotion_type_data:
+        #     print promotion_type_data
+        #     promotion_type = Promotion_Type.objects.get_or_create(**promotion_type_data)[0]
+        #     validated_data['promotion_type'] = promotion_type
 
         instance.name = validated_data.get('name', instance.name)
-        instance.image = validated_data.get('image', instance.image)
-        instance.image_thumbnail = validated_data.get('image_thumbnail', instance.image_thumbnail)
         instance.short_description = validated_data.get('short_description', instance.short_description)
         instance.content = validated_data.get('content', instance.content)
         instance.promotion_category = validated_data.get('promotion_category', instance.promotion_category)
         instance.promotion_label = validated_data.get('promotion_label', instance.promotion_label)
-
         instance.promotion_type = validated_data.get('promotion_type', instance.promotion_type)
-
         instance.apply_date = validated_data.get('apply_date', instance.apply_date)
         instance.end_date = validated_data.get('end_date', instance.end_date)
-
-        # PromotionTypeSerializer
+        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
         instance.save()
         return instance
 

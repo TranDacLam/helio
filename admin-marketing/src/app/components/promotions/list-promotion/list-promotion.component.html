@@ -53,8 +53,8 @@
 
                         </td>
                         <td>{{ promotion.created | date : 'dd/MM/yyyy'}}</td>
-                        <td></td>
-                        <td><span *ngIf="promotion.promotion_type">{{ promotion.promotion_type.name }}</span></td>
+                        <td>{{ promotion.user_implementer?.email }}</td>
+                        <td>{{ promotion.promotion_type?.name }}</td>
                         <td class="text-center">
                             <img src="{{api_domain}}{{promotion.QR_code}}" *ngIf="promotion.QR_code; else create_qrcode_btn" height="50px" width="50px" />
                             <ng-template #create_qrcode_btn>

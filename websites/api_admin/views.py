@@ -73,7 +73,8 @@ class PromotionList(APIView):
 """
 
 
-@parser_classes((MultiPartParser, JSONParser))
+@parser_classes((MultiPartParser, FormParser))
+@permission_classes((AllowAny,))
 class PromotionDetail(APIView):
 
     def get_object(self, pk):
@@ -85,7 +86,7 @@ class PromotionDetail(APIView):
     def get(self, request, id, format=None):
         item = self.get_object(id)
         try:
-            serializer = admin_serializers.PromotionSerializer(
+            serializer = admin_serializers.PromotionDisplaySerializer(
                 item, many=False)
             return Response(serializer.data)
         except Exception, e:
@@ -1703,7 +1704,7 @@ class PostAPI(APIView):
 
     def get(self, request, id):
         try:
-            post = Post.objects.get(id = id)
+            post = Post.objects.get(id=id)
             postSerializer = admin_serializers.PostSerializer(post)
             return Response(postSerializer.data)
 
@@ -1921,6 +1922,7 @@ class FAQListAPI(APIView):
 
 
 class GeneratorQRCode(APIView):
+
     def post(self, request, id, format=None):
         try:
             promotion = Promotion.objects.get(pk=id)
@@ -1929,8 +1931,28 @@ class GeneratorQRCode(APIView):
             if promotion.QR_code:
                 return Response({"qr_code_url": promotion.QR_code.url}, status=200)
 
-
             return Response(status=400)
         except Promotion.DoesNotExist, e:
             return Response(status=400)
-        
+
+"""
+    Get All Category
+    @author :diemnguyen
+
+"""
+
+
+@permission_classes((AllowAny,))
+class CategoryList(APIView):
+
+    def get(self, request, format=None):
+        try:
+            category_list = Category.objects.all()
+            serializer = admin_serializers.CategorySerializer(
+                category_list, many=True)
+            return Response(serializer.data)
+
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
