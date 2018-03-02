@@ -11,8 +11,11 @@
     color: green;
 }
 .row-border tr td:first-child input{
-    margin-left: 6px;
+    margin-left: 0px;
 }
 .dels-noti{
     margin-bottom: 50px;
+}
+table.dataTable tbody td{
+    padding: 8px 18px;
 }
