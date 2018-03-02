@@ -5,6 +5,7 @@ import { Notification } from '../../../shared/class/notification';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import * as datatable_config from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -24,6 +25,8 @@ export class ListNotificationComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
+    dtOptions: any = {};
+
     notifications: Notification[];
     notifications_del = []; // Get array id to delete all id notification
     length_notification: number;
@@ -33,6 +36,7 @@ export class ListNotificationComponent implements OnInit {
     constructor(private notificationService: NotificationService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.dtOptions = datatable_config.data_config('Thông Báo').dtOptions;
         this.getNotifications();
 
         /*

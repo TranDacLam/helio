@@ -5,6 +5,7 @@ import { Game } from '../../../shared/class/game';
 import { GameService } from '../../../shared/services/game.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import * as datatable_config from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -24,14 +25,18 @@ export class ListGameComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
+    dtOptions: any = {};
+
     games: Game[];
     games_del = []; // Get array id to delete all id game
+    length_games: number;
     select_checked = false; // Check/uncheck all game
     message_result = ''; // Message error
 
     constructor(private gameService: GameService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.dtOptions = datatable_config.data_config('Trò Chơi').dtOptions;
         this.getGames();
 
         /*
@@ -57,6 +62,7 @@ export class ListGameComponent implements OnInit {
         this.gameService.getGames().subscribe(
             (data) => {
                 this.games = data;
+                this.length_games = this.games.length;
             } 
         );
     }
@@ -135,9 +141,9 @@ export class ListGameComponent implements OnInit {
                     this.games_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.length_games = this.length_games - this.games_del.length;
                     this.games_del = [];
                 });
-                this.getGames();
                 this.message_result = 'Xóa thành công.';
             }
         );

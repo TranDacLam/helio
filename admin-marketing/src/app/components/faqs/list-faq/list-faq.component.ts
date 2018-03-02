@@ -5,6 +5,9 @@ import { Faq } from '../../../shared/class/faq';
 import { FaqService } from '../../../shared/services/faq.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import * as datatable_config from '../../../shared/commons/datatable_config';
+
+declare var bootbox:any;
 
 @Component({
     selector: 'app-list-faq',
@@ -22,14 +25,18 @@ export class ListFaqComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
+    dtOptions: any = {};
+
     faqs: Faq[];
     faqs_del = []; // Get array id to delete all id faq
+    length_faqs: number;
     select_checked = false; // Check/uncheck all faq
     message_result = ''; // Message error
 
     constructor(private faqService: FaqService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.dtOptions = datatable_config.data_config('Câu Hỏi Thường Gặp').dtOptions;
         this.getFaqs();
 
         /*
@@ -55,6 +62,7 @@ export class ListFaqComponent implements OnInit {
         this.faqService.getFaqs().subscribe(
             (data) => {
                 this.faqs = data;
+                this.length_faqs = this.faqs.length;
             } 
         );
     }
@@ -90,6 +98,37 @@ export class ListFaqComponent implements OnInit {
     }
 
     /*
+        Function deleteFaqEvent(): confirm delete
+        @author: Lam
+    */
+    deleteFaqEvent(){
+        let that = this;
+        if ( this.faqs_del.length > 0 ) {
+            bootbox.confirm({
+                title: "Bạn có chắc chắn",
+                message: "Bạn muốn xóa " + this.faqs_del.length + " phần tử đã chọn",
+                buttons: {
+                    cancel: {
+                        label: "Hủy"
+                    },
+                    confirm: {
+                        label: "Xóa"
+                    }
+                },
+                callback: function (result) {
+                    if(result) {
+                        that.onDelelteFaq();
+                    }
+                }
+            });
+
+        } else  {
+            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+        }
+        
+    }
+
+    /*
         Function onDelelteFaq(): 
          + Callback service function onDelelteFaq() delete faq by array id
          + Remove tr have del-{{id}} and draw tables
@@ -102,9 +141,9 @@ export class ListFaqComponent implements OnInit {
                     this.faqs_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.length_faqs = this.length_faqs - this.faqs_del.length;
                     this.faqs_del = [];
                 });
-                this.getFaqs();
                 this.message_result = "Xóa thành công."
             }
         );
