@@ -3,15 +3,20 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item"><a routerLink="/advertisement-list">Quảng cáo</a></li>
+            <li class="breadcrumb-item"><a routerLink="/advertisement-list">Quảng Cáo</a></li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
 
 <div class='row title-adv'>
-	<a class="pull-left" routerLink="/advertisement-list">Quảng cáo</a>
-	<a class="pull-right" routerLink="/advertisement-add">Thêm Quảng cáo</a>
+	<a class="pull-left" routerLink="/advertisement-list">Quảng Cáo</a>
+	<a class="pull-right" routerLink="/advertisement-add">
+		<div class="btn btn-primary">
+			<span class="glyphicon glyphicon-plus"></span>
+			Thêm Quảng Cáo
+		</div>
+	</a>
 </div>
 <br>
 <div class="table card-list">
@@ -25,7 +30,7 @@
 		<thead>
 	      	<tr>
 	      		<th class="checkbox-adv"><input type="checkbox" id="allAdvs" value="allAdvs" name="allAdvs" (change)="checkAllAdv($event)"></th>
-	        	<th>Quảng cáo</th>
+	        	<th>Quảng Cáo</th>
 	      	</tr>
     	</thead>
     	<tbody>
@@ -39,7 +44,7 @@
 	<div class='row'>
 		<div class="col-md-3">
 			<select name="" class="form-control">
-				<option value="">Xóa các mệnh giá tiền được chọn</option>
+				<option value="">Xóa các quảng cáo được chọn</option>
 			</select>
 		</div>
 		<div class="col-md-3">

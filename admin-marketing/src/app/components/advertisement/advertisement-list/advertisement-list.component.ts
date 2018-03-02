@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 
 import { Subject } from 'rxjs/Subject';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Advertisement }  from '../../../shared/class/advertisement';
 
@@ -46,7 +46,8 @@ export class AdvertisementListComponent implements OnInit {
 
     constructor(
         private advertisementService: AdvertisementService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router,
         ) {
         this.advs = [];
         this.advs_delete = [];
@@ -75,10 +76,12 @@ export class AdvertisementListComponent implements OnInit {
     */
   	getAllAdvertisement() {
   		this.advertisementService.getAllAdvertisement().subscribe(
-  			result => {
+  			(result) => {
   				this.advs = result;
   				this.dtTrigger.next();
-  			});
+  			},
+            (error) => this.router.navigate(['/error', { message: error }])
+        );
   	}
   	/*
       Function: Select all checkbox
@@ -117,18 +120,11 @@ export class AdvertisementListComponent implements OnInit {
             this.message_success = "";
             this.message_result = "";
         } else{
-            let updateAdvItem = this.advs_delete.find(this.findIndexToUpdate, adv.id);
-
-            let index = this.advs_delete.indexOf(updateAdvItem);
-
-            this.advs_delete.splice(index, 1);
+            this.advs_delete = this.advs_delete.filter(ad => ad !== adv.id);
         }
     }
-    findIndexToUpdate(type) { 
-        return type.id === this;
-    }
 
-        /*
+    /*
         Confirm Delete Checkbox Selected
         Using bootbox plugin
         @author: Trangle
@@ -171,7 +167,7 @@ export class AdvertisementListComponent implements OnInit {
      */
     deleteAllCheckAdvs() {
         this.advertisementService.deleteAllAdvsSelected(this.advs_delete).subscribe(
-            result => {
+            (result) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     var self = this;
                     this.advs_delete.forEach(function(e){
@@ -182,6 +178,10 @@ export class AdvertisementListComponent implements OnInit {
                     this.advs_delete = [];
                 });
                 this.message_success = "Xóa quảng cáo thành công";
-            });
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
+            }
+        );
     }
 }
