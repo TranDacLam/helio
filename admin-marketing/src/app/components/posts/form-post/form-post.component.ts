@@ -3,14 +3,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Post } from '../../../shared/class/post';
-import { PostService } from '../../../shared/services/post.service';
+import { PostService } from '../../../shared/services/post.service';\
+import { PostType } from './../../../shared/class/post_types';
+import { PostTypeService } from '../../../shared/services/post-type.service';
 import 'rxjs/add/observable/throw';
 
 @Component({
     selector: 'form-post',
     templateUrl: './form-post.component.html',
     styleUrls: ['./form-post.component.css'],
-    providers: [PostService]
+    providers: [PostService, PostTypeService]
 })
 export class FormPostComponent implements OnInit {
 
@@ -25,11 +27,13 @@ export class FormPostComponent implements OnInit {
     @Input() post: Post; // Get post from component parent
 
     formPost: FormGroup;
+    post_types: PostType[];
 
     errorMessage = ''; // Messages error
 
     constructor(
         private postService: PostService,
+        private postTypeService: PostTypeService,
         private fb: FormBuilder,
         private location: Location,
         private router: Router,
@@ -37,6 +41,7 @@ export class FormPostComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.getPostTypes();
         this.creatForm();
     }
 
@@ -54,6 +59,14 @@ export class FormPostComponent implements OnInit {
             pin_to_top: [this.post.pin_to_top],
             key_query: [this.post.key_query, Validators.required],
         });
+    }
+
+    getPostTypes(){
+        this.postTypeService.getPostTypes().subscribe(
+            (data) => {
+                this.post_types = data;
+            } 
+        );
     }
 
     /*

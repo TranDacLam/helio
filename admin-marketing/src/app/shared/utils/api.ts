@@ -50,6 +50,7 @@ export const api = {
     generator_QR_code: env.api_domain + 'generator_QR_code/',
     /* Get All Category */
     category_list: env.api_domain +'category_list/',
+    post_type_list: env.api_domain +'post_type_list/',
 
 
 };
