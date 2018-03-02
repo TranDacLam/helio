@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Http, Response } from '@angular/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Feedback } from '../../../shared/class/feedback';
 
@@ -41,7 +41,8 @@ export class FeedbackListComponent implements OnInit {
 	dtTrigger: Subject<any> = new Subject();
     constructor(
         private feedbackService: FeedbackService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router,
     ) {
         this.feedbacks = [];
         this.feedback_del = [];
@@ -57,8 +58,8 @@ export class FeedbackListComponent implements OnInit {
             .subscribe(params => {
                 this.feedbackService.getFeedbackFilter(params)
                     .subscribe(
-                        result => this.feedbacks = result,
-                        error => this.errorMessage = <any>error
+                        (result) => this.feedbacks = result,
+                        (error) => this.router.navigate(['/error', { message: error }])
                 )
         });
         this.route.params.subscribe((params: any) => {
@@ -79,12 +80,12 @@ export class FeedbackListComponent implements OnInit {
      */
 	getAllFeedbacks() {
 		this.feedbackService.getAllFeedback().subscribe(
-			feedbacks => {
+			(feedbacks) => {
 				this.feedbacks = feedbacks;
 				// Caling the DT trigger to manually render the table
 				this.dtTrigger.next();
 			},
-            error =>  this.errorMessage = <any>error
+            (error) =>  this.router.navigate(['/error', { message: error }])
         );
 	}
     /*
@@ -120,14 +121,8 @@ export class FeedbackListComponent implements OnInit {
             this.message_result = "";
             this.message_success = "";
         } else {
-            let updateDenoItem = this.feedback_del.find(this.findIndexToUpdate, feedback.id);
-            let index = this.feedback_del.indexOf(updateDenoItem);
-
-            this.feedback_del.splice(index, 1);
+            this.feedback_del = this.feedback_del.filter(fb => fb !== feedback.id);
         }
-    }
-    findIndexToUpdate(feedback) { 
-        return feedback.id === this;
     }
 
     /*
@@ -173,7 +168,7 @@ export class FeedbackListComponent implements OnInit {
      */
     deleteFeedbackCheckbox() {
         this.feedbackService.deleteAllFeedbackChecked(this.feedback_del).subscribe(
-            result => {
+            (result) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     var self = this;
                     this.feedback_del.forEach(function(e){
@@ -185,7 +180,9 @@ export class FeedbackListComponent implements OnInit {
             });
             this.message_success = "Xóa phản hồi thành công";
            },
-            error =>  this.errorMessage = <any>error
-            );
-        }
+            (error) => {
+                this.router.navigate(['/error', { message: error.json().message }])
+            }
+        );
+    }
 }
