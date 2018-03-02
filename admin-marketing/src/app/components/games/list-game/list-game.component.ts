@@ -5,6 +5,7 @@ import { Game } from '../../../shared/class/game';
 import { GameService } from '../../../shared/services/game.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import * as datatable_config from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -24,6 +25,8 @@ export class ListGameComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
+    dtOptions: any = {};
+
     games: Game[];
     games_del = []; // Get array id to delete all id game
     length_games: number;
@@ -33,6 +36,7 @@ export class ListGameComponent implements OnInit {
     constructor(private gameService: GameService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.dtOptions = datatable_config.data_config('Trò Chơi').dtOptions;
         this.getGames();
 
         /*

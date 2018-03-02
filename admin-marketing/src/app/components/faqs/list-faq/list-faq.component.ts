@@ -5,6 +5,7 @@ import { Faq } from '../../../shared/class/faq';
 import { FaqService } from '../../../shared/services/faq.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import * as datatable_config from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -24,6 +25,8 @@ export class ListFaqComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
+    dtOptions: any = {};
+
     faqs: Faq[];
     faqs_del = []; // Get array id to delete all id faq
     length_faqs: number;
@@ -33,6 +36,7 @@ export class ListFaqComponent implements OnInit {
     constructor(private faqService: FaqService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.dtOptions = datatable_config.data_config('Câu Hỏi Thường Gặp').dtOptions;
         this.getFaqs();
 
         /*

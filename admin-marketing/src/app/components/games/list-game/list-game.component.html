@@ -23,7 +23,7 @@
     </div>
 </div>
 <div>
-    <table datatable class="row-border hover" *ngIf="games">
+    <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="games">
         <thead>
             <tr>
                 <th><input type="checkbox" (change)="onSelectAll($event)"/></th>

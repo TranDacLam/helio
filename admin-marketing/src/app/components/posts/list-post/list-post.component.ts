@@ -5,6 +5,7 @@ import { Post } from '../../../shared/class/post';
 import { PostService } from '../../../shared/services/post.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import * as datatable_config from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -24,6 +25,8 @@ export class ListPostComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
+    dtOptions: any = {};
+
     posts: Post[];
     posts_del = []; // Get array id to delete all id post
     length_posts: number;
@@ -33,6 +36,7 @@ export class ListPostComponent implements OnInit {
     constructor(private postService: PostService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.dtOptions = datatable_config.data_config('Bài Viết').dtOptions;
         this.getPosts();
 
         /*

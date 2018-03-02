@@ -5,6 +5,7 @@ import { Event } from '../../../shared/class/event';
 import { EventService } from '../../../shared/services/event.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import * as datatable_config from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -24,6 +25,8 @@ export class ListEventComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
+    dtOptions: any = {};
+
     events: Event[];
     events_del = []; // Get array id to delete all id event
     length_events: number;
@@ -33,6 +36,7 @@ export class ListEventComponent implements OnInit {
     constructor(private eventService: EventService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.dtOptions = datatable_config.data_config('Sự Kiện').dtOptions;
         this.getEvents();
 
         /*

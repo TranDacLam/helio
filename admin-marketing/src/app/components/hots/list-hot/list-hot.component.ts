@@ -5,6 +5,7 @@ import { Hot } from '../../../shared/class/hot';
 import { HotService } from '../../../shared/services/hot.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import * as datatable_config from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -24,6 +25,8 @@ export class ListHotComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
+    dtOptions: any = {};
+
     hots: Hot[];
     hots_del = []; // Get array id to delete all id hot
     length_hots: numebr;
@@ -33,6 +36,7 @@ export class ListHotComponent implements OnInit {
     constructor(private hotService: HotService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.dtOptions = datatable_config.data_config('Hot').dtOptions;
         this.getHots();
 
         /*
