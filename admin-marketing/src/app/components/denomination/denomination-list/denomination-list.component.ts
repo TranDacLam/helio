@@ -39,7 +39,7 @@ export class DenominationListComponent implements OnInit {
     constructor(
         private denominationService: DenominationService,
         private route: ActivatedRoute,
-        private router: Router;
+        private router: Router,
         ) {
         this.denominations = [];
         this.deno_selected = [];
