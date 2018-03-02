@@ -76,6 +76,9 @@ p {
     letter-spacing: 0.5px;*/
 }
 
+h1.h1-title {
+    margin-bottom: 30px;
+}
 /* START HEADER*/
 #header-wrapper {
     background-color: #15062b;

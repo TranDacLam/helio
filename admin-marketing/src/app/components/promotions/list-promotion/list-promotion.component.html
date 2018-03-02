@@ -9,10 +9,10 @@
 </div>
 <!-- End breadcrumb -->
 <div class="row mt-50 mb-30">
-    <div class="col-xs-6 col-sm-6">
+    <div class="col-xs-12 col-sm-6">
         <a class="btn btn-primary" routerLink="/">TRỞ VỀ TRANG QUẢN TRỊ</a>
     </div>
-    <div class="col-xs-6 col-sm-6">
+    <div class="col-xs-12 col-sm-6">
         <a class="btn btn-primary pull-right" routerLink="/promotions/add"><span _ngcontent-c1="" class="glyphicon glyphicon-plus"></span>&nbsp;TẠO KHUYẾN MÃI MỚI</a>
     </div>
 </div>
@@ -29,7 +29,7 @@
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"  *ngIf="promotion_list">
                 <thead>
                     <tr>
-                        <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"></th>
+                        <th class="text-center"><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"></th>
                         <th>ID</th>
                         <th>Tên Khuyến Mãi</th>
                         <th>Tình Trạng</th>
@@ -42,16 +42,10 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let promotion of promotion_list">
-                        <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                        <td class="text-center"><input type="checkbox" (change)="selectCheckbox($event);"/></td>
                         <td>{{ promotion.id }}</td>
                         <td><a routerLink="/promotions/{{ promotion.id }}/change">{{ promotion.name }}</a></td>
-                        <td >
-                            <span *ngIf="promotion.is_draft; else public">Draft</span>
-                            <ng-template #public>
-                               <span>Đã Triển Khai</span>
-                            </ng-template>
-
-                        </td>
+                        <td>{{ promotion.is_draft ? "Draft" : "Đã Triển Khai" }}</td>
                         <td>{{ promotion.created | date : 'dd/MM/yyyy'}}</td>
                         <td>{{ promotion.user_implementer?.email }}</td>
                         <td>{{ promotion.promotion_type?.name }}</td>

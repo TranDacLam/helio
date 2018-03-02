@@ -35,7 +35,7 @@ class PromotionList(APIView):
     def get(self, request, format=None):
         try:
             lst_item = Promotion.objects.all()
-            serializer = admin_serializers.PromotionSerializer(
+            serializer = admin_serializers.PromotionDisplaySerializer(
                 lst_item, many=True)
             return Response(serializer.data)
         except Exception, e:
@@ -99,8 +99,6 @@ class PromotionDetail(APIView):
             print request.data
             serializer = admin_serializers.PromotionSerializer(
                 data=request.data)
-
-            print "serializer", serializer
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
@@ -152,7 +150,7 @@ class PromotionUser(APIView):
                     ~Q(pk__in=promotion_user_id_list))
 
                 result = {}
-                result['promotion_detail'] = admin_serializers.PromotionSerializer(
+                result['promotion_detail'] = admin_serializers.PromotionDisplaySerializer(
                     promotion_detail, many=False).data
                 result['user_all'] = admin_serializers.UserSerializer(
                     user_all_list, many=True).data
@@ -1968,3 +1966,10 @@ class CategoryList(APIView):
             print "FeeAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
+@permission_classes((AllowAny,))
+class UploadFile(APIView): 
+    def post(self, request, format=None):
+        print "request",request
+        return Response({'tesst' : 'tesst'}, status=200)
