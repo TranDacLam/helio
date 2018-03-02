@@ -20,8 +20,9 @@
             data-loading-text="<i class='fa fa-spinner fa-spin'></i>Tạo QR Code">Tạo QR Code</button>
     </div>
     <div class="col-sm-4 pull-right">
-        <a class="btn btn-primary btn-block" [routerLink]="['/notification/add']" [queryParams]="{promotion: promotion.id}">CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI</a>
-        <a class="btn btn-primary btn-block" routerLink="/notification/add">TỔNG HỢP TRIỂN KHAI KHUYẾN MÃI</a>
+        <a *ngIf="!notification_id" class="btn btn-primary btn-block" [routerLink]="['/notification/add']" [queryParams]="{promotion: promotion.id}">TẠO THÔNG BÁO CHO KHUYẾN MÃI</a>
+        <a *ngIf="notification_id" class="btn btn-primary btn-block" [routerLink]="['/notification/edit', notification_id]">CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI</a>
+        <a class="btn btn-primary btn-block" routerLink="#">TỔNG HỢP TRIỂN KHAI KHUYẾN MÃI</a>
     </div>
 </div>
 

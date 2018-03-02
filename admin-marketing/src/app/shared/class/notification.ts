@@ -10,5 +10,5 @@ export class Notification {
     is_QR_code: boolean;
     location: string;
     is_draft: boolean;
-    promotion_id: number;
+    promotion: number;
 }
