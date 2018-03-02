@@ -26,6 +26,7 @@ export class ListPostComponent implements OnInit {
 
     posts: Post[];
     posts_del = []; // Get array id to delete all id post
+    length_posts: number;
     select_checked = false; // Check/uncheck all post
     message_result = ''; // Message error
 
@@ -57,6 +58,7 @@ export class ListPostComponent implements OnInit {
         this.postService.getPosts().subscribe(
             (data) => {
                 this.posts = data;
+                this.length_posts = this.posts.length;
             } 
         );
     }
@@ -135,9 +137,9 @@ export class ListPostComponent implements OnInit {
                     this.posts_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.length_posts = this.length_posts - this.posts_del.length;
                     this.posts_del = [];
                 });
-                this.getPosts();
                 this.message_result = "Xóa thành công.";
             }
         );
