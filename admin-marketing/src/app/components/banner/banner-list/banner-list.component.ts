@@ -4,10 +4,12 @@ import { Http, Response } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/map';
 
 import { Banner } from '../../../shared/class/banner';
 import { BannerService } from '../../../shared/services/banner.service';
+import { data_config } from '../../../shared/commons/datatable_config';
+
+declare var bootbox:any;
 
 @Component({
     selector: 'app-banner-list',
@@ -17,19 +19,21 @@ import { BannerService } from '../../../shared/services/banner.service';
 export class BannerListComponent implements OnInit {
 
 	dtOptions: any = {};
+
 	banners: Banner[];
 
     banner_del: any;
-    isChecked = false;
-    message_success: string = ""; // Display message success
-    message_error: string = ""; // Display message error
-    message_result: string = ""; // Display message result
-    errorMessage: String;
-    checkAll= false;
 
-  // Inject the DataTableDirective into the dtElement property
-  @ViewChild(DataTableDirective)
-  dtElement: DataTableDirective;
+    isChecked = false;
+
+    message_success: string = ""; // Display message success
+    message_result: string = ""; // Display message result
+    errorMessage: string; // Show error from server
+    record: string ="Banner";
+
+    // Inject the DataTableDirective into the dtElement property
+    @ViewChild(DataTableDirective)
+    dtElement: DataTableDirective;
 
 
     // Using trigger becase fetching the list of banners can be quite long
@@ -45,36 +49,16 @@ export class BannerListComponent implements OnInit {
     }
 
     ngOnInit() {
-        /*
-            Customize: DataTable
-            @author: TrangLe
-         */
-        this.dtOptions = {
-            language: {
-                sSearch: '',
-                searchPlaceholder: ' Nhập thông tin tìm kiếm',
-                lengthMenu: 'Hiển thị _MENU_ Banner',
-                info: "Hiển thị _START_ tới _END_ của _TOTAL_ Banner",
-                paginate: {
-                    "first":      "Đầu",
-                    "last":       "Cuối",
-                    "next":       "Sau",
-                    "previous":   "Trước"
-                },
-                select: {
-                    rows: ''
-                },
-                sInfoFiltered: "",
-                zeroRecords: 'Không có Banner nào để hiển thị',
-                infoEmpty: ""
-            },
-            responsive: true,
-            pagingType: "full_numbers",
-        };
+        // Call dataTable
+        this.dtOptions = data_config(this.record).dtOptions;
+        // Call function getAllBanners()
         this.getAllBanners();
     }
     /*
         Function: Select All Banner
+        Check checkbox all selected
+        True: push id in array, isChecked = True
+        False: isChecked = False, remove id
         @author: TrangLe
      */
     checkAllBanner(event) {
@@ -85,7 +69,7 @@ export class BannerListComponent implements OnInit {
             });
             this.banner_del = arr_del;
             this.isChecked = true;
-            this.message_error = "";
+            this.message_success = "";
             this.message_result = "";
         }else{
             this.isChecked = false;
@@ -97,20 +81,28 @@ export class BannerListComponent implements OnInit {
 
     /*
         GET: Get All Banner
+        Call service banner
         @author: TrangLe
      */
     getAllBanners() {
         this.bannerService.getAllBanner().subscribe(
-            result => {
+            (result) => {
                 this.banners = result;
-                this.dtTrigger.next(); },
-                error =>  this.errorMessage = <any>error
-                )
-    }
+                this.dtTrigger.next(); 
+            },
+            (error) =>  this.errorMessage = <any>error
+        )};
+    /*
+        Function: Check each item checkbox
+        Check item checkbox is checked
+        True: push id in array
+        False: remove id in array
+        @author: Trangle
+     */
     checkItemChange(event, banner) {
         if(event.target.checked){
             this.banner_del.push(banner.id);
-            this.message_error = "";
+            this.message_success = "";
             this.message_result = "";
         }
         else{
@@ -125,19 +117,42 @@ export class BannerListComponent implements OnInit {
         return type.id === this;
     }
 
+    confirmDelete() {
+        /* Check banner_del not null and length >0
+            True: Show confirm and call function deleteFeedbackCheckbox 
+            False: show alert
+        */
+        if(this.banner_del !== null && this.banner_del.length > 0 ){
+            bootbox.confirm({
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.banner_del.length + " phần tử đã chọn",
+                buttons: {
+                    confirm: {
+                        label: 'Xóa',
+                        className: 'btn-success',
+                    },
+                    cancel: {
+                        label: 'Hủy',
+                        className: 'pull-left btn-danger',
+                    }
+                },
+                callback: (result)=> {
+                    if(result) {
+                        // Check result = true. call function
+                        this.deleteBannersCheckbox()
+                    }
+                }
+            });
+        } else {
+            bootbox.alert("Vui lòng chọn banner để xóa");
+        } 
+    }
     /*
         Function: Delete All Banner Selected
-
         @author: TrangLe
      */
     deleteBannersCheckbox() {
-        if (this.banner_del !== null) { 
-            if( this.banner_del.length == 0) {
-                this.message_error = "Vui lòng chọn feedback để xóa";
-                this.message_result = "";
-                this.message_success = "";
-        } else {
-            this.bannerService.deleteBannerSelected(this.banner_del).subscribe(
+        this.bannerService.deleteBannerSelected(this.banner_del).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     var self = this;
@@ -150,9 +165,6 @@ export class BannerListComponent implements OnInit {
                 });
                 this.message_success = "Xóa banner thành công";
             },
-            (error) =>  this.errorMessage = <any>error
-            );
-            }  
-        }
-    }
+            (error) =>  this.errorMessage = <any>error);
+    }  
 }

@@ -24,6 +24,7 @@
                 pattern="[0-9]+"
                 placeholder="Tên Mệnh giá nạp tiền" 
                 #name="ngModel"
+                (click)="removeMessage(errorMessage)"
                 >
                 <div *ngIf="name.invalid && (name.dirty || name.touched)">
                     <em [ngStyle]="{'color': 'red'}" *ngIf="name.errors.required">
@@ -31,6 +32,11 @@
                     </em>
                     <em [ngStyle]="{'color': 'red'}" *ngIf="name.errors.pattern">
                     Vui lòng nhập số tiền hợp lệ.
+                    </em>
+                </div>
+                <div *ngIf='errorMessage'>
+                    <em [ngStyle]="{'color': 'red'}">
+                    Trường đã tồn tại.
                     </em>
                 </div>
             </div>

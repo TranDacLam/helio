@@ -5,6 +5,9 @@ import { Subject } from 'rxjs/Subject';
 import { ActivatedRoute } from '@angular/router';
 
 import { User } from '../../../shared/class/user';
+import { data_config } from '../../../shared/commons/datatable_config';
+
+declare var bootbox:any;
 
 @Component({
   selector: 'app-user-list',
@@ -12,13 +15,18 @@ import { User } from '../../../shared/class/user';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
+
 	dtOptions: any = {};
+
 	users: User[];
+
 	select_checkbox = false; // Default checkbox false
+
 	user_selected: any;
+
 	message_success: string = ""; // Display message success
-  	message_error: string = ""; // Display message error
-  	message_result = ''; // Message result
+  	message_result: string = ''; // Message result
+    record: string = "User";
 
  	// Inject the DataTableDirective into the dtElement property
   	@ViewChild(DataTableDirective)
@@ -35,33 +43,8 @@ export class UserListComponent implements OnInit {
   		 }
 
   	ngOnInit() {
-  		this.dtOptions = {
-  			// Declare the use of the extension in the dom parameter
-	        language: {
-	        	sSearch: '',
-	        	searchPlaceholder: ' Nhập thông tin tìm kiếm',
-	        	lengthMenu: 'Hiển thị _MENU_ user',
-	        	info: "Hiển thị _START_ tới _END_ của _TOTAL_ user",
-	        	paginate: {
-		        "first":      "Đầu",
-		        "last":       "Cuối",
-		        "next":       "Sau",
-		        "previous":   "Trước"
-		    	},
-		    	select: {
-		    		rows: ''
-		    	},
-		    	sInfoFiltered: "",
-		    	zeroRecords: 'Không có user nào để hiển thị',
-		    	infoEmpty: ""
-	        },
-	        responsive: true,
-	        pagingType: "full_numbers",
-	        select: {
-	          	style: 'multi',
-            	selector: 'td:first-child'
-	          },
-	  	};
+        // Call data_config
+  		this.dtOptions = data_config(this.record).dtOptions;
 	  	this.getAllUser()
   	}
 
@@ -79,7 +62,7 @@ export class UserListComponent implements OnInit {
             });
             this.user_selected = array_del;
             this.select_checkbox = true;
-            this.message_error = "";
+            this.message_success = "";
             this.message_result = "";
         }else{
             this.select_checkbox = false;
@@ -93,7 +76,7 @@ export class UserListComponent implements OnInit {
   	checkItemChange(event, deno) {
   		if(event.target.checked){
         	this.user_selected.push(deno.id);
-          this.message_error = "";
+          this.message_success = "";
           this.message_result = "";
       	}
       	else{
@@ -106,6 +89,42 @@ export class UserListComponent implements OnInit {
   	}
   	findIndexToUpdate(type) { 
         return type.id === this;
+    }
+
+    /*
+        Confirm Delete Checkbox Selected
+        Using bootbox plugin
+        @author: Trangle
+     */
+    confirmDelete() {
+        /* Check user_selected not null and length >0
+            True: Show confirm and call function deleteFeedbackCheckbox 
+            False: show alert
+        */
+        if(this.user_selected !== null && this.user_selected.length > 0 ){
+            bootbox.confirm({
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.user_selected.length + " phần tử đã chọn",
+                buttons: {
+                    confirm: {
+                        label: 'Xóa',
+                        className: 'btn-success',
+                    },
+                    cancel: {
+                        label: 'Hủy',
+                        className: 'pull-left btn-danger',
+                    }
+                },
+                callback: (result)=> {
+                    if(result) {
+                        // Check result = true. call function
+                        this.deleteUsersCheckbox()
+                    }
+                }
+            });
+        } else {
+            bootbox.alert("Vui lòng chọn user để xóa");
+        } 
     }
 
     // Delete All Checkbox
