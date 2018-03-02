@@ -32,8 +32,8 @@ export class DenominationService {
 		Author: TrangLe
 	*/
 	createDenomination(deno: Denomination): Observable<Denomination> {
-    	let urlDeno = `${api.denomination}`;
-		return this.http.post(urlDeno, deno, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    	let urlDeno = `${api.denomination}`; 
+		return this.http.post(urlDeno, deno,httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	/*
