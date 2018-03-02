@@ -26,6 +26,7 @@ export class ListNotificationComponent implements OnInit {
 
     notifications: Notification[];
     notifications_del = []; // Get array id to delete all id notification
+    length_notification: number;
     select_checked = false; // Check/uncheck all notification 
     message_result = ''; // Message error
 
@@ -57,6 +58,7 @@ export class ListNotificationComponent implements OnInit {
         this.notificationService.getNotifications().subscribe(
             (data) => {
                 this.notifications = data;
+                this.length_notification = this.notifications.length;
             } 
         );
     }
@@ -100,7 +102,7 @@ export class ListNotificationComponent implements OnInit {
         if ( this.notifications_del.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa những " + this.notifications_del.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.notifications_del.length + " phần tử đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -135,10 +137,9 @@ export class ListNotificationComponent implements OnInit {
                     this.notifications_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.length_notification = this.length_notification - this.notifications_del.length;
                     this.notifications_del = [];
-                    
                 });
-                this.getNotifications();
                 this.message_result = 'Xóa thành công.';
             }
         );
