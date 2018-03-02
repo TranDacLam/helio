@@ -2,7 +2,7 @@ export class Notification {
     id: number;
     subject: string;
     message: string;
-    image: string|any;
+    image: any;
     sub_url: string;
     category: number;
     sent_date: string;
@@ -10,5 +10,6 @@ export class Notification {
     is_QR_code: boolean;
     location: string;
     is_draft: boolean;
-    promotion: number;
+    is_clear_image: boolean;
+    promotion_id: number;
 }
