@@ -408,7 +408,7 @@ class DenominationView(APIView):
                 queryset = Denomination.objects.filter(
                     pk__in=deno_id).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
-            return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
+            return Response({"code": 400, "message": "Not found list id ", "fields": "id"}, status=400)
         except Exception, e:
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
