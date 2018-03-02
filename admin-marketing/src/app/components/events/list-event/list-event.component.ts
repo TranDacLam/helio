@@ -26,6 +26,7 @@ export class ListEventComponent implements OnInit {
 
     events: Event[];
     events_del = []; // Get array id to delete all id event
+    length_events: number;
     select_checked = false; // Check/uncheck all event
     message_result = ''; // Message error
 
@@ -57,6 +58,7 @@ export class ListEventComponent implements OnInit {
         this.eventService.getEvents().subscribe(
             (data) => {
                 this.events = data;
+                this.length_events = this.events.length;
             } 
         );
     }
@@ -97,7 +99,7 @@ export class ListEventComponent implements OnInit {
     */
     deleteEvent(){
         let that = this;
-        if ( this.events.length > 0 ) {
+        if ( this.events_del.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
                 message: "Bạn muốn xóa " + this.events_del.length + " phần tử đã chọn",
@@ -135,9 +137,9 @@ export class ListEventComponent implements OnInit {
                     this.events_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.length_events = this.length_events - this.events_del.length;
                     this.events_del = [];
                 });
-                this.getEvents();
                 this.message_result = 'Xóa thành công.';
             }
         );

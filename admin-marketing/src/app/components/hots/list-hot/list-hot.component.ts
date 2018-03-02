@@ -26,6 +26,7 @@ export class ListHotComponent implements OnInit {
 
     hots: Hot[];
     hots_del = []; // Get array id to delete all id hot
+    length_hots: numebr;
     select_checked = false; // Check/uncheck all hot
     message_result = ''; // Message error
 
@@ -57,6 +58,7 @@ export class ListHotComponent implements OnInit {
         this.hotService.getHots().subscribe(
             (data) => {
                 this.hots = data;
+                this.length_hots = this.hosts;
             } 
         );
     }
@@ -98,7 +100,7 @@ export class ListHotComponent implements OnInit {
     */
     deleteHotEvent(){
         let that = this;
-        if ( this.hots.length > 0 ) {
+        if ( this.hots_del.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
                 message: "Bạn muốn xóa " + this.hots_del.length + " phần tử đã chọn",
@@ -136,9 +138,9 @@ export class ListHotComponent implements OnInit {
                     this.hots_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.length_hots = this.length_hots - this.hots_del.length;
                     this.hots_del = [];
                 });
-                this.getHots();
                 this.message_result = 'Xóa thành công.';
             }
         );

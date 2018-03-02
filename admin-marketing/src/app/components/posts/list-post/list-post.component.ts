@@ -99,7 +99,7 @@ export class ListPostComponent implements OnInit {
     */
     deletePostEvent(){
         let that = this;
-        if ( this.posts.length > 0 ) {
+        if ( this.posts_del.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
                 message: "Bạn muốn xóa " + this.posts_del.length + " phần tử đã chọn",

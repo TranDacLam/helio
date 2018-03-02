@@ -26,6 +26,7 @@ export class ListGameComponent implements OnInit {
 
     games: Game[];
     games_del = []; // Get array id to delete all id game
+    length_games: number;
     select_checked = false; // Check/uncheck all game
     message_result = ''; // Message error
 
@@ -57,6 +58,7 @@ export class ListGameComponent implements OnInit {
         this.gameService.getGames().subscribe(
             (data) => {
                 this.games = data;
+                this.length_games = this.games.length;
             } 
         );
     }
@@ -135,9 +137,9 @@ export class ListGameComponent implements OnInit {
                     this.games_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.length_games = this.length_games - this.games_del.length;
                     this.games_del = [];
                 });
-                this.getGames();
                 this.message_result = 'Xóa thành công.';
             }
         );
