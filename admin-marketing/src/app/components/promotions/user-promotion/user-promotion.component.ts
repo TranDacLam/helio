@@ -30,10 +30,11 @@ export class UserPromotionComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute, 
         private promotionService: PromotionService
-    ) { }
+    ) { 
+        this.api_domain = env.api_domain_root;
+    }
 
     ngOnInit() {
-        this.api_domain = env.api_domain_root;
     	this.getUsersPromotion();
     }
 

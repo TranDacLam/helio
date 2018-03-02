@@ -128,13 +128,21 @@ class PromotionSerializer(serializers.ModelSerializer):
     #         raise serializers.ValidationError("Apply Date must be less than End Date")
     #     return data
 
+    def create(self, validated_data):
+        print "CREATE"
+        return Promotion(**validated_data)
     def update(self, instance, validated_data):
+
         image = validated_data.get('image', instance.image)
         if image:
             instance.image = image
         image_thumbnail = validated_data.get('image_thumbnail', instance.image_thumbnail)
         if image_thumbnail:
             instance.image_thumbnail = image_thumbnail
+
+        # is_draft = validated_data.get('is_draft', True)
+
+        # print is_draft, instance.is_draft
 
         # if promotion_type_data:
         #     print promotion_type_data
@@ -211,7 +219,7 @@ class CategoryNotificationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category_Notification
-        fields = ('id', 'name')
+        fields = '__all__'
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -221,7 +229,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ('name', 'image', 'short_description', 'content', 'start_date', 'end_date', 'start_time', 'end_time', 'is_draft')
+        fields = ('id', 'name', 'image', 'short_description', 'content', 'start_date', 'end_date', 'start_time', 'end_time', 'is_draft')
 
     def validate(self, data):
         if data['start_date'] > data['end_date']:
