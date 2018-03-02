@@ -45,13 +45,7 @@
                         <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
                         <td>{{ promotion.id }}</td>
                         <td><a routerLink="/promotions/{{ promotion.id }}/change">{{ promotion.name }}</a></td>
-                        <td >
-                            <span *ngIf="promotion.is_draft; else public">Draft</span>
-                            <ng-template #public>
-                               <span>Đã Triển Khai</span>
-                            </ng-template>
-
-                        </td>
+                        <td>{{ promotion.is_draft ? "Draft" : "Đã Triển Khai" }}</td>
                         <td>{{ promotion.created | date : 'dd/MM/yyyy'}}</td>
                         <td>{{ promotion.user_implementer?.email }}</td>
                         <td>{{ promotion.promotion_type?.name }}</td>

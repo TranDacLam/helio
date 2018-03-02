@@ -33,7 +33,7 @@ export class UserPromotionComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.api_domain = env.api_domain_1;
+        this.api_domain = env.api_domain_root;
     	this.getUsersPromotion();
     }
 

@@ -27,7 +27,7 @@ export class PromotionService {
     constructor(private http: Http) { }
 
     /*  
-        Get promotion by id
+        Get user promotion list
         @author: diemnguyen
     */
     getUsersPromotion(id: number): Observable<any> {
@@ -67,13 +67,24 @@ export class PromotionService {
         Save Promotion
         @author: diemnguyen
     */
-    savePromotion(promotion: any): Observable<any> {
-        _headers.set('Content-Type', 'multipart/form-data');
-        let _options_save = new RequestOptions({
-            headers: _headers
-        });
+    savePromotion(promotionFormData:FormData): Observable<any> {
 
-        return this.http.post(api.promotion, promotion, _options_save).map((res: Response) => res.json()).catch(this.handleError);
+        return Observable.create(observer => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', api.promotion);
+            xhr.send(promotionFormData);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(xhr.response);
+                    }
+                }
+            }
+        });
     }
 
     /*  
@@ -82,14 +93,23 @@ export class PromotionService {
     */
   
      updatePromotion(promotionFormData:FormData, id: number): Observable<any> { 
-        console.log(promotionFormData);
-
-
         let promotion_detail_url = `${api.promotion}${id}/`;
-        let request = new XMLHttpRequest();
-        request.open('PUT', promotion_detail_url);
-        request.send(promotionFormData);
-        return;
+        return Observable.create(observer => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('PUT', promotion_detail_url);
+            xhr.send(promotionFormData);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(xhr.response);
+                    }
+                }
+            }
+        });
     }
 
     /*  
@@ -118,7 +138,10 @@ export class PromotionService {
         }
         return this.http.post(user_promotion_url, JSON.stringify(param), _options).catch(this.handleError);
     }
-
+    /*  
+        Generator QR code
+        @author: diemnguyen
+    */
     generator_QR_code(id: number): Observable<any>{
         let generator_QR_code_url = `${api.generator_QR_code}${id}/`
         return this.http.post(generator_QR_code_url, JSON.stringify({'vo':'promotion'}), _options).catch(this.handleError);

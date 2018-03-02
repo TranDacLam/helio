@@ -57,7 +57,7 @@ export class ListPromotionComponent implements OnInit {
         ) { }
 
     ngOnInit() {
-        this.api_domain = env.api_domain_1;
+        this.api_domain = env.api_domain_root;
     	this.getAllPromotion();
     	this.dtOptions = datatable_config.dtOptions;
 

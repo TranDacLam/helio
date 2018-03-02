@@ -11,7 +11,7 @@
 
     <div class="form-group row">
         <div class="col-sm-2">
-            <label class="col-form-label form-check-label">Hình Ảnh (*)</label>
+            <label class="col-form-label form-check-label">Hình Ảnh</label>
         </div>
         <div class="col-sm-10">
             <p *ngIf="promotion.image">
@@ -23,7 +23,7 @@
 
     <div class="form-group row">
         <div class="col-sm-2">
-            <label class="col-form-label form-check-label">Thumbnail Cho App (*)</label>
+            <label class="col-form-label form-check-label">Thumbnail Cho App</label>
         </div>
         <div class="col-sm-10">
             <p *ngIf="promotion.image_thumbnail">
@@ -84,7 +84,7 @@
             <label class="col-form-label form-check-label">Loại Khuyến Mãi</label>
         </div>
         <div class="col-sm-4">
-            <select  [compareWith]="equalsObject" class="form-control" formControlName="promotion_type" *ngIf="promotionTypes">
+            <select class="form-control" formControlName="promotion_type" *ngIf="promotionTypes">
                 <option value="">--SELECT--</option>
                 <option *ngFor="let type of promotionTypes" [value] ="type.id">{{ type.name }}</option>
             </select>
@@ -101,7 +101,7 @@
                 <span class="input-group-addon" [owlDateTimeTrigger]="dtApplyDate">
                     <i class="fa fa-calendar"></i>
                 </span>
-                <input type="text" class="form-control event-date" formControlName="apply_date" [owlDateTime]="dtApplyDate"/>         
+                <input type="text" class="form-control event-date" value = "{{promotion?.apply_date}}" formControlName="apply_date" [owlDateTime]="dtApplyDate"/>         
                 <owl-date-time [pickerType]="'calendar'" #dtApplyDate></owl-date-time>
                 <show-error-valid [control]="promotionForm.get('apply_date')"></show-error-valid>
             </div>

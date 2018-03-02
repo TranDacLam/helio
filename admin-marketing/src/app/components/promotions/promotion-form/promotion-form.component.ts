@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import 'rxjs/add/observable/throw';
+import { DateTimeAdapter } from 'ng-pick-datetime';
 
 import { Promotion } from '../../../shared/class/promotion';
 import { Category } from '../../../shared/class/category';
@@ -13,6 +14,7 @@ import { PromotionService } from '../../../shared/services/promotion.service';
 import { CategoryService } from '../../../shared/services/category.service';
 import { PromotionTypeService } from '../../../shared/services/promotion-type.service';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
+
 
 import { env } from '../../../../environments/environment';
 
@@ -36,11 +38,9 @@ export class PromotionFormComponent implements OnInit {
     promotionTypes: PromotionType[];
     promotionLabels: PromotionLabel[];
     categorys: Category[];
-    
+
     promotionForm: FormGroup;
-
     ckEditorConfig:any;
-
     selected = true;
 
     api_domain:string = "";
@@ -52,11 +52,15 @@ export class PromotionFormComponent implements OnInit {
         private fb: FormBuilder,
         private location: Location,
         private router: Router,
-        private route: ActivatedRoute
-    ) { }
+        private route: ActivatedRoute,
+        private dateTimeAdapter: DateTimeAdapter<any>
+    ) { 
+        dateTimeAdapter.setLocale('en-GB'); 
+    }
 
     ngOnInit() {
-        this.api_domain = env.api_domain_1;
+        this.api_domain = env.api_domain_root;
+        
         this.getAllCategory();
         this.getPromotionTypes();
         this.getPromotionLabels();
@@ -68,12 +72,6 @@ export class PromotionFormComponent implements OnInit {
         this.creatPromotionForm();
     }
 
-    /*
-        Compare 2 object. Use for selected of select element.
-    */
-    equalsObject(o1: any, o2: any) { 
-        return o1 && o2 && o1.id === o2.id; 
-    }
 
     /*
         function getPromotionType(): get all promotion type
@@ -141,9 +139,10 @@ export class PromotionFormComponent implements OnInit {
     }
 
 
-    onFileUploadRequest(event) {
-        console.log("aaaaa");
-    }
+    /*
+        Change file input event. ( image field and thumbnail image field)
+        @author: diemnguyen
+    */
     onFileChange(event) {
         let reader = new FileReader();
         let input_id = $(event.target).attr('id');
@@ -153,14 +152,18 @@ export class PromotionFormComponent implements OnInit {
         }
     }
 
+    /*
+        Click save button
+        Call save(promotion id is null) or update(promotion id is not null) service
+        @author: diemnguyen
+    */
     saveEvent(): void {
         const that = this;
         // Convert FormGroup to FormData
         let promotionValues = this.promotionForm.value;
-
-        console.log(promotionValues[''])
-
         let promotionFormData = new FormData(); 
+
+        // Loop to set value to formData
         Object.keys(promotionValues).forEach(k => { 
             if(!promotionValues[k]) {
                 promotionFormData.append(k, '');
@@ -177,18 +180,18 @@ export class PromotionFormComponent implements OnInit {
         if(this.promotion.id) {
             this.promotionService.updatePromotion(promotionFormData, this.promotion.id).subscribe(
                 (data) => {
-                    //TO DO : check is success
-                    that.router.navigate(['/promotions', {'action': 'Sửa "', 'promotion_name': that.promotion.name}]);
-                },
+                    // Navigate to promotion page where success
+                    that.router.navigate(['/promotions', {'action': 'Sửa "', 'promotion_name': promotionValues['name']}]);
+                }, 
                 (error) => {
                     that.router.navigate(['/error']);
                 }
             );
         } else {
-            this.promotionService.savePromotion(this.promotionForm).subscribe(
+            this.promotionService.savePromotion(promotionFormData).subscribe(
                 (data) => {
-                    //TO DO : check is success
-                    that.router.navigate(['/promotions', {'action': 'Tạo mới "', 'promotion_name': that.promotion.name}]);
+                    // Navigate to promotion page where success
+                    that.router.navigate(['/promotions', {'action': 'Tạo mới "', 'promotion_name': promotionValues['name']}]);
                 }, 
                 (error) => {
                     that.router.navigate(['/error']);
@@ -197,6 +200,13 @@ export class PromotionFormComponent implements OnInit {
         }
     }
 
+    /*
+        Click promotion button
+        step1: open popup comfirm
+        step2:  + click ok button call service delete
+                + click cance button close popup
+        @author: diemnguyen
+    */
     deletePromotionEvent(event) {
         const id = this.promotion.id;
         const that = this;
@@ -214,6 +224,7 @@ export class PromotionFormComponent implements OnInit {
                 },
                 callback: function (result) {
                     if(result) {
+                        // Call service delete promotion by id
                         that.promotionService.deletePromotionById(id).subscribe(
                             (data) => {
                                 if (data.status == 204) {
