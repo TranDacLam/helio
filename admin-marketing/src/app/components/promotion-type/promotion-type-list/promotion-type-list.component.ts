@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { PromotionType } from '../../../shared/class/promotion-type';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { PromotionTypeService } from '../../../shared/services/promotion-type.service';
 
@@ -14,18 +15,29 @@ export class PromotionTypeListComponent implements OnInit {
 	proTypes: PromotionType[];
 
   	constructor(
-  		private promotionTypeService: PromotionTypeService
+  		private promotionTypeService: PromotionTypeService,
+        private router: Router,
   		) 
   	{ }
 
   	ngOnInit() {
+        /* 
+            Call function Get all PromotionType
+            @author: Trangle
+        */   
   		this.getAllPromotionType();
   	}
 
+    /*
+        Get All Promotion Type
+        Call servive promotion_type
+        @author: TrangLe
+     */
   	getAllPromotionType() {
   		this.promotionTypeService.getAllPromotionsType().subscribe(
-  			result => this.proTypes = result
-  			)
+  			(result) => this.proTypes = result,
+            (error) => this.router.navigate(['/error', { message: error }])
+		)
   	}
 
 }
