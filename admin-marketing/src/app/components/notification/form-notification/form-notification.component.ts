@@ -34,6 +34,7 @@ export class FormNotificationComponent implements OnInit {
 
     @Input() noti: Notification; // Get notification from component parent
     @Input() type_http; // Get type http from component parent
+    @Input() promotion_id; // Get type http from component parent
     
     // Return 1 object to parent
     @Output() update_noti: EventEmitter<Notification> = new EventEmitter<Notification>();
@@ -74,10 +75,11 @@ export class FormNotificationComponent implements OnInit {
             message: [this.noti.message, [Validators.required]],
             image: [this.noti.image],
             sub_url: [this.noti.sub_url, Validators.required],
-            category: [this.noti.category, Validators.required],
+            category: [this.noti.category ? this.noti.category : '', Validators.required],
             is_QR_code: [this.noti.is_QR_code],
             location: [this.noti.location],
             is_clear_image: [false],
+            promotion_id: [this.promotion_id ? this.promotion_id : null]
         });
     }
 

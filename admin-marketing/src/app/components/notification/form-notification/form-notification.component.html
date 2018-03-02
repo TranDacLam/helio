@@ -52,7 +52,8 @@
             <label class="col-form-label form-check-label">Danh Mục</label>
         </div>
         <div class="col-sm-6" *ngIf="categories">
-            <select class="form-control" formControlName="category">
+            <select class="form-control" formControlName="category">\
+                <option value="">--SELECT--</option>
                 <option *ngFor="let cate of categories" 
                     value="{{ cate.id }}" [selected]="cate.id === noti.category"
                 >

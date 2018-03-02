@@ -11,20 +11,19 @@ export class AddNotificationComponent implements OnInit {
 
     noti: Notification = new Notification(); // create object notification
     type_http = "post"; // type http to form notification component
+    promotion_id: number; // get id promotion
 
     constructor(private route: ActivatedRoute) { }
 
     ngOnInit() {
     	/*
-            Use route to get params from url
+            Use route to get params promotion id from url
             Author: Lam
         */
-        this.route.queryParams.subscribe(params => {
-            if(params.promotion) {
-            	this.noti.promotion  = +params.promotion;
-            }
-            console.log(this.noti.promotion);
-        });
+        const id = +this.route.snapshot.queryParamMap.get('promotion');
+        if(id > 0){
+            this.promotion_id = id;
+        }
     }
 
 }
