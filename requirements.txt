@@ -16,6 +16,7 @@ html2text==2014.4.5
 django-recaptcha
 django-push-notifications
 django-cors-headers
+qrcode
 
 #-e git+git://github.com/mvpdev/django-eav.git#egg=django-eav
 #django-allauth

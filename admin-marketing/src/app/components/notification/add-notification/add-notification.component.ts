@@ -9,7 +9,7 @@ import { Notification } from '../../../shared/class/notification';
 export class AddNotificationComponent implements OnInit {
 
     noti: Notification = new Notification(); // create object notification
-    method = "post"; // type http to form notification component 
+    type_http = "post"; // type http to form notification component
 
     constructor() { }
 

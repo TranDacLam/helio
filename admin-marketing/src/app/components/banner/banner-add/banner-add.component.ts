@@ -16,7 +16,7 @@ export class BannerAddComponent implements OnInit {
     banners: Banner[] =[];
     formBanner: FormGroup;
     banner_form = new Banner();
-    errorMessage: String;
+    errorMessage: string;
     positions = positions;
     isSelected = true; // Set value default selcted 
 
@@ -37,6 +37,7 @@ export class BannerAddComponent implements OnInit {
 
     /* 
       Create form to add banner
+      Call service Banner
       @author: Trangle
     */
     createForm() {
@@ -56,7 +57,6 @@ export class BannerAddComponent implements OnInit {
     onFileChange(e) {
       if(e.target.files && e.target.files.length > 0) {
         let file = e.target.files[0];
-        console.log(file);
         this.formBanner.get('image').setValue(file);
       }
     }
@@ -75,15 +75,12 @@ export class BannerAddComponent implements OnInit {
         @author: TrangLe
      */
     createBanner(formBanner){
-           this.bannerService.CreateBanner( formBanner )
-               .subscribe(
-                    result => {
-                       this.banners.push(result);
-                    error =>  this.errorMessage = <any>error
-               });
-        this.router.navigate(['/banner-list', { message_post: formBanner.sub_url} ])
-   }
-   logValue(formBanner) {
-       console.log(formBanner)
-   }
+        this.bannerService.CreateBanner( formBanner ).subscribe(
+            (result) => {
+                this.banners.push(result);
+                this.router.navigate(['/banner-list', { message_post: formBanner.sub_url} ])     
+            },
+            (error) =>  this.errorMessage = <any>error
+        );
+    }
 }

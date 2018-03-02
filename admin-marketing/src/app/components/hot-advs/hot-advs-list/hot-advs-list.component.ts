@@ -5,6 +5,9 @@ import { Subject } from 'rxjs/Subject';
 import { ActivatedRoute } from '@angular/router';
 
 import { HotAdvs } from '../../../shared/class/hot-advs';
+import { data_config } from '../../../shared/commons/datatable_config';
+
+declare var bootbox:any;
 
 @Component({
   selector: 'app-hot-advs-list',
@@ -18,9 +21,10 @@ export class HotAdvsListComponent implements OnInit {
 	hot_adv_selected: any;
 	hot_advs : HotAdvs [];
 	message_success: string = ""; // Display message success
-  	message_error: string = ""; // Display message error
   	message_result = ''; // Message result
 
+    record: String = "Hot Advs";
+    
   	// Inject the DataTableDirective into the dtElement property
   	@ViewChild(DataTableDirective)
   	dtElement: DataTableDirective;
@@ -37,29 +41,7 @@ export class HotAdvsListComponent implements OnInit {
   		}
 
   	ngOnInit() {
-  		this.dtOptions = {
-  			// Declare the use of the extension in the dom parameter
-	        language: {
-	        	sSearch: '',
-	        	searchPlaceholder: ' Nhập thông tin tìm kiếm',
-	        	lengthMenu: 'Hiển thị _MENU_ Hot Advs',
-	        	info: "Hiển thị _START_ tới _END_ của _TOTAL_ Hot Advs",
-	        	paginate: {
-		        "first":      "Đầu",
-		        "last":       "Cuối",
-		        "next":       "Sau",
-		        "previous":   "Trước"
-		    	},
-		    	select: {
-		    		rows: ''
-		    	},
-		    	sInfoFiltered: "",
-		    	zeroRecords: 'Không có Hot Advs nào để hiển thị',
-		    	infoEmpty: ""
-	        },
-	        responsive: true,
-	        pagingType: "full_numbers",
-	  	};
+  		this.dtOptions = data_config(this.record).dtOptions;
 	  	this.getAllHotAdvs();
   	}
 
@@ -75,7 +57,7 @@ export class HotAdvsListComponent implements OnInit {
             });
             this.hot_adv_selected = array_del;
             this.select_checkbox = true;
-            this.message_error = "";
+            this.message_success = "";
             this.message_result = "";
         }else{
             this.select_checkbox = false;
@@ -89,7 +71,7 @@ export class HotAdvsListComponent implements OnInit {
   	checkItemChange(event, deno) {
   		if(event.target.checked){
         	this.hot_adv_selected.push(deno.id);
-          this.message_error = "";
+          this.message_success = "";
           this.message_result = "";
       	}
       	else{
@@ -104,6 +86,36 @@ export class HotAdvsListComponent implements OnInit {
         return type.id === this;
     }
 
+    confirmDelete() {
+        /* Check hot_adv_selected not null and length >0
+            True: Show confirm and call function deleteFeedbackCheckbox 
+            False: show alert
+        */
+        if(this.hot_adv_selected !== null && this.hot_adv_selected.length > 0 ){
+            bootbox.confirm({
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.hot_adv_selected.length + " phần tử đã chọn",
+                buttons: {
+                    confirm: {
+                        label: 'Xóa',
+                        className: 'btn-success',
+                    },
+                    cancel: {
+                        label: 'Hủy',
+                        className: 'pull-left btn-danger',
+                    }
+                },
+                callback: (result)=> {
+                    if(result) {
+                        // Check result = true. call function
+                        this.deleteHotAdvsCheckbox()
+                    }
+                }
+            });
+        } else {
+            bootbox.alert("Vui lòng chọn hot advs để xóa");
+        } 
+    }
     deleteHotAdvsCheckbox() {
 
     }

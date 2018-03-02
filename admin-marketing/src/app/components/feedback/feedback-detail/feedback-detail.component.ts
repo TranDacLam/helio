@@ -25,7 +25,8 @@ export class FeedbackDetailComponent implements OnInit {
   	feedbacks: Feedback[];
   	status = Status; // List rating
     formFeed = new Feedback();
-    errorMessage: String;
+    
+    errorMessage: string;
 
   	constructor(
   		private feedbackService: FeedbackService,
