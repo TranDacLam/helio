@@ -5,6 +5,7 @@ import { Notification } from '../../../shared/class/notification';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import * as datatable_config from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -24,14 +25,18 @@ export class ListNotificationComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
+    dtOptions: any = {};
+
     notifications: Notification[];
     notifications_del = []; // Get array id to delete all id notification
+    length_notification: number;
     select_checked = false; // Check/uncheck all notification 
     message_result = ''; // Message error
 
     constructor(private notificationService: NotificationService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.dtOptions = datatable_config.data_config('Thông Báo').dtOptions;
         this.getNotifications();
 
         /*
@@ -57,6 +62,7 @@ export class ListNotificationComponent implements OnInit {
         this.notificationService.getNotifications().subscribe(
             (data) => {
                 this.notifications = data;
+                this.length_notification = this.notifications.length;
             } 
         );
     }
@@ -100,7 +106,7 @@ export class ListNotificationComponent implements OnInit {
         if ( this.notifications_del.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa những " + this.notifications_del.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.notifications_del.length + " phần tử đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -135,10 +141,9 @@ export class ListNotificationComponent implements OnInit {
                     this.notifications_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.length_notification = this.length_notification - this.notifications_del.length;
                     this.notifications_del = [];
-                    
                 });
-                this.getNotifications();
                 this.message_result = 'Xóa thành công.';
             }
         );

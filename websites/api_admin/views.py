@@ -35,7 +35,7 @@ class PromotionList(APIView):
     def get(self, request, format=None):
         try:
             lst_item = Promotion.objects.all()
-            serializer = admin_serializers.PromotionSerializer(
+            serializer = admin_serializers.PromotionDisplaySerializer(
                 lst_item, many=True)
             return Response(serializer.data)
         except Exception, e:
@@ -99,8 +99,6 @@ class PromotionDetail(APIView):
             print request.data
             serializer = admin_serializers.PromotionSerializer(
                 data=request.data)
-
-            print "serializer", serializer
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
@@ -141,25 +139,35 @@ class PromotionUser(APIView):
 
     def get(self, request, id, format=None):
         try:
-            if id:
-                promotion_detail = Promotion.objects.get(pk=id)
-
+            promotion_detail = Promotion.objects.get(pk=id)
+            # Check empty of promtion object
+            if promotion_detail:
+                try:
+                    # Get notification by promotion_id
+                    notification = Notification.objects.get(promotion=promotion_detail)
+                except Notification.DoesNotExist:
+                    notification = None
+                # Get list user ID by promition id
                 promotion_user_id_list = Gift.objects.filter(
                     promotion_id=id).values_list('user_id', flat=True)
+                # Get all list user ID not exist in promotion user list
                 user_promotion_list = User.objects.filter(
                     pk__in=promotion_user_id_list)
                 user_all_list = User.objects.filter(
                     ~Q(pk__in=promotion_user_id_list))
 
+                # Return result both: notification_id, list promotion user, list all user, promition detail
                 result = {}
-                result['promotion_detail'] = admin_serializers.PromotionSerializer(
+                result['notification_id'] = notification.id if notification else ''
+                result['promotion_detail'] = admin_serializers.PromotionDisplaySerializer(
                     promotion_detail, many=False).data
                 result['user_all'] = admin_serializers.UserSerializer(
                     user_all_list, many=True).data
                 result['user_promotion'] = admin_serializers.UserSerializer(
                     user_promotion_list, many=True).data
-
                 return Response(result)
+
+            return Response({"code": 400, "message": "Promotion not found", "fields": ""}, status=400)
         except Exception, e:
             print 'PromotionUserView ', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1968,3 +1976,10 @@ class CategoryList(APIView):
             print "FeeAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
+@permission_classes((AllowAny,))
+class UploadFile(APIView): 
+    def post(self, request, format=None):
+        print "request",request
+        return Response({'tesst' : 'tesst'}, status=200)

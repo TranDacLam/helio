@@ -14,6 +14,7 @@ import { CategoryService } from '../../../shared/services/category.service';
 import { PromotionTypeService } from '../../../shared/services/promotion-type.service';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
 
+
 import { env } from '../../../../environments/environment';
 
 declare var bootbox:any;
@@ -36,14 +37,14 @@ export class PromotionFormComponent implements OnInit {
     promotionTypes: PromotionType[];
     promotionLabels: PromotionLabel[];
     categorys: Category[];
-    
+
     promotionForm: FormGroup;
-
     ckEditorConfig:any;
-
     selected = true;
 
     api_domain:string = "";
+
+    public selectedMoment = new Date();
     constructor(
         private promotionService: PromotionService,
         private categoryService: CategoryService,
@@ -53,10 +54,12 @@ export class PromotionFormComponent implements OnInit {
         private location: Location,
         private router: Router,
         private route: ActivatedRoute
-    ) { }
+    ) {
+        this.api_domain = env.api_domain_root;
+    }
 
     ngOnInit() {
-        this.api_domain = env.api_domain_1;
+        
         this.getAllCategory();
         this.getPromotionTypes();
         this.getPromotionLabels();
@@ -69,10 +72,24 @@ export class PromotionFormComponent implements OnInit {
     }
 
     /*
-        Compare 2 object. Use for selected of select element.
-    */
-    equalsObject(o1: any, o2: any) { 
-        return o1 && o2 && o1.id === o2.id; 
+        function creatForm(): Create Reactive Form
+        @author: diemnguyen
+    */ 
+    private creatPromotionForm(): void {
+        this.promotionForm = this.fb.group({
+            id: [this.promotion.id],
+            name: [this.promotion.name, [Validators.required]],
+            image: [this.promotion.image],
+            image_thumbnail: [this.promotion.image_thumbnail],
+            short_description: [this.promotion.short_description, [Validators.required]],
+            content: [this.promotion.content, [Validators.required]],
+            promotion_category: [this.promotion.promotion_category ? this.promotion.promotion_category : ''],
+            promotion_label: [this.promotion.promotion_label ? this.promotion.promotion_label : ''],
+            promotion_type: [this.promotion.promotion_type ? this.promotion.promotion_type.id : ''],
+            apply_date: [this.promotion.apply_date],
+            end_date: [this.promotion.end_date],
+            is_draft: [this.promotion.is_draft],
+        });
     }
 
     /*
@@ -120,30 +137,11 @@ export class PromotionFormComponent implements OnInit {
         );
     }
 
+
     /*
-        function creatForm(): Create Reactive Form
+        Change file input event. ( image field and thumbnail image field)
         @author: diemnguyen
-    */ 
-    private creatPromotionForm(): void {
-        this.promotionForm = this.fb.group({
-        	id: [this.promotion.id],
-            name: [this.promotion.name, [Validators.required]],
-            image: [this.promotion.image],
-            image_thumbnail: [this.promotion.image_thumbnail],
-            short_description: [this.promotion.short_description, [Validators.required]],
-            content: [this.promotion.content, [Validators.required]],
-            promotion_category: [this.promotion.promotion_category ? this.promotion.promotion_category : ''],
-            promotion_label: [this.promotion.promotion_label ? this.promotion.promotion_label : ''],
-            promotion_type: [this.promotion.promotion_type ? this.promotion.promotion_type.id : ''],
-            apply_date: [this.promotion.apply_date],
-            end_date: [this.promotion.end_date],
-        });
-    }
-
-
-    onFileUploadRequest(event) {
-        console.log("aaaaa");
-    }
+    */
     onFileChange(event) {
         let reader = new FileReader();
         let input_id = $(event.target).attr('id');
@@ -153,23 +151,15 @@ export class PromotionFormComponent implements OnInit {
         }
     }
 
+    /*
+        Click save button
+        Call save(promotion id is null) or update(promotion id is not null) service
+        @author: diemnguyen
+    */
     saveEvent(): void {
         const that = this;
         // Convert FormGroup to FormData
-        let promotionValues = this.promotionForm.value;
-
-        console.log(promotionValues[''])
-
-        let promotionFormData = new FormData(); 
-        Object.keys(promotionValues).forEach(k => { 
-            if(!promotionValues[k]) {
-                promotionFormData.append(k, '');
-            } else if (k === 'image' || k === 'image_thumbnail') {
-                promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
-            } else {
-                promotionFormData.append(k, promotionValues[k]);
-            }
-        });
+        let promotionFormData = this.convertFormGroupToFormData(this.promotionForm);
         /*
             Case 1: Promotion id is not null then call update service
             Case 1: Promotion id is null then call save service
@@ -177,18 +167,18 @@ export class PromotionFormComponent implements OnInit {
         if(this.promotion.id) {
             this.promotionService.updatePromotion(promotionFormData, this.promotion.id).subscribe(
                 (data) => {
-                    //TO DO : check is success
-                    that.router.navigate(['/promotions', {'action': 'Sửa "', 'promotion_name': that.promotion.name}]);
-                },
+                    // Navigate to promotion page where success
+                    that.router.navigate(['/promotions', {'action': 'Sửa "', 'promotion_name': this.promotionForm.value['name']}]);
+                }, 
                 (error) => {
                     that.router.navigate(['/error']);
                 }
             );
         } else {
-            this.promotionService.savePromotion(this.promotionForm).subscribe(
+            this.promotionService.savePromotion(promotionFormData).subscribe(
                 (data) => {
-                    //TO DO : check is success
-                    that.router.navigate(['/promotions', {'action': 'Tạo mới "', 'promotion_name': that.promotion.name}]);
+                    // Navigate to promotion page where success
+                    that.router.navigate(['/promotions', {'action': 'Tạo mới "', 'promotion_name': this.promotionForm.value['name']}]);
                 }, 
                 (error) => {
                     that.router.navigate(['/error']);
@@ -197,6 +187,13 @@ export class PromotionFormComponent implements OnInit {
         }
     }
 
+    /*
+        Click promotion button
+        step1: open popup comfirm
+        step2:  + click ok button call service delete
+                + click cance button close popup
+        @author: diemnguyen
+    */
     deletePromotionEvent(event) {
         const id = this.promotion.id;
         const that = this;
@@ -214,6 +211,7 @@ export class PromotionFormComponent implements OnInit {
                 },
                 callback: function (result) {
                     if(result) {
+                        // Call service delete promotion by id
                         that.promotionService.deletePromotionById(id).subscribe(
                             (data) => {
                                 if (data.status == 204) {
@@ -232,5 +230,33 @@ export class PromotionFormComponent implements OnInit {
         } else  {
             bootbox.alert("Vui lòng chọn phần tử cần xóa");
         }
+    }
+
+    /*
+        Convert form group to form data to submit form
+        @author: diemnguyen
+    */
+    private convertFormGroupToFormData(promotionForm: FormGroup) {
+        // Convert FormGroup to FormData
+        let promotionValues = promotionForm.value;
+        let promotionFormData:FormData = new FormData(); 
+        if (promotionValues){
+            /* 
+                Loop to set value to formData
+                Case1: if value is null then set ""
+                Case2: If key is image field then set value have both file and name
+                Else: Set value default
+            */
+            Object.keys(promotionValues).forEach(k => { 
+                if(promotionValues[k] == null) {
+                    promotionFormData.append(k, '');
+                } else if (k === 'image' || k === 'image_thumbnail') {
+                    promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                } else {
+                    promotionFormData.append(k, promotionValues[k]);
+                }
+            });
+        }
+        return promotionFormData;
     }
 }

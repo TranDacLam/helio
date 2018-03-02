@@ -5,6 +5,7 @@ import { Post } from '../../../shared/class/post';
 import { PostService } from '../../../shared/services/post.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import * as datatable_config from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -24,14 +25,18 @@ export class ListPostComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
+    dtOptions: any = {};
+
     posts: Post[];
     posts_del = []; // Get array id to delete all id post
+    length_posts: number;
     select_checked = false; // Check/uncheck all post
     message_result = ''; // Message error
 
     constructor(private postService: PostService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.dtOptions = datatable_config.data_config('Bài Viết').dtOptions;
         this.getPosts();
 
         /*
@@ -57,6 +62,7 @@ export class ListPostComponent implements OnInit {
         this.postService.getPosts().subscribe(
             (data) => {
                 this.posts = data;
+                this.length_posts = this.posts.length;
             } 
         );
     }
@@ -97,7 +103,7 @@ export class ListPostComponent implements OnInit {
     */
     deletePostEvent(){
         let that = this;
-        if ( this.posts.length > 0 ) {
+        if ( this.posts_del.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
                 message: "Bạn muốn xóa " + this.posts_del.length + " phần tử đã chọn",
@@ -135,9 +141,9 @@ export class ListPostComponent implements OnInit {
                     this.posts_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.length_posts = this.length_posts - this.posts_del.length;
                     this.posts_del = [];
                 });
-                this.getPosts();
                 this.message_result = "Xóa thành công.";
             }
         );

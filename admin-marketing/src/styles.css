@@ -76,6 +76,9 @@ p {
     letter-spacing: 0.5px;*/
 }
 
+h1.h1-title {
+    margin-bottom: 30px;
+}
 /* START HEADER*/
 #header-wrapper {
     background-color: #15062b;
@@ -177,4 +180,15 @@ p {
         padding-right: 0px;
     }
     /* END HEADER*/
+}
+
+/* Table */
+.dataTables_paginate{
+    margin-top: 20px;
+}
+.dataTables_filter, .dataTables_length{
+    margin-bottom: 15px;
+}
+.dataTables_wrapper{
+    margin-bottom: 20px;
 }

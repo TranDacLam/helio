@@ -8,6 +8,7 @@ import { CategoryNotification } from '../../../shared/class/category-notificatio
 import { NotificationService } from '../../../shared/services/notification.service';
 import { CategoryNotificationService } from '../../../shared/services/category-notification.service';
 import 'rxjs/add/observable/throw';
+import { env } from '../../../../environments/environment';
 
 declare var $ :any; // declare Jquery
 declare var bootbox:any;
@@ -33,6 +34,7 @@ export class FormNotificationComponent implements OnInit {
 
     @Input() noti: Notification; // Get notification from component parent
     @Input() type_http; // Get type http from component parent
+    @Input() promotion_id; // Get type http from component parent
     
     // Return 1 object to parent
     @Output() update_noti: EventEmitter<Notification> = new EventEmitter<Notification>();
@@ -43,7 +45,10 @@ export class FormNotificationComponent implements OnInit {
 
     check_QR: boolean = true; // Check enable/disable input Location
 
-    errorMessage = ''; // Messages error
+    errorMessage: any; // Messages error
+    msg_clear_image = ''; // message clear image
+
+    api_domain: string = '';
 
     constructor(
         private notificationService: NotificationService,
@@ -55,6 +60,7 @@ export class FormNotificationComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.api_domain = env.api_domain_1;
         this.getCategory();
         this.creatForm();
     }
@@ -69,9 +75,11 @@ export class FormNotificationComponent implements OnInit {
             message: [this.noti.message, [Validators.required]],
             image: [this.noti.image],
             sub_url: [this.noti.sub_url, Validators.required],
-            category: [this.noti.category, Validators.required],
-            is_QR_code: [false],
+            category: [this.noti.category ? this.noti.category : '', Validators.required],
+            is_QR_code: [this.noti.is_QR_code],
             location: [this.noti.location],
+            is_clear_image: [false],
+            promotion_id: [this.promotion_id ? this.promotion_id : null]
         });
     }
 
@@ -98,10 +106,11 @@ export class FormNotificationComponent implements OnInit {
         let reader = new FileReader();
         if(event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                this.formNotification.get('image').setValue(reader.result.split(',')[1]);
-            };
+            this.formNotification.get('image').setValue({
+                filename: file.name,
+                filetype: file.type,
+                value: file,
+            });
         }
     }
 
@@ -121,36 +130,42 @@ export class FormNotificationComponent implements OnInit {
             * TH1:  + Type_http = post, callback service function addNoti() to add Notification, 
                     + Later, redirect list notification with message
             * TH2:  + Type_http = put or put_popup, callback service function updateNoti() to update Notification
-                    + Type_http = put then redirect list notification with message
+                    + Type_http = put then check clear imgae, success then redirect list notification with message, fail show error
                     + Type_http = put_popup then update Notification show and hidden modal  
         author: Lam
     */ 
     onSubmit(): void{
         this.formNotification.value.category = parseInt(this.formNotification.value.category);
+        let value_form = this.formNotification.value;
         if(this.type_http == 'post'){
-            this.notificationService.addNoti(this.formNotification.value).subscribe(
+            this.notificationService.addNoti(value_form).subscribe(
                 (data) => {
-                    this.router.navigate(['/notification/list', { message_post: this.formNotification.value.subject}]);
+                    this.router.navigate(['/notification/list', { message_post: value_form.subject}]);
                 },
                 (error) => {
-                    { this.errorMessage = error.message; } 
+                    this.router.navigate(['/error']);
                 }
             );
         }else if(this.type_http == 'put' || this.type_http == 'put_popup'){
-            this.notificationService.updateNoti(this.formNotification.value, this.noti.id).subscribe(
-                (data) => {
-                    this.noti = data;
-                    if(this.type_http == "put"){
-                        this.router.navigate(['/notification/list', { message_put: this.formNotification.value.subject}]);
-                    }else if(this.type_http == 'put_popup'){
-                        this.getNotification();
-                        $('#UpdateNoti').modal('toggle');
+            if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
+                this.formNotification.get('is_clear_image').setValue(false);
+                this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+            }else{
+                this.notificationService.updateNoti(value_form, this.noti.id).subscribe(
+                    (data) => {
+                        this.noti = data;
+                        if(this.type_http == "put"){
+                            this.router.navigate(['/notification/list', { message_put: value_form.subject}]);
+                        }else if(this.type_http == 'put_popup'){
+                            this.getNotification();
+                            $('#UpdateNoti').modal('toggle');
+                        }
+                    },
+                    (error) => {
+                        this.router.navigate(['/error']);
                     }
-                },
-                (error) => {
-                    { this.errorMessage = error.message; } 
-                }
-            );
+                );
+            }
         }
         
     }

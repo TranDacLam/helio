@@ -22,8 +22,8 @@
         <h4>{{message_result}}</h4>
     </div>
 </div>
-<div class="row">
-    <table datatable class="row-border hover" *ngIf="notifications">
+<div>
+    <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="notifications">
         <thead>
             <tr>
                 <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
@@ -56,7 +56,7 @@
         </select>
     </div>
     <div class="col-md-3">
-        {{ notifications_del.length }} của {{ notifications.length }} được chọn
+        {{ notifications_del.length }} của {{ length_notification }} được chọn
         <button class="btn btn-danger" (click)="deleteNotificationEvent()">Thực hiện</button>
     </div>
 </div>

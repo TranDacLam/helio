@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app.routing';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime'; // date and time
+import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from './components/users/users.component';
@@ -177,7 +178,8 @@ import { ErrorComponent } from './components/error/error.component';
     FeedbackService,
     FeeService,
     BannerService,
-    CategoryService
+    CategoryService,
+    {provide: OWL_DATE_TIME_LOCALE, useValue: 'vi'},
   ],
   bootstrap: [AppComponent]
 })

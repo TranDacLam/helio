@@ -45,11 +45,12 @@
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Loại Bài Viết</label>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6" *ngIf="post_types">
             <select class="form-control" formControlName="post_type_id">
-                <option value='1'
+                <option *ngFor="let type of post_types" 
+                    value="{{ type.id }}" [selected]="type.id === post.post_type_id"
                 >
-                1</option>
+                {{ type.name }}</option>
             </select>
             <show-error-valid [control]="formPost.get('post_type_id')"></show-error-valid>
         </div>

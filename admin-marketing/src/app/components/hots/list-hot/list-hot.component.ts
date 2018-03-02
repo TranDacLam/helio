@@ -5,6 +5,7 @@ import { Hot } from '../../../shared/class/hot';
 import { HotService } from '../../../shared/services/hot.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import * as datatable_config from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -24,14 +25,18 @@ export class ListHotComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
+    dtOptions: any = {};
+
     hots: Hot[];
     hots_del = []; // Get array id to delete all id hot
+    length_hots: numebr;
     select_checked = false; // Check/uncheck all hot
     message_result = ''; // Message error
 
     constructor(private hotService: HotService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.dtOptions = datatable_config.data_config('Hot').dtOptions;
         this.getHots();
 
         /*
@@ -57,6 +62,7 @@ export class ListHotComponent implements OnInit {
         this.hotService.getHots().subscribe(
             (data) => {
                 this.hots = data;
+                this.length_hots = this.hosts;
             } 
         );
     }
@@ -98,7 +104,7 @@ export class ListHotComponent implements OnInit {
     */
     deleteHotEvent(){
         let that = this;
-        if ( this.hots.length > 0 ) {
+        if ( this.hots_del.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
                 message: "Bạn muốn xóa " + this.hots_del.length + " phần tử đã chọn",
@@ -136,9 +142,9 @@ export class ListHotComponent implements OnInit {
                     this.hots_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.length_hots = this.length_hots - this.hots_del.length;
                     this.hots_del = [];
                 });
-                this.getHots();
                 this.message_result = 'Xóa thành công.';
             }
         );
