@@ -264,3 +264,15 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
+
+class PostTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Post_Type
+        fields = ('id', 'name', 'description')
+
+class FAQSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FAQ
+        fields = ('id', 'question', 'answer', 'category')
