@@ -25,6 +25,13 @@
             <label class="col-form-label form-check-label">Hình Ảnh</label>
         </div>
         <div class="col-sm-6">
+            <p *ngIf="noti.image">
+                <span>Hiện tại: <a href="{{api_domain}}{{noti.image}}" target="_blank">{{noti.image}}</a></span>
+            </p>
+            <p *ngIf="noti.image" class="clear_image">
+                <input type="checkbox" formControlName="is_clear_image"/> Xóa
+            </p>
+            <p *ngIf="msg_clear_image" class="msg_error">{{msg_clear_image}}</p>
             <input type="file" class="form-control" accept="image/*"
             (change)="onFileChange($event)" #inputImage/>
             <button type="button" class="btn btn-sm btn-danger" (click)="clearFile()">clear file</button>
@@ -45,13 +52,14 @@
             <label class="col-form-label form-check-label">Danh Mục</label>
         </div>
         <div class="col-sm-6" *ngIf="categories">
-            <select class="form-control" formControlName="category">
+            <select class="form-control" formControlName="category">\
+                <option value="">--SELECT--</option>
                 <option *ngFor="let cate of categories" 
                     value="{{ cate.id }}" [selected]="cate.id === noti.category"
                 >
                 {{ cate.name }}</option>
             </select>
-            <show-error-valid [control]="formNotification.get('category_id')"></show-error-valid>
+            <show-error-valid [control]="formNotification.get('category')"></show-error-valid>
         </div>
     </div>
 

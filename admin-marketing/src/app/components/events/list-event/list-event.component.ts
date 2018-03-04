@@ -5,6 +5,7 @@ import { Event } from '../../../shared/class/event';
 import { EventService } from '../../../shared/services/event.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import * as datatable_config from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -24,14 +25,18 @@ export class ListEventComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
+    dtOptions: any = {};
+
     events: Event[];
     events_del = []; // Get array id to delete all id event
+    length_events: number;
     select_checked = false; // Check/uncheck all event
     message_result = ''; // Message error
 
     constructor(private eventService: EventService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.dtOptions = datatable_config.data_config('Sự Kiện').dtOptions;
         this.getEvents();
 
         /*
@@ -57,6 +62,7 @@ export class ListEventComponent implements OnInit {
         this.eventService.getEvents().subscribe(
             (data) => {
                 this.events = data;
+                this.length_events = this.events.length;
             } 
         );
     }
@@ -97,7 +103,7 @@ export class ListEventComponent implements OnInit {
     */
     deleteEvent(){
         let that = this;
-        if ( this.events.length > 0 ) {
+        if ( this.events_del.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
                 message: "Bạn muốn xóa " + this.events_del.length + " phần tử đã chọn",
@@ -135,9 +141,9 @@ export class ListEventComponent implements OnInit {
                     this.events_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.length_events = this.length_events - this.events_del.length;
                     this.events_del = [];
                 });
-                this.getEvents();
                 this.message_result = 'Xóa thành công.';
             }
         );

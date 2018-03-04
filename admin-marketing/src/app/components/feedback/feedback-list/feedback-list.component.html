@@ -11,13 +11,10 @@
 
 <div class='row title-feedback'>
 	<a class="pull-left" routerLink="/feedback-list">Phản hồi</a>
-	<a class="pull-right" routerLink="">Thống kê tình trạng phản hồi</a>
+	<a class="pull-right" routerLink="/feedback/statistics">Thống kê tình trạng phản hồi</a>
 </div>
 <div *ngIf="message_success" class="alert alert-success">
     {{ message_success }}
-</div>
-<div *ngIf="message_error" class="alert alert-danger">
-    {{ message_error }}
 </div>
 <div *ngIf="message_result" class="alert alert-success">
     {{ message_result }}
@@ -65,6 +62,6 @@
 	</div>
 	<div class="col-md-3" *ngIf="feedbacks">
 		{{feedback_del.length}} của {{feedbacks.length}} được chọn
-		<button (click)="deleteFeedbackCheckbox()" type="button" class="button-feedback btn btn-danger">Thực hiện</button>
+		<button (click)="confirmDelete()" type="button" class="button-feedback btn btn-danger">Thực hiện</button>
 	</div>
 </div>

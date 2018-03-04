@@ -25,6 +25,11 @@
         (change)="onFileChange($event)" #inputImage
         />
         	<show-error-valid [control]="formBanner.get('image')"></show-error-valid>
+            <div *ngIf='errorMessage'>
+                <em [ngStyle]="{'color': 'red'}">
+                    Hãy tải lên một hình ảnh hợp lệ. Tập tin mà bạn đã tải không phải là hình ảnh
+                </em>
+            </div>
         	<button type="button" class=" clear-file btn btn-danger" (click)="clearFile()">Clear file</button>
     	</div>
     	
@@ -66,6 +71,5 @@
     <div class="form-group row">
     	<button [disabled]="formBanner.invalid" type="submit" class="pull-right btn btn-info" (click)="createBanner(formBanner.value); logValue(formBanner.value)" >Lưu lại</button>
     </div>
-    {{formBanner.value | json }}
 </form>
 </div>

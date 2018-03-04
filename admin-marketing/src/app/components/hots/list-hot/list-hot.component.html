@@ -22,8 +22,8 @@
         <h4>{{message_result}}</h4>
     </div>
 </div>
-<div class="row">
-    <table datatable class="row-border hover" *ngIf="hots">
+<div>
+    <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="hots">
         <thead>
             <tr>
                 <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
@@ -45,7 +45,7 @@
         </select>
     </div>
     <div class="col-md-3">
-        {{ hots_del.length }} của {{ hots.length }} được chọn 
+        {{ hots_del.length }} của {{ length_hots }} được chọn 
         <button class="btn btn-danger" (click)="deleteHotEvent()">Thực hiện</button>
     </div>
 </div>

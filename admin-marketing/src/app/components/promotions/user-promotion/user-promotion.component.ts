@@ -26,14 +26,17 @@ export class UserPromotionComponent implements OnInit {
 
     api_domain:string = "";
 
+    notification_id: number;
+
     constructor(
         private router: Router,
         private route: ActivatedRoute, 
         private promotionService: PromotionService
-    ) { }
+    ) { 
+        this.api_domain = env.api_domain_root;
+    }
 
     ngOnInit() {
-        this.api_domain = env.api_domain_1;
     	this.getUsersPromotion();
     }
 
@@ -42,6 +45,7 @@ export class UserPromotionComponent implements OnInit {
 
         this.promotionService.getUsersPromotion(promotion_id).subscribe(
             (data)=> {
+                this.notification_id = data.notification_id;
                 this.promotion = data.promotion_detail;
                 this.user_list_left = data.user_all;
                 this.user_list_right = data.user_promotion;

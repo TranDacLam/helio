@@ -17,16 +17,14 @@
 	<div *ngIf="message_success" class="alert alert-success">
 		{{ message_success }}
 	</div>
-	<div *ngIf="message_error" class="alert alert-danger">
-		{{ message_error }}
-	</div>
 	<div class="alert alert-success" *ngIf="message_result">
         {{message_result}}
     </div>
 	<table id="table-user" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
-	      		<th><input type="checkbox" name="allCheckUse" value="allCheckUser"(change)="checkAllUser($event)"/> Email</th>
+	      		<th><input type="checkbox" name="allCheckUse" value="allCheckUser"(change)="checkAllUser($event)"/></th>
+	      		<th> Email</th>
 	        	<th>Loại User </th>
 	      	</tr>
     	</thead>
@@ -34,7 +32,8 @@
    			<tr *ngFor ="let user of users" id="delete{{user.id}}">
    				<td><input type="checkbox" [checked]="select_checkbox"
    					value={{user.id}} name=""
-   					(change)="checkItemChange($event, user)"/> {{ user.email }}</td>
+   					(change)="checkItemChange($event, user)"/></td>
+   				<td>{{ user.email }}</td>
         		<td>{{ user.role_user }}</td>
    			</tr>
     	</tbody>
@@ -48,7 +47,7 @@
 		</div>
 		<div class="col-md-3">
 			{{user_selected.length}} của {{users.length}} được chọn
-			<button (click)="deleteUsersCheckbox()" type="button" class="btn btn-danger">Thực hiện</button>
+			<button (click)="confirmDelete()" type="button" class="btn btn-danger">Thực hiện</button>
 		</div>
 	</div>
 </div>

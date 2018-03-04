@@ -8,6 +8,9 @@ import { User } from '../../../shared/class/user';
 
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
+import { data_config } from '../../../shared/commons/datatable_config';
+
+declare var bootbox:any;
 
 @Component({
   selector: 'app-link-card-list',
@@ -19,12 +22,15 @@ export class LinkCardListComponent implements OnInit {
 
 	dtOptions: any = {};
 	link_cards: User[];
+
 	checkbox_selected = false; // Default feedback selected false
+
     link_card_del: any;
+    
     message_success: string = ""; // Display message success
-    message_error: string = ""; // Display message error
     message_result: string = ""; // Display message result
-    errorMessage: String;
+    errorMessage: string;
+    record: string = "Thẻ Liên Kết";
 
     // Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
@@ -42,29 +48,8 @@ export class LinkCardListComponent implements OnInit {
   	}
 
   	ngOnInit() {
-         // Customize DataTable
-  		this.dtOptions = {
-          language: {
-            sSearch: '',
-            searchPlaceholder: ' Nhập thông tin tìm kiếm',
-            lengthMenu: 'Hiển thị _MENU_ Thẻ Liên Kết',
-            info: "Hiển thị _START_ tới _END_ của _TOTAL_ Thẻ Liên Kết",
-            paginate: {
-            "first":      "Đầu",
-            "last":       "Cuối",
-            "next":       "Sau",
-            "previous":   "Trước"
-          },
-          select: {
-            rows: ''
-          },
-          sInfoFiltered: "",
-          zeroRecords: 'Không có Thẻ Liên Kết nào để hiển thị',
-          infoEmpty: ""
-          },
-          responsive: true,
-          pagingType: "full_numbers",
-        };
+        // Customize DataTable
+  		this.dtOptions = data_config(this.record).dtOptions;
         this.getAllLinkCards();
   	}
 
@@ -98,7 +83,7 @@ export class LinkCardListComponent implements OnInit {
           });
             this.link_card_del = arr
             this.checkbox_selected = true;
-            this.message_error = "";
+            this.message_success = "";
             this.message_result = "";
         } else {
             this.checkbox_selected = false;
@@ -111,7 +96,7 @@ export class LinkCardListComponent implements OnInit {
   	changeCheckboxLinkCard(event, linkCard) {
   		if(event.target.checked) {
             this.link_card_del.push(linkCard.id)
-            this.message_error ='';
+            this.message_success ='';
             this.message_result = "";
         } else {
             let updateItem = this.link_card_del.find(this.findIndexToUpdate, linkCard.id);
@@ -126,35 +111,60 @@ export class LinkCardListComponent implements OnInit {
     }
 
     /*
+        Confirm Delete Checkbox Selected
+        Using bootbox plugin
+        @author: Trangle
+     */
+    confirmDelete() {
+        /* Check link_card_del not null and length >0
+            True: Show confirm and call function deleteFeedbackCheckbox 
+            False: show alert
+        */
+        if(this.link_card_del !== null && this.link_card_del.length > 0 ){
+            bootbox.confirm({
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.link_card_del.length + " phần tử đã chọn",
+                buttons: {
+                    confirm: {
+                        label: 'Xóa',
+                        className: 'btn-success',
+                    },
+                    cancel: {
+                        label: 'Hủy',
+                        className: 'pull-left btn-danger',
+                    }
+                },
+                callback: (result)=> {
+                    if(result) {
+                        // Check result = true. call function
+                        this.deleteLinkCardCheckbox()
+                    }
+                }
+            });
+        } else {
+            bootbox.alert("Vui lòng chọn thẻ liên kết để xóa");
+        } 
+    }
+    /*
         Function: Delete all selected
-        Step: Check link_card !== null
-            True: check link_card_del.length == 0
-            False: Delete link_card By Id Selected
         @author: TrangLe
      */
 
   	deleteLinkCardCheckbox() {
-        if (this.link_card_del !== null) {
-            if (this.link_card_del.length == 0 ){
-                this.message_error = "Vui lòng chọn thẻ liên kết để xóa";
-                this.message_result = "";
-                this.message_success = "";
-            } else {
-                this.linkCardService.deleteAllUserLinkedSelected(this.link_card_del).subscribe(
-                    result => {
-                        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                                var self = this;
-                                this.link_card_del.forEach(function(e){
-                                    dtInstance.rows('#delete'+e).remove().draw();
-                                    var link_card_item = self.link_cards.find(link_card => link_card.id == e);
-                                    self.link_cards = self.link_cards.filter(link_cards => link_cards !== link_card_item);
-                                });
-                                this.link_card_del = [];
-                           });
-                         this.message_success = "Xóa thẻ liên kết thành công";
-                       });
-                    }
-        } else {
-          return 0;
-        }}
+        this.linkCardService.deleteAllUserLinkedSelected(this.link_card_del).subscribe(
+            result => {
+                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                        var self = this;
+                        this.link_card_del.forEach(function(e){
+                            dtInstance.rows('#delete'+e).remove().draw();
+                            var link_card_item = self.link_cards.find(link_card => link_card.id == e);
+                            self.link_cards = self.link_cards.filter(link_cards => link_cards !== link_card_item);
+                        });
+                        this.link_card_del = [];
+                   });
+                this.message_success = "Xóa thẻ liên kết thành công";
+            }
+        );
+    }
+
 }

@@ -7,10 +7,13 @@ import { ActivatedRoute } from '@angular/router';
 import { Advertisement }  from '../../../shared/class/advertisement';
 
 import { AdvertisementService } from '../../../shared/services/advertisement.service';
-
+import { data_config } from '../../../shared/commons/datatable_config';
 // Using Jquery plugins
 declare var jquery:any;
 declare var $ :any;
+
+// Using bootbox plugin
+declare var bootbox:any;
 
 @Component({
     selector: 'app-advertisement-list',
@@ -20,13 +23,17 @@ declare var $ :any;
 export class AdvertisementListComponent implements OnInit {
 
 	dtOptions: any = {};
-	advs : Advertisement[];
-	advs_delete: any; // Contains all checkbox were selected
-	isChecked = false; // Default value chekbox
-	message_success: string = ""; // Display message success
-	message_error: string = ""; // Display message error
-	message_result = ''; // Message result
 
+	advs : Advertisement[];
+
+	advs_delete: any; // Contains all checkbox were selected
+
+	isChecked = false; // Default value chekbox
+
+	message_success: string = ""; // Display message success
+	message_result: string = ''; // Message result
+    record: string = "Quảng Cáo";
+    
 	// Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
@@ -45,54 +52,23 @@ export class AdvertisementListComponent implements OnInit {
         this.advs_delete = [];
     }
     ngOnInit() {
-        /*
-            Customize: Customize DataTable
-            @author: TrangLe
-         */
-        this.dtOptions = {
-            columnDefs: [{
-                'className': 'dt-body-center',
-                'render': function (data, type, full, meta){
-                    return '<input type="checkbox" name="id[]" value="' 
-                      + $('<div/>').text(data).html() + '">';
-                    }
-                }],
-                language: {
-                    sSearch: '',
-                    searchPlaceholder: ' Nhập thông tin tìm kiếm',
-                    lengthMenu: 'Hiển thị _MENU_ Quảng cáo',
-                    info: "Hiển thị _START_ tới _END_ của _TOTAL_ Quảng cáo",
-                    paginate: {
-                        "first":      "Đầu",
-                        "last":       "Cuối",
-                        "next":       "Sau",
-                        "previous":   "Trước"
-                    },
-                    select: {
-                        rows: ''
-                    },
-                    sInfoFiltered: "",
-                    zeroRecords: 'Không có Quảng cáo nào để hiển thị',
-                    infoEmpty: ""
-               },
-                responsive: true,
-                pagingType: "full_numbers",
-                select: {
-                    style: 'multi',
-                    selector: 'td:first-child'
-                },
-            };
-            this.getAllAdvertisement();
-            this.route.params.subscribe(params => {
-                if( params.message_post ){
-                    this.message_result = " Thêm "+ params.message_post + " thành công.";
-                } else if ( params.message_put ) {
-                    this.message_result = "  Chỉnh sửa  "+ params.message_put + " thành công.";
-                } else {
-                    this.message_result = "";
-                }
-            });
-        }
+
+        // Call dataTable 
+        this.dtOptions = data_config(this.record).dtOptions;
+
+        // Call function get all adv
+        this.getAllAdvertisement();
+
+        this.route.params.subscribe(params => {
+            if( params.message_post ){
+                this.message_result = " Thêm "+ params.message_post + " thành công.";
+            } else if ( params.message_put ) {
+                this.message_result = "  Chỉnh sửa  "+ params.message_put + " thành công.";
+            } else {
+                this.message_result = "";
+            }
+        });
+    }
   	/*
         GET: Get All Advertiment To Show
         @author: TrangLe 
@@ -106,33 +82,39 @@ export class AdvertisementListComponent implements OnInit {
   	}
   	/*
       Function: Select all checkbox
+      Check checkbox all selected
+      True: push id selected in array, isCheck = true
+      False: isCheck = false, remove id in array
       @author: TrangLe
     */
   	checkAllAdv(event) {
         let listAdv_del = []; 
-            if(event.target.checked){
-                this.advs.forEach(function(element) {
-                    listAdv_del.push(element.id);
-              });
-                this.advs_delete = listAdv_del;
-                this.isChecked = true;
-                this.message_error = "";
-                this.message_result = "";
-            }else{
-                this.isChecked = false;
-                this.advs.forEach((item, index) => {
-                this.advs_delete.splice(index, this.advs.length);
+        if(event.target.checked){
+            this.advs.forEach(function(element) {
+                listAdv_del.push(element.id);
+          });
+            this.advs_delete = listAdv_del;
+            this.isChecked = true;
+            this.message_success = "";
+            this.message_result = "";
+        }else{
+            this.isChecked = false;
+            this.advs.forEach((item, index) => {
+            this.advs_delete.splice(index, this.advs.length);
             });
         }
     }
     /*
         Function: Select each item checkbox
+        Check each checkbox selected
+        True: Push id in array
+        False: Remove id in array
         @author: Trangle
      */
     changeCheckboxAdv(e, adv){
         if( e.target.checked ){
             this.advs_delete.push(adv.id);
-            this.message_error = "";
+            this.message_success = "";
             this.message_result = "";
         } else{
             let updateAdvItem = this.advs_delete.find(this.findIndexToUpdate, adv.id);
@@ -145,29 +127,61 @@ export class AdvertisementListComponent implements OnInit {
     findIndexToUpdate(type) { 
         return type.id === this;
     }
-	/*
-        DELETE: Delete All Select Box Checked   
+
+        /*
+        Confirm Delete Checkbox Selected
+        Using bootbox plugin
+        @author: Trangle
      */
-	deleteAllCheckAdvs() {
-		if (this.advs_delete !== null) {
-			if ( this.advs_delete.length == 0 ){
-				this.message_error = "Vui lòng chọn quảng cáo để xóa";
-				this.message_result = "";
-                this.message_success = "";
-            } else {
-                this.advertisementService.deleteAllAdvsSelected(this.advs_delete).subscribe(
-                    result => {
-                        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                            this.advs_delete.forEach(function(e){
-                                dtInstance.rows('#delete'+e).remove().draw();
-                            });
-                            this.advs_delete = [];
-                        });
-                        this.message_success = "Xóa quảng cáo thành công";
-                    });
-            }
+    confirmDelete() {
+        /* Check advs_delete not null and length >0
+            True: Show confirm and call function deleteFeedbackCheckbox 
+            False: show alert
+        */
+        if(this.advs_delete !== null && this.advs_delete.length > 0 ){
+            bootbox.confirm({
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.advs_delete.length + " phần tử đã chọn",
+                buttons: {
+                    confirm: {
+                        label: 'Xóa',
+                        className: 'btn-success',
+                    },
+                    cancel: {
+                        label: 'Hủy',
+                        className: 'pull-left btn-danger',
+                    }
+                },
+                callback: (result)=> {
+                    if(result) {
+                        // Check result = true. call function
+                        this.deleteAllCheckAdvs()
+                    }
+                }
+            });
         } else {
-            return 0;
-        }	
+            bootbox.alert("Vui lòng chọn quảng cáo để xóa");
+        } 
+    }
+
+    /*
+        DELETE: Delete All Select Box Checked 
+        Call service advertiment
+        @author: Trangle  
+     */
+    deleteAllCheckAdvs() {
+        this.advertisementService.deleteAllAdvsSelected(this.advs_delete).subscribe(
+            result => {
+                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                    var self = this;
+                    this.advs_delete.forEach(function(e){
+                        dtInstance.rows('#delete'+e).remove().draw();
+                        var item = self.advs.find(banner => banner.id == e);
+                        self.advs = self.advs.filter(advs => advs !== item);
+                    });
+                    this.advs_delete = [];
+                });
+                this.message_success = "Xóa quảng cáo thành công";
+            });
     }
 }
