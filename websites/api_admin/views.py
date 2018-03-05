@@ -665,6 +665,7 @@ class NotificationDetail(APIView):
 
     def post(self, request, format=None):
         try:
+            print request.data
             serializer = admin_serializers.NotificationSerializer(
                 data=request.data)
             if serializer.is_valid():

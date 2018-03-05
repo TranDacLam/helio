@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Post } from '../../../shared/class/post';
-import { PostService } from '../../../shared/services/post.service';\
+import { PostService } from '../../../shared/services/post.service';
 import { PostType } from './../../../shared/class/post_types';
 import { PostTypeService } from '../../../shared/services/post-type.service';
 import 'rxjs/add/observable/throw';
