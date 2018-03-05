@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FeedbackService } from '../../../shared/services/feedback.service'
+import { Router } from '@angular/router';
 import 'rxjs/add/observable/throw';
 
 @Component({
@@ -22,7 +23,7 @@ export class StatisticsFeedbackComponent implements OnInit {
     message_status = '';
     message_rate = '';
 
-    constructor(private feedbackService: FeedbackService) {}
+    constructor(private feedbackService: FeedbackService, private router: Router) {}
 
     ngOnInit() {
         this.getStatisticFeedback();
@@ -52,12 +53,14 @@ export class StatisticsFeedbackComponent implements OnInit {
         author: Lam
     */
     onSubmit(event){
+        let start;
+        let end;
         if(event === 'status'){
-            let start = this.date_status_start ? this.date_status_start : null;
-            let end = this.date_status_end ? this.date_status_end : null;
+            start = this.date_status_start ? this.date_status_start : null;
+            end = this.date_status_end ? this.date_status_end : null;
         }else{
-            let start = this.date_rate_start ? this.date_rate_start : null;
-            let end = this.date_rate_end ? this.date_rate_end : null;
+            start = this.date_rate_start ? this.date_rate_start : null;
+            end = this.date_rate_end ? this.date_rate_end : null;
         }
         if(start == null && end == null){
             this.message_status = '* Vui lòng chọn ngày.';

@@ -62,7 +62,7 @@ export class LinkCardListComponent implements OnInit {
   	getAllLinkCards() {
       this.linkCardService.getAllLinkedUsers().subscribe(
         (result) => {
-          this.link_cards = result,
+          this.link_cards = result;
           // Caling the DT trigger to manually render the table
           this.dtTrigger.next();
         },
