@@ -416,7 +416,7 @@ class DenominationView(APIView):
                 queryset = Denomination.objects.filter(
                     pk__in=deno_id).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
-            return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
+            return Response({"code": 400, "message": "Not found list id ", "fields": "id"}, status=400)
         except Exception, e:
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
@@ -1201,24 +1201,35 @@ class BannerViewDetail(APIView):
         try:
             queryset = Banner.objects.get(pk=pk)
             return queryset
-        except Exception, e:
-            return Response(status=500)
+        except Banner.DoesNotExist, e:
+            raise Http404
 
     def get(self, request, pk, format=None):
         banner = self.get_object(pk)
-        serializer = admin_serializers.BannerSerializer(banner)
-        return Response(serializer.data)
+        try:
+            serializer = admin_serializers.BannerSerializer(banner)
+            return Response(serializer.data)
+
+        except Exception, e:
+            print 'BannerViewDetail ', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
 
     def put(self, request, pk, format=None):
+        print('request', request.data)
         banner = self.get_object(pk)
-        serializer = admin_serializers.BannerSerializer(
-            banner, data=request.data)
         try:
+            print ('banner', banner)
+
+            serializer = admin_serializers.BannerSerializer(
+                banner, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
+            print serializer.errors
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
+            print 'BannerViewDetail PUT', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 

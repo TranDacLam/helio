@@ -53,7 +53,7 @@ export class AdvertisementService {
 		const id = adv.id;
 		var body = JSON.stringify(adv);
 		const url = `${api.advertisement}${id}/`;
-		return this.http.put(url,adv, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.put(url,body, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 	/*
 		DELETE: Delete All Advertiment which checked box

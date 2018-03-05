@@ -135,13 +135,19 @@
                             [(ngModel)]="feedback.answer"
                             >
                             </textarea>
+                            <show-error-valid [control]="feedbackForm.get('answer')"></show-error-valid>
                         </div>
+                    </div>
+                    <div *ngIf="errorMessage">
+                        <em [ngStyle]="{'color': 'red'}">
+                            {{errorMessage}}
+                        </em>
                     </div>
                 </div>
             </div>
             <div class="row button-feedback">
                 <div class="col-md-8 col-md-offset-2">
-                    <button [disabled] = "feedbackForm.pristine" type="submit" class=' pull-right btn btn-info' (click)="updateFeedback()">Lưu lại</button>
+                    <button type="submit" class=' pull-right btn btn-info' (click)="updateFeedback()">Lưu lại</button>
                     <button type="submit" class='pull-left btn btn-danger' (click)="confirmDeleteFeedback(feedback)" >Xóa </button>
                 </div>
             </div>

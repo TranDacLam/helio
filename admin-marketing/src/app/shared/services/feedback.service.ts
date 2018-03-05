@@ -48,7 +48,7 @@ export class FeedbackService {
 	updateFeedbackById(feedback: Feedback): Observable<any> {
 		const id = feedback.id;
 		const url = `${api.feedback}${id}/`;
-		return this.http.put(url, feedback, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.put(url, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 	/*
 		DELETE: Delete Feedback By ID

@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Banner, positions } from '../../../shared/class/banner';
 import { BannerService } from '../../../shared/services/banner.service';
+
+import { env } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-banner-detail',
@@ -16,16 +18,16 @@ export class BannerDetailComponent implements OnInit {
     banner_form = new Banner();
 	errorMessage: String;
     positions = positions;
-    // set inputImage property as a local variable, #inputImage on the tag input file
-    @ViewChild('inputImage')
-    inputImage: any;
+    api_domain:string = "";
 
   	constructor( 
   		private bannerService: BannerService,
   		private route: ActivatedRoute,
         private fb: FormBuilder,
+        private router: Router,
   	) {
         this.createForm();
+        this.api_domain = env.api_domain_root;
        }
 
   	ngOnInit() {
@@ -64,19 +66,53 @@ export class BannerDetailComponent implements OnInit {
         FileReader: reading file contents
         @author: TrangLe
     */
-    onFileChange(e) {
-      if(e.target.files && e.target.files.length > 0) {
-        let file = e.target.files[0];
-        this.formBanner.get('image').setValue(file);
-      }
+    onFileChange(event) {
+        let reader = new FileReader();
+        let input_id = $(event.target).attr('id');
+        if(event.target.files && event.target.files.length > 0) {
+            let file = event.target.files[0];
+            this.formBanner.get(input_id).setValue({ filename: file.name, filetype: file.type, value: file });
+        }
     }
-    /*
-        Clear file upload
-        @author: Trangle
-     */
-    clearFile() {
-      this.formBanner.get('image').setValue(null);
-      this.inputImage.nativeElement.value = "";
+    onSubmit() {
+        var self = this;
+        let bannerFormGroup = this.convertFormGroupToFormData(this.formBanner);
+        this.bannerService.updateBanner(bannerFormGroup, this.banner.id).subscribe(
+                (data) => {
+                    // Navigate to promotion page where success
+                    this.router.navigate(['/banner-list', { message_put: this.formBanner.value['sub_url']} ])
+                }, 
+                (error) => {
+                    self.router.navigate(['/error', { message: error }]);
+                }
+            );
     }
 
+    /*
+        Convert form group to form data to submit form
+        @author: diemnguyen
+    */
+    private convertFormGroupToFormData(formBanner: FormGroup) {
+        // Convert FormGroup to FormData
+        let bannerValues = formBanner.value;
+        let bannerFormData:FormData = new FormData(); 
+        if (bannerValues){
+            /* 
+                Loop to set value to formData
+                Case1: if value is null then set ""
+                Case2: If key is image field then set value have both file and name
+                Else: Set value default
+            */
+            Object.keys(bannerValues).forEach(k => { 
+                if(bannerValues[k] == null) {
+                    bannerFormData.append(k, '');
+                } else if (k === 'image') {
+                    bannerFormData.append(k, bannerValues[k].value, bannerValues[k].name);
+                } else {
+                    bannerFormData.append(k, bannerValues[k]);
+                }
+            });
+        }
+        return bannerFormData;
+    }
 }
