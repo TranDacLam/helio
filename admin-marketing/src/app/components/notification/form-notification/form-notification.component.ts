@@ -76,7 +76,7 @@ export class FormNotificationComponent implements OnInit {
             image: [this.noti.image],
             sub_url: [this.noti.sub_url, Validators.required],
             category: [this.noti.category ? this.noti.category : '', Validators.required],
-            is_QR_code: [this.noti.is_QR_code],
+            is_QR_code: [this.noti.is_QR_code ? this.noti.is_QR_code : false],
             location: [this.noti.location],
             is_clear_image: [false],
             promotion_id: [this.promotion_id ? this.promotion_id : null]
