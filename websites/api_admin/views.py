@@ -643,7 +643,7 @@ class NotificationList(APIView):
 
 
 @permission_classes((AllowAny,))
-@parser_classes((MultiPartParser, JSONParser))
+@parser_classes((MultiPartParser, FormParser))
 class NotificationDetail(APIView):
 
     def get_object(self, pk):
