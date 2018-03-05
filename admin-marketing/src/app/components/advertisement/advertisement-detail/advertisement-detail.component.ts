@@ -11,6 +11,7 @@ import { AdvertisementService } from '../../../shared/services/advertisement.ser
 })
 export class AdvertisementDetailComponent implements OnInit {
 	@Input() adv: Advertisement;
+	errorMessage: string ="";
 	constructor(
 		private advertisementService: AdvertisementService,
 		private route: ActivatedRoute,
@@ -28,9 +29,10 @@ export class AdvertisementDetailComponent implements OnInit {
 	getAdv() {
 		const id = +this.route.snapshot.paramMap.get('id');
 		this.advertisementService.getAdvertisement(id).subscribe(
-			result => {
-        	this.adv = result;
+			(result) => {
+        		this.adv = result;
       		},
+      		(error) => this.router.navigate(['/error', { message: error }])
         );
 	}
 	/*
@@ -39,7 +41,15 @@ export class AdvertisementDetailComponent implements OnInit {
 		@author: TrangLe
 	 */
 	EditAdv() {
-		this.advertisementService.updateAdv(this.adv)
-			.subscribe(() => this.router.navigate(['/advertisement-list', { message_put: this.adv.name} ]));
+		this.advertisementService.updateAdv(this.adv).subscribe(
+			() => this.router.navigate(['/advertisement-list', { message_put: this.adv.name} ]),
+			(error) => {
+				if(error.status == 400) {
+					this.errorMessage = error.json().name
+				} else {
+					this.router.navigate(['/error', { message: error.json().message }])
+				}
+			}
+			);
 	}
 }

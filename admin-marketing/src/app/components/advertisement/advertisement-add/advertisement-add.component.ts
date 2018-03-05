@@ -33,7 +33,14 @@ export class AdvertisementAddComponent implements OnInit {
 				this.advs.push(resultAdv);
                 this.router.navigate(['/advertisement-list', { message_post: advForm.name} ])
 			},
-            (error) => this.errorMessage = <any>error
+            (error) => {
+                if (error.status == 400 ) {
+                    console.log(error.json());
+                    this.errorMessage = error.json().name
+                } else {
+                    this.router.navigate(['/error', { message: error.json().message }])
+                }
+            }
         );
     }
 }

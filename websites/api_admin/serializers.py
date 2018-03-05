@@ -184,7 +184,22 @@ class NotificationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Notification
-        fields=('id', 'subject', 'image', 'sub_url', 'category', 'sent_date', 'sent_user', 'is_draft', 'location', 'is_QR_code', 'message')
+        fields= '__all__'
+
+    def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.subject = validated_data.get('subject', instance.subject)
+        instance.sub_url = validated_data.get('sub_url', instance.sub_url)
+        instance.category = validated_data.get('category', instance.category)
+        instance.location = validated_data.get('location', instance.location)
+        instance.is_QR_code = validated_data.get('is_QR_code', instance.is_QR_code)
+        instance.message = validated_data.get('message', instance.message)
+        instance.promotion = validated_data.get('promotion', instance.promotion)
+        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
+        instance.save()
+        return instance
 
 class UserEmbedSerializer(serializers.Serializer):
     full_name = serializers.CharField(required=True)
@@ -209,11 +224,21 @@ class FeeSerializer(serializers.ModelSerializer):
 
 class BannerSerializer(serializers.ModelSerializer):
 
-    image = serializers.ImageField(max_length=None, use_url=True)
-
     class Meta:
         model = Banner
-        fields = ('id', 'image', 'sub_url', 'position')
+        fields = ('id', 'image', 'sub_url', 'position', 'is_show')
+
+    def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.sub_url = validated_data.get('sub_url', instance.sub_url)
+        instance.position = validated_data.get('position', instance.position)
+        instance.is_show = validated_data.get('is_show', instance.is_show)
+        instance.save()
+        return instance
+
+
 
 class CategoryNotificationSerializer(serializers.ModelSerializer):
 
@@ -264,3 +289,15 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
+
+class PostTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Post_Type
+        fields = ('id', 'name', 'description')
+
+class FAQSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FAQ
+        fields = ('id', 'question', 'answer', 'category')

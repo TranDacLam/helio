@@ -111,14 +111,8 @@ export class DenominationListComponent implements OnInit {
             this.message_result = "";
         }
         else{
-            let updateDenoItem = this.deno_selected.find(this.findIndexToUpdate, deno.id);
-            let index = this.deno_selected.indexOf(updateDenoItem);
-
-            this.deno_selected.splice(index, 1);
+            this.deno_selected = this.deno_selected.filter(ad => ad !== deno.id);
         }
-    }
-    findIndexToUpdate(type) { 
-        return type.id === this;
     }
     confirmDelete() {
         /* Check deno_selected not null and length >0
@@ -166,7 +160,7 @@ export class DenominationListComponent implements OnInit {
                 this.message_success = "Xóa mệnh giá nạp tiền thành công";
             },
             (error) => {
-                this.router.navigate(['/error', { message: error }]);
+                this.router.navigate(['/error', { message: error.json().message }]);
             }
             );
     }

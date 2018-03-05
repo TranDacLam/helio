@@ -44,7 +44,8 @@ export class PromotionFormComponent implements OnInit {
 
     api_domain:string = "";
 
-    public selectedMoment = new Date();
+    errors: any = "";
+
     constructor(
         private promotionService: PromotionService,
         private categoryService: CategoryService,
@@ -157,6 +158,7 @@ export class PromotionFormComponent implements OnInit {
         @author: diemnguyen
     */
     saveEvent(): void {
+        this.errors = '';
         const that = this;
         // Convert FormGroup to FormData
         let promotionFormData = this.convertFormGroupToFormData(this.promotionForm);
@@ -171,7 +173,7 @@ export class PromotionFormComponent implements OnInit {
                     that.router.navigate(['/promotions', {'action': 'Sửa "', 'promotion_name': this.promotionForm.value['name']}]);
                 }, 
                 (error) => {
-                    that.router.navigate(['/error']);
+                    that.errors = error;
                 }
             );
         } else {
@@ -181,7 +183,8 @@ export class PromotionFormComponent implements OnInit {
                     that.router.navigate(['/promotions', {'action': 'Tạo mới "', 'promotion_name': this.promotionForm.value['name']}]);
                 }, 
                 (error) => {
-                    that.router.navigate(['/error']);
+                    that.errors = error;
+                    // that.router.navigate(['/error']);
                 }
             );
         }

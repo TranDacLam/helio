@@ -3,29 +3,31 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item"><a routerLink="/denomination-list">Mệnh giá nạp tiền</a></li>
+            <li class="breadcrumb-item"><a routerLink="/denomination-list">Mệnh Giá Nạp Tiền</a></li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
 <div class='title-denomi row'>
-    <a class="pull-left" routerLink="/denomination-add">Thêm Mệnh giá nạp tiền</a>
+    <a class="pull-left" routerLink="/denomination-add">Thêm Mệnh Giá Nạp Tiền</a>
 </div>
 <form #addDenominationForm="ngForm" class="row form-add-denomi" accept-charset="utf-8" novalidate="">
     <div class="content-denomi">
         <div class="form-group row">
             <div class="col-sm-2">
-                <label class="center-block">Tên Mệnh giá nạp tiền:</label>
+                <label class="center-block">Tên Mệnh Giá Nạp Tiền:</label>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-6">
                 <input class='form-control' name="name" 
                 ngModel
                 required
-                pattern="[0-9]+"
-                placeholder="Tên Mệnh giá nạp tiền" 
+                pattern="^[0-9]+"
+                placeholder="Tên Mệnh Giá Nạp Tiền"
+                maxlength="10"
                 #name="ngModel"
+                [ngModel]="data"
                 (click)="removeMessage(errorMessage)"
-                >
+                > 
                 <div *ngIf="name.invalid && (name.dirty || name.touched)">
                     <em [ngStyle]="{'color': 'red'}" *ngIf="name.errors.required">
                     Trường không được bỏ trống.
@@ -33,12 +35,18 @@
                     <em [ngStyle]="{'color': 'red'}" *ngIf="name.errors.pattern">
                     Vui lòng nhập số tiền hợp lệ.
                     </em>
+                    <em [ngStyle]="{'color': 'red'}" *ngIf="name.errors?.maxlength">
+                        Mệnh giá tiền nhỏ hơn hoặc bằng 10 kí tự
+                    </em>
                 </div>
                 <div *ngIf='errorMessage'>
                     <em [ngStyle]="{'color': 'red'}">
-                    Trường đã tồn tại.
+                    {{errorMessage}}
                     </em>
                 </div>
+            </div>
+            <div class="col-md-2">
+                <p class='dv-denom'>VĐN</p>
             </div>
         </div>
     </div>
@@ -49,5 +57,5 @@
             [disabled]="addDenominationForm.invalid"
             class="pull-right btn btn-info">Lưu lại</button>
         </div>
-    </div>      
+    </div>  
 </form>

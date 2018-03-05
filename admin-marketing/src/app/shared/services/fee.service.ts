@@ -23,9 +23,11 @@ export class FeeService {
 
 
   private feeUrl = api.fee;
+  private feeUrlList = api.fee_list;
+
 
   	getFees(): Observable<Fee[]>{
-  		return this.http.get(this.feeUrl, httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
+  		return this.http.get(this.feeUrlList, httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
   	}
  	// throw error
 	handleError(error: Response) {
@@ -37,10 +39,10 @@ export class FeeService {
   	deleteListFee(list_id: number[] ):Observable<Fee>{
 		let options = new RequestOptions({ 
 		    body: {'list_id': list_id},
-		    headers: new Headers({ 'Content-Type': 'application/json' }),
+		    headers: httpOptions.headers,
 		    method: RequestMethod.Delete,
 		  })
-  		return this.http.delete( this.feeUrl, options  ).map((res: Response) => res.json()).catch(this.handleError);
+  		return this.http.delete( this.feeUrlList, options  ).map((res: Response) => res.json()).catch(this.handleError);
 	}
 	applyFee(id: number):Observable<Fee>{
 		// let feeUrl = `http://127.0.0.1:8000/vi/api/fee/${id}/`;
@@ -49,15 +51,4 @@ export class FeeService {
 
 	}
 
-
- //  private handleError<T> (operation = 'operation', result?: T) {
-	//   return (error: any): Observable<T> => {
-
-	//     // TODO: send the error to remote logging infrastructure
-	//     console.error(error); // log to console instead
-
-	//     // Let the app keep running by returning an empty result.
-	//     return of(result as T);
-	//   };
-	// }
 }

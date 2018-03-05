@@ -336,7 +336,7 @@ class Notification(DateTimeModel):
     sent_user = models.ForeignKey('User', related_name='notification_user_rel',
                                   null=True, blank=True)
     promotion = models.OneToOneField(
-        Promotion, on_delete=models.CASCADE, null=True, blank=True)
+        'Promotion', related_name='notification_promotion_rel', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return '%s' % (self.subject)

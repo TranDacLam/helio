@@ -10,7 +10,12 @@
 <!-- End breadcrumb -->
 <div class='row content-banner'>
 	<a class="pull-left" routerLink="/banner-list">Banner</a>
-	<a class="pull-right" routerLink="/banner-add">Thêm banner</a>
+	<a class="pull-right" routerLink="/banner-add">
+		<div class="btn btn-primary">
+			<span class="glyphicon glyphicon-plus"></span>
+			Thêm banner
+		</div>
+	</a>
 </div>
 <br>
 <div class="table card-list">
@@ -20,7 +25,7 @@
 	<div class="alert alert-success" *ngIf="message_result">
         {{message_result}}
     </div>
-	<table id="table-user" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
+	<table id="table-banner" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
 	      		<th class='checkbox-banner'><input type="checkbox" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/></th>
