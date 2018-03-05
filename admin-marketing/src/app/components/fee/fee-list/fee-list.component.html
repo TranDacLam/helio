@@ -1,58 +1,67 @@
-	<div class="row head-content">
-		<div class="pull-left child-head">
-			Phí Giao Dịch
-		</div>
-		<a routerLink="/fee/add">
-			<div class="pull-right child-head btn btn-primary">
-				<span class="glyphicon glyphicon-plus"></span>
-				Thêm Phí Giao Dịch
-			</div>
+<ol class="breadcrumb">
+    <li><a routerLink='/'>Trang Chủ</a></li>
+    <li class="active"><a routerLink="/fee/list">Quản Lý Phí Giao Dịch</a></li>
+ </ol>
+<div class="row text-center">
+    <h1>PHÍ GIAO DỊCH</h1>
+</div>
+<div class="row mt-30 mb-30">
+    <div class="col-xs-6 col-sm-6">
+        <a class="btn btn-primary" routerLink="/">TRỞ VỀ TRANG QUẢN TRỊ</a>
+    </div>
+    <div class="col-xs-6 col-sm-6">
+        <a class="btn btn-primary pull-right" routerLink="/fee/add">
+			<span class="glyphicon glyphicon-plus"></span>
+			THÊM PHÍ GIAO DỊCH
 		</a>
-
-	</div>
-	<div class="row">
-		<div *ngIf="errorText" class="alert-danger">
-			<div class="alert alert-danger" role="alert">
-			  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-			  {{errorText}}
-			</div>
+    </div>
+    <div class="col-xs-12 col-sm-12 mt-15 messsage" *ngIf="message_result">
+        <h4>{{message_result}}</h4>
+    </div>
+</div>
+<div class="row">
+	<div *ngIf="errorText" class="alert-danger">
+		<div class="alert alert-danger" role="alert">
+		  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		  {{errorText}}
 		</div>
 	</div>
-	<div class="wrapper-table">
-		<table datatable [dtOptions]="dtOptions" *ngIf="fees" class="row-border hover">
-		<thead>
-			<tr class="">
-				<th><input type="checkbox" name="" (change)="selectAll($event);"></th>
-				<th>Phí</th>
-				<th>Vị trí</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody *ngIf="fees">
-			<tr *ngFor="let fee of fees" id={{fee.id}}>
-				<td class="checkbox-tb"><input type="checkbox" name="{{fee.id}}" [checked]="fee.selected" [value]=fee.id (change)="triggerItem($event.target.checked, fee.id);" ></td>
-				<td class="fee-tb">{{fee.fee}} {{fee.fee_type}}</td>
-				<td class="position-tb">{{fee.position}}</td>
-				<td *ngIf="fee.is_apply">
-					<div (mouseover)="hoverIn(fee);" (mouseleave)="hoverOut(fee);" class="btn btn-success text-center" (click)="fee.isHover? cancel_apply_fee(fee.id): apply_fee(fee.id)" >
-						<span *ngIf="fee.isHover">Hủy Áp dụng phí</span>
-						<span *ngIf="!fee.isHover" >Đang Áp dụng phí</span>
-					</div>
-				</td>
-				<td *ngIf="!fee.is_apply"><div class="btn btn-primary text-center" (click)="apply_fee(fee.id)">Áp dụng phí</div></td>
-			</tr>
-			<hr>
-		</tbody>
-	</table>
+</div>
+<div class="wrapper-table">
+	<table datatable [dtOptions]="dtOptions" *ngIf="fees" class="row-border hover">
+	<thead>
+		<tr class="">
+			<th><input type="checkbox" name="" (change)="selectAll($event);"></th>
+			<th>Phí</th>
+			<th>Vị trí</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody *ngIf="fees">
+		<tr *ngFor="let fee of fees" id={{fee.id}}>
+			<td class="checkbox-tb"><input type="checkbox" name="{{fee.id}}" [checked]="fee.selected" [value]=fee.id (change)="triggerItem($event.target.checked, fee.id);" ></td>
+			<td class="fee-tb">{{fee.fee}} {{fee.fee_type}}</td>
+			<td class="position-tb">{{fee.position}}</td>
+			<td *ngIf="fee.is_apply">
+				<div (mouseover)="hoverIn(fee);" (mouseleave)="hoverOut(fee);" class="btn btn-success text-center" (click)="fee.isHover? cancel_apply_fee(fee.id): apply_fee(fee.id)" >
+					<span *ngIf="fee.isHover">Hủy Áp dụng phí</span>
+					<span *ngIf="!fee.isHover" >Đang Áp dụng phí</span>
+				</div>
+			</td>
+			<td *ngIf="!fee.is_apply"><div class="btn btn-primary text-center" (click)="apply_fee(fee.id)">Áp dụng phí</div></td>
+		</tr>
+		<hr>
+	</tbody>
+</table>
+</div>
+<div class='row under-table'>
+	<div class="col-md-3">
+		<select name="" class="form-control">
+			<option value="">Xóa các phí dịch được chọn</option>
+		</select>
 	</div>
-	<div class='row'>
-		<div class="col-md-3">
-			<select name="" class="form-control">
-				<option value="">Xóa các phản hồi được chọn</option>
-			</select>
-		</div>
-		<div class="col-md-3" *ngIf="fees" >
-			 {{list_id.length}} của {{fees.length}} được chọn
-			<button type="button" class="btn btn-danger" (click)="confirm_delete();">Thực hiện</button>
-		</div>
+	<div class="col-md-3" *ngIf="fees" >
+		 {{list_id.length}} của {{fees.length}} được chọn
+		<button type="button" class="btn btn-danger" (click)="confirm_delete();">Thực hiện</button>
 	</div>
+</div>

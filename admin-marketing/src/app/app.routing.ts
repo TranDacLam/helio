@@ -155,7 +155,7 @@ const routes: Routes = [{
         component: NotificationDetailComponent
     },
     {
-        path: 'fee',
+        path: 'fee/list',
         component: FeeListComponent
     },
     {

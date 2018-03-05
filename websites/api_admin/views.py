@@ -256,6 +256,7 @@ class UserDetail(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
 """
 GET and POST Advertisement
 @author: Trangle
@@ -311,6 +312,7 @@ class AdvertisementView(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
 """
 GET, PUT Advertisement Detail
 @author: Trangle
@@ -349,6 +351,7 @@ class AdvertisementDetail(APIView):
         advertisement.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 """
 Get PromotionType
 @author: Trangle
@@ -367,6 +370,8 @@ class PromotionTypeView(APIView):
         except Exception, e:
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
 """
     Get and Post Denomination
     @author: Trangle
@@ -420,6 +425,7 @@ class DenominationView(APIView):
         except Exception, e:
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
 
 """
 GET FeedBack
@@ -499,6 +505,8 @@ class FeedbackView(APIView):
             print e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
 """
 GET, PUT, DELETE Feedback by id
 @author: Trangle
@@ -537,6 +545,8 @@ class FeedbackDetailView(APIView):
         feedback = self.get_object(pk)
         feedback.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 """
 GET all linked users
 DELETE all checkbox selected
@@ -578,6 +588,7 @@ class UserLinkCardList(APIView):
             print e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
 
 """
 Get Notification List
@@ -622,6 +633,7 @@ class NotificationList(APIView):
             print e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
 
 """
     Get Notification Detail
@@ -682,6 +694,7 @@ class NotificationDetail(APIView):
     def delete(self, request, id, format=None):
         item = self.get_object(id).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 """
     Get User List By Notification
@@ -754,6 +767,7 @@ class NotificationUser(APIView):
             print 'NotificationUserView ', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
 
 """
     Get Summary feedbacks
@@ -836,6 +850,7 @@ class SummaryAPI(APIView):
             print "SummaryAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
 
 
 """
@@ -947,6 +962,7 @@ class UserEmbedDetail(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
 """
     relate user with user embed 
     @author :Hoangnguyen
@@ -1049,17 +1065,6 @@ class RelateAPI(APIView):
 @permission_classes((AllowAny,))
 class FeeAPI(APIView):
 
-    def get(self, request, format=None):
-        try:
-            fee = Fee.objects.all()
-            feeSerializer = admin_serializers.FeeSerializer(fee, many=True)
-            return Response(feeSerializer.data)
-
-        except Exception, e:
-            print "FeeAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
-            return Response(error, status=500)
-
     def post(self, request, format=None):
         try:
             feeSerializer = admin_serializers.FeeSerializer(data=request.data)
@@ -1104,9 +1109,20 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
-    """
-        list_id is array in body request
-    """
+
+@permission_classes((AllowAny,))
+class FeeListAPI(APIView):
+
+    def get(self, request, format=None):
+        try:
+            fee = Fee.objects.all()
+            feeSerializer = admin_serializers.FeeSerializer(fee, many=True)
+            return Response(feeSerializer.data)
+
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
 
     def delete(self, request, format=None):
         try:
@@ -1118,8 +1134,8 @@ class FeeAPI(APIView):
                     fees.delete()
                     return Response({"code": 200, "message": "success", "fields": ""}, status=200)
                 return Response({"code": 400, "message": "Not Found Fee", "fields": ""}, status=400)
-
             return Response({"code": 400, "message": "List_id field is required", "fields": ""}, status=400)
+
         except Exception, e:
             print "FeeAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1187,6 +1203,7 @@ class BannerView(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
 """
     GET, PUT, DELETE Banner by id
     @author: Trangle
@@ -1237,6 +1254,7 @@ class BannerViewDetail(APIView):
         banner = self.get_object(pk)
         banner.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 """
     Get All CategoryNotifications
@@ -1329,6 +1347,8 @@ class EventAPI(APIView):
             print "EventAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
 """
     EventList
     @author :Hoangnguyen
@@ -1364,6 +1384,8 @@ class EventListAPI(APIView):
             print "EventListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
 """
     PromotionLabel
     @author :Hoangnguyen
@@ -1438,6 +1460,7 @@ class PromotionLabelAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
 """
     PromotionLabelList
     @author :Hoangnguyen
@@ -1475,6 +1498,8 @@ class PromotionLabelListAPI(APIView):
             print "PromotionLabelListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
 """
     Hot
     @author :Hoangnguyen
@@ -1542,6 +1567,8 @@ class HotAPI(APIView):
             print "HotAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
 """
     HotListAPI
     @author :Hoangnguyen
@@ -1576,6 +1603,8 @@ class HotListAPI(APIView):
             print "HotListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
 """
     Post 
     @author :Hoangnguyen
@@ -1637,6 +1666,7 @@ class PostAPI(APIView):
             print "EventAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
 
 """
     Hot
@@ -1722,10 +1752,11 @@ class HotAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
 """
     Post 
     @author :Hoangnguyen
-    TODO
+    TODO upload image
 """
 
 
@@ -1792,6 +1823,7 @@ class PostAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
 """
     PostList
     @author :Hoangnguyen
@@ -1828,6 +1860,7 @@ class PostListAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
 """
     PostTypeList
     @author :Hoangnguyen
@@ -1848,6 +1881,7 @@ class PostTypeListAPI(APIView):
             print "PostTypeListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
 
 """
     FAQ 
@@ -1915,6 +1949,8 @@ class FAQAPI(APIView):
             print "FAQAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
 """
     FAQList
     @author :Hoangnguyen
@@ -1994,3 +2030,4 @@ class UploadFile(APIView):
     def post(self, request, format=None):
         print "request",request
         return Response({'tesst' : 'tesst'}, status=200)
+
