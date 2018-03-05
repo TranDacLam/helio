@@ -20,9 +20,6 @@ export class BannerAddComponent implements OnInit {
     positions = positions;
     isSelected = true; // Set value default selcted 
 
-    // set inputImage property as a local variable, #inputImage on the tag input file
-    @ViewChild('inputImage')
-    inputImage: any;
 
     constructor(
         private fb: FormBuilder,
@@ -54,19 +51,13 @@ export class BannerAddComponent implements OnInit {
         FileReader: reading file contents
         @author: TrangLe
     */
-    onFileChange(e) {
-      if(e.target.files && e.target.files.length > 0) {
-        let file = e.target.files[0];
-        this.formBanner.get('image').setValue(file);
-      }
-    }
-    /*
-        Clear file upload
-        @author: Trangle
-     */
-    clearFile() {
-      this.formBanner.get('image').setValue(null);
-      this.inputImage.nativeElement.value = "";
+    onFileChange(event) {
+        let reader = new FileReader();
+        let input_id = $(event.target).attr('id');
+        if(event.target.files && event.target.files.length > 0) {
+            let file = event.target.files[0];
+            this.formBanner.get(input_id).setValue({ filename: file.name, filetype: file.type, value: file });
+        }
     }
 
     onSubmit() { }
@@ -74,13 +65,46 @@ export class BannerAddComponent implements OnInit {
         POST: Create New Advertiment
         @author: TrangLe
      */
-    createBanner(formBanner){
-        this.bannerService.CreateBanner( formBanner ).subscribe(
+    createBanner(){
+        var self = this;
+        let bannerFormGroup = this.convertFormGroupToFormData(this.formBanner);
+
+        this.bannerService.CreateBanner(bannerFormGroup).subscribe(
             (result) => {
-                this.banners.push(result);
-                this.router.navigate(['/banner-list', { message_post: formBanner.sub_url} ])     
+                self.banners.push(result);
+                self.router.navigate(['/banner-list', { message_post: this.formBanner.value['sub_url']} ])     
             },
-            (error) =>  this.errorMessage = <any>error
+            (error) =>  {
+                    self.errorMessage = error
+                }
         );
+    }
+
+    /*
+        Convert form group to form data to submit form
+        @author: diemnguyen
+    */
+    private convertFormGroupToFormData(bannerForm: FormGroup) {
+        // Convert FormGroup to FormData
+        let bannerValues = bannerForm.value;
+        let bannerFormData:FormData = new FormData(); 
+        if (bannerValues){
+            /* 
+                Loop to set value to formData
+                Case1: if value is null then set ""
+                Case2: If key is image field then set value have both file and name
+                Else: Set value default
+            */
+            Object.keys(bannerValues).forEach(k => { 
+                if(bannerValues[k] == null) {
+                    bannerFormData.append(k, '');
+                } else if (k === 'image') {
+                    bannerFormData.append(k, bannerValues[k].value, bannerValues[k].name);
+                } else {
+                    bannerFormData.append(k, bannerValues[k]);
+                }
+            });
+        }
+        return bannerFormData;
     }
 }

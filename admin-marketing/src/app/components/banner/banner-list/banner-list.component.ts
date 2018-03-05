@@ -53,6 +53,16 @@ export class BannerListComponent implements OnInit {
         this.dtOptions = data_config(this.record).dtOptions;
         // Call function getAllBanners()
         this.getAllBanners();
+
+        this.route.params.subscribe(params => {
+            if( params.message_post ){
+                this.message_result = " Thêm "+ params.message_post + " thành công.";
+            } else if ( params.message_put ) {
+                this.message_result = "  Chỉnh sửa  "+ params.message_put + " thành công.";
+            } else {
+                this.message_result = "";
+            }
+        });
     }
     /*
         Function: Select All Banner
@@ -106,17 +116,9 @@ export class BannerListComponent implements OnInit {
             this.message_result = "";
         }
         else{
-            let updateBannerItem = this.banner_del.find(this.findIndexToUpdate, banner.id);
-
-            let index = this.banner_del.indexOf(updateBannerItem);
-
-            this.banner_del.splice(index, 1);
+            this.banner_del = this.banner_del.filter(ad => ad !== banner.id);
         }
     }
-    findIndexToUpdate(type) { 
-        return type.id === this;
-    }
-
     confirmDelete() {
         /* Check banner_del not null and length >0
             True: Show confirm and call function deleteFeedbackCheckbox 

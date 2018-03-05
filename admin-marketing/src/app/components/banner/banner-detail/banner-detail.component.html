@@ -2,7 +2,7 @@
 <div class="row">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a routerLink="/home">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="">Trang chủ</a></li>
             <li class="breadcrumb-item"><a routerLink="/banner-list">Banner</a></li>
             <li class="breadcrumb-item"><a routerLink="/banner-detail">Chỉnh sửa Banner</a></li>
             
@@ -12,7 +12,6 @@
 <!-- End breadcrumb -->
 <a class="pull-left" routerLink="/banner-add">Chỉnh sửa Banner</a>
 <br>
-<hr>
 <div class="col-md-8 col-md-offset-2">
     <div *ngIf='banner'>
     	<form [formGroup]="formBanner" (ngSubmit)="onSubmit()">
@@ -21,10 +20,12 @@
                     <label class="center-block">Hình Ảnh:</label>
                 </div>
                 <div class="col-sm-8">
+                    <p *ngIf="banner.image">
+                        <span>Currently: <a href="{{api_domain}}{{banner.image}}" target="_blank">{{banner.image}}</a></span>
+                    </p>
                 	<input type="file" id="image" class="form-control" accept="image/*"
-                (change)="onFileChange($event)" #inputImage/>
+                (change)="onFileChange($event)"/>
                 	<show-error-valid [control]="formBanner.get('image')"></show-error-valid>
-                	<button type="button" class=" clear-file btn btn-danger" (click)="clearFile()">Clear file</button>
             	</div>
             	
         	</div>
@@ -46,11 +47,11 @@
                 </div>
                 <div class="col-md-3">
                     <select class='form-control' name="position" 
-                    formControlName="position" [(ngModel)]="banner.position">
-                        <option *ngFor="let position of positions" [selected]="position === banner.position" [value]="position">
-                            {{position}}
-                        </option>
-                    </select>
+                            formControlName="position" [(ngModel)]="banner.position">
+                                <option *ngFor="let position of positions" [value]="position" [selected]="position === banner.position">
+                                    {{position}}
+                                </option>
+                            </select>
                     <show-error-valid [control]="formBanner.get('position')"></show-error-valid>
                 </div>
             </div> 

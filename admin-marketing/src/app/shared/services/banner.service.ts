@@ -39,17 +39,49 @@ export class BannerService {
         PUT: Update Banner By Id
         @author: Trangle
      */
-    updateBanner(banner: Banner, id:number): Observable<Banner> {
-        const url = `${api.feedback}${id}/`;
-        return this.http.put(url, banner, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+     updateBanner(bannerFormData:FormData, id: number): Observable<any> { 
+        let url = `${api.banner}${id}/`;
+        return Observable.create(observer => {
+            let xhr = new XMLHttpRequest();
+            // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
+            xhr.open('PUT', url);
+            xhr.send(bannerFormData);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(xhr.response);
+                    }
+                }
+            }
+        });
     }
     /*
       POST: Create a New Banner
       @author: TrangLe
     */
-    CreateBanner(bannerForm: Banner): Observable<any> {
-       let url_banner = `${api.banner}`;
-       return this.http.post(url_banner, bannerForm, httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
+     CreateBanner(bannerFormData:FormData): Observable<any> {
+
+        return Observable.create(observer => {
+            let xhr = new XMLHttpRequest();
+            // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
+            xhr.open('POST', api.banner);
+            xhr.send(bannerFormData);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(xhr.response);
+                    }
+                }
+            }
+        });
     }
 
     deleteBannerSelected(banner_id): Observable<any> {

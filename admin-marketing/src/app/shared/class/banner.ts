@@ -6,4 +6,4 @@ export class Banner {
 	position: number;
 }
 
-export const positions = ['1', '2'];
+export const positions = [1, 2, 3, 4];
