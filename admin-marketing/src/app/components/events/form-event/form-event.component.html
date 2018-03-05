@@ -50,7 +50,7 @@
                 <i class="fa fa-calendar"></i>
             </span>
             <input type="text" class="form-control event-date" formControlName="start_date"
-                [owlDateTime]="dt1"
+                [owlDateTime]="dt1" [max]="formEvent.value.end_date" 
             />         
             <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
             <show-error-valid [control]="formEvent.get('start_date')"></show-error-valid>
@@ -65,7 +65,7 @@
                 <i class="fa fa-calendar"></i>
             </span>
             <input type="text" class="form-control event-date" formControlName="end_date"
-                [owlDateTime]="dt2"
+                [owlDateTime]="dt2" [min]="formEvent.value.start_date"
             />         
             <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
             <show-error-valid [control]="formEvent.get('end_date')"></show-error-valid>
