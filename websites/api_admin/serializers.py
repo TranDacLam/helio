@@ -132,7 +132,6 @@ class PromotionSerializer(serializers.ModelSerializer):
         print "CREATE"
         return Promotion(**validated_data)
     def update(self, instance, validated_data):
-
         image = validated_data.get('image', instance.image)
         if image:
             instance.image = image
@@ -239,8 +238,10 @@ class EventSerializer(serializers.ModelSerializer):
         return data
     # override mehod update because name field is unique
     def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
         instance.name = validated_data.get('name', instance.name)
-        instance.image = validated_data.get('image', instance.image)
         instance.short_description = validated_data.get('short_description', instance.short_description)
         instance.content = validated_data.get('content', instance.content)
         instance.start_date = validated_data.get('start_date', instance.start_date)
@@ -257,14 +258,37 @@ class HotSerializer(serializers.ModelSerializer):
         model = Hot
         fields = ('id', 'name', 'sub_url', 'image', 'is_show')
 
+    def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.name = validated_data.get('name', instance.name)
+        instance.sub_url = validated_data.get('sub_url', instance.sub_url)
+        instance.is_show = validated_data.get('is_show', instance.is_show)
+        instance.save()
+        return instance
+
 class PostSerializer(serializers.ModelSerializer):
 
     post_type = serializers.SlugRelatedField(queryset = Post_Type.objects.all(), read_only=False, slug_field = 'name' )
 
     class Meta:
         model = Post
-        fields = ('name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
+        fields = ('id','name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
 
+    def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.name = validated_data.get('name', instance.name)
+        instance.short_description = validated_data.get('short_description', instance.short_description)
+        instance.content = validated_data.get('content', instance.content)
+        instance.post_type = validated_data.get('post_type', instance.post_type)
+        instance.key_query = validated_data.get('key_query', instance.key_query)
+        instance.pin_to_top = validated_data.get('pin_to_top', instance.pin_to_top)
+        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
+        instance.save()
+        return instance
 class PostTypeSerializer(serializers.ModelSerializer):
 
     class Meta:

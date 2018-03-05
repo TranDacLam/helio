@@ -109,7 +109,6 @@ class PromotionDetail(APIView):
             return Response(error, status=500)
 
     def put(self, request, id, format=None):
-        print request.data
         item = self.get_object(id)
         try:
             serializer = admin_serializers.PromotionSerializer(
@@ -1590,69 +1589,6 @@ class HotListAPI(APIView):
 
         except Exception, e:
             print "HotListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
-            return Response(error, status=500)
-
-
-"""
-    Post 
-    @author :Hoangnguyen
-    TODO upload image 
-"""
-
-
-@parser_classes((MultiPartParser,))
-@permission_classes((AllowAny,))
-class PostAPI(APIView):
-
-    def get(self, request, id):
-        try:
-            post = Post.objects.get(id=id)
-            postSerializer = admin_serializers.PostSerializer(post)
-            return Response(postSerializer.data)
-
-        except Post.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Post.", "fields": ""}, status=400)
-        except Exception, e:
-            print "PostAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
-            return Response(error, status=500)
-
-    def put(self, request, id):
-        promotionLabel = self.get_object(id)
-        try:
-            promotionLabelSerializer = admin_serializers.PromotionLabelSerializer(
-                instance=promotionLabel, data=request.data)
-            if promotionLabelSerializer.is_valid():
-                promotionLabelSerializer.save()
-                return Response(promotionLabelSerializer.data)
-            return Response({"code": 400, "message": promotionLabelSerializer.errors, "fields": ""}, status=400)
-
-        except Exception, e:
-            print "EventAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
-            return Response(error, status=500)
-
-    def delete(self, request, id=None, format=None):
-        try:
-            if id:
-                promotionLabel = Promotion_Label.objects.get(id=id)
-                promotionLabel.delete()
-                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
-
-            list_id = request.data.get('list_id', None)
-            if list_id:
-                promotionLabels = Promotion_Label.objects.filter(
-                    id__in=list_id)
-                if promotionLabels:
-                    promotionLabels.delete()
-                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
-                return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
-
-        except Promotion_Label.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
-        except Exception, e:
-            print "EventAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
