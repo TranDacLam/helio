@@ -123,10 +123,10 @@ class PromotionSerializer(serializers.ModelSerializer):
         model = Promotion
         fields = '__all__'
 
-    # def validate(self, data):
-    #     if data['apply_date'] > data['end_date']:
-    #         raise serializers.ValidationError("Apply Date must be less than End Date")
-    #     return data
+    def validate(self, data):
+        if data['apply_date'] and data['end_date'] and data['apply_date'] > data['end_date']:
+            raise serializers.ValidationError("Apply Date must be less than End Date")
+        return data
 
     def create(self, validated_data):
         print "CREATE"

@@ -27,6 +27,7 @@ export class UserPromotionComponent implements OnInit {
     api_domain:string = "";
 
     notification_id: number;
+    message_result: string = "";
 
     constructor(
         private router: Router,
@@ -51,7 +52,7 @@ export class UserPromotionComponent implements OnInit {
                 this.user_list_right = data.user_promotion;
             }, 
             (error) => {
-                console.log("Internal Server Error")
+                this.router.navigate(['/error']);
             });
     }
 
@@ -61,13 +62,11 @@ export class UserPromotionComponent implements OnInit {
         this.promotionService.updateUserPromotion(promotion_id, list_user_id).subscribe(
             (data)=> {
                 if (data.status == 204) {
-                    console.log('Success');
-                } else {
-                    console.log('Error');
-                }
+                    this.message_result = "Lưu thành công"
+                } 
             }, 
             (error) => {
-                console.log("Internal Server Error")
+                this.router.navigate(['/error']);
             });
 	}
 

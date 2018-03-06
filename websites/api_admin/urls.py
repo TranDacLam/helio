@@ -70,8 +70,9 @@ urlpatterns = [
 	url(r'^generator_QR_code/(?P<id>[0-9]+)/$', views.GeneratorQRCode.as_view(), name="generator-QR-code"),
 	url(r'^category_list/$', views.CategoryList.as_view(), name="category-list"),
 
-	url(r'^upload_file/$', views.UploadFile.as_view(), name="upload-file"),
-
 	url(r'^users/$', views.UserListView.as_view(), name="users"),
 	url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetailView.as_view(), name="users_detail"),
+	
+	url(r'^upload_file/$', views.postUpload, name="upload-file"),
+
 ]

@@ -43,19 +43,49 @@ export class NotificationService {
         function addNoti(): add notification
         author: Lam
     */
-    addNoti(noti: Notification): Observable<Notification>{
-        return this.http.post(this.url_notification, JSON.stringify(noti), httpOptions)
-            .map((res: Response) => res.json()).catch(this.handleError);
+    addNoti(noti: FormData): Observable<any>{
+        return Observable.create(observer => {
+            let xhr = new XMLHttpRequest();
+            // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
+            xhr.open('POST', api.notification);
+            xhr.send(noti);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(xhr.response);
+                    }
+                }
+            }
+        });
     }
 
     /* 
         function updateNoti(): Update notification
         author: Lam
     */
-    updateNoti(noti: Notification, id: number): Observable<Notification>{
+    updateNoti(noti: FormData, id: number): Observable<any>{
         let url_update_noti = `${this.url_notification}${id}/`;
-        return this.http.put(url_update_noti, JSON.stringify(noti), httpOptions)
-            .map((res: Response) => res.json()).catch(this.handleError);
+        return Observable.create(observer => {
+            let xhr = new XMLHttpRequest();
+            // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
+            xhr.open('PUT', url_update_noti);
+            xhr.send(noti);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(xhr.response);
+                    }
+                }
+            }
+        });
     }
 
     /* 

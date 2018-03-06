@@ -57,10 +57,11 @@ export class FormNotificationComponent implements OnInit {
         private location: Location,
         private router: Router,
         private route: ActivatedRoute
-    ) { }
+    ) { 
+        this.api_domain = env.api_domain_root;
+    }
 
     ngOnInit() {
-        this.api_domain = env.api_domain_1;
         this.getCategory();
         this.creatForm();
     }
@@ -76,7 +77,7 @@ export class FormNotificationComponent implements OnInit {
             image: [this.noti.image],
             sub_url: [this.noti.sub_url, Validators.required],
             category: [this.noti.category ? this.noti.category : '', Validators.required],
-            is_QR_code: [this.noti.is_QR_code],
+            is_QR_code: [this.noti.is_QR_code ? this.noti.is_QR_code : false],
             location: [this.noti.location],
             is_clear_image: [false],
             promotion_id: [this.promotion_id ? this.promotion_id : null]
@@ -136,9 +137,11 @@ export class FormNotificationComponent implements OnInit {
     */ 
     onSubmit(): void{
         this.formNotification.value.category = parseInt(this.formNotification.value.category);
+        // Convert FormGroup to FormData
+        let noti_form_data = this.convertFormGroupToFormData(this.formNotification);
         let value_form = this.formNotification.value;
         if(this.type_http == 'post'){
-            this.notificationService.addNoti(value_form).subscribe(
+            this.notificationService.addNoti(noti_form_data).subscribe(
                 (data) => {
                     this.router.navigate(['/notification/list', { message_post: value_form.subject}]);
                 },
@@ -151,7 +154,7 @@ export class FormNotificationComponent implements OnInit {
                 this.formNotification.get('is_clear_image').setValue(false);
                 this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
             }else{
-                this.notificationService.updateNoti(value_form, this.noti.id).subscribe(
+                this.notificationService.updateNoti(noti_form_data, this.noti.id).subscribe(
                     (data) => {
                         this.noti = data;
                         if(this.type_http == "put"){
@@ -236,6 +239,34 @@ export class FormNotificationComponent implements OnInit {
             this.check_QR = true;
             this.formNotification.get('is_QR_code').setValue(false);
         }
+    }
+
+    /*
+        Convert form group to form data to submit form
+        @author: lam
+    */
+    private convertFormGroupToFormData(promotionForm: FormGroup) {
+        // Convert FormGroup to FormData
+        let promotionValues = promotionForm.value;
+        let promotionFormData:FormData = new FormData(); 
+        if (promotionValues){
+            /* 
+                Loop to set value to formData
+                Case1: if value is null then set ""
+                Case2: If key is image field then set value have both file and name
+                Else: Set value default
+            */
+            Object.keys(promotionValues).forEach(k => { 
+                if(promotionValues[k] == null) {
+                    promotionFormData.append(k, '');
+                } else if (k === 'image') {
+                    promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                } else {
+                    promotionFormData.append(k, promotionValues[k]);
+                }
+            });
+        }
+        return promotionFormData;
     }
 
 }

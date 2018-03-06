@@ -643,7 +643,7 @@ class NotificationList(APIView):
 
 
 @permission_classes((AllowAny,))
-@parser_classes((MultiPartParser, JSONParser))
+@parser_classes((MultiPartParser, FormParser))
 class NotificationDetail(APIView):
 
     def get_object(self, pk):
@@ -2025,12 +2025,22 @@ class CategoryList(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
-@permission_classes((AllowAny,))
-class UploadFile(APIView): 
-    def post(self, request, format=None):
-        print "request",request
-        return Response({'tesst' : 'tesst'}, status=200)
+
+# @parser_classes((MultiPartParser, FormParser))
+# @permission_classes((AllowAny,))
+# def UploadFile(APIView): 
+@csrf_exempt
+def postUpload(request):
+    print "request", request.FILES
+    result = {
+        'uploaded': 1,
+        'fileName': 'logo.png',
+        'url': 'https://helio.vn/static/assets/images/logo.png'
+    }
+    return JsonResponse(result, status=200)
 
 
 """
