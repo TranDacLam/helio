@@ -71,4 +71,10 @@ urlpatterns = [
 	url(r'^category_list/$', views.CategoryList.as_view(), name="category-list"),
 
 	url(r'^upload_file/$', views.UploadFile.as_view(), name="upload-file"),
+
+	url(r'^game/$', views.GameAPI.as_view(), name="game"),
+	url(r'^game/(?P<id>[0-9]+)/$', views.GameAPI.as_view(), name="game-detail"),
+	url(r'^game_list/$', views.GameListAPI.as_view(), name="game-list"),
+	url(r'^type_list/$', views.TypeListAPI.as_view(), name="type-list"),
+
 ]

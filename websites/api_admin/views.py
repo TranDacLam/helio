@@ -1681,7 +1681,6 @@ class HotAPI(APIView):
 """
     Post 
     @author :Hoangnguyen
-    TODO upload image
 """
 
 
@@ -1811,7 +1810,6 @@ class PostTypeListAPI(APIView):
 """
     FAQ 
     @author :Hoangnguyen
-    TODO upload image 
 """
 
 
@@ -1908,7 +1906,7 @@ class FAQListAPI(APIView):
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
 
         except Exception, e:
-            print "HotListAPI", e
+            print "FAQListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -1956,3 +1954,120 @@ class UploadFile(APIView):
         print "request",request
         return Response({'tesst' : 'tesst'}, status=200)
 
+"""
+    Game 
+    @author :Hoangnguyen
+"""
+
+
+@parser_classes((MultiPartParser,))
+@permission_classes((AllowAny,))
+class GameAPI(APIView):
+
+    def get(self, request, id):
+        try:
+            game = Game.objects.get(id=id)
+            gameSerializer = admin_serializers.GameSerializer(game)
+            return Response(gameSerializer.data)
+
+        except Game.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Game.", "fields": ""}, status=400)
+        except Exception, e:
+            print "GameAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def post(self, request, format=None):
+        try:
+            gameSerializer = admin_serializers.GameSerializer(data=request.data)
+            if gameSerializer.is_valid():
+                gameSerializer.save()
+                return Response(gameSerializer.data)
+            return Response({"code": 400, "message": gameSerializer.errors, "fields": ""}, status=400)
+
+        except Exception, e:
+            print "GameAPI ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def put(self, request, id):
+        try:
+            game = Game.objects.get(id=id)
+            gameSerializer = admin_serializers.GameSerializer(
+                instance=game, data=request.data)
+            if gameSerializer.is_valid():
+                gameSerializer.save()
+                return Response(gameSerializer.data)
+            return Response({"code": 400, "message": gameSerializer.errors, "fields": ""}, status=400)
+
+        except Game.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Game.", "fields": ""}, status=400)
+        except Exception, e:
+            print "GameAPI", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id, format=None):
+        try:
+            game = Game.objects.get(id=id)
+            game.delete()
+            return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+
+        except Game.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Game.", "fields": ""}, status=400)
+        except Exception, e:
+            print "GameAPI", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+
+"""
+    GameList
+    @author :Hoangnguyen
+ 
+"""
+@permission_classes((AllowAny,))
+class GameListAPI(APIView):
+
+    def get(self, request):
+        try:
+            game = Game.objects.all()
+            gameSerializer = admin_serializers.GameSerializer(game, many=True)
+            return Response(gameSerializer.data)
+        except Exception, e:
+            print "GameListAPI", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request):
+        try:
+            list_id = request.data.get('list_id', None)
+            if list_id:
+                games = Game.objects.filter(id__in=list_id)
+                if games:
+                    games.delete()
+                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": "Not Found Games.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
+
+        except Exception, e:
+            print "GameListAPI", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+"""
+    TypeList
+    @author :Hoangnguyen
+ 
+"""
+@permission_classes((AllowAny,))
+class TypeListAPI(APIView):
+
+    def get(self, request):
+        try:
+            types = Type.objects.all()
+            typeSerializer = admin_serializers.TypeSerializer(types, many=True)
+            return Response(typeSerializer.data)
+        except Exception, e:
+            print "TypeListAPI", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)

@@ -290,6 +290,7 @@ class PostSerializer(serializers.ModelSerializer):
         instance.is_draft = validated_data.get('is_draft', instance.is_draft)
         instance.save()
         return instance
+
 class PostTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -311,3 +312,38 @@ class FAQSerializer(serializers.ModelSerializer):
         raise serializers.ValidationError("This category is unvalid")
 
 
+class GameSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Game
+        fields = ('id', 'name', 'short_description', 'content', 'image', 'game_type', 'is_draft')
+
+    def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.name = validated_data.get('name', instance.name)
+        instance.short_description = validated_data.get('short_description', instance.short_description)
+        instance.content = validated_data.get('content', instance.content)
+        instance.game_type = validated_data.get('game_type', instance.game_type)
+        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
+        instance.save()
+        return instance
+
+class TypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Type
+        fields = ('id', 'name', 'description', 'category', 'image', 'sub_url', 'description_detail')
+
+    def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.name = validated_data.get('name', instance.name)
+        instance.description = validated_data.get('description', instance.description)
+        instance.category = validated_data.get('category', instance.category)
+        instance.sub_url = validated_data.get('sub_url', instance.sub_url)
+        instance.description_detail = validated_data.get('description_detail', instance.description_detail)
+        instance.save()
+        return instance
