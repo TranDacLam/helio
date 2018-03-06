@@ -13,9 +13,10 @@ import { PromotionService } from '../../../shared/services/promotion.service';
 import { CategoryService } from '../../../shared/services/category.service';
 import { PromotionTypeService } from '../../../shared/services/promotion-type.service';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
-
+import { DatePipe } from '@angular/common';
 
 import { env } from '../../../../environments/environment';
+import * as moment from 'moment';
 
 declare var bootbox:any;
 
@@ -45,6 +46,7 @@ export class PromotionFormComponent implements OnInit {
     api_domain:string = "";
 
     errors: any = "";
+    apply_date: Date = new Date();
 
     constructor(
         private promotionService: PromotionService,
@@ -54,19 +56,21 @@ export class PromotionFormComponent implements OnInit {
         private fb: FormBuilder,
         private location: Location,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private datePipe: DatePipe
     ) {
         this.api_domain = env.api_domain_root;
     }
 
     ngOnInit() {
-        
+
+
         this.getAllCategory();
         this.getPromotionTypes();
         this.getPromotionLabels();
 
         this.ckEditorConfig = {
-            filebrowserUploadUrl: 'http://127.0.0.1:8000/ckeditor/upload/'
+            filebrowserUploadUrl: 'http://127.0.0.1:8000/vi/api/upload_file/'
 
         };
         this.creatPromotionForm();
@@ -87,8 +91,8 @@ export class PromotionFormComponent implements OnInit {
             promotion_category: [this.promotion.promotion_category ? this.promotion.promotion_category : ''],
             promotion_label: [this.promotion.promotion_label ? this.promotion.promotion_label : ''],
             promotion_type: [this.promotion.promotion_type ? this.promotion.promotion_type.id : ''],
-            apply_date: [this.promotion.apply_date],
-            end_date: [this.promotion.end_date],
+            apply_date: [this.promotion.apply_date ? moment(this.promotion.apply_date,"DD/MM/YYYY").toDate() : ''],
+            end_date: [this.promotion.end_date ? moment(this.promotion.end_date,"DD/MM/YYYY").toDate() : ''],
             is_draft: [this.promotion.is_draft],
         });
     }
@@ -255,11 +259,19 @@ export class PromotionFormComponent implements OnInit {
                     promotionFormData.append(k, '');
                 } else if (k === 'image' || k === 'image_thumbnail') {
                     promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                } else if (k === 'apply_date' || k === 'end_date') {
+                    promotionFormData.append(k, this.transformDate(promotionValues[k]));
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
                 }
             });
         }
         return promotionFormData;
+    }
+
+
+
+    transformDate(date) {
+        return this.datePipe.transform(date, 'dd/MM/yyyy');
     }
 }

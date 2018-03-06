@@ -1,6 +1,13 @@
 <div class="row text-center">
     <h1 class="h1-title">CHI TIẾT KHUYÊN MÃI</h1>
 </div>
+<div *ngIf="message_result" class="row">
+    <div class="col-md-12">
+        <div *ngIf="message_result" class="alert alert-success">
+            {{ message_result }}
+        </div>
+    </div>
+</div>
 <div class="row mb-20"  *ngIf="promotion">
     <div class="col-sm-6">
         <a class="btn btn-primary mb-20" routerLink="/promotions">TRỞ VỀ QUẢN LÝ KHUYẾN MÃI</a>
