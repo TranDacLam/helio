@@ -28,6 +28,7 @@
                 name="allLinkCards" value="allLinkCards" (change)="selectAllCheckbox($event);"/>
             </th>
             <th>Card Bardoce</th>
+            <th>Email</th>
             <th>Họ và Tên </th>
             <th>Số điện thoại</th>
             <th>Ngày sinh</th>
@@ -48,6 +49,9 @@
                 </label>
             </td>
             <td>{{ link_card.barcode }}</td>
+            <td><a [routerLink]="['../link-card/detail/', link_card.id, { email: link_card.email, barcode: link_card.barcode }]">
+                {{ link_card.email }}</a>
+            </td>
             <td>{{ link_card.full_name }}</td>
             <td>{{ link_card.phone }}</td>
             <td>{{ link_card.birth_date }}</td>

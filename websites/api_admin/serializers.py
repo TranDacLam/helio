@@ -2,14 +2,10 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from core.models import *
 from core.custom_models import *
-from django.contrib.auth import get_user_model
 from datetime import datetime
 import core.constants as const
 
 from rest_framework import serializers    
-
-
-
 
 class Base64ImageField(serializers.ImageField):
     """
@@ -116,22 +112,27 @@ class PromotionDisplaySerializer(serializers.ModelSerializer):
     class Meta:
         model = Promotion
         fields = '__all__'
+from rest_framework.fields import CurrentUserDefault
 
 class PromotionSerializer(serializers.ModelSerializer):
     apply_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
     end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
+
     class Meta:
         model = Promotion
         fields = '__all__'
 
-    # def validate(self, data):
-    #     if data['apply_date'] > data['end_date']:
-    #         raise serializers.ValidationError("Apply Date must be less than End Date")
-    #     return data
+    def validate(self, data):
+        if data['apply_date'] and data['end_date'] and data['apply_date'] > data['end_date']:
+            raise serializers.ValidationError("Apply Date must be less than End Date")
+        return data
 
     def create(self, validated_data):
-        print "CREATE"
-        return Promotion(**validated_data)
+        # If this promotion is public then set user
+
+        if not validated_data.get('is_draft'):
+            validated_data['user_implementer'] = self.context['request'].user
+        return Promotion.objects.create(**validated_data)
     def update(self, instance, validated_data):
         image = validated_data.get('image', instance.image)
         if image:
@@ -140,7 +141,9 @@ class PromotionSerializer(serializers.ModelSerializer):
         if image_thumbnail:
             instance.image_thumbnail = image_thumbnail
 
-        # is_draft = validated_data.get('is_draft', True)
+        # Is this promotion change from draft to public then set user
+        if instance.is_draft and not validated_data.get('is_draft'):
+            instance.user_implementer = self.context['request'].user
 
         # print is_draft, instance.is_draft
 
@@ -184,7 +187,22 @@ class NotificationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Notification
-        fields=('id', 'subject', 'image', 'sub_url', 'category', 'sent_date', 'sent_user', 'is_draft', 'location', 'is_QR_code', 'message')
+        fields= '__all__'
+
+    def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.subject = validated_data.get('subject', instance.subject)
+        instance.sub_url = validated_data.get('sub_url', instance.sub_url)
+        instance.category = validated_data.get('category', instance.category)
+        instance.location = validated_data.get('location', instance.location)
+        instance.is_QR_code = validated_data.get('is_QR_code', instance.is_QR_code)
+        instance.message = validated_data.get('message', instance.message)
+        instance.promotion = validated_data.get('promotion', instance.promotion)
+        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
+        instance.save()
+        return instance
 
 class UserEmbedSerializer(serializers.Serializer):
     full_name = serializers.CharField(required=True)
@@ -209,11 +227,21 @@ class FeeSerializer(serializers.ModelSerializer):
 
 class BannerSerializer(serializers.ModelSerializer):
 
-    image = serializers.ImageField(max_length=None, use_url=True)
-
     class Meta:
         model = Banner
-        fields = ('id', 'image', 'sub_url', 'position')
+        fields = ('id', 'image', 'sub_url', 'position', 'is_show')
+
+    def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.sub_url = validated_data.get('sub_url', instance.sub_url)
+        instance.position = validated_data.get('position', instance.position)
+        instance.is_show = validated_data.get('is_show', instance.is_show)
+        instance.save()
+        return instance
+
+
 
 class CategoryNotificationSerializer(serializers.ModelSerializer):
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -57,7 +57,7 @@ export class FeedbackDetailComponent implements OnInit {
 	        sent_date: [this.formFeed.sent_date],
 	        rate: [this.formFeed.rate],
 	        status: [this.formFeed.status],
-	        answer: [this.formFeed.answer],     
+	        answer: [this.formFeed.answer, [Validators.maxLength(1000)]],     
       })
   	}
   	/*
@@ -66,10 +66,9 @@ export class FeedbackDetailComponent implements OnInit {
     */
   	getFeedback() {
     	const id = +this.route.snapshot.paramMap.get('id');
-    	this.feedbackService.getFeedbackById(id)
-    	.subscribe(
-        feedback => this.feedback = feedback,
-        error =>  this.errorMessage = <any>error
+    	this.feedbackService.getFeedbackById(id).subscribe(
+            feedback => this.feedback = feedback,
+            error =>  this.router.navigate(['/error', { message: error }])
         );
     }
 
@@ -81,7 +80,7 @@ export class FeedbackDetailComponent implements OnInit {
     	this.feedbackService.deleteFeedbackById(feedback)
             .subscribe(
                 () => this.router.navigate(['/feedback-list', { message_del: feedback.name} ]),
-                error =>  this.errorMessage = <any>error
+                error =>  this.router.navigate(['/error', { message: error.json().message }])
            );
     }
     /* 
@@ -92,7 +91,14 @@ export class FeedbackDetailComponent implements OnInit {
     	this.feedbackService.updateFeedbackById(this.feedback)
     	    .subscribe(
                 () => this.router.navigate(['/feedback-list', { message_put: this.feedback.name} ]),
-                error =>  this.errorMessage = <any>error
+                (error) =>  {
+                    if (error.status == 400) {
+                        this.errorMessage = error.json().message
+                    } else {
+                        this.router.navigate(['/error', { message: error.json().message }])
+                    }
+                    
+                }
             )
     }
 

@@ -3,7 +3,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item"><a routerLink="/advertisement-list">Quảng cáo</a></li>
+            <li class="breadcrumb-item"><a routerLink="/advertisement-list">Quảng Cáo</a></li>
             <li class="breadcrumb-item"><a routerLink="/advertisement-add">Thêm Quảng Cáo</a></li>
         </ol>
     </nav>
@@ -23,6 +23,7 @@
                 <input class='form-control' name="name" 
                 ngModel
                 required 
+                maxlength="254" 
                 placeholder="Nhập Tên Quảng Cáo" 
                 ([ngModel])="name"
                 #name = "ngModel"
@@ -30,6 +31,14 @@
                 <div *ngIf="name.invalid && (name.dirty || name.touched)">
                     <em [ngStyle]="{'color': 'red'}" *ngIf="name.errors.required">
                     Trường không được bỏ trống.
+                    </em>
+                    <em [ngStyle]="{'color': 'red'}" *ngIf="name.errors.maxlength">
+                        Quảng cáo nhỏ hơn hoặc bằng 254 kí tự
+                    </em>
+                </div>
+                <div *ngIf="errorMessage">
+                    <em [ngStyle]="{'color': 'red'}">
+                        {{ errorMessage }}
                     </em>
                 </div>
             </div>

@@ -29,7 +29,7 @@ export class ListHotComponent implements OnInit {
 
     hots: Hot[];
     hots_del = []; // Get array id to delete all id hot
-    length_hots: numebr;
+    length_hots: number;
     select_checked = false; // Check/uncheck all hot
     message_result = ''; // Message error
 
@@ -62,7 +62,7 @@ export class ListHotComponent implements OnInit {
         this.hotService.getHots().subscribe(
             (data) => {
                 this.hots = data;
-                this.length_hots = this.hosts;
+                this.length_hots = this.hots.length;
             } 
         );
     }

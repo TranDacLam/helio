@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Denomination } from '../../../shared/class/denomination';
 
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { DenominationService } from '../../../shared/services/denomination.service';
 import { Router } from "@angular/router";
 
@@ -15,14 +17,24 @@ export class DenominationAddComponent implements OnInit {
     denominations: Denomination[] = [];
     errorMessage: string;
     
+    denoForm: FormGroup;
+    data: '';
+    
     constructor(
         private router: Router,
+        private fb: FormBuilder,
         private denominationService: DenominationService,
         ) { }
 
     ngOnInit() {
+        this.createForm();
     }
 
+    createForm() {
+        this.denoForm = this.fb.group({
+          denomination: ['', Validators.required],
+        });
+    }
     /* 
         Add Denomination
         Call service denomination
@@ -37,9 +49,9 @@ export class DenominationAddComponent implements OnInit {
             },
             (error) =>  {
                 if(error.status == 400) {
-                    this.errorMessage = error;
+                    this.errorMessage = error.json().denomination[0];
                 } else {
-                    this.router.navigate(['/error', { message: error }]);
+                    this.router.navigate(['/error', { message: error.json().message }]);
                 }
             })
     }
@@ -50,5 +62,4 @@ export class DenominationAddComponent implements OnInit {
     removeMessage(er) {
        this.errorMessage = '';
     }
-    
 }

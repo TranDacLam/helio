@@ -13,9 +13,10 @@ import { PromotionService } from '../../../shared/services/promotion.service';
 import { CategoryService } from '../../../shared/services/category.service';
 import { PromotionTypeService } from '../../../shared/services/promotion-type.service';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
-
+import { DatePipe } from '@angular/common';
 
 import { env } from '../../../../environments/environment';
+import * as moment from 'moment';
 
 declare var bootbox:any;
 
@@ -44,7 +45,9 @@ export class PromotionFormComponent implements OnInit {
 
     api_domain:string = "";
 
-    public selectedMoment = new Date();
+    errors: any = "";
+    apply_date: Date = new Date();
+
     constructor(
         private promotionService: PromotionService,
         private categoryService: CategoryService,
@@ -53,19 +56,24 @@ export class PromotionFormComponent implements OnInit {
         private fb: FormBuilder,
         private location: Location,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private datePipe: DatePipe
     ) {
         this.api_domain = env.api_domain_root;
     }
 
     ngOnInit() {
-        
+
+
         this.getAllCategory();
         this.getPromotionTypes();
         this.getPromotionLabels();
 
         this.ckEditorConfig = {
-            filebrowserUploadUrl: 'http://127.0.0.1:8000/ckeditor/upload/'
+            // removePlugins: 'filebrowser',
+            extraPlugins: 'uploadimage,youtube',
+            uploadUrl: 'http://127.0.0.1:8000/vi/api/upload_file/',
+            // filebrowserUploadUrl: 'http://127.0.0.1:8000/vi/api/upload_file/'
 
         };
         this.creatPromotionForm();
@@ -86,8 +94,8 @@ export class PromotionFormComponent implements OnInit {
             promotion_category: [this.promotion.promotion_category ? this.promotion.promotion_category : ''],
             promotion_label: [this.promotion.promotion_label ? this.promotion.promotion_label : ''],
             promotion_type: [this.promotion.promotion_type ? this.promotion.promotion_type.id : ''],
-            apply_date: [this.promotion.apply_date],
-            end_date: [this.promotion.end_date],
+            apply_date: [this.promotion.apply_date ? moment(this.promotion.apply_date,"DD/MM/YYYY").toDate() : ''],
+            end_date: [this.promotion.end_date ? moment(this.promotion.end_date,"DD/MM/YYYY").toDate() : ''],
             is_draft: [this.promotion.is_draft],
         });
     }
@@ -157,6 +165,7 @@ export class PromotionFormComponent implements OnInit {
         @author: diemnguyen
     */
     saveEvent(): void {
+        this.errors = '';
         const that = this;
         // Convert FormGroup to FormData
         let promotionFormData = this.convertFormGroupToFormData(this.promotionForm);
@@ -171,7 +180,7 @@ export class PromotionFormComponent implements OnInit {
                     that.router.navigate(['/promotions', {'action': 'Sửa "', 'promotion_name': this.promotionForm.value['name']}]);
                 }, 
                 (error) => {
-                    that.router.navigate(['/error']);
+                    that.errors = error;
                 }
             );
         } else {
@@ -181,7 +190,8 @@ export class PromotionFormComponent implements OnInit {
                     that.router.navigate(['/promotions', {'action': 'Tạo mới "', 'promotion_name': this.promotionForm.value['name']}]);
                 }, 
                 (error) => {
-                    that.router.navigate(['/error']);
+                    that.errors = error;
+                    // that.router.navigate(['/error']);
                 }
             );
         }
@@ -216,8 +226,6 @@ export class PromotionFormComponent implements OnInit {
                             (data) => {
                                 if (data.status == 204) {
                                     that.router.navigate(['/promotions', {'action': 'Xóa "', 'promotion_name': that.promotion.name}]);
-                                } else {
-                                    console.log("Xoa khong thanh cong");
                                 }
                             }, 
                             (error) => {
@@ -252,11 +260,17 @@ export class PromotionFormComponent implements OnInit {
                     promotionFormData.append(k, '');
                 } else if (k === 'image' || k === 'image_thumbnail') {
                     promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                } else if (k === 'apply_date' || k === 'end_date') {
+                    promotionFormData.append(k, this.transformDate(promotionValues[k]));
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
                 }
             });
         }
         return promotionFormData;
+    }
+
+    transformDate(date) {
+        return date ? this.datePipe.transform(date, 'dd/MM/yyyy') : '';
     }
 }

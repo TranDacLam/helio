@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Http, Response } from '@angular/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { LinkCardService } from '../../../shared/services/link-card.service';
 import { User } from '../../../shared/class/user';
@@ -42,6 +42,7 @@ export class LinkCardListComponent implements OnInit {
   	constructor(
   		private route: ActivatedRoute,
         private linkCardService: LinkCardService,
+        private router: Router,
   		) { 
   		this.link_card_del = [];
         this.link_cards = [];
@@ -60,12 +61,12 @@ export class LinkCardListComponent implements OnInit {
      */
   	getAllLinkCards() {
       this.linkCardService.getAllLinkedUsers().subscribe(
-        result => {
-          this.link_cards = result,
+        (result) => {
+          this.link_cards = result;
           // Caling the DT trigger to manually render the table
           this.dtTrigger.next();
         },
-        error =>  this.errorMessage = <any>error
+        (error) => this.router.navigate(['/error', { message: error }])
         )
   	}
     /*
@@ -99,16 +100,9 @@ export class LinkCardListComponent implements OnInit {
             this.message_success ='';
             this.message_result = "";
         } else {
-            let updateItem = this.link_card_del.find(this.findIndexToUpdate, linkCard.id);
-
-            let index = this.link_card_del.indexOf(updateItem);
-
-            this.link_card_del.splice(index, 1);
+            this.link_card_del = this.link_card_del.filter(ad => ad !== linkCard.id);
         }
   	}
-  	findIndexToUpdate(linkCard) { 
-        return linkCard.id === this;
-    }
 
     /*
         Confirm Delete Checkbox Selected
@@ -152,7 +146,7 @@ export class LinkCardListComponent implements OnInit {
 
   	deleteLinkCardCheckbox() {
         this.linkCardService.deleteAllUserLinkedSelected(this.link_card_del).subscribe(
-            result => {
+            (result) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                         var self = this;
                         this.link_card_del.forEach(function(e){
@@ -163,6 +157,9 @@ export class LinkCardListComponent implements OnInit {
                         this.link_card_del = [];
                    });
                 this.message_success = "Xóa thẻ liên kết thành công";
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
             }
         );
     }

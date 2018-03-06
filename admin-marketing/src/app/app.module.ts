@@ -10,6 +10,8 @@ import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app.routing';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime'; // date and time
 import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+import { DatePipe } from '@angular/common';
+
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from './components/users/users.component';
@@ -180,6 +182,7 @@ import { ErrorComponent } from './components/error/error.component';
     BannerService,
     CategoryService,
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'vi'},
+    DatePipe,
   ],
   bootstrap: [AppComponent]
 })
