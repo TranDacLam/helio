@@ -15,8 +15,6 @@ export class UserDetailComponent implements OnInit {
 	user_form = new User();
 	readonly_value = true;
 
-   @ViewChild('fileInput') fileInput: ElementRef;
-
 	constructor( private fb: FormBuilder) { }
 
 	ngOnInit() {
@@ -28,40 +26,35 @@ export class UserDetailComponent implements OnInit {
 		this.formUser = this.fb.group({
         email: [this.user_form.email, [Validators.required, Validators.email]],
         full_name: [this.user_form.full_name, [Validators.required]],
-          birth_date: [this.user_form.birth_date],
-          phone: [this.user_form.phone, [Validators.required]],
-          personal_id: [this.user_form.personal_id],
-          country: [this.user_form.country],
-          address: [this.user_form.address],
-          city: [this.user_form.city],
-          image: [this.user_form.image],
-          password: [this.user_form.password],
-          role_user: [this.user_form.role_user, [Validators.required]] 
+        birth_date: [this.user_form.birth_date],
+        phone: [this.user_form.phone, [Validators.required]],
+        personal_id: [this.user_form.personal_id],
+        country: [this.user_form.country],
+        address: [this.user_form.address],
+        city: [this.user_form.city],
+        avatar: [this.user_form.avatar],
+        password: [this.user_form.password],
+        role_user: [this.user_form.role_user, [Validators.required]] 
     })
 	}
 
-  // upload image 
-  // FileReader: reading file contents
-  onFileChange(e) {
-    let reader = new FileReader();
-    if(e.target.files && e.target.files.length > 0) {
-      let file = e.target.files[0];
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.formUser.get('image').setValue(file)
-      };
+    // upload image 
+    // FileReader: reading file contents
+    onFileChange(event) {
+        let reader = new FileReader();
+        let input_id = $(event.target).attr('id');
+        if(event.target.files && event.target.files.length > 0) {
+            let file = event.target.files[0];
+            this.formUser.get(input_id).setValue({ filename: file.name, filetype: file.type, value: file });
+        }
     }
-  }
-  // Clear file 
-  clearFile() {
-    this.formUser.get('image').setValue(null);
-    this.fileInput.nativeElement.value = '';
-  }
 
-  // Show pass word
+
+    // Show pass word
  	showPassword(input: any): any {
  		input.type = input.type === 'password' ? 'text' : 'password';
  	}
+
  	// Change attribute readonly password
  	ChangeReadonly(event) {
  		if(event.target.checked) {

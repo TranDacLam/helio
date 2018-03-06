@@ -12,7 +12,6 @@
 <div class='title-user row'>
     <a class="pull-left" routerLink="/user-add">Thêm User</a>
 </div>
-
 <form [formGroup]="formUser" (ngSubmit)="onSubmit()">
 	<div class='content-form-add-user row'>
 		<div class="col-md-8 col-md-offset-2">
@@ -42,11 +41,15 @@
 				<div class="col-sm-3">
 					<label class="center-block">Ngày sinh:</label>
 				</div>
-	        	<div class="col-sm-8">	
-					<input class='form-control' name="birth_date" 
-					formControlName="birth_date" type="date"
-					>
-					<show-error-valid [control]="formUser.get('birth_date')"></show-error-valid>	
+	        	<div class="col-sm-8">
+	        		<div class="input-group">
+		                <input type="text" class="form-control event-date" formControlName="birth_date" name="birth_date" [owlDateTime]="dtBirtday"/>         
+		                <owl-date-time [pickerType]="'calendar'"  #dtBirtday></owl-date-time>
+		                <span class="input-group-addon" [owlDateTimeTrigger]="dtBirtday">
+		                    <i class="fa fa-calendar"></i>
+		                </span>
+						<show-error-valid [control]="formUser.get('birth_date')"></show-error-valid>	
+	        		</div>
 	        	</div>
 	        </div>
 			<div class="form-group row">
@@ -109,10 +112,10 @@
 		            <label class="center-block">Hình Ảnh:</label>
 		        </div>
 		        <div class="col-sm-8">
-	            	<input type="file" formControlName="image" class="form-control" accept="image/*"
-	            (change)="onFileChange($event)" #inputImage/>
-	            	<show-error-valid [control]="formUser.get('image')"></show-error-valid>
-	            	<button type="button" class=" clear-file btn btn-danger" (click)="clearFile()">Clear file</button>
+	            	<input type="file" id="avatar" class="form-control" accept="image/*"
+			        (change)="onFileChange($event)"
+			        />
+	            	<show-error-valid [control]="formUser.get('avatar')"></show-error-valid>
 	        	</div>
 	        	
 	    	</div>

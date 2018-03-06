@@ -10,11 +10,12 @@ export class User {
     address: string;
     country: string;
 	city: string;
-    image: string|any;
+    avatar: string|any;
 	password: string;
 	role_user: string;
     username_mapping: string;
     date_mapping: string;
+    is_active: boolean;
 
     isChecked: boolean;
 }

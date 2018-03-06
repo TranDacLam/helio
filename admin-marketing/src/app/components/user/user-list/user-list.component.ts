@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 
 import { Subject } from 'rxjs/Subject';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { User } from '../../../shared/class/user';
+import { UserService } from '../../../shared/services/user.service';
 import { data_config } from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
@@ -12,7 +13,8 @@ declare var bootbox:any;
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  styleUrls: ['./user-list.component.css'],
+  providers: [ UserService ]
 })
 export class UserListComponent implements OnInit {
 
@@ -32,11 +34,16 @@ export class UserListComponent implements OnInit {
   	@ViewChild(DataTableDirective)
   	dtElement: DataTableDirective;
 
-	// Using trigger becase fetching the list of feedbacks can be quite long
-  	// thus we ensure the data is fetched before rensering
-	// dtTrigger: Subject<any> = new Subject();
+	/* 
+        Using trigger becase fetching the list of feedbacks can be quite long
+  	    thus we ensure the data is fetched before rensering
+    */
+	dtTrigger: Subject<any> = new Subject();
+
   	constructor(
-  		private route: ActivatedRoute
+  		private route: ActivatedRoute,
+        private userService: UserService,
+        private router: Router,
   		) {
   			this.users = [];
   			this.user_selected = [];
@@ -50,6 +57,15 @@ export class UserListComponent implements OnInit {
 
   	// Get All User
   	getAllUser() {
+        this.userService.getAllUsers().subscribe(
+            (data) => {
+                this.users = data;
+                this.dtTrigger.next();
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error }])
+            }
+            )
 
   	}
 
@@ -73,23 +89,16 @@ export class UserListComponent implements OnInit {
     }
 
   	// Change checkbox item
-  	checkItemChange(event, deno) {
+  	checkItemChange(event, user) {
   		if(event.target.checked){
-        	this.user_selected.push(deno.id);
-          this.message_success = "";
-          this.message_result = "";
+        	this.user_selected.push(user.id);
+            this.message_success = "";
+            this.message_result = "";
       	}
       	else{
-       		let updateDenoItem = this.user_selected.find(this.findIndexToUpdate, deno.id);
-
-       		let index = this.user_selected.indexOf(updateDenoItem);
-
-       		this.user_selected.splice(index, 1);
+       		this.user_selected = this.user_selected.filter(user => user !== user.id);
       	}
   	}
-  	findIndexToUpdate(type) { 
-        return type.id === this;
-    }
 
     /*
         Confirm Delete Checkbox Selected
@@ -129,6 +138,23 @@ export class UserListComponent implements OnInit {
 
     // Delete All Checkbox
     deleteUsersCheckbox() {
+        this.userService.deleteUserSelected(this.user_selected).subscribe(
+            (data) => {
+                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                    var self = this;
+                    this.user_selected.forEach(function(e){
+                        dtInstance.rows('#delete'+e).remove().draw();
+                        var item = self.users.find(user => user.id == e);
+                        self.users = self.users.filter(users => users !== item);
+                    });
+                    this.user_selected = [];
+                });
+                this.message_success = "Xóa user thành công";
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
+            }
+        )
     	
     }
 

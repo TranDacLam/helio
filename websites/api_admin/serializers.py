@@ -301,3 +301,10 @@ class FAQSerializer(serializers.ModelSerializer):
     class Meta:
         model = FAQ
         fields = ('id', 'question', 'answer', 'category')
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = '__all__'
+

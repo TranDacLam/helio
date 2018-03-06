@@ -10,7 +10,12 @@
 <!-- End breadcrumb -->
 <div class='row title-user'>
 	<a class="pull-left" routerLink="/user-list">User</a>
-	<a class="pull-right" routerLink="/user-add">Thêm user</a>
+	<a class="pull-right" routerLink="/user-add">
+		<div class="btn btn-primary">
+			<span class="glyphicon glyphicon-plus"></span>
+			Thêm user
+		</div>
+	</a>
 </div>
 <br>
 <div class="table card-list">
@@ -23,7 +28,7 @@
 	<table id="table-user" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
-	      		<th><input type="checkbox" name="allCheckUse" value="allCheckUser"(change)="checkAllUser($event)"/></th>
+	      		<th class="checkbox-user"><input type="checkbox" name="allCheckUse" value="allCheckUser"(change)="checkAllUser($event)"/></th>
 	      		<th> Email</th>
 	        	<th>Loại User </th>
 	      	</tr>
@@ -33,7 +38,7 @@
    				<td><input type="checkbox" [checked]="select_checkbox"
    					value={{user.id}} name=""
    					(change)="checkItemChange($event, user)"/></td>
-   				<td>{{ user.email }}</td>
+   				<td class="title-email">{{ user.email }}</td>
         		<td>{{ user.role_user }}</td>
    			</tr>
     	</tbody>

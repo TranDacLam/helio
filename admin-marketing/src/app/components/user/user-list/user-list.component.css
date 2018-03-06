@@ -1,6 +1,16 @@
 /*begin content user list*/
+.checkbox-user {
+	padding: 10px;
+}
 .title-user {
 	margin: 15px 0px;
 	border-bottom: 1px solid black;
+	padding: 0 0 10px 0px;
+}
+a.pull-left {
+	color: #333333;
+}
+a.pull-left:hover {
+	text-decoration: none;
 }
 /*end content user list*/

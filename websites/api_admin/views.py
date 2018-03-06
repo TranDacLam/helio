@@ -2032,3 +2032,115 @@ class UploadFile(APIView):
         print "request",request
         return Response({'tesst' : 'tesst'}, status=200)
 
+
+"""
+GET, DELETE, POST User
+@author: TrangLe
+"""
+@parser_classes((MultiPartParser, JSONParser))
+@permission_classes((AllowAny,))
+class UserListView(APIView):
+    """
+        Method: GET
+        Get All User
+    """
+    def get(self, request, format=None):
+        print "METHOD GET"
+        try:
+            users = User.objects.all()
+            serializer = admin_serializers.UserSerializer(users, many=True)
+            return Response(serializer.data)
+
+        except Exception, e:
+            print "List User",e
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+
+    """
+        Method:POST
+        Create Users
+    """
+    def post(self, request, format=None):
+        print "METHOD POST"
+        try:
+            serializer = admin_serializers.UserSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+
+        except Exception, e:
+            print "banner ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    """
+        Method: DELETE
+        Delete all user check
+    """
+    def delete(self, request, format=None):
+        print "METHOD DELETE"
+        try:
+            # Get list user id to delete
+            user_id = self.request.data.get('user_id', None)
+            print "User List Id", user_id
+
+            # Check list user id
+            if user_id:
+                User.objects.filter(pk__in=user_id).delete()
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
+
+        except Exception, e:
+            print e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+"""
+    GET, PUT User Detail
+    @author: TrangLe
+"""
+@parser_classes((MultiPartParser, JSONParser))
+@permission_classes((AllowAny,))
+class UserDetailView(APIView):
+
+    def get_object(self, pk):
+        try:
+            queryset = User.objects.get(pk=pk)
+            return queryset
+        except User.DoesNotExist, e:
+            raise Http404
+
+    """
+        Get User By Id
+    """
+    def get(self, request, pk, format=None):
+        print "METHOD GET"
+
+        user = self.get_object(pk)
+        try:
+            serializer = admin_serializers.UserSerializer(user)
+            return Response(serializer.data)
+        except Exception, e:
+            print 'UserDetailView ', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    """
+        Update User By Id
+    """
+    def put(self, request, pk, format=None):
+        print "METHOD PUT",
+
+        user = self.get_object(pk)
+        try:
+            serializer = admin_serializers.UserSerializer(user, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception, e:
+            print 'UserDetailView PUT', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)

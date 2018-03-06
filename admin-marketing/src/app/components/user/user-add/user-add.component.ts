@@ -14,8 +14,6 @@ export class UserAddComponent implements OnInit {
 	user_form = new User();
 	users: User[];
 	roles_user = roles_user;
-  
-  @ViewChild('fileInput') fileInput: ElementRef;
 
 	constructor(
 		private fb: FormBuilder
@@ -36,27 +34,21 @@ export class UserAddComponent implements OnInit {
             country: [this.user_form.country],
             address: [this.user_form.address],
             city: [this.user_form.city],
-            image: [this.user_form.image],
+            avatar: [this.user_form.avatar],
             password: [this.user_form.password],
+            is_active: [this.user_form.is_active],
             role_user: [this.user_form.role_user, [Validators.required]]
         });
  	}
-   // upload image 
+    // upload image 
     // FileReader: reading file contents
-    onFileChange(e) {
-      let reader = new FileReader();
-      if(e.target.files && e.target.files.length > 0) {
-        let file = e.target.files[0];
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          this.formUser.get('image').setValue(file)
-        };
-      }
-    }
-    // Clear file 
-    clearFile() {
-      this.formUser.get('image').setValue(null);
-      this.fileInput.nativeElement.value = '';
+    onFileChange(event) {
+        let reader = new FileReader();
+        let input_id = $(event.target).attr('id');
+        if(event.target.files && event.target.files.length > 0) {
+            let file = event.target.files[0];
+            this.formUser.get(input_id).setValue({ filename: file.name, filetype: file.type, value: file });
+        }
     }
 
  	// Show pass word
