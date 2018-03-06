@@ -116,15 +116,6 @@ export class FormNotificationComponent implements OnInit {
     }
 
     /*
-        Function clearFile(): Clear value input file image
-        author: Lam
-    */ 
-    clearFile(): void {
-        this.formNotification.get('image').setValue(null);
-        this.inputImage.nativeElement.value = "";
-    }
-
-    /*
         Function onSubmit():
          + Step 1: Check type_http add notification (post), edit notification (put), edit use modal (put_popup)
          + Step 2:  

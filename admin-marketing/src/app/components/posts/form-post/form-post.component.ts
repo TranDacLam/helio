@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -7,6 +7,7 @@ import { PostService } from '../../../shared/services/post.service';
 import { PostType } from './../../../shared/class/post-type';
 import { PostTypeService } from '../../../shared/services/post-type.service';
 import 'rxjs/add/observable/throw';
+import { env } from '../../../../environments/environment';
 
 @Component({
     selector: 'form-post',
@@ -20,16 +21,14 @@ export class FormPostComponent implements OnInit {
         author: Lam
     */
 
-    // set inputImage property as a local variable, #inputImage on the tag input file
-    @ViewChild('inputImage')
-    inputImage: any;
-
     @Input() post: Post; // Get post from component parent
 
     formPost: FormGroup;
     post_types: PostType[];
+    multi_imgae: any;
 
     errorMessage = ''; // Messages error
+    api_domain: string = '';
 
     constructor(
         private postService: PostService,
@@ -38,7 +37,9 @@ export class FormPostComponent implements OnInit {
         private location: Location,
         private router: Router,
         private route: ActivatedRoute
-    ) { }
+    ) { 
+        this.api_domain = env.api_domain_root;
+    }
 
     ngOnInit() {
         this.getPostTypes();
@@ -55,9 +56,11 @@ export class FormPostComponent implements OnInit {
             image: [this.post.image, Validators.required],
             short_description: [this.post.short_description, Validators.required],
             content: [this.post.content, Validators.required],
-            post_type_id: [this.post.post_type_id, Validators.required],
-            pin_to_top: [this.post.pin_to_top],
+            post_type_id: [this.post.post_type_id ? this.post.post_type_id : '', Validators.required],
+            pin_to_top: [this.post.pin_to_top ? this.post.pin_to_top : false],
             key_query: [this.post.key_query, Validators.required],
+            is_clear_image: [false],
+            is_clear_multi_image: [false]
         });
     }
 
@@ -77,20 +80,32 @@ export class FormPostComponent implements OnInit {
         let reader = new FileReader();
         if(event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                this.formPost.get('image').setValue(reader.result.split(',')[1]);
-            };
+            this.formPost.get('image').setValue({
+                filename: file.name,
+                filetype: file.type,
+                value: file,
+            });
         }
     }
 
     /*
-        Function clearFile(): Clear value input file image
+        Function onFileMultipleChange(): Input multiple file image to get base 64
         author: Lam
     */ 
-    clearFile(): void {
-        this.formPost.get('image').setValue(null);
-        this.inputImage.nativeElement.value = "";
+    onFileMultipleChange(event): void{
+        this.multi_imgae = [];
+        let obj_image: any;
+        if(event.target.files && event.target.files.length > 0) {
+            for(let i = 0; i < event.target.files.length; i++){
+                let file = event.target.files[i];
+                obj_image = {
+                    filename: file.name,
+                    filetype: file.type,
+                    value: file,
+                }
+                this.multi_imgae.push(obj_image);
+            }
+        }
     }
 
     /*

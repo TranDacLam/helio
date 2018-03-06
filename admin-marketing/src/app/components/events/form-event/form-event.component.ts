@@ -57,7 +57,24 @@ export class FormEventComponent implements OnInit {
             start_time: [this.event.start_time, Validators.required],
             end_time: [this.event.end_time, Validators.required],
             is_draft: [this.event.is_draft],
-        });
+        }, {validator: this.dateLessThan('start_date', 'end_date')});
+    }
+
+    /*
+        function dateLessThan(): validate date
+        @author: lam
+    */
+    dateLessThan(from: string, to: string) {
+        return (group: FormGroup): {[key: string]: any} => {
+            let f = group.controls[from];
+            let t = group.controls[to];
+            if (f.value > t.value) {
+                return {
+                    dates: "* Ngày kết thúc phải nhỏ hơn ngày bắt đầu."
+                };
+            }
+            return {};
+        }
     }
 
     /*

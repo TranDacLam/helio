@@ -41,6 +41,7 @@
         </div>
     </div>
 
+    <label *ngIf="formEvent.errors" class="error_msg col-md-offset-2">{{ formEvent.errors?.dates }}</label>
     <div class="form-group row">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Ngày Bắt Đầu</label>
