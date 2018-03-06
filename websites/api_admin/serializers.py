@@ -4,6 +4,7 @@ from core.models import *
 from core.custom_models import *
 from django.contrib.auth import get_user_model
 from datetime import datetime
+import core.constants as const
 
 from rest_framework import serializers    
 
@@ -296,7 +297,17 @@ class PostTypeSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'description')
 
 class FAQSerializer(serializers.ModelSerializer):
-
+    # follow models.py
+    limit_category_Faq = [const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY,
+                           const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY]
+    
     class Meta:
         model = FAQ
         fields = ('id', 'question', 'answer', 'category')
+
+    def validate_category( self, value):
+        if value.id in self.limit_category_Faq:
+            return value
+        raise serializers.ValidationError("This category is unvalid")
+
+
