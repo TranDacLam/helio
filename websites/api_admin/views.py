@@ -21,14 +21,14 @@ from django.utils import timezone
 from django.db.models import Count
 from django.http import Http404
 from django.db import DatabaseError
-from rest_framework.decorators import parser_classes
+from rest_framework.decorators import parser_classes, authentication_classes
 from rest_framework.parsers import MultiPartParser
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 import json
 """
     Get Promotion
     @author: diemnguyen
 """
-
 
 class PromotionList(APIView):
 
@@ -255,6 +255,7 @@ class UserDetail(APIView):
             print "UserDetail", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
 
 
 """
@@ -2048,6 +2049,7 @@ GET, DELETE, POST User
 @author: TrangLe
 """
 @parser_classes((MultiPartParser, JSONParser))
+@authentication_classes((SessionAuthentication, BasicAuthentication))
 @permission_classes((AllowAny,))
 class UserListView(APIView):
     """
@@ -2058,7 +2060,7 @@ class UserListView(APIView):
         print "METHOD GET"
         try:
             users = User.objects.all()
-            serializer = admin_serializers.UserSerializer(users, many=True)
+            serializer = admin_serializers.UserRoleDisplaySerializer(users, many=True)
             return Response(serializer.data)
 
         except Exception, e:
@@ -2073,7 +2075,7 @@ class UserListView(APIView):
     def post(self, request, format=None):
         print "METHOD POST"
         try:
-            serializer = admin_serializers.UserSerializer(data=request.data)
+            serializer = admin_serializers.UserRoleSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
@@ -2111,6 +2113,7 @@ class UserListView(APIView):
     @author: TrangLe
 """
 @parser_classes((MultiPartParser, JSONParser))
+@authentication_classes((SessionAuthentication, BasicAuthentication))
 @permission_classes((AllowAny,))
 class UserDetailView(APIView):
 
@@ -2129,7 +2132,7 @@ class UserDetailView(APIView):
 
         user = self.get_object(pk)
         try:
-            serializer = admin_serializers.UserSerializer(user)
+            serializer = admin_serializers.UserRoleDisplaySerializer(user)
             return Response(serializer.data)
         except Exception, e:
             print 'UserDetailView ', e
@@ -2140,16 +2143,41 @@ class UserDetailView(APIView):
         Update User By Id
     """
     def put(self, request, pk, format=None):
-        print "METHOD PUT",
+        print "METHOD PUT"
 
         user = self.get_object(pk)
         try:
-            serializer = admin_serializers.UserSerializer(user, data=request.data)
+            serializer = admin_serializers.UserRoleSerializer(user, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+        except Exception, e:
+            print 'UserDetailView PUT', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, pk, format=None):
+        print "METHOD DELETE"
+
+        user = self.get_object(pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+"""
+    GET: Get Al Roles
+    @author: TrangLes
+"""
+@permission_classes((AllowAny,))
+class RolesView(APIView):
+    def get(self, request, format=None):
+        print "Method Get"
+
+        try:
+            role = Roles.objects.all()
+            serializer = admin_serializers.RolesSerializer(role, many=True)
+            return Response(serializer.data)
+            
         except Exception, e:
             print 'UserDetailView PUT', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}

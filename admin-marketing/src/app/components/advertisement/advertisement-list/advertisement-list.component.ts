@@ -120,8 +120,13 @@ export class AdvertisementListComponent implements OnInit {
             this.message_success = "";
             this.message_result = "";
         } else{
-            this.advs_delete = this.advs_delete.filter(ad => ad !== adv.id);
+            let updateItem = this.advs_delete.find(this.findIndexToUpdate, adv.id);
+            let index = this.advs_delete.indexOf(updateItem);
+            this.advs_delete.splice(index, 1);
         }
+    }
+    findIndexToUpdate(type) {
+        return type.id === this;
     }
 
     /*

@@ -2,23 +2,42 @@ import { Component,ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { User,roles_user } from '../../../shared/class/user';
+import { User } from '../../../shared/class/user';
+import { UserService } from '../../../shared/services/user.service';
+
+import { env } from '../../../../environments/environment';
+
+// Using bootbox 
+declare var bootbox:any;
 
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
-  styleUrls: ['./user-detail.component.css']
+  styleUrls: ['./user-detail.component.css'],
+  providers: [ UserService ]
 })
 export class UserDetailComponent implements OnInit {
 
+    user: User;
 	formUser: FormGroup;
 	user_form = new User();
 	readonly_value = true;
 
-	constructor( private fb: FormBuilder) { }
+    errorMessage: string ='';
+    api_domain:string = "";
+    
+	constructor( 
+        private fb: FormBuilder,
+        private route: ActivatedRoute,
+        private userService:  UserService,
+        private router: Router,
+        ) { 
+            this.api_domain = env.api_domain_root;
+        }
 
 	ngOnInit() {
 		this.createFormUser();
+        this.getUserById();
 	}
 
 	// Create Form 
@@ -34,10 +53,47 @@ export class UserDetailComponent implements OnInit {
         city: [this.user_form.city],
         avatar: [this.user_form.avatar],
         password: [this.user_form.password],
-        role_user: [this.user_form.role_user, [Validators.required]] 
+        role: [this.user_form.role, [Validators.required]],
+        is_active: [this.user_form.is_active]
     })
 	}
 
+    /*
+        GET: Get User By Id
+        Call service user.service
+        @author: Trangle
+     */
+    getUserById() {
+        const id = +this.route.snapshot.paramMap.get('id');
+        this.userService.getUserById(id)
+        .subscribe(
+            (data) => {
+                this.user = data;
+            },
+            (error) =>  {
+                this.errorMessage = <any>error
+            }
+        );
+    }
+
+    /*
+        DELETE: Delete User By Id
+        Call service user.service
+        @author: Trangle
+    */
+    deleteUserById(user: User){
+        this.userService.deleteUserById(user)
+            .subscribe(
+                () => {
+                    this.router.navigate(['/user-list', { message_del: user.email} ]);
+                },
+                (error) =>  {
+                    console.log(error);
+                    // this.router.navigate(['/error', { message: error }])
+                }
+           );
+    }
+   
     // upload image 
     // FileReader: reading file contents
     onFileChange(event) {
@@ -63,5 +119,33 @@ export class UserDetailComponent implements OnInit {
  			this.readonly_value= true;
  		}
  	}
+
+     /* 
+        Confirm delete feedback detail
+        Using: bootbox plugin
+        @author: Trangle
+    */
+    confirmDeleteFeedback(user: User) {
+        bootbox.confirm({
+            title: "Bạn có chắc chắn?",
+            message: "Bạn muốn xóa phản hồi này.",
+            buttons: {
+                confirm: {
+                    label: 'Xóa',
+                    className: 'btn-success',
+                },
+                cancel: {
+                    label: 'Hủy',
+                    className: 'pull-left btn-danger',
+                }
+            },
+            callback: (result)=> {
+                if(result) {
+                    // Check result = true. call function callback
+                    this.deleteUserById(user)
+                }
+            }
+        });
+    }
 
 }

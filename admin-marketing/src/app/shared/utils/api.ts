@@ -55,4 +55,6 @@ export const api = {
 
     users: env.api_domain + 'users/',
 
+    role: env.api_domain + 'role/',
+
 };

@@ -26,7 +26,6 @@ export class UserListComponent implements OnInit {
 
 	user_selected: any;
 
-	message_success: string = ""; // Display message success
   	message_result: string = ''; // Message result
     record: string = "User";
 
@@ -44,6 +43,7 @@ export class UserListComponent implements OnInit {
   		private route: ActivatedRoute,
         private userService: UserService,
         private router: Router,
+
   		) {
   			this.users = [];
   			this.user_selected = [];
@@ -52,7 +52,19 @@ export class UserListComponent implements OnInit {
   	ngOnInit() {
         // Call data_config
   		this.dtOptions = data_config(this.record).dtOptions;
-	  	this.getAllUser()
+
+        // Get All User
+	  	this.getAllUser();
+
+        this.route.params.subscribe(params => {
+            if( params.message_post ){
+                this.message_result = " Thêm "+ params.message_post + " thành công.";
+            } else if ( params.message_put ) {
+                this.message_result = "  Chỉnh sửa  "+ params.message_put + " thành công.";
+            } else {
+                this.message_result = "";
+            }
+        });
   	}
 
   	// Get All User
@@ -65,8 +77,7 @@ export class UserListComponent implements OnInit {
             (error) => {
                 this.router.navigate(['/error', { message: error }])
             }
-            )
-
+        )
   	}
 
   	// Checkbox all
@@ -78,7 +89,6 @@ export class UserListComponent implements OnInit {
             });
             this.user_selected = array_del;
             this.select_checkbox = true;
-            this.message_success = "";
             this.message_result = "";
         }else{
             this.select_checkbox = false;
@@ -92,13 +102,17 @@ export class UserListComponent implements OnInit {
   	checkItemChange(event, user) {
   		if(event.target.checked){
         	this.user_selected.push(user.id);
-            this.message_success = "";
             this.message_result = "";
       	}
       	else{
-       		this.user_selected = this.user_selected.filter(user => user !== user.id);
+            let updateItem = this.user_selected.find(this.findIndexToUpdate, user.id);
+            let index = this.user_selected.indexOf(updateItem);
+            this.user_selected.splice(index, 1);
       	}
   	}
+    findIndexToUpdate(type) {
+        return type.id === this;
+    }
 
     /*
         Confirm Delete Checkbox Selected
@@ -149,7 +163,7 @@ export class UserListComponent implements OnInit {
                     });
                     this.user_selected = [];
                 });
-                this.message_success = "Xóa user thành công";
+                this.message_result = "Xóa user thành công";
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.json().message + error.json().fields }])

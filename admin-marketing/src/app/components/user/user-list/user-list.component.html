@@ -19,9 +19,6 @@
 </div>
 <br>
 <div class="table card-list">
-	<div *ngIf="message_success" class="alert alert-success">
-		{{ message_success }}
-	</div>
 	<div class="alert alert-success" *ngIf="message_result">
         {{message_result}}
     </div>
@@ -38,8 +35,8 @@
    				<td><input type="checkbox" [checked]="select_checkbox"
    					value={{user.id}} name=""
    					(change)="checkItemChange($event, user)"/></td>
-   				<td class="title-email">{{ user.email }}</td>
-        		<td>{{ user.role_user }}</td>
+   				<td class="title-email"><a routerLink="/user-detail/{{ user.id }}" >{{ user.email }}</a></td>
+        		<td>{{ user.role.name }}</td>
    			</tr>
     	</tbody>
 	</table>

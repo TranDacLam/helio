@@ -13,4 +13,11 @@ a.pull-left {
 a.pull-left:hover {
 	text-decoration: none;
 }
+td.title-email a {
+	text-decoration: none;
+	color: black;
+} 
+td.title-email a:hover {
+	color: red;
+}
 /*end content user list*/

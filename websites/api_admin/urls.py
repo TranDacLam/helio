@@ -72,6 +72,8 @@ urlpatterns = [
 
 	url(r'^users/$', views.UserListView.as_view(), name="users"),
 	url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetailView.as_view(), name="users_detail"),
+
+	url(r'^role/$', views.RolesView.as_view(), name="role"),
 	
 	url(r'^upload_file/$', views.postUpload, name="upload-file"),
 

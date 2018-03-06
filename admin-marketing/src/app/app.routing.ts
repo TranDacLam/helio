@@ -111,7 +111,7 @@ const routes: Routes = [{
         path: 'user-list',
         component: UserListComponent
     }, {
-        path: 'user-detail',
+        path: 'user-detail/:id',
         component: UserDetailComponent
     }, {
         path: 'link-card-list',
