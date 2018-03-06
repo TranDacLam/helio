@@ -12,6 +12,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime'; /
 import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
+import { DatePipe } from '@angular/common';
+
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from './components/users/users.component';
@@ -188,6 +190,7 @@ import { LoginComponent } from './components/login/login.component';
     CategoryService,
     AuthGuard,
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'vi'},
+    DatePipe,
   ],
   bootstrap: [AppComponent]
 })

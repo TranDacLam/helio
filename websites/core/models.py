@@ -410,3 +410,26 @@ class Promotion_Type(DateTimeModel):
 
     def __unicode__(self):
         return self.name + ' ' + self.name
+
+@python_2_unicode_compatible
+class Hot_Advs(DateTimeModel):
+    name = models.CharField(max_length=255, unique=True)
+    image = models.ImageField(max_length=1000, upload_to="hots")
+    is_register = models.BooleanField(default=False)
+    is_view_detail = models.BooleanField(default=False)
+    is_draft = models.BooleanField(default=False)
+    content = models.TextField()
+    sub_url_register = models.CharField(max_length=1000)
+    sub_url_view_detail = models.CharField(max_length=1000)
+    is_draft = models.BooleanField(default=False)
+
+    def __str__(self):
+        return '%s' % (self.name)
+
+
+@python_2_unicode_compatible
+class Roles(DateTimeModel): 
+    name = models.CharField(max_length=255)   
+
+    def __str__(self):
+        return '%s' % (self.name)   

@@ -5,7 +5,6 @@ from django.utils.translation import ugettext_lazy as _
 from utils.codes import RandomPassword
 from django.utils import timezone
 
-
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None, username=None, **extra_fields):
         """
@@ -90,6 +89,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     barcode = models.CharField(max_length=100, null=True, blank=True)
     username_mapping = models.CharField(max_length=255, null=True, blank=True)
     date_mapping = models.DateField(null=True, blank=True)
+
+    role = models.ForeignKey('Roles', related_name='user_role_rel', null=True, blank=True)
 
     objects = MyUserManager()
     USERNAME_FIELD = 'email'
