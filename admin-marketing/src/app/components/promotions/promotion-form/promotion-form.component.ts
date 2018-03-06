@@ -70,7 +70,10 @@ export class PromotionFormComponent implements OnInit {
         this.getPromotionLabels();
 
         this.ckEditorConfig = {
-            filebrowserUploadUrl: 'http://127.0.0.1:8000/vi/api/upload_file/'
+            // removePlugins: 'filebrowser',
+            extraPlugins: 'uploadimage,youtube',
+            uploadUrl: 'http://127.0.0.1:8000/vi/api/upload_file/',
+            // filebrowserUploadUrl: 'http://127.0.0.1:8000/vi/api/upload_file/'
 
         };
         this.creatPromotionForm();
@@ -223,8 +226,6 @@ export class PromotionFormComponent implements OnInit {
                             (data) => {
                                 if (data.status == 204) {
                                     that.router.navigate(['/promotions', {'action': 'Xóa "', 'promotion_name': that.promotion.name}]);
-                                } else {
-                                    console.log("Xoa khong thanh cong");
                                 }
                             }, 
                             (error) => {
@@ -269,9 +270,7 @@ export class PromotionFormComponent implements OnInit {
         return promotionFormData;
     }
 
-
-
     transformDate(date) {
-        return this.datePipe.transform(date, 'dd/MM/yyyy');
+        return date ? this.datePipe.transform(date, 'dd/MM/yyyy') : '';
     }
 }
