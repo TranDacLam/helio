@@ -74,7 +74,6 @@ class PromotionList(APIView):
 
 
 @parser_classes((MultiPartParser, FormParser))
-@permission_classes((AllowAny,))
 class PromotionDetail(APIView):
 
     def get_object(self, pk):
@@ -97,9 +96,11 @@ class PromotionDetail(APIView):
     def post(self, request, format=None):
         try:
             print request.data
-            serializer = admin_serializers.PromotionSerializer(
-                data=request.data)
+            serializer = admin_serializers.PromotionSerializer(context={'request': request},
+                                                               data=request.data)
             if serializer.is_valid():
+                # serializer.user_implementer = request.user.id
+                # print "serializer.user_implementer"
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -110,10 +111,11 @@ class PromotionDetail(APIView):
 
     def put(self, request, id, format=None):
         print request.data
+        # print request.user
         item = self.get_object(id)
         try:
             serializer = admin_serializers.PromotionSerializer(
-                item, data=request.data)
+                item, context={'request': request}, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
@@ -144,7 +146,8 @@ class PromotionUser(APIView):
             if promotion_detail:
                 try:
                     # Get notification by promotion_id
-                    notification = Notification.objects.get(promotion=promotion_detail)
+                    notification = Notification.objects.get(
+                        promotion=promotion_detail)
                 except Notification.DoesNotExist:
                     notification = None
                 # Get list user ID by promition id
@@ -156,7 +159,8 @@ class PromotionUser(APIView):
                 user_all_list = User.objects.filter(
                     ~Q(pk__in=promotion_user_id_list))
 
-                # Return result both: notification_id, list promotion user, list all user, promition detail
+                # Return result both: notification_id, list promotion user,
+                # list all user, promition detail
                 result = {}
                 result['notification_id'] = notification.id if notification else ''
                 result['promotion_detail'] = admin_serializers.PromotionDisplaySerializer(
@@ -286,13 +290,13 @@ class AdvertisementView(APIView):
         try:
 
             serializer = admin_serializers.AdvertisementSerializer(
-            data=request.data)
+                data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
-            error = {"code": 500, "message": "%s" % e, "fields":""}
+            error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, format=None):
@@ -400,7 +404,7 @@ class DenominationView(APIView):
         """
         try:
             serializer = admin_serializers.DenominationSerializer(
-            data=request.data)
+                data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
@@ -409,7 +413,7 @@ class DenominationView(APIView):
             print e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
-        
+
     def delete(self, request, format=None):
         """
         DELETE: Multi ids select
@@ -853,7 +857,6 @@ class SummaryAPI(APIView):
             return Response(error, status=500)
 
 
-
 """
     Get user embed 
     @author :Hoangnguyen
@@ -1237,7 +1240,7 @@ class BannerViewDetail(APIView):
         print('request', request.data)
         banner = self.get_object(pk)
         try:
-            print ('banner', banner)
+            print('banner', banner)
 
             serializer = admin_serializers.BannerSerializer(
                 banner, data=request.data)
@@ -2031,7 +2034,7 @@ from django.http import JsonResponse
 
 # @parser_classes((MultiPartParser, FormParser))
 # @permission_classes((AllowAny,))
-# def UploadFile(APIView): 
+# def UploadFile(APIView):
 @csrf_exempt
 def postUpload(request):
     print "request", request.FILES
@@ -2041,4 +2044,3 @@ def postUpload(request):
         'url': 'https://helio.vn/static/assets/images/logo.png'
     }
     return JsonResponse(result, status=200)
-

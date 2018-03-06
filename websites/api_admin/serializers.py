@@ -2,13 +2,8 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from core.models import *
 from core.custom_models import *
-from django.contrib.auth import get_user_model
 from datetime import datetime
-
 from rest_framework import serializers    
-
-
-
 
 class Base64ImageField(serializers.ImageField):
     """
@@ -115,10 +110,12 @@ class PromotionDisplaySerializer(serializers.ModelSerializer):
     class Meta:
         model = Promotion
         fields = '__all__'
+from rest_framework.fields import CurrentUserDefault
 
 class PromotionSerializer(serializers.ModelSerializer):
     apply_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
     end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
+
     class Meta:
         model = Promotion
         fields = '__all__'
@@ -129,8 +126,11 @@ class PromotionSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        print "CREATE"
-        return Promotion(**validated_data)
+        # If this promotion is public then set user
+
+        if not validated_data.get('is_draft'):
+            validated_data['user_implementer'] = self.context['request'].user
+        return Promotion.objects.create(**validated_data)
     def update(self, instance, validated_data):
 
         image = validated_data.get('image', instance.image)
@@ -140,7 +140,9 @@ class PromotionSerializer(serializers.ModelSerializer):
         if image_thumbnail:
             instance.image_thumbnail = image_thumbnail
 
-        # is_draft = validated_data.get('is_draft', True)
+        # Is this promotion change from draft to public then set user
+        if instance.is_draft and not validated_data.get('is_draft'):
+            instance.user_implementer = self.context['request'].user
 
         # print is_draft, instance.is_draft
 
