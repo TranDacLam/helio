@@ -3,6 +3,8 @@ from rest_framework.validators import UniqueValidator
 from core.models import *
 from core.custom_models import *
 from datetime import datetime
+import core.constants as const
+
 from rest_framework import serializers    
 
 class Base64ImageField(serializers.ImageField):
@@ -132,7 +134,6 @@ class PromotionSerializer(serializers.ModelSerializer):
             validated_data['user_implementer'] = self.context['request'].user
         return Promotion.objects.create(**validated_data)
     def update(self, instance, validated_data):
-
         image = validated_data.get('image', instance.image)
         if image:
             instance.image = image
@@ -266,8 +267,10 @@ class EventSerializer(serializers.ModelSerializer):
         return data
     # override mehod update because name field is unique
     def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
         instance.name = validated_data.get('name', instance.name)
-        instance.image = validated_data.get('image', instance.image)
         instance.short_description = validated_data.get('short_description', instance.short_description)
         instance.content = validated_data.get('content', instance.content)
         instance.start_date = validated_data.get('start_date', instance.start_date)
@@ -284,13 +287,37 @@ class HotSerializer(serializers.ModelSerializer):
         model = Hot
         fields = ('id', 'name', 'sub_url', 'image', 'is_show')
 
+    def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.name = validated_data.get('name', instance.name)
+        instance.sub_url = validated_data.get('sub_url', instance.sub_url)
+        instance.is_show = validated_data.get('is_show', instance.is_show)
+        instance.save()
+        return instance
+
 class PostSerializer(serializers.ModelSerializer):
 
     post_type = serializers.SlugRelatedField(queryset = Post_Type.objects.all(), read_only=False, slug_field = 'name' )
 
     class Meta:
         model = Post
-        fields = ('name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
+        fields = ('id','name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
+
+    def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.name = validated_data.get('name', instance.name)
+        instance.short_description = validated_data.get('short_description', instance.short_description)
+        instance.content = validated_data.get('content', instance.content)
+        instance.post_type = validated_data.get('post_type', instance.post_type)
+        instance.key_query = validated_data.get('key_query', instance.key_query)
+        instance.pin_to_top = validated_data.get('pin_to_top', instance.pin_to_top)
+        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
+        instance.save()
+        return instance
 
 class PostTypeSerializer(serializers.ModelSerializer):
 
@@ -299,7 +326,52 @@ class PostTypeSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'description')
 
 class FAQSerializer(serializers.ModelSerializer):
-
+    # follow models.py
+    limit_category_Faq = [const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY,
+                           const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY]
+    
     class Meta:
         model = FAQ
         fields = ('id', 'question', 'answer', 'category')
+
+    def validate_category( self, value):
+        if value.id in self.limit_category_Faq:
+            return value
+        raise serializers.ValidationError("This category is unvalid")
+
+
+class GameSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Game
+        fields = ('id', 'name', 'short_description', 'content', 'image', 'game_type', 'is_draft')
+
+    def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.name = validated_data.get('name', instance.name)
+        instance.short_description = validated_data.get('short_description', instance.short_description)
+        instance.content = validated_data.get('content', instance.content)
+        instance.game_type = validated_data.get('game_type', instance.game_type)
+        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
+        instance.save()
+        return instance
+
+class TypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Type
+        fields = ('id', 'name', 'description', 'category', 'image', 'sub_url', 'description_detail')
+
+    def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.name = validated_data.get('name', instance.name)
+        instance.description = validated_data.get('description', instance.description)
+        instance.category = validated_data.get('category', instance.category)
+        instance.sub_url = validated_data.get('sub_url', instance.sub_url)
+        instance.description_detail = validated_data.get('description_detail', instance.description_detail)
+        instance.save()
+        return instance
