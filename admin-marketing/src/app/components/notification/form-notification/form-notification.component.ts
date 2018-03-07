@@ -73,7 +73,7 @@ export class FormNotificationComponent implements OnInit {
     creatForm(): void{
         this.formNotification = this.fb.group({
             subject: [this.noti.subject, [Validators.required]],
-            message: [this.noti.message, [Validators.required]],
+            message: [this.noti.message],
             image: [this.noti.image],
             sub_url: [this.noti.sub_url, Validators.required],
             category: [this.noti.category ? this.noti.category : '', Validators.required],
@@ -137,7 +137,11 @@ export class FormNotificationComponent implements OnInit {
                     this.router.navigate(['/notification/list', { message_post: value_form.subject}]);
                 },
                 (error) => {
-                    this.router.navigate(['/error']);
+                    if(error.code === 400){
+                        this.errorMessage = error.message;
+                    }else{
+                        this.router.navigate(['/error']);
+                    }
                 }
             );
         }else if(this.type_http == 'put' || this.type_http == 'put_popup'){
@@ -156,7 +160,11 @@ export class FormNotificationComponent implements OnInit {
                         }
                     },
                     (error) => {
+                        if(error.code === 400){
+                        this.errorMessage = error.message;
+                    }else{
                         this.router.navigate(['/error']);
+                    }
                     }
                 );
             }

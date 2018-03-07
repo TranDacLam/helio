@@ -1,4 +1,8 @@
-<h4 class="message_error" *ngIf="errorMessage">{{errorMessage}}</h4>
+<ng-container *ngIf="errorMessage">
+    <h4 *ngFor="let error of errorMessage | mapToIterable" class="error_msg">
+        {{error.val}}.
+    </h4>
+</ng-container>
 <form [formGroup]="formNotification" novalidate>
     <div class="form-group row">
         <div class="col-sm-2">

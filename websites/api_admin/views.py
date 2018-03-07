@@ -222,7 +222,6 @@ class PromotionUser(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class UserDetail(APIView):
 
     def get(self, request, format=None):
@@ -269,7 +268,6 @@ GET and POST Advertisement
 """
 
 
-@permission_classes((AllowAny, ))
 class AdvertisementView(APIView):
 
     def get(self, request, format=None):
@@ -325,7 +323,6 @@ GET, PUT Advertisement Detail
 """
 
 
-@permission_classes((AllowAny, ))
 class AdvertisementDetail(APIView):
     """
     Retrieve, update or delete a advertisement instance
@@ -364,7 +361,6 @@ Get PromotionType
 """
 
 
-@permission_classes((AllowAny, ))
 class PromotionTypeView(APIView):
 
     def get(self, request, format=None):
@@ -384,7 +380,6 @@ class PromotionTypeView(APIView):
 """
 
 
-@permission_classes((AllowAny, ))
 class DenominationView(APIView):
 
     def get(self, request, format=None):
@@ -439,7 +434,6 @@ GET FeedBack
 """
 
 
-@permission_classes((AllowAny, ))
 class FeedbackView(APIView):
 
     def get(self, request, format=None):
@@ -519,7 +513,6 @@ GET, PUT, DELETE Feedback by id
 """
 
 
-@permission_classes((AllowAny, ))
 class FeedbackDetailView(APIView):
 
     def get_object(self, pk):
@@ -560,7 +553,6 @@ DELETE all checkbox selected
 """
 
 
-@permission_classes((AllowAny,))
 class UserLinkCardList(APIView):
 
     def get(self, request, format=None):
@@ -602,7 +594,6 @@ Get Notification List
 """
 
 
-@permission_classes((AllowAny,))
 class NotificationList(APIView):
 
     def get(self, request, format=None):
@@ -648,7 +639,6 @@ class NotificationList(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 @parser_classes((MultiPartParser, FormParser))
 class NotificationDetail(APIView):
 
@@ -710,7 +700,6 @@ class NotificationDetail(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class NotificationUser(APIView):
 
     def get(self, request, id):
@@ -786,7 +775,6 @@ class NotificationUser(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class SummaryAPI(APIView):
 
     def get(self, request, format=None):
@@ -870,7 +858,6 @@ class SummaryAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class UserEmbedDetail(APIView):
 
     def get(self, request, format=None):
@@ -976,7 +963,6 @@ class UserEmbedDetail(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class RelateAPI(APIView):
 
     def post(self, request, format=None):
@@ -1068,7 +1054,6 @@ class RelateAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class FeeAPI(APIView):
 
     def post(self, request, format=None):
@@ -1116,7 +1101,6 @@ class FeeAPI(APIView):
             return Response(error, status=500)
 
 
-@permission_classes((AllowAny,))
 class FeeListAPI(APIView):
 
     def get(self, request, format=None):
@@ -1157,7 +1141,6 @@ class FeeListAPI(APIView):
 
 
 @parser_classes((MultiPartParser, JSONParser))
-@permission_classes((AllowAny,))
 class BannerView(APIView):
 
     def get(self, request, format=None):
@@ -1217,7 +1200,6 @@ class BannerView(APIView):
 
 
 @parser_classes((MultiPartParser, JSONParser))
-@permission_classes((AllowAny,))
 class BannerViewDetail(APIView):
 
     def get_object(self, pk):
@@ -1269,7 +1251,6 @@ class BannerViewDetail(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class CategoryNotifications(APIView):
 
     def get(self, request, format=None):
@@ -1293,7 +1274,6 @@ class CategoryNotifications(APIView):
 
 
 @parser_classes((MultiPartParser, JSONParser))
-@permission_classes((AllowAny,))
 class EventAPI(APIView):
 
     def get(self, request, id):
@@ -1362,7 +1342,6 @@ class EventAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class EventListAPI(APIView):
 
     def get(self, request, format=None):
@@ -1400,7 +1379,6 @@ class EventListAPI(APIView):
 
 
 @parser_classes((JSONParser,))
-@permission_classes((AllowAny,))
 class PromotionLabelAPI(APIView):
 
     def get_object(self, id):
@@ -1474,7 +1452,6 @@ class PromotionLabelAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class PromotionLabelListAPI(APIView):
 
     def get(self, request):
@@ -1514,7 +1491,6 @@ class PromotionLabelListAPI(APIView):
 
 
 @parser_classes((MultiPartParser, JSONParser))
-@permission_classes((AllowAny,))
 class HotAPI(APIView):
 
     def get(self, request, id):
@@ -1581,7 +1557,6 @@ class HotAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class HotListAPI(APIView):
 
     def get(self, request):
@@ -1619,7 +1594,6 @@ class HotListAPI(APIView):
 
 
 @parser_classes((MultiPartParser, JSONParser))
-@permission_classes((AllowAny,))
 class HotAPI(APIView):
 
     def get(self, request, id=None):
@@ -1703,7 +1677,6 @@ class HotAPI(APIView):
 
 
 @parser_classes((MultiPartParser,))
-@permission_classes((AllowAny,))
 class PostAPI(APIView):
 
     def get(self, request, id):
@@ -1773,7 +1746,6 @@ class PostAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class PostListAPI(APIView):
 
     def get(self, request):
@@ -1810,7 +1782,6 @@ class PostListAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class PostTypeListAPI(APIView):
 
     def get(self, request):
@@ -1832,7 +1803,6 @@ class PostTypeListAPI(APIView):
 
 
 @parser_classes((JSONParser,))
-@permission_classes((AllowAny,))
 class FAQAPI(APIView):
 
     def get(self, request, id):
@@ -1899,7 +1869,6 @@ class FAQAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class FAQListAPI(APIView):
 
     def get(self, request):
@@ -1950,7 +1919,6 @@ class GeneratorQRCode(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class CategoryList(APIView):
 
     def get(self, request, format=None):
@@ -1987,7 +1955,6 @@ GET, DELETE, POST User
 """
 @parser_classes((MultiPartParser, JSONParser))
 @authentication_classes((SessionAuthentication, BasicAuthentication))
-@permission_classes((AllowAny,))
 class UserListView(APIView):
     """
         Method: GET
@@ -2051,7 +2018,6 @@ class UserListView(APIView):
 """
 @parser_classes((MultiPartParser, JSONParser))
 @authentication_classes((SessionAuthentication, BasicAuthentication))
-@permission_classes((AllowAny,))
 class UserDetailView(APIView):
 
     def get_object(self, pk):
@@ -2105,7 +2071,6 @@ class UserDetailView(APIView):
     GET: Get Al Roles
     @author: TrangLes
 """
-@permission_classes((AllowAny,))
 class RolesView(APIView):
     def get(self, request, format=None):
         print "Method Get"
@@ -2126,7 +2091,6 @@ class RolesView(APIView):
 
 
 @parser_classes((MultiPartParser,))
-@permission_classes((AllowAny,))
 class GameAPI(APIView):
 
     def get(self, request, id):
@@ -2191,7 +2155,6 @@ class GameAPI(APIView):
     @author :Hoangnguyen
  
 """
-@permission_classes((AllowAny,))
 class GameListAPI(APIView):
 
     def get(self, request):
@@ -2224,7 +2187,6 @@ class GameListAPI(APIView):
     @author :Hoangnguyen
  
 """
-@permission_classes((AllowAny,))
 class TypeListAPI(APIView):
 
     def get(self, request):

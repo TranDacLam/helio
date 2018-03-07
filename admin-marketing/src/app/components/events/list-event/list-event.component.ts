@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Event } from '../../../shared/class/event';
 import { EventService } from '../../../shared/services/event.service';
 import { message } from '../../../shared/utils/message';
@@ -31,9 +31,10 @@ export class ListEventComponent implements OnInit {
     events_del = []; // Get array id to delete all id event
     length_events: number;
     select_checked = false; // Check/uncheck all event
-    message_result = ''; // Message error
+    message_result = ''; // Message success
+    errorMessage = '';
 
-    constructor(private eventService: EventService, private route: ActivatedRoute) { }
+    constructor(private eventService: EventService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Sự Kiện').dtOptions;
@@ -63,7 +64,14 @@ export class ListEventComponent implements OnInit {
             (data) => {
                 this.events = data;
                 this.length_events = this.events.length;
-            } 
+            },
+            (error) => {
+                if(error.code === 403){
+                    this.errorMessage = error.message;
+                }else{
+                    this.router.navigate(['/error']);
+                }
+            }
         );
     }
 

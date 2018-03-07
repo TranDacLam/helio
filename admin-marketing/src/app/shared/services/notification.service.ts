@@ -6,14 +6,6 @@ import { api } from '../utils/api';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
-const token = localStorage.getItem('auth_token');
-
-const httpOptions = {
-    headers: new Headers({ 
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-    })
-};
 
 @Injectable()
 export class NotificationService {
@@ -22,7 +14,19 @@ export class NotificationService {
     private url_user_notification = api.user_notification;
     private url_notification_list = api.notification_list;
 
-    constructor(private http: Http) { }
+    httpOptions: any;
+    token: any = '';
+
+    constructor(private http: Http) { 
+        this.token = localStorage.getItem('auth_token');
+
+        this.httpOptions = {
+            headers: new Headers({ 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            })
+        };
+    }
 
     /* 
         function getNotification(): Get notification by id
@@ -30,7 +34,7 @@ export class NotificationService {
     */
     getNotification(id: number): Observable<any> {
         let url_detail_noti = `${this.url_notification}${id}`;
-        return this.http.get(url_detail_noti).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_detail_noti, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -38,7 +42,7 @@ export class NotificationService {
         author: Lam
     */
     getNotifications(): Observable<any> {
-        return this.http.get(this.url_notification_list).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(this.url_notification_list, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -48,7 +52,7 @@ export class NotificationService {
     addNoti(noti: FormData): Observable<any>{
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.open('POST', api.notification);
             xhr.send(noti);
 
@@ -58,7 +62,7 @@ export class NotificationService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(xhr.response);
+                        observer.error(JSON.parse(xhr.response));
                     }
                 }
             }
@@ -73,7 +77,7 @@ export class NotificationService {
         let url_update_noti = `${this.url_notification}${id}/`;
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.open('PUT', url_update_noti);
             xhr.send(noti);
 
@@ -83,7 +87,7 @@ export class NotificationService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(xhr.response);
+                        observer.error(JSON.parse(xhr.response));
                     }
                 }
             }
@@ -96,7 +100,7 @@ export class NotificationService {
     */
     onDelNoti(id: number): Observable<any>{
         const url_del_noti = `${this.url_notification}${id}/`;
-        return this.http.delete(url_del_noti, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_del_noti, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -109,7 +113,7 @@ export class NotificationService {
         }
 
         let _options = new RequestOptions({
-            headers: httpOptions.headers,
+            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
 
@@ -122,7 +126,7 @@ export class NotificationService {
     */
     getUserNotification(id): Observable<any> {
         let url_user_noti_detail = `${this.url_user_notification}${id}`
-        return this.http.get(url_user_noti_detail).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_user_noti_detail, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -134,7 +138,7 @@ export class NotificationService {
         let param = {
             list_user_id: user_noti
         }
-        return this.http.post(url_user_noti_detail, JSON.stringify(param), httpOptions).catch(this.handleError);
+        return this.http.post(url_user_noti_detail, JSON.stringify(param), this.httpOptions).catch(this.handleError);
     }
 
 

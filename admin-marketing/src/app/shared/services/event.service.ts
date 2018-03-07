@@ -5,30 +5,37 @@ import { api } from '../utils/api';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
-const httpOptions = {
-    headers: new Headers({ 'Content-Type': 'application/json' })
-};
-
 @Injectable()
 export class EventService {
 
     private urlEvent= api.event;
     private urlEventList= api.event_list;
     
+    httpOptions: any;
+    token: any = '';
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+        this.token = localStorage.getItem('auth_token');
+
+        this.httpOptions = {
+            headers: new Headers({ 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            })
+        };
+     }
 
     /* 
         function getEvents(): Get all notification
         author: Lam
     */
     getEvents(): Observable<any>{
-        return this.http.get(this.urlEventList).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(this.urlEventList, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     getEvent(id: number): Observable<any>{
         let url_detail_event = `${this.urlEvent}${id}`;
-        return this.http.get(url_detail_event).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_detail_event, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -41,7 +48,7 @@ export class EventService {
         }
 
         let _options = new RequestOptions({
-            headers: httpOptions.headers,
+            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
 
@@ -51,7 +58,7 @@ export class EventService {
     addEvent(value: FormData): Observable<any>{
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.open('POST', api.event);
             xhr.send(value);
 
@@ -72,7 +79,7 @@ export class EventService {
         let url_update_event = `${this.urlEvent}${id}/`;
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.open('PUT', url_update_event);
             xhr.send(value);
 
@@ -91,7 +98,7 @@ export class EventService {
 
     onDelEvent(id: number): Observable<any>{
         const url_del_event = `${this.urlEvent}${id}/`;
-        return this.http.delete(url_del_event, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_del_event, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     // exception
