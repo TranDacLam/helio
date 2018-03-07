@@ -339,6 +339,52 @@ class FAQSerializer(serializers.ModelSerializer):
             return value
         raise serializers.ValidationError("This category is unvalid")
 
+class RolesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Roles
+        fields = ('id', 'name')
+        
+class UserRoleDisplaySerializer(serializers.ModelSerializer):
+
+    role = RolesSerializer(many=False, required=False, read_only=False)
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
+class UserRoleSerializer(serializers.ModelSerializer):
+
+    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
+    
+    class Meta:
+        model = User
+        fields = '__all__'
+
+    def validate_birth_date(self, value):
+        if value >= datetime.now().date():
+            raise serializers.ValidationError("Birthday must less then today")
+        return value
+            
+    def update(self, instance, validated_data):
+
+        avatar = validated_data.get('avatar', instance.image)
+        if avatar:
+            instance.avatar = avatar
+        instance.email = validated_data.get('email', instance.email)
+        instance.full_name = validated_data.get('full_name', instance.full_name)
+        instance.birth_date = validated_data.get('birth_date', instance.birth_date)
+        instance.phone = validated_data.get('phone', instance.phone)
+        instance.personal_id = validated_data.get('personal_id', instance.personal_id)
+        instance.country = validated_data.get('country', instance.country)
+        instance.city = validated_data.get('city', instance.city)
+        instance.address = validated_data.get('address', instance.address)
+        instance.password = validated_data.get('password', instance.password)
+        instance.role = validated_data.get('role', instance.role)
+        instance.is_active = validated_data.get('is_active', instance.is_active)
+        instance.save()
+        return instance
+
 
 class GameSerializer(serializers.ModelSerializer):
 

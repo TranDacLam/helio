@@ -1,5 +1,5 @@
-button.clear-file.btn.btn-danger {
-	margin-top: 10px;
+.content-user {
+	padding: 8px 15px;
 }
 .input-password {
 	padding: 5px 50px 5px 10px;
@@ -10,4 +10,17 @@ button.clear-file.btn.btn-danger {
 	top: 0%;
 	right: 15px;
 	cursor: pointer;
+}
+p.title-user-edit {
+	border-bottom: 2px solid black;
+	padding: 10px 0;
+}
+p.info-users {
+	padding: 15px 0;
+	border-bottom: 2px solid black;
+	border-top: 2px solid black;
+}
+.info-user-content {
+	border-bottom: 2px solid black;
+	margin: 10px 0;
 }

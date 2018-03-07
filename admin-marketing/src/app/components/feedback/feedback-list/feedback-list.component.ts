@@ -121,8 +121,13 @@ export class FeedbackListComponent implements OnInit {
             this.message_result = "";
             this.message_success = "";
         } else {
-            this.feedback_del = this.feedback_del.filter(fb => fb !== feedback.id);
+            let updateItem = this.feedback_del.find(this.findIndexToUpdate, feedback.id);
+            let index = this.feedback_del.indexOf(updateItem);
+            this.feedback_del.splice(index, 1);
         }
+    }
+    findIndexToUpdate(type) {
+        return type.id === this;
     }
 
     /*

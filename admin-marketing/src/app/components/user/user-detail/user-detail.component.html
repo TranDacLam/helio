@@ -4,15 +4,15 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
             <li class="breadcrumb-item"><a routerLink="/user-list">User</a></li>
-            <li class="breadcrumb-item"><a routerLink="/user-detail">Chỉnh sửa user</a></li>
+            <li class="breadcrumb-item"><a routerLink="/user-detail">Sửa Thông tin User</a></li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
-<!-- <div *ngIf="user"> -->
+<div *ngIf="user">
 	<form [formGroup]="formUser" novalidate>
-		<div class="row">
-			<p>Sửa Thông tin User</p>
+		<div class="row content-user">
+			<p class=title-user-edit>Sửa Thông tin User</p>
 			<div class="col-md-8 col-md-offset-2">
 				<div class="form-group row">
 					<div class="col-sm-3">
@@ -20,7 +20,8 @@
 					</div>
 					<div class="col-sm-8">	
 						<input class='form-control' name="email"
-						formControlName="email" 
+						formControlName="email"
+						[(ngModel)]="user.email"
 						>	
 						<show-error-valid [control]="formUser.get('email')"></show-error-valid>
 					</div>
@@ -30,7 +31,7 @@
 						<label class="center-block">Loại User:</label>
 					</div>
 					<div class="col-sm-8">	
-						
+						{{ user.role.name }}
 					</div>
 				</div>
 				<div class="form-group row">
@@ -38,8 +39,9 @@
 						<label class="center-block">Trạng thái:</label>
 					</div>
 					<div class="col-sm-8">	
-						<input type="checkbox" name="active" value=""
-				      		
+						<input type="checkbox" name="is_active" value=""
+				      		formControlName="is_active"
+				      		[(ngModel)]='user.is_active'
 				      	>
 				      	<label>Active</label>
 				      	<p>Chỉ định xem người dùng này phải được coi là đang hoạt động.  Bạn nên bỏ chọn này thay vì xóa tài khoản</p>
@@ -58,21 +60,19 @@
 						<label class="center-block">Ngày tạo:</label>
 					</div>
 					<div class="col-sm-3">	
-						
+						{{ user.modified | date:"dd/MM/yyyy" }}
 					</div>
 					<div class="col-sm-3">
 						<label class="center-block">Ngày cập nhật:</label>
 					</div>
 					<div class="col-sm-3">	
-						
+						{{ user.date_joined | date:"dd/MM/yyyy" }}
 					</div>
 				</div>
 			</div>
 		</div>
-		<hr>
-		<div class="row">
-			<p>Thông tin cá nhân</p>
-			<hr>
+		<div class="row info-user-content ">
+			<p class="info-users">Thông tin cá nhân</p>
 			<div class="col-md-8 col-md-offset-2">
 				<div class="form-group row">
 					<div class="col-sm-3">
@@ -81,7 +81,7 @@
 					<div class="col-sm-8">	
 						<input class='form-control' name="full_name" 
 						formControlName="full_name" type="text"
-						
+						[(ngModel)]="user.full_name"
 						>
 						<show-error-valid [control]="formUser.get('full_name')"></show-error-valid>	
 	        		</div>
@@ -91,11 +91,16 @@
 						<label class="center-block">Ngày sinh:</label>
 					</div>
 		        	<div class="col-sm-8">	
-						<input class='form-control' name="birth_date" 
-						formControlName="birth_date" type="date"
-						
-						>
-						<show-error-valid [control]="formUser.get('birth_date')"></show-error-valid>	
+						<div class="input-group">
+			                <input type="text" class="form-control event-date" formControlName="birth_date" name="birth_date" [owlDateTime]="dtBirtday"
+			                [(ngModel)]="user.birth_date"
+			                />         
+			                <owl-date-time [pickerType]="'calendar'"  #dtBirtday></owl-date-time>
+			                <span class="input-group-addon" [owlDateTimeTrigger]="dtBirtday">
+			                    <i class="fa fa-calendar"></i>
+			                </span>
+							<show-error-valid [control]="formUser.get('birth_date')"></show-error-valid>	
+	        			</div>
 		        	</div>
 	        	</div>
 	        	<div class="form-group row">
@@ -105,6 +110,7 @@
 		        	<div class="col-sm-8">	
 						<input class='form-control' name="phone" 
 						formControlName="phone"
+						[(ngModel)]="user.phone"
 						>
 						<show-error-valid [control]="formUser.get('phone')"></show-error-valid>	
 		        	</div>
@@ -158,10 +164,12 @@
 			            <label class="center-block">Hình Ảnh:</label>
 			        </div>
 			        <div class="col-sm-8">
-		            	<input type="file" formControlName="image" class="form-control" accept="image/*"
-		            (change)="onFileChange($event)" #inputImage/>
+			        	<p *ngIf="user.avatar">
+			                <span>Currently: <a href="{{api_domain}}{{user.avatar}}" target="_blank">{{user.avatar}}</a></span>
+			            </p>
+		            	<input type="file" id="avatar" class="form-control" accept="image/*"
+		            	(change)="onFileChange($event)"/>
 		            	<show-error-valid [control]="formUser.get('image')"></show-error-valid>
-		            	<button type="button" class=" clear-file btn btn-danger" (click)="clearFile()">Clear file</button>
 		        	</div>
 		    	</div>
 		    	<div class="form-group row">
@@ -171,23 +179,24 @@
 		        	<div class="col-sm-8">	
 						<input class='input-password form-control' type="password" name="password" 
 						formControlName="password"
+						[(ngModel)]="user.password"
 						#input
 						[readonly]="readonly_value"
 						>
 						<button (click)="showPassword(input)" type="button" class="file-icon btn btn-default"><span class="fa fa-eye"></span></button>
-						<input type="checkbox" (change)="ChangeReadonly($event)"> Thay đổi mật khẩu(Chức năng này chì dành cho System Admin)
+						<br>
+						<input type="checkbox" (change)="ChangeReadonly($event)">  Thay đổi mật khẩu(Chức năng này chì dành cho System Admin)
 						<show-error-valid [control]="formUser.get('password')"></show-error-valid>	
 		        	</div>
 	        	</div>
 			</div>
 		</div>
-		<hr>
 		<div class='col-md-8 col-md-offset-2'>
-			<button type="button" class="pull-left btn btn-danger">Xóa</button>
+			<button (click)="confirmDeleteFeedback(user)" type="button" class="pull-left btn btn-danger">Xóa</button>
 			<button [disabled]="formUser.pristine" type="button" class="pull-right btn btn-info">Lưu lại</button>
 		</div>
 	</form>
-<!-- </div> -->
+</div>
 
 
 

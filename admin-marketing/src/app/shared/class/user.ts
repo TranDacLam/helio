@@ -10,13 +10,12 @@ export class User {
     address: string;
     country: string;
 	city: string;
-    image: string|any;
+    avatar: string|any;
 	password: string;
-	role_user: string;
+	role: string;
     username_mapping: string;
     date_mapping: string;
+    is_active: boolean;
 
     isChecked: boolean;
 }
-
-export const roles_user = ['System Admin', 'Manager', 'Author', 'Customer Care', 'Teller'];

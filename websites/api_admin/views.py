@@ -21,14 +21,14 @@ from django.utils import timezone
 from django.db.models import Count
 from django.http import Http404
 from django.db import DatabaseError
-from rest_framework.decorators import parser_classes
+from rest_framework.decorators import parser_classes, authentication_classes
 from rest_framework.parsers import MultiPartParser
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 import json
 """
     Get Promotion
     @author: diemnguyen
 """
-
 
 class PromotionList(APIView):
 
@@ -260,6 +260,7 @@ class UserDetail(APIView):
             print "UserDetail", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
 
 
 """
@@ -1979,6 +1980,145 @@ def postUpload(request):
     }
     return JsonResponse(result, status=200)
 
+
+"""
+GET, DELETE, POST User
+@author: TrangLe
+"""
+@parser_classes((MultiPartParser, JSONParser))
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+@permission_classes((AllowAny,))
+class UserListView(APIView):
+    """
+        Method: GET
+        Get All User
+    """
+    def get(self, request, format=None):
+        print "METHOD GET"
+        try:
+            users = User.objects.all()
+            serializer = admin_serializers.UserRoleDisplaySerializer(users, many=True)
+            return Response(serializer.data)
+
+        except Exception, e:
+            print "List User",e
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+
+    """
+        Method:POST
+        Create Users
+    """
+    def post(self, request, format=None):
+        print "METHOD POST"
+        try:
+            serializer = admin_serializers.UserRoleSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+
+        except Exception, e:
+            print "banner ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    """
+        Method: DELETE
+        Delete all user check
+    """
+    def delete(self, request, format=None):
+        print "METHOD DELETE"
+        try:
+            # Get list user id to delete
+            user_id = self.request.data.get('user_id', None)
+            print "User List Id", user_id
+
+            # Check list user id
+            if user_id:
+                User.objects.filter(pk__in=user_id).delete()
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
+
+        except Exception, e:
+            print e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+"""
+    GET, PUT User Detail
+    @author: TrangLe
+"""
+@parser_classes((MultiPartParser, JSONParser))
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+@permission_classes((AllowAny,))
+class UserDetailView(APIView):
+
+    def get_object(self, pk):
+        try:
+            queryset = User.objects.get(pk=pk)
+            return queryset
+        except User.DoesNotExist, e:
+            raise Http404
+
+    """
+        Get User By Id
+    """
+    def get(self, request, pk, format=None):
+        print "METHOD GET"
+
+        user = self.get_object(pk)
+        try:
+            serializer = admin_serializers.UserRoleDisplaySerializer(user)
+            return Response(serializer.data)
+        except Exception, e:
+            print 'UserDetailView ', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    """
+        Update User By Id
+    """
+    def put(self, request, pk, format=None):
+        print "METHOD PUT"
+
+        user = self.get_object(pk)
+        try:
+            serializer = admin_serializers.UserRoleSerializer(user, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception, e:
+            print 'UserDetailView PUT', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, pk, format=None):
+        print "METHOD DELETE"
+
+        user = self.get_object(pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+"""
+    GET: Get Al Roles
+    @author: TrangLes
+"""
+@permission_classes((AllowAny,))
+class RolesView(APIView):
+    def get(self, request, format=None):
+        print "Method Get"
+
+        try:
+            role = Roles.objects.all()
+            serializer = admin_serializers.RolesSerializer(role, many=True)
+            return Response(serializer.data)
+            
+        except Exception, e:
+            print 'UserDetailView PUT', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
 """
     Game 
     @author :Hoangnguyen
@@ -2096,4 +2236,3 @@ class TypeListAPI(APIView):
             print "TypeListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
-
