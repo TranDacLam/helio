@@ -13,6 +13,7 @@ import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { DatePipe } from '@angular/common';
+import { MapToIterablePipe } from './shared/pipes/map-to-iterable.pipe';
 
 
 import { AppComponent } from './app.component';
@@ -164,6 +165,7 @@ import { LoginComponent } from './components/login/login.component';
     FormHotComponent,
     ErrorComponent,
     LoginComponent,
+    MapToIterablePipe
   ],
   imports: [
     BrowserModule,

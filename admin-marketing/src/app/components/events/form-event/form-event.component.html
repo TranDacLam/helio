@@ -1,4 +1,8 @@
-<h4>{{ errorMessage }}</h4>
+<ng-container *ngIf="errorMessage">
+    <h4 *ngFor="let error of errorMessage | mapToIterable" class="error_msg">
+        {{error.val}}.
+    </h4>
+</ng-container>
 <form [formGroup]="formEvent" novalidate>
     <div class="form-group row">
         <div class="col-sm-2">
@@ -10,14 +14,20 @@
         </div>
     </div>
 
-    <div class="form-group row noti-image">
+    <div class="form-group row event-image">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Hình Ảnh</label>
         </div>
         <div class="col-sm-8">
+            <p *ngIf="event.image">
+                <span>Hiện tại: <a href="{{api_domain}}{{event.image}}" target="_blank">{{event.image}}</a></span>
+            </p>
+            <p *ngIf="event.image" class="clear_image">
+                <input type="checkbox" formControlName="is_clear_image"/> Xóa
+            </p>
+            <p *ngIf="msg_clear_image" class="error_msg">{{msg_clear_image}}</p>
             <input type="file" class="form-control" accept="image/*"
-            (change)="onFileChange($event)" #inputImage/>
-            <button type="button" class="btn btn-sm btn-danger" (click)="clearFile()">clear file</button>
+            (change)="onFileChange($event)" />
         </div>
     </div>
 
@@ -41,7 +51,6 @@
         </div>
     </div>
 
-    <label *ngIf="formEvent.errors" class="error_msg col-md-offset-2">{{ formEvent.errors?.dates }}</label>
     <div class="form-group row">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Ngày Bắt Đầu</label>
@@ -51,9 +60,11 @@
                 <i class="fa fa-calendar"></i>
             </span>
             <input type="text" class="form-control event-date" formControlName="start_date"
-                [owlDateTime]="dt1" [max]="formEvent.value.end_date" 
+                [owlDateTime]="dt1" id="start_date"
             />         
             <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+        </div>
+        <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="formEvent.get('start_date')"></show-error-valid>
         </div>
     </div>
@@ -66,9 +77,11 @@
                 <i class="fa fa-calendar"></i>
             </span>
             <input type="text" class="form-control event-date" formControlName="end_date"
-                [owlDateTime]="dt2" [min]="formEvent.value.start_date"
+                [owlDateTime]="dt2" id="end_date"
             />         
             <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+        </div>
+        <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="formEvent.get('end_date')"></show-error-valid>
         </div>
     </div>
@@ -81,9 +94,11 @@
                 <i class="fa fa-clock-o"></i>
             </span>
             <input type="text" class="form-control event-date" formControlName="start_time"
-                [owlDateTime]="dt3"
+                [owlDateTime]="dt3" id="start_time"
             />         
             <owl-date-time [pickerType]="'timer'" #dt3></owl-date-time>
+        </div>
+        <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="formEvent.get('start_time')"></show-error-valid>
         </div>
     </div>
@@ -96,15 +111,17 @@
                 <i class="fa fa-clock-o"></i>
             </span>
             <input type="text" class="form-control event-date" formControlName="end_time"
-                [owlDateTime]="dt4"
+                [owlDateTime]="dt4" id="end_time"
             />         
             <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
+        </div>
+        <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="formEvent.get('end_time')"></show-error-valid>
         </div>
     </div>
 
     <hr/>
-    <button class="btn btn-primary" (click)="onDelete()" *ngIf="type_http == 'put'">
+    <button class="btn btn-primary" (click)="deleteEvent()" *ngIf="type_http == 'put'">
         XÓA
     </button>
     <button class="btn btn-primary pull-right" (click)="onSubmit()" [disabled]="formEvent.invalid">

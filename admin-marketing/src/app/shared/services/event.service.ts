@@ -27,7 +27,8 @@ export class EventService {
     }
 
     getEvent(id: number): Observable<any>{
-        return;
+        let url_detail_event = `${this.urlEvent}${id}`;
+        return this.http.get(url_detail_event).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -47,16 +48,50 @@ export class EventService {
         return this.http.delete(this.urlEventList, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    addEvent(value): Observable<any>{
-        return;
+    addEvent(value: FormData): Observable<any>{
+        return Observable.create(observer => {
+            let xhr = new XMLHttpRequest();
+            // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
+            xhr.open('POST', api.event);
+            xhr.send(value);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(JSON.parse(xhr.response));
+                    }
+                }
+            }
+        });
     }
 
-    updateEvent(value, id): Observable<any>{
-        return;
+    updateEvent(value: FormData, id: number): Observable<any>{
+        let url_update_event = `${this.urlEvent}${id}/`;
+        return Observable.create(observer => {
+            let xhr = new XMLHttpRequest();
+            // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
+            xhr.open('PUT', url_update_event);
+            xhr.send(value);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(JSON.parse(xhr.response));
+                    }
+                }
+            }
+        });
     }
 
-    onDelEvent(id): Observable<any>{
-        return;
+    onDelEvent(id: number): Observable<any>{
+        const url_del_event = `${this.urlEvent}${id}/`;
+        return this.http.delete(url_del_event, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     // exception
