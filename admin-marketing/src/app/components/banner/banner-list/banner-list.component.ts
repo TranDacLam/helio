@@ -116,9 +116,16 @@ export class BannerListComponent implements OnInit {
             this.message_result = "";
         }
         else{
-            this.banner_del = this.banner_del.filter(ad => ad !== banner.id);
+            let updateItem = this.banner_del.find(this.findIndexToUpdate, banner.id);
+            let index = this.banner_del.indexOf(updateItem);
+            this.banner_del.splice(index, 1);
         }
     }
+
+    findIndexToUpdate(type) {
+        return type.id === this;
+    }
+    
     confirmDelete() {
         /* Check banner_del not null and length >0
             True: Show confirm and call function deleteFeedbackCheckbox 

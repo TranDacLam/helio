@@ -131,7 +131,7 @@ const routes: Routes = [{
         component: UserListComponent,
         canActivate: [AuthGuard]
     }, {
-        path: 'user-detail',
+        path: 'user-detail/:id',
         component: UserDetailComponent,
         canActivate: [AuthGuard]
     }, {

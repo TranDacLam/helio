@@ -4,13 +4,16 @@ button.clear-file.btn.btn-danger {
 }
 .title-user {
 	margin: 10px 0;
+	border-bottom: 2px solid black;
+	padding: 10px 0;
 }
 .title-user a {
 	text-decoration: none;
 	list-style-type: none;
+	color: black;
 }
 .content-form-add-user {
-	border-bottom: 2px solid #ccc;
+	border-bottom: 2px solid black;
 	margin: 10px 0 15px 0;
 }
 
