@@ -31,7 +31,7 @@
 	<table datatable [dtOptions]="dtOptions" *ngIf="fees" class="row-border hover">
 	<thead>
 		<tr class="">
-			<th><input type="checkbox" name="" (change)="selectAll($event);"></th>
+			<th><input id='selectAll' type="checkbox" name="" (change)="selectAll($event);"></th>
 			<th>Phí</th>
 			<th>Vị trí</th>
 			<th></th>
@@ -39,7 +39,9 @@
 	</thead>
 	<tbody *ngIf="fees">
 		<tr *ngFor="let fee of fees" id={{fee.id}}>
-			<td class="checkbox-tb"><input type="checkbox" name="{{fee.id}}" [checked]="fee.selected" [value]=fee.id (change)="triggerItem($event.target.checked, fee.id);" ></td>
+			<td class="checkbox-tb">
+				<input type="checkbox" name="{{fee.id}}" id='checkbox_{{fee.id}}'[value]=fee.id (change)="triggerItem($event.target.checked, fee.id);" >
+			</td>
 			<td class="fee-tb">{{fee.fee}} {{fee.fee_type}}</td>
 			<td class="position-tb">{{fee.position}}</td>
 			<td *ngIf="fee.is_apply">
