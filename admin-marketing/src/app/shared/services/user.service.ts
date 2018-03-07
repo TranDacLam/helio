@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { api } from '../utils/api';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 
-import { User} from '../../shared/class/user';
+import { User } from '../../shared/class/user';
 
 const httpOptions = {
 	headers: new Headers({ 'Content-Type': 'application/json' })
@@ -39,7 +39,7 @@ export class UserService {
 	*/
 	deleteUserById(user: User): Observable<User> {
 		const id = user.id;
-		const url = `${api.user}${id}/`;
+		const url = `${api.users}${id}/`;
 		return this.http.delete(url,httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
@@ -61,13 +61,39 @@ export class UserService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(xhr.response);
+                        observer.error(JSON.parse(xhr.response));
                     }
                 }
             }
         });
     }
 
+    /*
+    	PUT: Update User
+    	@author: Trangle
+    */
+   
+   	updateUser(userForm: FormData, id:number): Observable<any> {
+   		const url = `${api.users}${id}/`;
+
+   		return Observable.create(observer => {
+   			let xhr = new XMLHttpRequest();
+   			xhr.open('PUT', url);
+   			xhr.send(userForm);
+
+   			xhr.onreadystatechange = function() {
+   				if(xhr.readyState === 4) {
+   					if(xhr.status === 200) {
+   						observer.next(JSON.parse(xhr.response));
+   						observer.complete();
+   					} else {
+   						observer.error(JSON.parse(xhr.response));
+   					}
+   				}
+   			}
+   		});
+   	}
+   
 	/*
 		DELETE: Delete User Selected
 		@author: Trangle

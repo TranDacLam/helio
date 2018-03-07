@@ -25,7 +25,9 @@ export class UserAddComponent implements OnInit {
 	users: User[] = [];
     roles: Role[];
 
-    errorMessage: string="";
+    errorMessage: string ='';
+
+    isSelected = true; // Set value default selcted 
 
 	constructor(
 		private fb: FormBuilder,
@@ -41,23 +43,32 @@ export class UserAddComponent implements OnInit {
  	 	this.createForm();
  	}
 
+    /*
+        Create Form User
+        @author: Trangle
+     */
  	createForm() {
  		this.formUser = this.fb.group({
             email: [this.user_form.email, [Validators.required, Validators.email]],
             full_name: [this.user_form.full_name, [Validators.required]],
-            phone: [this.user_form.phone, [Validators.required]],
+            phone: [this.user_form.phone, [Validators.required, Validators.minLength(9), Validators.maxLength(11)]],
             personal_id: [this.user_form.personal_id],
             country: [this.user_form.country],
             address: [this.user_form.address],
             city: [this.user_form.city],
             avatar: [this.user_form.avatar, [Validators.required]],
-            password: [this.user_form.password, [Validators.required]],
+            password: [this.user_form.password, [Validators.required, Validators.minLength(9), Validators.maxLength(32)]],
             is_active: [this.user_form.is_active],
-            role: [this.user_form.role],
-            birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date,"DD/MM/YYYY").toDate() : ''],
+            role: [this.user_form.role, [Validators.required]],
+            birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date,"DD/MM/YYYY").toDate() : null],
         });
  	}
 
+    /*
+        GET: get all role
+        Call service Role
+        @author: Trangle
+     */
     getAllRoles() {
         this.roleService.getAllRoles().subscribe(
             (result) => {
@@ -69,6 +80,11 @@ export class UserAddComponent implements OnInit {
         )
     }
 
+    /*
+        POST: Create User
+        Call service user.service 
+        @author: Trangle
+     */
     onSubmit() {
         var self = this;
         let userFormGroup = this.convertFormGroupToFormData(this.formUser);
@@ -78,13 +94,20 @@ export class UserAddComponent implements OnInit {
                 self.router.navigate(['/user-list', { message_post: this.formUser.value['email']} ]);
             },
             (error) => {
-                this.errorMessage = <any>error;
+                if(error.code == 400) {
+                    self.errorMessage = error.message;
+                } else {
+                    this.router.navigate(['/error', { message: error.message }]);
+                }
             }
         )
     }
 
-    // upload image 
-    // FileReader: reading file contents
+    /* 
+        upload image 
+        FileReader: reading file contents
+        @author: Trangle
+    */
     onFileChange(event) {
         let reader = new FileReader();
         let input_id = $(event.target).attr('id');
@@ -94,7 +117,12 @@ export class UserAddComponent implements OnInit {
         }
     }
 
- 	// Show password
+ 	/* 
+        Show and hide password
+        if type='passwod' is hide
+        else type='text' is show
+        @author: Trangle
+    */    
  	showPassword(input: any): any {
  		input.type = input.type === 'password' ? 'text' : 'password';
  	}
@@ -127,8 +155,13 @@ export class UserAddComponent implements OnInit {
         }
         return userFormData;
     }
-
+    
     transformDate(date) {
         return this.datePipe.transform(date, 'dd/MM/yyyy');
     }
+
+    removeErrorMessage() {
+        this.errorMessage = '';
+    }
+
 }

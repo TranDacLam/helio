@@ -2019,7 +2019,7 @@ class UserListView(APIView):
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
-            print "banner ", e
+            print "User ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -2084,11 +2084,12 @@ class UserDetailView(APIView):
 
         user = self.get_object(pk)
         try:
+            print('user', user)
             serializer = admin_serializers.UserRoleSerializer(user, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
             print 'UserDetailView PUT', e

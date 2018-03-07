@@ -3,7 +3,11 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { User } from '../../../shared/class/user';
+
 import { UserService } from '../../../shared/services/user.service';
+
+import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
 
 import { env } from '../../../../environments/environment';
 
@@ -31,6 +35,7 @@ export class UserDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private userService:  UserService,
         private router: Router,
+        private datePipe: DatePipe,
         ) { 
             this.api_domain = env.api_domain_root;
         }
@@ -45,15 +50,15 @@ export class UserDetailComponent implements OnInit {
 		this.formUser = this.fb.group({
         email: [this.user_form.email, [Validators.required, Validators.email]],
         full_name: [this.user_form.full_name, [Validators.required]],
-        birth_date: [this.user_form.birth_date],
-        phone: [this.user_form.phone, [Validators.required]],
+        birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date,"DD/MM/YYYY").toDate() : null],
+        phone: [this.user_form.phone, [Validators.required, Validators.minLength(9), Validators.maxLength(11)]],
         personal_id: [this.user_form.personal_id],
         country: [this.user_form.country],
         address: [this.user_form.address],
         city: [this.user_form.city],
         avatar: [this.user_form.avatar],
-        password: [this.user_form.password],
-        role: [this.user_form.role, [Validators.required]],
+        password: [this.user_form.password, [Validators.required, Validators.minLength(9), Validators.maxLength(32)]],
+        role: [this.user_form.role ? this.user_form.role : ''],
         is_active: [this.user_form.is_active]
     })
 	}
@@ -71,9 +76,28 @@ export class UserDetailComponent implements OnInit {
                 this.user = data;
             },
             (error) =>  {
-                this.errorMessage = <any>error
+                this.router.navigate(['/error', { message: error.message }])
             }
         );
+    }
+
+    onSubmit() {
+        var self = this;
+        let userFormGroup = this.convertFormGroupToFormData(this.formUser);
+        this.userService.updateUser(userFormGroup, this.user.id).subscribe(
+                (data) => {
+                    // Navigate to promotion page where success
+                    self.router.navigate(['/user-list', { message_put: this.formUser.value['email']} ])
+                }, 
+                (error) => {
+                    if(error.code == 400) {
+                        this.errorMessage = error.message
+                    } else {
+                       self.router.navigate(['/error', { message: error.message }]);
+                    }
+                }
+            );
+
     }
 
     /*
@@ -88,8 +112,7 @@ export class UserDetailComponent implements OnInit {
                     this.router.navigate(['/user-list', { message_del: user.email} ]);
                 },
                 (error) =>  {
-                    console.log(error);
-                    // this.router.navigate(['/error', { message: error }])
+                    this.router.navigate(['/error', { message: error }])
                 }
            );
     }
@@ -106,7 +129,11 @@ export class UserDetailComponent implements OnInit {
     }
 
 
-    // Show pass word
+    /*
+        Show password 
+        if type = 'password' is hide
+        else type= "text" is show
+     */
  	showPassword(input: any): any {
  		input.type = input.type === 'password' ? 'text' : 'password';
  	}
@@ -148,4 +175,41 @@ export class UserDetailComponent implements OnInit {
         });
     }
 
+    /*
+        Convert form group to form data to submit form
+        @author: trangle
+    */
+    private convertFormGroupToFormData(userForm: FormGroup) {
+        // Convert FormGroup to FormData
+        let userValues = userForm.value;
+        let userFormData:FormData = new FormData(); 
+        if (userValues){
+            /* 
+                Loop to set value to formData
+                Case1: if value is null then set ""
+                Case2: If key is image field then set value have both file and name
+                Else: Set value default
+            */
+            Object.keys(userValues).forEach(k => { 
+                if(userValues[k] == null) {
+                    userFormData.append(k, '');
+                } else if (k === 'avatar') {
+                    userFormData.append(k, userValues[k].value, userValues[k].name);
+                } else if(k === 'birth_date') {
+                    userFormData.append(k, this.transformDate(userValues[k]))
+                } else {
+                    userFormData.append(k, userValues[k]);
+                }
+            });
+        }
+        return userFormData;
+    }
+
+    transformDate(date) {
+        return this.datePipe.transform(date, 'dd/MM/yyyy');
+    }
+
+    removeErrorMessage() {
+        this.errorMessage = '';
+    }
 }
