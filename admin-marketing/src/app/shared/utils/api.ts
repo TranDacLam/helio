@@ -68,4 +68,6 @@ export const api = {
 
     type_list: env.api_domain + 'type_list/',
 
+    account_users: env.api_domain + 'accounts/users/',
+
 };
