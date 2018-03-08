@@ -25,6 +25,9 @@ from rest_framework.decorators import parser_classes, authentication_classes
 from rest_framework.parsers import MultiPartParser
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+
 """
     Get Promotion
     @author: diemnguyen
@@ -180,6 +183,10 @@ class PromotionUser(APIView):
 
     def post(self, request, id, format=None):
         try:
+            #Set is_save to True to block change user list
+            promition = Promotion.objects.get(pk=id)
+            promition.is_save = True
+            promotion.save();
 
             list_user_id = self.request.data.get('list_user_id', '')
 
@@ -1933,8 +1940,7 @@ class CategoryList(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+
 # @parser_classes((MultiPartParser, FormParser))
 # @permission_classes((AllowAny,))
 # def UploadFile(APIView):

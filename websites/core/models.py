@@ -165,6 +165,7 @@ class Promotion(DateTimeModel):
     is_draft = models.BooleanField(default=False)
     user_implementer = models.ForeignKey('User', related_name='user_implementer_rel',
                                          null=True, blank=True)
+    is_save = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s' % (self.name)
