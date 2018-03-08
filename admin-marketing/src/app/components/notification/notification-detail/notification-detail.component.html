@@ -21,7 +21,7 @@
     <p>Ngày gửi: {{noti_detail.sent_date}}</p>
     <p>Người gửi: {{noti_detail.sent_user}}</p>
     <p>Ngày update: </p>
-    <p><a class="btn btn-primary">GỬI THÔNG BÁO</a></p>
+    <p><a class="btn btn-primary" (click)="checkSendNotification()">GỬI THÔNG BÁO</a></p>
     <p>
         <input type="checkbox" (change)="isUpdateNoti($event)"/> 
         Sửa thông báo đã gửi (Chức năng này chỉ dành cho System Admin)
@@ -32,6 +32,7 @@
         </button>
     </p>
     <p class="message-success" *ngIf="messageSuccess">{{ messageSuccess }}</p>
+    <p class="message_error" *ngIf="messageError">{{ messageError }}</p>
 </div>
 <div class="row">
     <app-user-multiselect 

@@ -70,4 +70,6 @@ export const api = {
 
     account_users: env.api_domain + 'accounts/users/',
 
+    notification_push: env.api_domain + 'notification/push/',
+
 };
