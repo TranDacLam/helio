@@ -432,3 +432,23 @@ class TypeSerializer(serializers.ModelSerializer):
         instance.description_detail = validated_data.get('description_detail', instance.description_detail)
         instance.save()
         return instance
+
+class HotAdvsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Hot_Advs
+        exclude = ('created', 'modified')
+
+    def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.name = validated_data.get('name', instance.name)
+        instance.content = validated_data.get('content', instance.content)
+        instance.is_register = validated_data.get('is_register', instance.is_register)
+        instance.is_view_detail = validated_data.get('is_view_detail', instance.is_view_detail)
+        instance.sub_url_register = validated_data.get('sub_url_register', instance.sub_url_register)
+        instance.sub_url_view_detail = validated_data.get('sub_url_view_detail', instance.sub_url_view_detail)
+        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
+        instance.save()
+        return instance
