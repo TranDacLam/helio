@@ -60,10 +60,10 @@ export class FormEventComponent implements OnInit {
             start_date: [this.event.start_date ? moment(this.event.start_date,"DD/MM/YYYY").toDate() : '', 
                 [DateValidators.checkDate, DateValidators.formatStartDate, DateValidators.requiredStartDate]],
             end_date: [this.event.end_date ? moment(this.event.end_date,"DD/MM/YYYY").toDate() : '', 
-                [DateValidators.checkDate, DateValidators.formatEndDate, DateValidators.requiredEndDate]],
-            start_time: [this.event.start_time ? moment(this.event.start_time,"hh:mm").toDate() : '', 
+                [DateValidators.checkDate, DateValidators.formatEndDate, DateValidators.requiredStartDate]],
+            start_time: [this.event.start_time ? moment(this.event.start_time,"HH:mm").format() : '', 
                 [DateValidators.formatStartTime]],
-            end_time: [this.event.end_time ? moment(this.event.end_time,"hh:mm").toDate() : '',
+            end_time: [this.event.end_time ? moment(this.event.end_time,"HH:mm").format() : '',
                 [DateValidators.formatEndTime]],
             is_draft: [this.event.is_draft],
             is_clear_image: [false]
@@ -111,7 +111,7 @@ export class FormEventComponent implements OnInit {
                     if(error.code === 400){
                         this.errorMessage = error.message;
                     }else{
-                        this.router.navigate(['/error']);
+                        this.router.navigate(['/error', { message: error.message}]);
                     }
                 }
             );
@@ -122,14 +122,13 @@ export class FormEventComponent implements OnInit {
             }else{
                 this.eventService.updateEvent(event_form_data, this.event.id).subscribe(
                     (data) => {
-                        this.event = data;
                         this.router.navigate(['/event/list', { message_put: value_form.name}]);
                     },
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
                         }else{
-                            this.router.navigate(['/error']);
+                            this.router.navigate(['/error', { message: error.message}]);
                         }
                     }
                 );

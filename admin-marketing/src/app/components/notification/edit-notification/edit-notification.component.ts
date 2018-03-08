@@ -31,9 +31,14 @@ export class EditNotificationComponent implements OnInit {
     */
     getNotification(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.notificationService.getNotification(id).subscribe(data => {
-            this.noti = data;
-        });
+        this.notificationService.getNotification(id).subscribe(
+            (data) => {
+                this.noti = data;
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
     }
 
 }

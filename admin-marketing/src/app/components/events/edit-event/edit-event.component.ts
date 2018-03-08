@@ -31,9 +31,14 @@ export class EditEventComponent implements OnInit {
     */
     getEvent(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.eventService.getEvent(id).subscribe(data => {
-            this.event = data;
-        });
+        this.eventService.getEvent(id).subscribe(
+            (data) => {
+                this.event = data;
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
     }
 
 }

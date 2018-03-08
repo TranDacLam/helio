@@ -26,8 +26,10 @@ export class ListPromotionLabelComponent implements OnInit {
 
     promotion_labels: PromotionLabel[];
     promotion_labels_del = []; // Get array id to delete all id promotion label
+    length_promotion_labels: number;
     select_checked = false; // Check/uncheck all Promotion Label
     message_result = ''; // Message error
+    errorMessage = '';
 
     constructor(private promotionLabelService: PromotionLabelService, private route: ActivatedRoute) { }
 
@@ -57,7 +59,15 @@ export class ListPromotionLabelComponent implements OnInit {
         this.promotionLabelService.getPromotionLabels().subscribe(
             (data) => {
                 this.promotion_labels = data;
-            } 
+                this.length_promotion_labels = this.promotion_labels.length;
+            },
+            (error) => {
+                if(error.code === 403){
+                    this.errorMessage = error.message;
+                }else{
+                    this.router.navigate(['/error', { message: error.message}]);
+                }
+            }
         );
     }
 
@@ -97,7 +107,7 @@ export class ListPromotionLabelComponent implements OnInit {
     */
     deletePormotionLabelEvent(){
         let that = this;
-        if ( this.promotion_labels.length > 0 ) {
+        if ( this.promotion_labels_del.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
                 message: "Bạn muốn xóa " + this.promotion_labels_del.length + " phần tử đã chọn",
@@ -135,9 +145,10 @@ export class ListPromotionLabelComponent implements OnInit {
                     this.promotion_labels_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.length_promotion_labels = this.length_promotion_labels - this.promotion_labels_del.length;
                     this.promotion_labels_del = [];
                 });
-                this.getPromotionLabels();
+                this.select_checked = false;
                 this.message_result = 'Xóa thành công.';
             }
         );

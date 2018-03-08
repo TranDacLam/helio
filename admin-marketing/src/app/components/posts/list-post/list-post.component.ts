@@ -32,6 +32,7 @@ export class ListPostComponent implements OnInit {
     length_posts: number;
     select_checked = false; // Check/uncheck all post
     message_result = ''; // Message error
+    errorMessage = '';
 
     constructor(private postService: PostService, private route: ActivatedRoute) { }
 
@@ -63,7 +64,14 @@ export class ListPostComponent implements OnInit {
             (data) => {
                 this.posts = data;
                 this.length_posts = this.posts.length;
-            } 
+            },
+            (error) => {
+                if(error.code === 403){
+                    this.errorMessage = error.message;
+                }else{
+                    this.router.navigate(['/error', { message: error.message}]);
+                }
+            }
         );
     }
 
@@ -144,6 +152,7 @@ export class ListPostComponent implements OnInit {
                     this.length_posts = this.length_posts - this.posts_del.length;
                     this.posts_del = [];
                 });
+                this.select_checked = false;
                 this.message_result = "Xóa thành công.";
             }
         );

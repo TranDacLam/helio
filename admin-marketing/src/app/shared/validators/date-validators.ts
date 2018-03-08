@@ -107,6 +107,9 @@ export class DateValidators {
     static formatStartTime(c: FormControl): ValidationErrors {
         let validatePattern = /^(\d{1,2})(:)(\d{2})$/;
         let getValTime = String($('#start_time').val());
+        if(getValTime.indexOf(',') !== -1){
+            getValTime = getValTime.substr(0,getValTime.indexOf(','));
+        }
         let timeValues = getValTime.match(validatePattern);
         if(getValTime === ''){
             return {
@@ -131,6 +134,9 @@ export class DateValidators {
     static formatEndTime(c: FormControl): ValidationErrors {
         let validatePattern = /^(\d{1,2})(:)(\d{2})$/;
         let getValTime = String($('#end_time').val());
+        if(getValTime.indexOf(',') !== -1){
+            getValTime = getValTime.substr(0,getValTime.indexOf(','));
+        }
         let timeValues = getValTime.match(validatePattern);
         if(getValTime === ''){
             return {

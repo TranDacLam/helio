@@ -7,9 +7,6 @@ import { api } from '../utils/api';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
-const httpOptions = {
-    headers: new Headers({ 'Content-Type': 'application/json' })
-};
 
 @Injectable()
 export class LinkCardService {
@@ -19,7 +16,19 @@ export class LinkCardService {
     private url_relate = api.relate;
     private url_delete_relate = api.delete_relate;
 
-    constructor(private http: Http) { }
+    httpOptions: any;
+    token: any = '';
+
+    constructor(private http: Http) {
+        this.token = localStorage.getItem('auth_token');
+
+        this.httpOptions = {
+            headers: new Headers({ 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            })
+        };
+    }
 
     /* 
         function getEmail(): Get user by email
@@ -27,7 +36,7 @@ export class LinkCardService {
     */
     getEmail(email){
         const url_get_email = `${this.url_app}?email=${email}`;
-        return this.http.get(url_get_email).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_get_email, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -36,7 +45,7 @@ export class LinkCardService {
     */
     updateUserApp(user_app: User, id: number): Observable<User>{
         const urlUser = `${this.url_app}${id}/`;
-        return this.http.put(urlUser, JSON.stringify(user_app), httpOptions)
+        return this.http.put(urlUser, JSON.stringify(user_app), this.httpOptions)
             .map((res: Response) => res.json()).catch(this.handleError);
     }
 
@@ -46,7 +55,7 @@ export class LinkCardService {
     */
     getBarcode(barcode): Observable<any>{
         const url_get_barcode = `${this.url_embed}?barcode=${barcode}`;
-        return this.http.get(url_get_barcode).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_get_barcode, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -56,7 +65,7 @@ export class LinkCardService {
     updateUserEmbed(user_embed: User): Observable<Customer>{     
         const id = user_embed.barcode;
         const urlUser = `${this.url_embed}${id}/`;
-        return this.http.put(urlUser, JSON.stringify(user_embed), httpOptions)
+        return this.http.put(urlUser, JSON.stringify(user_embed), this.httpOptions)
             .map((res: Response) => res.json()).catch(this.handleError);
     }
 
@@ -66,7 +75,7 @@ export class LinkCardService {
     */
     getUserApp(id: number): Observable<User>{
         const url_app_id = `${this.url_app}${id}`;
-        return this.http.get(url_app_id).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_app_id, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -75,7 +84,7 @@ export class LinkCardService {
     */
     getUserEmbed(id: number): Observable<Customer>{
         const url_embed_id = `${this.url_embed}${id}`;
-        return this.http.get(url_embed_id).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_embed_id, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -84,7 +93,7 @@ export class LinkCardService {
     */
     delLinkCard(id: number): Observable<any>{
         const url_del_linkcard = `${this.url_delete_relate}${id}`;
-        return this.http.delete(url_del_linkcard, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_del_linkcard, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -93,7 +102,7 @@ export class LinkCardService {
     */
     relate(email, barcode): Observable<any>{
         let obj_relate = {email: email, barcode: barcode};
-        return this.http.post(this.url_relate, obj_relate, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.post(this.url_relate, obj_relate, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* function getAllLinkedUsers(): Get all linked card users
@@ -101,7 +110,7 @@ export class LinkCardService {
     */
     getAllLinkedUsers(): Observable<User[]> {
        const url = `${api.user_link_card}`;
-       return this.http.get(url).map((res: Response) => res.json()).catch(this.handleError);
+       return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
     /* Delete All checkbox chosen
         author: TrangLe
@@ -113,7 +122,7 @@ export class LinkCardService {
             user_linked_id: user_linked_id
         }
         let _options = new RequestOptions({
-            headers: httpOptions.headers,
+            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
         return this.http.delete(url, _options).map((res: Response) => res.json()).catch(this.handleError);

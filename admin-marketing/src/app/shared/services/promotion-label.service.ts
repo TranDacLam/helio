@@ -5,11 +5,7 @@ import { api } from '../utils/api';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
-const httpOptions = {
-    headers: new Headers({ 
-        'Content-Type': 'application/json',
-    })
-};
+
 @Injectable()
 export class PromotionLabelService {
 
@@ -30,25 +26,35 @@ export class PromotionLabelService {
         };
      }
 	
-	// Get All Promotion Label from server
+    /* 
+        function getPromotionLabels(): Get all promotion labels
+        author: Lam
+    */
 	getPromotionLabels(): Observable<any>{
 		return this.http.get(this.urlPromotionLabelList, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
-	// POST: Add new Promotion Label to the server 
+    /* 
+        function addPromotionLabel(): add promotion labels
+        author: Lam
+    */ 
 	addPromotionLabel(proLabel): Observable<any> {
 		let body = JSON.stringify(proLabel); // String payload
 		return this.http.post(this.urlPromotionLabel, body, this.httpOptions)
 			.map((res: Response) => res.json()).catch(this.handleError);	
 	}
 
+    /* 
+        function getPromotionLabel(): get promotion label by id
+        author: Lam
+    */ 
 	getPromotionLabel(id: number): Observable<any>{
         let url_promotion_label = `${this.urlPromotionLabel}${id}`;
         return this.http.get(url_promotion_label, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
-        function onDelEventSelect(): Delete all event selected
+        function onDelEventSelect(): Delete all promotion label selected
         author: Lam
     */
     onDelPromotionLabelSelect(arr): Observable<any>{
@@ -64,12 +70,20 @@ export class PromotionLabelService {
         return this.http.delete(this.urlPromotionLabelList, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
+    /* 
+        function updatePromotionLabel(): update promotion label by id
+        author: Lam
+    */
     updatePromotionLabel(value, id): Observable<any>{
         let url_update_promotion_label = `${this.urlPromotionLabel}${id}/`;
         return this.http.put(url_update_promotion_label, JSON.stringify(value), this.httpOptions)
             .map((res: Response) => res.json()).catch(this.handleError);
     }
 
+    /* 
+        function onDelEventSelect(): Delete promotion label by id
+        author: Lam
+    */
     onDelPromotionLabel(id): Observable<any>{
         const url_del = `${this.urlPromotionLabel}${id}/`;
         return this.http.delete(url_del, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
