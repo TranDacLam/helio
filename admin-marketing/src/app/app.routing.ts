@@ -55,6 +55,9 @@ import { ListPromotionComponent } from './components/promotions/list-promotion/l
 import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
 import { ErrorComponent } from './components/error/error.component';
 
+import { UserPermissionComponent } from './components/user-permission/user-permission.component';
+
+
 
 const routes: Routes = [{
         path: '',
@@ -235,9 +238,14 @@ const routes: Routes = [{
         component: EditPromotionLabelComponent
     },
     {
+        path: 'user-permission',
+        component: UserPermissionComponent
+    },
+    {
         path: 'error',
         component: ErrorComponent
     },
+
 ];
 
 @NgModule({

@@ -90,6 +90,8 @@ import { ListPromotionComponent } from './components/promotions/list-promotion/l
 import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
 import { FormHotComponent } from './components/hots/form-hot/form-hot.component';
 import { ErrorComponent } from './components/error/error.component';
+import { UserPermissionComponent } from './components/user-permission/user-permission.component';
+import { UserPermissionService } from './shared/services/user-permission.service';
 
 
 
@@ -159,6 +161,7 @@ import { ErrorComponent } from './components/error/error.component';
     UserPromotionComponent,
     FormHotComponent,
     ErrorComponent,
+    UserPermissionComponent,
   ],
   imports: [
     BrowserModule,
@@ -183,6 +186,7 @@ import { ErrorComponent } from './components/error/error.component';
     CategoryService,
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'vi'},
     DatePipe,
+    UserPermissionService,
   ],
   bootstrap: [AppComponent]
 })

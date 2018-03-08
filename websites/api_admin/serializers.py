@@ -299,8 +299,6 @@ class HotSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
 
-    post_type = serializers.SlugRelatedField(queryset = Post_Type.objects.all(), read_only=False, slug_field = 'name' )
-
     class Meta:
         model = Post
         fields = ('id','name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
@@ -375,3 +373,9 @@ class TypeSerializer(serializers.ModelSerializer):
         instance.description_detail = validated_data.get('description_detail', instance.description_detail)
         instance.save()
         return instance
+
+class RoleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Roles
+        fields = ('id', 'name')

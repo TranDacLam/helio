@@ -53,5 +53,12 @@ export const api = {
     category_list: env.api_domain +'category_list/',
     post_type_list: env.api_domain +'post_type_list/',
 
+    role_list: env.api_domain + 'role_list/',
+    users_role: env.api_domain + 'users_role/',
+    set_role: env.api_domain + 'set_role/',
+    
+
+
+
 
 };
