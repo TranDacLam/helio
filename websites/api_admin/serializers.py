@@ -370,13 +370,6 @@ class UserRoleSerializer(serializers.ModelSerializer):
         if value >= datetime.now().date():
             raise serializers.ValidationError("Birthday must less then today")
         return value
-        
-    def validate_password(self, password):
-        try:
-            validate_password(password)
-        except ValidationError as exc:
-            raise serializers.ValidationError(str(exc))
-        return password
 
     def create(self, validated_data):
         user = super(UserRoleSerializer, self).create(validated_data)
