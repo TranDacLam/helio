@@ -16,25 +16,35 @@ export class PromotionLabelService {
   	private urlPromotionLabel = `${api.promotion_label}`;
     private urlPromotionLabelList = `${api.promotion_label_list}`;
 
-	constructor(private http: Http) 
-	{
-	}
+	httpOptions: any;
+    token: any = '';
+
+    constructor(private http: Http) {
+        this.token = localStorage.getItem('auth_token');
+
+        this.httpOptions = {
+            headers: new Headers({ 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            })
+        };
+     }
 	
 	// Get All Promotion Label from server
 	getPromotionLabels(): Observable<any>{
-		return this.http.get(this.urlPromotionLabelList).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(this.urlPromotionLabelList, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	// POST: Add new Promotion Label to the server 
 	addPromotionLabel(proLabel): Observable<any> {
 		let body = JSON.stringify(proLabel); // String payload
-		return this.http.post(this.urlPromotionLabel, body, httpOptions)
+		return this.http.post(this.urlPromotionLabel, body, this.httpOptions)
 			.map((res: Response) => res.json()).catch(this.handleError);	
 	}
 
 	getPromotionLabel(id: number): Observable<any>{
         let url_promotion_label = `${this.urlPromotionLabel}${id}`;
-        return this.http.get(url_promotion_label).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_promotion_label, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -47,7 +57,7 @@ export class PromotionLabelService {
         }
 
         let _options = new RequestOptions({
-            headers: httpOptions.headers,
+            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
 
@@ -56,13 +66,13 @@ export class PromotionLabelService {
 
     updatePromotionLabel(value, id): Observable<any>{
         let url_update_promotion_label = `${this.urlPromotionLabel}${id}/`;
-        return this.http.put(url_update_promotion_label, JSON.stringify(value), httpOptions)
+        return this.http.put(url_update_promotion_label, JSON.stringify(value), this.httpOptions)
             .map((res: Response) => res.json()).catch(this.handleError);
     }
 
     onDelPromotionLabel(id): Observable<any>{
         const url_del = `${this.urlPromotionLabel}${id}/`;
-        return this.http.delete(url_del, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_del, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
 	// exception

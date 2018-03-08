@@ -11,23 +11,31 @@ import { api } from '../utils/api';
 
 import { PromotionType } from '../../shared/class/promotion-type';
 
-const httpOptions = {
-	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable()
 export class PromotionTypeService {
 
-  	constructor(private http: HttpClient) {
-  	 }
+  	httpOptions: any;
+    token: any = '';
+
+    constructor(private http: Http) {
+        this.token = localStorage.getItem('auth_token');
+
+        this.httpOptions = {
+            headers: new Headers({ 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            })
+        };
+    }
 
   	/*
   		GET: Get All Promorion Type From Server
   		@author: TrangLe
   	 */
-	getAllPromotionsType(): Observable<PromotionType[]>{
+	getAllPromotionsType(): Observable<any[]>{
 		let urlPromotionType = `${api.promotion_type}`;
-		return this.http.get<PromotionType[]>(urlPromotionType).catch(this.handleError);
+		return this.http.get(urlPromotionType, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	/*
