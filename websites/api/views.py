@@ -1001,41 +1001,50 @@ def add_notification(request):
 
 
 @api_view(['POST'])
-@permission_classes((AllowAny,))
 def send_notification(request):
     try:
-        # TODO : Check user i not anonymous
-        print 'request.data ', request.data
-        notification_id = request.data.get('notification_id', '')
-        if not notification_id:
-            error = {
-                "code": 400, "message": "Please check required fields : [notification_id]", "fields": "",
-                "flag": False}
-            return Response(error, status=400)
+        user = request.user
 
-        notify_obj = Notification.objects.get(pk=notification_id)
-        user_of_notification = User_Notification.objects.filter(
-            notification_id=notification_id).values_list('user_id', flat=True)
+        if not request.user.anonymously:
 
-        data_notify = {"title": notify_obj.subject, "body": notify_obj.message,
-                       "sub_url": notify_obj.sub_url, "image": notify_obj.image.url if notify_obj.image else "",
-                       "notification_id": notify_obj.id}
+            print 'request.data ', request.data
+            notification_id = request.data.get('notification_id', '')
+            if not notification_id:
+                error = {
+                    "code": 400, "message": "Please check required fields : [notification_id]", "fields": "",
+                    "flag": False}
+                return Response(error, status=400)
 
-        devices_ios = APNSDevice.objects.filter(
-            user__flag_notification=True, user__id__in=user_of_notification)
-        if devices_ios:
-            devices_ios.send_message(message=data_notify, extra=data_notify)
+            notify_obj = Notification.objects.get(pk=notification_id)
+            user_of_notification = User_Notification.objects.filter(
+                notification_id=notification_id).values_list('user_id', flat=True)
 
-        fcm_devices = GCMDevice.objects.filter(
-            user__flag_notification=True, user__id__in=user_of_notification)
-        if fcm_devices:
-            data_notify['click_action'] = "ACTIVITY_NOTIFICATION"
-            data_notify['title_payload'] = notify_obj.subject
-            data_notify['body_payload'] = notify_obj.message
-            fcm_devices.send_message(notify_obj.subject, extra=data_notify)
+            data_notify = {"title": notify_obj.subject, "body": notify_obj.message,
+                           "sub_url": notify_obj.sub_url, "image": notify_obj.image.url if notify_obj.image else "",
+                           "notification_id": notify_obj.id}
 
-        return Response({'message': _('Push Notification Successfull')})
+            devices_ios = APNSDevice.objects.filter(
+                user__flag_notification=True, user__id__in=user_of_notification)
+            if devices_ios:
+                devices_ios.send_message(message=data_notify, extra=data_notify)
 
+            fcm_devices = GCMDevice.objects.filter(
+                user__flag_notification=True, user__id__in=user_of_notification)
+            if fcm_devices:
+                data_notify['click_action'] = "ACTIVITY_NOTIFICATION"
+                data_notify['title_payload'] = notify_obj.subject
+                data_notify['body_payload'] = notify_obj.message
+                fcm_devices.send_message(notify_obj.subject, extra=data_notify)
+
+            # When send success then update user and date sent
+            notify_obj.sent_user = user
+            notify_obj.sent_date = datetime.datetime.now()
+            notify_obj.save()
+
+            return Response({'message': _('Push Notification Successfull')})
+
+        else:
+            return Response({'message': _('Anonymous User Cannot Call This Action.')}, status=400)
     except Notification.DoesNotExist, e:
         print "error PUSH notification ", e
         error = {"code": 400, "message": "%s" % e,

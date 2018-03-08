@@ -35,7 +35,6 @@ export class AdvertisementAddComponent implements OnInit {
 			},
             (error) => {
                 if (error.status == 400 ) {
-                    console.log(error.json());
                     this.errorMessage = error.json().name
                 } else {
                     this.router.navigate(['/error', { message: error.json().message }])

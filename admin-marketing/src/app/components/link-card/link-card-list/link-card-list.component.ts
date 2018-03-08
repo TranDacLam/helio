@@ -100,9 +100,14 @@ export class LinkCardListComponent implements OnInit {
             this.message_success ='';
             this.message_result = "";
         } else {
-            this.link_card_del = this.link_card_del.filter(ad => ad !== linkCard.id);
+            let updateItem = this.link_card_del.find(this.findIndexToUpdate, linkCard.id);
+            let index = this.link_card_del.indexOf(updateItem);
+            this.link_card_del.splice(index, 1);
         }
   	}
+    findIndexToUpdate(type) {
+        return type.id === this;
+    }
 
     /*
         Confirm Delete Checkbox Selected

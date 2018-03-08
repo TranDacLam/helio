@@ -1,4 +1,4 @@
-.noti-image button{
+.event-image button{
     margin-top: 5px;
 }
 form label{
@@ -10,7 +10,10 @@ form select.form-control{
 form .event-date{
     width: 40%;
 }
-form .input-group{
+form .input-group, .custom-date{
     padding-right: 15px;
     padding-left: 15px;
+}
+.error_msg{
+    color: red;
 }

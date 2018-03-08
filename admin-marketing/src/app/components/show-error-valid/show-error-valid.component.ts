@@ -25,7 +25,11 @@ export class ShowErrorValidComponent implements OnInit {
        'uniqueName': (params) => params.message,
        'telephoneNumbers': (params) => params.message,
        'telephoneNumber': (params) => params.message,
-       'owlDateTimeParse': (params) => ''
+       'owlDateTimeParse': (params) => '',
+       'fomatDate': (param) => param.message,
+       'fomatTime': (param) => param.message,
+       'required_date': (param) => param.message,
+       'required_time': (param) => param.message,
     };
 
     @Input()

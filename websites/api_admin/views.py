@@ -21,14 +21,17 @@ from django.utils import timezone
 from django.db.models import Count
 from django.http import Http404
 from django.db import DatabaseError
-from rest_framework.decorators import parser_classes
+from rest_framework.decorators import parser_classes, authentication_classes
 from rest_framework.parsers import MultiPartParser
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+
 """
     Get Promotion
     @author: diemnguyen
 """
-
 
 class PromotionList(APIView):
 
@@ -180,6 +183,10 @@ class PromotionUser(APIView):
 
     def post(self, request, id, format=None):
         try:
+            #Set is_save to True to block change user list
+            promition = Promotion.objects.get(pk=id)
+            promition.is_save = True
+            promotion.save();
 
             list_user_id = self.request.data.get('list_user_id', '')
 
@@ -222,7 +229,6 @@ class PromotionUser(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class UserDetail(APIView):
 
     def get(self, request, format=None):
@@ -262,13 +268,13 @@ class UserDetail(APIView):
             return Response(error, status=500)
 
 
+
 """
 GET and POST Advertisement
 @author: Trangle
 """
 
 
-@permission_classes((AllowAny, ))
 class AdvertisementView(APIView):
 
     def get(self, request, format=None):
@@ -324,7 +330,6 @@ GET, PUT Advertisement Detail
 """
 
 
-@permission_classes((AllowAny, ))
 class AdvertisementDetail(APIView):
     """
     Retrieve, update or delete a advertisement instance
@@ -363,7 +368,6 @@ Get PromotionType
 """
 
 
-@permission_classes((AllowAny, ))
 class PromotionTypeView(APIView):
 
     def get(self, request, format=None):
@@ -383,7 +387,6 @@ class PromotionTypeView(APIView):
 """
 
 
-@permission_classes((AllowAny, ))
 class DenominationView(APIView):
 
     def get(self, request, format=None):
@@ -438,7 +441,6 @@ GET FeedBack
 """
 
 
-@permission_classes((AllowAny, ))
 class FeedbackView(APIView):
 
     def get(self, request, format=None):
@@ -518,7 +520,6 @@ GET, PUT, DELETE Feedback by id
 """
 
 
-@permission_classes((AllowAny, ))
 class FeedbackDetailView(APIView):
 
     def get_object(self, pk):
@@ -559,7 +560,6 @@ DELETE all checkbox selected
 """
 
 
-@permission_classes((AllowAny,))
 class UserLinkCardList(APIView):
 
     def get(self, request, format=None):
@@ -601,7 +601,6 @@ Get Notification List
 """
 
 
-@permission_classes((AllowAny,))
 class NotificationList(APIView):
 
     def get(self, request, format=None):
@@ -647,7 +646,6 @@ class NotificationList(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 @parser_classes((MultiPartParser, FormParser))
 class NotificationDetail(APIView):
 
@@ -709,7 +707,6 @@ class NotificationDetail(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class NotificationUser(APIView):
 
     def get(self, request, id):
@@ -785,7 +782,6 @@ class NotificationUser(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class SummaryAPI(APIView):
 
     def get(self, request, format=None):
@@ -869,7 +865,6 @@ class SummaryAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class UserEmbedDetail(APIView):
 
     def get(self, request, format=None):
@@ -976,7 +971,6 @@ class UserEmbedDetail(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class RelateAPI(APIView):
 
     def post(self, request, format=None):
@@ -1068,7 +1062,6 @@ class RelateAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class FeeAPI(APIView):
 
     def post(self, request, format=None):
@@ -1115,8 +1108,7 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
-
-@permission_classes((AllowAny,))
+@authentication_classes((SessionAuthentication, BasicAuthentication))
 class FeeListAPI(APIView):
 
     def get(self, request, format=None):
@@ -1157,7 +1149,6 @@ class FeeListAPI(APIView):
 
 
 @parser_classes((MultiPartParser, JSONParser))
-@permission_classes((AllowAny,))
 class BannerView(APIView):
 
     def get(self, request, format=None):
@@ -1217,7 +1208,6 @@ class BannerView(APIView):
 
 
 @parser_classes((MultiPartParser, JSONParser))
-@permission_classes((AllowAny,))
 class BannerViewDetail(APIView):
 
     def get_object(self, pk):
@@ -1269,7 +1259,6 @@ class BannerViewDetail(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class CategoryNotifications(APIView):
 
     def get(self, request, format=None):
@@ -1293,7 +1282,6 @@ class CategoryNotifications(APIView):
 
 
 @parser_classes((MultiPartParser, JSONParser))
-@permission_classes((AllowAny,))
 class EventAPI(APIView):
 
     def get(self, request, id):
@@ -1362,7 +1350,6 @@ class EventAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class EventListAPI(APIView):
 
     def get(self, request, format=None):
@@ -1400,7 +1387,6 @@ class EventListAPI(APIView):
 
 
 @parser_classes((JSONParser,))
-@permission_classes((AllowAny,))
 class PromotionLabelAPI(APIView):
 
     def get_object(self, id):
@@ -1474,7 +1460,6 @@ class PromotionLabelAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class PromotionLabelListAPI(APIView):
 
     def get(self, request):
@@ -1514,7 +1499,6 @@ class PromotionLabelListAPI(APIView):
 
 
 @parser_classes((MultiPartParser, JSONParser))
-@permission_classes((AllowAny,))
 class HotAPI(APIView):
 
     def get(self, request, id):
@@ -1581,7 +1565,6 @@ class HotAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class HotListAPI(APIView):
 
     def get(self, request):
@@ -1619,7 +1602,6 @@ class HotListAPI(APIView):
 
 
 @parser_classes((MultiPartParser, JSONParser))
-@permission_classes((AllowAny,))
 class HotAPI(APIView):
 
     def get(self, request, id=None):
@@ -1703,7 +1685,6 @@ class HotAPI(APIView):
 
 
 @parser_classes((MultiPartParser,))
-@permission_classes((AllowAny,))
 class PostAPI(APIView):
 
     def get(self, request, id):
@@ -1773,7 +1754,6 @@ class PostAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class PostListAPI(APIView):
 
     def get(self, request):
@@ -1810,7 +1790,6 @@ class PostListAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class PostTypeListAPI(APIView):
 
     def get(self, request):
@@ -1832,7 +1811,6 @@ class PostTypeListAPI(APIView):
 
 
 @parser_classes((JSONParser,))
-@permission_classes((AllowAny,))
 class FAQAPI(APIView):
 
     def get(self, request, id):
@@ -1899,7 +1877,6 @@ class FAQAPI(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class FAQListAPI(APIView):
 
     def get(self, request):
@@ -1950,7 +1927,6 @@ class GeneratorQRCode(APIView):
 """
 
 
-@permission_classes((AllowAny,))
 class CategoryList(APIView):
 
     def get(self, request, format=None):
@@ -1965,8 +1941,7 @@ class CategoryList(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+
 # @parser_classes((MultiPartParser, FormParser))
 # @permission_classes((AllowAny,))
 # def UploadFile(APIView):
@@ -1980,6 +1955,142 @@ def postUpload(request):
     }
     return JsonResponse(result, status=200)
 
+
+"""
+GET, DELETE, POST User
+@author: TrangLe
+"""
+@parser_classes((MultiPartParser, JSONParser))
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+class UserListView(APIView):
+    """
+        Method: GET
+        Get All User
+    """
+    def get(self, request, format=None):
+        print "METHOD GET"
+        try:
+            users = User.objects.all()
+            serializer = admin_serializers.UserRoleDisplaySerializer(users, many=True)
+            return Response(serializer.data)
+
+        except Exception, e:
+            print "List User",e
+            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            return Response(error, status=500)
+
+    """
+        Method:POST
+        Create Users
+    """
+    def post(self, request, format=None):
+        print "METHOD POST"
+        try:
+            serializer = admin_serializers.UserRoleSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+
+        except Exception, e:
+            print "banner ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    """
+        Method: DELETE
+        Delete all user check
+    """
+    def delete(self, request, format=None):
+        print "METHOD DELETE"
+        try:
+            # Get list user id to delete
+            user_id = self.request.data.get('user_id', None)
+            print "User List Id", user_id
+
+            # Check list user id
+            if user_id:
+                User.objects.filter(pk__in=user_id).delete()
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
+
+        except Exception, e:
+            print e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+"""
+    GET, PUT User Detail
+    @author: TrangLe
+"""
+@parser_classes((MultiPartParser, JSONParser))
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+class UserDetailView(APIView):
+
+    def get_object(self, pk):
+        try:
+            queryset = User.objects.get(pk=pk)
+            return queryset
+        except User.DoesNotExist, e:
+            raise Http404
+
+    """
+        Get User By Id
+    """
+    def get(self, request, pk, format=None):
+        print "METHOD GET"
+
+        user = self.get_object(pk)
+        try:
+            serializer = admin_serializers.UserRoleDisplaySerializer(user)
+            return Response(serializer.data)
+        except Exception, e:
+            print 'UserDetailView ', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    """
+        Update User By Id
+    """
+    def put(self, request, pk, format=None):
+        print "METHOD PUT"
+
+        user = self.get_object(pk)
+        try:
+            serializer = admin_serializers.UserRoleSerializer(user, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception, e:
+            print 'UserDetailView PUT', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, pk, format=None):
+        print "METHOD DELETE"
+
+        user = self.get_object(pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+"""
+    GET: Get Al Roles
+    @author: TrangLes
+"""
+class RolesView(APIView):
+    def get(self, request, format=None):
+        print "Method Get"
+
+        try:
+            role = Roles.objects.all()
+            serializer = admin_serializers.RolesSerializer(role, many=True)
+            return Response(serializer.data)
+            
+        except Exception, e:
+            print 'UserDetailView PUT', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
 """
     Game 
     @author :Hoangnguyen
@@ -1987,7 +2098,6 @@ def postUpload(request):
 
 
 @parser_classes((MultiPartParser,))
-@permission_classes((AllowAny,))
 class GameAPI(APIView):
 
     def get(self, request, id):
@@ -2052,7 +2162,6 @@ class GameAPI(APIView):
     @author :Hoangnguyen
  
 """
-@permission_classes((AllowAny,))
 class GameListAPI(APIView):
 
     def get(self, request):
@@ -2085,7 +2194,6 @@ class GameListAPI(APIView):
     @author :Hoangnguyen
  
 """
-@permission_classes((AllowAny,))
 class TypeListAPI(APIView):
 
     def get(self, request):
@@ -2174,3 +2282,4 @@ class SetRoleAPI(APIView):
             print "UserListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+

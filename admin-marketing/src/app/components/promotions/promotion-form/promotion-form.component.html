@@ -25,7 +25,7 @@
             <p *ngIf="promotion.image">
                 <span>Currently: <a href="{{api_domain}}{{promotion.image}}" target="_blank">{{promotion.image}}</a></span>
             </p>
-            <input type="file" class="form-control-file" id="image" accept="image/*" (change)="onFileChange($event)">
+            <input type="file" class="form-control-file" id="image" accept="image/*" (change)="onFileChange($event)" />
         </div>
     </div>
 
@@ -37,7 +37,7 @@
             <p *ngIf="promotion.image_thumbnail">
                 <span>Currently: <a href="{{api_domain}}{{promotion.image_thumbnail}}" target="_blank">{{promotion.image_thumbnail}}</a></span>
             </p>
-            <input type="file" class="form-control-file" accept="image/*" id="image_thumbnail" (change)="onFileChange($event)">
+            <input type="file" class="form-control-file" accept="image/*" id="image_thumbnail" (change)="onFileChange($event)"/>
         </div>
     </div>
 
@@ -100,6 +100,7 @@
         </div>
     </div>
 
+    <label *ngIf="promotionForm.errors" class="error_msg col-md-offset-2">{{ promotionForm.errors?.dates }}</label>
     <div class="form-group row">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Ngày Áp Dụng</label>
@@ -109,7 +110,9 @@
                 <span class="input-group-addon" [owlDateTimeTrigger]="dtApplyDate">
                     <i class="fa fa-calendar"></i>
                 </span>
-                <input type="text" class="form-control event-date" formControlName="apply_date" [owlDateTime]="dtApplyDate"/>         
+                <input type="text" class="form-control event-date" formControlName="apply_date" 
+                    [owlDateTime]="dtApplyDate" [max]="promotionForm.value.end_date" 
+                />         
                 <owl-date-time [pickerType]="'calendar'"  #dtApplyDate></owl-date-time>
                 <show-error-valid [control]="promotionForm.get('apply_date')"></show-error-valid>
             </div>
@@ -124,7 +127,9 @@
                 <span class="input-group-addon" [owlDateTimeTrigger]="dtEndDate">
                     <i class="fa fa-calendar"></i>
                 </span>
-                <input type="text" class="form-control event-date" formControlName="end_date" [owlDateTime]="dtEndDate"/>         
+                <input type="text" class="form-control event-date" formControlName="end_date" 
+                    [owlDateTime]="dtEndDate" [min]="promotionForm.value.apply_date"
+                />         
                 <owl-date-time [pickerType]="'calendar'" #dtEndDate></owl-date-time>
                 <show-error-valid [control]="promotionForm.get('end_date')"></show-error-valid>
             </div>

@@ -9,4 +9,5 @@ export class Event {
     start_time: string;
     end_time: string;
     is_draft: boolean;
+    is_clear_image: boolean;
 }

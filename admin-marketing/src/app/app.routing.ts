@@ -53,7 +53,9 @@ import { AddPromotionComponent } from './components/promotions/add-promotion/add
 import { EditPromotionComponent } from './components/promotions/edit-promotion/edit-promotion.component';
 import { ListPromotionComponent } from './components/promotions/list-promotion/list-promotion.component';
 import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
+import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
+import { AuthGuard } from './shared/guards/index';
 
 import { UserPermissionComponent } from './components/user-permission/user-permission.component';
 
@@ -61,181 +63,235 @@ import { UserPermissionComponent } from './components/user-permission/user-permi
 
 const routes: Routes = [{
         path: '',
-        component: HomeComponent
+        component: HomeComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'users',
-        component: UsersComponent
+        component: UsersComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'promotions',
-        component: ListPromotionComponent
+        component: ListPromotionComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'users-promotions/:id',
-        component: UserPromotionComponent
+        component: UserPromotionComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'promotions/:id/change',
-        component: EditPromotionComponent
+        component: EditPromotionComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'promotions/add',
-        component: AddPromotionComponent
+        component: AddPromotionComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'advertisement-list',
-        component: AdvertisementListComponent
+        component: AdvertisementListComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'advertisement-detail/:id',
-        component: AdvertisementDetailComponent
+        component: AdvertisementDetailComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'advertisement-add',
-        component: AdvertisementAddComponent
+        component: AdvertisementAddComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'promotion-type-list',
-        component: PromotionTypeListComponent
+        component: PromotionTypeListComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'denomination-add',
-        component: DenominationAddComponent
+        component: DenominationAddComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'denomination-list',
-        component: DenominationListComponent
+        component: DenominationListComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'feedback-list',
-        component: FeedbackListComponent
+        component: FeedbackListComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'feedback-detail/:id',
-        component: FeedbackDetailComponent
+        component: FeedbackDetailComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'hot-advs-add',
-        component: HotAdvsAddComponent
+        component: HotAdvsAddComponent,
+         canActivate: [AuthGuard]
     }, {
         path: 'hot-advs-list',
-        component: HotAdvsListComponent
+        component: HotAdvsListComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'user-add',
-        component: UserAddComponent
+        component: UserAddComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'user-list',
-        component: UserListComponent
+        component: UserListComponent,
+        canActivate: [AuthGuard]
     }, {
-        path: 'user-detail',
-        component: UserDetailComponent
+        path: 'user-detail/:id',
+        component: UserDetailComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'link-card-list',
-        component: LinkCardListComponent
+        component: LinkCardListComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'banner-add',
-        component: BannerAddComponent
+        component: BannerAddComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'banner-list',
-        component: BannerListComponent
+        component: BannerListComponent,
+        canActivate: [AuthGuard]
     }, {
         path: 'banner-detail/:id',
-        component: BannerDetailComponent
+        component: BannerDetailComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'feedback/statistics',
-        component: StatisticsFeedbackComponent
+        component: StatisticsFeedbackComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'link-card/add',
-        component: AddLinkCardComponent
+        component: AddLinkCardComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'link-card/detail/:id',
-        component: LinkCardDetailComponent
+        component: LinkCardDetailComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'notification/list',
-        component: ListNotificationComponent
+        component: ListNotificationComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'notification/add',
-        component: AddNotificationComponent
+        component: AddNotificationComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'notification/edit/:id',
-        component: EditNotificationComponent
+        component: EditNotificationComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'notification/detail/:id',
-        component: NotificationDetailComponent
+        component: NotificationDetailComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'fee/list',
-        component: FeeListComponent
+        component: FeeListComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'fee/add',
-        component: FeeAddComponent
+        component: FeeAddComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'event/list',
-        component: ListEventComponent
+        component: ListEventComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'event/add',
-        component: AddEventComponent
+        component: AddEventComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'event/edit/:id',
-        component: EditEventComponent
+        component: EditEventComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'faq/list',
-        component: ListFaqComponent
+        component: ListFaqComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'faq/add',
-        component: AddFaqComponent
+        component: AddFaqComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'faq/edit/:id',
-        component: EditFaqComponent
+        component: EditFaqComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'game/list',
-        component: ListGameComponent
+        component: ListGameComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'game/add',
-        component: AddGameComponent
+        component: AddGameComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'game/edit/:id',
-        component: EditGameComponent
+        component: EditGameComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'hot/list',
-        component: ListHotComponent
+        component: ListHotComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'hot/add',
-        component: AddHotComponent
+        component: AddHotComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'hot/edit/:id',
-        component: EditHotComponent
+        component: EditHotComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'post/list',
-        component: ListPostComponent
+        component: ListPostComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'post/add',
-        component: AddPostComponent
+        component: AddPostComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'post/edit/:id',
-        component: EditPostComponent
+        component: EditPostComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'promotion-label/list',
-        component: ListPromotionLabelComponent
+        component: ListPromotionLabelComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'promotion-label/add',
-        component: AddPromotionLabelComponent
+        component: AddPromotionLabelComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'promotion-label/edit/:id',
-        component: EditPromotionLabelComponent
+        component: EditPromotionLabelComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'login',
+        component: LoginComponent
     },
     {
         path: 'user-permission',

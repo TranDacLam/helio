@@ -111,9 +111,15 @@ export class DenominationListComponent implements OnInit {
             this.message_result = "";
         }
         else{
-            this.deno_selected = this.deno_selected.filter(ad => ad !== deno.id);
+            let updateItem = this.deno_selected.find(this.findIndexToUpdate, deno.id);
+            let index = this.deno_selected.indexOf(updateItem);
+            this.deno_selected.splice(index, 1);
         }
     }
+    findIndexToUpdate(type) {
+        return type.id === this;
+    }
+    
     confirmDelete() {
         /* Check deno_selected not null and length >0
             True: Show confirm and call function deleteFeedbackCheckbox 
