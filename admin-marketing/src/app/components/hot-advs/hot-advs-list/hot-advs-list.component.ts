@@ -61,11 +61,13 @@ export class HotAdvsListComponent implements OnInit {
 
   	getAllHotAdvs() {
           this.hotAdvsSerice.getAllHotAdvs().subscribe(
-               (result) => {
+                (result) => {
                     this.hot_advs = result;
                     this.dtTrigger.next(); 
-               },
-               (error) =>  this.router.navigate(['/error', { message: error.message }])
+                },
+                (error) =>  {
+                   this.router.navigate(['/error', { message: error.json().message }])
+               }
           )
   	}
   	/* Function: Select All Banner
@@ -156,7 +158,7 @@ export class HotAdvsListComponent implements OnInit {
                this.message_result = "Xóa Hot Advs thành công";
             },
             (error) => {
-               this.router.navigate(['/error', { message: error }])
+               this.router.navigate(['/error', { message: error.json().message }])
             }
         )
     }

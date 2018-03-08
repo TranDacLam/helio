@@ -72,8 +72,8 @@ export class UserAddComponent implements OnInit {
     getAllRoles() {
         this.roleService.getAllRoles().subscribe(
             (result) => {
-                    this.roles = result
-                },
+                this.roles = result
+            },
             (error) => {
                 this.router.navigate(['/error', { message: error.json().message }])
             }
