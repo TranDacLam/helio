@@ -97,7 +97,24 @@ export class PromotionFormComponent implements OnInit {
             apply_date: [this.promotion.apply_date ? moment(this.promotion.apply_date,"DD/MM/YYYY").toDate() : ''],
             end_date: [this.promotion.end_date ? moment(this.promotion.end_date,"DD/MM/YYYY").toDate() : ''],
             is_draft: [this.promotion.is_draft],
-        });
+        }, {validator: this.dateLessThan('apply_date', 'end_date')});
+    }
+
+    /*
+        function dateLessThan(): validate date
+        @author: lam
+    */ 
+    dateLessThan(from: string, to: string) {
+        return (group: FormGroup): {[key: string]: any} => {
+            let f = group.controls[from];
+            let t = group.controls[to];
+            if (f.value > t.value) {
+                return {
+                    dates: "* Ngày kết thúc phải nhỏ hơn ngày bắt đầu."
+                };
+            }
+            return {};
+        }
     }
 
     /*

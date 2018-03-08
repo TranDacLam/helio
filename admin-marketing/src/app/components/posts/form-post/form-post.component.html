@@ -15,9 +15,15 @@
             <label class="col-form-label form-check-label">Hình Ảnh</label>
         </div>
         <div class="col-sm-8">
-            <input type="file" class="form-control" accept="image/*"
-            (change)="onFileChange($event)" #inputImage/>
-            <button type="button" class="btn btn-sm btn-danger" (click)="clearFile()">clear file</button>
+            <p *ngIf="post.image">
+                <span>Hiện tại: <a href="{{api_domain}}{{post.image}}" target="_blank">{{post.image}}</a></span>
+            </p>
+            <p *ngIf="post.image" class="clear_image">
+                <input type="checkbox" formControlName="is_clear_image"/> Xóa
+            </p>
+            <p *ngIf="msg_clear_image" class="msg_error">{{msg_clear_image}}</p>
+            <input type="file" accept="image/*"
+            (change)="onFileChange($event)"/>
         </div>
     </div>
 
@@ -47,6 +53,7 @@
         </div>
         <div class="col-sm-6" *ngIf="post_types">
             <select class="form-control" formControlName="post_type_id">
+                <option value="">--SELECT--</option>
                 <option *ngFor="let type of post_types" 
                     value="{{ type.id }}" [selected]="type.id === post.post_type_id"
                 >
@@ -75,6 +82,15 @@
         </div>
     </div>
 
+    <div class="form-group row noti-image">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Hình Ảnh Bài Viết</label>
+        </div>
+        <div class="col-sm-8">
+            <input type="file" accept="image/*"
+            (change)="onFileMultipleChange($event)" multiple/>
+        </div>
+    </div>
 
     <hr/>
     <button class="btn btn-primary pull-right" (click)="onSubmit()" [disabled]="formPost.invalid">
