@@ -7,14 +7,22 @@ import 'rxjs/add/operator/catch';
 import { HotAdvs } from '../../shared/class/hot-advs';
 import { api } from '../utils/api';
 
-
-const httpOptions = {
-	headers: new Headers({ 'Content-Type': 'application/json' })
-};
 @Injectable()
 export class HotAdvsService {
 
-  	constructor(private http: Http) { }
+    httpOptions: any;
+    token: any ='';
+
+  	constructor(private http: Http) { 
+        this.token = localStorage.getItem('auth_token');
+
+        this.httpOptions = {
+            headers: new Headers({ 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            })
+        };
+    }
 
 
   	/*
@@ -23,7 +31,7 @@ export class HotAdvsService {
     */
   	getAllHotAdvs(): Observable<HotAdvs[]> {
   		let url = `${api.hot_advs}`
-  		return this.http.get(url).map((res: Response) => res.json()).catch(this.handleError);
+  		return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
   	}
 
   	/*
@@ -34,8 +42,8 @@ export class HotAdvsService {
 
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
             xhr.open('POST', api.hot_advs);
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.send(hotAdvsFormData);
 
             xhr.onreadystatechange = function() {
@@ -52,16 +60,16 @@ export class HotAdvsService {
     }
 
     deleteHotAdvsSelected(hot_advs_id): Observable<any> {
-      let url = `${api.hot_advs}`;
-      let param = {
-          hot_advs_id: hot_advs_id
+        let url = `${api.hot_advs}`;
+        let param = {
+            hot_advs_id: hot_advs_id
         }
-      let _options = new RequestOptions({
-        headers: httpOptions.headers,
-        body: JSON.stringify(param)
-      });
+        let _options = new RequestOptions({
+            headers: this.httpOptions.headers,
+            body: JSON.stringify(param)
+        });
 
-      return this.http.delete(url,_options ).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url,_options ).map((res: Response) => res.json()).catch(this.handleError);
     }
 
   	/* 

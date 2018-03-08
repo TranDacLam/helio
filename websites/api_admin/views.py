@@ -452,11 +452,11 @@ class FeedbackView(APIView):
             try:
                 if start_date:
                     kwargs['sent_date__gte'] = timezone.make_aware(datetime.strptime(
-                        start_date, "%Y-%m-%d"))
+                        start_date, "%d/%m/%Y"))
                     print kwargs['sent_date__gte']
                 if end_date:
                     kwargs['sent_date__lte'] = timezone.make_aware(datetime.strptime(
-                        end_date, "%Y-%m-%d") + timedelta(days=1))
+                        end_date, "%d/%m/%Y") + timedelta(days=1))
                     print kwargs['sent_date__lte']
                 if status:
                     kwargs['status'] = status
@@ -1232,7 +1232,7 @@ class BannerViewDetail(APIView):
                 serializer.save()
                 return Response(serializer.data)
             print serializer.errors
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
         except Exception, e:
             print 'BannerViewDetail PUT', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1954,7 +1954,6 @@ GET, DELETE, POST User
 @author: TrangLe
 """
 @parser_classes((MultiPartParser, JSONParser))
-@authentication_classes((SessionAuthentication, BasicAuthentication))
 class UserListView(APIView):
     """
         Method: GET
@@ -2017,7 +2016,6 @@ class UserListView(APIView):
     @author: TrangLe
 """
 @parser_classes((MultiPartParser, JSONParser))
-@authentication_classes((SessionAuthentication, BasicAuthentication))
 class UserDetailView(APIView):
 
     def get_object(self, pk):
@@ -2205,7 +2203,6 @@ class TypeListAPI(APIView):
     @author: TrangLe
 """
 @parser_classes((MultiPartParser, JSONParser))
-@permission_classes((AllowAny,))
 class HotAdvsView(APIView):
 
     def get(self, request):
