@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Notification } from '../../../shared/class/notification';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { message } from '../../../shared/utils/message';
@@ -32,8 +32,9 @@ export class ListNotificationComponent implements OnInit {
     length_notification: number;
     select_checked = false; // Check/uncheck all notification 
     message_result = ''; // Message error
+    errorMessage = '';
 
-    constructor(private notificationService: NotificationService, private route: ActivatedRoute) { }
+    constructor(private notificationService: NotificationService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Thông Báo').dtOptions;
@@ -63,7 +64,14 @@ export class ListNotificationComponent implements OnInit {
             (data) => {
                 this.notifications = data;
                 this.length_notification = this.notifications.length;
-            } 
+            },
+            (error) => {
+                if(error.code === 403){
+                    this.errorMessage = error.message;
+                }else{
+                    this.router.navigate(['/error']);
+                }
+            }
         );
     }
 

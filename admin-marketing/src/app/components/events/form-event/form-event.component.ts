@@ -1,11 +1,15 @@
-import { Component, OnInit, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Event } from '../../../shared/class/event';
 import { EventService } from '../../../shared/services/event.service';
+import { env } from '../../../../environments/environment';
+import { DateValidators } from './../../../shared/validators/date-validators';
+import * as moment from 'moment';
 import 'rxjs/add/observable/throw';
 
+declare var bootbox:any;
 
 @Component({
     selector: 'form-event',
@@ -19,16 +23,15 @@ export class FormEventComponent implements OnInit {
         author: Lam
     */
 
-    // set inputImage property as a local variable, #inputImage on the tag input file
-    @ViewChild('inputImage')
-    inputImage: any;
-
     @Input() event: Event; // Get event from component parent
     @Input() type_http; // Get type http from component parent
 
     formEvent: FormGroup;
 
-    errorMessage = ''; // Messages error
+    errorMessage: any; // Messages error
+    msg_clear_image = '';
+
+    api_domain: string = '';
 
     constructor(
         private eventService: EventService,
@@ -36,7 +39,9 @@ export class FormEventComponent implements OnInit {
         private location: Location,
         private router: Router,
         private route: ActivatedRoute,
-    ) {}
+    ) {
+        this.api_domain = env.api_domain_root;
+    }
 
     ngOnInit() {
         this.creatForm();
@@ -49,14 +54,19 @@ export class FormEventComponent implements OnInit {
     creatForm(): void{
         this.formEvent = this.fb.group({
             name: [this.event.name, Validators.required],
-            image: [this.event.image, Validators.required],
+            image: [this.event.image],
             short_description: [this.event.short_description, Validators.required],
             content: [this.event.content, Validators.required],
-            start_date: [this.event.start_date, Validators.required],
-            end_date: [this.event.end_date, Validators.required],
-            start_time: [this.event.start_time, Validators.required],
-            end_time: [this.event.end_time, Validators.required],
+            start_date: [this.event.start_date ? moment(this.event.start_date,"DD/MM/YYYY").toDate() : '', 
+                [DateValidators.checkDate, DateValidators.formatStartDate]],
+            end_date: [this.event.end_date ? moment(this.event.end_date,"DD/MM/YYYY").toDate() : '', 
+                [DateValidators.checkDate, DateValidators.formatEndDate]],
+            start_time: [this.event.start_time ? moment(this.event.start_time,"hh:mm").toDate() : '', 
+                [DateValidators.formatStartTime]],
+            end_time: [this.event.end_time ? moment(this.event.end_time,"hh:mm").toDate() : '',
+                [DateValidators.formatEndTime]],
             is_draft: [this.event.is_draft],
+            is_clear_image: [false]
         });
     }
 
@@ -65,23 +75,14 @@ export class FormEventComponent implements OnInit {
         author: Lam
     */ 
     onFileChange(event): void{
-        let reader = new FileReader();
         if(event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                this.formEvent.get('image').setValue(reader.result.split(',')[1]);
-            };
+            this.formEvent.get('image').setValue({
+                filename: file.name,
+                filetype: file.type,
+                value: file,
+            });
         }
-    }
-
-    /*
-        Function clearFile(): Clear value input file image
-        author: Lam
-    */ 
-    clearFile(): void {
-        this.formEvent.get('image').setValue(null);
-        this.inputImage.nativeElement.value = "";
     }
 
     /*
@@ -95,27 +96,71 @@ export class FormEventComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(): void{
+        this.formEvent.value.start_date = $('#start_date').val();
+        this.formEvent.value.end_date = $('#end_date').val();
+        this.formEvent.value.start_time = $('#start_time').val();
+        this.formEvent.value.end_time = $('#end_time').val();
+        let event_form_data = this.convertFormGroupToFormData(this.formEvent);
+        let value_form = this.formEvent.value;
         if(this.type_http == 'post'){
-            this.eventService.addEvent(this.formEvent.value).subscribe(
+            this.eventService.addEvent(event_form_data).subscribe(
                 (data) => {
-                    this.router.navigate(['/event/list', { message_post: this.formEvent.value.name}]);
+                    this.router.navigate(['/event/list', { message_post: value_form.name}]);
                 },
                 (error) => {
-                    { this.errorMessage = error.message; } 
+                    if(error.code === 400){
+                        this.errorMessage = error.message;
+                    }else{
+                        this.router.navigate(['/error']);
+                    }
                 }
             );
         }else if(this.type_http == 'put'){
-            this.eventService.updateEvent(this.formEvent.value, this.event.id).subscribe(
-                (data) => {
-                    this.event = data;
-                    this.router.navigate(['/event/list', { message_put: this.formEvent.value.name}]);
-                },
-                (error) => {
-                    { this.errorMessage = error.message; } 
-                }
-            );
+            if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
+                this.formEvent.get('is_clear_image').setValue(false);
+                this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+            }else{
+                this.eventService.updateEvent(event_form_data, this.event.id).subscribe(
+                    (data) => {
+                        this.event = data;
+                        this.router.navigate(['/event/list', { message_put: value_form.name}]);
+                    },
+                    (error) => {
+                        if(error.code === 400){
+                            this.errorMessage = error.message;
+                        }else{
+                            this.router.navigate(['/error']);
+                        }
+                    }
+                );
+            }
         }
         
+    }
+
+    /*
+        Function deleteNotificationEvent(): confirm delete
+        @author: Lam
+    */
+    deleteEvent(){
+        let that = this;
+        bootbox.confirm({
+            title: "Bạn có chắc chắn",
+            message: "Bạn muốn xóa sự kiện này?",
+            buttons: {
+                cancel: {
+                    label: "Hủy"
+                },
+                confirm: {
+                    label: "Xóa"
+                }
+            },
+            callback: function (result) {
+                if(result) {
+                    that.onDelete();
+                }
+            }
+        });
     }
 
     /*
@@ -128,6 +173,34 @@ export class FormEventComponent implements OnInit {
         const id = this.event.id;
         this.eventService.onDelEvent(id).subscribe();
         this.router.navigate(['/event/list']);
+    }
+
+    /*
+        Convert form group to form data to submit form
+        @author: lam
+    */
+    private convertFormGroupToFormData(promotionForm: FormGroup) {
+        // Convert FormGroup to FormData
+        let promotionValues = promotionForm.value;
+        let promotionFormData:FormData = new FormData(); 
+        if (promotionValues){
+            /* 
+                Loop to set value to formData
+                Case1: if value is null then set ""
+                Case2: If key is image field then set value have both file and name
+                Else: Set value default
+            */
+            Object.keys(promotionValues).forEach(k => { 
+                if(promotionValues[k] == null) {
+                    promotionFormData.append(k, '');
+                } else if (k === 'image') {
+                    promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                } else {
+                    promotionFormData.append(k, promotionValues[k]);
+                }
+            });
+        }
+        return promotionFormData;
     }
 
 }

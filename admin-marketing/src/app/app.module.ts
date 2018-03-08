@@ -10,7 +10,10 @@ import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app.routing';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime'; // date and time
 import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { DatePipe } from '@angular/common';
+import { MapToIterablePipe } from './shared/pipes/map-to-iterable.pipe';
 
 
 import { AppComponent } from './app.component';
@@ -44,6 +47,7 @@ import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
 import { CategoryService } from './shared/services/category.service';
 import { BannerService } from './shared/services/banner.service';
+import { AuthGuard } from './shared/guards/index';
 
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
 
@@ -90,6 +94,7 @@ import { ListPromotionComponent } from './components/promotions/list-promotion/l
 import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
 import { FormHotComponent } from './components/hots/form-hot/form-hot.component';
 import { ErrorComponent } from './components/error/error.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 
@@ -159,6 +164,8 @@ import { ErrorComponent } from './components/error/error.component';
     UserPromotionComponent,
     FormHotComponent,
     ErrorComponent,
+    LoginComponent,
+    MapToIterablePipe
   ],
   imports: [
     BrowserModule,
@@ -172,6 +179,8 @@ import { ErrorComponent } from './components/error/error.component';
     AppRoutingModule,
     OwlDateTimeModule, 
     OwlNativeDateTimeModule,
+    RecaptchaModule.forRoot(), // Keep in mind the "forRoot"-magic nuances!
+    RecaptchaFormsModule,
   ],
   providers: [
     AdvertisementService,
@@ -181,6 +190,7 @@ import { ErrorComponent } from './components/error/error.component';
     FeeService,
     BannerService,
     CategoryService,
+    AuthGuard,
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'vi'},
     DatePipe,
   ],
