@@ -222,6 +222,9 @@ export class FormNotificationComponent implements OnInit {
         this.notificationService.onDelNoti(id).subscribe(
             (data) => {
                 this.router.navigate(['/notification/list', { message_del: 'success'}]);
+            },
+            (error) => {
+                 this.router.navigate(['/error', { message: error.message}]);
             }
         );
     }

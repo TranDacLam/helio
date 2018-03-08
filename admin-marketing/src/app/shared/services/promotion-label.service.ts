@@ -74,7 +74,7 @@ export class PromotionLabelService {
         function updatePromotionLabel(): update promotion label by id
         author: Lam
     */
-    updatePromotionLabel(value, id): Observable<any>{
+    updatePromotionLabel(value, id: number): Observable<any>{
         let url_update_promotion_label = `${this.urlPromotionLabel}${id}/`;
         return this.http.put(url_update_promotion_label, JSON.stringify(value), this.httpOptions)
             .map((res: Response) => res.json()).catch(this.handleError);
@@ -84,7 +84,7 @@ export class PromotionLabelService {
         function onDelEventSelect(): Delete promotion label by id
         author: Lam
     */
-    onDelPromotionLabel(id): Observable<any>{
+    onDelPromotionLabel(id: number): Observable<any>{
         const url_del = `${this.urlPromotionLabel}${id}/`;
         return this.http.delete(url_del, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }

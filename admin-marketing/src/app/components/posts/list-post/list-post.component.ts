@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../../../shared/class/post';
 import { PostService } from '../../../shared/services/post.service';
 import { message } from '../../../shared/utils/message';
@@ -34,7 +34,7 @@ export class ListPostComponent implements OnInit {
     message_result = ''; // Message error
     errorMessage = '';
 
-    constructor(private postService: PostService, private route: ActivatedRoute) { }
+    constructor(private postService: PostService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Bài Viết').dtOptions;

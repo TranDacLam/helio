@@ -138,7 +138,7 @@ export class FormEventComponent implements OnInit {
     }
 
     /*
-        Function deleteNotificationEvent(): confirm delete
+        Function deleteEvent(): confirm delete
         @author: Lam
     */
     deleteEvent(){
@@ -170,8 +170,14 @@ export class FormEventComponent implements OnInit {
     */
     onDelete(): void {
         const id = this.event.id;
-        this.eventService.onDelEvent(id).subscribe();
-        this.router.navigate(['/event/list']);
+        this.eventService.onDelEvent(id).subscribe(
+            (data) => {
+                this.router.navigate(['/event/list', { message_del: 'success'}]);
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
     }
 
     /*

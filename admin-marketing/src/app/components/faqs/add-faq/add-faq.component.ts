@@ -3,13 +3,15 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Faq } from '../../../shared/class/faq';
 import { FaqService } from '../../../shared/services/faq.service';
+import { Category } from './../../../shared/class/category';
+import { CategoryService } from './../../../shared/services/category.service';
 import 'rxjs/add/observable/throw';
 
 @Component({
     selector: 'app-add-faq',
     templateUrl: './add-faq.component.html',
     styleUrls: ['./add-faq.component.css'],
-    providers: [FaqService]
+    providers: [FaqService, CategoryService]
 })
 export class AddFaqComponent implements OnInit {
 
@@ -18,19 +20,22 @@ export class AddFaqComponent implements OnInit {
     */
 
     faq: Faq = new Faq();
+    categories: Category[];
 
     formFaq: FormGroup;
 
-    errorMessage = ''; // Messages error
+    errorMessage: any; // Messages error
 
     constructor(
         private faqService: FaqService,
         private fb: FormBuilder,
         private router: Router,
+        private categoryService: CategoryService
     ) { }
 
     ngOnInit() {
         this.creatForm();
+        this.getCategories();
     }
 
     /*
@@ -41,8 +46,23 @@ export class AddFaqComponent implements OnInit {
         this.formFaq = this.fb.group({
             question: [this.faq.question, Validators.required],
             answer: [this.faq.answer, Validators.required],
-            category_id: [this.faq.category_id, Validators.required],
+            category: ['', Validators.required],
         });
+    }
+
+    /*
+        function getCategories(): get all category
+        @author: Lam
+    */ 
+    getCategories(): void{
+        this.categoryService.getAllCategory().subscribe(
+            (data) => {
+                this.categories = data;
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
     }
 
     /*
@@ -52,12 +72,17 @@ export class AddFaqComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(): void{
+        this.formFaq.value.category = parseInt(this.formFaq.value.category);
         this.faqService.addFaq(this.formFaq.value).subscribe(
             (data) => {
-                this.router.navigate(['/faq/list', { message_post: this.formFaq.value.name}]);
+                this.router.navigate(['/faq/list', { message_post: this.formFaq.value.question}]);
             },
             (error) => {
-                { this.errorMessage = error.message; } 
+                if(error.code === 400){
+                    this.errorMessage = error.message;
+                }else{
+                    this.router.navigate(['/error', { message: error.message}]);
+                }
             }
         );
     }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PromotionLabel } from '../../../shared/class/promotion-label';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
 import { message } from '../../../shared/utils/message';
@@ -31,7 +31,7 @@ export class ListPromotionLabelComponent implements OnInit {
     message_result = ''; // Message error
     errorMessage = '';
 
-    constructor(private promotionLabelService: PromotionLabelService, private route: ActivatedRoute) { }
+    constructor(private promotionLabelService: PromotionLabelService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
         this.getPromotionLabels();

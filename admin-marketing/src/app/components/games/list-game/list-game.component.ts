@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Game } from '../../../shared/class/game';
 import { GameService } from '../../../shared/services/game.service';
 import { message } from '../../../shared/utils/message';
@@ -32,8 +32,9 @@ export class ListGameComponent implements OnInit {
     length_games: number;
     select_checked = false; // Check/uncheck all game
     message_result = ''; // Message error
+    errorMessage = '';
 
-    constructor(private gameService: GameService, private route: ActivatedRoute) { }
+    constructor(private gameService: GameService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Trò Chơi').dtOptions;
@@ -63,7 +64,14 @@ export class ListGameComponent implements OnInit {
             (data) => {
                 this.games = data;
                 this.length_games = this.games.length;
-            } 
+            },
+            (error) => {
+                if(error.code === 403){
+                    this.errorMessage = error.message;
+                }else{
+                    this.router.navigate(['/error', { message: error.message}]);
+                }
+            }
         );
     }
 
@@ -144,6 +152,7 @@ export class ListGameComponent implements OnInit {
                     this.length_games = this.length_games - this.games_del.length;
                     this.games_del = [];
                 });
+                this.select_checked = false;
                 this.message_result = 'Xóa thành công.';
             }
         );

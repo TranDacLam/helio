@@ -4,13 +4,18 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Location } from '@angular/common';
 import { Game } from '../../../shared/class/game';
 import { GameService } from '../../../shared/services/game.service';
+import { Type } from '../../../shared/class/type';
+import { TypeService } from '../../../shared/services/type.service';
+import { env } from '../../../../environments/environment';
 import 'rxjs/add/observable/throw';
+
+declare var bootbox:any;
 
 @Component({
     selector: 'form-game',
     templateUrl: './form-game.component.html',
     styleUrls: ['./form-game.component.css'],
-    providers: [GameService]
+    providers: [GameService, TypeService]
 })
 export class FormGameComponent implements OnInit {
 
@@ -18,26 +23,31 @@ export class FormGameComponent implements OnInit {
         author: Lam
     */
 
-    // set inputImage property as a local variable, #inputImage on the tag input file
-    @ViewChild('inputImage')
-    inputImage: any;
-
     @Input() game: Game; // Get game from component parent
+
+    types: Type[];
 
     formGame: FormGroup;
 
-    errorMessage = ''; // Messages error
+    errorMessage: any; // Messages error
+    msg_clear_image = '';
+
+    api_domain: string = '';
 
     constructor(
         private gameService: GameService,
+        private typeService: TypeService,
         private fb: FormBuilder,
         private location: Location,
         private router: Router,
         private route: ActivatedRoute
-    ) { }
+    ) { 
+        this.api_domain = env.api_domain_root;
+    }
 
     ngOnInit() {
         this.creatForm();
+        this.getTypes();
     }
 
     /*
@@ -47,12 +57,28 @@ export class FormGameComponent implements OnInit {
     creatForm(): void{
         this.formGame = this.fb.group({
             name: [this.game.name, Validators.required],
-            image: [this.game.image, Validators.required],
+            image: [this.game.image],
             short_description: [this.game.short_description, Validators.required],
             content: [this.game.content, Validators.required],
-            game_type_id: [this.game.game_type_id, Validators.required],
+            game_type: [this.game.game_type ? this.game.game_type : '', Validators.required],
             is_draft: [this.game.is_draft],
+            is_clear_image: [false]
         });
+    }
+
+    /*
+        function getTypes(): get all type
+        @author: Lam
+    */ 
+    getTypes(): void{
+        this.typeService.getTypes().subscribe(
+            (data) => {
+                this.types = data;
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
     }
 
     /*
@@ -60,24 +86,16 @@ export class FormGameComponent implements OnInit {
         author: Lam
     */ 
     onFileChange(event): void{
-        let reader = new FileReader();
         if(event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                this.formGame.get('image').setValue(reader.result.split(',')[1]);
-            };
+            this.formGame.get('image').setValue({
+                filename: file.name,
+                filetype: file.type,
+                value: file,
+            });
         }
     }
 
-    /*
-        Function clearFile(): Clear value input file image
-        author: Lam
-    */ 
-    clearFile(): void {
-        this.formGame.get('image').setValue(null);
-        this.inputImage.nativeElement.value = "";
-    }
 
     /*
         Function onSubmit():
@@ -90,27 +108,106 @@ export class FormGameComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(): void{
+        this.formGame.value.game_type = parseInt(this.formGame.value.game_type);
+        let game_form_data = this.convertFormGroupToFormData(this.formGame);
+        let value_form = this.formGame.value;
         if(!this.game.id){
-            this.gameService.addGame(this.formGame.value).subscribe(
+            this.gameService.addGame(game_form_data).subscribe(
                 (data) => {
-                    this.router.navigate(['/game/list', { message_post: this.formGame.value.name}]);
+                    this.router.navigate(['/game/list', { message_post: value_form.name}]);
                 },
                 (error) => {
                     { this.errorMessage = error.message; } 
                 }
             );
         }else{
-            this.gameService.updateGame(this.formGame.value, this.game.id).subscribe(
-                (data) => {
-                    this.game = data;
-                    this.router.navigate(['/game/list', { message_put: this.formGame.value.name}]);
-                },
-                (error) => {
-                    { this.errorMessage = error.message; } 
-                }
-            );
+            if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
+                this.formGame.get('is_clear_image').setValue(false);
+                this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+            }else{
+                this.gameService.updateGame(game_form_data, this.game.id).subscribe(
+                    (data) => {
+                        this.game = data;
+                        this.router.navigate(['/game/list', { message_put: value_form.name}]);
+                    },
+                    (error) => {
+                        { this.errorMessage = error.message; } 
+                    }
+                );
+            }
         }
         
+    }
+
+    /*
+        Function deleteGameEvent(): confirm delete
+        @author: Lam
+    */
+    deleteGameEvent(){
+        let that = this;
+        bootbox.confirm({
+            title: "Bạn có chắc chắn",
+            message: "Bạn muốn xóa sự kiện này?",
+            buttons: {
+                cancel: {
+                    label: "Hủy"
+                },
+                confirm: {
+                    label: "Xóa"
+                }
+            },
+            callback: function (result) {
+                if(result) {
+                    that.onDelete();
+                }
+            }
+        });
+    }
+
+    /*
+        Function onDelete():
+         + Get id from url path
+         + Call service function onDelGame() by id to delete event
+        Author: Lam
+    */
+    onDelete(): void {
+        const id = this.game.id;
+        this.gameService.onDelGame(id).subscribe(
+            (data) => {
+                this.router.navigate(['/game/list', { message_del: 'success'}]);
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
+    }
+
+    /*
+        Convert form group to form data to submit form
+        @author: lam
+    */
+    private convertFormGroupToFormData(promotionForm: FormGroup) {
+        // Convert FormGroup to FormData
+        let promotionValues = promotionForm.value;
+        let promotionFormData:FormData = new FormData(); 
+        if (promotionValues){
+            /* 
+                Loop to set value to formData
+                Case1: if value is null then set ""
+                Case2: If key is image field then set value have both file and name
+                Else: Set value default
+            */
+            Object.keys(promotionValues).forEach(k => { 
+                if(promotionValues[k] == null) {
+                    promotionFormData.append(k, '');
+                } else if (k === 'image') {
+                    promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                } else {
+                    promotionFormData.append(k, promotionValues[k]);
+                }
+            });
+        }
+        return promotionFormData;
     }
 
 }
