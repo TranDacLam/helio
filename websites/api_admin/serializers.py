@@ -200,7 +200,6 @@ class NotificationSerializer(serializers.ModelSerializer):
         instance.is_QR_code = validated_data.get('is_QR_code', instance.is_QR_code)
         instance.message = validated_data.get('message', instance.message)
         instance.promotion = validated_data.get('promotion', instance.promotion)
-        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
         instance.save()
         return instance
 
