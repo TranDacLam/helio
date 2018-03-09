@@ -27,7 +27,10 @@ export class FormUserEmbedComponent implements OnInit {
     dis_input_embed = {barcode: true, full_name: true, email: true, phone: true, 
                         birth_date: true, personal_id: true, address: true};
 
-    errorMessage = ''; // Message show error
+    msg_success = ''; // Message show error
+    msg_error: any;
+
+    errorMessage = '';
 
     constructor(private fb: FormBuilder, private linkCardService: LinkCardService) { }
 
@@ -91,9 +94,16 @@ export class FormUserEmbedComponent implements OnInit {
         Author: Lam
     */
     onSubmitEmbed(){
-        this.linkCardService.updateUserEmbed(this.embedForm.value).subscribe(put_embed => {
-            console.log(put_embed);
-        });
+        this.linkCardService.updateUserEmbed(this.embedForm.value).subscribe(
+            (data) => {
+                this.msg_success = data.message;
+                this.msg_error = null;
+            },
+            (error) => {
+                this.msg_error = error.message;
+                this.msg_success = '';
+            }
+        );
     }
 
 }

@@ -2,6 +2,12 @@
     <fieldset class="scheduler-border">
     <legend class="scheduler-border">THÔNG TIN THẺ HELIO APP</legend>
         <div class="col-xs-6 col-sm-6">
+            <ng-container *ngIf="msg_error">
+                <p *ngFor="let error of msg_error | mapToIterable" class="msg_error">
+                    {{error.val}}.
+                </p>
+            </ng-container>
+            <h4 *ngIf="msg_success" class="msg_success">{{msg_success}}</h4>
             <form [formGroup]="embedForm" novalidate>
                 <div class="form-group row">
                     <div class="col-sm-5 form-check">

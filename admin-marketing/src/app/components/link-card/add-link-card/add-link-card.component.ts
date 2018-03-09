@@ -51,25 +51,31 @@ export class AddLinkCardComponent implements OnInit {
     onCardLink(): void{
         let user_app = this.userappComponent.user_app;
         let user_embed = this.userembedComponent.user_embed;
+        let isValid = false;
 
         Object.entries(user_app).forEach(([key, val]) => {
             if(key !== 'id'){
                 if(user_app[key] !== user_embed[key]){
                     this.status_error[key] = true;
+                    isValid = true;
                 }else{
                     this.status_error[key] = false;
                 }
             }
         });
         
-        this.linkCardService.relate(user_app.email, user_embed.barcode).subscribe(
-            (data) => {
-                this.router.navigate(['/link-card/detail/', user_app.id,{ email: user_app.email, barcode: user_embed.barcode, message: 'success'}]);
-            },
-            (error) => {
-                this.errorMessage = error.message; 
-            }
-        );
+        if(isValid){
+            this.errorMessage = "Lỗi, yêu cầu các trường thông tin tài khoản và thẻ phải trùng nhau."; 
+        }else{
+            this.linkCardService.relate(user_app.email, user_embed.barcode).subscribe(
+                (data) => {
+                    this.router.navigate(['/link-card/detail/', user_app.id,{ email: user_app.email, barcode: user_embed.barcode, message: 'success'}]);
+                },
+                (error) => {
+                    this.errorMessage = error.message; 
+                }
+            );
+        }
     }
 
 }
