@@ -20,7 +20,7 @@ export class FeeService {
         this.httpOptions = {
             headers: new Headers({ 
                 'Content-Type': 'application/json',
-                'Authorization': `${this.token}`
+                'Authorization': `Bearer ${this.token}`
             })
         };
      }

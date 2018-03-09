@@ -1108,7 +1108,6 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
-@authentication_classes((SessionAuthentication, BasicAuthentication))
 class FeeListAPI(APIView):
 
     def get(self, request, format=None):
@@ -1118,7 +1117,7 @@ class FeeListAPI(APIView):
             return Response(feeSerializer.data)
 
         except Exception, e:
-            print "FeeAPI ", e
+            print "FeeListAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -1135,7 +1134,7 @@ class FeeListAPI(APIView):
             return Response({"code": 400, "message": "List_id field is required", "fields": ""}, status=400)
 
         except Exception, e:
-            print "FeeAPI ", e
+            print "FeeListAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -1619,7 +1618,7 @@ class HotAPI(APIView):
             return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
 
         except Exception, e:
-            print "EventAPI ", e
+            print "HotAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -1632,7 +1631,7 @@ class HotAPI(APIView):
             return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
-            print "EventAPI ", e
+            print "HotAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -1650,7 +1649,7 @@ class HotAPI(APIView):
             return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
 
         except Exception, e:
-            print "EventAPI", e
+            print "HotAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -1697,7 +1696,7 @@ class PostAPI(APIView):
             return Response({"code": 400, "message": "Not Found Post.", "fields": ""}, status=400)
 
         except Exception, e:
-            print "EventAPI ", e
+            print "PostAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -2236,12 +2235,13 @@ class UserRoleListAPI(APIView):
             if role_id:
                 role = Roles.objects.get( id = role_id )
                 users = role.user_role_rel.all()
-                userSerializer = admin_serializers.UserSerializer(users, many=True)
-                return Response(userSerializer.data)
-            return Response({"code": 400, "message": "Not Found role_id.", "fields": ""}, status=400)
+            else:
+                users = User.objects.filter( role__isnull = True )
+            userSerializer = admin_serializers.UserSerializer(users, many=True)
+            return Response(userSerializer.data)
 
         except Roles.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Roles.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": "Not Found Role.", "fields": ""}, status=400)
         except Exception, e:
             print "UserListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
