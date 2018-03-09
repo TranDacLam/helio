@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { PromotionService } from '../../../shared/services/promotion.service';
 import { Promotion } from '../../../shared/class/promotion';
-import { datatable_config } from '../../../shared/commons/datatable_config';
+import * as datatable_config from '../../../shared/commons/datatable_config';
 
 import { env } from '../../../../environments/environment';
 
@@ -60,8 +60,7 @@ export class ListPromotionComponent implements OnInit {
 
     ngOnInit() {
     	this.getAllPromotion();
-    	this.dtOptions = datatable_config.dtOptions;
-
+        this.dtOptions = datatable_config.data_config('Khuyến Mãi').dtOptions;
         this.route.params.subscribe(params => {
             if (params && params.action) {
                 this.message_result = params.action + params.promotion_name + '" thành công.';
@@ -128,7 +127,7 @@ export class ListPromotionComponent implements OnInit {
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.length_selected + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " khuyến mãi đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -145,7 +144,7 @@ export class ListPromotionComponent implements OnInit {
             });
 
         } else  {
-            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+            bootbox.alert("Vui lòng chọn khuyến mãi cần xóa");
         }
         
     }
@@ -180,7 +179,7 @@ export class ListPromotionComponent implements OnInit {
             this.promotionService.deletePromotionList(list_id_selected).subscribe(
                 (data) => {
                     if (data.status == 204) {
-                        this.message_result = "Xóa "+ this.length_selected + " phần tử thành công"
+                        this.message_result = "Xóa "+ this.length_selected + " khuyến mãi thành công"
 
                         // Remove all promotion selected on UI
                         dtInstance.rows('.selected').remove().draw();
