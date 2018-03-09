@@ -6,6 +6,6 @@
 export const env = {
   	production: true, 
   	api_domain: 'http://172.16.12.10:8001/vi/api/',
-  	api_domain_root: 'http://172.16.12.10:8001.1:8000',
+  	api_domain_root: 'http://172.16.12.10:8001',
     key_recaptcha: '6LcznUsUAAAAAL5a4yHMyyDhqjuDeJvXJnFqOrDp'
 };

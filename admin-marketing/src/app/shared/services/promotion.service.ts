@@ -128,9 +128,10 @@ export class PromotionService {
             list_promotion_id: list_id_selected
         }
 
-        const _options_delete = this.httpOptions.merge({
+        let _options_delete = new RequestOptions({
+            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
-        })
+        });
         return this.http.delete(api.promotion_list, _options_delete).catch(this.handleError);
     }
 

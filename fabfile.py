@@ -4,7 +4,7 @@ ENV = 'development' # Choices ['uat','production','development']
 
 #ENV = 'production'
 SERVERS = {
-    'development': '192.168.1.31',
+    'development': '172.16.12.10',
     # 'uat': '49.156.53.49',
     'production' : '49.156.53.49',
     'api' : '49.156.53.49'
@@ -84,9 +84,9 @@ def deploy():
                 else:
                     sudo('su -s /bin/bash www-data -c "%s;%s" '%(env.activate,"uwsgi --reload %s"%PROCESS_ID[ENV]))
 
-
+    with cd(PROJECT_PATH):
         with cd('admin-marketing'):
-            sudo("sudo ng build  --env=%s --output-path=/var/www/html/helio_admin"%ENV)
+            sudo("ng build  --env=%s --output-path=/var/www/html/helio_admin"%ENV)
             
 
 

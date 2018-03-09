@@ -261,6 +261,7 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, "static"),
 )
+CORS_ORIGIN_ALLOW_ALL = True
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 

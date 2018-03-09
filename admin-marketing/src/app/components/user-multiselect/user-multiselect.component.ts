@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChildren, QueryList, Input, Output, EventEmitter
 import { DataTableDirective } from 'angular-datatables';
 
 import { User } from '../../shared/class/user';
-import { datatable_config } from '../../shared/commons/datatable_config';
 
 
 @Component({

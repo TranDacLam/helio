@@ -893,6 +893,7 @@ class UserEmbedDetail(APIView):
                 result = {}
                 first_name = item[0] if item[0] else ''  # Firstname
                 surname = item[1] if item[1] else ''  # Surname
+                result["barcode"] = barcode
                 result["full_name"] = first_name + surname
                 result["birth_date"] = item[2] if item[2] else None  # DOB
                 result["personal_id"] = item[
@@ -1107,7 +1108,6 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
-
 class FeeListAPI(APIView):
 
     def get(self, request, format=None):
@@ -1117,7 +1117,7 @@ class FeeListAPI(APIView):
             return Response(feeSerializer.data)
 
         except Exception, e:
-            print "FeeAPI ", e
+            print "FeeListAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -1134,7 +1134,7 @@ class FeeListAPI(APIView):
             return Response({"code": 400, "message": "List_id field is required", "fields": ""}, status=400)
 
         except Exception, e:
-            print "FeeAPI ", e
+            print "FeeListAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -1618,7 +1618,7 @@ class HotAPI(APIView):
             return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
 
         except Exception, e:
-            print "EventAPI ", e
+            print "HotAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -1631,7 +1631,7 @@ class HotAPI(APIView):
             return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
-            print "EventAPI ", e
+            print "HotAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -1649,7 +1649,7 @@ class HotAPI(APIView):
             return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
 
         except Exception, e:
-            print "EventAPI", e
+            print "HotAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -1683,7 +1683,7 @@ class HotAPI(APIView):
 """
 
 
-@parser_classes((MultiPartParser,))
+@parser_classes((MultiPartParser, JSONParser))
 class PostAPI(APIView):
 
     def get(self, request, id):
@@ -1696,7 +1696,7 @@ class PostAPI(APIView):
             return Response({"code": 400, "message": "Not Found Post.", "fields": ""}, status=400)
 
         except Exception, e:
-            print "EventAPI ", e
+            print "PostAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -2254,3 +2254,84 @@ class HotAdvsView(APIView):
             print e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+"""
+    RoleList
+    @author :Hoangnguyen
+ 
+"""
+@permission_classes((AllowAny,))
+class RoleListAPI(APIView):
+
+    def get(self, request):
+        try:
+            roles = Roles.objects.all()
+            roleSerializer = admin_serializers.RoleSerializer(roles, many=True)
+            return Response(roleSerializer.data)
+        except Exception, e:
+            print "RoleListAPI", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+"""
+    UserRoleList
+    @author :Hoangnguyen
+ 
+"""
+@permission_classes((AllowAny,))
+class UserRoleListAPI(APIView):
+
+    def get(self, request):
+        try:
+            role_id = self.request.query_params.get('role_id', None)
+            if role_id:
+                role = Roles.objects.get( id = role_id )
+                users = role.user_role_rel.all()
+            else:
+                users = User.objects.filter( role__isnull = True )
+            userSerializer = admin_serializers.UserSerializer(users, many=True)
+            return Response(userSerializer.data)
+
+        except Roles.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Role.", "fields": ""}, status=400)
+        except Exception, e:
+            print "UserListAPI", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+"""
+    SetRole
+    @author :Hoangnguyen
+    check role exist
+    check user in list_id exist
+    check user has no role
+    
+"""
+@permission_classes((AllowAny,))
+class SetRoleAPI(APIView):
+
+    def put(self, request, role_id ):
+        try:
+            role = Roles.objects.get( id = role_id )
+            list_id = request.data.get('list_id', None)
+            if list_id:
+                users = User.objects.filter( id__in = list_id )
+                if users:
+                    # check user has role
+                    user_has_role = users.filter( role__isnull = False )
+                    if user_has_role:
+                        return Response({"code": 400, "message": "User had role.", "fields": ""}, status=400)
+
+                    role.user_role_rel.add(*users)
+                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                
+                return Response({"code": 400, "message": "Not Found users.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
+
+        except Roles.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Role.", "fields": ""}, status=400)
+        except Exception, e:
+            print "UserListAPI", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+

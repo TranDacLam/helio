@@ -54,6 +54,10 @@ export const api = {
     post_type_list: env.api_domain +'post_type_list/',
     login: env.api_domain +'accounts/login/',
 
+    role_list: env.api_domain + 'role_list/',
+    users_role: env.api_domain + 'users_role/',
+    set_role: env.api_domain + 'set_role/',
+
     users: env.api_domain + 'users/',
 
     role: env.api_domain + 'role/',
