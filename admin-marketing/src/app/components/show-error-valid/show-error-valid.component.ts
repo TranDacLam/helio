@@ -32,6 +32,7 @@ export class ShowErrorValidComponent implements OnInit {
        'required_time': (param) => param.message,
        'passwordValidate': (param) => param.message,
        'phoneValidate': (param) => param.message,
+       'denominationValidate': (param) => param.message,
     };
 
     @Input()

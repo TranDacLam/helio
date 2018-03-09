@@ -38,7 +38,7 @@
    				<td><input type="checkbox" [checked]="select_checkbox"
    					value={{denomination.id}} name=""
    					(change)="checkItemChange($event, denomination)"/></td>
-        		<td>{{ denomination.denomination }}</td>
+        		<td>{{ denomination.denomination | number }}</td>
    			</tr>
     	</tbody>
 	</table>

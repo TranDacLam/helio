@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { DenominationService } from '../../../shared/services/denomination.service';
 import { Router } from "@angular/router";
+import { DenominationValidators } from './../../../shared/validators/denomination-validators';
 
 @Component({
     selector: 'app-denomination-add',
@@ -18,7 +19,7 @@ export class DenominationAddComponent implements OnInit {
     errorMessage: string;
     
     denoForm: FormGroup;
-    data: '';
+    data:any;
     
     constructor(
         private router: Router,
@@ -32,7 +33,7 @@ export class DenominationAddComponent implements OnInit {
 
     createForm() {
         this.denoForm = this.fb.group({
-          denomination: ['', Validators.required],
+          denomination: ['', [Validators.required, DenominationValidators.denominationValidators]],
         });
     }
     /* 
@@ -40,12 +41,17 @@ export class DenominationAddComponent implements OnInit {
         Call service denomination
         @author: Trangle
     */
-    addDenomination(denomination: number) {
-        this.denominationService.createDenomination({ denomination } as Denomination )
+    addDenomination(denomination:any) {
+        var denoArr = [];
+        let denomi = this.convert_format_currency(this.data);
+        denomination.denomination = denomi
+        denoArr.push(denomination);
+
+        this.denominationService.createDenomination(denomination)
         .subscribe(
             (denomination) => {
                 this.denominations.push(denomination); 
-                this.router.navigate(['/denomination-list', { message_post: denomination.denomination} ])   
+                this.router.navigate(['/denomination-list', { message_post: this.data} ])   
             },
             (error) =>  {
                 if(error.status == 400) {
@@ -61,5 +67,16 @@ export class DenominationAddComponent implements OnInit {
     */
     removeMessage(er) {
        this.errorMessage = '';
+    }
+
+    format_currency(nStr) {
+        // Convert number to format currency
+        this.data = nStr.replace(/,/g,"").toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+    }
+
+    convert_format_currency(number) {
+        // Conver format currency from form to number. Save databse
+        var denomi = number.replace(/,/g,'');
+        return denomi;
     }
 }

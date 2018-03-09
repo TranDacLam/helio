@@ -11,34 +11,21 @@
 <div class='title-denomi row'>
     <a class="pull-left" routerLink="/denomination-add">Thêm Mệnh Giá Nạp Tiền</a>
 </div>
-<form #addDenominationForm="ngForm" class="row form-add-denomi" accept-charset="utf-8" novalidate="">
+<form [formGroup]="denoForm" class="row form-add-denomi" accept-charset="utf-8" novalidate="">
     <div class="content-denomi">
         <div class="form-group row">
             <div class="col-sm-2">
                 <label class="center-block">Tên Mệnh Giá Nạp Tiền:</label>
             </div>
             <div class="col-sm-6">
-                <input class='form-control' name="name" 
-                ngModel
-                required
-                pattern="^[0-9]+"
+                <input class='form-control' name="denomination" 
+                formControlName="denomination" id="denomination"
                 placeholder="Tên Mệnh Giá Nạp Tiền"
-                maxlength="10"
-                #name="ngModel"
                 [ngModel]="data"
                 (click)="removeMessage(errorMessage)"
+                (keyup) ="format_currency($event.target.value)"
                 > 
-                <div *ngIf="name.invalid && (name.dirty || name.touched)">
-                    <em [ngStyle]="{'color': 'red'}" *ngIf="name.errors.required">
-                    Trường không được bỏ trống.
-                    </em>
-                    <em [ngStyle]="{'color': 'red'}" *ngIf="name.errors.pattern">
-                    Vui lòng nhập số tiền hợp lệ.
-                    </em>
-                    <em [ngStyle]="{'color': 'red'}" *ngIf="name.errors?.maxlength">
-                        Mệnh giá tiền nhỏ hơn hoặc bằng 10 kí tự
-                    </em>
-                </div>
+                <show-error-valid [control]="denoForm.get('denomination')"></show-error-valid>
                 <div *ngIf='errorMessage'>
                     <em [ngStyle]="{'color': 'red'}">
                     {{errorMessage}}
@@ -53,8 +40,8 @@
     <div class="form-group row">
         <div class="col-sm-2"></div>
         <div class='col-sm-8'>
-            <button (click)="addDenomination(name.value)"
-            [disabled]="addDenominationForm.invalid"
+            <button (click)="addDenomination(denoForm.value)"
+            [disabled]="denoForm.invalid"
             class="pull-right btn btn-info">Lưu lại</button>
         </div>
     </div>  

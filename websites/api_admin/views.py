@@ -379,7 +379,7 @@ class PromotionTypeView(APIView):
     @author: Trangle
 """
 
-
+@permission_classes((AllowAny, ))
 class DenominationView(APIView):
 
     def get(self, request, format=None):
