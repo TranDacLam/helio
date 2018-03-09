@@ -24,7 +24,10 @@
                         <span>Currently: <a href="{{api_domain}}{{banner.image}}" target="_blank">{{banner.image}}</a></span>
                     </p>
                 	<input type="file" id="image" class="form-control" accept="image/*"
-                (change)="onFileChange($event)"/>
+                    (change)="onFileChange($event)"/>
+                    <div *ngIf="errorMessage">
+                        <p class='errors'> {{ errorMessage.image }} </p>
+                    </div>
                 	<show-error-valid [control]="formBanner.get('image')"></show-error-valid>
             	</div>
             	
@@ -37,7 +40,10 @@
         			<input class='form-control' name="sub_url" 
         			formControlName="sub_url"
                     [(ngModel)]="banner.sub_url"
-        			>	
+        			>
+                    <div *ngIf="errorMessage">
+                        <p class='errors'> {{ errorMessage.sub_url }} </p>
+                    </div>	
         			<show-error-valid [control]="formBanner.get('sub_url')"></show-error-valid>
             	</div>
             </div>
@@ -47,11 +53,11 @@
                 </div>
                 <div class="col-md-3">
                     <select class='form-control' name="position" 
-                            formControlName="position" [(ngModel)]="banner.position">
-                                <option *ngFor="let position of positions" [value]="position" [selected]="position === banner.position">
-                                    {{position}}
-                                </option>
-                            </select>
+                        formControlName="position" [(ngModel)]="banner.position">
+                        <option *ngFor="let position of positions" [value]="position" [selected]="position === banner.position">
+                            {{position}}
+                        </option>
+                    </select>
                     <show-error-valid [control]="formBanner.get('position')"></show-error-valid>
                 </div>
             </div> 

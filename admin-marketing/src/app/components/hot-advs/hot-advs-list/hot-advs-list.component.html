@@ -9,8 +9,13 @@
 </div>
 <!-- End breadcrumb -->
 <div class='row title-hot-advs'>
-	<a class="pull-left" routerLink="/denomination-list">Hot Advs</a>
-	<a class="pull-right" routerLink="/denomination-add">Thêm Hot Advs</a>
+	<a class="pull-left" routerLink="/hot-advs-list">Hot Advs</a>
+	<a class="pull-right" routerLink="/hot-advs-add">
+		<div class="btn btn-primary">
+			<span class="glyphicon glyphicon-plus"></span>
+			Thêm Hot Advs
+		</div>
+	</a>
 </div>
 <br>
 <div class="table card-list">
@@ -20,10 +25,10 @@
 	<div class="alert alert-success" *ngIf="message_result">
         {{message_result}}
     </div>
-	<table id="table-hot-advs" datatable [dtOptions]='dtOptions' class='row-border hover'>
+	<table id="table-hot-advs" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
-	      		<th><input type="checkbox" name="allCheckHotAdvs" value="allCheckHotAdvs"(change)="checkAllHotAdvs($event)"/></th>
+	      		<th class="checkbox-hot-advs"><input type="checkbox" name="allCheckHotAdvs" value="allCheckHotAdvs"(change)="checkAllHotAdvs($event)"/></th>
 
 	        	<th>Hot Advs</th>
 	      	</tr>

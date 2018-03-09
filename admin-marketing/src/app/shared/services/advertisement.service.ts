@@ -6,24 +6,32 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 
-import { Advertisement } from '../../shared/class/advertisement';
 import { api } from '../utils/api';
-
-const httpOptions = {
-	headers: new Headers({ 'Content-Type': 'application/json' })
-};
+import { Advertisement } from '../../shared/class/advertisement';
 
 @Injectable()
 export class AdvertisementService {
 
-	constructor(private http: Http){}
+	httpOptions: any;
+	token: any = '';
+
+	constructor(private http: Http){
+		this.token = localStorage.getItem('auth_token');
+
+		this.httpOptions = {
+            headers: new Headers({ 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            })
+        };
+	}
 	/*
 		GET: Get All Advertiment From Service
 		@author: TrangLe
 	 */
 	getAllAdvertisement(): Observable<any>{
 		let urlAdv = `${api.advertisement}`;
-		return this.http.get(urlAdv).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(urlAdv, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	/*
@@ -32,7 +40,7 @@ export class AdvertisementService {
 	 */ 
 	addAdvertisement(adv: Advertisement): Observable<Advertisement> {
 		let urlAdv = `${api.advertisement}`;
-		return this.http.post(urlAdv, adv, httpOptions)
+		return this.http.post(urlAdv, adv, this.httpOptions)
 		.map((res: Response) => res.json()).catch(this.handleError);		
 	}
 
@@ -42,7 +50,7 @@ export class AdvertisementService {
 	 */
 	getAdvertisement(id: number): Observable<Advertisement> {
 		const url = `${api.advertisement}${id}/`;
-		return this.http.get(url).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 	
 	/*
@@ -53,7 +61,7 @@ export class AdvertisementService {
 		const id = adv.id;
 		var body = JSON.stringify(adv);
 		const url = `${api.advertisement}${id}/`;
-		return this.http.put(url,body, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.put(url,body, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 	/*
 		DELETE: Delete All Advertiment which checked box
@@ -65,7 +73,7 @@ export class AdvertisementService {
             adv_id: adv_id
         }
         let _options = new RequestOptions({
-            headers: httpOptions.headers,
+            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
 		return this.http.delete(url, _options)

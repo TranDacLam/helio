@@ -459,11 +459,11 @@ class FeedbackView(APIView):
             try:
                 if start_date:
                     kwargs['sent_date__gte'] = timezone.make_aware(datetime.strptime(
-                        start_date, "%Y-%m-%d"))
+                        start_date, "%d/%m/%Y"))
                     print kwargs['sent_date__gte']
                 if end_date:
                     kwargs['sent_date__lte'] = timezone.make_aware(datetime.strptime(
-                        end_date, "%Y-%m-%d") + timedelta(days=1))
+                        end_date, "%d/%m/%Y") + timedelta(days=1))
                     print kwargs['sent_date__lte']
                 if status:
                     kwargs['status'] = status
@@ -1239,7 +1239,7 @@ class BannerViewDetail(APIView):
                 serializer.save()
                 return Response(serializer.data)
             print serializer.errors
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
         except Exception, e:
             print 'BannerViewDetail PUT', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1960,7 +1960,6 @@ GET, DELETE, POST User
 @author: TrangLe
 """
 @parser_classes((MultiPartParser, JSONParser))
-@authentication_classes((SessionAuthentication, BasicAuthentication))
 class UserListView(APIView):
     """
         Method: GET
@@ -1992,7 +1991,7 @@ class UserListView(APIView):
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
-            print "banner ", e
+            print "User ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -2023,7 +2022,6 @@ class UserListView(APIView):
     @author: TrangLe
 """
 @parser_classes((MultiPartParser, JSONParser))
-@authentication_classes((SessionAuthentication, BasicAuthentication))
 class UserDetailView(APIView):
 
     def get_object(self, pk):
@@ -2056,11 +2054,12 @@ class UserDetailView(APIView):
 
         user = self.get_object(pk)
         try:
+            print('user', user)
             serializer = admin_serializers.UserRoleSerializer(user, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
             print 'UserDetailView PUT', e
@@ -2204,6 +2203,58 @@ class TypeListAPI(APIView):
             print "TypeListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+"""
+    GET, POST, DELETE Hot_Advs 
+    @author: TrangLe
+"""
+@parser_classes((MultiPartParser, JSONParser))
+class HotAdvsView(APIView):
+
+    def get(self, request):
+        try:
+            hot_advs = Hot_Advs.objects.all()
+            serializer = admin_serializers.HotAdvsSerializer(hot_advs, many=True)
+            return Response(serializer.data)
+        except Exception, e:
+            print "Hot_advs List", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def post(self, request, format=None):
+        print "Method POST"
+        try:
+            serializer = admin_serializers.HotAdvsSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+
+        except Exception, e:
+            print "Hot_Advs ", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, format=None):
+        """
+        Delete All Hot_Advs Selected
+        """
+        print "Method DELETE"
+        try:
+            # Get list id Hot_Advs to delete
+            hot_advs_id = self.request.data.get('hot_advs_id', None)
+            print "LIST Hot_Advs ID DELETE : ", hot_advs_id
+
+            # Check list id Hot_Advs is valid
+            if hot_advs_id:
+                Hot_Advs.objects.filter(pk__in=hot_advs_id).delete()
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
+        except Exception, e:
+            print e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
+
 """
     RoleList
     @author :Hoangnguyen
@@ -2282,4 +2333,5 @@ class SetRoleAPI(APIView):
             print "UserListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
 

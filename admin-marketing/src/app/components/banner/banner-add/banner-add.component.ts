@@ -75,8 +75,12 @@ export class BannerAddComponent implements OnInit {
                 self.router.navigate(['/banner-list', { message_post: this.formBanner.value['sub_url']} ])     
             },
             (error) =>  {
-                    self.errorMessage = error
+                if( error.code == 400 ){
+                    self.errorMessage = error.message
+                } else {
+                    self.router.navigate(['/error', {message: error}])
                 }
+            }
         );
     }
 

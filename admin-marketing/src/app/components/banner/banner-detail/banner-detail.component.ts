@@ -56,8 +56,12 @@ export class BannerDetailComponent implements OnInit {
   		const id = +this.route.snapshot.paramMap.get('id');
     	this.bannerService.getBannerById(id)
     	.subscribe(
-        	banner => this.banner = banner,
-        	error =>  this.errorMessage = <any>error
+        	(banner) => {
+                this.banner = banner;
+            },
+        	(error) =>  {
+                this.router.navigate(['/error', { message: error }]);
+            }
         );
   	}
 
@@ -83,9 +87,13 @@ export class BannerDetailComponent implements OnInit {
                     this.router.navigate(['/banner-list', { message_put: this.formBanner.value['sub_url']} ])
                 }, 
                 (error) => {
-                    self.router.navigate(['/error', { message: error }]);
+                    if(error.code == 400) {
+                        this.errorMessage = error.message
+                    } else {
+                       self.router.navigate(['/error', { message: error.message }]);
                 }
-            );
+            }
+        );
     }
 
     /*
