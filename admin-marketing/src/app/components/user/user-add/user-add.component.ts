@@ -7,6 +7,7 @@ import { Role } from '../../../shared/class/role';
 
 import { UserService } from '../../../shared/services/user.service';
 import { RoleService } from '../../../shared/services/role.service';
+import { UserValidators } from './../../../shared/validators/user-validators';
 
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
@@ -51,13 +52,13 @@ export class UserAddComponent implements OnInit {
  		this.formUser = this.fb.group({
             email: [this.user_form.email, [Validators.required, Validators.email]],
             full_name: [this.user_form.full_name, [Validators.required]],
-            phone: [this.user_form.phone, [Validators.required, Validators.minLength(9), Validators.maxLength(11)]],
+            phone: [this.user_form.phone, [Validators.required,UserValidators.phoneValidators]],
             personal_id: [this.user_form.personal_id],
             country: [this.user_form.country],
             address: [this.user_form.address],
             city: [this.user_form.city],
             avatar: [this.user_form.avatar, [Validators.required]],
-            password: [this.user_form.password, [Validators.required, Validators.minLength(9), Validators.maxLength(32)]],
+            password: [this.user_form.password, [Validators.required, UserValidators.passwordValidators]],
             is_active: [this.user_form.is_active],
             role: [this.user_form.role, [Validators.required]],
             birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date,"DD/MM/YYYY").toDate() : null],
