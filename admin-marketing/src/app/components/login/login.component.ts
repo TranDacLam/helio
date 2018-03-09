@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from './../../shared/services/auth.service';
@@ -20,6 +20,8 @@ export class LoginComponent implements OnInit {
     msg_error: string = '';
     key_recaptcha: string = '';
     message_result: string = '';
+
+    token_recaptcha = '';
 
     constructor(
         private authService: AuthService,
@@ -52,8 +54,7 @@ export class LoginComponent implements OnInit {
     creatForm(): void{
         this.formLogin = this.fb.group({
             email: [this.user.email, Validators.required],
-            password: [this.user.password, Validators.required],
-            captcha: ['', Validators.required]
+            password: [this.user.password, Validators.required]
         });
     }
 
@@ -61,17 +62,20 @@ export class LoginComponent implements OnInit {
         function onSubmit(): Call service function auth
         author: Lam
     */ 
-    onSubmit(){
-        this.message_result = '';
-        this.authService.auth(this.formLogin.value).subscribe(
-            (data) => {
-               localStorage.setItem('auth_token', data.token);
-               this.router.navigateByUrl('/');
-            },
-            (error) => {
-                this.msg_error = error.non_field_errors[0] ? error.non_field_errors[0] : "Lỗi";
-            }
-        );
+    onSubmit(event){
+        if(event){
+            this.token_recaptcha = event;
+            this.message_result = '';
+            this.authService.auth(this.formLogin.value).subscribe(
+                (data) => {
+                   localStorage.setItem('auth_token', data.token);
+                   this.router.navigateByUrl('/');
+                },
+                (error) => {
+                    this.msg_error = error.non_field_errors[0] ? error.non_field_errors[0] : "Lỗi";
+                }
+            );
+        }
     }
 
 }
