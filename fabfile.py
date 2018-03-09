@@ -1,6 +1,7 @@
 from fabric.api import *
 
 ENV = 'development' # Choices ['uat','production','development']
+
 #ENV = 'production'
 SERVERS = {
     'development': '192.168.1.31',
@@ -16,28 +17,28 @@ BRANCH = {
 }
 
 USERS = {
-    'development': 'vooc',
+    'development': 'adminvn',
     # 'uat': 'thangv',
     'production': 'thangv',
     'api': 'thangv'
 }
 
 PASSWORDS = {
-    'development': 'vooc@min',
+    'development': 'Abc@123',
     # 'uat': 'ThangV@@123',
     'production': 'develop@vooc.vn',
     'api': 'develop@vooc.vn'
 }
 
 VIRTUAL_ENVS = {
-    'development': 'source /home/vooc/envs_root/helio_web_env/bin/activate',
+    'development': 'source /home/adminvn/envs_root/helio_web_env/bin/activate',
     # 'uat': 'source /home/thangv/envs/helio_web_env/bin/activate',
     'production': 'source /home/thangv/envs/helio_web_env/bin/activate',
     'api': 'source /home/thangv/envs/api_helio_web_env/bin/activate'
 }
 
 PATHS = {
-    'development': '/home/vooc/projects/helio_web',
+    'development': '/home/adminvn/sites/helio_web',
     # 'uat': '/home/thangv/projects/helio_web/',
     'production': '/home/thangv/projects/helio_web/',
     'api' : '/home/thangv/projects/api_source/helio_web'
@@ -82,6 +83,14 @@ def deploy():
                     sudo('systemctl restart uwsgi_helio')
                 else:
                     sudo('su -s /bin/bash www-data -c "%s;%s" '%(env.activate,"uwsgi --reload %s"%PROCESS_ID[ENV]))
+
+
+        with cd('admin-marketing'):
+            sudo("sudo ng build  --env=%s --output-path=/var/www/html/helio_admin"%ENV)
+            
+
+
+
 
         
 
