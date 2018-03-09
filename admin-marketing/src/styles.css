@@ -192,3 +192,68 @@ h1.h1-title {
 .dataTables_wrapper{
     margin-bottom: 20px;
 }
+
+
+/* 
+    Custom button add
+    author: Lam; 
+*/
+.custom-title .custom-button{
+    color: black;
+    background-color: #fff;
+    border-color: black;
+    margin-bottom: 10px;
+}
+.custom-title .custom-button:hover{
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+}
+.custom-title .icon-button {
+    font-size: 14px;
+    padding-right: 9px;
+}
+.custom-title{
+    margin: 20px 0;
+    border-bottom: 2px solid #111111;
+}
+.custom-title>div{
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+/* 
+    custom multi select user
+    author: Lam; 
+*/
+.multiselect_user{
+    margin-top: 40px;
+}
+.multiselect_user .row-border{
+    font-size: 12px;
+}
+.multiselect_user .datatable-content{
+    width: 47%;
+}
+.multiselect_user .button-move{
+    width: 6%;
+    margin-top: 20%;
+}
+.multiselect_user .button-move button{
+    margin-top: 10px;
+    margin-left: 15px;
+}
+.multiselect_user #DataTables_Table_1_wrapper {
+    overflow: auto !important;
+}
+@media only screen and (max-width : 768px) {
+    .multiselect_user .datatable-content{
+        width: 100%;
+    }
+    .multiselect_user .button-move{
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+}

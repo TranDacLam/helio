@@ -18,6 +18,8 @@ export class LinkCardDetailComponent implements OnInit {
     user_app = new User();
     user_embed = new Customer();
 
+    msg_success: string = '';
+
     constructor(
         private linkCardService: LinkCardService, 
         private route: ActivatedRoute,
@@ -40,6 +42,7 @@ export class LinkCardDetailComponent implements OnInit {
         this.route.params.subscribe(params => {
             email = params.email;
             barcode = params.barcode;
+            this.msg_success = params.message ? params.message : '';
         });
 
         this.linkCardService.getEmail(email).subscribe(data_app => {

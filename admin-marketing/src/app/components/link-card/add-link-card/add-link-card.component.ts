@@ -64,7 +64,7 @@ export class AddLinkCardComponent implements OnInit {
         
         this.linkCardService.relate(user_app.email, user_embed.barcode).subscribe(
             (data) => {
-                this.router.navigate(['/link-card/detail/', user_app.id,{ email: user_app.email, barcode: user_embed.barcode}]);
+                this.router.navigate(['/link-card/detail/', user_app.id,{ email: user_app.email, barcode: user_embed.barcode, message: 'success'}]);
             },
             (error) => {
                 this.errorMessage = error.message; 
