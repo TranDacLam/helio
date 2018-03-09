@@ -4,7 +4,7 @@ ENV = 'development' # Choices ['uat','production','development']
 
 #ENV = 'production'
 SERVERS = {
-    'development': '192.168.1.31',
+    'development': '172.16.12.10',
     # 'uat': '49.156.53.49',
     'production' : '49.156.53.49',
     'api' : '49.156.53.49'
