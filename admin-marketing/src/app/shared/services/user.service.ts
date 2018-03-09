@@ -4,16 +4,25 @@ import { Observable } from 'rxjs/Observable';
 import { api } from '../utils/api';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 
-import { User} from '../../shared/class/user';
+import { User } from '../../shared/class/user';
 
-const httpOptions = {
-	headers: new Headers({ 'Content-Type': 'application/json' })
-}
 
 @Injectable()
 export class UserService {
 
-  	constructor(private http: Http) { }
+    httpOptions: any;
+    token:any = '';
+
+  	constructor(private http: Http) {
+        this.token = localStorage.getItem('auth_token');
+
+        this.httpOptions = {
+            headers: new Headers({ 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            })
+        };
+    }
 
   	/*
 		GET: Get All Users From Server
@@ -21,7 +30,7 @@ export class UserService {
 	 */
 	getAllUsers(): Observable<User[]> {
     	let url = `${api.users}`;
-		return this.http.get(url).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	/*
@@ -30,7 +39,7 @@ export class UserService {
 	 */
 	getUserById(id:number):Observable<User> {
 		const url = `${api.users}${id}/`;
-		return this.http.get(url, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	/*
@@ -39,8 +48,8 @@ export class UserService {
 	*/
 	deleteUserById(user: User): Observable<User> {
 		const id = user.id;
-		const url = `${api.user}${id}/`;
-		return this.http.delete(url,httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		const url = `${api.users}${id}/`;
+		return this.http.delete(url,this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	/*
@@ -51,8 +60,8 @@ export class UserService {
 
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
             xhr.open('POST', api.users);
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.send(userFormData);
 
             xhr.onreadystatechange = function() {
@@ -61,13 +70,40 @@ export class UserService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(xhr.response);
+                        observer.error(JSON.parse(xhr.response));
                     }
                 }
             }
         });
     }
 
+    /*
+    	PUT: Update User
+    	@author: Trangle
+    */
+   
+   	updateUser(userForm: FormData, id:number): Observable<any> {
+   		const url = `${api.users}${id}/`;
+
+   		return Observable.create(observer => {
+   			let xhr = new XMLHttpRequest();
+   			xhr.open('PUT', url);
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+   			xhr.send(userForm);
+
+   			xhr.onreadystatechange = function() {
+   				if(xhr.readyState === 4) {
+   					if(xhr.status === 200) {
+   						observer.next(JSON.parse(xhr.response));
+   						observer.complete();
+   					} else {
+   						observer.error(JSON.parse(xhr.response));
+   					}
+   				}
+   			}
+   		});
+   	}
+   
 	/*
 		DELETE: Delete User Selected
 		@author: Trangle
@@ -79,7 +115,7 @@ export class UserService {
 			user_id: user_id
 		};
 		let _options = new RequestOptions({
-			headers: httpOptions.headers,
+			headers: this.httpOptions.headers,
 			body: JSON.stringify(param)
 		});
 		return this.http.delete(url, _options).map((res: Response) => res.json()).catch(this.handleError);

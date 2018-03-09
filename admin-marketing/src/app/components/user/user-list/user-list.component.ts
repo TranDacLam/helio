@@ -60,7 +60,9 @@ export class UserListComponent implements OnInit {
             if( params.message_post ){
                 this.message_result = " Thêm "+ params.message_post + " thành công.";
             } else if ( params.message_put ) {
-                this.message_result = "  Chỉnh sửa  "+ params.message_put + " thành công.";
+                this.message_result = "  Chỉnh sửa "+ params.message_put + " thành công.";
+            } else if( params.message_del ) {
+                this.message_result = " Xóa " + params.message_del + " thành công.";
             } else {
                 this.message_result = "";
             }
@@ -75,7 +77,7 @@ export class UserListComponent implements OnInit {
                 this.dtTrigger.next();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error }])
+                this.router.navigate(['/error', { message: error.json().message }])
             }
         )
   	}

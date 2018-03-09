@@ -80,7 +80,9 @@ export class AdvertisementListComponent implements OnInit {
   				this.advs = result;
   				this.dtTrigger.next();
   			},
-            (error) => this.router.navigate(['/error', { message: error }])
+            (error) => {
+                this.router.navigate(['/error', { message: error.json().message }])
+            }
         );
   	}
   	/*

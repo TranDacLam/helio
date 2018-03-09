@@ -9,14 +9,23 @@ import { api } from '../utils/api';
 
 import { Denomination } from '../../shared/class/denomination';
 
-const httpOptions = {
-	headers: new Headers({ 'Content-Type': 'application/json' })
-};
 
 @Injectable()
 export class DenominationService {
 
-	constructor(private http: Http) { }
+	httpOptions: any;
+	token: any = '';
+
+	constructor(private http: Http) { 
+		this.token = localStorage.getItem('auth_token')
+
+		this.httpOptions = {
+			headers: new Headers({
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${this.token}`
+			})
+		};
+	}
 
 	/*
 		GET: Get All Denomination From Server
@@ -24,7 +33,7 @@ export class DenominationService {
 	 */
 	getAllDenomination(): Observable<Denomination[]> {
     	let urlDeno = `${api.denomination}`;
-		return this.http.get(urlDeno).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(urlDeno, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	/*
@@ -33,7 +42,7 @@ export class DenominationService {
 	*/
 	createDenomination(deno: Denomination): Observable<Denomination> {
     	let urlDeno = `${api.denomination}`; 
-		return this.http.post(urlDeno, deno,httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.post(urlDeno, deno,this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	/*
@@ -45,7 +54,7 @@ export class DenominationService {
             deno_id: deno_id
         }
         let _options = new RequestOptions({
-            headers: httpOptions.headers,
+            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
 

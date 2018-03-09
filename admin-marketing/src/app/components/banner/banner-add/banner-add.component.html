@@ -22,11 +22,11 @@
         </div>
         <div class="col-sm-8">
         	<input type="file" id="image" class="form-control" accept="image/*"
-        (change)="onFileChange($event)"
+            (change)="onFileChange($event)"
         />
         	<show-error-valid [control]="formBanner.get('image')"></show-error-valid>
-            <div *ngIf='errorMessage'>
-                {{errorMessage}}
+            <div *ngIf="errorMessage">
+                <p class='errors'> {{ errorMessage.image }} </p>
             </div>
     	</div>
     	
@@ -38,7 +38,10 @@
     	<div class="col-sm-8">	
 			<input class='form-control' name="sub_url" 
 			formControlName="sub_url"
-			>	
+			>
+            <div *ngIf="errorMessage">
+                <p class='errors'> {{ errorMessage.sub_url }} </p>
+            </div>	
 			<show-error-valid [control]="formBanner.get('sub_url')"></show-error-valid>
     	</div>
     </div>
@@ -54,6 +57,9 @@
                     {{position}}
                 </option>
             </select>
+            <div *ngIf="errorMessage">
+                <p class='errors'> {{ errorMessage.position }} </p>
+            </div>
             <show-error-valid [control]="formBanner.get('position')"></show-error-valid>
         </div>
     </div> 
