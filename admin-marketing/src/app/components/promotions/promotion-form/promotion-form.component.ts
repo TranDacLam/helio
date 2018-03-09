@@ -231,9 +231,7 @@ export class PromotionFormComponent implements OnInit {
                         // Call service delete promotion by id
                         that.promotionService.deletePromotionById(id).subscribe(
                             (data) => {
-                                if (data.status == 204) {
-                                    that.router.navigate(['/promotions', {'action': 'Xóa "', 'promotion_name': that.promotion.name}]);
-                                }
+                                that.router.navigate(['/promotions', {'action': 'Xóa "', 'promotion_name': that.promotion.name}]);
                             }, 
                             (error) => {
                                 that.router.navigate(['/error']);
