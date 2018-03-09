@@ -85,8 +85,8 @@ def deploy():
                     sudo('su -s /bin/bash www-data -c "%s;%s" '%(env.activate,"uwsgi --reload %s"%PROCESS_ID[ENV]))
 
 
-        with cd('admin-marketing'):
-            sudo("sudo ng build  --env=%s --output-path=/var/www/html/helio_admin"%ENV)
+        # with cd('admin-marketing'):
+        #     sudo("ng build  --env=%s --output-path=/var/www/html/helio_admin"%ENV)
             
 
 
