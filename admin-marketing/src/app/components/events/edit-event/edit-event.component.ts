@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Event } from '../../../shared/class/event';
 import { EventService } from '../../../shared/services/event.service';
 
@@ -16,7 +16,8 @@ export class EditEventComponent implements OnInit {
 
     constructor(
         private eventService: EventService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -31,9 +32,14 @@ export class EditEventComponent implements OnInit {
     */
     getEvent(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.eventService.getEvent(id).subscribe(data => {
-            this.event = data;
-        });
+        this.eventService.getEvent(id).subscribe(
+            (data) => {
+                this.event = data;
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
     }
 
 }

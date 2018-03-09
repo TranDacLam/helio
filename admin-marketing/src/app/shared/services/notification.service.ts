@@ -138,7 +138,18 @@ export class NotificationService {
         let param = {
             list_user_id: user_noti
         }
-        return this.http.post(url_user_noti_detail, JSON.stringify(param), this.httpOptions).catch(this.handleError);
+        return this.http.post(url_user_noti_detail, JSON.stringify(param), this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    }
+
+    /*
+        Function sendNotification(): send notification by notification_id
+        @author: Lam
+    */
+    sendNotification(id: number){
+        let param = {
+            notification_id: id
+        }
+        return this.http.post(api.notification_push, JSON.stringify(param), this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
 

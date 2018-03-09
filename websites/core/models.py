@@ -165,6 +165,7 @@ class Promotion(DateTimeModel):
     is_draft = models.BooleanField(default=False)
     user_implementer = models.ForeignKey('User', related_name='user_implementer_rel',
                                          null=True, blank=True)
+    is_save = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -331,7 +332,7 @@ class Notification(DateTimeModel):
     is_QR_code = models.BooleanField('Is QR Code', default=False)
     location = models.CharField(max_length=500, null=True, blank=True)
 
-    is_draft = models.BooleanField(default=False)
+    # is_draft = models.BooleanField(default=False)
     sent_date = models.DateField(_('Sent Date'), null=True, blank=True)
     sent_user = models.ForeignKey('User', related_name='notification_user_rel',
                                   null=True, blank=True)

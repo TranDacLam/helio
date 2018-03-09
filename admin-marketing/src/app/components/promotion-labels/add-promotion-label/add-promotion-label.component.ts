@@ -22,7 +22,7 @@ export class AddPromotionLabelComponent implements OnInit {
 
     formPromotionLabel: FormGroup;
 
-    errorMessage = ''; // Messages error
+    errorMessage: any; // Messages error
 
     constructor(
         private promotionLabelService: PromotionLabelService,
@@ -56,7 +56,11 @@ export class AddPromotionLabelComponent implements OnInit {
                 this.router.navigate(['/promotion-label/list', { message_post: this.formPromotionLabel.value.name}]);
             },
             (error) => {
-                { this.errorMessage = error.message; } 
+                if(error.code === 400){
+                    this.errorMessage = error.message;
+                }else{
+                    this.router.navigate(['/error', { message: error.message}]);
+                }
             }
         );
     }

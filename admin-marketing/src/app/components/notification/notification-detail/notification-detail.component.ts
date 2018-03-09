@@ -6,6 +6,8 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/observable/throw';
 
+declare var bootbox:any;
+
 @Component({
     selector: 'app-notification-detail',
     templateUrl: './notification-detail.component.html',
@@ -24,6 +26,7 @@ export class NotificationDetailComponent implements OnInit {
 
     is_update: boolean = false; // Check input checkbox Update Notification
     messageSuccess = '';
+    messageError = '';
 
     constructor(
         private notificationService: NotificationService, 
@@ -77,16 +80,68 @@ export class NotificationDetailComponent implements OnInit {
         Author: Lam
     */
     update_user_noti(event){
-        const id = +this.route.snapshot.paramMap.get('id');
-        this.notificationService.updateUserNoti(id, event).subscribe(
+        if(event.length > 0){
+            const id = +this.route.snapshot.paramMap.get('id');
+            this.notificationService.updateUserNoti(id, event).subscribe(
+                (data) => {
+                    this.messageSuccess = "Lưu thành công.";
+                    setTimeout(()=>{
+                          this.messageSuccess = '';
+                    },5000);
+                },
+                (error) => {
+                    this.messageSuccess = error.message;
+                }
+            );
+        }else{
+            bootbox.alert("Vui lòng chọn user");
+        }
+        
+    }
+
+    /*
+        Function checkSendNotification(): confirm delete
+        @author: Lam
+    */
+    checkSendNotification(){
+        let that = this;
+        bootbox.confirm({
+            title: "Bạn có chắc chắn",
+            message: "Bạn có muốn gửi thông báo này không?",
+            buttons: {
+                cancel: {
+                    label: "Hủy"
+                },
+                confirm: {
+                    label: "Đồng Ý"
+                }
+            },
+            callback: function (result) {
+                if(result) {
+                    that.sendNotification();
+                }
+            }
+        });
+    }
+
+    /*
+        Function sendNotification(): call service function sendNotification() send notification by notification_id
+        @author: Lam
+    */
+    sendNotification(){
+        const id = this.noti_detail.id;
+        this.notificationService.sendNotification(id).subscribe(
             (data) => {
-                this.messageSuccess = "Lưu thành công.";
+                this.messageSuccess = data.message;
                 setTimeout(()=>{
                       this.messageSuccess = '';
-                },5000);
+                },10000);
             },
             (error) => {
-                this.messageSuccess = error.message;
+                this.messageError = error.message;
+                setTimeout(()=>{
+                      this.messageError = '';
+                },10000);
             }
         );
     }

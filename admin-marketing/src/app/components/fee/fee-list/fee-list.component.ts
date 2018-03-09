@@ -51,20 +51,20 @@ export class FeeListComponent implements OnInit {
    
    /*
     selectAll FUNCTION
-    for loop in fees, call triggerItem to add id to list_id
+    set list_id is empty
+    if selectAll is check push all id to list_id
     author: Hoangnguyen
    */
    selectAll(event){
+     this.list_id = []
      if(event.target.checked){
         for (var i in this.fees){
-            this.triggerItem(true, this.fees[i].id);
-            this.fees[i].selected = true;
+            $('#checkbox_'+this.fees[i].id).prop('checked', true);
+            this.list_id.push(this.fees[i].id);
         }
-
      }else{
        for (var i in this.fees){
-          this.triggerItem(false, this.fees[i].id);
-          this.fees[i].selected = false;
+            $('#checkbox_'+this.fees[i].id).prop('checked', false);
         }
      }
    }
@@ -72,22 +72,29 @@ export class FeeListComponent implements OnInit {
    /*
       triggerItem FUNCTION
       when check checkbox
-      check id exist in list_id ( avoid duplicate when select all) 
-          if false add id to list_id, if true, no add
+      push id to list_id
       when uncheck checkbox
       remove id in list_id 
       author: Hoangnguyen
    */
     triggerItem( checked: boolean, id: any){
        if(checked){
-         var fee = this.list_id.find( item => item == id);
-         if (fee){
-             return false;
-         }
+         // when check checkbox
          this.list_id.push(id);
+         // checked all fee then inout selectAll is checked
+         if (this.list_id.length == this.fees.length){
+           $('#selectAll').prop('checked', true);
+         }
+
        }else{
+         //when uncheck checkbox
          var index = this.list_id.indexOf(id);
          this.list_id.splice(index, 1);
+         // uncheck selectAll
+         let selectAll = $('#selectAll').prop('checked');
+         if(selectAll){
+           $('#selectAll').prop('checked', false);
+         }
        }
     }
 

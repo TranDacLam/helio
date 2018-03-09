@@ -19,11 +19,13 @@ export class LoginComponent implements OnInit {
 
     msg_error: string = '';
     key_recaptcha: string = '';
+    message_result: string = '';
 
     constructor(
         private authService: AuthService,
         private fb: FormBuilder,
-        private router: Router
+        private router: Router,
+        private route: ActivatedRoute
     ) { 
         this.key_recaptcha = env.key_recaptcha 
     }
@@ -32,6 +34,14 @@ export class LoginComponent implements OnInit {
         if(localStorage && localStorage.getItem('auth_token')){
             this.router.navigateByUrl('/');
         }
+        this.route.params.subscribe(params => {
+            if(params.message){
+                this.message_result = params.message;
+                setTimeout(()=>{
+                      this.message_result = '';
+                },7000);
+            }
+        });
         this.creatForm();
     }
 
@@ -52,6 +62,7 @@ export class LoginComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(){
+        this.message_result = '';
         this.authService.auth(this.formLogin.value).subscribe(
             (data) => {
                localStorage.setItem('auth_token', data.token);

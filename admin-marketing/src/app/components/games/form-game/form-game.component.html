@@ -1,4 +1,8 @@
-<h4>{{ errorMessage }}</h4>
+<ng-container *ngIf="errorMessage">
+    <h4 *ngFor="let error of errorMessage | mapToIterable" class="error_msg">
+        {{error.val}}.
+    </h4>
+</ng-container>
 <form [formGroup]="formGame" novalidate>
     <div class="form-group row">
         <div class="col-sm-2">
@@ -35,9 +39,15 @@
             <label class="col-form-label form-check-label">Hình Ảnh</label>
         </div>
         <div class="col-sm-8">
+            <p *ngIf="game.image">
+                <span>Hiện tại: <a href="{{api_domain}}{{game.image}}" target="_blank">{{game.image}}</a></span>
+            </p>
+            <p *ngIf="game.image" class="clear_image">
+                <input type="checkbox" formControlName="is_clear_image"/> Xóa
+            </p>
+            <p *ngIf="msg_clear_image" class="error_msg">{{msg_clear_image}}</p>
             <input type="file" class="form-control" accept="image/*"
             (change)="onFileChange($event)" #inputImage/>
-            <button type="button" class="btn btn-sm btn-danger" (click)="clearFile()">clear file</button>
         </div>
     </div>
 
@@ -45,13 +55,15 @@
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Loại Trò Chơi</label>
         </div>
-        <div class="col-sm-6">
-            <select class="form-control" formControlName="game_type_id">
-                <option value='1'
+        <div class="col-sm-6" *ngIf="types">
+            <select class="form-control" formControlName="game_type">
+                <option value="">--SELECT--</option>
+                <option *ngFor="let type of types" 
+                    value="{{ type.id }}"
                 >
-                1</option>
+                {{ type.name }}</option>
             </select>
-            <show-error-valid [control]="formGame.get('game_type_id')"></show-error-valid>
+            <show-error-valid [control]="formGame.get('game_type')"></show-error-valid>
         </div>
     </div>
 
@@ -65,6 +77,9 @@
     </div>
 
     <hr/>
+    <button class="btn btn-primary" (click)="deleteGameEvent()">
+        XÓA
+    </button>
     <button class="btn btn-primary pull-right" (click)="onSubmit()" [disabled]="formGame.invalid">
         LƯU LẠI
     </button>

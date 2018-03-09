@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Denomination }  from '../../../shared/class/denomination';
 
 import { DenominationService } from '../../../shared/services/denomination.service';
-import { datatable_config, data_config } from '../../../shared/commons/datatable_config';
+import { data_config } from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 

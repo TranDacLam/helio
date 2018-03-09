@@ -3,13 +3,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Faq } from '../../../shared/class/faq';
 import { FaqService } from '../../../shared/services/faq.service';
+import { Category } from './../../../shared/class/category';
+import { CategoryService } from './../../../shared/services/category.service';
 import 'rxjs/add/observable/throw';
+
+declare var bootbox:any;
 
 @Component({
     selector: 'app-edit-faq',
     templateUrl: './edit-faq.component.html',
     styleUrls: ['./edit-faq.component.css'],
-    providers: [FaqService]
+    providers: [FaqService, CategoryService]
 })
 export class EditFaqComponent implements OnInit {
 
@@ -17,21 +21,24 @@ export class EditFaqComponent implements OnInit {
         author: Lam
     */
 
-    faq: Faq = new Faq();
+    faq: Faq;
+    categories: Category[];
 
     formFaq: FormGroup;
 
-    errorMessage = ''; // Messages error
+    errorMessage: any; // Messages error
 
     constructor(
         private faqService: FaqService,
         private fb: FormBuilder,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private categoryService: CategoryService
     ) { }
 
     ngOnInit() {
         this.getFaq();
+        this.getCategories();
     }
 
     /*
@@ -43,10 +50,15 @@ export class EditFaqComponent implements OnInit {
     */
     getFaq(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.faqService.getFaq(id).subscribe(data => {
-            this.faq = data;
-            this.creatForm();
-        });
+        this.faqService.getFaq(id).subscribe(
+            (data) => {
+                this.faq = data;
+                this.creatForm();
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
     }
 
     /*
@@ -57,8 +69,23 @@ export class EditFaqComponent implements OnInit {
         this.formFaq = this.fb.group({
             question: [this.faq.question, Validators.required],
             answer: [this.faq.answer, Validators.required],
-            category_id: [this.faq.category_id, Validators.required],
+            category: [this.faq.category ? this.faq.category : '', Validators.required],
         });
+    }
+
+    /*
+        function getCategories(): get all category
+        @author: Lam
+    */ 
+    getCategories(): void{
+        this.categoryService.getAllCategory().subscribe(
+            (data) => {
+                this.categories = data;
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
     }
 
     /*
@@ -68,14 +95,44 @@ export class EditFaqComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(): void{
+        this.formFaq.value.category = parseInt(this.formFaq.value.category);
         this.faqService.updateFaq(this.formFaq.value, this.faq.id).subscribe(
             (data) => {
-                this.router.navigate(['/faq/list', { message_post: this.formFaq.value.name}]);
+                this.router.navigate(['/faq/list', { message_put: this.formFaq.value.question}]);
             },
             (error) => {
-                { this.errorMessage = error.message; } 
+                if(error.code === 400){
+                    this.errorMessage = error.message;
+                }else{
+                    this.router.navigate(['/error', { message: error.message}]);
+                }
             }
         );
+    }
+
+    /*
+        Function deleteFaqEvent(): confirm delete
+        @author: Lam
+    */
+    deleteFaqEvent(){
+        let that = this;
+        bootbox.confirm({
+            title: "Bạn có chắc chắn",
+            message: "Bạn muốn xóa sự kiện này?",
+            buttons: {
+                cancel: {
+                    label: "Hủy"
+                },
+                confirm: {
+                    label: "Xóa"
+                }
+            },
+            callback: function (result) {
+                if(result) {
+                    that.onDelete();
+                }
+            }
+        });
     }
 
     /*
@@ -86,8 +143,14 @@ export class EditFaqComponent implements OnInit {
     */
     onDelete(): void {
         const id = this.faq.id;
-        this.faqService.onDelFaq(id).subscribe();
-        this.router.navigate(['/faq/list']);
+        this.faqService.onDelFaq(id).subscribe(
+            (data) => {
+                this.router.navigate(['/faq/list', { message_del: 'success'}]);
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
     }
 
 }

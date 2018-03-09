@@ -5,29 +5,37 @@ import { api } from '../utils/api';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
-const httpOptions = {
-    headers: new Headers({ 'Content-Type': 'application/json' })
-};
-
 @Injectable()
 export class PostService {
 
     private urlPost = api.post;
     private urlPostLIst = api.post_list;
 
-    constructor(private http: Http) { }
+    httpOptions: any;
+    token: any = '';
+
+    constructor(private http: Http) {
+        this.token = localStorage.getItem('auth_token');
+
+        this.httpOptions = {
+            headers: new Headers({ 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            })
+        };
+    }
 
     /* 
         function getPosts(): Get all post
         author: Lam
     */
     getPosts(): Observable<any>{
-        return this.http.get(this.urlPostLIst).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(this.urlPostLIst, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     getPost(id: number): Observable<any>{
         let url_post_id = `${this.urlPost}${id}`;
-        return this.http.get(url_post_id).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_post_id, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -40,28 +48,57 @@ export class PostService {
         }
 
         let _options = new RequestOptions({
-            headers: httpOptions.headers,
+            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
 
         return this.http.delete(this.urlPostLIst, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    addPost(value): Observable<any>{
-        let body = JSON.stringify(value); // String payload
-        return this.http.post(this.urlPost, body, httpOptions)
-            .map((res: Response) => res.json()).catch(this.handleError);
+    addPost(value: FormData): Observable<any>{
+        return Observable.create(observer => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', this.urlPost);
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            xhr.send(value);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(JSON.parse(xhr.response));
+                    }
+                }
+            }
+        });
     }
 
-    updatePost(value, id): Observable<any>{
+    updatePost(value: FormData, id: number): Observable<any>{
         let url_update_post = `${this.urlPost}${id}/`;
-        return this.http.put(url_update_post, JSON.stringify(value), httpOptions)
-            .map((res: Response) => res.json()).catch(this.handleError);
+        return Observable.create(observer => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('PUT', url_update_post);
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            xhr.send(value);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(JSON.parse(xhr.response));
+                    }
+                }
+            }
+        });
     }
 
-    onDelPost(id): Observable<any>{
+    onDelPost(id: number): Observable<any>{
         const url_del = `${this.urlPost}${id}/`;
-        return this.http.delete(url_del, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_del, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     // exception

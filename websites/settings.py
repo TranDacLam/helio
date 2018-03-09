@@ -261,6 +261,7 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, "static"),
 )
+CORS_ORIGIN_ALLOW_ALL = True
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
@@ -317,6 +318,9 @@ try:
 
     elif 'PRODUCTION' in os.environ and os.environ['PRODUCTION']:
         from config.setting_production import *
+
+    elif 'DEVELOPMENT' in os.environ and os.environ['DEVELOPMENT']:
+        from config.setting_develop import *
     else:
         from config.setting_local import *
 except ImportError:

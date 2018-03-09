@@ -1,10 +1,8 @@
-<div *ngIf="errors" class="row">
-    <div class="col-md-12">
-        <div *ngIf="errors" class="alert alert-danger">
-            <p>{{ errors }}</p>
-        </div>
-    </div>
-</div>
+<ng-container *ngIf="errors">
+    <p *ngFor="let error of errors | mapToIterable" class="error_msg">
+        {{error.val}}.
+    </p>
+</ng-container>
 
 <form [formGroup]="promotionForm" novalidate>
     <div class="form-group row">
@@ -100,7 +98,6 @@
         </div>
     </div>
 
-    <label *ngIf="promotionForm.errors" class="error_msg col-md-offset-2">{{ promotionForm.errors?.dates }}</label>
     <div class="form-group row">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Ngày Áp Dụng</label>
@@ -111,7 +108,7 @@
                     <i class="fa fa-calendar"></i>
                 </span>
                 <input type="text" class="form-control event-date" formControlName="apply_date" 
-                    [owlDateTime]="dtApplyDate" [max]="promotionForm.value.end_date" 
+                    [owlDateTime]="dtApplyDate" id="start_date"
                 />         
                 <owl-date-time [pickerType]="'calendar'"  #dtApplyDate></owl-date-time>
                 <show-error-valid [control]="promotionForm.get('apply_date')"></show-error-valid>
@@ -128,7 +125,7 @@
                     <i class="fa fa-calendar"></i>
                 </span>
                 <input type="text" class="form-control event-date" formControlName="end_date" 
-                    [owlDateTime]="dtEndDate" [min]="promotionForm.value.apply_date"
+                    [owlDateTime]="dtEndDate" id="end_date"
                 />         
                 <owl-date-time [pickerType]="'calendar'" #dtEndDate></owl-date-time>
                 <show-error-valid [control]="promotionForm.get('end_date')"></show-error-valid>

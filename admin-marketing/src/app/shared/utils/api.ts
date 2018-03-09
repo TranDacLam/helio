@@ -54,8 +54,26 @@ export const api = {
     post_type_list: env.api_domain +'post_type_list/',
     login: env.api_domain +'accounts/login/',
 
+    role_list: env.api_domain + 'role_list/',
+    users_role: env.api_domain + 'users_role/',
+    set_role: env.api_domain + 'set_role/',
+
     users: env.api_domain + 'users/',
 
     role: env.api_domain + 'role/',
+
+    faq: env.api_domain + 'faq/',
+
+    faq_list: env.api_domain + 'faq_list/',
+
+    game: env.api_domain + 'game/',
+
+    game_list: env.api_domain + 'game_list/',
+
+    type_list: env.api_domain + 'type_list/',
+
+    account_users: env.api_domain + 'accounts/users/',
+
+    notification_push: env.api_domain + 'notification/push/',
 
 };

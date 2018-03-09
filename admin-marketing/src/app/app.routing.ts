@@ -57,6 +57,9 @@ import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
 import { AuthGuard } from './shared/guards/index';
 
+import { UserPermissionComponent } from './components/user-permission/user-permission.component';
+
+
 
 const routes: Routes = [{
         path: '',
@@ -291,9 +294,14 @@ const routes: Routes = [{
         component: LoginComponent
     },
     {
+        path: 'user-permission',
+        component: UserPermissionComponent
+    },
+    {
         path: 'error',
         component: ErrorComponent
     },
+
 ];
 
 @NgModule({
