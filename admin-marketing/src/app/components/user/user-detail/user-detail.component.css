@@ -11,6 +11,9 @@
 	right: 15px;
 	cursor: pointer;
 }
+p.errors {
+	color: red;
+}
 p.title-user-edit {
 	border-bottom: 2px solid black;
 	padding: 10px 0;
