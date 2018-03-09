@@ -4,7 +4,6 @@ from core.models import *
 from core.custom_models import *
 from datetime import datetime
 import core.constants as const
-
 from rest_framework import serializers    
 
 class Base64ImageField(serializers.ImageField):
@@ -287,6 +286,7 @@ class HotSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'sub_url', 'image', 'is_show')
 
     def update(self, instance, validated_data):
+        
         image = validated_data.get('image', instance.image)
         if image:
             instance.image = image
@@ -296,25 +296,34 @@ class HotSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class PostSerializer(serializers.ModelSerializer):
+class PostImageSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Post
-        fields = ('id','name' , 'image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
+        model = Post_Image
+        fields = ('id', 'image', 'post')
 
     def update(self, instance, validated_data):
         image = validated_data.get('image', instance.image)
         if image:
             instance.image = image
-        instance.name = validated_data.get('name', instance.name)
-        instance.short_description = validated_data.get('short_description', instance.short_description)
-        instance.content = validated_data.get('content', instance.content)
-        instance.post_type = validated_data.get('post_type', instance.post_type)
-        instance.key_query = validated_data.get('key_query', instance.key_query)
-        instance.pin_to_top = validated_data.get('pin_to_top', instance.pin_to_top)
-        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
+        instance.post = validated_data.get('post', instance.post)
         instance.save()
         return instance
+
+class PostSerializer(serializers.ModelSerializer):
+
+    posts_image = PostImageSerializer( many = True )
+    
+    class Meta:
+        model = Post
+        fields = ('id','name' , 'posts_image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
+
+    def create(self, validated_data):
+        posts_image = validated_data.pop('posts_image')
+        post = Post.objects.create(**validated_data)
+        for post_image in posts_image:
+            Post_Image.objects.create( post = post, **posts_image )
+        return post
 
 class PostTypeSerializer(serializers.ModelSerializer):
 

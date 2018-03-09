@@ -1683,7 +1683,7 @@ class HotAPI(APIView):
 """
 
 
-@parser_classes((MultiPartParser,))
+@parser_classes((MultiPartParser, JSONParser))
 class PostAPI(APIView):
 
     def get(self, request, id):
