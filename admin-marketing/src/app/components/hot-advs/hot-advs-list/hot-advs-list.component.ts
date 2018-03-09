@@ -20,13 +20,13 @@ declare var bootbox:any;
 export class HotAdvsListComponent implements OnInit {
 
 	dtOptions: any = {};
-	select_checkbox = false; // Default checkbox false
 	hot_adv_selected: any;
-	hot_advs : HotAdvs [];
-	message_success: string = ""; // Display message success
-  	message_result = ''; // Message result
 
-     record: String = "Hot Advs";
+	hot_advs : HotAdvs [];
+
+  	message_result:string = ''; // Message result
+
+    record: String = "Hot Advs";
     
   	// Inject the DataTableDirective into the dtElement property
   	@ViewChild(DataTableDirective)
@@ -38,18 +38,18 @@ export class HotAdvsListComponent implements OnInit {
 
   	constructor(
   		private route: ActivatedRoute,
-          private hotAdvsSerice: HotAdvsService,
-          private router: Router,
+        private hotAdvsSerice: HotAdvsService,
+        private router: Router,
   		) {
   			this.hot_advs = [];
   			this.hot_adv_selected = [];
   		}
 
   	ngOnInit() {
+        this.getHotAdvs();
   		this.dtOptions = data_config(this.record).dtOptions;
-	  	this.getAllHotAdvs();
-
-          this.route.params.subscribe(params => {
+	  	
+        this.route.params.subscribe(params => {
             if( params.message_post ){
                 this.message_result = " Thêm "+ params.message_post + " thành công.";
             } else {
@@ -58,22 +58,20 @@ export class HotAdvsListComponent implements OnInit {
           });
 
   	}
-
-  	getAllHotAdvs() {
-          this.hotAdvsSerice.getAllHotAdvs().subscribe(
-                (result) => {
-                    this.hot_advs = result;
-                    this.dtTrigger.next(); 
-                },
-                (error) =>  {
-                   this.router.navigate(['/error', { message: error.json().message }])
-               }
+  	getHotAdvs() {
+        this.hotAdvsSerice.getAllHotAdvs().subscribe(
+            (result) => {
+                this.hot_advs = result;
+                this.dtTrigger.next(); 
+            },
+            (error) =>  {
+                this.router.navigate(['/error', { message: error.json().message }])
+            }
           )
   	}
   	/* Function: Select All Banner
         Check checkbox all selected
-        True: push id in array, select_checkbox = True
-        False: select_checkbox = False, remove id
+        True: push id in array
         @author: TrangLe
      */
   	checkAllHotAdvs(event){
@@ -81,15 +79,14 @@ export class HotAdvsListComponent implements OnInit {
         if(event.target.checked){
             this.hot_advs.forEach(function(element) {
                 array_del.push(element.id);
+                $('#'+element.id).prop('checked', true);
             });
             this.hot_adv_selected = array_del;
-            this.select_checkbox = true;
-            this.message_success = "";
             this.message_result = "";
         }else{
-            this.select_checkbox = false;
             this.hot_advs.forEach((item, index) => {
         		this.hot_adv_selected.splice(index, this.hot_advs.length);
+                $('#'+item.id).prop('checked', false);
      		});
         }
     }
@@ -98,20 +95,19 @@ export class HotAdvsListComponent implements OnInit {
   	checkItemChange(event, deno) {
   		if(event.target.checked){
         	this.hot_adv_selected.push(deno.id);
-          this.message_success = "";
-          this.message_result = "";
+            if(this.hot_adv_selected.length == this.hot_advs.length) {
+                $('#allCheck').prop('checked', true)
+            }
+            this.message_result = "";
       	}
       	else{
-       		let updateDenoItem = this.hot_adv_selected.find(this.findIndexToUpdate, deno.id);
 
-       		let index = this.hot_adv_selected.indexOf(updateDenoItem);
-
+       		let index = this.hot_adv_selected.indexOf(deno);
        		this.hot_adv_selected.splice(index, 1);
+
+            $('#allCheck').prop('checked', false);
       	}
   	}
-  	findIndexToUpdate(type) { 
-        return type.id === this;
-    }
 
     confirmDelete() {
         /* Check hot_adv_selected not null and length >0

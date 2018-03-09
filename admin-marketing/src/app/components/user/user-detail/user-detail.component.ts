@@ -155,7 +155,7 @@ export class UserDetailComponent implements OnInit {
     confirmDeleteFeedback(user: User) {
         bootbox.confirm({
             title: "Bạn có chắc chắn?",
-            message: "Bạn muốn xóa phản hồi này.",
+            message: "Bạn muốn xóa user này.",
             buttons: {
                 confirm: {
                     label: 'Xóa',

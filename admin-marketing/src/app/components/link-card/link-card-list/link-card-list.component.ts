@@ -23,11 +23,8 @@ export class LinkCardListComponent implements OnInit {
 	dtOptions: any = {};
 	link_cards: User[];
 
-	checkbox_selected = false; // Default feedback selected false
-
     link_card_del: any;
     
-    message_success: string = ""; // Display message success
     message_result: string = ""; // Display message result
     errorMessage: string;
     record: string = "Thẻ Liên Kết";
@@ -72,42 +69,40 @@ export class LinkCardListComponent implements OnInit {
     /*
         Function: Select all Checkbox
         Step: Check event checked
-        True: Push id to arr, checkbox_selected = True
-        False: checkbox_selected = False
+        True: Push id to arr
         @author: TrangLe
      */
   	selectAllCheckbox(event) {
         let arr = [];
         if (event.target.checked) {
             this.link_cards.forEach(function(element) {
-            arr.push(element.id)
+            arr.push(element.id);
+            $('#'+element.id).prop('checked', true);
           });
             this.link_card_del = arr
-            this.checkbox_selected = true;
-            this.message_success = "";
             this.message_result = "";
         } else {
-            this.checkbox_selected = false;
             this.link_cards.forEach((item, index) => {
                 this.link_card_del.splice(index, this.link_cards.length);
+                $('#'+item.id).prop('checked', false);
         });
     }
     }
 
   	changeCheckboxLinkCard(event, linkCard) {
   		if(event.target.checked) {
-            this.link_card_del.push(linkCard.id)
-            this.message_success ='';
+            this.link_card_del.push(linkCard.id);
+            if(this.link_cards.length == this.link_card_del.length) {
+                $('allCheck').prop('checked', true);
+            }
             this.message_result = "";
         } else {
-            let updateItem = this.link_card_del.find(this.findIndexToUpdate, linkCard.id);
-            let index = this.link_card_del.indexOf(updateItem);
+            let index = this.link_card_del.indexOf(linkCard);
             this.link_card_del.splice(index, 1);
+
+            $('allCheck').prop('checked', false);
         }
   	}
-    findIndexToUpdate(type) {
-        return type.id === this;
-    }
 
     /*
         Confirm Delete Checkbox Selected
@@ -161,7 +156,7 @@ export class LinkCardListComponent implements OnInit {
                         });
                         this.link_card_del = [];
                    });
-                this.message_success = "Xóa thẻ liên kết thành công";
+                this.message_result = "Xóa thẻ liên kết thành công";
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.json().message + error.json().fields }])

@@ -25,14 +25,14 @@
 	<table id="table-user" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
-	      		<th class="checkbox-user"><input type="checkbox" name="allCheckUse" value="allCheckUser"(change)="checkAllUser($event)"/></th>
+	      		<th class="checkbox-user"><input id="allCheck" type="checkbox" name="allCheckUse" value="allCheckUser"(change)="checkAllUser($event)"/></th>
 	      		<th> Email</th>
 	        	<th>Loại User </th>
 	      	</tr>
     	</thead>
     	<tbody>
    			<tr *ngFor ="let user of users" id="delete{{user.id}}">
-   				<td><input type="checkbox" [checked]="select_checkbox"
+   				<td><input type="checkbox" id="check_{{user.id}}"
    					value={{user.id}} name=""
    					(change)="checkItemChange($event, user)"/></td>
    				<td class="title-email"><a routerLink="/user-detail/{{ user.id }}" >{{ user.email }}</a></td>
@@ -49,7 +49,7 @@
 		</div>
 		<div class="col-md-3">
 			{{user_selected.length}} của {{users.length}} được chọn
-			<button (click)="confirmDelete()" type="button" class="btn btn-danger">Thực hiện</button>
+			<button (click)="confirmDelete()" type="button" class="button-user btn btn-danger">Thực hiện</button>
 		</div>
 	</div>
 </div>

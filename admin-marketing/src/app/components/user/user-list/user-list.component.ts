@@ -22,8 +22,6 @@ export class UserListComponent implements OnInit {
 
 	users: User[];
 
-	select_checkbox = false; // Default checkbox false
-
 	user_selected: any;
 
   	message_result: string = ''; // Message result
@@ -69,7 +67,10 @@ export class UserListComponent implements OnInit {
         });
   	}
 
-  	// Get All User
+  	/* 
+        Get All User
+        @author: Trangle
+    */
   	getAllUser() {
         this.userService.getAllUsers().subscribe(
             (data) => {
@@ -82,39 +83,56 @@ export class UserListComponent implements OnInit {
         )
   	}
 
-  	// Checkbox all
+  	/* 
+        Checkbox all User
+        Step1: Create array to contain id user to checked
+        Step 2: Check checkbox all user checked
+            True: Push id checked to array_del, assign user_selected = array_del, message_result = ''
+            False: Splice all id from array
+        @author: Trangle
+    */
+     
   	checkAllUser(event){
         let array_del = [];
         if(event.target.checked){
             this.users.forEach(function(element) {
                 array_del.push(element.id);
+                $('#check_'+element.id).prop('checked', true);
             });
             this.user_selected = array_del;
-            this.select_checkbox = true;
             this.message_result = "";
         }else{
-            this.select_checkbox = false;
             this.users.forEach((item, index) => {
+                $('#check_'+item.id).prop('checked', false);
         		this.user_selected.splice(index, this.users.length);
      		});
         }
     }
 
-  	// Change checkbox item
+  	/* 
+        Change checkbox item
+        Step : Checking checkbox item to checked
+            True: Push id to user_selected, message_result = '', 
+                check length.user_selected = users.length, checkbox all = true
+            False: remove id from user_selected, check all = false
+        @author: Trangle
+    */
   	checkItemChange(event, user) {
   		if(event.target.checked){
-        	this.user_selected.push(user.id);
+            this.user_selected.push(user.id);
+            if (this.user_selected.length === this.users.length) {
+                $('#allCheck').prop('checked', true);
+            }
             this.message_result = "";
       	}
       	else{
-            let updateItem = this.user_selected.find(this.findIndexToUpdate, user.id);
-            let index = this.user_selected.indexOf(updateItem);
+            var index = this.user_selected.indexOf(user);
             this.user_selected.splice(index, 1);
+
+            // uncheck selectAll
+            let selectAll = $('#allCheck').prop('checked', false);
       	}
   	}
-    findIndexToUpdate(type) {
-        return type.id === this;
-    }
 
     /*
         Confirm Delete Checkbox Selected

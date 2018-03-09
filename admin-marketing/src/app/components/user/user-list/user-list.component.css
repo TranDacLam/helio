@@ -1,4 +1,7 @@
 /*begin content user list*/
+#table-user_wrapper {
+	overflow: scroll;
+}
 .checkbox-user {
 	padding: 10px;
 }
@@ -19,5 +22,8 @@ td.title-email a {
 } 
 td.title-email a:hover {
 	color: red;
+}
+.button-user {
+	margin-left: 15px;
 }
 /*end content user list*/
