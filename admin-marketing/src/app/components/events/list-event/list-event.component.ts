@@ -69,7 +69,7 @@ export class ListEventComponent implements OnInit {
                 if(error.code === 403){
                     this.errorMessage = error.message;
                 }else{
-                    this.router.navigate(['/error']);
+                    this.router.navigate(['/error', { message: error.message}]);
                 }
             }
         );
@@ -152,6 +152,7 @@ export class ListEventComponent implements OnInit {
                     this.length_events = this.length_events - this.events_del.length;
                     this.events_del = [];
                 });
+                this.select_checked = false;
                 this.message_result = 'Xóa thành công.';
             }
         );

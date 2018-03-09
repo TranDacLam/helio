@@ -6,8 +6,10 @@ import { Post } from '../../../shared/class/post';
 import { PostService } from '../../../shared/services/post.service';
 import { PostType } from './../../../shared/class/post-type';
 import { PostTypeService } from '../../../shared/services/post-type.service';
-import 'rxjs/add/observable/throw';
 import { env } from '../../../../environments/environment';
+import 'rxjs/add/observable/throw';
+
+declare var bootbox:any;
 
 @Component({
     selector: 'form-post',
@@ -27,7 +29,8 @@ export class FormPostComponent implements OnInit {
     post_types: PostType[];
     multi_imgae: any;
 
-    errorMessage = ''; // Messages error
+    errorMessage: any; // Messages error
+    msg_clear_image = '';
     api_domain: string = '';
 
     constructor(
@@ -53,14 +56,13 @@ export class FormPostComponent implements OnInit {
     creatForm(): void{
         this.formPost = this.fb.group({
             name: [this.post.name, Validators.required],
-            image: [this.post.image, Validators.required],
+            image: [this.post.image],
             short_description: [this.post.short_description, Validators.required],
             content: [this.post.content, Validators.required],
-            post_type_id: [this.post.post_type_id ? this.post.post_type_id : '', Validators.required],
+            post_type: [this.post.post_type ? this.post.post_type : '', Validators.required],
             pin_to_top: [this.post.pin_to_top ? this.post.pin_to_top : false],
             key_query: [this.post.key_query, Validators.required],
-            is_clear_image: [false],
-            is_clear_multi_image: [false]
+            is_clear_image: [false]
         });
     }
 
@@ -77,7 +79,6 @@ export class FormPostComponent implements OnInit {
         author: Lam
     */ 
     onFileChange(event): void{
-        let reader = new FileReader();
         if(event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
             this.formPost.get('image').setValue({
@@ -119,27 +120,109 @@ export class FormPostComponent implements OnInit {
         author: Lam
     */
     onSubmit(): void{
+        this.formPost.value.post_type = parseInt(this.formPost.value.post_type);
+        let post_form_data = this.convertFormGroupToFormData(this.formPost);
+        let value_form = this.formPost.value;
         if(!this.post.id){
-            this.postService.addPost(this.formPost.value).subscribe(
+            this.postService.addPost(post_form_data).subscribe(
                 (data) => {
-                    this.router.navigate(['/post/list', { message_post: this.formPost.value.name}]);
+                    this.router.navigate(['/post/list', { message_post: value_form.name}]);
                 },
                 (error) => {
-                    { this.errorMessage = error.message; } 
+                    if(error.code === 400){
+                        this.errorMessage = error.message;
+                    }else{
+                        this.router.navigate(['/error', { message: error.message}]);
+                    }
                 }
             );
         }else {
-            this.postService.updatePost(this.formPost.value, this.post.id).subscribe(
+            this.postService.updatePost(post_form_data, this.post.id).subscribe(
                 (data) => {
                     this.post = data;
-                    this.router.navigate(['/post/list', { message_put: this.formPost.value.name}]);
+                    this.router.navigate(['/post/list', { message_put: value_form.name}]);
                 },
                 (error) => {
-                    { this.errorMessage = error.message; } 
+                    if(error.code === 400){
+                        this.errorMessage = error.message;
+                    }else{
+                        this.router.navigate(['/error', { message: error.message}]);
+                    }
                 }
             );
         }
         
+    }
+
+    /*
+        Function deletePostEvent(): confirm delete
+        @author: Lam
+    */
+    deletePostEvent(){
+        let that = this;
+        bootbox.confirm({
+            title: "Bạn có chắc chắn",
+            message: "Bạn muốn xóa bài viết này?",
+            buttons: {
+                cancel: {
+                    label: "Hủy"
+                },
+                confirm: {
+                    label: "Xóa"
+                }
+            },
+            callback: function (result) {
+                if(result) {
+                    that.onDelete();
+                }
+            }
+        });
+    }
+
+    /*
+        Function onDelete():
+         + Get id from url path
+         + Call service function onDelPost() by id to delete event
+        Author: Lam
+    */
+    onDelete(): void {
+        const id = this.post.id;
+        this.postService.onDelPost(id).subscribe(
+            (data) => {
+                this.router.navigate(['/post/list', { message_del: 'success'}]);
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
+    }
+
+    /*
+        Convert form group to form data to submit form
+        @author: lam
+    */
+    private convertFormGroupToFormData(promotionForm: FormGroup) {
+        // Convert FormGroup to FormData
+        let promotionValues = promotionForm.value;
+        let promotionFormData:FormData = new FormData(); 
+        if (promotionValues){
+            /* 
+                Loop to set value to formData
+                Case1: if value is null then set ""
+                Case2: If key is image field then set value have both file and name
+                Else: Set value default
+            */
+            Object.keys(promotionValues).forEach(k => { 
+                if(promotionValues[k] == null) {
+                    promotionFormData.append(k, '');
+                } else if (k === 'image') {
+                    promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                } else {
+                    promotionFormData.append(k, promotionValues[k]);
+                }
+            });
+        }
+        return promotionFormData;
     }
 
 }

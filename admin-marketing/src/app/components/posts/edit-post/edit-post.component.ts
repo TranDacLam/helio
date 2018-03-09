@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../../../shared/class/post';
 import { PostService } from '../../../shared/services/post.service';
 
@@ -15,7 +15,8 @@ export class EditPostComponent implements OnInit {
 
     constructor(
         private postService: PostService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -30,9 +31,14 @@ export class EditPostComponent implements OnInit {
     */
     getPost(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.postService.getPost(id).subscribe(data => {
-            this.post = data;
-        });
+        this.postService.getPost(id).subscribe(
+            (data) => {
+                this.post = data;
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
     }
 
 }

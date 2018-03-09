@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../../../shared/class/post';
 import { PostService } from '../../../shared/services/post.service';
 import { message } from '../../../shared/utils/message';
@@ -32,8 +32,9 @@ export class ListPostComponent implements OnInit {
     length_posts: number;
     select_checked = false; // Check/uncheck all post
     message_result = ''; // Message error
+    errorMessage = '';
 
-    constructor(private postService: PostService, private route: ActivatedRoute) { }
+    constructor(private postService: PostService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Bài Viết').dtOptions;
@@ -63,7 +64,14 @@ export class ListPostComponent implements OnInit {
             (data) => {
                 this.posts = data;
                 this.length_posts = this.posts.length;
-            } 
+            },
+            (error) => {
+                if(error.code === 403){
+                    this.errorMessage = error.message;
+                }else{
+                    this.router.navigate(['/error', { message: error.message}]);
+                }
+            }
         );
     }
 
@@ -144,6 +152,7 @@ export class ListPostComponent implements OnInit {
                     this.length_posts = this.length_posts - this.posts_del.length;
                     this.posts_del = [];
                 });
+                this.select_checked = false;
                 this.message_result = "Xóa thành công.";
             }
         );

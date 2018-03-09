@@ -4,4 +4,5 @@ export class Hot {
     sub_url: string;
     image: string;
     is_show: boolean;
+    is_clear_image: boolean
 }

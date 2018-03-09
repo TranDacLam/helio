@@ -58,7 +58,7 @@
             <select class="form-control" formControlName="category">\
                 <option value="">--SELECT--</option>
                 <option *ngFor="let cate of categories" 
-                    value="{{ cate.id }}" [selected]="cate.id === noti.category"
+                    value="{{ cate.id }}"
                 >
                 {{ cate.name }}</option>
             </select>

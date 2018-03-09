@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Hot } from '../../../shared/class/hot';
 import { HotService } from '../../../shared/services/hot.service';
 import { message } from '../../../shared/utils/message';
@@ -32,8 +32,9 @@ export class ListHotComponent implements OnInit {
     length_hots: number;
     select_checked = false; // Check/uncheck all hot
     message_result = ''; // Message error
+    errorMessage = '';
 
-    constructor(private hotService: HotService, private route: ActivatedRoute) { }
+    constructor(private hotService: HotService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Hot').dtOptions;
@@ -63,7 +64,14 @@ export class ListHotComponent implements OnInit {
             (data) => {
                 this.hots = data;
                 this.length_hots = this.hots.length;
-            } 
+            },
+            (error) => {
+                if(error.code === 403){
+                    this.errorMessage = error.message;
+                }else{
+                    this.router.navigate(['/error', { message: error.message}]);
+                }
+            }
         );
     }
 
@@ -145,6 +153,7 @@ export class ListHotComponent implements OnInit {
                     this.length_hots = this.length_hots - this.hots_del.length;
                     this.hots_del = [];
                 });
+                this.select_checked = false;
                 this.message_result = 'Xóa thành công.';
             }
         );

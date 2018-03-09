@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Game } from '../../../shared/class/game';
 import { GameService } from '../../../shared/services/game.service';
 
@@ -15,7 +15,8 @@ export class EditGameComponent implements OnInit {
 
     constructor(
         private gameService: GameService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -30,9 +31,14 @@ export class EditGameComponent implements OnInit {
     */
     getGame(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.gameService.getGame(id).subscribe(data => {
-            this.game = data;
-        });
+        this.gameService.getGame(id).subscribe(
+            (data) => {
+                this.game = data;
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
     }
 
 }

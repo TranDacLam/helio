@@ -52,7 +52,7 @@ export class EditPromotionLabelComponent implements OnInit {
                 this.creatForm();
             },
             (error) => {
-                this.errorMessage = error.message; 
+                this.router.navigate(['/error', { message: error.message}]);
             }
         );
     }
@@ -79,7 +79,11 @@ export class EditPromotionLabelComponent implements OnInit {
                 this.router.navigate(['/promotion-label/list', { message_post: this.formPromotionLabel.value.name}]);
             },
             (error) => {
-                { this.errorMessage = error.message; } 
+                if(error.code === 400){
+                    this.errorMessage = error.message;
+                }else{
+                    this.router.navigate(['/error', { message: error.message}]);
+                }
             }
         );
     }

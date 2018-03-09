@@ -14,6 +14,7 @@ import { CategoryService } from '../../../shared/services/category.service';
 import { PromotionTypeService } from '../../../shared/services/promotion-type.service';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
 import { DatePipe } from '@angular/common';
+import { DateValidators } from './../../../shared/validators/date-validators';
 
 import { env } from '../../../../environments/environment';
 import * as moment from 'moment';
@@ -94,27 +95,12 @@ export class PromotionFormComponent implements OnInit {
             promotion_category: [this.promotion.promotion_category ? this.promotion.promotion_category : ''],
             promotion_label: [this.promotion.promotion_label ? this.promotion.promotion_label : ''],
             promotion_type: [this.promotion.promotion_type ? this.promotion.promotion_type.id : ''],
-            apply_date: [this.promotion.apply_date ? moment(this.promotion.apply_date,"DD/MM/YYYY").toDate() : ''],
-            end_date: [this.promotion.end_date ? moment(this.promotion.end_date,"DD/MM/YYYY").toDate() : ''],
+            apply_date: [this.promotion.apply_date ? moment(this.promotion.apply_date,"DD/MM/YYYY").toDate() : '',
+                [DateValidators.checkDate, DateValidators.formatStartDate]],
+            end_date: [this.promotion.end_date ? moment(this.promotion.end_date,"DD/MM/YYYY").toDate() : '',
+                [DateValidators.checkDate, DateValidators.formatEndDate]],
             is_draft: [this.promotion.is_draft],
-        }, {validator: this.dateLessThan('apply_date', 'end_date')});
-    }
-
-    /*
-        function dateLessThan(): validate date
-        @author: lam
-    */ 
-    dateLessThan(from: string, to: string) {
-        return (group: FormGroup): {[key: string]: any} => {
-            let f = group.controls[from];
-            let t = group.controls[to];
-            if (f.value > t.value) {
-                return {
-                    dates: "* Ngày kết thúc phải nhỏ hơn ngày bắt đầu."
-                };
-            }
-            return {};
-        }
+        });
     }
 
     /*
@@ -197,7 +183,11 @@ export class PromotionFormComponent implements OnInit {
                     that.router.navigate(['/promotions', {'action': 'Sửa "', 'promotion_name': this.promotionForm.value['name']}]);
                 }, 
                 (error) => {
-                    that.errors = error;
+                    if(error.code === 400){
+                        that.errors = error.message;
+                    }else{
+                        that.router.navigate(['/error']);
+                    }
                 }
             );
         } else {
@@ -207,8 +197,11 @@ export class PromotionFormComponent implements OnInit {
                     that.router.navigate(['/promotions', {'action': 'Tạo mới "', 'promotion_name': this.promotionForm.value['name']}]);
                 }, 
                 (error) => {
-                    that.errors = error;
-                    // that.router.navigate(['/error']);
+                    if(error.code === 400){
+                        that.errors = error.message;
+                    }else{
+                        that.router.navigate(['/error']);
+                    }
                 }
             );
         }

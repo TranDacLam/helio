@@ -62,5 +62,18 @@ export const api = {
 
     role: env.api_domain + 'role/',
 
+    faq: env.api_domain + 'faq/',
+
+    faq_list: env.api_domain + 'faq_list/',
+
+    game: env.api_domain + 'game/',
+
+    game_list: env.api_domain + 'game_list/',
+
+    type_list: env.api_domain + 'type_list/',
+
+    account_users: env.api_domain + 'accounts/users/',
+
+    notification_push: env.api_domain + 'notification/push/',
 
 };

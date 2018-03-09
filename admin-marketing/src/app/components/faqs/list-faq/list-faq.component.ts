@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Faq } from '../../../shared/class/faq';
 import { FaqService } from '../../../shared/services/faq.service';
 import { message } from '../../../shared/utils/message';
@@ -32,8 +32,9 @@ export class ListFaqComponent implements OnInit {
     length_faqs: number;
     select_checked = false; // Check/uncheck all faq
     message_result = ''; // Message error
+    errorMessage: any;
 
-    constructor(private faqService: FaqService, private route: ActivatedRoute) { }
+    constructor(private faqService: FaqService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Câu Hỏi Thường Gặp').dtOptions;
@@ -63,7 +64,14 @@ export class ListFaqComponent implements OnInit {
             (data) => {
                 this.faqs = data;
                 this.length_faqs = this.faqs.length;
-            } 
+            },
+            (error) => {
+                if(error.code === 403){
+                    this.errorMessage = error.message;
+                }else{
+                    this.router.navigate(['/error', { message: error.message}]);
+                }
+            }
         );
     }
 
@@ -144,6 +152,7 @@ export class ListFaqComponent implements OnInit {
                     this.length_faqs = this.length_faqs - this.faqs_del.length;
                     this.faqs_del = [];
                 });
+                this.select_checked = false;
                 this.message_result = "Xóa thành công."
             }
         );

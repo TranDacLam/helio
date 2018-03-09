@@ -1,3 +1,24 @@
 .dels-game{
     margin-bottom: 50px;
 }
+.mt-50{
+    margin-top: 50px;
+}
+.mb-30{
+    margin-bottom: 30px;
+}
+.mt-15{
+    margin-top: 15px;
+}
+.messsage{
+    color: green;
+}
+.row-border tr td:first-child input{
+    margin-left: 6px;
+}
+.dels-event{
+    margin-bottom: 50px;
+}
+.messsage_error{
+    color: red;
+}
