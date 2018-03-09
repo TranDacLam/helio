@@ -31,9 +31,14 @@ export class UserPermissionService {
   	getRoles(): Observable<Role[]>{
   		return this.http.get(this.role_list, this.httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
   	}
-  	getUsers(): Observable<User[]>{
-  		return this.http.get(this.role_list, this.httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
+  	getUserLeft(): Observable<User[]>{
+
+  		return this.http.get(this.users_role, this.httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
   	}
+    getUserRight( id: number ): Observable<User[]>{
+      let users_role_id = this.users_role + `?role_id=${id}`
+      return this.http.get( users_role_id, this.httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
+    }
 
 	// throw error
 	handleError(error: Response) {

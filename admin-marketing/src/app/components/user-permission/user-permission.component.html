@@ -8,14 +8,13 @@
 <div class="row">
 	<div class="wrap-head">
 		<p>Các Quyền</p>
-		<ul class="list-role" >
-			<li><input class="role_checkbox" type="radio" name="">System Admin</li>
-			<li><input class="role_checkbox" type="radio" name="">Manager</li>
-			<li><input class="role_checkbox" type="radio" name="">Customer Care</li>
-			<li><input class="role_checkbox" type="radio" name="">Author</li>
-			<li><input class="role_checkbox" type="radio" name="">Teller</li>
+		<ul *ngFor='let role of roles' class="list-role" >
+			<li>
+				<input class="role_checkbox" type="radio" name="role" id='role_{{role.id}}' value='{{role.id}}' (change)='getUserRight( role.id )'>
+				<label for="role_{{role.id}}">{{role.name}}</label>
+			</li>
 		</ul>
 	</div>
 </div>
 
-
+<app-user-multiselect [user_list_left] = 'user_list_left' [user_list_right] = 'user_list_right' ></app-user-multiselect>
