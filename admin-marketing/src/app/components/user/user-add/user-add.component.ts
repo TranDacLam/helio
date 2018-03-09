@@ -7,6 +7,7 @@ import { Role } from '../../../shared/class/role';
 
 import { UserService } from '../../../shared/services/user.service';
 import { RoleService } from '../../../shared/services/role.service';
+import { UserValidators } from './../../../shared/validators/user-validators';
 
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
@@ -25,7 +26,9 @@ export class UserAddComponent implements OnInit {
 	users: User[] = [];
     roles: Role[];
 
-    errorMessage: string="";
+    errorMessage: string ='';
+
+    isSelected = true; // Set value default selcted 
 
 	constructor(
 		private fb: FormBuilder,
@@ -41,34 +44,48 @@ export class UserAddComponent implements OnInit {
  	 	this.createForm();
  	}
 
+    /*
+        Create Form User
+        @author: Trangle
+     */
  	createForm() {
  		this.formUser = this.fb.group({
             email: [this.user_form.email, [Validators.required, Validators.email]],
             full_name: [this.user_form.full_name, [Validators.required]],
-            phone: [this.user_form.phone, [Validators.required]],
+            phone: [this.user_form.phone, [Validators.required,UserValidators.phoneValidators]],
             personal_id: [this.user_form.personal_id],
             country: [this.user_form.country],
             address: [this.user_form.address],
             city: [this.user_form.city],
             avatar: [this.user_form.avatar, [Validators.required]],
-            password: [this.user_form.password, [Validators.required]],
+            password: [this.user_form.password, [Validators.required, UserValidators.passwordValidators]],
             is_active: [this.user_form.is_active],
-            role: [this.user_form.role],
-            birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date,"DD/MM/YYYY").toDate() : ''],
+            role: [this.user_form.role, [Validators.required]],
+            birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date,"DD/MM/YYYY").toDate() : null],
         });
  	}
 
+    /*
+        GET: get all role
+        Call service Role
+        @author: Trangle
+     */
     getAllRoles() {
         this.roleService.getAllRoles().subscribe(
             (result) => {
-                    this.roles = result
-                },
+                this.roles = result
+            },
             (error) => {
                 this.router.navigate(['/error', { message: error.json().message }])
             }
         )
     }
 
+    /*
+        POST: Create User
+        Call service user.service 
+        @author: Trangle
+     */
     onSubmit() {
         var self = this;
         let userFormGroup = this.convertFormGroupToFormData(this.formUser);
@@ -78,13 +95,20 @@ export class UserAddComponent implements OnInit {
                 self.router.navigate(['/user-list', { message_post: this.formUser.value['email']} ]);
             },
             (error) => {
-                this.errorMessage = <any>error;
+                if(error.code == 400) {
+                    self.errorMessage = error.message;
+                } else {
+                    this.router.navigate(['/error', { message: error.message }]);
+                }
             }
         )
     }
 
-    // upload image 
-    // FileReader: reading file contents
+    /* 
+        upload image 
+        FileReader: reading file contents
+        @author: Trangle
+    */
     onFileChange(event) {
         let reader = new FileReader();
         let input_id = $(event.target).attr('id');
@@ -94,7 +118,12 @@ export class UserAddComponent implements OnInit {
         }
     }
 
- 	// Show password
+ 	/* 
+        Show and hide password
+        if type='passwod' is hide
+        else type='text' is show
+        @author: Trangle
+    */    
  	showPassword(input: any): any {
  		input.type = input.type === 'password' ? 'text' : 'password';
  	}
@@ -127,8 +156,13 @@ export class UserAddComponent implements OnInit {
         }
         return userFormData;
     }
-
+    
     transformDate(date) {
         return this.datePipe.transform(date, 'dd/MM/yyyy');
     }
+
+    removeErrorMessage() {
+        this.errorMessage = '';
+    }
+
 }

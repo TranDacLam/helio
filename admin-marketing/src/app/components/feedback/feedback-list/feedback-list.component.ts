@@ -56,10 +56,14 @@ export class FeedbackListComponent implements OnInit {
         this.getAllFeedbacks();
         this.route.queryParams
             .subscribe(params => {
-                this.feedbackService.getFeedbackFilter(params)
-                    .subscribe(
-                        (result) => this.feedbacks = result,
-                        (error) => this.router.navigate(['/error', { message: error }])
+                console.log(params);
+                this.feedbackService.getFeedbackFilter(params).subscribe(
+                    (result) => {
+                        this.feedbacks = result;
+                    },
+                    (error) => {
+                        this.router.navigate(['/error', { message: error.json().message }])
+                    }
                 )
         });
         this.route.params.subscribe((params: any) => {
@@ -85,7 +89,7 @@ export class FeedbackListComponent implements OnInit {
 				// Caling the DT trigger to manually render the table
 				this.dtTrigger.next();
 			},
-            (error) =>  this.router.navigate(['/error', { message: error }])
+            (error) =>  this.router.navigate(['/error', { message: error.json().message }])
         );
 	}
     /*

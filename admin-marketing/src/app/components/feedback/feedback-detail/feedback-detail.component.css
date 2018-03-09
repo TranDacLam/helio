@@ -1,7 +1,7 @@
 /*Begin feedback detail content*/
 .edit-feedback {
 	margin: 10px 15px;
-	border-bottom: 2px solid #ccc;
+	border-bottom: 2px solid black;
 }
 a.title-feedback {
 	padding: 5px 0px;
@@ -15,6 +15,6 @@ a.title-feedback {
 .button-feedback {
 	margin: 10px 15px;
 	padding-top: 10px;
-	border-top: 2px solid #ccc;
+	border-top: 2px solid black;
 }
 /*End feedback detail content*/

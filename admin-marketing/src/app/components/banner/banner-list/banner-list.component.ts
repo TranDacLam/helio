@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Http, Response } from '@angular/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subject } from 'rxjs/Subject';
 
@@ -18,9 +18,9 @@ declare var bootbox:any;
 })
 export class BannerListComponent implements OnInit {
 
-	dtOptions: any = {};
+    dtOptions: any = {};
 
-	banners: Banner[];
+    banners: Banner[];
 
     banner_del: any;
 
@@ -36,17 +36,18 @@ export class BannerListComponent implements OnInit {
     dtElement: DataTableDirective;
 
 
-    // Using trigger becase fetching the list of banners can be quite long
+     // Using trigger becase fetching the list of banners can be quite long
 	// thus we ensure the data is fetched before rensering
 	dtTrigger: Subject<any> = new Subject();
 
-    constructor(
+     constructor(
         private route: ActivatedRoute,
-        private bannerService: BannerService
+        private bannerService: BannerService,
+        private router: Router,
         ) { 
         this.banner_del = [];
         this.banners = [];
-    }
+     }
 
     ngOnInit() {
         // Call dataTable
@@ -54,16 +55,16 @@ export class BannerListComponent implements OnInit {
         // Call function getAllBanners()
         this.getAllBanners();
 
-        this.route.params.subscribe(params => {
-            if( params.message_post ){
-                this.message_result = " Thêm "+ params.message_post + " thành công.";
-            } else if ( params.message_put ) {
-                this.message_result = "  Chỉnh sửa  "+ params.message_put + " thành công.";
-            } else {
-                this.message_result = "";
-            }
-        });
-    }
+          this.route.params.subscribe(params => {
+               if( params.message_post ){
+                    this.message_result = " Thêm "+ params.message_post + " thành công.";
+               } else if ( params.message_put ) {
+                    this.message_result = "  Chỉnh sửa  "+ params.message_put + " thành công.";
+               } else {
+                    this.message_result = "";
+               }
+          });
+     }
     /*
         Function: Select All Banner
         Check checkbox all selected
@@ -94,13 +95,15 @@ export class BannerListComponent implements OnInit {
         Call service banner
         @author: TrangLe
      */
-    getAllBanners() {
-        this.bannerService.getAllBanner().subscribe(
-            (result) => {
-                this.banners = result;
-                this.dtTrigger.next(); 
-            },
-            (error) =>  this.errorMessage = <any>error
+     getAllBanners() {
+          this.bannerService.getAllBanner().subscribe(
+               (result) => {
+                    this.banners = result;
+                    this.dtTrigger.next(); 
+               },
+               (error) => {
+                    this.router.navigate(['/error', { message: error.json().message }])
+               }
         )};
     /*
         Function: Check each item checkbox
@@ -160,10 +163,10 @@ export class BannerListComponent implements OnInit {
         Function: Delete All Banner Selected
         @author: TrangLe
      */
-    deleteBannersCheckbox() {
+     deleteBannersCheckbox() {
         this.bannerService.deleteBannerSelected(this.banner_del).subscribe(
-            (data) => {
-                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          (data) => {
+               this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     var self = this;
                     this.banner_del.forEach(function(element) {
                         dtInstance.rows('#delete'+element).remove().draw();
@@ -171,9 +174,12 @@ export class BannerListComponent implements OnInit {
                         self.banners = self.banners.filter(banners => banners !== banner_item);
                     });
                     this.banner_del = [];
-                });
-                this.message_success = "Xóa banner thành công";
-            },
-            (error) =>  this.errorMessage = <any>error);
-    }  
+               });
+               this.message_success = "Xóa banner thành công";
+          },
+          (error) => {
+               this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
+               }
+          );  
+     }  
 }

@@ -4,6 +4,9 @@ from core.models import *
 from core.custom_models import *
 from datetime import datetime
 import core.constants as const
+import sys
+from django.core import exceptions
+import django.contrib.auth.password_validation as validators
 
 from rest_framework import serializers    
 
@@ -200,7 +203,6 @@ class NotificationSerializer(serializers.ModelSerializer):
         instance.is_QR_code = validated_data.get('is_QR_code', instance.is_QR_code)
         instance.message = validated_data.get('message', instance.message)
         instance.promotion = validated_data.get('promotion', instance.promotion)
-        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
         instance.save()
         return instance
 
@@ -355,8 +357,10 @@ class UserRoleDisplaySerializer(serializers.ModelSerializer):
 
 class UserRoleSerializer(serializers.ModelSerializer):
 
-    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
-    
+    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required = False)
+    password = serializers.CharField(write_only=True)
+    phone =serializers.CharField(max_length=11, min_length=9)
+
     class Meta:
         model = User
         fields = '__all__'
@@ -365,10 +369,16 @@ class UserRoleSerializer(serializers.ModelSerializer):
         if value >= datetime.now().date():
             raise serializers.ValidationError("Birthday must less then today")
         return value
+
+    def create(self, validated_data):
+        user = super(UserRoleSerializer, self).create(validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
             
     def update(self, instance, validated_data):
 
-        avatar = validated_data.get('avatar', instance.image)
+        avatar = validated_data.get('avatar', instance.avatar)
         if avatar:
             instance.avatar = avatar
         instance.email = validated_data.get('email', instance.email)
@@ -379,7 +389,7 @@ class UserRoleSerializer(serializers.ModelSerializer):
         instance.country = validated_data.get('country', instance.country)
         instance.city = validated_data.get('city', instance.city)
         instance.address = validated_data.get('address', instance.address)
-        instance.password = validated_data.get('password', instance.password)
+        instance.set_password(validated_data['password'])
         instance.role = validated_data.get('role', instance.role)
         instance.is_active = validated_data.get('is_active', instance.is_active)
         instance.save()
@@ -419,5 +429,25 @@ class TypeSerializer(serializers.ModelSerializer):
         instance.category = validated_data.get('category', instance.category)
         instance.sub_url = validated_data.get('sub_url', instance.sub_url)
         instance.description_detail = validated_data.get('description_detail', instance.description_detail)
+        instance.save()
+        return instance
+
+class HotAdvsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Hot_Advs
+        exclude = ('created', 'modified')
+
+    def update(self, instance, validated_data):
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.name = validated_data.get('name', instance.name)
+        instance.content = validated_data.get('content', instance.content)
+        instance.is_register = validated_data.get('is_register', instance.is_register)
+        instance.is_view_detail = validated_data.get('is_view_detail', instance.is_view_detail)
+        instance.sub_url_register = validated_data.get('sub_url_register', instance.sub_url_register)
+        instance.sub_url_view_detail = validated_data.get('sub_url_view_detail', instance.sub_url_view_detail)
+        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
         instance.save()
         return instance

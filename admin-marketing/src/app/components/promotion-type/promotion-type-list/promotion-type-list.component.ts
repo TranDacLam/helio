@@ -35,8 +35,12 @@ export class PromotionTypeListComponent implements OnInit {
      */
   	getAllPromotionType() {
   		this.promotionTypeService.getAllPromotionsType().subscribe(
-  			(result) => this.proTypes = result,
-            (error) => this.router.navigate(['/error', { message: error }])
+  			(result) => {
+                this.proTypes = result;
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.json().message }])
+            }
 		)
   	}
 

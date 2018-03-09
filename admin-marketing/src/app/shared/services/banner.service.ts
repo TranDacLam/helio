@@ -9,14 +9,23 @@ import 'rxjs/add/operator/catch';
 import { Banner } from '../../shared/class/banner';
 import { api } from '../utils/api';
 
-const httpOptions = {
-	headers: new Headers({ 'Content-Type': 'application/json' })
-};
 
 @Injectable()
 export class BannerService {
 
-  constructor(private http: Http) { }
+    httpOptions: any;
+    token: any = '';
+
+    constructor(private http: Http) {
+        this.token = localStorage.getItem('auth_token');
+
+        this.httpOptions = {
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            })
+        }
+    }
 
   	/*
       GET: Get All Banner From Service
@@ -24,7 +33,7 @@ export class BannerService {
     */
   	getAllBanner(): Observable<Banner[]> {
   		let url_banner = `${api.banner}`
-  		return this.http.get(url_banner).map((res: Response) => res.json()).catch(this.handleError);
+  		return this.http.get(url_banner, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
   	}
 
     /*
@@ -33,7 +42,7 @@ export class BannerService {
      */
     getBannerById(id: number): Observable<Banner> {
       const url = `${api.banner}${id}/`;
-      return this.http.get(url, httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+      return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
     /*
         PUT: Update Banner By Id
@@ -43,8 +52,8 @@ export class BannerService {
         let url = `${api.banner}${id}/`;
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
             xhr.open('PUT', url);
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.send(bannerFormData);
 
             xhr.onreadystatechange = function() {
@@ -53,7 +62,7 @@ export class BannerService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(xhr.response);
+                        observer.error(JSON.parse(xhr.response));
                     }
                 }
             }
@@ -67,17 +76,16 @@ export class BannerService {
 
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
             xhr.open('POST', api.banner);
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`); 
             xhr.send(bannerFormData);
-
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(xhr.response);
+                        observer.error(JSON.parse(xhr.response));
                     }
                 }
             }
@@ -90,7 +98,7 @@ export class BannerService {
           banner_id: banner_id
         }
       let _options = new RequestOptions({
-        headers: httpOptions.headers,
+        headers: this.httpOptions.headers,
         body: JSON.stringify(param)
       });
 

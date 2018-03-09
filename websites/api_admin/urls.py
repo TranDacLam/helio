@@ -83,4 +83,5 @@ urlpatterns = [
 	url(r'^game_list/$', views.GameListAPI.as_view(), name="game-list"),
 	url(r'^type_list/$', views.TypeListAPI.as_view(), name="type-list"),
 
+	url(r'^hot_advs/$', views.HotAdvsView.as_view(), name="hot_advs"),
 ]

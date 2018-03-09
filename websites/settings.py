@@ -317,6 +317,9 @@ try:
 
     elif 'PRODUCTION' in os.environ and os.environ['PRODUCTION']:
         from config.setting_production import *
+
+    elif 'DEVELOPMENT' in os.environ and os.environ['DEVELOPMENT']:
+        from config.setting_develop import *
     else:
         from config.setting_local import *
 except ImportError:

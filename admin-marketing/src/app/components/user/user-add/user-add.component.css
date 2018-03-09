@@ -16,7 +16,9 @@ button.clear-file.btn.btn-danger {
 	border-bottom: 2px solid black;
 	margin: 10px 0 15px 0;
 }
-
+p.errors {
+	color: red;
+}
 /* == css for input password == */
 .input-password {
 	padding: 5px 50px 5px 10px;
