@@ -8,12 +8,18 @@
     </nav>
 </div>
 <!-- End breadcrumb -->
-<div class="row mt-50 mb-30">
+<div class="row mt-50 mb-30 custom-title">
     <div class="col-xs-12 col-sm-6">
-        <a class="btn btn-primary" routerLink="/">TRỞ VỀ TRANG QUẢN TRỊ</a>
+        <a class="btn custom-button" routerLink="/">
+            <i class="fa fas fa-arrow-left icon-button"></i>
+            TRỞ VỀ TRANG QUẢN TRỊ
+        </a>
     </div>
     <div class="col-xs-12 col-sm-6">
-        <a class="btn btn-primary pull-right" routerLink="/promotions/add"><span _ngcontent-c1="" class="glyphicon glyphicon-plus"></span>&nbsp;TẠO KHUYẾN MÃI MỚI</a>
+        <a class="btn custom-button pull-right" routerLink="/promotions/add">
+            <i class="fa fas fa-plus icon-button"></i>
+            TẠO KHUYẾN MÃI MỚI
+        </a>
     </div>
 </div>
 <div *ngIf="message_result" class="row">

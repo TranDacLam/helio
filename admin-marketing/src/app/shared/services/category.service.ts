@@ -5,21 +5,30 @@ import { api } from '../utils/api';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
-const httpOptions = {
-    headers: new Headers({ 'Content-Type': 'application/json' })
-};
 
 @Injectable()
 export class CategoryService {
 
-  	constructor(private http: Http) { }
+    httpOptions: any;
+    token: any = '';
+
+  	constructor(private http: Http) { 
+        this.token = localStorage.getItem('auth_token');
+
+        this.httpOptions = {
+            headers: new Headers({ 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            })
+        };
+    }
 
   	/* 
         function getCategoryNotifications(): Get all Category Notifications
         author: Lam
     */
     getAllCategory(): Observable<any> {
-        return this.http.get(api.category_list).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(api.category_list, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     // exception

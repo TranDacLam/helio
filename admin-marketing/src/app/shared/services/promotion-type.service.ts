@@ -14,24 +14,26 @@ import { PromotionType } from '../../shared/class/promotion-type';
 @Injectable()
 export class PromotionTypeService {
 
-	httpOptions:any;
-	token: any = '';
+  	httpOptions: any;
+    token: any = '';
 
-  	constructor(private http: Http) {
-  		this.token = localStorage.getItem('auth_token');
+    constructor(private http: Http) {
+        this.token = localStorage.getItem('auth_token');
 
-  		this.httpOptions = {
-  			headers: new Headers({ 
+        this.httpOptions = {
+            headers: new Headers({ 
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.token}`
             })
-  		};
-  	}
+        };
+    }
+
+
   	/*
   		GET: Get All Promorion Type From Server
   		@author: TrangLe
   	 */
-	getAllPromotionsType(): Observable<PromotionType[]>{
+	getAllPromotionsType(): Observable<any[]>{
 		let urlPromotionType = `${api.promotion_type}`;
 		return this.http.get(urlPromotionType, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}

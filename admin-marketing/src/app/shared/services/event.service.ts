@@ -58,8 +58,8 @@ export class EventService {
     addEvent(value: FormData): Observable<any>{
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.open('POST', api.event);
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.send(value);
 
             xhr.onreadystatechange = function() {
@@ -79,8 +79,8 @@ export class EventService {
         let url_update_event = `${this.urlEvent}${id}/`;
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.open('PUT', url_update_event);
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.send(value);
 
             xhr.onreadystatechange = function() {

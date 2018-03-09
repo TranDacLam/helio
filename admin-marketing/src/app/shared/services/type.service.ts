@@ -7,9 +7,9 @@ import "rxjs/add/operator/catch";
 
 
 @Injectable()
-export class PostTypeService {
+export class TypeService {
 
-    private urlPostTypeLIst = api.post_type_list;
+    private urlTypeList = api.type_list;
 
     httpOptions: any;
     token: any = '';
@@ -26,11 +26,11 @@ export class PostTypeService {
     }
 
     /* 
-        function getPosts(): Get all post
+        function getEvents(): Get all notification
         author: Lam
     */
-    getPostTypes(): Observable<any>{
-        return this.http.get(this.urlPostTypeLIst, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    getTypes(): Observable<any>{
+        return this.http.get(this.urlTypeList, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     // exception

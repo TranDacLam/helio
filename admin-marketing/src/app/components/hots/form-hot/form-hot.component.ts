@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Location } from '@angular/common';
 import { Hot } from '../../../shared/class/hot';
 import { HotService } from '../../../shared/services/hot.service';
+import { env } from '../../../../environments/environment';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -30,13 +31,19 @@ export class FormHotComponent implements OnInit {
 
     errorMessage = ''; // Messages error
 
+    msg_clear_image = '';
+
+    api_domain: string = '';
+
     constructor(
         private hotService: HotService,
         private fb: FormBuilder,
         private location: Location,
         private router: Router,
         private route: ActivatedRoute
-    ) { }
+    ) { 
+        this.api_domain = env.api_domain_root;
+    }
 
     ngOnInit() {
         this.creatForm();
@@ -52,6 +59,7 @@ export class FormHotComponent implements OnInit {
             image: [this.hot.image, Validators.required],
             sub_url: [this.hot.sub_url, Validators.required],
             is_show: [this.hot.is_show],
+            is_clear_image: [false]
         });
     }
 
@@ -60,23 +68,14 @@ export class FormHotComponent implements OnInit {
         author: Lam
     */ 
     onFileChange(event): void{
-        let reader = new FileReader();
         if(event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                this.formHot.get('image').setValue(reader.result.split(',')[1]);
-            };
+            this.formHot.get('image').setValue({
+                filename: file.name,
+                filetype: file.type,
+                value: file,
+            });
         }
-    }
-
-    /*
-        Function clearFile(): Clear value input file image
-        author: Lam
-    */ 
-    clearFile(): void {
-        this.formHot.get('image').setValue(null);
-        this.inputImage.nativeElement.value = "";
     }
 
     /*
@@ -90,25 +89,39 @@ export class FormHotComponent implements OnInit {
         author: Lam
     */
     onSubmit(): void{
+        let hot_form_data = this.convertFormGroupToFormData(this.formHot);
+        let value_form = this.formHot.value;
         if(!this.hot.id){
-            this.hotService.addHot(this.formHot.value).subscribe(
+            this.hotService.addHot(hot_form_data).subscribe(
                 (data) => {
-                    this.router.navigate(['/hot/list', { message_post: this.formHot.value.name}]);
+                    this.router.navigate(['/hot/list', { message_post: value_form.name}]);
                 },
                 (error) => {
-                    { this.errorMessage = error.message; } 
+                    if(error.code === 400){
+                        this.errorMessage = error.message;
+                    }else{
+                        this.router.navigate(['/error', { message: error.message}]);
+                    }
                 }
             );
         }else{
-            this.hotService.updateHot(this.formHot.value, this.hot.id).subscribe(
-                (data) => {
-                    this.hot = data;
-                    this.router.navigate(['/hot/list', { message_put: this.formHot.value.name}]);
-                },
-                (error) => {
-                    { this.errorMessage = error.message; } 
-                }
-            );
+            if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
+                this.formHot.get('is_clear_image').setValue(false);
+                this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+            }else{
+                this.hotService.updateHot(hot_form_data, this.hot.id).subscribe(
+                    (data) => {
+                        this.router.navigate(['/hot/list', { message_put: value_form.name}]);
+                    },
+                    (error) => {
+                        if(error.code === 400){
+                            this.errorMessage = error.message;
+                        }else{
+                            this.router.navigate(['/error', { message: error.message}]);
+                        }
+                    }
+                );
+            }
         }
         
     }
@@ -151,6 +164,34 @@ export class FormHotComponent implements OnInit {
                 this.router.navigate(['/hot/list', { message_del: 'success'}]);
             }
         );
+    }
+
+    /*
+        Convert form group to form data to submit form
+        @author: lam
+    */
+    private convertFormGroupToFormData(promotionForm: FormGroup) {
+        // Convert FormGroup to FormData
+        let promotionValues = promotionForm.value;
+        let promotionFormData:FormData = new FormData(); 
+        if (promotionValues){
+            /* 
+                Loop to set value to formData
+                Case1: if value is null then set ""
+                Case2: If key is image field then set value have both file and name
+                Else: Set value default
+            */
+            Object.keys(promotionValues).forEach(k => { 
+                if(promotionValues[k] == null) {
+                    promotionFormData.append(k, '');
+                } else if (k === 'image') {
+                    promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                } else {
+                    promotionFormData.append(k, promotionValues[k]);
+                }
+            });
+        }
+        return promotionFormData;
     }
 
 }

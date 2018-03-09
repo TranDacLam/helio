@@ -3,7 +3,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item"><a routerLink="/faq/list">Quản Câu hỏi Thường Gặp</a></li>
+            <li class="breadcrumb-item"><a routerLink="/faq/list">Quản Lý Câu hỏi Thường Gặp</a></li>
             <li class="breadcrumb-item active" aria-current="page">Chỉnh Sửa Câu hỏi Thường Gặp</li>
         </ol>
     </nav>
@@ -13,8 +13,12 @@
     <h3>Chỉnh Sửa Câu hỏi Thường Gặp</h3>
     <hr/>
 </div>
-<h4>{{ errorMessage }}</h4>
-<form [formGroup]="formFaq" novalidate>
+<ng-container *ngIf="errorMessage">
+    <h4 *ngFor="let error of errorMessage | mapToIterable" class="error_msg">
+        {{error.val}}.
+    </h4>
+</ng-container>
+<form [formGroup]="formFaq" novalidate *ngIf="faq">
     <div class="form-group row">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Câu Hỏi</label>
@@ -30,7 +34,7 @@
             <label class="col-form-label form-check-label">Câu Trả Lời</label>
         </div>
         <div class="col-sm-8">
-            <ckeditor formControlName="answer"></ckeditor>>
+            <ckeditor formControlName="answer"></ckeditor>
             <show-error-valid [control]="formFaq.get('answer')"></show-error-valid>
         </div>
     </div>
@@ -39,17 +43,20 @@
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Danh Mục</label>
         </div>
-        <div class="col-sm-8">
-            <select class="form-control" formControlName="category_id">
-                <option value="1" checked>1</option>
-                <option value="2">2</option>
+        <div class="col-sm-8" *ngIf="categories">
+            <select class="form-control" formControlName="category">
+                <option value="">--SELECT--</option>
+                <option *ngFor="let cate of categories" 
+                    value="{{ cate.id }}"
+                >
+                {{ cate.name }}</option>
             </select>
-            <show-error-valid [control]="formFaq.get('category_id')"></show-error-valid>
+            <show-error-valid [control]="formFaq.get('category')"></show-error-valid>
         </div>
     </div>
 
     <hr/>
-    <button class="btn btn-primary" (click)="onDelete()">
+    <button class="btn btn-primary" (click)="deleteFaqEvent()">
         XÓA
     </button>
     <button class="btn btn-primary pull-right" (click)="onSubmit()" [disabled]="formFaq.invalid">

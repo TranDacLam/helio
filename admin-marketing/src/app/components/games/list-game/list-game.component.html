@@ -11,12 +11,21 @@
 <div class="row text-center">
     <h1>QUẢN LÝ TRÒ CHƠI</h1>
 </div>
-<div class="row mt-50 mb-30">
+<div class="row mt-50 mb-30 custom-title">
     <div class="col-xs-6 col-sm-6">
-        <a class="btn btn-primary" routerLink="/">TRỞ VỀ TRANG QUẢN TRỊ</a>
+        <a class="btn custom-button" routerLink="/">
+            <i class="fa fas fa-arrow-left icon-button"></i>
+            TRỞ VỀ TRANG QUẢN TRỊ
+        </a>
     </div>
     <div class="col-xs-6 col-sm-6">
-        <a class="btn btn-primary pull-right" routerLink="/game/add">TẠO TRÒ CHƠI MỚI</a>
+        <a class="btn custom-button pull-right" routerLink="/game/add">
+            <i class="fa fas fa-plus icon-button"></i>
+            TẠO TRÒ CHƠI MỚI
+        </a>
+    </div>
+    <div class="col-xs-12 col-sm-12 mt-15 messsage_error" *ngIf="errorMessage">
+        <h4>{{errorMessage}}</h4>
     </div>
     <div class="col-xs-12 col-sm-12 mt-15 messsage" *ngIf="message_result">
         <h4>{{message_result}}</h4>
@@ -33,7 +42,7 @@
         <tbody>
             <tr *ngFor="let game of games" id="del-{{game.id}}">
                 <td><input type="checkbox" (change)="onSelectCKB($event, game)" [checked]="select_checked"/></td>
-                <td><a routerLink="/game/edit/{{ game.id }}">{{ game.question }}</a></td>
+                <td><a routerLink="/game/edit/{{ game.id }}">{{ game.name }}</a></td>
             </tr>
         </tbody>
     </table>

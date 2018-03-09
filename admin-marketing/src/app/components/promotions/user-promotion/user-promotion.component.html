@@ -1,3 +1,14 @@
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="/promotions">Quản Lý Khuyến Mãi</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chi Tiết Khuyến Mãi</li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
 <div class="row text-center">
     <h1 class="h1-title">CHI TIẾT KHUYÊN MÃI</h1>
 </div>
@@ -8,9 +19,12 @@
         </div>
     </div>
 </div>
-<div class="row mb-20"  *ngIf="promotion">
+<div class="row mb-20 custom-title"  *ngIf="promotion">
     <div class="col-sm-6">
-        <a class="btn btn-primary mb-20" routerLink="/promotions">TRỞ VỀ QUẢN LÝ KHUYẾN MÃI</a>
+        <a class="btn custom-button mb-20" routerLink="/promotions">
+            <i class="fa fas fa-arrow-left icon-button"></i>
+            TRỞ VỀ QUẢN LÝ KHUYẾN MÃI
+        </a>
         <div>
             <p><label>ID : </label> {{promotion.id}}</p>
             <p><label>Tên Khuyến Mãi : </label> {{promotion.name}}</p>
@@ -22,14 +36,20 @@
         </div>
         
     </div>
-    <div class="col-sm-2">
-        <button *ngIf="! promotion.QR_code" class="btn btn-primary btn-block text-right" (click)="generator_QR_code($event, promotion.id)"
+    <div class="col-sm-2 qr_code">
+        <button *ngIf="! promotion.QR_code" class="btn custom-button btn-block text-right" (click)="generator_QR_code($event, promotion.id)"
             data-loading-text="<i class='fa fa-spinner fa-spin'></i>Tạo QR Code">Tạo QR Code</button>
     </div>
     <div class="col-sm-4 pull-right">
-        <a *ngIf="!notification_id" class="btn btn-primary btn-block" [routerLink]="['/notification/add']" [queryParams]="{promotion: promotion.id}">TẠO THÔNG BÁO CHO KHUYẾN MÃI</a>
-        <a *ngIf="notification_id" class="btn btn-primary btn-block" [routerLink]="['/notification/edit', notification_id]">CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI</a>
-        <a class="btn btn-primary btn-block" routerLink="#">TỔNG HỢP TRIỂN KHAI KHUYẾN MÃI</a>
+        <a *ngIf="!notification_id" class="btn custom-button btn-block" [routerLink]="['/notification/add']" [queryParams]="{promotion: promotion.id}">
+            <i class="fa fas fa-plus icon-button"></i>
+            TẠO THÔNG BÁO CHO KHUYẾN MÃI
+        </a>
+        <a *ngIf="notification_id" class="btn custom-button btn-block" [routerLink]="['/notification/edit', notification_id]">
+            <i class="fa fas fa-pencil-square-oicon-button"></i>
+            CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI
+        </a>
+        <a class="btn custom-button btn-block" routerLink="#">TỔNG HỢP TRIỂN KHAI KHUYẾN MÃI</a>
     </div>
 </div>
 

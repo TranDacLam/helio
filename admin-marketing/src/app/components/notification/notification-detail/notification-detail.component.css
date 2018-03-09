@@ -17,3 +17,6 @@
 .message-success{
     color: green;
 }
+.message_error{
+    color: red;
+}

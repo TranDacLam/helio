@@ -1,4 +1,8 @@
-<h4>{{ errorMessage }}</h4>
+<ng-container *ngIf="errorMessage">
+    <h4 *ngFor="let error of errorMessage | mapToIterable" class="error_msg">
+        {{error.val}}.
+    </h4>
+</ng-container>
 <form [formGroup]="formHot" novalidate>
     <div class="form-group row">
         <div class="col-sm-2">
@@ -25,9 +29,15 @@
             <label class="col-form-label form-check-label">Hình Ảnh</label>
         </div>
         <div class="col-sm-8">
+            <p *ngIf="hot.image">
+                <span>Hiện tại: <a href="{{api_domain}}{{hot.image}}" target="_blank">{{hot.image}}</a></span>
+            </p>
+            <p *ngIf="hot.image" class="clear_image">
+                <input type="checkbox" formControlName="is_clear_image"/> Xóa
+            </p>
+            <p *ngIf="msg_clear_image" class="error_msg">{{msg_clear_image}}</p>
             <input type="file" class="form-control" accept="image/*"
             (change)="onFileChange($event)" #inputImage/>
-            <button type="button" class="btn btn-sm btn-danger" (click)="clearFile()">clear file</button>
         </div>
     </div>
 

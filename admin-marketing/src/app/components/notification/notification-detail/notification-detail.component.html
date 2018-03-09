@@ -12,8 +12,13 @@
 <div class="row text-center">
     <h1>CHI TIẾT THÔNG BÁO</h1>
 </div>
-<div class="row mb-30" *ngIf="noti_detail">
-    <p><a class="btn btn-primary" routerLink="/notification/list">TRỞ VỀ TRANG QUẢN LÝ THÔNG BÁO</a></p>
+<div class="row mb-30 custom-title" *ngIf="noti_detail">
+    <p>
+        <a class="btn custom-button" routerLink="/notification/list">
+            <i class="fa fas fa-arrow-left icon-button"></i>
+            TRỞ VỀ TRANG QUẢN LÝ THÔNG BÁO
+        </a>
+    </p>
     <p>ID: {{noti_detail.id}}</p>
     <p>Tên thông báo: {{noti_detail.subject}}</p>
     <p *ngIf="noti_detail.is_draft">Trạng thái: Đã gửi</p>
@@ -21,17 +26,23 @@
     <p>Ngày gửi: {{noti_detail.sent_date}}</p>
     <p>Người gửi: {{noti_detail.sent_user}}</p>
     <p>Ngày update: </p>
-    <p><a class="btn btn-primary">GỬI THÔNG BÁO</a></p>
+    <p><a class="btn custom-button" (click)="checkSendNotification()">
+            <i class="fa fas fa-paper-plane icon-button"></i>
+            GỬI THÔNG BÁO
+        </a>
+    </p>
     <p>
         <input type="checkbox" (change)="isUpdateNoti($event)"/> 
         Sửa thông báo đã gửi (Chức năng này chỉ dành cho System Admin)
     </p>
     <p *ngIf="is_update">
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#UpdateNoti">
+        <button type="button" class="btn custom-button" data-toggle="modal" data-target="#UpdateNoti">
+            <i class="fa fas fa-pencil-square-o icon-button"></i>
             SỬA THÔNG BÁO ĐÃ GỬI
         </button>
     </p>
     <p class="message-success" *ngIf="messageSuccess">{{ messageSuccess }}</p>
+    <p class="message_error" *ngIf="messageError">{{ messageError }}</p>
 </div>
 <div class="row">
     <app-user-multiselect 
