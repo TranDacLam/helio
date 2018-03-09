@@ -84,4 +84,9 @@ urlpatterns = [
 	url(r'^type_list/$', views.TypeListAPI.as_view(), name="type-list"),
 
 	url(r'^hot_advs/$', views.HotAdvsView.as_view(), name="hot_advs"),
+
+	url(r'^role_list/$', views.RoleListAPI.as_view(), name="role-list"),
+	url(r'^users_role/$', views.UserRoleListAPI.as_view(), name="user-list"),
+	url(r'^set_role/(?P<role_id>[0-9]+)/$', views.SetRoleAPI.as_view(), name="set-role"),
+
 ]

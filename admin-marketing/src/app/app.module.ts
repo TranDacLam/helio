@@ -94,7 +94,10 @@ import { ListPromotionComponent } from './components/promotions/list-promotion/l
 import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
 import { FormHotComponent } from './components/hots/form-hot/form-hot.component';
 import { ErrorComponent } from './components/error/error.component';
+import { UserPermissionComponent } from './components/user-permission/user-permission.component';
+import { UserPermissionService } from './shared/services/user-permission.service';
 import { LoginComponent } from './components/login/login.component';
+
 
 
 
@@ -164,6 +167,7 @@ import { LoginComponent } from './components/login/login.component';
     UserPromotionComponent,
     FormHotComponent,
     ErrorComponent,
+    UserPermissionComponent,
     LoginComponent,
     MapToIterablePipe
   ],
@@ -193,6 +197,7 @@ import { LoginComponent } from './components/login/login.component';
     AuthGuard,
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'vi'},
     DatePipe,
+    UserPermissionService,
   ],
   bootstrap: [AppComponent]
 })
