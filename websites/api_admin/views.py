@@ -257,7 +257,7 @@ class UserDetail(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response({"code": 200, "status": "success", "fields": ""}, status=200)
-            return Response({"code": 500, "message": serializer.errors, "fields": ""}, status=500)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
 
         except User.DoesNotExist, e:
             return Response({"code": 400, "message": "Not found user", "fields": ""}, status=400)
@@ -895,7 +895,7 @@ class UserEmbedDetail(APIView):
                 surname = item[1] if item[1] else ''  # Surname
                 result["barcode"] = barcode
                 result["full_name"] = first_name + surname
-                result["birth_date"] = item[2] if item[2] else None  # DOB
+                result["birth_date"] = item[2].strftime( '%d/%m/%Y') if item[2] else None  # DOB
                 result["personal_id"] = item[
                     3] if item[3] else None  # PostCode
                 result["address"] = item[4] if item[4] else None  # Address1
@@ -1312,11 +1312,14 @@ class EventAPI(APIView):
 
     def put(self, request, id):
         try:
+            is_clear_image = request.data.get('is_clear_image', None)
             event = Event.objects.get(id=id)
             eventSerializer = admin_serializers.EventSerializer(
                 instance=event, data=request.data)
             if eventSerializer.is_valid():
                 eventSerializer.save()
+                if is_clear_image:
+                    event.image = None 
                 return Response(eventSerializer.data)
             return Response({"code": 400, "message": eventSerializer.errors, "fields": ""}, status=400)
 
@@ -1528,11 +1531,14 @@ class HotAPI(APIView):
 
     def put(self, request, id):
         try:
+            is_clear_image = request.data.get('is_clear_image', None)
             hot = Hot.objects.get(id=id)
             hotSerializer = admin_serializers.HotSerializer(
                 instance=hot, data=request.data)
             if hotSerializer.is_valid():
                 hotSerializer.save()
+                if is_clear_image:
+                    hot.image = None 
                 return Response(hotSerializer.data)
             return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
 
@@ -1593,89 +1599,6 @@ class HotListAPI(APIView):
             return Response(error, status=500)
 
 
-"""
-    Hot
-    @author :Hoangnguyen
-
-"""
-
-
-@parser_classes((MultiPartParser, JSONParser))
-class HotAPI(APIView):
-
-    def get(self, request, id=None):
-        try:
-            if id:
-                hot = Hot.objects.get(id=id)
-                hotSerializer = admin_serializers.HotSerializer(hot)
-            else:
-                hots = Hot.objects.all()
-                hotSerializer = admin_serializers.HotSerializer(
-                    hots, many=True)
-            return Response(hotSerializer.data)
-
-        except Hot.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
-
-        except Exception, e:
-            print "HotAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
-            return Response(error, status=500)
-
-    def post(self, request, format=None):
-        try:
-            hotSerializer = admin_serializers.HotSerializer(data=request.data)
-            if hotSerializer.is_valid():
-                hotSerializer.save()
-                return Response(hotSerializer.data)
-            return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
-
-        except Exception, e:
-            print "HotAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
-            return Response(error, status=500)
-
-    def put(self, request, id):
-        try:
-            hot = Hot.objects.get(id=id)
-            hotSerializer = admin_serializers.HotSerializer(
-                instance=hot, data=request.data)
-            if hotSerializer.is_valid():
-                hotSerializer.save()
-                return Response(hotSerializer.data)
-            return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
-
-        except Hot.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
-
-        except Exception, e:
-            print "HotAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
-            return Response(error, status=500)
-
-    def delete(self, request, id=None, format=None):
-        try:
-            if id:
-                hot = Hot.objects.get(id=id)
-                hot.delete()
-                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
-
-            list_id = request.data.get('list_id', None)
-            if list_id:
-                hots = Hot.objects.filter(id__in=list_id)
-                if hots:
-                    hots.delete()
-                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
-                return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
-
-        except Hot.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
-
-        except Exception, e:
-            print "EventAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
-            return Response(error, status=500)
-
 
 """
     Post 
@@ -1702,6 +1625,7 @@ class PostAPI(APIView):
 
     def post(self, request, format=None):
         try:
+            key_query = request.data.get('key_query', None)
             postSerializer = admin_serializers.PostSerializer(
                 data=request.data)
             if postSerializer.is_valid():
@@ -1716,11 +1640,14 @@ class PostAPI(APIView):
 
     def put(self, request, id):
         try:
+            is_clear_image = request.data.get('is_clear_image', None)
             post = Post.objects.get(id=id)
             postSerializer = admin_serializers.PostSerializer(
                 instance=post, data=request.data)
             if postSerializer.is_valid():
                 postSerializer.save()
+                if is_clear_image:
+                    post.image = None 
                 return Response(postSerializer.data)
             return Response({"code": 400, "message": postSerializer.errors, "fields": ""}, status=400)
 
@@ -2126,11 +2053,14 @@ class GameAPI(APIView):
 
     def put(self, request, id):
         try:
+            is_clear_image = request.data.get('is_clear_image', None)
             game = Game.objects.get(id=id)
             gameSerializer = admin_serializers.GameSerializer(
                 instance=game, data=request.data)
             if gameSerializer.is_valid():
                 gameSerializer.save()
+                if is_clear_image:
+                    game.image = None 
                 return Response(gameSerializer.data)
             return Response({"code": 400, "message": gameSerializer.errors, "fields": ""}, status=400)
 
@@ -2287,7 +2217,7 @@ class UserRoleListAPI(APIView):
                 role = Roles.objects.get( id = role_id )
                 users = role.user_role_rel.all()
             else:
-                users = User.objects.filter( role__isnull = True )
+                users = User.objects.filter( is_staff = True, role__isnull = True )
             userSerializer = admin_serializers.UserSerializer(users, many=True)
             return Response(userSerializer.data)
 
@@ -2321,7 +2251,7 @@ class SetRoleAPI(APIView):
                     if user_has_role:
                         return Response({"code": 400, "message": "User had role.", "fields": ""}, status=400)
 
-                    role.user_role_rel.add(*users)
+                    role.user_role_rel.set(*users)
                     return Response({"code": 200, "message": "success", "fields": ""}, status=200)
                 
                 return Response({"code": 400, "message": "Not Found users.", "fields": ""}, status=400)
