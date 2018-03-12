@@ -74,7 +74,12 @@ def deploy():
         run('git reset --hard origin/%s'%BRANCH[ENV])
         # run('git reset --hard origin/master')
         run('find . -name "*.pyc" -exec rm -rf {} \;')
-        
+
+
+        with cd('admin-marketing'):
+            sudo("ng build  --env=%s --output-path=/var/www/html/helio_admin"%ENV)
+            
+    with cd(PROJECT_PATH):
         with cd('websites'):
             with prefix(env.activate):
                 run('pip install -r ../requirements.txt')
@@ -84,9 +89,6 @@ def deploy():
                 else:
                     sudo('su -s /bin/bash www-data -c "%s;%s" '%(env.activate,"uwsgi --reload %s"%PROCESS_ID[ENV]))
 
-    with cd(PROJECT_PATH):
-        with cd('admin-marketing'):
-            sudo("ng build  --env=%s --output-path=/var/www/html/helio_admin"%ENV)
             
 
 
