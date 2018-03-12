@@ -99,6 +99,7 @@ import { UserPermissionComponent } from './components/user-permission/user-permi
 import { UserPermissionService } from './shared/services/user-permission.service';
 import { LoginComponent } from './components/login/login.component';
 import { Globals } from './shared/commons/globals';
+import { OpenTimeComponent } from './components/open-time/open-time.component';
 
 
 
@@ -170,7 +171,8 @@ import { Globals } from './shared/commons/globals';
     ErrorComponent,
     UserPermissionComponent,
     LoginComponent,
-    MapToIterablePipe
+    MapToIterablePipe,
+    OpenTimeComponent
   ],
   imports: [
     BrowserModule,
