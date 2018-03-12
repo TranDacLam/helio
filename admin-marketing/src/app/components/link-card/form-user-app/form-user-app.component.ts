@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../../../shared/class/user';
 import { LinkCardService } from '../../../shared/services/link-card.service';
+import { DateValidators } from './../../../shared/validators/date-validators';
+import { NumberValidators } from './../../../shared/validators/number-validators';
 import 'rxjs/add/observable/throw';
 
 @Component({
@@ -45,9 +47,12 @@ export class FormUserAppComponent implements OnInit {
         this.appForm = this.fb.group({
             full_name: [this.user_app.full_name, [Validators.required]],
             email: [this.user_app.email, [Validators.email]],
-            phone: [this.user_app.phone, Validators.required],
-            birth_date: [this.user_app.birth_date, Validators.required],
-            personal_id: [this.user_app.personal_id, Validators.required],
+            phone: [this.user_app.phone, 
+                [Validators.required, NumberValidators.validPhone]],
+            birth_date: [this.user_app.birth_date, 
+                [Validators.required, DateValidators.formatDate]],
+            personal_id: [this.user_app.personal_id, 
+                [Validators.required, NumberValidators.validPersonID]],
             address: [this.user_app.address, Validators.required],
         });
     }

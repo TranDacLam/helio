@@ -30,7 +30,7 @@ export class DateValidators {
     */
     static formatStartDate(c: FormControl): ValidationErrors {
         if(c.dirty){
-            let validatePattern = /^(\d{1,2})(\/|)(\d{1,2})(\/|)(\d{4})$/;
+            let validatePattern = /^(\d{1,2})(\/)(\d{1,2})(\/)(\d{4})$/;
             let getValDate = String($('#start_date').val());
             let dateValues = getValDate.match(validatePattern);
             if(getValDate === ''){
@@ -38,7 +38,7 @@ export class DateValidators {
             }else if(dateValues === null){
                 return {
                     'fomatDate': {
-                        'message': 'Định dạng ngày không đúng'
+                        'message': 'Định dạng ngày phải là dd/MM/yyyy'
                     }
                 };
             }
@@ -52,7 +52,7 @@ export class DateValidators {
     */
     static formatEndDate(c: FormControl): ValidationErrors {
         if(c.dirty){
-            let validatePattern = /^(\d{1,2})(\/|)(\d{1,2})(\/|)(\d{4})$/;
+            let validatePattern = /^(\d{1,2})(\/)(\d{1,2})(\/)(\d{4})$/;
             let getValDate = String($('#end_date').val());
             let dateValues = getValDate.match(validatePattern);
             if(getValDate === ''){
@@ -60,7 +60,7 @@ export class DateValidators {
             }else if(dateValues === null){
                 return {
                     'fomatDate': {
-                        'message': 'Định dạng ngày không đúng'
+                        'message': 'Định dạng ngày phải là dd/MM/yyyy'
                     }
                 };
             }
@@ -148,6 +148,26 @@ export class DateValidators {
             return {
                 'fomatDate': {
                     'message': 'Định dạng thời gian không đúng'
+                }
+            };
+        }
+        return null;
+    }
+
+    /*
+        Function formatStartDate(): validate format start date
+        Author: Lam
+    */
+    static formatDate(c: FormControl): ValidationErrors {
+        let validatePattern = /^(\d{1,2})(\/)(\d{1,2})(\/)(\d{4})$/;
+        let getValDate = c.value;
+        let dateValues = getValDate ? getValDate.match(validatePattern) : '';
+        if(getValDate === ''){
+            return null;
+        }else if(dateValues === null){
+            return {
+                'fomatDate': {
+                    'message': 'Định dạng ngày phải là dd/MM/yyyy'
                 }
             };
         }

@@ -4,3 +4,6 @@
 .card-link-success fieldset>legend span{
     color: green;
 }
+.title-link-card{
+    padding-left: 15px;
+}

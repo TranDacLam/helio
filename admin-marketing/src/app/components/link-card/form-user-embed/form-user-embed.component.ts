@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Customer } from '../../../shared/class/customer';
 import { LinkCardService } from '../../../shared/services/link-card.service';
+import { DateValidators } from './../../../shared/validators/date-validators';
+import { NumberValidators } from './../../../shared/validators/number-validators';
 import 'rxjs/add/observable/throw';
 
 @Component({
@@ -47,9 +49,12 @@ export class FormUserEmbedComponent implements OnInit {
             barcode: [this.user_embed.barcode, [Validators.required]],
             full_name: [this.user_embed.full_name, [Validators.required]],
             email: [this.user_embed.email, [Validators.email]],
-            phone: [this.user_embed.phone, Validators.required],
-            birth_date: [this.user_embed.birth_date, Validators.required],
-            personal_id: [this.user_embed.personal_id, Validators.required],
+            phone: [this.user_embed.phone, 
+                [Validators.required, NumberValidators.validPhone]],
+            birth_date: [this.user_embed.birth_date, 
+                [Validators.required, DateValidators.formatDate]],
+            personal_id: [this.user_embed.personal_id, 
+                [Validators.required, NumberValidators.validPersonID]],
             address: [this.user_embed.address, Validators.required],
         });
     }
