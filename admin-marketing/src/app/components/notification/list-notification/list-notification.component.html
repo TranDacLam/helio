@@ -46,12 +46,17 @@
         </thead>
         <tbody>
             <tr *ngFor="let noti of notifications" id="del-{{noti.id}}">
-                <td><input type="checkbox" (change)="onSelectCKB($event, noti)" [checked]="select_checked"/></td>
+                <td *ngIf="noti.sent_date">
+                    <input type="checkbox" disabled/>
+                </td>
+                <td *ngIf="!noti.sent_date">
+                    <input type="checkbox" (change)="onSelectCKB($event, noti)" [checked]="select_checked"/>
+                </td>
                 <td>{{ noti.id }}</td>
                 <td><a routerLink="/notification/edit/{{ noti.id }}">{{ noti.subject }}</a></td>
-                <td *ngIf="noti.is_draft">Đã gửi</td>
-                <td *ngIf="!noti.is_draft">Chưa gửi</td>
-                <td>{{ noti.sent_date }}</td>
+                <td *ngIf="noti.sent_date">Đã gửi</td>
+                <td *ngIf="!noti.sent_date">Chưa gửi</td>
+                <td>{{ noti.sent_date | date: 'dd/MM/yyyy'}}</td>
                 <td>{{ noti.sent_user }}</td>
                 <td><a class="btn btn-primary" routerLink="/notification/detail/{{ noti.id }}">Chọn danh sách user</a></td>
             </tr>

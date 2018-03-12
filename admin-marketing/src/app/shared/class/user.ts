@@ -12,7 +12,7 @@ export class User {
 	city: string;
     avatar: string|any;
 	password: string;
-	role: string;
+	role: number;
     username_mapping: string;
     date_mapping: string;
     is_active: boolean;

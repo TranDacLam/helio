@@ -21,18 +21,23 @@
     </p>
     <p>ID: {{noti_detail.id}}</p>
     <p>Tên thông báo: {{noti_detail.subject}}</p>
-    <p *ngIf="noti_detail.is_draft">Trạng thái: Đã gửi</p>
-    <p *ngIf="!noti_detail.is_draft">Trạng thái: Chưa gửi</p>
-    <p>Ngày gửi: {{noti_detail.sent_date}}</p>
+    <p *ngIf="noti_detail.sent_date">Trạng thái: Đã gửi</p>
+    <p *ngIf="!noti_detail.sent_date">Trạng thái: Chưa gửi</p>
+    <p>Ngày gửi: {{noti_detail.sent_date | date: 'dd/MM/yyyy'}}</p>
     <p>Người gửi: {{noti_detail.sent_user}}</p>
-    <p>Ngày update: </p>
-    <p><a class="btn custom-button" (click)="checkSendNotification()">
+    <p>Ngày update: {{noti_detail.modified | date: 'dd/MM/yyyy'}}</p>
+    <p *ngIf="user_current"><button class="btn custom-button" (click)="checkSendNotification()" 
+            [disabled]="user_current.role !== 1 && noti_detail.sent_date"
+        >
             <i class="fa fas fa-paper-plane icon-button"></i>
-            GỬI THÔNG BÁO
-        </a>
+            <ng-container *ngIf="!noti_detail.sent_date">GỬI THÔNG BÁO</ng-container>
+            <ng-container *ngIf="noti_detail.sent_date">
+                GỬI LẠI THÔNG BÁO
+            </ng-container>
+        </button>
     </p>
-    <p>
-        <input type="checkbox" (change)="isUpdateNoti($event)"/> 
+    <p *ngIf="user_current">
+        <input type="checkbox" (change)="isUpdateNoti($event)" [disabled]="user_current.role !== 1 && noti_detail.sent_date" /> 
         Sửa thông báo đã gửi (Chức năng này chỉ dành cho System Admin)
     </p>
     <p *ngIf="is_update">
