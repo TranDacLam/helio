@@ -222,6 +222,9 @@ class UserEmbedSerializer(serializers.Serializer):
         return value
 
 class FeeSerializer(serializers.ModelSerializer):
+    fee = serializers.IntegerField(required=True)
+    fee_type = serializers.CharField(required=True)
+    position = serializers.CharField(required=True)
 
     class Meta:
         model = Fee
