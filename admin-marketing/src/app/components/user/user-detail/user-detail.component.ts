@@ -28,6 +28,7 @@ export class UserDetailComponent implements OnInit {
 	readonly_value = true;
 
     errorMessage: string ='';
+    errors: string='';
     api_domain:string = "";
     
 	constructor( 
@@ -76,7 +77,7 @@ export class UserDetailComponent implements OnInit {
                 this.user = data;
             },
             (error) =>  {
-                this.router.navigate(['/error', { message: error.message }])
+                this.router.navigate(['/error', { message: error.json().message }])
             }
         );
     }
@@ -92,6 +93,8 @@ export class UserDetailComponent implements OnInit {
                 (error) => {
                     if(error.code == 400) {
                         this.errorMessage = error.message
+                    } else if(error.code == 405) {
+                        this.errors = error.message;
                     } else {
                        self.router.navigate(['/error', { message: error.message }]);
                     }
@@ -112,7 +115,11 @@ export class UserDetailComponent implements OnInit {
                     this.router.navigate(['/user-list', { message_del: user.email} ]);
                 },
                 (error) =>  {
-                    this.router.navigate(['/error', { message: error }])
+                    if(error.status == 405) {
+                        this.errors = error.json().message
+                    } else {
+                        this.router.navigate(['/error', { message: error.json().message }])
+                    }
                 }
            );
     }
@@ -155,7 +162,7 @@ export class UserDetailComponent implements OnInit {
     confirmDeleteFeedback(user: User) {
         bootbox.confirm({
             title: "Bạn có chắc chắn?",
-            message: "Bạn muốn xóa phản hồi này.",
+            message: "Bạn muốn xóa user này.",
             buttons: {
                 confirm: {
                     label: 'Xóa',

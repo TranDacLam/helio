@@ -58,6 +58,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { AuthGuard } from './shared/guards/index';
 
 import { UserPermissionComponent } from './components/user-permission/user-permission.component';
+import { OpenTimeComponent } from './components/open-time/open-time.component'
 
 
 
@@ -296,6 +297,10 @@ const routes: Routes = [{
     {
         path: 'user-permission',
         component: UserPermissionComponent
+    },
+    {
+        path: 'open-time',
+        component: OpenTimeComponent
     },
     {
         path: 'error',

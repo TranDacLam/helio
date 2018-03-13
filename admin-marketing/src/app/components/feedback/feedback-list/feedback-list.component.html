@@ -13,9 +13,6 @@
 	<a class="pull-left" routerLink="/feedback-list">Phản hồi</a>
 	<a class="pull-right" routerLink="/feedback/statistics">Thống kê tình trạng phản hồi</a>
 </div>
-<div *ngIf="message_success" class="alert alert-success">
-    {{ message_success }}
-</div>
 <div *ngIf="message_result" class="alert alert-success">
     {{ message_result }}
 </div>
@@ -23,7 +20,7 @@
 	<thead>
 		<tr class="tr-feedbacks">
             <th class="checkbox-feedback"><input type="checkbox" 
-                name="allFeedbacks" [(ngModel)]="allFeedbacks" value="allFeedbacks" (change)="selectAllCheckbox($event);"/>
+                name="allFeedbacks" id="allCheck" value="allFeedbacks" (change)="selectAllCheckbox($event);"/>
             </th>
             <th>Phản hồi </th>
             <th>Người gửi</th>
@@ -40,7 +37,7 @@
                 <input type="checkbox" 
                 name="{{ feedback.id }}"
                 value="{{ feedback.id }}"
-                [checked]="feedback_selected"
+                id="{{ feedback.id }}"
                 (change)="changeCheckboxFeedback($event, feedback)"
                 />
                 </label>

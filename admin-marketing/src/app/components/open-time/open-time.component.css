@@ -1,0 +1,12 @@
+.label-title{
+    width: 70px;
+}
+.label-empty{
+    margin: 0 10px;
+}
+.mb-15{
+    margin-bottom: 15px;
+}
+.table-open-time th, .table-open-time td{
+    text-align: center;
+}

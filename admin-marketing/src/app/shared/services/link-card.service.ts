@@ -43,7 +43,7 @@ export class LinkCardService {
         function updateUserApp(): Update user
         author: Lam
     */
-    updateUserApp(user_app: User, id: number): Observable<User>{
+    updateUserApp(user_app: User, id: number): Observable<any>{
         const urlUser = `${this.url_app}${id}/`;
         return this.http.put(urlUser, JSON.stringify(user_app), this.httpOptions)
             .map((res: Response) => res.json()).catch(this.handleError);
@@ -62,7 +62,7 @@ export class LinkCardService {
         function updateUserEmbed(): Update user embed
         author: Lam
     */
-    updateUserEmbed(user_embed: User): Observable<Customer>{     
+    updateUserEmbed(user_embed: User): Observable<any>{     
         const id = user_embed.barcode;
         const urlUser = `${this.url_embed}${id}/`;
         return this.http.put(urlUser, JSON.stringify(user_embed), this.httpOptions)
@@ -73,7 +73,7 @@ export class LinkCardService {
         function getUserApp(): Get user by id
         author: Lam
     */
-    getUserApp(id: number): Observable<User>{
+    getUserApp(id: number): Observable<any>{
         const url_app_id = `${this.url_app}${id}`;
         return this.http.get(url_app_id, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
@@ -82,7 +82,7 @@ export class LinkCardService {
         function getUserEmbed(): Get user embed by id
         author: Lam
     */
-    getUserEmbed(id: number): Observable<Customer>{
+    getUserEmbed(id: number): Observable<any>{
         const url_embed_id = `${this.url_embed}${id}`;
         return this.http.get(url_embed_id, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
