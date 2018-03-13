@@ -11,7 +11,7 @@
 <!-- End breadcrumb -->
 <div class="row card-link-success">
     <fieldset class="scheduler-border">
-        <legend class="scheduler-border">
+        <legend class="scheduler-border title-link-card">
             Chi Tiết Liên Kết Thẻ
             <span class="pull-right" *ngIf="msg_success"><i>Bạn đã thực hiện liên kết thẻ với tài khoản Helio thành công.</i></span>
         </legend>
@@ -50,7 +50,7 @@
                         <label class="col-form-label form-check-label">Ngày Sinh</label>
                     </div>
                     <div class="col-sm-7">
-                        {{ user_app.birth_date }}
+                        {{ user_app.birth_date | date: 'dd/MM/yyyy' }}
                     </div>
                 </div>
 
@@ -114,7 +114,7 @@
                         <label class="col-form-label form-check-label">Ngày Sinh</label>
                     </div>
                     <div class="col-sm-7">
-                        {{ user_embed.birth_date }}
+                        {{ user_embed.birth_date | date: 'dd/MM/yyyy' }}
                     </div>
                 </div>
 
@@ -141,7 +141,7 @@
                         <label class="col-form-label form-check-label">Tài Khoản Thực Hiện Mapping</label>
                     </div>
                     <div class="col-sm-7">
-                        admin@vooc.vn
+                        {{ user_app.username_mapping }}
                     </div>
                 </div>
 
@@ -150,6 +150,7 @@
                         <label class="col-form-label form-check-label">Thời Gian Mapping</label>
                     </div>
                     <div class="col-sm-7">
+                        {{ user_app.date_mapping | date: 'dd/MM/yyyy' }}
                     </div>
                 </div>
             </form>
@@ -165,5 +166,5 @@
     </fieldset>
 </div>
 <div class="row">
-    <button class="btn btn-danger" (click)="deleteLinkCardEvent()">Xóa Liên Kết</button>
+    <button class="btn btn-danger pull-right" (click)="deleteLinkCardEvent()">Xóa Liên Kết</button>
 </div>

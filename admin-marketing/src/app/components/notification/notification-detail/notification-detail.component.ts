@@ -3,8 +3,10 @@ import { User } from '../../../shared/class/user';
 import { Notification } from '../../../shared/class/notification';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Globals } from './../../../shared/commons/globals';
 import 'rxjs/add/observable/throw';
+
 
 declare var bootbox:any;
 
@@ -27,14 +29,21 @@ export class NotificationDetailComponent implements OnInit {
     is_update: boolean = false; // Check input checkbox Update Notification
     messageSuccess = '';
     messageError = '';
+    user_current: User;
 
     constructor(
         private notificationService: NotificationService, 
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router,
+        private globals: Globals
     ) { }
 
     ngOnInit() {
         this.getUserNotification();
+        setTimeout(()=>{
+            this.user_current = this.globals.user_current;
+        },100);
+        
     }
 
     /*
@@ -53,6 +62,24 @@ export class NotificationDetailComponent implements OnInit {
             }
         );
 
+    }
+
+    /*
+        Function getNotification():
+         + Get id from url path
+         + Callback service function getNotification() by id
+        Author: Lam
+    */
+    getNotification(){
+        const id = +this.route.snapshot.paramMap.get('id');
+        this.notificationService.getNotification(id).subscribe(
+            (data) => {
+                this.noti_detail = data;
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
     }
 
     /*
@@ -80,22 +107,27 @@ export class NotificationDetailComponent implements OnInit {
         Author: Lam
     */
     update_user_noti(event){
-        if(event.length > 0){
-            const id = +this.route.snapshot.paramMap.get('id');
-            this.notificationService.updateUserNoti(id, event).subscribe(
-                (data) => {
-                    this.messageSuccess = "Lưu thành công.";
-                    setTimeout(()=>{
-                          this.messageSuccess = '';
-                    },5000);
-                },
-                (error) => {
-                    this.messageSuccess = error.message;
-                }
-            );
+        if(this.user_current.role === 1 && this.noti_detail.sent_date){
+            if(event.length > 0){
+                const id = +this.route.snapshot.paramMap.get('id');
+                this.notificationService.updateUserNoti(id, event).subscribe(
+                    (data) => {
+                        this.messageSuccess = "Lưu thành công.";
+                        setTimeout(()=>{
+                              this.messageSuccess = '';
+                        },5000);
+                    },
+                    (error) => {
+                        this.messageSuccess = error.message;
+                    }
+                );
+            }else{
+                bootbox.alert("Vui lòng chọn user");
+            }
         }else{
-            bootbox.alert("Vui lòng chọn user");
+            bootbox.alert("Chức năng này chỉ dành cho System Admin");
         }
+        
         
     }
 
@@ -132,6 +164,7 @@ export class NotificationDetailComponent implements OnInit {
         const id = this.noti_detail.id;
         this.notificationService.sendNotification(id).subscribe(
             (data) => {
+                this.getNotification();
                 this.messageSuccess = data.message;
                 setTimeout(()=>{
                       this.messageSuccess = '';

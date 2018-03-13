@@ -40,15 +40,18 @@
 
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <re-captcha formControlName="captcha"
-                                            siteKey={{key_recaptcha}}>
+                                        <re-captcha size="invisible" #captchaRef="reCaptcha" 
+                                            siteKey={{key_recaptcha}} (resolved)="onSubmit($event)"> 
                                         </re-captcha>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-lg btn-primary btn-block" 
-                                        value="Đăng Nhập" (click)="onSubmit()" [disabled]="formLogin.invalid"
+                                    <input type="submit" class="btn btn-lg btn-primary btn-block" (click)="captchaRef.execute()"
+                                        value="Đăng Nhập" [disabled]="formLogin.invalid" *ngIf="!token_recaptcha"
+                                    />
+                                    <input type="submit" class="btn btn-lg btn-primary btn-block" (click)="onSubmit(token_recaptcha)"
+                                        value="Đăng Nhập" [disabled]="formLogin.invalid" *ngIf="token_recaptcha"
                                     />
                                 </div>
                             </div>

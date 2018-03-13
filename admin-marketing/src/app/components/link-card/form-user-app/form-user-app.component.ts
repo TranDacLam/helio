@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../../../shared/class/user';
 import { LinkCardService } from '../../../shared/services/link-card.service';
+import { DateValidators } from './../../../shared/validators/date-validators';
+import { NumberValidators } from './../../../shared/validators/number-validators';
 import 'rxjs/add/observable/throw';
 
 @Component({
@@ -26,8 +28,10 @@ export class FormUserAppComponent implements OnInit {
     // Enable/Disable input field when change input checkbox
     dis_input_app = {full_name: true, email: true, phone: true, birth_date: true, personal_id: true, address: true};
 
-    errorMessage = ""; // Message show error
+    msg_success = ''; // Message show error
+    msg_error: any;
 
+    errorMessage = '';
 
     constructor(private fb: FormBuilder, private linkCardService: LinkCardService) { }
 
@@ -43,9 +47,12 @@ export class FormUserAppComponent implements OnInit {
         this.appForm = this.fb.group({
             full_name: [this.user_app.full_name, [Validators.required]],
             email: [this.user_app.email, [Validators.email]],
-            phone: [this.user_app.phone, Validators.required],
-            birth_date: [this.user_app.birth_date, Validators.required],
-            personal_id: [this.user_app.personal_id, Validators.required],
+            phone: [this.user_app.phone, 
+                [Validators.required, NumberValidators.validPhone]],
+            birth_date: [this.user_app.birth_date, 
+                [Validators.required, DateValidators.formatDate]],
+            personal_id: [this.user_app.personal_id, 
+                [Validators.required, NumberValidators.validPersonID]],
             address: [this.user_app.address, Validators.required],
         });
     }
@@ -89,7 +96,16 @@ export class FormUserAppComponent implements OnInit {
     */
     onSubmitApp(){
         let id = this.user_app.id;
-        this.linkCardService.updateUserApp(this.appForm.value, id).subscribe();
+        this.linkCardService.updateUserApp(this.appForm.value, id).subscribe(
+            (data) => {
+                this.msg_success = data.message;
+                this.msg_error = null;
+            },
+            (error) => {
+                this.msg_error = error.message;
+                this.msg_success = '';
+            }
+        );
     }
 
 }

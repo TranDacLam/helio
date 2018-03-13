@@ -184,8 +184,9 @@ class PromotionUser(APIView):
     def post(self, request, id, format=None):
         try:
             #Set is_save to True to block change user list
-            promition = Promotion.objects.get(pk=id)
-            promition.is_save = True
+            promotion = Promotion.objects.get(pk=id)
+            
+            promotion.is_save = True
             promotion.save();
 
             list_user_id = self.request.data.get('list_user_id', '')

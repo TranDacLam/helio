@@ -120,6 +120,21 @@ export class UserService {
 		});
 		return this.http.delete(url, _options).map((res: Response) => res.json()).catch(this.handleError);
 	}
+
+    /*
+        getUserByToken: get User By Token
+        @author: Trangle
+     */
+    getUserByToken(value):Observable<any> {
+        let _option = {
+            headers: new Headers({ 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${value}`
+            })
+        };
+        return this.http.get(api.account_users, _option).map((res: Response) => res.json()).catch(this.handleError);
+    }
+
 	/* 
       Handle error
     */

@@ -88,10 +88,10 @@ export class LinkCardDetailComponent implements OnInit {
         const id = this.user_app.id;
         this.linkCardService.delLinkCard(id).subscribe(
             (data) => {
-                this.router.navigate(['/list-link-card', { message: "Xóa Thành Công" }]); // redirect list link card
+                this.router.navigate(['/link-card-list', { message: "Xóa Thành Công" }]); // redirect list link card
             },
             (error) => {
-                this.router.navigate(['/list-link-card', { messafe: error.message }]); // redirect list link card
+                this.router.navigate(['/link-card-list', { messafe: error.message }]); // redirect list link card
             }
         );
     }
