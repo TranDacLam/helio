@@ -3,6 +3,7 @@ import { Fee } from '../../../shared/class/fee';
 import { FeeService } from '../../../shared/services/fee.service';
 import { Subject } from 'rxjs/Subject';
 import { DataTableDirective } from 'angular-datatables';
+import { Router } from '@angular/router';
 
 declare var bootbox:any;
 
@@ -13,7 +14,7 @@ declare var bootbox:any;
 })
 export class FeeListComponent implements OnInit {
 
-  constructor( private feeService: FeeService ) {
+  constructor( private feeService: FeeService, private router: Router ) {
 
    }
 
@@ -45,7 +46,7 @@ export class FeeListComponent implements OnInit {
    			this.fees = success; 
    		},
 		error => {
-			this.errorText = error.statusText;
+      this.router.navigate(['/error']);
 		});
    }
    
@@ -146,7 +147,8 @@ export class FeeListComponent implements OnInit {
               });
            },
          error =>{
-          this.errorText = error.json().message;
+          // this.errorText = error.json().message;
+          this.router.navigate(['/error']);
         });
        return true;
      }
@@ -172,7 +174,10 @@ export class FeeListComponent implements OnInit {
            });
           fee.is_apply = true;
        },
-       error => this.errorText = error.json().message
+       error => {
+         // this.errorText = error.json().message
+          this.router.navigate(['/error']);
+       }
        );
    }
 
@@ -190,7 +195,10 @@ export class FeeListComponent implements OnInit {
             fee.is_apply = false;
           }
        },
-       error => this.errorText = error.json().message
+       error => {
+         // this.errorText = error.json().message
+          this.router.navigate(['/error']);
+       }
        );
    }
 

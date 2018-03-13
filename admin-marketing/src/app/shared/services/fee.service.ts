@@ -50,9 +50,8 @@ export class FeeService {
   		return this.http.delete( this.feeUrlList, options  ).map((res: Response) => res.json()).catch(this.handleError);
 	}
 	applyFee(id: number):Observable<Fee>{
-		// let feeUrl = `http://127.0.0.1:8000/vi/api/fee/${id}/`;
 		let feeDetailUrl = this.feeUrl + `${id}/`;
-  		return this.http.put( feeDetailUrl, this.httpOptions  ).map((res: Response) => res.json()).catch(this.handleError);
+  	return this.http.put( feeDetailUrl, null, this.httpOptions  ).map((res: Response) => res.json()).catch(this.handleError);
 
 	}
 
