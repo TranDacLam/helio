@@ -59,7 +59,7 @@ import { AuthGuard } from './shared/guards/index';
 
 import { UserPermissionComponent } from './components/user-permission/user-permission.component';
 import { OpenTimeComponent } from './components/open-time/open-time.component'
-
+import { PromotionReportComponent } from './components/promotions/promotion-report/promotion-report.component';
 
 
 const routes: Routes = [{
@@ -301,6 +301,10 @@ const routes: Routes = [{
     {
         path: 'open-time',
         component: OpenTimeComponent
+    },
+    {
+        path: 'promotions/report/:id',
+        component: PromotionReportComponent
     },
     {
         path: 'error',
