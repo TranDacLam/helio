@@ -20,25 +20,22 @@
 </div>
 <br>
 <div class="table card-list">
-	<div *ngIf="message_success" class="alert alert-success">
-		{{ message_success }}
-	</div>
 	<div class="alert alert-success" *ngIf="message_result">
         {{message_result}}
     </div>
 	<table id="table-denomination" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
-	      		<th class='check-denomi'><input type="checkbox" [(ngModel)]="selectedAll" name="allCheckDeno" value="allCheckDeno"(change)="checkAllDeno($event)"/></th>
+	      		<th class='check-denomi'><input type="checkbox" id="allCheck" name="allCheckDeno" value="allCheckDeno"(change)="checkAllDeno($event)"/></th>
 	        	<th>Mệnh Giá Nạp Tiền</th>
 	      	</tr>
     	</thead>
     	<tbody>
    			<tr *ngFor ="let denomination of denominations" id="delete{{denomination.id}}">
-   				<td><input type="checkbox" [checked]="select_checkbox"
+   				<td><input type="checkbox" id={{denomination.id}}
    					value={{denomination.id}} name=""
    					(change)="checkItemChange($event, denomination)"/></td>
-        		<td>{{ denomination.denomination }}</td>
+        		<td>{{ denomination.denomination | number }}</td>
    			</tr>
     	</tbody>
 	</table>

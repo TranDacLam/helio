@@ -40,7 +40,7 @@ export class DenominationService {
 		POST: Create a new denomination
 		Author: TrangLe
 	*/
-	createDenomination(deno: Denomination): Observable<Denomination> {
+	createDenomination(deno:any): Observable<Denomination> {
     	let urlDeno = `${api.denomination}`; 
 		return this.http.post(urlDeno, deno,this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
