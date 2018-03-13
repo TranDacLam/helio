@@ -75,8 +75,8 @@ def deploy():
         # run('git reset --hard origin/master')
         run('find . -name "*.pyc" -exec rm -rf {} \;')
 
-
         with cd('admin-marketing'):
+            run('npm install')
             sudo("ng build  --env=%s --output-path=/var/www/html/helio_admin"%ENV)
             
     with cd(PROJECT_PATH):
