@@ -101,7 +101,7 @@ import { UserPermissionService } from './shared/services/user-permission.service
 import { LoginComponent } from './components/login/login.component';
 import { Globals } from './shared/commons/globals';
 import { OpenTimeComponent } from './components/open-time/open-time.component';
-
+import { PromotionReportComponent } from './components/promotions/promotion-report/promotion-report.component';
 
 
 
@@ -173,7 +173,8 @@ import { OpenTimeComponent } from './components/open-time/open-time.component';
     UserPermissionComponent,
     LoginComponent,
     MapToIterablePipe,
-    OpenTimeComponent
+    OpenTimeComponent,
+    PromotionReportComponent
   ],
   imports: [
     BrowserModule,
