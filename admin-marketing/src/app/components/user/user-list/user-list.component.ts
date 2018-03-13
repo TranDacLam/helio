@@ -126,7 +126,7 @@ export class UserListComponent implements OnInit {
             this.message_result = "";
       	}
       	else{
-            var index = this.user_selected.indexOf(user);
+            var index = this.user_selected.indexOf(user.id);
             this.user_selected.splice(index, 1);
 
             // uncheck selectAll

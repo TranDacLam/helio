@@ -36,7 +36,7 @@
    					value={{user.id}} name=""
    					(change)="checkItemChange($event, user)"/></td>
    				<td class="title-email"><a routerLink="/user-detail/{{ user.id }}" >{{ user.email }}</a></td>
-        		<td>{{ user.role.name }}</td>
+        		<td *ngIf="user.role.name">{{ user.role.name }}</td>
    			</tr>
     	</tbody>
 	</table>

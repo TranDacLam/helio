@@ -24,6 +24,7 @@ from django.db import DatabaseError
 from rest_framework.decorators import parser_classes, authentication_classes
 from rest_framework.parsers import MultiPartParser
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -2054,9 +2055,13 @@ class UserDetailView(APIView):
 
         user = self.get_object(pk)
         try:
-            print('user', user)
+            print('user', user.is_staff)
             serializer = admin_serializers.UserRoleSerializer(user, data=request.data)
             if serializer.is_valid():
+                if(self.request.user.role_id == 1 and user.is_staff == True):
+                    self.request.user.set_password(self.request.data.get("password"))
+                else:
+                    return Response({"code": 405, "message":"Just System Admin change password user"}, status=405)
                 serializer.save()
                 return Response(serializer.data)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
@@ -2070,8 +2075,20 @@ class UserDetailView(APIView):
         print "METHOD DELETE"
 
         user = self.get_object(pk)
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        try:
+            # Get role_id when user login
+            role_id = self.request.user.role_id
+            # If role = System admin(role_id=1). Accept delete user
+            if role_id == 1:
+                print "role_id", role_id
+                user.delete()
+            else:
+                return Response({"code": 405, "message": "Just System Admin accept delete"}, status=405)
+            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+        except Exception, e:
+            print 'UserDetailView PUT', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
 """
     GET: Get Al Roles
     @author: TrangLes

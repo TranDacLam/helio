@@ -11,6 +11,9 @@
 <!-- End breadcrumb -->
 <div *ngIf="user">
 	<form [formGroup]="formUser" novalidate (ngSubmit)="onSubmit()">
+		<div *ngIf="errors" class="alert alert-danger fade in">
+		   <span >{{ errors }}</span>.
+		</div>
 		<div class="row content-user">
 			<p class=title-user-edit>Sửa Thông tin User</p>
 			<div class="col-md-8 col-md-offset-2">
