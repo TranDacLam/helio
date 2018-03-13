@@ -59,7 +59,7 @@ import { AuthGuard } from './shared/guards/index';
 
 import { UserPermissionComponent } from './components/user-permission/user-permission.component';
 import { OpenTimeComponent } from './components/open-time/open-time.component'
-
+import { PromotionReportComponent } from './components/promotions/promotion-report/promotion-report.component';
 
 
 const routes: Routes = [{
@@ -303,14 +303,18 @@ const routes: Routes = [{
         component: OpenTimeComponent
     },
     {
+        path: 'promotions/report/:id',
+        component: PromotionReportComponent
+    },
+    {
         path: 'error',
         component: ErrorComponent
     },
 
 ];
-
+// imports: [ RouterModule.forRoot(routes, { useHash: true })],
 @NgModule({
-    imports: [ RouterModule.forRoot(routes) ],
+    imports: [ RouterModule.forRoot(routes, { useHash: true })],
     exports: [ RouterModule ]
 })
 export class AppRoutingModule {}
