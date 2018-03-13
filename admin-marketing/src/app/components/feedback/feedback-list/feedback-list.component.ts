@@ -123,7 +123,7 @@ export class FeedbackListComponent implements OnInit {
             }
             this.message_result = "";
         } else {
-            let index = this.feedback_del.indexOf(feedback);
+            let index = this.feedback_del.indexOf(feedback.id);
             this.feedback_del.splice(index, 1);
 
             $('#allCheck').prop('checked', false);

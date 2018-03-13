@@ -97,7 +97,7 @@ export class LinkCardListComponent implements OnInit {
             }
             this.message_result = "";
         } else {
-            let index = this.link_card_del.indexOf(linkCard);
+            let index = this.link_card_del.indexOf(linkCard.id);
             this.link_card_del.splice(index, 1);
 
             $('allCheck').prop('checked', false);

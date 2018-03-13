@@ -116,7 +116,7 @@ export class DenominationListComponent implements OnInit {
         }
         else{
 
-            let index = this.deno_selected.indexOf(deno);
+            let index = this.deno_selected.indexOf(deno.id);
             this.deno_selected.splice(index, 1);
 
             $('#allCheck').prop('checked', false);

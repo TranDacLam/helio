@@ -122,7 +122,7 @@ export class AdvertisementListComponent implements OnInit {
             }
             this.message_result = "";
         } else{
-            let index = this.advs_delete.indexOf(adv);
+            let index = this.advs_delete.indexOf(adv.id);
             this.advs_delete.splice(index, 1);
 
             // uncheck selectAll

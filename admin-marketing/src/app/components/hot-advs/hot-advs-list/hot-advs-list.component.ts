@@ -102,7 +102,7 @@ export class HotAdvsListComponent implements OnInit {
       	}
       	else{
 
-       		let index = this.hot_adv_selected.indexOf(deno);
+       		let index = this.hot_adv_selected.indexOf(deno.id);
        		this.hot_adv_selected.splice(index, 1);
 
             $('#allCheck').prop('checked', false);

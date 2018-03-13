@@ -120,7 +120,7 @@ export class BannerListComponent implements OnInit {
             this.message_result = "";
         }
         else{
-            let index = this.banner_del.indexOf(banner);
+            let index = this.banner_del.indexOf(banner.id);
             this.banner_del.splice(index, 1);
 
             $('#allCheck').prop('checked', false);
