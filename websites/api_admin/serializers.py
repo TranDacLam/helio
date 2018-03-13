@@ -365,7 +365,7 @@ class UserRoleDisplaySerializer(serializers.ModelSerializer):
 class UserRoleSerializer(serializers.ModelSerializer):
 
     birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required = False)
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, required=False)
     phone = serializers.CharField(max_length=11, min_length=9, validators=[UniqueValidator(queryset=User.objects.all())])
     
 
@@ -401,7 +401,9 @@ class UserRoleSerializer(serializers.ModelSerializer):
         instance.country = validated_data.get('country', instance.country)
         instance.city = validated_data.get('city', instance.city)
         instance.address = validated_data.get('address', instance.address)
-        instance.set_password(validated_data['password'])
+        # if validated_data['password'] !=  instance.password:
+            # print 'set password'
+            # instance.set_password(validated_data['password'])
         instance.role = validated_data.get('role', instance.role)
         instance.is_active = validated_data.get('is_active', instance.is_active)
         if instance.role_id == 6:

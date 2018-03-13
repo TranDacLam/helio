@@ -3,6 +3,9 @@
 	margin: 10px 15px;
 	border-bottom: 2px solid black;
 }
+.form-feedback {
+	margin-left: 10px;
+}
 a.title-feedback {
 	padding: 5px 0px;
 	color: black;
