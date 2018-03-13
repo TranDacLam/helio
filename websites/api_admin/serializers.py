@@ -60,7 +60,7 @@ class Base64ImageField(serializers.ImageField):
 
 class UserSerializer(serializers.ModelSerializer):
 
-    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
+    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], allow_null = True)
 
     class Meta:
         model = User
@@ -209,7 +209,7 @@ class NotificationSerializer(serializers.ModelSerializer):
 
 class UserEmbedSerializer(serializers.Serializer):
     full_name = serializers.CharField(required=True)
-    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required=True)
+    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required=True)
     personal_id = serializers.IntegerField(required=True)
     email = serializers.CharField(required=True)
     address = serializers.CharField(required=True)
@@ -255,8 +255,8 @@ class CategoryNotificationSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
 
-    start_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required = True)
-    end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required =  True)
+    start_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required = True)
+    end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required =  True)
 
     class Meta:
         model = Event
@@ -400,7 +400,7 @@ class UserRoleDisplaySerializer(serializers.ModelSerializer):
 
 class UserRoleSerializer(serializers.ModelSerializer):
 
-    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required = False)
+    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required = False)
     password = serializers.CharField(write_only=True)
     phone =serializers.CharField(max_length=11, min_length=9)
 
