@@ -1,0 +1,54 @@
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="/banner-list">Banner</a></li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class='row content-banner'>
+	<a class="pull-left" routerLink="/banner-list">Banner</a>
+	<a class="pull-right" routerLink="/banner-add">
+		<div class="btn btn-primary">
+			<span class="glyphicon glyphicon-plus"></span>
+			Thêm banner
+		</div>
+	</a>
+</div>
+<br>
+<div class="table card-list">
+	<div class="alert alert-success" *ngIf="message_result">
+        {{message_result}}
+    </div>
+	<table id="table-banner" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
+		<thead>
+	      	<tr>
+	      		<th class='checkbox-banner'><input type="checkbox" id="allCheck" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/></th>
+	      		<th>Banner</th>
+	      	</tr>
+    	</thead>
+    	<tbody>
+   			<tr *ngFor ="let banner of banners" id="delete{{banner.id}}">
+   				<td><input type="checkbox"
+   					value={{banner.id}} name="banner[]" id="{{banner.id}}"
+   					(change)="checkItemChange($event, banner)"/></td>
+   				<td><a routerLink="/banner-detail/{{ banner.id }}"> {{ banner.sub_url }}</a></td>
+   			</tr>
+    	</tbody>
+	</table>
+	<hr>
+	<div class='row'>
+		<div class="col-md-3">
+			<select name="" class="form-control">
+				<option value="">Xóa các banner được chọn</option>
+			</select>
+		</div>
+		<div class="col-md-3">
+			{{banner_del.length}} của {{banners.length}} được chọn
+			<button (click)="confirmDelete()" type="button" class="button-banner btn btn-danger">Thực hiện</button>
+		</div>
+	</div>
+</div>
+

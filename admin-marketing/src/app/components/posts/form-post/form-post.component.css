@@ -1,0 +1,23 @@
+.noti-image button{
+    margin-top: 5px;
+}
+form label{
+    margin-top: 8px;
+}
+form select.form-control{
+    width: 40%;
+}
+form .event-date{
+    width: 40%;
+}
+form .input-group{
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.message_error{
+    color: red;
+    margin-bottom: 20px;
+}
+.msg_error{
+    color: red;
+}

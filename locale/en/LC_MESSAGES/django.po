@@ -37,7 +37,30 @@ msgstr "PROMOTION"
 
 msgid "menu.faq"
 msgstr "FAQs"
+
+msgid "menu.helio_photos"
+msgstr "HELIO PHOTOS"
 # END MAIN MENU
+
+# START SUB MENU
+msgid "menu.submenu.play"
+msgstr "Helio Play"
+
+msgid "menu.submenu.kids"
+msgstr "Helio Kids"
+
+msgid "menu.submenu.night_life"
+msgstr "Night Life"
+
+msgid "menu.submenu.coffee"
+msgstr "Coffee & Bakery"
+
+msgid "menu.submenu.ortherproduct"
+msgstr "Other Product"
+
+msgid "menu.submenu.redemption_store"
+msgstr "Redemption Store"
+# END SUB MENU
 
 # START BUTTON
 msgid "btn.click_now"
@@ -48,6 +71,9 @@ msgstr "View all"
 
 msgid "btn.view_more"
 msgstr "View more"
+
+msgid "btn.view_detail"
+msgstr "View detail"
 # END BUTTON
 
 # START HOME PAGE
@@ -64,7 +90,7 @@ msgid "homepage.title.section.event"
 msgstr "HELIO CENTER EVENT"
 
 msgid "homepage.title.section.entertaiment"
-msgstr "TRUNG TÂM VUI CHƠI GIẢI TRÍ TẠI ĐÀ NẴNG"
+msgstr "ENTERTAINMENT CENTER AT DA NANG"
 
 msgid "homepage.text.night_life"
 msgstr "NIGHT LIFE"
@@ -77,12 +103,166 @@ msgstr "KIDS"
 
 msgid "homepage.text.coffee"
 msgstr "COFFEE"
+
 # END HOME PAGE
 
 # START FAQs REDEMPTION STORE
 msgid "redemption_store.title.section.faq"
-msgstr "QUESTIONS RELATED TO REDEEM THE GIFT"
+msgstr "FREQUENTLY ASKED QUESTION"
 # END FAQs REDEMPTION STORE
+
+# START FAQs POWERCARD
+msgid "powercard.title.section.faq"
+msgstr "FREQUENTLY ASKED QUESTION"
+# END FAQs POWERCARD
+
+# START POWERCARD
+msgid "powercard.btn.view_full"
+msgstr "SHOW MORE"
+# END POWERCARD
+
+# START EXPERIENCE DETAIl
+msgid "experiencepage.btn.all_experience" 
+msgstr "ALL EXPERIENCE"
+
+msgid "experiencepage.other_experience" 
+msgstr "OTHER EXPERIENCE"
+# END EXPERIENCE DETAIl
+
+# START EVENT
+msgid "eventpage.title.all_event" 
+msgstr "ALL EVENT"
+
+msgid "eventpage.btn.all_event" 
+msgstr "ALL EVENT"
+
+msgid "eventpage.other_event" 
+msgstr "OTHER EVENT"
+
+msgid "eventpage.days" 
+msgstr "DAYS"
+
+msgid "eventpage.hours" 
+msgstr "HOURS"
+
+msgid "eventpage.minutes" 
+msgstr "MINUTES"
+
+msgid "eventpage.seconds" 
+msgstr "SECONDS"
+
+msgid "eventpage.finished" 
+msgstr "FINISHED EVENT"
+
+msgid "eventpage.current" 
+msgstr "CURRENT EVENT"
+
+msgid "eventpage.future" 
+msgstr "FUTURE EVENT"
+# END EVENT
+
+# START PROMOTION DETAIl
+msgid "promotionpage.btn.all_promotion" 
+msgstr "ALL PROMOTION"
+
+msgid "promotionpage.other_promotion" 
+msgstr "OTHER PROMOTION"
+
+msgid "promotionpage.menu.all" 
+msgstr "ALL"
+# END PROMOTION DETAIl
+
+# START CAREER DETAIl
+msgid "careerpage.btn.all_career" 
+msgstr "ALL CAREER"
+
+msgid "careerpage.other_career" 
+msgstr "OTHER CAREER"
+# END CAREER DETAIl
+
+# START NEW DETAIl
+msgid "newpage.btn.all_news" 
+msgstr "ALL NEWS"
+
+msgid "newpage.other_new" 
+msgstr "OTHER NEWS"
+# END NEW DETAIl
+
+# START FAQS
+msgid "faqspage.header.title"
+msgstr "FAQs"
+
+msgid "faqspage.header.description"
+msgstr "Frequently asked questions help you have more good experience when you go to Helio Center."
+
+msgid "faqspage.text.support_more"
+msgstr "SUPPORT MORE"
+
+msgid "faqspage.text.contact_us"
+msgstr "CONTACT US"
+# END FAQs
+
+# START CONTACT 
+msgid "contact.header.title"
+msgstr "CONTACT"
+
+msgid "contact.header.description"
+msgstr "Frequently asked questions help you have more good experience when you go to Helio Center. Frequently asked questions help you have more good experience when you go to Helio Center."
+
+msgid "contact.btn.send"
+msgstr "SEND MESSAGE" 
+
+msgid "contact.lable.title.name"
+msgstr "Your name" 
+
+msgid "contact.lable.title.email"
+msgstr "Email" 
+
+msgid "contact.lable.title.phone"
+msgstr "Phone number" 
+
+msgid "contact.lable.title.subject"
+msgstr "Subject" 
+
+msgid "contact.lable.title.message"
+msgstr "Main message"
+
+msgid "contact.message_success"
+msgstr "Your message was sent successfully!"
+
+msgid "contact.message_error"
+msgstr "Please fix errors below"
+
+msgid "This field is required."
+msgstr "This field is required."
+# END CONTACT
+
+# START OTHER PRODUCT
+msgid "other_product.header.title"
+msgstr "OTHER PRODUCT"
+
+msgid "other_product.header.description"
+msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra. Donec sit amet enim a velit varius eleifend eget vitae eros. Nulla in vulputate justo. Suspendisse potenti."
+# END OTHER PRODUCT
+
+# START ADMIN PROMOTION DETAIL
+msgid "admin_promotion.message_success"
+msgstr "Save success!"
+
+msgid "admin_promotion.message_promotion_install"
+msgstr "Promotion for user install app first. This action cannot apply."
+
+msgid "admin_promotion.btn_back_admin"
+msgstr "BACK TO ADMIN PROMOTION"
+
+msgid "admin_promotion.btn_save"
+msgstr "SAVE"
+# START ADMIN PROMOTION DETAIL
+
+# START HELIO PHOTO
+msgid "helio_photo.total_image"
+msgstr "images"
+# END HELIO PHOTO
 
 #START FOOTER
 msgid "footer.contact.address"
@@ -104,11 +284,104 @@ msgid "footer.menu.news"
 msgstr "NEWS"
 
 msgid "footer.menu.experience"
-msgstr "TRAI NGHIEM"
+msgstr "EXPERIENCE"
 
 msgid "footer.menu.policy"
-msgstr "CHINH SACH"
+msgstr "POLICY"
 
 msgid "footer.menu.terms_of_use"
-msgstr "DIEU KHOAN SU DUNG"   
+msgstr "TERM & CONDITION"   
+
+msgid "footer.text_right"
+msgstr "Powered by"
+
+msgid "footer.text_company"
+msgstr "KhoiPhat, Ltd."   
 #END FOOTER
+
+
+#START EMAIL TEMPLATE
+
+msgid "mail.hello"
+msgstr "Hello"
+
+msgid "mail.register.header"
+msgstr "you have registered for the Helio center."
+
+msgid "mail.register.content1"
+msgstr "Use this account email to sign in to "
+
+msgid "mail.register.content2"
+msgstr "on your computer or mobile device to enjoy a more personalized experience."
+
+msgid "mail.register.content3"
+msgstr "Account Email: "
+
+msgid "mail.register.footer1"
+msgstr "If this account was set up in error, please call "
+
+msgid "mail.register.footer2"
+msgstr "for assistance."
+
+msgid "mail.register.footer3"
+msgstr "Thank you,"
+
+msgid "mail.register.footer4"
+msgstr "Helio Center Support Team."
+
+msgid "mail.verify.header"
+msgstr "Helio Account"
+
+msgid "mail.verify.code"
+msgstr "Security code"
+
+msgid "mail.verify.content"
+msgstr "Please use the following security code for the Helio account"
+
+msgid "mail.verify.footer"
+msgstr "Thank,"
+
+msgid "mail.verify.footer2"
+msgstr "The Helio account team."
+
+msgid "mail.contact.content1"
+msgstr "You have been recieved a contact from"
+
+msgid "mail.contact.content2"
+msgstr "with the following message"
+
+msgid "mail.contact.email"
+msgstr "User Email"
+
+msgid "mail.contact.phone"
+msgstr "Phone Number"
+
+#START EMAIL TEMPLATE
+
+msgid "Popular"
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+msgid "Feedback"
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "No Process"
+msgstr ""
+
+msgid "Answered"
+msgstr ""
+
+msgid "Moved to related department"
+msgstr ""
+
+msgid "Ticket transfer fee"
+msgstr ""
+
+msgid "Deposit fee"
+msgstr ""
+

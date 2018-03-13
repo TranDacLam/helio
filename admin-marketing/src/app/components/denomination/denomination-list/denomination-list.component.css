@@ -1,0 +1,19 @@
+/*Begin content-denomination*/
+.check-denomi {
+	padding: 10px;
+}
+.title-denomination {
+	margin: 15px 0px;
+	border-bottom: 2px solid black;
+	padding: 0 0 10px 0px;
+}
+a.pull-left {
+	color: #333333;
+}
+a.pull-left:hover {
+	text-decoration: none;
+}
+.button-deno {
+	margin-left: 10px;
+}
+/*End content-denomination*/

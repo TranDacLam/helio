@@ -1,5 +1,68 @@
-@import url("https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz");
-@import url("https://fonts.googleapis.com/css?family=Cabin");
+/*@import url("https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz");*/
+/*@import url("https://fonts.googleapis.com/css?family=Cabin");*/
+
+@font-face {
+    font-family: 'Cabin';
+    src: url('../../fonts/Cabin-Regular.eot');
+    src: url('../../fonts/Cabin-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../../fonts/Cabin-Regular.woff') format('woff'),
+        url('../../fonts/Cabin-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cabin';
+    src: url('../../fonts/Cabin-Regular_1.eot');
+    src: url('../../fonts/Cabin-Regular_1.eot?#iefix') format('embedded-opentype'),
+        url('../../fonts/Cabin-Regular_1.woff') format('woff'),
+        url('../../fonts/Cabin-Regular_1.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cabin';
+    src: url('../../fonts/Cabin-Regular_2.eot');
+    src: url('../../fonts/Cabin-Regular_2.eot?#iefix') format('embedded-opentype'),
+        url('../../fonts/Cabin-Regular_2.woff') format('woff'),
+        url('../../fonts/Cabin-Regular_2.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*Yanone facefont */
+
+@font-face {
+    font-family: 'Yanone Kaffeesatz';
+    src: url('../../fonts/YanoneKaffeesatz-Regular_1.eot');
+    src: url('../../fonts/YanoneKaffeesatz-Regular_1.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/YanoneKaffeesatz-Regular_1.woff') format('woff'),
+         url('../../fonts/YanoneKaffeesatz-Regular_1.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Yanone Kaffeesatz';
+    src: url('../../fonts/YanoneKaffeesatz-Regular_2.eot');
+    src: url('../../fonts/YanoneKaffeesatz-Regular_2.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/YanoneKaffeesatz-Regular_2.woff') format('woff'),
+         url('../../fonts/YanoneKaffeesatz-Regular_2.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Yanone Kaffeesatz';
+    src: url('../../fonts/YanoneKaffeesatz-Regular_3.eot');
+    src: url('../../fonts/YanoneKaffeesatz-Regular_3.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/YanoneKaffeesatz-Regular_3.woff') format('woff'),
+         url('../../fonts/YanoneKaffeesatz-Regular_3.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 
 body {
@@ -14,7 +77,9 @@ p {
     line-height: 24px;
     letter-spacing: 0.5px;
 }
-
+img {
+    width: 100%;
+}
 p.short_description {
     font-size: 16px;
 }
@@ -23,6 +88,27 @@ p.page_description {
     font-size: 20px;
 }
 
+/* start custom modal bootstrap */
+.modal-backdrop.fade.in {
+    opacity: 1;
+} 
+.custom-modal .modal-header, 
+.custom-modal .modal-body {
+    border-bottom: none;
+    padding: 0px;
+}
+.custom-modal .modal-header .close {
+    font-size: 76px;
+    color: #fff;
+    opacity: 1;
+    margin-right: 5px;
+    font-weight: normal;
+}
+.custom-modal .modal-content {
+    background: transparent;
+}
+/* end custom modal bootstrap */
+
 .big-font-size {
     font-size: 72px;
     font-family: "Yanone Kaffeesatz";
@@ -30,6 +116,7 @@ p.page_description {
     letter-spacing: 3px;
     font-weight: bold;
 }
+
 .title-content {
     font-family: "Yanone Kaffeesatz";
     font-size: 36px;
@@ -39,9 +126,11 @@ p.page_description {
 }
 /*Event notification*/
 .text-center.event-new {
-     background-image: linear-gradient(to right, #e436aa, #2c1b76);
+    height: 48px;
+    overflow: hidden;
 }
-.text-center.event-new p {
+.text-center.event-new marquee {
+    background-image: linear-gradient(to right, #e436aa, #2c1b76);
     padding: 10px;
     color: #fff;
     margin-bottom: 0px;
@@ -49,38 +138,57 @@ p.page_description {
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 0.5px;
+    white-space:nowrap;
+}
+.text-center.event-new marquee span { 
+    margin-right: 20%;
 }
 .fa.fa-bell-o {
     transform: rotate(30deg);
     margin-right: 10px;
 }
+/*LIMIT SHORT DESCRIPTION*/
+.text-limit-rows {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   max-height: 100px;
+    -webkit-line-clamp: 4;
+   -webkit-box-orient: vertical;
+}
 
 /*HEADER*/
-.header {
-    padding: 15px 0;
-    background-size: 100% 100%;
+.navbar-default .navbar-nav>.open>a, 
+.navbar-default .navbar-nav>.open>a:focus, 
+.navbar-default .navbar-nav>.open>a:hover {
+    background: transparent;
 }
-.well.logo-div {
+
+
+.header {
+    padding: 15px 0 0px 0px;
+    min-height: 150px;
+    position: relative;
+}
+.header .top-menu, 
+.header .navbar.header-nav {
+    margin-left: 180px;
+}
+
+.header .well.logo-div {
     background-color: transparent;
     padding: 0px;
     border: none;
+    position: absolute;
+    width: 130px;
 }
 .well.logo-div img {
     height: 100%;
 }
-.navbar.navbar-default{
+
+.header .navbar.header-nav {
     margin-bottom: 0px;
-}
-.menu .col-sm-2, .menu .col-xs-2{
-    padding-right:0px !important;
-}  
-.row .well.logo-div {
-    margin: 0;
-    text-align: center;
-}
-.top_link{
-    padding: 15px;
-}
+} 
 .navbar-default {
     background: transparent;
     border: none;
@@ -95,7 +203,8 @@ p.page_description {
     padding-right: 0px;
 }
 .main-menu  .navbar-nav>li {
-    padding: 0 50px 0 0;
+    padding: 0 40px 0 0;
+    min-height: 57px;
 }
 .main-menu .navbar-nav>li.active>a,
 .main-menu .navbar-nav>li.active>a:hover,
@@ -110,23 +219,29 @@ p.page_description {
     text-decoration: none;
     background-color: transparent;
 }
+.dropdown-menu-custom {
+    background-color: #15062b;
+}
 .navbar-default .main-menu ul.dropdown-menu {
     padding: 0px;
 }
 .navbar-default .main-menu .dropdown-menu>li>a:hover,
-.navbar-default .main-menu .dropdown-menu>li>a:focus {
-    background-color: #15062b;
-    color: #fff;
+.navbar-default .main-menu .dropdown-menu>li>a:focus,
+.navbar-default .main-menu .dropdown-menu>li.active>a,
+.navbar-default .main-menu .navbar-nav .open .dropdown-menu>.active>a, 
+.navbar-default .main-menu .navbar-nav .open .dropdown-menu>.active>a:focus, 
+.navbar-default .main-menu .navbar-nav .open .dropdown-menu>.active>a:hover
+
+ {
+    background-color: #fec231;
+    color: #15062b;
 }
 .navbar-default .main-menu .dropdown-menu>li>a {
-    color: #15062b;
+    color: #fff;
     padding-left: 15px;
     padding-right: 15px;
 }
 
-.menu-content {
-    padding-left: 4%;
-}
 .navbar.navbar-default.header-nav {
     min-height: 0px;
 }
@@ -196,13 +311,27 @@ p.page-title-text {
     color: #fff;
     background-image: linear-gradient(347deg, #07487b, #3c0034);
 }
-
+#footer-wrapper .menuwidget a:hover{
+    color: #da139a;
+    text-decoration: underline;
+}
+#footer-wrapper #email-contact{
+    color: #fff;
+}
+#footer-wrapper #email-contact:hover{
+    color: #da139a;
+    text-decoration: underline;
+}
 .footer-contact {
     margin-bottom: 35px;
 }
 
 .box_footer {
     padding-top: 25px;
+}
+
+.footer-contact img {
+    width: 160px;
 }
 
 a.btn-custom-style {
@@ -214,12 +343,14 @@ a.btn-custom-style {
     font-weight: bold;
     border-style: solid;
     color: #fff;
-    border-width: 1px;
-    border-image-source: linear-gradient(16deg, #e436aa, #2c1b76);
+    border-width: 2px;
     border-image-slice: 1;
+    border-style: solid;
+    border-image-source: linear-gradient(16deg, #e436aa, #2c1b76);
     padding: 9px 15px 3px 15px;
     text-decoration: none;
     text-transform: uppercase;
+    border-color: #fff;
 }
 .active>a.btn-custom-style,
 a.btn-custom-style:focus, 
@@ -250,6 +381,55 @@ a.btn-custom-style:hover {
     margin-top: 50px;
     margin-bottom: 80px;
 }
+.banner3 {
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+/*ROW EQUAL FOR EXPERIENCE AND CAREER*/
+.row-equal {
+    display: flex;
+    flex-wrap: wrap;
+}
+/*START Helio play and kids*/
+.cursor-custom {
+    cursor: default;
+}
+/*END Helio play and kids*/
+
+/*START CUSTOM HR*/
+.hr-custom {
+    border-color: #802ca2;
+    margin: 50px 0px;
+}
+/*END CUSTOM HR*/
+
+.download-app{
+    background: url('../images/download-app_banner.png') no-repeat;
+    min-height: 250px;
+    /*width: 100%;*/
+    position: relative;
+    background-size: 100% auto;
+}
+
+.download-app .app-android{
+    right: 13px;
+    position: absolute;
+    top: 40%;
+    width: 20%;
+    height: 40%;
+    cursor: pointer;
+    right: 0;
+}
+
+.download-app .app-ios{
+    right: 13px;
+    position: absolute;
+    top: 0;
+    width: 20%;
+    height: 38%;
+    cursor: pointer;
+    right: 0;
+}
 
 /*FOOTER*/
 .menuwidget.nav li {
@@ -263,13 +443,95 @@ a.btn-custom-style:hover {
 .menuwidget.nav li a:hover {
     background: transparent;
 }
+.helio-footer-info p, 
+.contact-text p {
+    font-size: 14px;
+}
+.search-btn {
+    color: #fff;
+}
+.search-btn .glyphicon-search {
+    top: 5px;
+}
+.custom-icon {
+    margin: 0px 20px;
+    font-size: 30px;
+    color: #fff;
+}
+.icon-footer a:hover,
+.icon-footer a:focus {
+    color: #fff;
+}
+.icon-footer .icon-youtube-play:hover,
+.icon-footer .icon-youtube-play:focus {
+    color: #e336b6;
+}
+.icon-youtube-play {
+    color: #e336b6;
+}
+.footer-text {
+    display: inline;
+}
+.footer-text-color {
+    color: #e336b6;
+    display: inline;
+}
 
+
+input.input-search {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    width: 350px;
+    outline: 0;
+}
+.glyphicon-custom {
+    top: 0px;
+    margin-left: 8px;
+    font-weight: normal;
+    font-size: 18px;
+}
 /*Apply for mobile*/
-@media (max-width: 992px) {
+@media (max-width: 991px) {
     .big-font-size {
         font-size: 36px;
         line-height: 40px;
     }
+    .helio-footer-info div.icon-footer {
+        text-align: left;
+        
+    }
+    .helio-footer-info div.pull-right {
+        float: none !important; 
+    }
+
+}
+
+@media (max-width: 767px) {
+    p {
+        font-size: 16px;
+        line-height: 20px;
+    }
+    p.short_description {
+        font-size: 14px;
+    }
+    p.page_description {
+        font-size: 18px;
+    }
+    .big-font-size {
+        font-size: 28px;
+        line-height: 30px;
+    }
+    .title-content {
+        font-size: 24px;
+        line-height: 30px;
+    }
+    a.btn-custom-style {
+        font-size: 20px;
+        padding-top: 7px;
+    }
+
+
     .navbar-toggle.pull-left {
         margin-left: 10px;
     }
@@ -291,11 +553,55 @@ a.btn-custom-style:hover {
     .page-header-img {
         margin-bottom: 0px;
     } 
-
-
-    .main-menu .navbar-nav li a {
-        text-align: right;
+    .header {
+        min-height: 110px;
     }
+    .header .well.logo-div {
+        width: 95px;
+    }
+    .header .top-menu {
+        margin-left: 95px;
+    }
+    .header .navbar.header-nav {
+        padding-left: 0px;
+        margin: 50px -15px 0px;
+    }
+
+    .main-menu .navbar-nav {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    .main-menu  .navbar-nav>li {
+        border-bottom: 1px solid #ccc;
+        padding: 0px;
+    }
+
+    .main-menu .navbar-nav li a, 
+    .time-info .time-wrapper {
+        padding: 25px 15px 20px 15px;
+    }
+    .time-info .time-wrapper p{
+        text-align: left;
+    }
+    .main-menu .navbar-nav .dropdown-menu>li>a {
+        padding: 20px 30px 15px 30px;
+        position: relative;
+    }
+    .navbar-default .main-menu .navbar-nav .open .dropdown-menu>li>a {
+        color: #fff;
+    }
+    #menu-caret {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+    }
+    #menu-caret:before {
+        content: "\e113";
+    }
+    .dropdown-submenu.open #menu-caret:before {
+        content: "\e114";
+    }
+
     .main-menu .navbar-nav>li.active>a,
     .main-menu .navbar-nav>li.active>a:hover,
     .main-menu .navbar-nav>li>a:focus, 
@@ -307,5 +613,80 @@ a.btn-custom-style:hover {
         text-decoration: none;
         background-color: transparent;
     }
+}
+/* Safari 6.1-10.0*/
+@media screen and (min-color-index:0) 
+and(-webkit-min-device-pixel-ratio:0) { @media
+{
+    a.btn-custom-style {
+        padding-top: 3px;
+    }
+}}
+/* Safari 10.1+ */
+@media not all and (min-resolution:.001dpcm) { @media
+{
+    a.btn-custom-style {
+        padding-top: 3px;
+    }
+}}
 
+
+/* IE10 and hight and max-with:991px*/
+@media all and (-ms-high-contrast:none) and (min-width: 991px){
+    .big-font-size {
+        font-size: 60px;
+    }
+}
+
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+    .download-app{
+        min-height: 70px;
+    }
+    .download-app .app-ios{
+       height: 40%; 
+    }
+    .download-app .app-android{
+       top: 42%;
+       height: 40%; 
+    }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+    .download-app{
+        min-height: 130px;
+    }
+    .download-app .app-ios{
+       height: 37%; 
+    }
+    .download-app .app-android{
+       top: 43%;
+       height: 40%; 
+    }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 768px) {
+    .header .header-nav ul li:hover ul{
+        display: block;
+    }
+
+    .download-app{
+        min-height: 130px;
+    }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+    .download-app{
+        min-height: 180px;
+    }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+    .download-app{
+        min-height: 250px;
+    }
 }

@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% load i18n %} 
+{% block title %}Power card - Thẻ vạn năng{% endblock %}
 {% block extrastylesheet %}
 	<link href="{{ STATIC_URL }}assets/websites/css/powercard.css" rel="stylesheet" type="text/css" />
 	<link href="{{ STATIC_URL }}assets/websites/css/faqs_section.css" rel="stylesheet" type="text/css" />
@@ -50,7 +51,7 @@
 	                </div>
 	                <div class="row card-div-bottom hidden">
 	                	<button class="view-full card-close">
-	                		XEM ĐẦY ĐỦ <br> <i class="glyphicon glyphicon-chevron-down"></i>
+	                		 {% trans "powercard.btn.view_full" %}<br> <i class="glyphicon glyphicon-chevron-down"></i>
 	                	</button>
 	                </div>
 				</div>
@@ -64,20 +65,17 @@
     {% if result.faqs %}
     <div class="faqs-section">
     	<div class="faqs-title" align="center">
-    		<p class="big-font-size">NHỮNG CÂU HỎI LIÊN QUAN ĐẾN POWERCARD</p>
+    		<p class="big-font-size">{% trans "powercard.title.section.faq" %}</p>
     	</div>
     	{% include 'websites/sections/faqs_section.html' %}
 
     	<div class="div-view-more" align="center">
-            <a class="btn-view-more btn-custom-style btn-custom-style-kids" role="button">{% trans "btn.view_more" %}</a>
+            <a class="btn-view-more btn-custom-style btn-custom-style-faqs" role="button">{% trans "btn.view_more" %}<span class="glyphicon glyphicon-chevron-down glyphicon-custom"></a>
         </div>
     </div>
     {% endif %}
 
-    <!-- DOWNLOAD APP BANNER -->
-    <div class="app-banner">
-	    <a href="#"><img src="{{ STATIC_URL }}assets/websites/images/download-app_banner.png" width="100%"></a>
-	</div>
+    
 </div>
 
 {% endblock %}

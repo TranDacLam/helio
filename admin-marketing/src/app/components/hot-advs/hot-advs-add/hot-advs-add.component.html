@@ -1,0 +1,128 @@
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="/hot-advs-list">Hot Advs</a></li>
+            <li class="breadcrumb-item"><a routerLink="/hot-advs-add">Thêm Hot Advs</a></li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class='title-hot-advs row'>
+    <a class="pull-left" routerLink="/hot-advs-add">Thêm Hot Advs</a>
+</div>
+<form [formGroup]="formHotAds" enctype="multipart/form-data">
+	<div class="col-md-8 col-md-offset-2">
+		<div class="form-group row">
+			<div class="col-sm-3">
+				<label class="center-block"> Tên:</label>
+			</div>
+        	<div class="col-sm-8">	
+				<input class='form-control' name="name" 
+				formControlName="name"
+				(click)="removeErrorMessage()"
+				>
+				<div *ngIf="errorMessage">
+					<p class='errors'> {{ errorMessage.name }} </p>
+				</div>
+				<show-error-valid [control]="formHotAds.get('name')"></show-error-valid>	
+        	</div>
+        </div>
+        <div class="form-group row">
+	        <div class="col-sm-3">
+	            <label class="center-block">Hình Ảnh:</label>
+	        </div>
+	        <div class="col-sm-8">
+            	<input type="file" id="image" class="form-control" accept="image/*"
+		        (change)="onFileChange($event)"
+		        />
+		        <div *ngIf="errorMessage">
+					<p class='errors'> {{ errorMessage.image }} </p>
+				</div>
+            	<show-error-valid [control]="formHotAds.get('image')"></show-error-valid>
+        	</div>
+        	
+    	</div>
+        <div class="form-group row">
+			<div class="col-sm-3">
+				<label class="center-block"> Nội Dung:</label>
+			</div>
+        	<div class="col-sm-8">	
+				<textarea row="8" class='form-control' name="content" 
+				formControlName="content"
+				></textarea>
+				<div *ngIf="errorMessage">
+					<p class='errors'> {{ errorMessage.content }} </p>
+				</div>
+				<show-error-valid [control]="formHotAds.get('content')"></show-error-valid>
+        	</div>
+        </div>
+        <div class="form-group row">
+			<div class="col-sm-3">
+				<label class="center-block">Button:</label>
+			</div>
+        	<div class="col-sm-8">	
+				<div class="row">
+					<div class="col-md-3">
+						<button type="button" class="btn btn-info">Đăng kí</button>
+					</div>
+					<div class="form-check col-md-3">
+					    <input type="checkbox" class="form-check-input" id="is_register" formControlName="is_register">
+					    <label class="form-check-label" for="is_register">Hiển thị</label>
+					</div>
+					<div class="col-md-3">
+						<button type="button" class='btn btn-success'>Xem chi tiết</button>
+					</div>
+					<div class="form-check col-md-3">
+					    <input type="checkbox" class="form-check-input" id="is_view_detail" formControlName="is_view_detail">
+					    <label class="form-check-label" for="is_view_detail">Hiển thị</label>
+					</div>
+				</div>
+        	</div>
+        </div>
+        <div class="form-group row">
+			<div class="col-sm-3">
+				<label class="center-block"> Sub_url button Đăng kí:</label>
+			</div>
+        	<div class="col-sm-8">	
+				<input class='form-control' name="sub_url_register" 
+				formControlName="sub_url_register"
+				>
+				<div *ngIf="errorMessage">
+					<p class='errors'> {{ errorMessage.sub_url_register }} </p>
+				</div>
+				<show-error-valid [control]="formHotAds.get('content')"></show-error-valid>
+        	</div>
+        </div>
+        <div class="form-group row">
+			<div class="col-sm-3">
+				<label class="center-block"> Sub_url button Xem chi tiết:</label>
+			</div>
+        	<div class="col-sm-8">	
+				<input class='form-control' name="sub_url_view_detail" 
+				formControlName="sub_url_view_detail"
+				>
+				<div *ngIf="errorMessage">
+					<p class='errors'> {{ errorMessage.sub_url_view_detail }} </p>
+				</div>
+				<show-error-valid [control]="formHotAds.get('content')"></show-error-valid>
+        	</div>
+        </div>
+        <div class="form-group row">
+        	<div class="col-sm-3">
+				<label class="center-block"> Trạng thái:</label>
+			</div>
+        	<div class="form-check col-sm-8">
+			    <input  formControlName="is_draft" type="checkbox" class="form-check-input" id="is_draft">
+			    <label class="form-check-label" for="is_draft">Is Draf</label>
+			</div>
+        </div>
+	</div>
+	<div class="clearfix"></div>
+	<div class="area-button row">
+		<div class="col-md-8 col-md-offset-2">
+    		<button [disabled]="formHotAds.invalid" (click)="createHotAdvs();" class="bt-hot-advs pull-right btn btn-info">Lưu lại</button>
+    	</div>
+    </div>
+</form>

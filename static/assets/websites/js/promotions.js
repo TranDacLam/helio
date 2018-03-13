@@ -4,29 +4,25 @@ var KidsFunction = (function ($) {
         var show_num = {};
         var first_show = 5,
             view_more = 5;
-        this.initElementPage = function() {
-            $(".promotion-btn-group li:first").addClass("active");
-            $(".tab-content .tab-pane:first").addClass("active");
-        }
 
         this.initEventPage = function () {
-            $(".tab-content .tab-pane").each(function(){
+            $(".tab-content .tab-pane.view-more-content").each(function(){
                 var id = $(this).attr("id");
                 show_num[id] = first_show;
-                _self.viewMore($(this).find(".view-more-div"));
+                _self.viewMore($(this));
             });
             $(".btn-view-more").click(function() {
-                var div_parent = $(this).parent().parent();
-                var id = $(div_parent).parent().attr("id");
+                var element_content = $(this).parent().closest(".view-more-content");
+                var id = $(element_content).attr("id");
                 show_num[id] += view_more;
-                _self.viewMore(div_parent);
+                _self.viewMore(element_content);
             });     
         }
         this.viewMore = function (element) {
-            var id = $(element).parent().attr("id");
-            var size_list = $(element).find(".image-div").length;
+            var id = $(element).attr("id");
+            var size_list = $(element).find(".item-line").length;
             var show_lengh =  show_num[id];
-            $(element).find('.image-div:lt('+show_lengh+')').show();
+            $(element).find('.item-line:lt('+show_lengh+')').show();
             if(show_lengh >= size_list) {
                 $(element).find(".btn-view-more").hide();
             }
@@ -38,7 +34,6 @@ var KidsFunction = (function ($) {
 
 (function (kids, $) {
     $(document).ready(function(){
-        kids.initElementPage()
         kids.initEventPage();
     });
 })(new KidsFunction(), jQuery);

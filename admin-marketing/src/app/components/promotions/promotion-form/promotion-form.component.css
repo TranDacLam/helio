@@ -1,0 +1,10 @@
+.error_msg{
+    color: red;
+}
+.custom-date{
+    padding-right: 15px;
+    padding-left: 15px;
+}
+form .event-date{
+    width: 40%;
+}

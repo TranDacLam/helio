@@ -8,6 +8,7 @@ from django import forms
 import custom_models
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from multiupload.admin import MultiUploadAdmin
 # from django.contrib.admin import SimpleListFilter
 
 
@@ -48,8 +49,9 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = custom_models.User
-        fields = ('email', 'password', 'birth_date', 'phone', 'personal_id',
-                  'country', 'address', 'city', 'is_active', 'is_staffing', 'is_superuser', 'groups')
+        fields = ('email', 'password', 'birth_date', 'phone', 'personal_id', 'full_name',
+                  'country', 'address', 'city', 'is_active', 'is_staff', 'is_superuser', 'groups', 'code', 
+                  'avatar', 'anonymously', 'flag_notification', 'device_unique', )
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -62,17 +64,21 @@ class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
     add_form = UserCreationForm
+    readonly_fields = ('code', 'anonymously', 'flag_notification', 'device_unique' )
 
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'country', 'is_staffing')
-    list_filter = ('is_staffing', 'is_superuser', )
+    list_display = ('email', 'country', 'is_staff', 'is_superuser')
+    list_filter = ('is_staff', 'is_superuser', )
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('birth_date', 'phone',
-                                      'personal_id', 'country', 'address', 'city',)}),
-        ('Permissions', {'fields': ('is_staffing', 'is_superuser', 'groups', )}),
+        ('Personal info', {'fields': ('full_name', 'birth_date', 'phone',
+                                      'personal_id', 'country', 'address', 'city', 'avatar', )}),
+        ('Permissions', {'fields': ('is_staff',
+                                    'is_superuser', 'is_active', 'anonymously', 'groups', )}),
+        ('Security', {'fields': ('code', 'device_unique', )}),
+        ('Notification', {'fields': ('flag_notification', )}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
@@ -82,7 +88,7 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'password1', 'password2')}
          ),
     )
-    search_fields = ('email',)
+    search_fields = ('email', 'phone', )
     ordering = ('email',)
     filter_horizontal = ()
 
@@ -102,10 +108,28 @@ admin.site.register(Type, TypeAdmin)
 
 # Register Posts Type Model to Admin Site
 
+class PostTypeAdmin(TranslationAdmin):
+    pass
+admin.site.register(Post_Type, PostTypeAdmin)
+
 
 class PostImageInline(admin.TabularInline):
     model = Post_Image
     extra = 3
+
+class PostMultiuploadMixing(object):
+
+    def process_uploaded_file(self, uploaded, post, request):
+        if post:
+            image_obj = post.posts_image.create(image=uploaded)
+        else:
+            image_obj = Post_Image.objects.create(image=uploaded, post=None)
+        return {
+            'url': image_obj.image.url,
+            'thumbnail_url': image_obj.image.url,
+            'id': image_obj.id,
+            'name': image_obj.filename
+        }
 
 # Add Filter Post Type
 
@@ -121,7 +145,7 @@ class PostImageInline(admin.TabularInline):
 #         post_types = set(
 #             [c.post_type for c in model_admin.model.objects.all()])
 #         result = [(pt.id, pt.name) for pt in post_types if pt != None]
-        
+
 #         return result
 
 #     def queryset(self, request, queryset):
@@ -131,27 +155,35 @@ class PostImageInline(admin.TabularInline):
 #             return queryset
 
 
-class PostTypeAdmin(TranslationAdmin):
-    pass
-admin.site.register(Post_Type, PostTypeAdmin)
-
 # Register Posts Model to Admin Site
+
 
 def custom_titled_filter(title):
     class Wrapper(admin.FieldListFilter):
+
         def __new__(cls, *args, **kwargs):
             instance = admin.FieldListFilter.create(*args, **kwargs)
             instance.title = title
             return instance
     return Wrapper
 
-class PostAdmin(TranslationAdmin):
+
+class PostAdmin(PostMultiuploadMixing, MultiUploadAdmin, TranslationAdmin):
     list_filter = (('post_type__name', custom_titled_filter('Post Type')), )
     # list_filter = (PostTypeFilter, )
     inlines = [PostImageInline, ]
     formfield_overrides = {
         models.TextField: {'widget': CKEditorUploadingWidget()},
     }
+    multiupload_form = True
+    multiupload_list = False
+
+    def delete_file(self, pk, request):
+        '''
+        Delete an image.
+        '''
+        obj = get_object_or_404(Image, pk=pk)
+        return obj.delete()
 
     def get_readonly_fields(self, request, obj=None):
         if obj:  # editing an existing object
@@ -164,7 +196,29 @@ admin.site.register(Post, PostAdmin)
 # Events
 
 
+class EventForm(forms.ModelForm):
+
+    class Meta:
+        model = Event
+        fields = '__all__'
+
+    # def clean_name_en(self):
+    #     name_en = self.cleaned_data.get('name_en')
+    #     if not name_en:
+    #         raise forms.ValidationError("Trường này không được bỏ trống.")
+
+    def clean_end_date(self):
+        print 'self.cleaned_data ',self.cleaned_data
+        end_date = self.cleaned_data.get('end_date')
+        start_date = self.cleaned_data.get('start_date')
+
+        if start_date and end_date < start_date:
+            raise forms.ValidationError("Ngày kết thúc phải lớn hơn ngày bắt đầu.")
+        return end_date
+
+
 class EventAdmin(TranslationAdmin):
+    form = EventForm
     formfield_overrides = {
         models.TextField: {'widget': CKEditorUploadingWidget()},
     }
@@ -181,15 +235,6 @@ class GameAdmin(TranslationAdmin):
     pass
 admin.site.register(Game, GameAdmin)
 
-# Entertainments
-
-
-class EntertainmentAdmin(TranslationAdmin):
-    formfield_overrides = {
-        models.TextField: {'widget': CKEditorUploadingWidget()},
-    }
-    pass
-admin.site.register(Entertainment, EntertainmentAdmin)
 
 # FAQs
 
@@ -210,6 +255,9 @@ admin.site.register(Banner, BannerAdmin)
 
 
 class PromotionAdmin(TranslationAdmin):
+    formfield_overrides = {
+        models.TextField: {'widget': CKEditorUploadingWidget()},
+    }
     pass
 admin.site.register(Promotion, PromotionAdmin)
 
@@ -222,21 +270,63 @@ class HotForm(forms.ModelForm):
         model = Hot
         fields = '__all__'
 
-    def clean(self):
+    def clean_is_show(self):
         is_show = self.cleaned_data.get('is_show')
         total_show = Hot.objects.filter(is_show=True).count()
-        if total_show < 5:
+        print 'total_show ',total_show
+        print 'is_show ',is_show
+        # case update db is 4:
+
+        if total_show < 4 or not is_show:
+            pass
+        elif self.instance.pk and self.instance.is_show == is_show and total_show == 4:
             pass
         else:
-            raise forms.ValidationError('Hot giới hạn tối đa 5 bài được hiển thị. Vui lòng chọn bỏ bớt trường is_show và chọn lại.',
-                                        code='invalid_is_show',
-                                        params={'is_show': is_show},
-                                        )
+            raise forms.ValidationError('Hot giới hạn tối đa 4 bài được hiển thị. Vui lòng chọn bỏ bớt trường is_show và chọn lại.',
+                                            code='invalid_is_show',
+                                            params={'is_show': is_show},
+                                            )
 
-        return self.cleaned_data
+        return self.cleaned_data['is_show']
 
 
 class HotsAdmin(TranslationAdmin):
     form = HotForm
+    list_display = ('name', 'is_show', )
     pass
 admin.site.register(Hot, HotsAdmin)
+
+
+class FeedBackAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(FeedBack, FeedBackAdmin)
+
+
+class AdvertisementAdmin(TranslationAdmin):
+    pass
+admin.site.register(Advertisement, AdvertisementAdmin)
+
+
+class PromotionLabelAdmin(TranslationAdmin):
+    pass
+admin.site.register(Promotion_Label, PromotionLabelAdmin)
+
+
+class TransactionTypeAdmin(TranslationAdmin):
+     pass
+admin.site.register(Transaction_Type, TransactionTypeAdmin)
+
+
+class OpenTimeAdmin(admin.ModelAdmin):
+     pass
+admin.site.register(OpenTime, OpenTimeAdmin)
+
+
+class NotificationAdmin(TranslationAdmin):
+     pass
+admin.site.register(Notification, NotificationAdmin)
+
+
+class CategoryNotificationAdmin(TranslationAdmin):
+     pass
+admin.site.register(Category_Notification, CategoryNotificationAdmin)

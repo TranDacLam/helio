@@ -8,32 +8,48 @@
 <html lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl" {% endif %}>
 
 <head>
+    <meta property="fb:pages" content="448464605517097" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=11,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
     <meta name="description" content="{% block meta_description %}{% endblock %}"> 
-
+    <link href="{{ STATIC_URL }}assets/images/favicon.ico" type="image/x-icon" rel="icon">
+    <link href="{{ STATIC_URL }}assets/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <META HTTP-EQUIV="Content-language" CONTENT="vi">
 
     <link href="{{ STATIC_URL }}assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="{{ STATIC_URL }}assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="{{ STATIC_URL }}assets/websites/css/global.css" rel="stylesheet" type="text/css" />
     
-    
 
+    <title>{% block title %}{% endblock title %}</title>
     {% block metacontent %}{% endblock %}
-    {% block meta_title_home %}
-      <title>{% block meta_title %}{% endblock %}</title>
-    {% endblock %}
+    
     {% block extrastylesheet %}{% endblock %}
 
     <script type="text/javascript">
         var STATIC_URL = '{{ STATIC_URL }}';
+        var MEDIA_URL = '{{ MEDIA_URL }}';
         var lang_code = '{{ LANGUAGE_CODE }}';
+        var fbAppId = '{{FB_APP_ID}}';
     </script>
     
-    <script src = "{{ STATIC_URL }}assets/js/jquery.min.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-101869660-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    <script src = "{{ STATIC_URL }}assets/js/jquery-3.2.1.min.js"></script>
     <script src = "{{ STATIC_URL }}assets/js/bootstrap.min.js"></script>
+    <script src = "//connect.facebook.net/en_US/sdk.js"></script>
+    <script src="{{ STATIC_URL }}assets/js/jquery.blockUI.js"></script>
     <script src = "{{ STATIC_URL }}assets/websites/js/ajaxSetup.js"></script>
     <script src = "{{ STATIC_URL }}assets/websites/js/main.js"></script>
     {% block extrascript %}{% endblock %}
@@ -48,9 +64,19 @@
 
     <!-- Start Body -->
     <div class="body-wrap">
-        <div class="container-fluid text-center event-new">
-            <p><i class="fa fa-bell-o" aria-hidden="true"></i>CHƯƠNG TRÌNH GIẢM GIÁ BÁNH TẠI BAKERY - SẮP DIỄN RA LÚC 17:30</p>
+        {% if advertisements %}
+        <div class="text-center event-new">
+            <marquee>
+                <div>
+                {% for advertisement in advertisements %}
+                    <i class="fa fa-bell-o" aria-hidden="true"></i>
+                    <span>{{advertisement}}</span>
+                {% endfor %}
+                </div>
+            </marquee>
+            <!-- <marquee behavior="scroll" direction="left" id="marq" loop="50" onmouseout="this.start()" onmouseover="this.stop()" scrollamount="10" scrolldelay="10"><p><i class="fa fa-bell-o" aria-hidden="true"></i>{{advertisement}}</p></marquee> -->
         </div>
+        {% endif %}
         {% block main_content %} {% endblock %}
 
     </div>

@@ -1,9 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.utils import translation
-from django.utils.translation import check_for_language, get_language
-from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
-from rest_auth.registration.views import SocialLoginView
+from django.http import Http404, HttpResponse
 
-class FacebookLogin(SocialLoginView):
-    adapter_class = FacebookOAuth2Adapter
+def custom_404(request):
+    return render(request, 'websites/errors/404.html', {}, status=404)
+
+def custom_500(request):
+    return render(request, 'websites/errors/500.html', {}, status=500)

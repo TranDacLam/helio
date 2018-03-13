@@ -1,0 +1,60 @@
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Quản Lý Câu Hỏi Thường Gặp</li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class="row text-center">
+    <h1>QUẢN LÝ CÂU HỎI THƯỜNG GẶP</h1>
+</div>
+<div class="row mt-50 mb-30 custom-title">
+    <div class="col-xs-6 col-sm-6">
+        <a class="btn custom-button" routerLink="/">
+            <i class="fa fas fa-arrow-left icon-button"></i>
+            TRỞ VỀ TRANG QUẢN TRỊ
+        </a>
+    </div>
+    <div class="col-xs-6 col-sm-6">
+        <a class="btn custom-button pull-right" routerLink="/faq/add">
+            <i class="fa fas fa-plus icon-button"></i>
+            TẠO CÂU HỎI MỚI
+        </a>
+    </div>
+    <div class="col-xs-12 col-sm-12 mt-15 messsage_error" *ngIf="errorMessage">
+        <h4>{{errorMessage}}</h4>
+    </div>
+    <div class="col-xs-12 col-sm-12 mt-15 messsage" *ngIf="message_result">
+        <h4>{{message_result}}</h4>
+    </div>
+</div>
+<div>
+    <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="faqs">
+        <thead>
+            <tr>
+                <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
+                <th>Câu Hỏi Thưòng Gặp</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let faq of faqs" id="del-{{faq.id}}">
+                <td><input type="checkbox" (change)="onSelectCKB($event, faq)" [checked]="select_checked"/></td>
+                <td><a routerLink="/faq/edit/{{ faq.id }}">{{ faq.question }}</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row dels-faq" *ngIf="faqs">
+    <div class="col-md-3">
+        <select name="" class="form-control">
+            <option value="1">Xóa các phản hồi được chọn</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        {{ faqs_del.length }} của {{ length_faqs }} được chọn 
+        <button class="btn btn-danger" (click)="deleteFaqEvent()">Thực hiện</button>
+    </div>
+</div>

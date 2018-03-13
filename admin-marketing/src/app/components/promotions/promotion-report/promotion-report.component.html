@@ -1,0 +1,57 @@
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Quản Lý Khuyến Mãi</li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class="row mt-50 mb-30 custom-title" *ngIf="promotion">
+    <div class="col-xs-12 col-sm-6">
+        <a class="btn custom-button" [routerLink]="['/users-promotions/', promotion.id]">
+            <i class="fa fas fa-arrow-left icon-button"></i>
+            TRỞ VỀ CHI TIẾT KHUYẾN MÃI
+        </a>
+    </div>
+</div>
+<div class="row" *ngIf="promotion">
+    <div class="col-md-12">
+        <p> ID: {{promotion.id}} </p>
+        <p> Tên Khuyến Mãi: {{promotion.name}} </p>
+        <p>TỔNG SỐ KHÁCH HÀNG: 2000 &ensp;&ensp; Số người đã nhận: 500 &ensp;&ensp; Số người chưa nhận: 500</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="datatable-content">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" *ngIf="promotion_user">
+                <thead>
+                    <tr>
+                        <th>Họ Và Tên</th>
+                        <th>Ngày Sinh</th>
+                        <th>Email</th>
+                        <th>Số Điện Thoại</th>
+                        <th>Trạng Thái Thẻ</th>
+                        <th>Tình Trạng</th>
+                        <th>Ngày Nhận</th>
+                        <th>Device ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of promotion_user">
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.birth_date | date : 'dd/MM/yyyy' }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.phone }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,8 +1,17 @@
 {% extends "layout.html" %}
 {% load i18n %} 
+
+{% block title %}Helio{% endblock title %}
 {% block extrastylesheet %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}assets/css/flexslider.css" type="text/css" media="screen" />
     <link href="{{ STATIC_URL }}assets/websites/css/home.css" rel="stylesheet" type="text/css" />
 {% endblock %}
+
+{% block extrascript %}
+    <script type="text/javascript" src = "{{ STATIC_URL }}assets/js/jquery.flexslider.js"></script>
+    <script src = "{{ STATIC_URL }}assets/websites/js/home.js"></script>
+{% endblock %}
+
 {% block main_content %}  
 <!-- SLIDE SECTION -->
 {% if result.hots %}
@@ -12,12 +21,25 @@
         <div class="carousel-inner" role="listbox">
             {% for hot in result.hots %}
             <div class="item">
-                <img src="{{ MEDIA_URL }}{{hot.image}}" width="100%">
+                <a href="{{hot.sub_url}}" target="_blank">
+                    <img src="{{ MEDIA_URL }}{{hot.image}}" width="100%">
+                    <div class="carousel-caption caption-custom hidden-md hidden-lg">
+                        <a href="{{hot.sub_url}}" target="_blank">{{hot.name}}</a>
+                    </div>
+                </a>
             </div>
             {% endfor %}
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <span class="sr-only">Next</span>
+            </a>
         </div>
-
-        <ul class="nav nav-justified home-carousel hidden-xs">
+        <ul class="nav nav-justified home-carousel hidden-sm hidden-xs">
             {% for hot in result.hots %}
             <li data-target="#myCarousel">
                 <a class="title-content" href="#">{{hot.name}}</a>
@@ -29,8 +51,8 @@
 {% endif %}
 <!-- BANNER 1 SECTION -->
 {% if result.banners and result.banners.1 %}
-<div class="container">
-    <a href="{{result.banners.1.sub_url}}"><img src="{{ MEDIA_URL }}{{result.banners.1.image}}" width="100%"></a>
+<div class="container banner-custom">
+    <a href="{{result.banners.1.sub_url}}" target="_blank"><img src="{{ MEDIA_URL }}{{result.banners.1.image}}" width="100%"></a>
 </div>
 {% endif %}
 
@@ -42,7 +64,7 @@
                 <p class="big-font-size game-title">{% trans "homepage.title.section.game" %}</p>
             </div>
             <div class="section-game">
-                <div class="col-lg-4 col-md-4 game-section-menu hidden-xs">
+                <div class="col-lg-3 col-md-3 game-section-menu hidden-sm hidden-xs">
                     <div class="list-group">
                         <a href="#" class="list-group-item text-center night-life">
                             {% trans "homepage.text.night_life" %}
@@ -58,122 +80,168 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-8 col-md-8 game-section">
+                <div class="col-lg-9 col-md-9 col-xs-12 game-section" id="id_game_section">
                     <!-- NIGHT LIFT section -->
-                    <div class="game-section-content">
-                        <div class="game-section-detail">
-                            <div class="col-xs-12 col-md-6 game-left">
-                                <div class="game-type-slide">
-                                    <div class="game-type-content">
-                                        <p class="title-content game-type">{% trans "homepage.text.night_life" %}</p>
-                                        <p class="short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p> 
+                    <div class="panel game-section-content row col-md-12">
+                        <div class="visible-xs visible-sm game-section-title">
+                            <h2 role = "button" data-toggle="collapse" data-target="#id_night_life" data-parent="#id_game_section">{% trans "homepage.text.night_life" %}<i class="more-less glyphicon glyphicon-plus"></i></h2>
+                        </div>
+                        <div class="collapse" id="id_night_life">
+                            {% if result.night_life_types %}
+                            <div class="game-section-detail">
+                                <div class="col-xs-12 col-md-6 game-left">
+                                    {% for type in result.night_life_types %}
+                                    <div class="game-type-slide">
+                                        <div class="game-type-content">
+                                            <p class="title-content game-type">
+                                                {{type.name}}</p>
+                                            <p class="short_description">
+                                                {{type.description}}
+                                                <!-- {% trans "homepage.text.night_life.description" %} --></p> 
+                                        </div>
+                                        <hr>
+                                        <p class="game-description short_description">{{type.description_detail}}</p> 
+                                        <!-- <p class="game-description short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p>  -->
                                     </div>
-                                    <hr>
-                                    <p class="game-description short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p> 
-                                </div>
-                            
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-md-6 game-section-detail">
-                            <div class="game-right">
-                                <img src="{{ STATIC_URL }}assets/websites/images/home_game_section_right.png" alt="helio" width="100%" height="550">
-                            </div>
-                        </div>
-                    </div>
+                                    {% endfor %}
+                                    <div class="type-group">
+                                        <!-- Night Life Type-->
+                                        <ul class="nav btn-custom-group type-group">
+                                            {% for type in result.night_life_types %}
+                                            <li>
+                                                <a class="btn-custom-style" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
 
-                    <!-- PLAY section -->
-                    <div class="game-section-content">
-                        {% if result.play_types %}
-                        <div class="game-section-detail">
-                            <div class="col-xs-12 col-md-6 game-left"> 
-                                {% for type in result.play_types %}
-                                <div class="game-type-slide">
-                                    <div class="game-type-content">
-                                        <p class="title-content game-type">{{type.name}}</p>
-                                        <p class="short_description">{{type.description}}</p> 
-                                    </div>
-                                    <hr>
-                                    <p class="game-description short_description">{{type.description_game}}</p> 
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6 game-section-detail">
+                                {% for type in result.night_life_types %}
+                                <div class="game-right">
+                                    <img src="{{ MEDIA_URL }}{{type.image}}" alt="helio" width="100%" height="550">
                                 </div>
                                 {% endfor %}
-                                <div class="type-group">
-                                    <!-- Games Type-->
-                                    <ul class="nav btn-custom-group type-group">
-                                        {% for type in result.play_types %}
-                                        <li>
-                                            <a class="btn-custom-style" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
-                                        </li>
-                                        {% endfor %}
-                                    </ul>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+
+                    <!-- PLAY section -->
+                    <div class="panel game-section-content row col-md-12">
+                        <div class="visible-xs visible-sm game-section-title">
+                            <h2 role = "button" data-toggle="collapse" href="#id_helio_play" data-parent="#id_game_section" class="collapsed">{% trans "homepage.text.play" %} <i class="more-less glyphicon glyphicon-plus"></i></h2>
+                        </div>
+                        <div id="id_helio_play" class="collapse" >
+                            {% if result.play_types %}
+                            <div class="game-section-detail">
+                                <div class="col-xs-12 col-md-6 game-left"> 
+                                    {% for type in result.play_types %}
+                                    <div class="game-type-slide">
+                                        <div class="game-type-content">
+                                            <p class="title-content game-type">{{type.name}}</p>
+                                            <p class="short_description">{{type.description}}</p> 
+                                        </div>
+                                        <hr>
+                                        <p class="game-description short_description">{{type.description_detail}}</p> 
+                                    </div>
+                                    {% endfor %}
+                                    <div class="type-group">
+                                        <!-- Games Type-->
+                                        <ul class="nav btn-custom-group type-group">
+                                            {% for type in result.play_types %}
+                                            <li>
+                                                <a class="btn-custom-style" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xs-12 col-md-6 game-section-detail">
-                            {% for type in result.play_types %}
-                            <div class="game-right">
-                                <img src="{{ MEDIA_URL }}{{type.image}}" alt="helio" width="100%" height="550">
+                            <div class="col-xs-12 col-md-6 game-section-detail">
+                                {% for type in result.play_types %}
+                                <div class="game-right">
+                                    <img src="{{ MEDIA_URL }}{{type.image}}" alt="helio" width="100%" height="550">
+                                </div>
+                                {% endfor %}
                             </div>
-                            {% endfor %}
+                            {% endif %}
                         </div>
-                        {% endif %}
                     </div>
 
                     <!-- KIDS section -->
-                    <div class="game-section-content">
-                        {% if result.kids_types %}
-                        <div class="game-section-detail">
-                            <div class="col-xs-12 col-md-6 game-left"> 
-                                {% for type in result.kids_types %}
-                                <div class="game-type-slide">
-                                    <div class="game-type-content">
-                                        <p class="title-content game-type">{{type.name}}</p>
-                                        <p class="short_description">{{type.description}}</p> 
+                    <div class="panel game-section-content row col-md-12">
+                        <div class="visible-xs visible-sm game-section-title">
+                            <h2 role = "button" data-toggle="collapse" href="#id_helio_kids" data-parent="#id_game_section" class="collapsed">{% trans "homepage.text.kids" %} <i class="more-less glyphicon glyphicon-plus"></i></h2>
+                        </div>
+                        <div class="collapse" id="id_helio_kids">
+                            {% if result.kids_types %}
+                            <div class="game-section-detail">
+                                <div class="col-xs-12 col-md-6 game-left"> 
+                                    {% for type in result.kids_types %}
+                                    <div class="game-type-slide">
+                                        <div class="game-type-content">
+                                            <p class="title-content game-type">{{type.name}}</p>
+                                            <p class="short_description">{{type.description}}</p> 
+                                        </div>
+                                        <hr>
+                                        <p class="game-description short_description">{{type.description_detail}}</p> 
                                     </div>
-                                    <hr>
-                                    <p class="game-description short_description">{{type.description_game}}</p> 
+                                    {% endfor %}
+                                    <div class="type-group">
+                                        <!-- Games Type-->
+                                        <ul class="nav btn-custom-group type-group">
+                                            {% for type in result.kids_types %}
+                                            <li>
+                                                <a class="btn-custom-style" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6 game-section-detail">
+                                {% for type in result.kids_types %}
+                                <div class="game-right">
+                                    <img src="{{ MEDIA_URL }}{{type.image}}" alt="helio" width="100%" height="550">
                                 </div>
                                 {% endfor %}
-                                <div class="type-group">
-                                    <!-- Games Type-->
-                                    <ul class="nav btn-custom-group type-group">
-                                        {% for type in result.kids_types %}
-                                        <li>
-                                            <a class="btn-custom-style" href="{{type.sub_url}}">{{type.name}}<span class="glyphicon glyphicon-chevron-right"></a>
-                                        </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
                             </div>
+                            {% endif %}
                         </div>
-                        <div class="col-xs-12 col-md-6 game-section-detail">
-                            {% for type in result.kids_types %}
-                            <div class="game-right">
-                                <img src="{{ MEDIA_URL }}{{type.image}}" alt="helio" width="100%" height="550">
-                            </div>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
                     </div>
 
                     <!-- COFFEE section -->
-                    <div class="game-section-content">
-                        <div class="game-section-detail">
-                            <div class="col-xs-12 col-md-6 game-left">
-                                <div class="game-type-slide">
-                                    <div class="game-type-content">
-                                        <p class="title-content game-type">COFFEE</p>
-                                        <p class="short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p> 
-                                    </div>
-                                    <hr>
-                                    <p class="game-description short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p> 
-                                </div>
-                            
-                            </div>
+                    <div class="panel game-section-content row col-md-12">
+                        <div class="visible-xs visible-sm game-section-title">
+                            <h2 role = "button" data-toggle="collapse" href="#id_helio_coffee" data-parent="#id_game_section" class="collapsed">{% trans "homepage.text.coffee" %} <i class="more-less glyphicon glyphicon-plus"></i></h2>
                         </div>
-                        <div class="col-xs-12 col-md-6 game-section-detail">
-                            <div class="game-right">
-                                <img src="{{ STATIC_URL }}assets/websites/images/home_game_section_right.png" alt="helio" width="100%" height="550">
+                        <div class="collapse" id="id_helio_coffee">
+                            {% if result.coffee_types %}
+                            <div class="game-section-detail">
+                                <div class="col-xs-12 col-md-6 game-left">
+                                    {% for type in result.coffee_types %}
+                                    <div class="game-type-slide">
+                                        <div class="game-type-content">
+                                            <p class="title-content game-type">{{type.name}}</p>
+                                            <p class="short_description">{{type.description}}</p> 
+                                        </div>
+                                        <hr>
+                                        <!-- <p class="game-description short_description">Hàng ngàn món quà hấp dẫn, lý thú. Helio mang đến cho bạn trải nghiệm Chơi Game - Tích điểm - Đổi quà thực sự thú vị tại quầy đổi quà lớn nhất Việt Nam hiện nay</p>  -->
+                                    </div>
+                                    {% endfor %}
+                                </div>
                             </div>
+                            <div class="col-xs-12 col-md-6 game-section-detail">
+                                {% for type in result.coffee_types %}
+                                <div class="game-right">
+                                    <img src="{{ MEDIA_URL }}{{type.image}}" alt="helio" width="100%" height="550">
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                    
@@ -188,8 +256,9 @@
         <div class="row content-info">
             <p class="title-content ">
                 {% trans "homepage.title.section.redemption_store" %}
-                <a class="btn btn-custom-style btn-link-more" href="#" role="button">{% trans "btn.click_now" %}</a>
+                <a class="btn btn-custom-style btn-link-more hidden-xs" href="{% url 'redemption_store' %}" role="button">{% trans "btn.click_now" %}</a>
             </p>
+            <a class="btn btn-custom-style btn-link-more hidden-md hidden-lg hidden-sm" href="{% url 'redemption_store' %}" role="button">{% trans "btn.click_now" %}</a>
             
         </div>
     </div>
@@ -198,27 +267,57 @@
 <!-- BANNER 2 SECTION -->
 {% if result.banners and result.banners.2 %}
 <div class="container block-content-20">
-     <a href="{{result.banners.2.sub_url}}"><img src="{{ MEDIA_URL }}{{result.banners.2.image}}" width="100%"></a>
+     <a href="{{result.banners.2.sub_url}}" target="_blank"><img src="{{ MEDIA_URL }}{{result.banners.2.image}}" width="100%"></a>
 </div>
 {% endif %}
 
 <!-- VIDIEO SECTION -->
 <div class="container block-content-20">
-    <div class="vidieo-div">
-        <div class="vidieo-right col-md-5">
-            <div class="col-md-10 vidieo-text">
-                <ul class="list-line list-inline">
-                    <li><i class="line" aria-hidden="true"></i></li>
-                    <li><i class="line" aria-hidden="true"></i></li>
-                    <li><i class="line" aria-hidden="true"></i></li>
-                </ul>
-                <p class="big-font-size">{% trans "homepage.title.section.entertaiment" %}</p>
-                <a class="btn btn-custom-style btn-entertaiment href="#" role="button">{% trans "btn.click_now" %}</a>
+    <div class="vidieo-div col-md-12">
+        <div class="row">
+            <div class="vidieo-right col-md-5">
+                <div class="col-md-10 vidieo-text">
+                    <ul class="list-line list-inline vidieo-list">
+                        <li>
+                            <i class="line" aria-hidden="true"></i>
+                            <div class="hidden">https://www.youtube.com/embed/Yw2PQMZ_-xQ</div>
+                        </li>
+                        <li>
+                            <i class="line" aria-hidden="true"></i>
+                            <div class="hidden">https://www.youtube-nocookie.com/embed/0BE8qEwxCgk</div>
+                        </li>
+                        <li>
+                            <i class="line" aria-hidden="true"></i>
+                            <div class="hidden">https://www.youtube.com/embed/sI7r-hUPoNo</div>
+                        </li>
+                    </ul>
+                    <div class="vidieo-caption">
+                        <p class="big-font-size">{% trans "homepage.title.section.entertaiment" %}</p>
+                        <p class="big-font-size">HALLOWEEN PARTY</p>
+                        <p class="big-font-size">TRUNG THU 2016</p>
+                    </div>
+                    <a class="btn btn-custom-style btn-entertaiment" href="{% url 'helio_introduction' %}" role="button">{% trans "KNOW ABOUT HELIO CENTER" %}</a>
+                </div>
             </div>
-        </div>
-        <div class="vidieo-left col-md-7">
-            <div class="btn-play-div col-md-12">
-                <a class="btn btn-custom-style" href="#" role="button" data-toggle="modal" data-target="#vidieo_play_modal"><i class="fa fa-play"></i></a>
+            <div class="vidieo-left col-md-9">
+                <div class="row vidieo-img">
+                    <div class="flexslider vidieo-slider">
+                        <ul class="slides">
+                            <li>
+                                <img src="{{ STATIC_URL }}assets/websites/images/video3.jpeg" />
+                            </li>
+                            <li>
+                                <img src="{{ STATIC_URL }}assets/websites/images/videoparty.jpeg" />
+                            </li>
+                            <li>
+                                <img src="{{ STATIC_URL }}assets/websites/images/vidieo_3.jpg" />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="vidieo-btn">
+                        <a class="btn btn-custom-style" href="#" role="button" data-toggle="modal" data-target="#vidieo_play_modal"><i class="fa fa-play"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -230,8 +329,9 @@
         <div class="row content-info">
             <p class="title-content">
                 {% trans "homepage.title.section.powercard" %}
-                <a class="btn btn-custom-style btn-link-more" href="{% url 'power_card' %}" role="button">{% trans "btn.click_now" %}</a>
+                <a class="btn btn-custom-style btn-link-more hidden-xs" href="{% url 'power_card' %}" role="button">{% trans "btn.click_now" %}</a>
             </p>
+            <a class="btn btn-custom-style btn-link-more hidden-md hidden-lg hidden-sm" href="{% url 'power_card' %}" role="button">{% trans "btn.click_now" %}</a>
         </div>
     </div>
 </div>
@@ -242,10 +342,10 @@
     <div class="row">
         <div class="col-md-12 event-section-body">
             <div class="row title-section event-title-section">
-                <div class="col-md-9">
+                <div class="col-md-9 col-sm-9">
                     <p class="big-font-size event-title">{% trans "homepage.title.section.event" %}</p>
                 </div> 
-                <div class="col-md-3" align="right">
+                <div class="col-md-3 event-all-btn">
                     <a class="btn btn-custom-style" href="{% url 'events' %}" role="button">{% trans "btn.view_all" %}</a>
                 </div>
                 
@@ -262,14 +362,14 @@
                     </div>
                     <div class="col-md-8">
                         <div class="caption">
-                            <p class="event-name">{{event.name}}</p>
+                            <a class="event-name" href="/events/{{event.id}}/detail/" target="_blank">{{event.name}}</a>
                             <p class="event-time"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ event.start_time | date:"H:i" }} - {{ event.end_time | date:"H:i" }} | {{ event.start_date | date:"d.m.Y" }} - {{ event.end_date | date:"d.m.Y" }}</p>
                             <p class="short_description">{{event.short_description}}</p>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="event-img">
-                            <img src="{{ MEDIA_URL }}{{event.image}}" alt="helio" width="100%">
+                            <a href="{% url "event_detail" event.id %}"><img src="{{ MEDIA_URL }}{{event.image}}" alt="helio" width="100%"></a>
                         </div>
                         
                     </div>
@@ -283,34 +383,26 @@
 {% endif %}
     
 <!-- BANNER 3 SECTION -->
-{% if result.banners and result.banners.3 %}
-<div class="container block-content-20 banner3">
-    <a href="{{result.banners.3.sub_url}}"><img src="{{ MEDIA_URL }}{{result.banners.3.image}}" width="100%"></a>
+<!-- {% if result.banners and result.banners.3 %}
+<div class="container block-content-20 banner3" >
+    <a href="{{result.banners.3.sub_url}}" target="_blank"><img src="{{ STATIC_URL }}assets/websites/images/download-app_banner.png" width="100%"></a>
 </div>
-{% endif %}
+{% endif %} --> 
 
 <!-- Modal -->
-<div id="vidieo_play_modal" class="modal fade" role="dialog">
+<div id="vidieo_play_modal" class="modal fade custom-modal" role="dialog">
     <div class="modal-dialog modal-lg">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-        <div class="modal-body">
-            <iframe id="helio_vidieo" width="100%" height="500px" src="https://www.youtube.com/embed/tGwuUvSuKLk" frameborder="0" allowfullscreen></iframe>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-    </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <iframe id="helio_vidieo" width="100%" height="500px" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
 
     </div>
 </div>
     
 {% endblock %}
-
-{% block extrascript %}
-    <script src = "{{ STATIC_URL }}assets/websites/js/home.js"></script>
-{% endblock %}
-
-
-
-
-    
-

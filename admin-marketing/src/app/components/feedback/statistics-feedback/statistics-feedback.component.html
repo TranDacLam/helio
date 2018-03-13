@@ -1,0 +1,139 @@
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="/feedback-list">Phản Hồi</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thống Kê Phản Hồi</li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class="row sf-title mt-30 mb-30">
+    <h3>Thống Kê</h3>
+    <p>Tổng quan thống kê về trạng thái của phản hồi</p>
+</div>
+<div class="row sf-content">
+    <h5 *ngIf="message_status">{{ message_status }}</h5>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-4 col-sm-4 text-center">
+                    <h5>Trạng thái xử lý của phản hồi</h5>
+                </div>
+                <div class="col-xs-2 col-sm-1">
+                    <h5>Thời gian</h5>
+                </div>
+                <div class="col-xs-3 col-sm-2 input-group">
+                    <input type="text" class="form-control event-date" [(ngModel)]="date_status_start"
+                        [owlDateTime]="dt1" placeholder="Start date" id="startD_status"
+                    />
+                    <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                </div>
+
+                <div class="col-xs-3 col-sm-2 input-group">
+                    <input type="text" class="form-control event-date" [(ngModel)]="date_status_end"
+                        [owlDateTime]="dt2" placeholder="End date" id="endD_status"
+                    />
+                    <span class="input-group-addon" [owlDateTimeTrigger]="dt2">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                    
+                </div>
+                <div class="col-xs-2 col-sm-3">
+                    <button class="btn btn-primary" (click)="onSubmitStatus()">Hiển Thị</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row text-center" *ngIf="status_sum >= 0">
+                <h1>TỔNG SỐ</h1>
+                <h4>{{ status_sum }}</h4>
+            </div>
+            <div class="row text-center" *ngIf="fb_status">
+                <div class="col-xs-4 col-sm-4">
+                    <h4>Chưa trả lời</h4>
+                    <p><a routerLink="/">{{ fb_status.no_process }}</a></p>
+                </div>
+                <div class="col-xs-3 col-sm-3">
+                    <h4>Đã trả lời</h4>
+                    <p>{{ fb_status.answered }}</p>
+                </div>
+                <div class="col-xs-5 col-sm-5">
+                    <h4>Đã chuyển đến bộ phận liên quan</h4>
+                    <p>{{ fb_status.moved }}</p>
+                </div>
+            </div>
+        </div> 
+    </div>  
+</div>
+
+<div class="row sf-content">
+    <h5 *ngIf="message_rate">{{ message_rate }}</h5>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-4 col-sm-4 text-center">
+                    <h5>Trạng thái Rating của phản hồi</h5>
+                </div>
+                <div class="col-xs-2 col-sm-1">
+                    <h5>Thời gian</h5>
+                </div>
+                <div class="col-xs-3 col-sm-2 input-group">
+                    <input type="text" class="form-control event-date" [(ngModel)]="date_rate_start"
+                        [owlDateTime]="dt3" placeholder="Start date" id="startD_rate"
+                    />
+                    <span class="input-group-addon" [owlDateTimeTrigger]="dt3">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                </div>
+                <div class="col-xs-3 col-sm-2 input-group">
+                    <input type="text" class="form-control event-date" [(ngModel)]="date_rate_end"
+                        [owlDateTime]="dt4" placeholder="End date" id="endD_rate"
+                    />
+                    <span class="input-group-addon" [owlDateTimeTrigger]="dt4">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
+                    
+                </div>
+                <div class="col-xs-2 col-sm-3">
+                    <button class="btn btn-primary" (click)="onSubmitRate()">Hiển Thị</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row text-center" *ngIf="rate_sum >= 0" >
+                <h1>TỔNG SỐ</h1>
+                <h4>{{ rate_sum }}</h4>
+            </div>
+            <div class="row text-center" *ngIf="fb_rate">
+                <div class="col-xs-3 col-sm-3">
+                    <h4>Tuyệt vời</h4>
+                    <p>{{ fb_rate.great }}</p>
+                </div>
+                <div class="col-xs-2 col-sm-2">
+                    <h4>Tốt</h4>
+                    <p>{{ fb_rate.good }}</p>
+                </div>
+                <div class="col-xs-2 col-sm-2">
+                    <h4>Bình thường</h4>
+                    <p>{{ fb_rate.nomal }}</p>
+                </div>
+                <div class="col-xs-2 col-sm-2">
+                    <h4>Xấu</h4>
+                    <p>{{ fb_rate.bad }}</p>
+                </div>
+                <div class="col-xs-2 col-sm-2">
+                    <h4>Không có gì</h4>
+                    <p>{{ fb_rate.notbad }}</p>
+                </div>
+            </div>
+        </div> 
+    </div>  
+</div>

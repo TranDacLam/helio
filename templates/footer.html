@@ -1,4 +1,13 @@
-{% load i18n %} 
+{% load i18n %}
+<div class="container block-content-20 banner3" >
+    <!-- <a href="/helio-introduction/" target="_blank"><img src="{{ STATIC_URL }}assets/websites/images/download-app_banner.png" width="100%"></a> -->
+    <div class="download-app">
+        <a href="https://itunes.apple.com/us/app/helio-center/id1259817229?mt=8" class="app-ios" target="_blank"></a>
+        <a href="#" class="app-android" target="_blank"></a>
+    </div>
+
+</div>
+
 <footer id="footer-wrapper">
     <div class="container">
         <div class="row">
@@ -7,9 +16,9 @@
                     <div class="footer-contact"> 
                         <a href="/"><img src="{{ STATIC_URL }}assets/images/footer_logo.png" alt="Helio Center - Khu vui chơi giải trí tại Đà Nẵng" title="Helio Center là khu vui chơi giải trí hiện đại đầu tiên và duy nhất tại Đà Nẵng"></a> 
                     </div>
-                    <div class="textwidget">
+                    <div class="textwidget contact-text">
                        <p><i class="fa fa-phone"></i>(0236) 3 630 888</p>
-                       <p><i class="fa fa-envelope-o"></i>contact@helio.vn</p>
+                       <a href="{% url 'contact' %}" id="email-contact"><p><i class="fa fa-envelope-o"></i>contact@helio.vn</p></a>
                        <p><i class="fa fa-map-marker"></i>{% trans "footer.contact.address" %}</p>
                     </div>
                 </div>
@@ -28,8 +37,8 @@
                         <ul class="menuwidget nav">
                             <li><a href="{% url 'news' %}">{% trans "footer.menu.news" %}</a></li>
                             <li><a href="{% url 'experience' %}">{% trans "footer.menu.experience" %}</a></li>
-                            <li><a href="{% url 'helio_term_condition' %}">{% trans "footer.menu.terms_of_use" %}</a></li>
-                            <li><a href="{% url 'home' %}">{% trans "footer.menu.policy" %}</a></li>
+                            <li><a href="{% url 'term_condition' %}">{% trans "footer.menu.terms_of_use" %}</a></li>
+                            <!-- <li><a href="{% url 'policy' %}">{% trans "footer.menu.policy" %}</a></li> -->
                         </ul>
                     </div>
                 </div>
@@ -44,21 +53,23 @@
             </div>
         </div>
         <hr>
-        <div class="row">
+        <div class="row helio-footer-info">
             <div class="col-lg-12">
                 
             </div>
             <div class="col-md-4">
                 <div>
-                    <p>©2017 Helio Center, All Rights Reserved.</p>
+                    <p class="footer-text">©2017 <p class="footer-text-color">Helio Center</p>, All Rights Reserved.</p>
                 </div>
             </div>
-            <div class="col-md-4">
-            
+            <div class="col-md-4 icon-footer" align="Center">
+                <a target="_blank" href="https://www.facebook.com/heliocenter/?fref=ts" class="custom-icon"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a target="_blank" href="https://www.youtube.com/channel/UCqohgvuEAarbR0xnVNTp0Ag" class="custom-icon icon-youtube-play"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                <!-- <a href="#" class="custom-icon"><i class="fa fa-tripadvisor" aria-hidden="true"></i></a> -->
             </div>
             <div class="col-md-4">
                 <div class="pull-right">
-                    <p>Powered by KhoiPhat Ltd., Co.</p>
+                    <p class="footer-text">{% trans "footer.text_right" %} <span class="footer-text-color">{% trans "footer.text_company" %}</span></p>
                 </div>
             </div>
         </div>

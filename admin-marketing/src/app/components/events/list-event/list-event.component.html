@@ -1,0 +1,60 @@
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Quản Lý Sự Kiện</li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class="row text-center">
+    <h1>QUẢN LÝ SỰ KIỆN</h1>
+</div>
+<div class="row mt-50 mb-30 custom-title">
+    <div class="col-xs-6 col-sm-6">
+        <a class="btn custom-button" routerLink="/">
+            <i class="fa fas fa-arrow-left icon-button"></i>
+            TRỞ VỀ TRANG QUẢN TRỊ
+        </a>
+    </div>
+    <div class="col-xs-6 col-sm-6">
+        <a class="btn custom-button pull-right" routerLink="/event/add">
+            <i class="fa fas fa-plus icon-button"></i>
+            TẠO SỰ KIỆN MỚI
+        </a>
+    </div>
+    <div class="col-xs-12 col-sm-12 mt-15 messsage_error" *ngIf="errorMessage">
+        <h4>{{errorMessage}}</h4>
+    </div>
+    <div class="col-xs-12 col-sm-12 mt-15 messsage" *ngIf="message_result">
+        <h4>{{message_result}}</h4>
+    </div>
+</div>
+<div>
+    <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="events">
+        <thead>
+            <tr>
+                <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
+                <th>Sự kiện</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let event of events" id="del-{{event.id}}">
+                <td><input type="checkbox" (change)="onSelectCKB($event, event)" [checked]="select_checked"/></td>
+                <td><a routerLink="/event/edit/{{ event.id }}">{{ event.name }}</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row dels-event" *ngIf="events">
+    <div class="col-md-3">
+        <select name="" class="form-control">
+            <option value="1">Xóa các phản hồi được chọn</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        {{ events_del.length }} của {{ length_events }} được chọn 
+        <button class="btn btn-danger" (click)="deleteEvent()">Thực hiện</button>
+    </div>
+</div>

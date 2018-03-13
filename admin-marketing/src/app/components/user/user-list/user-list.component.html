@@ -1,0 +1,56 @@
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="/user-list">User</a></li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class='row title-user'>
+	<a class="pull-left" routerLink="/user-list">User</a>
+	<a class="pull-right" routerLink="/user-add">
+		<div class="btn btn-primary">
+			<span class="glyphicon glyphicon-plus"></span>
+			Thêm user
+		</div>
+	</a>
+</div>
+<br>
+<div class="table card-list">
+	<div class="alert alert-success" *ngIf="message_result">
+        {{message_result}}
+    </div>
+	<table id="table-user" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
+		<thead>
+	      	<tr>
+	      		<th class="checkbox-user"><input id="allCheck" type="checkbox" name="allCheckUse" value="allCheckUser"(change)="checkAllUser($event)"/></th>
+	      		<th> Email</th>
+	        	<th>Loại User </th>
+	      	</tr>
+    	</thead>
+    	<tbody>
+   			<tr *ngFor ="let user of users" id="delete{{user.id}}">
+   				<td><input type="checkbox" id="check_{{user.id}}"
+   					value={{user.id}} name=""
+   					(change)="checkItemChange($event, user)"/></td>
+   				<td class="title-email"><a routerLink="/user-detail/{{ user.id }}" >{{ user.email }}</a></td>
+        		<td *ngIf="user.role.name">{{ user.role.name }}</td>
+   			</tr>
+    	</tbody>
+	</table>
+	<hr>
+	<div class='row'>
+		<div class="col-md-3">
+			<select name="" class="form-control">
+				<option value="">Xóa các user được chọn</option>
+			</select>
+		</div>
+		<div class="col-md-3">
+			{{user_selected.length}} của {{users.length}} được chọn
+			<button (click)="confirmDelete()" type="button" class="button-user btn btn-danger">Thực hiện</button>
+		</div>
+	</div>
+</div>
+

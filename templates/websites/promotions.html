@@ -1,7 +1,9 @@
-{% extends "layout.html" %}
+    {% extends "layout.html" %}
 {% load i18n %} 
+{% block title %}Promotion - Khuyến mãi{% endblock %}
 {% block extrastylesheet %}
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/slide.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/helio_item.css">
 <link rel="stylesheet" href="{{ STATIC_URL }}assets/websites/css/promotions.css">
 
 {% endblock %}
@@ -12,89 +14,107 @@
 <!-- Page Header -->
 <div class="container">
     <!-- CARD PAGE DESCRIPTION -->
+    {% if promotions_hots %}
     <div class="page-top">
         <div class="page-header-img">
-            <div id="promotionCarousel" class="carousel slide carousel-custom" data-ride="carousel">
+            <div id="promotion_carousel" class="carousel slide carousel-custom" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators carousel-indicators-custom">
-                    <li data-target="#promotionCarousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#promotionCarousel" data-slide-to="1"></li>
-                    <li data-target="#promotionCarousel" data-slide-to="2"></li>
+                    {% for promotion in promotions_hots %}
+                    <li data-target="#promotion_carousel" data-slide-to="{{forloop.counter0}}" class="{% if forloop.counter0 == 0 %} active {% endif %}"></li>
+                    {% endfor %}
                 </ol>
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        <img src="{{ STATIC_URL }}assets/websites/images/power_card_header.png" alt="Helio">
+                    {% for promotion in promotions_hots %}
+                    <div class="item {% if forloop.counter0 == 0 %} active {% endif %}">
+                        <a href="/promotions/{{promotion.id}}/detail/" target="_blank"><img src="{{ MEDIA_URL }}{{ promotion.image }}" alt="Helio" width="100%"></a>
                     </div>
+                    {% endfor %}
+                    {% for promotion in promotions_hots %}
                     <div class="item">
-                        <img src="{{ STATIC_URL }}assets/websites/images/power_card_header.png" alt="Helio">
+                        <a href="/promotions/{{promotion.id}}/detail/" target="_blank"><img src="{{ MEDIA_URL }}{{ promotion.image }}" alt="Helio" width="100%"></a>
                     </div>
-                    <div class="item">
-                        <img src="{{ STATIC_URL }}assets/websites/images/power_card_header.png" alt="Helio">
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
+    {% endif %}
 
-    {% if result.datas %}
-    
+    {% if datas %}
     <div class="btn-section-div">
         <!-- BUTTON GROUP -->
         <ul class="nav btn-custom-group promotion-btn-group">
-            {% for category in result.datas %}
-            <li  class="col-md-3">
-                <a href="#promotion{{ category.id }}" role="tab" data-toggle="tab" class="btn-custom-style">{{category.name}}</a>
+            {% for category in datas %}
+            <li  class="col-md-2 {% if forloop.counter0 == 0 %} active {% endif %} btn-group-five">
+                <a href="#promotion{{ category.id }}" role="tab" data-toggle="tab" class="btn-custom-style">
+                    {% if category.id == 0 %} 
+                        {% trans "promotionpage.menu.all" %} 
+                    {% else %} 
+                        {{category.name}}
+                    {% endif %} 
+                </a>
             </li>
             {% endfor %}
         </ul>
     </div>
 
     <div class="tab-content">
-        {% for category, promotions in result.datas.items %}
-        <div role="tabpanel" class="tab-pane" id="promotion{{ category.id }}">
-            <div class="row view-more-div">
+        {% for category, promotions in datas.items %}
+        <div role="tabpanel" class="tab-pane view-more-content {% if forloop.counter0 == 0 %} active {% endif %}" id="promotion{{ category.id }}">
+            <div class="row">
                 <!--  KID GAME CONTENT -->
                 <div class="kids-game-content col-md-12">
                     {% for promotion in promotions %}
                     {% if forloop.counter|divisibleby:2 %} 
-                    <div class="image-div content-pull-left col-md-12" style="background: url('{{ MEDIA_URL }}{{promotion.image}}'); display: none;">
+                    <div class="item-line content-pull-left col-md-12" style="display: none;">
                         <div class="row">
-                            <div class="kids-content-image col-md-7">
-                                
-                            </div>
-                            <div class="kids-content-text col-md-5">
+                            <div class="item-content-text col-md-5 col-xs-12 pull-right">
                                 <div class="col-md-9 image-text pull-right">
-                                    <div class="image-text-head">
-                                        <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
-                                    </div>
-                                    <p class="img-font-size">{{promotion.name}}</p>
-                                    <p class="img-text-description short_description">{{promotion.short_description}}</p>
-                                    <a class="btn btn-custom-style btn-custom-style-promotion" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                                    {% if promotion.promotion_label %}
+                                    <label class="image-text-head">
+                                        <label>
+                                            {{promotion.promotion_label}}
+                                            <span class="glyphicon glyphicon-play"></span>
+                                        </label>
+                                    </label>
+                                    {% endif %}
+                                    <p class="item-name">{{promotion.name}}</p>
+                                    <p class="text-limit-rows item-description short_description">{{promotion.short_description}}</p>
+                                    <a class="btn btn-custom-style btn-custom-style-promotion" href="{% url 'promotion_detail' promotion.id %}" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
                                 </div>
                             </div>
-
-                            <div class="image-hidden-sm-up col-md-7">
-                                <div class="row"><img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%"></div>
+                            <div class="item-content-image col-md-9 col-xs-12">
+                                <div class="row">
+                                    <a href="{% url 'promotion_detail' promotion.id %}"><img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%" height="100%"></a>
+                                </div>
                             </div>
                         </div>
                     </div>
                     {% else %}
-                    <div class="image-div content-pull-right col-md-12" style="background: url('{{ MEDIA_URL }}{{promotion.image}}'); display: none;">
+                    <div class="item-line content-pull-right col-md-12" style="display: none;">
                         <div class="row">
-                            <div class="kids-content-text col-md-5">
+                            <div class="item-content-text col-md-5 col-xs-12">
                                 <div class="col-md-9 image-text">
-                                    <div class="image-text-head">
-                                        <p>CHUONG TRINH HE <span class="glyphicon glyphicon-play"></span></p>
-                                    </div>
-                                    <p class="img-font-size">{{promotion.name}}</p>
-                                    <p class="img-text-description short_description">{{promotion.short_description}}</p>
-                                    <a class="btn btn-custom-style btn-custom-style-promotion" href="#" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
+                                    {% if promotion.promotion_label %}
+                                    <label class="image-text-head">
+                                        <label>
+                                            {{promotion.promotion_label}}
+                                            <span class="glyphicon glyphicon-play"></span>
+                                        </label>
+                                    </label>
+                                    {% endif %}
+                                    <p class="item-name">{{promotion.name}}</p>
+                                    <p class="text-limit-rows item-description short_description">{{promotion.short_description}}</p>
+                                    <a class="btn btn-custom-style btn-custom-style-promotion" href="{% url 'promotion_detail' promotion.id %}" role="button">{% trans "btn.click_now" %}<span class="glyphicon glyphicon-menu-right"></span></a>
                                 </div>
                             </div>
-                            <div class="kids-content-image col-md-7">
-                                <div class="image-hidden-sm-up row"><img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%"></div>
+                            <div class="item-content-image col-md-9 col-xs-12">
+                                <div class="row">
+                                    <a href="{% url 'promotion_detail' promotion.id %}"><img src="{{ MEDIA_URL }}{{promotion.image}}" width="100%" height="100%"></a>    
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -111,10 +131,7 @@
     </div>
     {% endif %}
 
-    <!-- DOWNLOAD APP BANNER -->
-    <div class="app-banner">
-        <a href="#"><img src="{{ STATIC_URL }}assets/websites/images/download-app_banner.png" width="100%"></a>
-    </div>
+
 </div>
 
 {% endblock %}

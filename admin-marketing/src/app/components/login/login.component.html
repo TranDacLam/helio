@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-sm-8 col-md-6 col-md-offset-3">
+        <h4 class="msg_success" *ngIf="message_result">Đăng xuất thành công.</h4>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Đăng Nhập</strong>
+            </div>
+            <div class="panel-body">
+                <form [formGroup]="formLogin" novalidate>
+                    <fieldset>
+                        <div class="row">
+                            <div class="center-block">
+                                <img class="profile-img"
+                                    src="../../../assets/images/login.png" alt="" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-10 col-md-offset-1 ">
+                                <label class="msg_error" *ngIf="msg_error">{{msg_error}}</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                        </span> 
+                                        <input class="form-control" placeholder="Username" type="text" 
+                                            formControlName="email" 
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-lock"></i>
+                                        </span>
+                                        <input class="form-control" placeholder="Password" type="password" 
+                                            formControlName="password" 
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <re-captcha size="invisible" #captchaRef="reCaptcha" 
+                                            siteKey={{key_recaptcha}} (resolved)="onSubmit($event)"> 
+                                        </re-captcha>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-lg btn-primary btn-block" (click)="captchaRef.execute()"
+                                        value="Đăng Nhập" [disabled]="formLogin.invalid" *ngIf="!token_recaptcha"
+                                    />
+                                    <input type="submit" class="btn btn-lg btn-primary btn-block" (click)="onSubmit(token_recaptcha)"
+                                        value="Đăng Nhập" [disabled]="formLogin.invalid" *ngIf="token_recaptcha"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

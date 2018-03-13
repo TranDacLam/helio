@@ -1,0 +1,14 @@
+.title-hot-advs {
+	margin: 15px 0px;
+	border-bottom: 2px solid black;
+	padding: 0 0 10px 0px;
+}
+.checkbox-hot-advs {
+	padding: 10px;
+}
+a.pull-left {
+	color: #333333;
+}
+a.pull-left:hover {
+	text-decoration: none;
+}

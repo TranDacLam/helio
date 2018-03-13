@@ -1,0 +1,35 @@
+
+/* custom data table */
+
+.wrapper-table{
+	padding: 10px;
+	/* border: 1px solid #000; */
+	margin-bottom: 30px;
+}
+.fee-tb{
+	width: 120px;
+	
+}
+.checkbox-tb{
+	width: 70px;
+}
+.mt-30{
+    margin-top: 30px;
+}
+.mb-30{
+    margin-bottom: 30px;
+}
+.mt-15{
+    margin-top: 15px;
+}
+table.dataTable thead .sorting_asc{
+	width: 70px;
+    padding-left: 10px;
+}
+table.dataTable thead .sorting_desc{
+	width: 70px;
+    padding-left: 10px;
+}
+.under-table{
+	margin-bottom: 50px;
+}

@@ -1,0 +1,20 @@
+<ol class="breadcrumb">
+    <li><a routerLink='/'>Trang Chủ</a></li>
+    <li class="active"><a routerLink="/user-permission">Quản Lý Phân quyền User</a></li>
+ </ol>
+<div class="row text-center">
+    <h1>PHÂN QUYỀN USER</h1>
+</div>
+<div class="row">
+	<div class="wrap-head">
+		<p>Các Quyền</p>
+		<ul *ngFor="let role of roles; let i = index;"  class="list-role" >
+			<li>
+				<input class="role_checkbox" type="radio" name="role" id='role_{{role.id}}' value='{{role.id}}'  [checked]="i == 0" (change)='getUserRight( role.id )'>
+				<label for="role_{{role.id}}">{{role.name}}</label>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<app-user-multiselect [user_list_left] = 'user_list_left' [user_list_right] = 'user_list_right' ></app-user-multiselect>

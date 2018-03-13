@@ -1,0 +1,33 @@
+/*Begin content add User*/
+button.clear-file.btn.btn-danger {
+	margin-top: 10px;
+}
+.title-user {
+	margin: 10px 0;
+	border-bottom: 2px solid black;
+	padding: 10px 0;
+}
+.title-user a {
+	text-decoration: none;
+	list-style-type: none;
+	color: black;
+}
+.content-form-add-user {
+	border-bottom: 2px solid black;
+	margin: 10px 0 15px 0;
+}
+p.errors {
+	color: red;
+}
+/* == css for input password == */
+.input-password {
+	padding: 5px 50px 5px 10px;
+}
+.file-icon {
+	float: right;
+	position: absolute;
+	top: 0%;
+	right: 15px;
+	cursor: pointer;
+}
+/*End content add User*/
