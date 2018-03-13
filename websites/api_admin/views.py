@@ -34,6 +34,7 @@ from django.http import JsonResponse
     @author: diemnguyen
 """
 
+
 class PromotionList(APIView):
 
     def get(self, request, format=None):
@@ -184,11 +185,10 @@ class PromotionUser(APIView):
 
     def post(self, request, id, format=None):
         try:
-            #Set is_save to True to block change user list
-            promotion = Promotion.objects.get(pk=id)
-            
-            promotion.is_save = True
-            promotion.save();
+            # Set is_save to True to block change user list
+            promition = Promotion.objects.get(pk=id)
+            promition.is_save = True
+            promotion.save()
 
             list_user_id = self.request.data.get('list_user_id', '')
 
@@ -259,7 +259,7 @@ class UserDetail(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response({"code": 200, "status": "success", "fields": ""}, status=200)
-            return Response({"code": 500, "message": serializer.errors, "fields": ""}, status=500)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
 
         except User.DoesNotExist, e:
             return Response({"code": 400, "message": "Not found user", "fields": ""}, status=400)
@@ -268,7 +268,6 @@ class UserDetail(APIView):
             print "UserDetail", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
-
 
 
 """
@@ -897,7 +896,8 @@ class UserEmbedDetail(APIView):
                 surname = item[1] if item[1] else ''  # Surname
                 result["barcode"] = barcode
                 result["full_name"] = first_name + surname
-                result["birth_date"] = item[2] if item[2] else None  # DOB
+                result["birth_date"] = item[2].strftime(
+                    '%d/%m/%Y') if item[2] else None  # DOB
                 result["personal_id"] = item[
                     3] if item[3] else None  # PostCode
                 result["address"] = item[4] if item[4] else None  # Address1
@@ -1110,6 +1110,7 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
 class FeeListAPI(APIView):
 
     def get(self, request, format=None):
@@ -1314,11 +1315,14 @@ class EventAPI(APIView):
 
     def put(self, request, id):
         try:
+            is_clear_image = request.data.get('is_clear_image', None)
             event = Event.objects.get(id=id)
             eventSerializer = admin_serializers.EventSerializer(
                 instance=event, data=request.data)
             if eventSerializer.is_valid():
                 eventSerializer.save()
+                if is_clear_image:
+                    event.image = None
                 return Response(eventSerializer.data)
             return Response({"code": 400, "message": eventSerializer.errors, "fields": ""}, status=400)
 
@@ -1530,11 +1534,14 @@ class HotAPI(APIView):
 
     def put(self, request, id):
         try:
+            is_clear_image = request.data.get('is_clear_image', None)
             hot = Hot.objects.get(id=id)
             hotSerializer = admin_serializers.HotSerializer(
                 instance=hot, data=request.data)
             if hotSerializer.is_valid():
                 hotSerializer.save()
+                if is_clear_image:
+                    hot.image = None
                 return Response(hotSerializer.data)
             return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
 
@@ -1596,90 +1603,6 @@ class HotListAPI(APIView):
 
 
 """
-    Hot
-    @author :Hoangnguyen
-
-"""
-
-
-@parser_classes((MultiPartParser, JSONParser))
-class HotAPI(APIView):
-
-    def get(self, request, id=None):
-        try:
-            if id:
-                hot = Hot.objects.get(id=id)
-                hotSerializer = admin_serializers.HotSerializer(hot)
-            else:
-                hots = Hot.objects.all()
-                hotSerializer = admin_serializers.HotSerializer(
-                    hots, many=True)
-            return Response(hotSerializer.data)
-
-        except Hot.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
-
-        except Exception, e:
-            print "HotAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
-            return Response(error, status=500)
-
-    def post(self, request, format=None):
-        try:
-            hotSerializer = admin_serializers.HotSerializer(data=request.data)
-            if hotSerializer.is_valid():
-                hotSerializer.save()
-                return Response(hotSerializer.data)
-            return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
-
-        except Exception, e:
-            print "HotAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
-            return Response(error, status=500)
-
-    def put(self, request, id):
-        try:
-            hot = Hot.objects.get(id=id)
-            hotSerializer = admin_serializers.HotSerializer(
-                instance=hot, data=request.data)
-            if hotSerializer.is_valid():
-                hotSerializer.save()
-                return Response(hotSerializer.data)
-            return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
-
-        except Hot.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
-
-        except Exception, e:
-            print "HotAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
-            return Response(error, status=500)
-
-    def delete(self, request, id=None, format=None):
-        try:
-            if id:
-                hot = Hot.objects.get(id=id)
-                hot.delete()
-                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
-
-            list_id = request.data.get('list_id', None)
-            if list_id:
-                hots = Hot.objects.filter(id__in=list_id)
-                if hots:
-                    hots.delete()
-                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
-                return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
-
-        except Hot.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
-
-        except Exception, e:
-            print "EventAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
-            return Response(error, status=500)
-
-
-"""
     Post 
     @author :Hoangnguyen
 """
@@ -1718,11 +1641,33 @@ class PostAPI(APIView):
 
     def put(self, request, id):
         try:
+            is_clear_image = request.data.get('is_clear_image', None)
             post = Post.objects.get(id=id)
             postSerializer = admin_serializers.PostSerializer(
                 instance=post, data=request.data)
             if postSerializer.is_valid():
                 postSerializer.save()
+                if is_clear_image:
+                    post.image = None
+                # handle update multi image
+                posts_image = request.data.get('posts_image', None)
+                if posts_image:
+                    for item in posts_image:
+                        item_id = item.get('id', None)
+                        # id is exist then update or delete image
+                        if item_id:
+                            is_clear_image_item = item.get( 'is_clear_image', None)
+                            post_image = Post_Image.objects.filter( id = item_id )
+                            if not post_image:
+                                return Response({"code": 400, "message": "Not Found Post Image.", "fields": ""}, status=400)
+                            if is_clear_image_item:
+                                post_image.delete()
+                                break
+                            post_image.update( **item )
+                        else:
+                            # id is not,create image
+                            Post_Image.objects.create( post = post, **item )
+                
                 return Response(postSerializer.data)
             return Response({"code": 400, "message": postSerializer.errors, "fields": ""}, status=400)
 
@@ -1746,6 +1691,7 @@ class PostAPI(APIView):
             print "PostAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
 
 
 """
@@ -1921,6 +1867,7 @@ class GeneratorQRCode(APIView):
         except Promotion.DoesNotExist, e:
             return Response(status=400)
 
+
 """
     Get All Category
     @author :diemnguyen
@@ -1961,32 +1908,38 @@ def postUpload(request):
 GET, DELETE, POST User
 @author: TrangLe
 """
+
+
 @parser_classes((MultiPartParser, JSONParser))
 class UserListView(APIView):
     """
         Method: GET
         Get All User
     """
+
     def get(self, request, format=None):
         print "METHOD GET"
         try:
             users = User.objects.all()
-            serializer = admin_serializers.UserRoleDisplaySerializer(users, many=True)
+            serializer = admin_serializers.UserRoleDisplaySerializer(
+                users, many=True)
             return Response(serializer.data)
 
         except Exception, e:
-            print "List User",e
-            error = {"code": 500, "message": "Internal Server Error", "fields":""}
+            print "List User", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
     """
         Method:POST
         Create Users
     """
+
     def post(self, request, format=None):
         print "METHOD POST"
         try:
-            serializer = admin_serializers.UserRoleSerializer(data=request.data)
+            serializer = admin_serializers.UserRoleSerializer(
+                data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
@@ -2001,6 +1954,7 @@ class UserListView(APIView):
         Method: DELETE
         Delete all user check
     """
+
     def delete(self, request, format=None):
         print "METHOD DELETE"
         try:
@@ -2019,10 +1973,13 @@ class UserListView(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
 """
     GET, PUT User Detail
     @author: TrangLe
 """
+
+
 @parser_classes((MultiPartParser, JSONParser))
 class UserDetailView(APIView):
 
@@ -2036,6 +1993,7 @@ class UserDetailView(APIView):
     """
         Get User By Id
     """
+
     def get(self, request, pk, format=None):
         print "METHOD GET"
 
@@ -2051,6 +2009,7 @@ class UserDetailView(APIView):
     """
         Update User By Id
     """
+
     def put(self, request, pk, format=None):
         print "METHOD PUT"
 
@@ -2058,6 +2017,7 @@ class UserDetailView(APIView):
         try:
             print('user', user.is_staff)
             serializer = admin_serializers.UserRoleSerializer(user, data=request.data)
+
             if serializer.is_valid():
                 if(self.request.user.role_id == 1 and user.is_staff == True):
                     self.request.user.set_password(self.request.data.get("password"))
@@ -2090,10 +2050,13 @@ class UserDetailView(APIView):
             print 'UserDetailView PUT', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
 """
     GET: Get Al Roles
     @author: TrangLes
 """
+
+
 class RolesView(APIView):
     def get(self, request, format=None):
         print "Method Get"
@@ -2102,11 +2065,13 @@ class RolesView(APIView):
             role = Roles.objects.all()
             serializer = admin_serializers.RolesSerializer(role, many=True)
             return Response(serializer.data)
-            
+
         except Exception, e:
             print 'UserDetailView PUT', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
 """
     Game 
     @author :Hoangnguyen
@@ -2131,7 +2096,8 @@ class GameAPI(APIView):
 
     def post(self, request, format=None):
         try:
-            gameSerializer = admin_serializers.GameSerializer(data=request.data)
+            gameSerializer = admin_serializers.GameSerializer(
+                data=request.data)
             if gameSerializer.is_valid():
                 gameSerializer.save()
                 return Response(gameSerializer.data)
@@ -2144,11 +2110,14 @@ class GameAPI(APIView):
 
     def put(self, request, id):
         try:
+            is_clear_image = request.data.get('is_clear_image', None)
             game = Game.objects.get(id=id)
             gameSerializer = admin_serializers.GameSerializer(
                 instance=game, data=request.data)
             if gameSerializer.is_valid():
                 gameSerializer.save()
+                if is_clear_image:
+                    game.image = None
                 return Response(gameSerializer.data)
             return Response({"code": 400, "message": gameSerializer.errors, "fields": ""}, status=400)
 
@@ -2178,6 +2147,8 @@ class GameAPI(APIView):
     @author :Hoangnguyen
  
 """
+
+
 class GameListAPI(APIView):
 
     def get(self, request):
@@ -2205,11 +2176,15 @@ class GameListAPI(APIView):
             print "GameListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
 """
     TypeList
     @author :Hoangnguyen
  
 """
+
+
 class TypeListAPI(APIView):
 
     def get(self, request):
@@ -2222,17 +2197,21 @@ class TypeListAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
 """
     GET, POST, DELETE Hot_Advs 
     @author: TrangLe
 """
+
+
 @parser_classes((MultiPartParser, JSONParser))
 class HotAdvsView(APIView):
 
     def get(self, request):
         try:
             hot_advs = Hot_Advs.objects.all()
-            serializer = admin_serializers.HotAdvsSerializer(hot_advs, many=True)
+            serializer = admin_serializers.HotAdvsSerializer(
+                hot_advs, many=True)
             return Response(serializer.data)
         except Exception, e:
             print "Hot_advs List", e
@@ -2273,11 +2252,14 @@ class HotAdvsView(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
 """
     RoleList
     @author :Hoangnguyen
  
 """
+
+
 @permission_classes((AllowAny,))
 class RoleListAPI(APIView):
 
@@ -2290,11 +2272,15 @@ class RoleListAPI(APIView):
             print "RoleListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
+
+
 """
     UserRoleList
     @author :Hoangnguyen
  
 """
+
+
 @permission_classes((AllowAny,))
 class UserRoleListAPI(APIView):
 
@@ -2302,10 +2288,10 @@ class UserRoleListAPI(APIView):
         try:
             role_id = self.request.query_params.get('role_id', None)
             if role_id:
-                role = Roles.objects.get( id = role_id )
+                role = Roles.objects.get(id=role_id)
                 users = role.user_role_rel.all()
             else:
-                users = User.objects.filter( role__isnull = True )
+                users = User.objects.filter(is_staff=True, role__isnull=True)
             userSerializer = admin_serializers.UserSerializer(users, many=True)
             return Response(userSerializer.data)
 
@@ -2316,6 +2302,7 @@ class UserRoleListAPI(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+
 """
     SetRole
     @author :Hoangnguyen
@@ -2324,24 +2311,26 @@ class UserRoleListAPI(APIView):
     check user has no role
     
 """
+
+
 @permission_classes((AllowAny,))
 class SetRoleAPI(APIView):
 
-    def put(self, request, role_id ):
+    def put(self, request, role_id):
         try:
-            role = Roles.objects.get( id = role_id )
+            role = Roles.objects.get(id=role_id)
             list_id = request.data.get('list_id', None)
             if list_id:
-                users = User.objects.filter( id__in = list_id )
+                users = User.objects.filter(id__in=list_id)
                 if users:
                     # check user has role
-                    user_has_role = users.filter( role__isnull = False )
+                    user_has_role = users.filter(role__isnull=False)
                     if user_has_role:
                         return Response({"code": 400, "message": "User had role.", "fields": ""}, status=400)
 
-                    role.user_role_rel.add(*users)
+                    role.user_role_rel.set(*users)
                     return Response({"code": 200, "message": "success", "fields": ""}, status=200)
-                
+
                 return Response({"code": 400, "message": "Not Found users.", "fields": ""}, status=400)
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
 
@@ -2351,5 +2340,3 @@ class SetRoleAPI(APIView):
             print "UserListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
-
-
