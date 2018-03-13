@@ -16,6 +16,7 @@ export class User {
     username_mapping: string;
     date_mapping: string;
     is_active: boolean;
+    is_staff: boolean;
 
     isChecked: boolean;
 }

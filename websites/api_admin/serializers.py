@@ -60,6 +60,8 @@ class Base64ImageField(serializers.ImageField):
 
 class UserSerializer(serializers.ModelSerializer):
 
+    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], allow_null = True)
+
     class Meta:
         model = User
         fields=('id' ,'full_name', 'email', 'phone','barcode','birth_date', 'personal_id', 'address', 'username_mapping', 'date_mapping')
@@ -207,7 +209,7 @@ class NotificationSerializer(serializers.ModelSerializer):
 
 class UserEmbedSerializer(serializers.Serializer):
     full_name = serializers.CharField(required=True)
-    birth_date = serializers.DateField(required=True)
+    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required=True)
     personal_id = serializers.IntegerField(required=True)
     email = serializers.CharField(required=True)
     address = serializers.CharField(required=True)
@@ -253,8 +255,8 @@ class CategoryNotificationSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
 
-    start_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required = True)
-    end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required =  True)
+    start_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required = True)
+    end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required =  True)
 
     class Meta:
         model = Event
@@ -305,6 +307,7 @@ class PostImageSerializer(serializers.ModelSerializer):
         model = Post_Image
         fields = ('id', 'image', 'post')
 
+
     def update(self, instance, validated_data):
         image = validated_data.get('image', instance.image)
         if image:
@@ -316,17 +319,50 @@ class PostImageSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
 
     posts_image = PostImageSerializer( many = True )
-    
+
     class Meta:
         model = Post
         fields = ('id','name' , 'posts_image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
+    '''
+        validate_key_query
+        validate when create new post by hand
+        because key_query is change value in method save() in model
+        author HoangNguyen
+    '''
+    def validate_key_query( self, value ):
+        # check is create method
+        if self.instance is None:
+            key_query = 'kq_' + value.replace(' ', '_')
+            key_query_is_exist = Post.objects.filter( key_query = key_query )
+            if key_query_is_exist:
+                raise serializers.ValidationError('key_query is exist.')
+            return value
+        return value
 
     def create(self, validated_data):
         posts_image = validated_data.pop('posts_image')
-        post = Post.objects.create(**validated_data)
-        for post_image in posts_image:
-            Post_Image.objects.create( post = post, **posts_image )
+        post = Post.objects.create( **validated_data )
+        for item in posts_image:
+            Post_Image.objects.create( post = post, **item )
         return post
+
+    def update(self, instance, validated_data):
+        # to do
+        image = validated_data.get('image', instance.image)
+        if image:
+            instance.image = image
+        instance.name = validated_data.get('name', instance.name)
+        instance.short_description = validated_data.get('short_description', instance.short_description)
+        instance.content = validated_data.get('content', instance.content)
+        instance.post_type = validated_data.get('post_type', instance.post_type)
+        instance.key_query = validated_data.get('key_query', instance.key_query)
+        instance.pin_to_top = validated_data.get('pin_to_top', instance.pin_to_top)
+        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
+        instance.save()
+
+        return instance
+
+
 
 class PostTypeSerializer(serializers.ModelSerializer):
 
@@ -364,9 +400,10 @@ class UserRoleDisplaySerializer(serializers.ModelSerializer):
 
 class UserRoleSerializer(serializers.ModelSerializer):
 
-    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required = False)
+    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required = False)
     password = serializers.CharField(write_only=True)
-    phone =serializers.CharField(max_length=11, min_length=9)
+    phone = serializers.CharField(max_length=11, min_length=9, validators=[UniqueValidator(queryset=User.objects.all())])
+    
 
     class Meta:
         model = User
@@ -380,6 +417,10 @@ class UserRoleSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = super(UserRoleSerializer, self).create(validated_data)
         user.set_password(validated_data['password'])
+        if user.role_id == 6:
+            user.is_staff = False
+        else:
+            user.is_staff = True
         user.save()
         return user
             
@@ -399,6 +440,10 @@ class UserRoleSerializer(serializers.ModelSerializer):
         instance.set_password(validated_data['password'])
         instance.role = validated_data.get('role', instance.role)
         instance.is_active = validated_data.get('is_active', instance.is_active)
+        if instance.role_id == 6:
+            instance.is_staff = False
+        else:
+            instance.is_staff = True
         instance.save()
         return instance
 

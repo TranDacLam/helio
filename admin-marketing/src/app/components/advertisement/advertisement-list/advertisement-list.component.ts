@@ -28,9 +28,6 @@ export class AdvertisementListComponent implements OnInit {
 
 	advs_delete: any; // Contains all checkbox were selected
 
-	isChecked = false; // Default value chekbox
-
-	message_success: string = ""; // Display message success
 	message_result: string = ''; // Message result
     record: string = "Quảng Cáo";
     
@@ -86,49 +83,51 @@ export class AdvertisementListComponent implements OnInit {
         );
   	}
   	/*
-      Function: Select all checkbox
-      Check checkbox all selected
-      True: push id selected in array, isCheck = true
-      False: isCheck = false, remove id in array
-      @author: TrangLe
+      Checkbox all Adv
+        Step1: Create array to contain id user to checked
+        Step 2: Check checkbox all user checked
+            True: Push id checked to listAdv_del, assign advs_delete = listAdv_del, message_result = ''
+            False: Splice all id from array
+        @author: Trangle
     */
   	checkAllAdv(event) {
         let listAdv_del = []; 
         if(event.target.checked){
             this.advs.forEach(function(element) {
                 listAdv_del.push(element.id);
+                $('#' + element.id).prop('checked', true);
           });
             this.advs_delete = listAdv_del;
-            this.isChecked = true;
-            this.message_success = "";
             this.message_result = "";
         }else{
-            this.isChecked = false;
             this.advs.forEach((item, index) => {
-            this.advs_delete.splice(index, this.advs.length);
+                $('#'+item.id).prop('checked', false);
+                this.advs_delete.splice(index, this.advs.length);
             });
         }
     }
     /*
-        Function: Select each item checkbox
-        Check each checkbox selected
-        True: Push id in array
-        False: Remove id in array
+        Change checkbox item
+        Step : Checking checkbox item to checked
+            True: Push id to advs_delete, message_result = '', 
+                check length.advs_delete = users.length, checkbox all = true
+            False: remove id from advs_delete, check all = false
         @author: Trangle
      */
     changeCheckboxAdv(e, adv){
         if( e.target.checked ){
             this.advs_delete.push(adv.id);
-            this.message_success = "";
+            if (this.advs_delete.length === this.advs.length) {
+                $('#allAdvs').prop('checked', true);
+            }
             this.message_result = "";
         } else{
-            let updateItem = this.advs_delete.find(this.findIndexToUpdate, adv.id);
-            let index = this.advs_delete.indexOf(updateItem);
+            let index = this.advs_delete.indexOf(adv.id);
             this.advs_delete.splice(index, 1);
+
+            // uncheck selectAll
+            $('#allAdvs').prop('checked', false);
         }
-    }
-    findIndexToUpdate(type) {
-        return type.id === this;
     }
 
     /*
@@ -184,7 +183,7 @@ export class AdvertisementListComponent implements OnInit {
                     });
                     this.advs_delete = [];
                 });
-                this.message_success = "Xóa quảng cáo thành công";
+                this.message_result = "Xóa quảng cáo thành công";
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.json().message + error.json().fields }])

@@ -19,23 +19,20 @@
 </div>
 <br>
 <div class="table card-list">
-	<div *ngIf="message_success" class="alert alert-success">
-		{{ message_success }}
-	</div>
 	<div class="alert alert-success" *ngIf="message_result">
         {{message_result}}
     </div>
 	<table id="table-banner" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
-	      		<th class='checkbox-banner'><input type="checkbox" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/></th>
+	      		<th class='checkbox-banner'><input type="checkbox" id="allCheck" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/></th>
 	      		<th>Banner</th>
 	      	</tr>
     	</thead>
     	<tbody>
    			<tr *ngFor ="let banner of banners" id="delete{{banner.id}}">
    				<td><input type="checkbox"
-   					value={{banner.id}} name="banner[]" [checked]="isChecked"
+   					value={{banner.id}} name="banner[]" id="{{banner.id}}"
    					(change)="checkItemChange($event, banner)"/></td>
    				<td><a routerLink="/banner-detail/{{ banner.id }}"> {{ banner.sub_url }}</a></td>
    			</tr>

@@ -20,11 +20,11 @@ export class DenominationListComponent implements OnInit {
 
     dtOptions: any = {};
     denominations: Denomination[];
-    select_checkbox = false; // Default checkbox false
+
     deno_selected: any;
     selectedAll: any;
 
-    message_success: string = ""; // Display message success
+
     message_result = ''; // Message result
     record: string = "Mệnh Giá Nạp Tiền";
 
@@ -71,28 +71,29 @@ export class DenominationListComponent implements OnInit {
             (error) => {
                 this.router.navigate(['/error', { message: error }]);
             }
-            );
+        );
 	}
 	/*
         Check all denomination selected
-        Check deno checked
-        True: push id selected in array, select_checkbox = true, message is null
-        False: select_checkbox = false
-        @author: Trangle   
+        Step: Create array to save id checked
+            Checking all checked
+            True: push id to array, item checkbox = True, message_result = ''
+            False: Remove all id from deno_selected, item checkbox = False
+        @author: TrangLe 
      */
 	checkAllDeno(event){
         let array_del = [];
         if(event.target.checked){
             this.denominations.forEach(function(element) {
                 array_del.push(element.id);
+                $('#' + element.id).prop('checked', true);
             });
             this.deno_selected = array_del;
-            this.select_checkbox = true;
-            this.message_success = "";
             this.message_result = "";
         }else{
-            this.select_checkbox = false;
+
             this.denominations.forEach((item, index) => {
+                $('#'+ item.id).prop('checked', false);
                 this.deno_selected.splice(index, this.denominations.length);
             });
         }
@@ -100,24 +101,26 @@ export class DenominationListComponent implements OnInit {
 
 	/*
         Check each item selected
-        @author: TrangLe
-        True: Push id selected to array
-        False: Remove id in array   
+        Check item checkbox is checked
+            True: push id in array, if deno_selected.lenght = denominations.length -> all checkbox = true
+            False: remove id in array, all checkbox = false 
+        @author: Trangle 
      */
 	checkItemChange(event, deno) {
 		if(event.target.checked){
             this.deno_selected.push(deno.id);
-            this.message_success = "";
+            if(this.deno_selected.length == this.denominations.length) {
+                $('#allCheck').prop('checked', true);
+            }
             this.message_result = "";
         }
         else{
-            let updateItem = this.deno_selected.find(this.findIndexToUpdate, deno.id);
-            let index = this.deno_selected.indexOf(updateItem);
+
+            let index = this.deno_selected.indexOf(deno.id);
             this.deno_selected.splice(index, 1);
+
+            $('#allCheck').prop('checked', false);
         }
-    }
-    findIndexToUpdate(type) {
-        return type.id === this;
     }
     
     confirmDelete() {
@@ -163,7 +166,7 @@ export class DenominationListComponent implements OnInit {
                     });
                     this.deno_selected = [];
                 });
-                this.message_success = "Xóa mệnh giá nạp tiền thành công";
+                this.message_result = "Xóa mệnh giá nạp tiền thành công";
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.json().message }]);

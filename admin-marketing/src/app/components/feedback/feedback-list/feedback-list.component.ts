@@ -22,12 +22,9 @@ export class FeedbackListComponent implements OnInit {
 	dtOptions: any = {};
     feedbacks: Feedback[];
 
-    feedback_selected = false; // Default feedback selected false
-
     feedback_del: any;
     allFeedbacks: any;
 
-    message_success: string = ""; // Display message success
     message_result: string = ""; // Display message result
     errorMessage: string;
     record: string = "Phản Hồi";
@@ -101,17 +98,16 @@ export class FeedbackListComponent implements OnInit {
     selectAllCheckbox(event) {
         let arrFeedback_del = [];
         if (event.target.checked) {
-                this.feedbacks.forEach(function(element) {
-                    arrFeedback_del.push(element.id)
-                });
+            this.feedbacks.forEach(function(element) {
+                arrFeedback_del.push(element.id)
+                $('#'+element.id).prop('checked', true);
+            });
             this.feedback_del = arrFeedback_del
-            this.feedback_selected = true;
             this.message_result = "";
-            this.message_success = "";
         } else {
-            this.feedback_selected = false;
             this.feedbacks.forEach((item, index) => {
                 this.feedback_del.splice(index, this.feedbacks.length);
+                $('#'+item.id).prop('checked', false);
             });
         }
     }
@@ -121,17 +117,17 @@ export class FeedbackListComponent implements OnInit {
      */
     changeCheckboxFeedback(event, feedback) {
         if(event.target.checked) {
-            this.feedback_del.push(feedback.id)
+            this.feedback_del.push(feedback.id);
+            if(this.feedback_del.length == this.feedbacks.length) {
+                $('#allCheck').prop('checked', true);
+            }
             this.message_result = "";
-            this.message_success = "";
         } else {
-            let updateItem = this.feedback_del.find(this.findIndexToUpdate, feedback.id);
-            let index = this.feedback_del.indexOf(updateItem);
+            let index = this.feedback_del.indexOf(feedback.id);
             this.feedback_del.splice(index, 1);
+
+            $('#allCheck').prop('checked', false);
         }
-    }
-    findIndexToUpdate(type) {
-        return type.id === this;
     }
 
     /*
@@ -187,7 +183,7 @@ export class FeedbackListComponent implements OnInit {
                     });
                 this.feedback_del = [];
             });
-            this.message_success = "Xóa phản hồi thành công";
+            this.message_result = "Xóa phản hồi thành công";
            },
             (error) => {
                 this.router.navigate(['/error', { message: error.json().message }])
