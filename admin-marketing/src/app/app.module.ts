@@ -15,6 +15,7 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { RECAPTCHA_LANGUAGE } from 'ng-recaptcha';
 import { DatePipe } from '@angular/common';
 import { MapToIterablePipe } from './shared/pipes/map-to-iterable.pipe';
+import { CalendarModule } from "ap-angular2-fullcalendar"; // https://fullcalendar.io/
 
 
 import { AppComponent } from './app.component';
@@ -188,6 +189,7 @@ import { OpenTimeComponent } from './components/open-time/open-time.component';
     OwlNativeDateTimeModule,
     RecaptchaModule.forRoot(), // Keep in mind the "forRoot"-magic nuances!
     RecaptchaFormsModule,
+    CalendarModule
   ],
   providers: [
     AdvertisementService,
