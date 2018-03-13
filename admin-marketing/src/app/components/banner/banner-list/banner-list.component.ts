@@ -24,9 +24,6 @@ export class BannerListComponent implements OnInit {
 
     banner_del: any;
 
-    isChecked = false;
-
-    message_success: string = ""; // Display message success
     message_result: string = ""; // Display message result
     errorMessage: string; // Show error from server
     record: string ="Banner";
@@ -65,30 +62,6 @@ export class BannerListComponent implements OnInit {
                }
           });
      }
-    /*
-        Function: Select All Banner
-        Check checkbox all selected
-        True: push id in array, isChecked = True
-        False: isChecked = False, remove id
-        @author: TrangLe
-     */
-    checkAllBanner(event) {
-        let arr_del = []; 
-        if(event.target.checked){
-            this.banners.forEach(function(element) {
-                arr_del.push(element.id);
-            });
-            this.banner_del = arr_del;
-            this.isChecked = true;
-            this.message_success = "";
-            this.message_result = "";
-        }else{
-            this.isChecked = false;
-            this.banners.forEach((item, index) => {
-                this.banner_del.splice(index, this.banners.length);
-            });
-        }
-    }
 
     /*
         GET: Get All Banner
@@ -96,37 +69,62 @@ export class BannerListComponent implements OnInit {
         @author: TrangLe
      */
      getAllBanners() {
-          this.bannerService.getAllBanner().subscribe(
-               (result) => {
-                    this.banners = result;
-                    this.dtTrigger.next(); 
-               },
-               (error) => {
-                    this.router.navigate(['/error', { message: error.json().message }])
-               }
+        this.bannerService.getAllBanner().subscribe(
+            (result) => {
+                this.banners = result;
+                this.dtTrigger.next(); 
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.json().message }])
+            }
         )};
+
+    /*
+        Function: Select All Banner
+        Step: Create array to save id checked
+            Checking all checked
+            True: push id to array, item checkbox = True, message_result = ''
+            False: Remove all id from banner_del, item checkbox = False
+        @author: TrangLe
+     */
+    checkAllBanner(event) {
+        let arr_del = []; 
+        if(event.target.checked){
+            this.banners.forEach(function(element) {
+                arr_del.push(element.id);
+                $('#' + element.id).prop('checked', true);
+            });
+            this.banner_del = arr_del;
+            this.message_result = "";
+        }else{
+            this.banners.forEach((item, index) => {
+                $('#'+ item.id).prop('checked', false);
+                this.banner_del.splice(index, this.banners.length);
+            });
+        }
+    }
+
     /*
         Function: Check each item checkbox
         Check item checkbox is checked
-        True: push id in array
-        False: remove id in array
+            True: push id in array, if banner_del.lenght = banners.length -> all checkbox = true
+            False: remove id in array, all checkbox = false
         @author: Trangle
      */
     checkItemChange(event, banner) {
         if(event.target.checked){
             this.banner_del.push(banner.id);
-            this.message_success = "";
+            if(this.banner_del.length == this.banners.length) {
+                $('#allCheck').prop('checked', true);
+            }
             this.message_result = "";
         }
         else{
-            let updateItem = this.banner_del.find(this.findIndexToUpdate, banner.id);
-            let index = this.banner_del.indexOf(updateItem);
+            let index = this.banner_del.indexOf(banner.id);
             this.banner_del.splice(index, 1);
-        }
-    }
 
-    findIndexToUpdate(type) {
-        return type.id === this;
+            $('#allCheck').prop('checked', false);
+        }
     }
     
     confirmDelete() {
@@ -175,7 +173,7 @@ export class BannerListComponent implements OnInit {
                     });
                     this.banner_del = [];
                });
-               this.message_success = "Xóa banner thành công";
+               this.message_result = "Xóa banner thành công";
           },
           (error) => {
                this.router.navigate(['/error', { message: error.json().message + error.json().fields }])

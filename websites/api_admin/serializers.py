@@ -402,7 +402,8 @@ class UserRoleSerializer(serializers.ModelSerializer):
 
     birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required = False)
     password = serializers.CharField(write_only=True)
-    phone =serializers.CharField(max_length=11, min_length=9)
+    phone = serializers.CharField(max_length=11, min_length=9, validators=[UniqueValidator(queryset=User.objects.all())])
+    
 
     class Meta:
         model = User
@@ -416,6 +417,10 @@ class UserRoleSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = super(UserRoleSerializer, self).create(validated_data)
         user.set_password(validated_data['password'])
+        if user.role_id == 6:
+            user.is_staff = False
+        else:
+            user.is_staff = True
         user.save()
         return user
             
@@ -435,6 +440,10 @@ class UserRoleSerializer(serializers.ModelSerializer):
         instance.set_password(validated_data['password'])
         instance.role = validated_data.get('role', instance.role)
         instance.is_active = validated_data.get('is_active', instance.is_active)
+        if instance.role_id == 6:
+            instance.is_staff = False
+        else:
+            instance.is_staff = True
         instance.save()
         return instance
 

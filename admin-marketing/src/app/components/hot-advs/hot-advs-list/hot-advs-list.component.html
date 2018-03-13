@@ -19,23 +19,20 @@
 </div>
 <br>
 <div class="table card-list">
-	<div *ngIf="message_success" class="alert alert-success">
-		{{ message_success }}
-	</div>
 	<div class="alert alert-success" *ngIf="message_result">
         {{message_result}}
     </div>
 	<table id="table-hot-advs" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
 		<thead>
 	      	<tr>
-	      		<th class="checkbox-hot-advs"><input type="checkbox" name="allCheckHotAdvs" value="allCheckHotAdvs"(change)="checkAllHotAdvs($event)"/></th>
+	      		<th class="checkbox-hot-advs"><input type="checkbox" id="allCheck" name="allCheckHotAdvs" value="allCheckHotAdvs"(change)="checkAllHotAdvs($event)"/></th>
 
 	        	<th>Hot Advs</th>
 	      	</tr>
     	</thead>
     	<tbody>
    			<tr *ngFor ="let hot_adv of hot_advs" id="delete{{hot_adv.id}}">
-   				<td><input type="checkbox" [checked]="select_checkbox"
+   				<td><input type="checkbox" id="{{hot_adv.id}}"
    					value={{hot_adv.id}} name=""
    					(change)="checkItemChange($event, hot_adv)"/></td>
         		<td>{{ hot_adv.name }}</td>

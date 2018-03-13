@@ -96,7 +96,9 @@ export class ListNotificationComponent implements OnInit {
         let array_del = [];
         if(event.target.checked){
             this.notifications.forEach(function(element) {
-                array_del.push(element.id);
+                if(!element.sent_date){
+                    array_del.push(element.id);
+                }
             });
             this.notifications_del = array_del;
             this.select_checked = true;

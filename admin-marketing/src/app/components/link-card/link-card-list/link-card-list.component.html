@@ -17,16 +17,13 @@
         </a>
     </div>
 </div>
-<div *ngIf="message_success" class="alert alert-success">
-    {{ message_success }}
-</div>
 <div *ngIf="message_result" class="alert alert-success">
     {{ message_result }}
 </div>
 <table id="table_link_card" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class=" row hover">
 	<thead>
 		<tr class="tr-link-card">
-            <th class="checkbox-link-card"><input type="checkbox" 
+            <th class="checkbox-link-card"><input type="checkbox" id="allCheck"
                 name="allLinkCards" value="allLinkCards" (change)="selectAllCheckbox($event);"/>
             </th>
             <th>Card Bardoce</th>
@@ -45,7 +42,7 @@
                     <input type="checkbox" 
                     name="{{ link_card.id }}"
                     value="{{ link_card.id }}"
-                    [checked]="checkbox_selected"
+                    id="{{ link_card.id }}"
                     (change)="changeCheckboxLinkCard($event, link_card)"
                     />
                 </label>

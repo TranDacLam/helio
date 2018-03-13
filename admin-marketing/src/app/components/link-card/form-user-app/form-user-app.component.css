@@ -60,3 +60,9 @@ form button:hover{
 .mgt-15{
     margin-top: 15px;
 }
+.msg_error{
+    color: red;
+}
+.msg_success{
+    color: green;
+}

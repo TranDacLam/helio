@@ -60,6 +60,7 @@ export class UserAddComponent implements OnInit {
             avatar: [this.user_form.avatar, [Validators.required]],
             password: [this.user_form.password, [Validators.required, UserValidators.passwordValidators]],
             is_active: [this.user_form.is_active],
+            is_staff: [this.user_form.is_staff],
             role: [this.user_form.role, [Validators.required]],
             birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date,"DD/MM/YYYY").toDate() : null],
         });

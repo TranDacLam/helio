@@ -16,4 +16,5 @@ export class Promotion {
     QR_code: string;
     user_implementer: User;
     is_draft: boolean;
+    is_save: boolean;
 }

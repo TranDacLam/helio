@@ -71,9 +71,6 @@ export class PromotionFormComponent implements OnInit {
         this.getPromotionLabels();
 
         this.ckEditorConfig = {
-            // removePlugins: 'filebrowser',
-            extraPlugins: 'uploadimage,youtube',
-            uploadUrl: 'http://127.0.0.1:8000/vi/api/upload_file/',
             // filebrowserUploadUrl: 'http://127.0.0.1:8000/vi/api/upload_file/'
 
         };
@@ -234,9 +231,7 @@ export class PromotionFormComponent implements OnInit {
                         // Call service delete promotion by id
                         that.promotionService.deletePromotionById(id).subscribe(
                             (data) => {
-                                if (data.status == 204) {
-                                    that.router.navigate(['/promotions', {'action': 'Xóa "', 'promotion_name': that.promotion.name}]);
-                                }
+                                that.router.navigate(['/promotions', {'action': 'Xóa "', 'promotion_name': that.promotion.name}]);
                             }, 
                             (error) => {
                                 that.router.navigate(['/error']);
