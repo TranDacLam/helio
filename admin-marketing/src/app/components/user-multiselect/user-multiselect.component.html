@@ -17,7 +17,7 @@
                     <td><input type="checkbox"/></td>
                     <td>{{ user.id }}</td>
                     <td>{{ user.full_name }}</td>
-                    <td>{{ user.birth_date | date : 'dd/MM/yyyy'}}</td>
+                    <td>{{ user.birth_date}}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.phone }}</td>
                     <td>{{ user.barcode }}</td>
@@ -47,7 +47,7 @@
                     <td><input type="checkbox"/></td>
                     <td>{{ user.id }}</td>
                     <td> {{ user.full_name }}</td>
-                    <td>{{ user.birth_date | date : 'dd/MM/yyyy'}}</td>
+                    <td>{{ user.birth_date}}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.phone }}</td>
                     <td>{{ user.barcode }}</td>
@@ -57,5 +57,7 @@
     </div>
 </div>
 <div class="row multiselect_footer">
-    <button class="btn btn-success" (click)="onSave()" >LƯU</button>
+    <div class="col-xs-12 col-md-12">
+        <button class="btn btn-success pull-right" (click)="onSave()" >LƯU</button>
+    </div>
 </div>

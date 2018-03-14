@@ -66,3 +66,7 @@ form button:hover{
 .msg_success{
     color: green;
 }
+.helio-app{
+    padding-left: 15px;
+    padding-right: 15px;
+}
