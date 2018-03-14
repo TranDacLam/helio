@@ -34,7 +34,7 @@ export class UserPermissionComponent implements OnInit {
   			this.user_list_right = data;
   		},
   		error =>{
-          console.log(error);
+          
   		}
   	)
   }
@@ -54,7 +54,7 @@ export class UserPermissionComponent implements OnInit {
   			this.user_list_left = data;
   		},
   		error =>{
-          console.log(error);
+          
 
   		}
   	)
@@ -69,7 +69,7 @@ export class UserPermissionComponent implements OnInit {
           }
   		},
   		error =>{
-          console.log(error);
+          
 
   		}
   	)
@@ -82,10 +82,10 @@ export class UserPermissionComponent implements OnInit {
         var role_id = $('.role_checkbox:checked').val();
         this.userPermissionService.setRoleUser( list_id, role_id).subscribe(
           data =>{
-            console.log(data);
+            
           },
           error =>{
-            console.log(error);
+            
           }
         )
     
@@ -115,10 +115,8 @@ export class UserPermissionComponent implements OnInit {
     */
     selectAllEventRight(event) {
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
-          console.log(dtInstance);
             dtInstance.rows().every( function () {
                 let row = this.node();
-                console.log(row);
                 if( event.target.checked ) {
                     $(row).addClass('selected');
                 } else {
@@ -164,8 +162,7 @@ export class UserPermissionComponent implements OnInit {
         let selected_temp: any;
         this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
             selected_temp = dtInstance.rows( '.selected' ).data();
-            dtInstance.rows('.selected').remove().draw(); 
-            console.log(selected_temp) ;          
+            dtInstance.rows('.selected').remove().draw();          
         });
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
              dtInstance.rows.add(selected_temp).draw();

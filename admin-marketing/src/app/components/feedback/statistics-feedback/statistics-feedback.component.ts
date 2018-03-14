@@ -123,8 +123,6 @@ export class StatisticsFeedbackComponent implements OnInit {
     checkDate(startD, endD) {
         let start = $('#' + startD).val() ? moment($('#' + startD).val(), "DD/MM/YYYY").toDate() : '';
         let end = $('#' + endD).val() ? moment($('#' + endD).val(), "DD/MM/YYYY").toDate() : '';
-        console.log(start);
-        console.log(end);
         if(start <= end || start === '' || end === ''){
             return true;
         }
