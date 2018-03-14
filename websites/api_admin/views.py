@@ -2015,14 +2015,15 @@ class UserDetailView(APIView):
 
         user = self.get_object(pk)
         try:
-            print('user', user.is_staff)
+            print('user', request.data)
             serializer = admin_serializers.UserRoleSerializer(user, data=request.data)
 
             if serializer.is_valid():
-                if(self.request.user.role_id == 1 and user.is_staff == True):
-                    self.request.user.set_password(self.request.data.get("password"))
-                else:
-                    return Response({"code": 405, "message":"Just System Admin change password user"}, status=405)
+                if(self.request.user.role_id == 1):
+                    if (user.is_staff == True):
+                        user.set_password(self.request.data.get("password"))
+                    return Response({"code": 405, "message":"Can not change password user"}, status=405)
+                return Response({"code": 405, "message":"Just System Admin change password user"}, status=405)
                 serializer.save()
                 return Response(serializer.data)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)

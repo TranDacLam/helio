@@ -1,6 +1,6 @@
 /*Begin title-ad*/
 .title-adv {
-	border-bottom: 2px solid #ccc;
+	border-bottom: 2px solid black;
 	margin: 10px 0 20px 0;
 	padding: 10px 0;
 }
@@ -10,7 +10,7 @@
 }
 /*Begin content-adv*/
 .content-adv {
-	border-bottom: 2px solid #ccc;
+	border-bottom: 2px solid black;
 	margin-bottom: 10px;
 }
 /*End content-adv*/

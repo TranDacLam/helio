@@ -14,7 +14,7 @@
 <a class="pull-left" routerLink="/banner-add">Thêm Banner</a>
 <br>
 <hr>
-<div class="col-md-8 col-md-offset-2">
+<div class="col-md-8">
 	<form [formGroup]="formBanner" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
     <div class="form-group row">
         <div class="col-sm-3">
@@ -72,7 +72,7 @@
     </div>
     <hr>
     <div class="form-group row">
-    	<button [disabled]="formBanner.invalid" type="submit" class="pull-right btn btn-info" (click)="createBanner();" >Lưu lại</button>
+    	<button type="submit" class="pull-right btn btn-info" (click)="createBanner();" >Lưu lại</button>
     </div>
 </form>
 </div>
