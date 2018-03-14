@@ -1,22 +1,19 @@
 <ol class="breadcrumb">
     <li><a routerLink='/'>Trang Chủ</a></li>
-    <li class="active"><a routerLink="/fee/list">Quản Lý Phí Giao Dịch</a></li>
+    <li class="active">Quản Lý Phí Giao Dịch</li>
  </ol>
 <div class="row text-center">
     <h1>PHÍ GIAO DỊCH</h1>
 </div>
 <div class="row mt-30 mb-30">
     <div class="col-xs-6 col-sm-6">
-        <a class="btn btn-primary" routerLink="/">TRỞ VỀ TRANG QUẢN TRỊ</a>
+        <a class="btn custom_btn" routerLink="/">TRỞ VỀ TRANG QUẢN TRỊ</a>
     </div>
     <div class="col-xs-6 col-sm-6">
-        <a class="btn btn-primary pull-right" routerLink="/fee/add">
+        <a class="btn custom_btn pull-right" routerLink="/fee/add">
 			<span class="glyphicon glyphicon-plus"></span>
 			THÊM PHÍ GIAO DỊCH
 		</a>
-    </div>
-    <div class="col-xs-12 col-sm-12 mt-15 messsage" *ngIf="message_result">
-        <h4>{{message_result}}</h4>
     </div>
 </div>
 <div class="row">
