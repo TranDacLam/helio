@@ -64,6 +64,7 @@ export class ListPromotionLabelComponent implements OnInit {
             (error) => {
                 if(error.code === 403){
                     this.errorMessage = error.message;
+                    this.message_result = '';
                 }else{
                     this.router.navigate(['/error', { message: error.message}]);
                 }
@@ -150,6 +151,7 @@ export class ListPromotionLabelComponent implements OnInit {
                 });
                 this.select_checked = false;
                 this.message_result = 'Xóa thành công.';
+                this.errorMessage = '';
             }
         );
     }

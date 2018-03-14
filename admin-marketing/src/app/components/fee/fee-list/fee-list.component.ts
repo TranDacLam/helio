@@ -91,7 +91,6 @@ export class FeeListComponent implements OnInit {
          //when uncheck checkbox
          var index = this.list_id.indexOf(id);
          this.list_id.splice(index, 1);
-         console.log(this.list_id);
          // uncheck selectAll
          let selectAll = $('#selectAll').prop('checked');
          if(selectAll){

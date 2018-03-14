@@ -42,25 +42,25 @@ export class UserDetailComponent implements OnInit {
         }
 
 	ngOnInit() {
-		this.createFormUser();
-        this.getUserById();
+       this.getUserById();
+		
 	}
 
 	// Create Form 
 	createFormUser() {
 		this.formUser = this.fb.group({
-        email: [this.user_form.email, [Validators.required, Validators.email]],
-        full_name: [this.user_form.full_name, [Validators.required]],
-        birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date,"DD/MM/YYYY").toDate() : null],
-        phone: [this.user_form.phone, [Validators.required,UserValidators.phoneValidators]],
-        personal_id: [this.user_form.personal_id],
-        country: [this.user_form.country],
-        address: [this.user_form.address],
-        city: [this.user_form.city],
-        avatar: [this.user_form.avatar],
-        password: [this.user_form.password, [Validators.required, UserValidators.passwordValidators]],
-        role: [this.user_form.role ? this.user_form.role : ''],
-        is_active: [this.user_form.is_active]
+        email: [this.user.email, [Validators.required, Validators.email]],
+        full_name: [this.user.full_name, [Validators.required]],
+        birth_date: [this.user.birth_date ? moment(this.user.birth_date,"DD/MM/YYYY").toDate() : null],
+        phone: [this.user.phone, [Validators.required,UserValidators.phoneValidators]],
+        personal_id: [this.user.personal_id],
+        country: [this.user.country],
+        address: [this.user.address],
+        city: [this.user.city],
+        avatar: [this.user.avatar],
+        password: [this.user.password, [Validators.required, UserValidators.passwordValidators]],
+        role: [this.user.role['id'] ? this.user.role['id'] : ''],
+        is_active: [this.user.is_active]
     })
 	}
 
@@ -75,6 +75,7 @@ export class UserDetailComponent implements OnInit {
         .subscribe(
             (data) => {
                 this.user = data;
+                this.createFormUser();
             },
             (error) =>  {
                 this.router.navigate(['/error', { message: error.json().message }])

@@ -6,6 +6,7 @@ import { Event } from '../../../shared/class/event';
 import { EventService } from '../../../shared/services/event.service';
 import { env } from '../../../../environments/environment';
 import { DateValidators } from './../../../shared/validators/date-validators';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import * as moment from 'moment';
 import 'rxjs/add/observable/throw';
 
@@ -96,33 +97,19 @@ export class FormEventComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(): void{
-        this.formEvent.value.start_date = $('#start_date').val();
-        this.formEvent.value.end_date = $('#end_date').val();
-        this.formEvent.value.start_time = $('#start_time').val();
-        this.formEvent.value.end_time = $('#end_time').val();
-        let event_form_data = this.convertFormGroupToFormData(this.formEvent);
-        let value_form = this.formEvent.value;
-        if(this.type_http == 'post'){
-            this.eventService.addEvent(event_form_data).subscribe(
-                (data) => {
-                    this.router.navigate(['/event/list', { message_post: value_form.name}]);
-                },
-                (error) => {
-                    if(error.code === 400){
-                        this.errorMessage = error.message;
-                    }else{
-                        this.router.navigate(['/error', { message: error.message}]);
-                    }
-                }
-            );
-        }else if(this.type_http == 'put'){
-            if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
-                this.formEvent.get('is_clear_image').setValue(false);
-                this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
-            }else{
-                this.eventService.updateEvent(event_form_data, this.event.id).subscribe(
+        if(this.formEvent.invalid){
+            ValidateSubmit.validateAllFormFields(this.formEvent);
+        }else{
+            this.formEvent.value.start_date = $('#start_date').val();
+            this.formEvent.value.end_date = $('#end_date').val();
+            this.formEvent.value.start_time = $('#start_time').val();
+            this.formEvent.value.end_time = $('#end_time').val();
+            let event_form_data = this.convertFormGroupToFormData(this.formEvent);
+            let value_form = this.formEvent.value;
+            if(this.type_http == 'post'){
+                this.eventService.addEvent(event_form_data).subscribe(
                     (data) => {
-                        this.router.navigate(['/event/list', { message_put: value_form.name}]);
+                        this.router.navigate(['/event/list', { message_post: value_form.name}]);
                     },
                     (error) => {
                         if(error.code === 400){
@@ -132,9 +119,26 @@ export class FormEventComponent implements OnInit {
                         }
                     }
                 );
+            }else if(this.type_http == 'put'){
+                if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
+                    this.formEvent.get('is_clear_image').setValue(false);
+                    this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                }else{
+                    this.eventService.updateEvent(event_form_data, this.event.id).subscribe(
+                        (data) => {
+                            this.router.navigate(['/event/list', { message_put: value_form.name}]);
+                        },
+                        (error) => {
+                            if(error.code === 400){
+                                this.errorMessage = error.message;
+                            }else{
+                                this.router.navigate(['/error', { message: error.message}]);
+                            }
+                        }
+                    );
+                }
             }
         }
-        
     }
 
     /*

@@ -4,6 +4,8 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Location } from '@angular/common';
 import { Hot } from '../../../shared/class/hot';
 import { HotService } from '../../../shared/services/hot.service';
+import { DateValidators } from './../../../shared/validators/date-validators';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { env } from '../../../../environments/environment';
 import 'rxjs/add/observable/throw';
 
@@ -89,29 +91,15 @@ export class FormHotComponent implements OnInit {
         author: Lam
     */
     onSubmit(): void{
-        let hot_form_data = this.convertFormGroupToFormData(this.formHot);
-        let value_form = this.formHot.value;
-        if(!this.hot.id){
-            this.hotService.addHot(hot_form_data).subscribe(
-                (data) => {
-                    this.router.navigate(['/hot/list', { message_post: value_form.name}]);
-                },
-                (error) => {
-                    if(error.code === 400){
-                        this.errorMessage = error.message;
-                    }else{
-                        this.router.navigate(['/error', { message: error.message}]);
-                    }
-                }
-            );
+        if(this.formHot.invalid){
+            ValidateSubmit.validateAllFormFields(this.formHot);
         }else{
-            if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
-                this.formHot.get('is_clear_image').setValue(false);
-                this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
-            }else{
-                this.hotService.updateHot(hot_form_data, this.hot.id).subscribe(
+            let hot_form_data = this.convertFormGroupToFormData(this.formHot);
+            let value_form = this.formHot.value;
+            if(!this.hot.id){
+                this.hotService.addHot(hot_form_data).subscribe(
                     (data) => {
-                        this.router.navigate(['/hot/list', { message_put: value_form.name}]);
+                        this.router.navigate(['/hot/list', { message_post: value_form.name}]);
                     },
                     (error) => {
                         if(error.code === 400){
@@ -121,6 +109,24 @@ export class FormHotComponent implements OnInit {
                         }
                     }
                 );
+            }else{
+                if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
+                    this.formHot.get('is_clear_image').setValue(false);
+                    this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                }else{
+                    this.hotService.updateHot(hot_form_data, this.hot.id).subscribe(
+                        (data) => {
+                            this.router.navigate(['/hot/list', { message_put: value_form.name}]);
+                        },
+                        (error) => {
+                            if(error.code === 400){
+                                this.errorMessage = error.message;
+                            }else{
+                                this.router.navigate(['/error', { message: error.message}]);
+                            }
+                        }
+                    );
+                }
             }
         }
         

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PromotionLabel } from '../../../shared/class/promotion-label';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -47,7 +48,6 @@ export class EditPromotionLabelComponent implements OnInit {
         const id = +this.route.snapshot.paramMap.get('id');
         this.promotionLabelService.getPromotionLabel(id).subscribe(
             (data) => {
-                console.log(data);
                 this.promotion_label = data;
                 this.creatForm();
             },
@@ -74,18 +74,22 @@ export class EditPromotionLabelComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(): void{
-        this.promotionLabelService.updatePromotionLabel(this.formPromotionLabel.value, this.promotion_label.id).subscribe(
-            (data) => {
-                this.router.navigate(['/promotion-label/list', { message_post: this.formPromotionLabel.value.name}]);
-            },
-            (error) => {
-                if(error.code === 400){
-                    this.errorMessage = error.message;
-                }else{
-                    this.router.navigate(['/error', { message: error.message}]);
+         if(this.formPromotionLabel.invalid){
+            ValidateSubmit.validateAllFormFields(this.formPromotionLabel);
+        }else{
+            this.promotionLabelService.updatePromotionLabel(this.formPromotionLabel.value, this.promotion_label.id).subscribe(
+                (data) => {
+                    this.router.navigate(['/promotion-label/list', { message_post: this.formPromotionLabel.value.name}]);
+                },
+                (error) => {
+                    if(error.code === 400){
+                        this.errorMessage = error.message;
+                    }else{
+                        this.router.navigate(['/error', { message: error.message}]);
+                    }
                 }
-            }
-        );
+            );
+        }            
     }
 
     /*

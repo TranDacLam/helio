@@ -15,6 +15,7 @@ import { PromotionTypeService } from '../../../shared/services/promotion-type.se
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
 import { DatePipe } from '@angular/common';
 import { DateValidators } from './../../../shared/validators/date-validators';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 
 import { env } from '../../../../environments/environment';
 import * as moment from 'moment';
@@ -165,42 +166,46 @@ export class PromotionFormComponent implements OnInit {
         @author: diemnguyen
     */
     saveEvent(): void {
-        this.errors = '';
-        const that = this;
-        // Convert FormGroup to FormData
-        let promotionFormData = this.convertFormGroupToFormData(this.promotionForm);
-        /*
-            Case 1: Promotion id is not null then call update service
-            Case 1: Promotion id is null then call save service
-        */
-        if(this.promotion.id) {
-            this.promotionService.updatePromotion(promotionFormData, this.promotion.id).subscribe(
-                (data) => {
-                    // Navigate to promotion page where success
-                    that.router.navigate(['/promotions', {'action': 'Sửa "', 'promotion_name': this.promotionForm.value['name']}]);
-                }, 
-                (error) => {
-                    if(error.code === 400){
-                        that.errors = error.message;
-                    }else{
-                        that.router.navigate(['/error']);
+         if(this.promotionForm.invalid){
+            ValidateSubmit.validateAllFormFields(this.promotionForm);
+        }else{
+            this.errors = '';
+            const that = this;
+            // Convert FormGroup to FormData
+            let promotionFormData = this.convertFormGroupToFormData(this.promotionForm);
+            /*
+                Case 1: Promotion id is not null then call update service
+                Case 1: Promotion id is null then call save service
+            */
+            if(this.promotion.id) {
+                this.promotionService.updatePromotion(promotionFormData, this.promotion.id).subscribe(
+                    (data) => {
+                        // Navigate to promotion page where success
+                        that.router.navigate(['/promotions', {'action': 'Sửa "', 'promotion_name': this.promotionForm.value['name']}]);
+                    }, 
+                    (error) => {
+                        if(error.code === 400){
+                            that.errors = error.message;
+                        }else{
+                            that.router.navigate(['/error']);
+                        }
                     }
-                }
-            );
-        } else {
-            this.promotionService.savePromotion(promotionFormData).subscribe(
-                (data) => {
-                    // Navigate to promotion page where success
-                    that.router.navigate(['/promotions', {'action': 'Tạo mới "', 'promotion_name': this.promotionForm.value['name']}]);
-                }, 
-                (error) => {
-                    if(error.code === 400){
-                        that.errors = error.message;
-                    }else{
-                        that.router.navigate(['/error']);
+                );
+            } else {
+                this.promotionService.savePromotion(promotionFormData).subscribe(
+                    (data) => {
+                        // Navigate to promotion page where success
+                        that.router.navigate(['/promotions', {'action': 'Tạo mới "', 'promotion_name': this.promotionForm.value['name']}]);
+                    }, 
+                    (error) => {
+                        if(error.code === 400){
+                            that.errors = error.message;
+                        }else{
+                            that.router.navigate(['/error']);
+                        }
                     }
-                }
-            );
+                );
+            }
         }
     }
 

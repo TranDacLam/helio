@@ -53,7 +53,6 @@ export class FeedbackListComponent implements OnInit {
         this.getAllFeedbacks();
         this.route.queryParams
             .subscribe(params => {
-                console.log(params);
                 this.feedbackService.getFeedbackFilter(params).subscribe(
                     (result) => {
                         this.feedbacks = result;

@@ -13,7 +13,7 @@
     <a class="pull-left" routerLink="/hot-advs-add">Thêm Hot Advs</a>
 </div>
 <form [formGroup]="formHotAds" enctype="multipart/form-data">
-	<div class="col-md-8 col-md-offset-2">
+	<div class="col-md-8">
 		<div class="form-group row">
 			<div class="col-sm-3">
 				<label class="center-block"> Tên:</label>
@@ -121,8 +121,8 @@
 	</div>
 	<div class="clearfix"></div>
 	<div class="area-button row">
-		<div class="col-md-8 col-md-offset-2">
-    		<button [disabled]="formHotAds.invalid" (click)="createHotAdvs();" class="bt-hot-advs pull-right btn btn-info">Lưu lại</button>
+		<div class="col-md-12">
+    		<button (click)="createHotAdvs();" class="bt-hot-advs pull-right btn btn-info">Lưu lại</button>
     	</div>
     </div>
 </form>

@@ -12,7 +12,7 @@
 <!-- End breadcrumb -->
 <a class="pull-left" routerLink="/banner-add">Chỉnh sửa Banner</a>
 <br>
-<div class="col-md-8 col-md-offset-2">
+<div class="col-md-8">
     <div *ngIf='banner'>
     	<form [formGroup]="formBanner" (ngSubmit)="onSubmit()">
             <div class="form-group row">
@@ -70,7 +70,7 @@
             </div>
             <hr>
             <div class="form-group row">
-            	<button [disabled]="formBanner.invalid" type="submit" class="pull-right btn btn-info">Lưu lại</button>
+            	<button type="submit" class="pull-right btn btn-info">Lưu lại</button>
             </div>
         </form>
     </div>

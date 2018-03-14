@@ -77,10 +77,10 @@
     </div>
 
     <hr/>
-    <button class="btn btn-primary" (click)="deleteGameEvent()">
+    <button class="btn btn-primary" (click)="deleteGameEvent()" *ngIf="game.id">
         XÓA
     </button>
-    <button class="btn btn-primary pull-right" (click)="onSubmit()" [disabled]="formGame.invalid">
+    <button class="btn btn-primary pull-right" (click)="onSubmit()">
         LƯU LẠI
     </button>
 </form>

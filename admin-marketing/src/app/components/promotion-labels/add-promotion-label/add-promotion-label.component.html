@@ -10,8 +10,10 @@
 </div>
 <!-- End breadcrumb -->
 <div class="row mt-30 mb-30">
-    <h3>Thêm Nhãn Khuyến Mãi</h3>
-    <hr/>
+    <div class="col-xs-12 col-md-12">
+        <h3>Thêm Nhãn Khuyến Mãi</h3>
+        <hr/>
+    </div>
 </div>
 <ng-container *ngIf="errorMessage">
     <h4 *ngFor="let error of errorMessage | mapToIterable" class="error_msg">
@@ -29,7 +31,7 @@
         </div>
     </div>
     <hr/>
-    <button class="btn btn-primary pull-right" (click)="onSubmit()" [disabled]="formPromotionLabel.invalid">
+    <button class="btn btn-primary pull-right" (click)="onSubmit()">
         LƯU LẠI
     </button>
 </form>

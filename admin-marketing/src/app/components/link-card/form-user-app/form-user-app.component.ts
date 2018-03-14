@@ -4,6 +4,7 @@ import { User } from '../../../shared/class/user';
 import { LinkCardService } from '../../../shared/services/link-card.service';
 import { DateValidators } from './../../../shared/validators/date-validators';
 import { NumberValidators } from './../../../shared/validators/number-validators';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import 'rxjs/add/observable/throw';
 
 @Component({
@@ -95,17 +96,21 @@ export class FormUserAppComponent implements OnInit {
         Author: Lam
     */
     onSubmitApp(){
-        let id = this.user_app.id;
-        this.linkCardService.updateUserApp(this.appForm.value, id).subscribe(
-            (data) => {
-                this.msg_success = data.message;
-                this.msg_error = null;
-            },
-            (error) => {
-                this.msg_error = error.message;
-                this.msg_success = '';
-            }
-        );
+        if(this.appForm.invalid){
+            ValidateSubmit.validateAllFormFields(this.appForm);
+        }else{
+            let id = this.user_app.id;
+            this.linkCardService.updateUserApp(this.appForm.value, id).subscribe(
+                (data) => {
+                    this.msg_success = data.message;
+                    this.msg_error = null;
+                },
+                (error) => {
+                    this.msg_error = error.message;
+                    this.msg_success = '';
+                }
+            );
+        }
     }
 
 }

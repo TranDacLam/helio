@@ -249,6 +249,9 @@ h1.h1-title {
 .multiselect_user #DataTables_Table_1_wrapper {
     overflow: auto !important;
 }
+.dataTables_scrollBody{
+    min-height: 433px;
+}
 @media only screen and (max-width : 768px) {
     .multiselect_user .datatable-content{
         width: 100%;
