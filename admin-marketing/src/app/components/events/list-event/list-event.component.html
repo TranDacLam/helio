@@ -11,7 +11,7 @@
 <div class="row text-center">
     <h1>QUẢN LÝ SỰ KIỆN</h1>
 </div>
-<div class="row mt-50 mb-30 custom-title">
+<div class="row mt-50 mb-15 custom-title">
     <div class="col-xs-6 col-sm-6">
         <a class="btn custom-button" routerLink="/">
             <i class="fa fas fa-arrow-left icon-button"></i>
@@ -19,7 +19,7 @@
         </a>
     </div>
     <div class="col-xs-6 col-sm-6">
-        <a class="btn custom-button pull-right" routerLink="/event/add">
+        <a class="btn custom-button pull-right" [routerLink]="['/event/add/', {lang: lang}]">
             <i class="fa fas fa-plus icon-button"></i>
             TẠO SỰ KIỆN MỚI
         </a>
@@ -29,6 +29,18 @@
     </div>
     <div class="col-xs-12 col-sm-12 mt-15 messsage alert alert-success" *ngIf="message_result">
         <h4>{{message_result}}</h4>
+    </div>
+</div>
+<div class="row mb-30 language">
+    <div class="col-xs-12 col-sm-12">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
+                (click)="changeLangVI()"
+            >VI</button>
+            <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
+                (click)="changeLangEN()"
+            >EN</button>
+        </div> 
     </div>
 </div>
 <div>
@@ -42,7 +54,7 @@
         <tbody>
             <tr *ngFor="let event of events" id="del-{{event.id}}">
                 <td><input type="checkbox" (change)="onSelectCKB($event, event)" [checked]="select_checked"/></td>
-                <td><a routerLink="/event/edit/{{ event.id }}">{{ event.name }}</a></td>
+                <td><a [routerLink]="['/event/edit/', event.id, {lang: lang}]">{{ event.name }}</a></td>
             </tr>
         </tbody>
     </table>

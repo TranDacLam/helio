@@ -43,9 +43,9 @@ export const api = {
     post: env.api_domain + 'post/',
     post_list: env.api_domain + 'post_list/',
 
-    event: env.api_domain + 'event/',
+    event: 'event/',
 
-    event_list: env.api_domain + 'event_list/',
+    event_list: 'event_list/',
 
     /* URL generator QR Code from Promotion ID ( POST )*/
     generator_QR_code: env.api_domain + 'generator_QR_code/',
