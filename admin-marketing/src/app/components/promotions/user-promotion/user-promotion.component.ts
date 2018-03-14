@@ -6,7 +6,9 @@ import { PromotionService } from '../../../shared/services/promotion.service';
 import { User } from '../../../shared/class/user';
 import { Promotion } from '../../../shared/class/promotion'
 import { env } from '../../../../environments/environment';
+import { Globals } from './../../../shared/commons/globals';
 
+declare var bootbox:any;
 declare var $: any;
 
 
@@ -24,6 +26,8 @@ export class UserPromotionComponent implements OnInit {
 	user_list_left: User[];
     user_list_right: User[];
 
+    user_current: User;
+
     api_domain:string = "";
 
     notification_id: number;
@@ -32,13 +36,17 @@ export class UserPromotionComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute, 
-        private promotionService: PromotionService
+        private promotionService: PromotionService,
+        private globals: Globals
     ) { 
         this.api_domain = env.api_domain_root;
     }
 
     ngOnInit() {
     	this.getUsersPromotion();
+        setTimeout(()=>{
+            this.user_current = this.globals.user_current;
+        },100);
     }
 
     getUsersPromotion(){
@@ -56,9 +64,28 @@ export class UserPromotionComponent implements OnInit {
             });
     }
 
+    /*
+        Function updateUserPromotion(): check valid
+        Author: Lam
+    */
     updateUserPromotion(list_user_id) {
-        const promotion_id = +this.route.snapshot.paramMap.get('id');
+        if(this.promotion.is_save === false){
+            if(list_user_id.length > 0){
+                this.updateUser(list_user_id)
+            }else{
+                bootbox.alert("Vui lòng chọn user");
+            }
+        }else{
+            if(this.user_current.role === 1){
+                this.updateUser(list_user_id);
+            }else{
+                bootbox.alert("Chức năng này chỉ dành cho System Admin");
+            }
+        }
+	}
 
+    updateUser(list_user_id){
+        const promotion_id = +this.route.snapshot.paramMap.get('id');
         this.promotionService.updateUserPromotion(promotion_id, list_user_id).subscribe(
             (data)=> {
                 if (data.status == 204) {
@@ -67,8 +94,9 @@ export class UserPromotionComponent implements OnInit {
             }, 
             (error) => {
                 this.router.navigate(['/error']);
-            });
-	}
+            }
+        );
+    }
 
     generator_QR_code(event , id: number) {
         let element = $(event.target);

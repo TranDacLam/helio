@@ -12,8 +12,10 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime'; /
 import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
+import { RECAPTCHA_LANGUAGE } from 'ng-recaptcha';
 import { DatePipe } from '@angular/common';
 import { MapToIterablePipe } from './shared/pipes/map-to-iterable.pipe';
+import { CalendarModule } from "ap-angular2-fullcalendar"; // https://fullcalendar.io/
 
 
 import { AppComponent } from './app.component';
@@ -97,8 +99,9 @@ import { ErrorComponent } from './components/error/error.component';
 import { UserPermissionComponent } from './components/user-permission/user-permission.component';
 import { UserPermissionService } from './shared/services/user-permission.service';
 import { LoginComponent } from './components/login/login.component';
-
-
+import { Globals } from './shared/commons/globals';
+import { OpenTimeComponent } from './components/open-time/open-time.component';
+import { PromotionReportComponent } from './components/promotions/promotion-report/promotion-report.component';
 
 
 
@@ -169,7 +172,9 @@ import { LoginComponent } from './components/login/login.component';
     ErrorComponent,
     UserPermissionComponent,
     LoginComponent,
-    MapToIterablePipe
+    MapToIterablePipe,
+    OpenTimeComponent,
+    PromotionReportComponent
   ],
   imports: [
     BrowserModule,
@@ -185,6 +190,7 @@ import { LoginComponent } from './components/login/login.component';
     OwlNativeDateTimeModule,
     RecaptchaModule.forRoot(), // Keep in mind the "forRoot"-magic nuances!
     RecaptchaFormsModule,
+    CalendarModule
   ],
   providers: [
     AdvertisementService,
@@ -197,7 +203,9 @@ import { LoginComponent } from './components/login/login.component';
     AuthGuard,
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'vi'},
     DatePipe,
+    {provide: RECAPTCHA_LANGUAGE, useValue: 'vi'},
     UserPermissionService,
+    Globals
   ],
   bootstrap: [AppComponent]
 })

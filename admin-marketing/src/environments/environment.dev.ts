@@ -7,5 +7,5 @@ export const env = {
   	production: true, 
   	api_domain: 'http://172.16.12.10:8001/vi/api/',
   	api_domain_root: 'http://172.16.12.10:8001',
-    key_recaptcha: '6LcznUsUAAAAAL5a4yHMyyDhqjuDeJvXJnFqOrDp'
+    key_recaptcha: '6LdIVEwUAAAAAJ6HhauYyGt-Yr2sTLLTDmBvddQP'
 };

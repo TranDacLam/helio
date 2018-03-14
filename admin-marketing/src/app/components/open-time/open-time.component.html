@@ -1,0 +1,102 @@
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Giờ Mở Cửa</li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class="row">
+    <h3>Giờ Mở Cửa</h3>
+    <hr/>
+</div>
+<div class="row mt-50 mb-30">
+    <form class="form-inline" [formGroup]="formOpenTime" novalidate>
+        <div class="col-sm-6">
+            <div class="row mb-15">
+                <label class="label-title">Giờ * </label>
+                <div class="input-group">
+                    <span class="input-group-addon" [owlDateTimeTrigger]="startTime">
+                        <i class="fa fa-clock-o"></i>
+                    </span>
+                    <input type="text" class="form-control event-date" formControlName="start_time"
+                        [owlDateTime]="startTime" id="start_time"
+                    />
+                    
+                    <owl-date-time [pickerType]="'timer'" #startTime></owl-date-time>
+                </div>
+                <label class="label-empty"> - </label>
+                <div class="input-group">
+                    <span class="input-group-addon" [owlDateTimeTrigger]="endTime">
+                        <i class="fa fa-clock-o"></i>
+                    </span>
+                    <input type="text" class="form-control event-date" formControlName="end_time"
+                        [owlDateTime]="endTime" id="end_time"
+                    />         
+                    <owl-date-time [pickerType]="'timer'" #endTime></owl-date-time>
+                </div>
+            </div>
+
+            <div class="row">
+                <label class="label-title">Ngày * </label>
+                <div class="input-group">
+                    <span class="input-group-addon" [owlDateTimeTrigger]="startDate">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                    <input type="text" class="form-control event-date" formControlName="start_date"
+                        [owlDateTime]="startDate" id="start_date"
+                    />         
+                    <owl-date-time [pickerType]="'calendar'" #startDate></owl-date-time>
+                </div>
+                <label class="label-empty"> - </label>
+                <div class="input-group">
+                    <span class="input-group-addon" [owlDateTimeTrigger]="endDate">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                    <input type="text" class="form-control event-date" formControlName="end_date"
+                        [owlDateTime]="endDate" id="end_date"
+                    />         
+                    <owl-date-time [pickerType]="'calendar'" #endDate></owl-date-time>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <table class="table table-bordered table-open-time">
+                <thead>
+                  <tr>
+                    <th>Thứ 2</th>
+                    <th>Thứ 3</th>
+                    <th>Thứ 4</th>
+                    <th>Thứ 5</th>
+                    <th>Thứ 6</th>
+                    <th>Thứ 7</th>
+                    <th>Chủ Nhật</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="checkbox" /></td>
+                    <td><input type="checkbox" /></td>
+                    <td><input type="checkbox" /></td>
+                    <td><input type="checkbox" /></td>
+                    <td><input type="checkbox" /></td>
+                    <td><input type="checkbox" /></td>
+                    <td><input type="checkbox" /></td>
+                  </tr>
+                </tbody>
+            </table>
+            <p class="pull-right"><input type="checkbox" /></p>
+        </div>
+
+        <button class="btn btn-primary pull-right" (click)="onSubmit()" [disabled]="formOpenTime.invalid">
+            LƯU LẠI
+        </button>
+    </form>
+</div>
+<hr/>
+<div class="row mt-50 mb-30 text-center">
+    <angular2-fullcalendar [options]="calendarOptions"></angular2-fullcalendar>
+</div>

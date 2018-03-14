@@ -44,7 +44,6 @@ export class UserPermissionComponent implements OnInit {
   getRoles(){
   	this.userPermissionService.getRoles().subscribe(
   		data =>{
-  			console.log(data);
   			this.roles = data;
   		},
   		error =>{
@@ -55,7 +54,7 @@ export class UserPermissionComponent implements OnInit {
   
   ngOnInit() {
   	this.getRoles();
-  	this.getUserRight(1);
+    this.getUserRight(1);
   	this.getUserLeft();
   }
 
