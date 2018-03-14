@@ -92,7 +92,6 @@ export class UserDetailComponent implements OnInit {
                     self.router.navigate(['/user-list', { message_put: this.formUser.value['email']} ])
                 }, 
                 (error) => {
-                    console.log(error);
                     if(error.code == 400) {
                         this.errorMessage = error.message
                     } else if(error.code == 405) {

@@ -48,7 +48,6 @@ export class EditPromotionLabelComponent implements OnInit {
         const id = +this.route.snapshot.paramMap.get('id');
         this.promotionLabelService.getPromotionLabel(id).subscribe(
             (data) => {
-                console.log(data);
                 this.promotion_label = data;
                 this.creatForm();
             },

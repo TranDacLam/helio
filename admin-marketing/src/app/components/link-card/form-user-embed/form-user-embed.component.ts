@@ -4,6 +4,7 @@ import { Customer } from '../../../shared/class/customer';
 import { LinkCardService } from '../../../shared/services/link-card.service';
 import { DateValidators } from './../../../shared/validators/date-validators';
 import { NumberValidators } from './../../../shared/validators/number-validators';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import 'rxjs/add/observable/throw';
 
 @Component({
@@ -99,16 +100,20 @@ export class FormUserEmbedComponent implements OnInit {
         Author: Lam
     */
     onSubmitEmbed(){
-        this.linkCardService.updateUserEmbed(this.embedForm.value).subscribe(
-            (data) => {
-                this.msg_success = data.message;
-                this.msg_error = null;
-            },
-            (error) => {
-                this.msg_error = error.message;
-                this.msg_success = '';
-            }
-        );
+        if(this.embedForm.invalid){
+            ValidateSubmit.validateAllFormFields(this.embedForm);
+        }else{
+            this.linkCardService.updateUserEmbed(this.embedForm.value).subscribe(
+                (data) => {
+                    this.msg_success = data.message;
+                    this.msg_error = null;
+                },
+                (error) => {
+                    this.msg_error = error.message;
+                    this.msg_success = '';
+                }
+            );
+        }
     }
 
 }

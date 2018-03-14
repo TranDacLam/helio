@@ -7,7 +7,7 @@
                     {{error.val}}.
                 </p>
             </ng-container>
-            <h4 *ngIf="msg_success" class="msg_success">{{msg_success}}</h4>
+            <h4 *ngIf="msg_success" class="msg_success alert alert-success">{{msg_success}}</h4>
             <form [formGroup]="embedForm" novalidate>
                 <div class="form-group row">
                     <div class="col-sm-5 form-check">
@@ -100,9 +100,7 @@
                     </div>
                 </div>
           
-                <button class="btn btn-primary" (click)="onSubmitEmbed()"
-                    [disabled]="user_embed && embedForm.invalid"
-                >LƯU</button>
+                <button class="btn btn-primary" (click)="onSubmitEmbed()">LƯU</button>
             </form>
         </div>
         <div class="col-xs-6 col-sm-6">
