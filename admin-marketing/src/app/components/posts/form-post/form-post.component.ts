@@ -6,6 +6,7 @@ import { Post } from '../../../shared/class/post';
 import { PostService } from '../../../shared/services/post.service';
 import { PostType } from './../../../shared/class/post-type';
 import { PostTypeService } from '../../../shared/services/post-type.service';
+import { PostImage } from './../../../shared/class/post-image';
 import { env } from '../../../../environments/environment';
 import 'rxjs/add/observable/throw';
 
@@ -27,7 +28,6 @@ export class FormPostComponent implements OnInit {
 
     formPost: FormGroup;
     post_types: PostType[];
-    multi_imgae: any;
 
     errorMessage: any; // Messages error
     msg_clear_image = '';
@@ -62,7 +62,8 @@ export class FormPostComponent implements OnInit {
             post_type: [this.post.post_type ? this.post.post_type : '', Validators.required],
             pin_to_top: [this.post.pin_to_top ? this.post.pin_to_top : false],
             key_query: [this.post.key_query, Validators.required],
-            is_clear_image: [false]
+            is_clear_image: [false],
+            posts_image: [this.post.posts_image]
         });
     }
 
@@ -94,18 +95,21 @@ export class FormPostComponent implements OnInit {
         author: Lam
     */ 
     onFileMultipleChange(event): void{
-        this.multi_imgae = [];
+        let multi_imgae = [];
         let obj_image: any;
         if(event.target.files && event.target.files.length > 0) {
             for(let i = 0; i < event.target.files.length; i++){
                 let file = event.target.files[i];
                 obj_image = {
-                    filename: file.name,
-                    filetype: file.type,
-                    value: file,
+                    image: {
+                        filename: file.name,
+                        filetype: file.type,
+                        value: file,
+                    }
                 }
-                this.multi_imgae.push(obj_image);
+                multi_imgae.push(obj_image);
             }
+            this.formPost.value.posts_image = multi_imgae;
         }
     }
 
@@ -217,6 +221,10 @@ export class FormPostComponent implements OnInit {
                     promotionFormData.append(k, '');
                 } else if (k === 'image') {
                     promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                } else if(k === 'posts_image'){
+                    Object.keys(promotionValues[k]).forEach(l => { 
+                        promotionFormData.append(k, promotionValues[k][l].image.value);
+                    });
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
                 }
