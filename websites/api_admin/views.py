@@ -186,8 +186,8 @@ class PromotionUser(APIView):
     def post(self, request, id, format=None):
         try:
             # Set is_save to True to block change user list
-            promition = Promotion.objects.get(pk=id)
-            promition.is_save = True
+            promotion = Promotion.objects.get(pk=id)
+            promotion.is_save = True
             promotion.save()
 
             list_user_id = self.request.data.get('list_user_id', '')
@@ -1079,7 +1079,7 @@ class FeeAPI(APIView):
                 feeSerializer.save()
                 return Response(feeSerializer.data)
 
-            return Response({"code": 200, "message": feeSerializer.errors, "fields": ""}, status=200)
+            return Response({"code": 400, "message": feeSerializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
             print "FeeAPI ", e
@@ -1089,10 +1089,12 @@ class FeeAPI(APIView):
     def put(self, request, id, format=None):
         try:
             fee = Fee.objects.get(id=id)
+            # cancel apply fee
             if fee.is_apply:
                 fee.is_apply = False
                 fee.save()
             else:
+                # apply fee
                 list_fee = Fee.objects.filter(
                     position=fee.position, is_apply=True)
                 if list_fee:
@@ -2015,14 +2017,15 @@ class UserDetailView(APIView):
 
         user = self.get_object(pk)
         try:
-            print('user', user.is_staff)
+            print('user', request.data)
             serializer = admin_serializers.UserRoleSerializer(user, data=request.data)
 
             if serializer.is_valid():
-                if(self.request.user.role_id == 1 and user.is_staff == True):
-                    self.request.user.set_password(self.request.data.get("password"))
-                else:
-                    return Response({"code": 405, "message":"Just System Admin change password user"}, status=405)
+                if(self.request.user.role_id == 1):
+                    if (user.is_staff == True):
+                        user.set_password(self.request.data.get("password"))
+                    return Response({"code": 405, "message":"Can not change password user"}, status=405)
+                return Response({"code": 405, "message":"Just System Admin change password user"}, status=405)
                 serializer.save()
                 return Response(serializer.data)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
@@ -2307,7 +2310,6 @@ class UserRoleListAPI(APIView):
     SetRole
     @author :Hoangnguyen
     check role exist
-    check user in list_id exist
     check user has no role
     
 """
@@ -2323,12 +2325,7 @@ class SetRoleAPI(APIView):
             if list_id:
                 users = User.objects.filter(id__in=list_id)
                 if users:
-                    # check user has role
-                    user_has_role = users.filter(role__isnull=False)
-                    if user_has_role:
-                        return Response({"code": 400, "message": "User had role.", "fields": ""}, status=400)
-
-                    role.user_role_rel.set(*users)
+                    role.user_role_rel.set(users)
                     return Response({"code": 200, "message": "success", "fields": ""}, status=200)
 
                 return Response({"code": 400, "message": "Not Found users.", "fields": ""}, status=400)

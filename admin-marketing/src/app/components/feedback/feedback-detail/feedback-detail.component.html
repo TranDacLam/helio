@@ -16,8 +16,8 @@
     </div>
     <div *ngIf='feedback'>
         <form [formGroup]="feedbackForm" novalidate>
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 ">
+            <div class="row form-feedback">
+                <div class="col-md-8 ">
                 	<div class="form-group row">
                         <div class="col-sm-3">
                             <label class="center-block"> Họ tên:</label>
@@ -146,7 +146,7 @@
                 </div>
             </div>
             <div class="row button-feedback">
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-12">
                     <button type="submit" class=' pull-right btn btn-info' (click)="updateFeedback()">Lưu lại</button>
                     <button type="submit" class='pull-left btn btn-danger' (click)="confirmDeleteFeedback(feedback)" >Xóa </button>
                 </div>

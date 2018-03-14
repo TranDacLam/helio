@@ -14,23 +14,27 @@ export class FeeAddComponent implements OnInit {
 
   feeAddForm: FormGroup;
   messageResult: String;
-
-  createFee(value: any){
-  	this.feeService.createFee(value).subscribe(
-  		result => {
-   			this.messageResult = "success"; 
-        this.router.navigate(['/fee']);
-   		},
-		error => {
-			this.messageResult = error.statusText;
-		});
+  submitted: boolean= false;
+  createFee(value: any, isValid: boolean){
+    this.submitted = true;
+    if (isValid){
+      this.feeService.createFee(value).subscribe(
+      result => {
+           this.messageResult = "success"; 
+          this.router.navigate(['/fee/list']);
+         },
+      error => {
+        this.messageResult = error.statusText;
+      });
+    }
+  	
   	}
 
 
   ngOnInit() {
   	this.feeAddForm = this.formBuilder.group({
-      fee: ['', Validators.required],
-      position: ['', Validators.required],
+      fee: [null, Validators.required],
+      position: [null, Validators.required],
       fee_type: [ 'vnd', Validators.required],
       is_apply: [false ],
     });
