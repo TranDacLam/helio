@@ -7,6 +7,7 @@ import { PostService } from '../../../shared/services/post.service';
 import { PostType } from './../../../shared/class/post-type';
 import { PostTypeService } from '../../../shared/services/post-type.service';
 import { PostImage } from './../../../shared/class/post-image';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { env } from '../../../../environments/environment';
 import 'rxjs/add/observable/throw';
 
@@ -124,38 +125,41 @@ export class FormPostComponent implements OnInit {
         author: Lam
     */
     onSubmit(): void{
-        this.formPost.value.post_type = parseInt(this.formPost.value.post_type);
-        let post_form_data = this.convertFormGroupToFormData(this.formPost);
-        let value_form = this.formPost.value;
-        if(!this.post.id){
-            this.postService.addPost(post_form_data).subscribe(
-                (data) => {
-                    this.router.navigate(['/post/list', { message_post: value_form.name}]);
-                },
-                (error) => {
-                    if(error.code === 400){
-                        this.errorMessage = error.message;
-                    }else{
-                        this.router.navigate(['/error', { message: error.message}]);
+        if(this.formPost.invalid){
+            ValidateSubmit.validateAllFormFields(this.formPost);
+        }else{
+            this.formPost.value.post_type = parseInt(this.formPost.value.post_type);
+            let post_form_data = this.convertFormGroupToFormData(this.formPost);
+            let value_form = this.formPost.value;
+            if(!this.post.id){
+                this.postService.addPost(post_form_data).subscribe(
+                    (data) => {
+                        this.router.navigate(['/post/list', { message_post: value_form.name}]);
+                    },
+                    (error) => {
+                        if(error.code === 400){
+                            this.errorMessage = error.message;
+                        }else{
+                            this.router.navigate(['/error', { message: error.message}]);
+                        }
                     }
-                }
-            );
-        }else {
-            this.postService.updatePost(post_form_data, this.post.id).subscribe(
-                (data) => {
-                    this.post = data;
-                    this.router.navigate(['/post/list', { message_put: value_form.name}]);
-                },
-                (error) => {
-                    if(error.code === 400){
-                        this.errorMessage = error.message;
-                    }else{
-                        this.router.navigate(['/error', { message: error.message}]);
+                );
+            }else {
+                this.postService.updatePost(post_form_data, this.post.id).subscribe(
+                    (data) => {
+                        this.post = data;
+                        this.router.navigate(['/post/list', { message_put: value_form.name}]);
+                    },
+                    (error) => {
+                        if(error.code === 400){
+                            this.errorMessage = error.message;
+                        }else{
+                            this.router.navigate(['/error', { message: error.message}]);
+                        }
                     }
-                }
-            );
+                );
+            }
         }
-        
     }
 
     /*

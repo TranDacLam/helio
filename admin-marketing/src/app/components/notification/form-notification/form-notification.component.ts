@@ -7,6 +7,7 @@ import { Notification } from '../../../shared/class/notification';
 import { CategoryNotification } from '../../../shared/class/category-notification';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { CategoryNotificationService } from '../../../shared/services/category-notification.service';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import 'rxjs/add/observable/throw';
 import { env } from '../../../../environments/environment';
 
@@ -127,49 +128,52 @@ export class FormNotificationComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(): void{
-        this.formNotification.value.category = parseInt(this.formNotification.value.category);
-        // Convert FormGroup to FormData
-        let noti_form_data = this.convertFormGroupToFormData(this.formNotification);
-        let value_form = this.formNotification.value;
-        if(this.type_http == 'post'){
-            this.notificationService.addNoti(noti_form_data).subscribe(
-                (data) => {
-                    this.router.navigate(['/notification/list', { message_post: value_form.subject}]);
-                },
-                (error) => {
-                    if(error.code === 400){
-                        this.errorMessage = error.message;
-                    }else{
-                        this.router.navigate(['/error']);
-                    }
-                }
-            );
-        }else if(this.type_http == 'put' || this.type_http == 'put_popup'){
-            if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
-                this.formNotification.get('is_clear_image').setValue(false);
-                this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
-            }else{
-                this.notificationService.updateNoti(noti_form_data, this.noti.id).subscribe(
+        if(this.formNotification.invalid){
+            ValidateSubmit.validateAllFormFields(this.formNotification);
+        }else{
+            this.formNotification.value.category = parseInt(this.formNotification.value.category);
+            // Convert FormGroup to FormData
+            let noti_form_data = this.convertFormGroupToFormData(this.formNotification);
+            let value_form = this.formNotification.value;
+            if(this.type_http == 'post'){
+                this.notificationService.addNoti(noti_form_data).subscribe(
                     (data) => {
-                        this.noti = data;
-                        if(this.type_http == "put"){
-                            this.router.navigate(['/notification/list', { message_put: value_form.subject}]);
-                        }else if(this.type_http == 'put_popup'){
-                            this.getNotification();
-                            $('#UpdateNoti').modal('toggle');
-                        }
+                        this.router.navigate(['/notification/list', { message_post: value_form.subject}]);
                     },
                     (error) => {
                         if(error.code === 400){
-                        this.errorMessage = error.message;
-                    }else{
-                        this.router.navigate(['/error']);
-                    }
+                            this.errorMessage = error.message;
+                        }else{
+                            this.router.navigate(['/error']);
+                        }
                     }
                 );
+            }else if(this.type_http == 'put' || this.type_http == 'put_popup'){
+                if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
+                    this.formNotification.get('is_clear_image').setValue(false);
+                    this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                }else{
+                    this.notificationService.updateNoti(noti_form_data, this.noti.id).subscribe(
+                        (data) => {
+                            this.noti = data;
+                            if(this.type_http == "put"){
+                                this.router.navigate(['/notification/list', { message_put: value_form.subject}]);
+                            }else if(this.type_http == 'put_popup'){
+                                this.getNotification();
+                                $('#UpdateNoti').modal('toggle');
+                            }
+                        },
+                        (error) => {
+                            if(error.code === 400){
+                            this.errorMessage = error.message;
+                        }else{
+                            this.router.navigate(['/error']);
+                        }
+                        }
+                    );
+                }
             }
         }
-        
     }
 
     /*
