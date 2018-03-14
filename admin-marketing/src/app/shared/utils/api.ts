@@ -50,7 +50,7 @@ export const api = {
     /* URL generator QR Code from Promotion ID ( POST )*/
     generator_QR_code: env.api_domain + 'generator_QR_code/',
     /* Get All Category */
-    category_list: env.api_domain +'category_list/',
+    category_list: 'category_list/',
     post_type_list: env.api_domain +'post_type_list/',
     login: env.api_domain +'accounts/login/',
 
@@ -62,9 +62,9 @@ export const api = {
 
     role: env.api_domain + 'role/',
 
-    faq: env.api_domain + 'faq/',
+    faq: 'faq/',
 
-    faq_list: env.api_domain + 'faq_list/',
+    faq_list: 'faq_list/',
 
     game: env.api_domain + 'game/',
 

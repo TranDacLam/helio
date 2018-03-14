@@ -171,8 +171,11 @@ export class ListEventComponent implements OnInit {
         Author: Lam
     */
     changeLangVI(){
-        this.lang = 'vi';
-        this.getEvents();
+        if(this.lang === 'en'){
+            this.events = null;
+            this.lang = 'vi';
+            this.getEvents();
+        }
     }
 
     /*
@@ -180,8 +183,11 @@ export class ListEventComponent implements OnInit {
         Author: Lam
     */
     changeLangEN(){
-        this.lang = 'en';
-        this.getEvents();
+        if(this.lang === 'vi'){
+            this.events = null;
+            this.lang = 'en';
+            this.getEvents();
+        }
     }
 
 }

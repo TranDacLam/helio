@@ -50,6 +50,8 @@ export class PromotionFormComponent implements OnInit {
     errors: any = "";
     apply_date: Date = new Date();
 
+    lang = 'vi';
+
     constructor(
         private promotionService: PromotionService,
         private categoryService: CategoryService,
@@ -106,7 +108,7 @@ export class PromotionFormComponent implements OnInit {
         @author: diemnguyen
     */ 
     getAllCategory(): void{
-        this.categoryService.getAllCategory().subscribe(
+        this.categoryService.getAllCategory(this.lang).subscribe(
             (data) => {
                 this.categorys = data;
             },

@@ -34,6 +34,8 @@ export class ListFaqComponent implements OnInit {
     message_result = ''; // Message error
     errorMessage: any;
 
+    lang: string = 'vi';
+
     constructor(private faqService: FaqService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
@@ -60,7 +62,7 @@ export class ListFaqComponent implements OnInit {
         Author: Lam
     */
     getFaqs(){
-        this.faqService.getFaqs().subscribe(
+        this.faqService.getFaqs(this.lang).subscribe(
             (data) => {
                 this.faqs = data;
                 this.length_faqs = this.faqs.length;
@@ -143,7 +145,7 @@ export class ListFaqComponent implements OnInit {
         Author: Lam
     */
     onDelelteFaq(){
-        this.faqService.onDelFaqSelect(this.faqs_del).subscribe(
+        this.faqService.onDelFaqSelect(this.faqs_del, this.lang).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     this.faqs_del.forEach(function(element) {
@@ -156,6 +158,30 @@ export class ListFaqComponent implements OnInit {
                 this.message_result = "Xóa thành công."
             }
         );
+    }
+
+    /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            this.faqs = null;
+            this.lang = 'vi';
+            this.getFaqs();
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangEN(){
+        if(this.lang === 'vi'){
+            this.faqs = null;
+            this.lang = 'en';
+            this.getFaqs();
+        }
     }
 
 }
