@@ -24,10 +24,10 @@
             TẠO CÂU HỎI MỚI
         </a>
     </div>
-    <div class="col-xs-12 col-sm-12 mt-15 messsage_error" *ngIf="errorMessage">
+    <div class="col-xs-12 col-sm-12 mt-15 messsage_error alert alert-danger" *ngIf="errorMessage">
         <h4>{{errorMessage}}</h4>
     </div>
-    <div class="col-xs-12 col-sm-12 mt-15 messsage" *ngIf="message_result">
+    <div class="col-xs-12 col-sm-12 mt-15 messsage alert alert-success" *ngIf="message_result">
         <h4>{{message_result}}</h4>
     </div>
 </div>

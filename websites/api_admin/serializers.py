@@ -325,7 +325,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id','name' , 'posts_image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
+        fields = ('id','name','image' , 'posts_image','short_description', 'content', 'post_type', 'key_query', 'pin_to_top', 'is_draft')
     '''
         validate_key_query
         validate when create new post by hand

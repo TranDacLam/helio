@@ -15,10 +15,10 @@ export class ShowErrorValidComponent implements OnInit {
 
     // Type and message validate
     private static readonly errorMessages = {
-       'email': () => 'Email invalid format',
-       'required': () => 'This field is required',
-       'minlength': (params) => 'The min number of characters is ' + params.requiredLength,
-       'maxlength': (params) => 'The max allowed number of characters is ' + params.requiredLength,
+       'email': () => 'Email không đúng định dạng',
+       'required': () => 'Trường này bắt buộc',
+       'minlength': (params) => 'Số ký tự tối thiểu là ' + params.requiredLength,
+       'maxlength': (params) => 'Số ký tự cho phép tối đa là ' + params.requiredLength,
        'pattern': (params) => 'The required pattern is: ' + params.requiredPattern,
        'years': (params) => params.message,
        'countryCity': (params) => params.message,

@@ -1,3 +1,5 @@
+import { PostImage } from './post-image';
+
 export class Post {
     id: number;
     name: string;
@@ -9,4 +11,5 @@ export class Post {
     pin_to_top: boolean;
     is_draft: boolean;
     is_clear_image: boolean;
+    posts_image: PostImage[];
 }

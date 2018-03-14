@@ -5,6 +5,7 @@ import { Faq } from '../../../shared/class/faq';
 import { FaqService } from '../../../shared/services/faq.service';
 import { Category } from './../../../shared/class/category';
 import { CategoryService } from './../../../shared/services/category.service';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import 'rxjs/add/observable/throw';
 
 @Component({
@@ -72,18 +73,22 @@ export class AddFaqComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(): void{
-        this.formFaq.value.category = parseInt(this.formFaq.value.category);
-        this.faqService.addFaq(this.formFaq.value).subscribe(
-            (data) => {
-                this.router.navigate(['/faq/list', { message_post: this.formFaq.value.question}]);
-            },
-            (error) => {
-                if(error.code === 400){
-                    this.errorMessage = error.message;
-                }else{
-                    this.router.navigate(['/error', { message: error.message}]);
+        if(this.formFaq.invalid){
+            ValidateSubmit.validateAllFormFields(this.formFaq);
+        }else{
+            this.formFaq.value.category = parseInt(this.formFaq.value.category);
+            this.faqService.addFaq(this.formFaq.value).subscribe(
+                (data) => {
+                    this.router.navigate(['/faq/list', { message_post: this.formFaq.value.question}]);
+                },
+                (error) => {
+                    if(error.code === 400){
+                        this.errorMessage = error.message;
+                    }else{
+                        this.router.navigate(['/error', { message: error.message}]);
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 }

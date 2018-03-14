@@ -6,6 +6,7 @@ import { Game } from '../../../shared/class/game';
 import { GameService } from '../../../shared/services/game.service';
 import { Type } from '../../../shared/class/type';
 import { TypeService } from '../../../shared/services/type.service';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { env } from '../../../../environments/environment';
 import 'rxjs/add/observable/throw';
 
@@ -108,32 +109,36 @@ export class FormGameComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(): void{
-        this.formGame.value.game_type = parseInt(this.formGame.value.game_type);
-        let game_form_data = this.convertFormGroupToFormData(this.formGame);
-        let value_form = this.formGame.value;
-        if(!this.game.id){
-            this.gameService.addGame(game_form_data).subscribe(
-                (data) => {
-                    this.router.navigate(['/game/list', { message_post: value_form.name}]);
-                },
-                (error) => {
-                    { this.errorMessage = error.message; } 
-                }
-            );
+        if(this.formGame.invalid){
+            ValidateSubmit.validateAllFormFields(this.formGame);
         }else{
-            if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
-                this.formGame.get('is_clear_image').setValue(false);
-                this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
-            }else{
-                this.gameService.updateGame(game_form_data, this.game.id).subscribe(
+            this.formGame.value.game_type = parseInt(this.formGame.value.game_type);
+            let game_form_data = this.convertFormGroupToFormData(this.formGame);
+            let value_form = this.formGame.value;
+            if(!this.game.id){
+                this.gameService.addGame(game_form_data).subscribe(
                     (data) => {
-                        this.game = data;
-                        this.router.navigate(['/game/list', { message_put: value_form.name}]);
+                        this.router.navigate(['/game/list', { message_post: value_form.name}]);
                     },
                     (error) => {
                         { this.errorMessage = error.message; } 
                     }
                 );
+            }else{
+                if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
+                    this.formGame.get('is_clear_image').setValue(false);
+                    this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                }else{
+                    this.gameService.updateGame(game_form_data, this.game.id).subscribe(
+                        (data) => {
+                            this.game = data;
+                            this.router.navigate(['/game/list', { message_put: value_form.name}]);
+                        },
+                        (error) => {
+                            { this.errorMessage = error.message; } 
+                        }
+                    );
+                }
             }
         }
         

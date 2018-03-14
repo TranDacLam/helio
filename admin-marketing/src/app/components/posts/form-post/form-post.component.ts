@@ -6,6 +6,8 @@ import { Post } from '../../../shared/class/post';
 import { PostService } from '../../../shared/services/post.service';
 import { PostType } from './../../../shared/class/post-type';
 import { PostTypeService } from '../../../shared/services/post-type.service';
+import { PostImage } from './../../../shared/class/post-image';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { env } from '../../../../environments/environment';
 import 'rxjs/add/observable/throw';
 
@@ -27,7 +29,6 @@ export class FormPostComponent implements OnInit {
 
     formPost: FormGroup;
     post_types: PostType[];
-    multi_imgae: any;
 
     errorMessage: any; // Messages error
     msg_clear_image = '';
@@ -62,7 +63,8 @@ export class FormPostComponent implements OnInit {
             post_type: [this.post.post_type ? this.post.post_type : '', Validators.required],
             pin_to_top: [this.post.pin_to_top ? this.post.pin_to_top : false],
             key_query: [this.post.key_query, Validators.required],
-            is_clear_image: [false]
+            is_clear_image: [false],
+            posts_image: [this.post.posts_image]
         });
     }
 
@@ -94,18 +96,21 @@ export class FormPostComponent implements OnInit {
         author: Lam
     */ 
     onFileMultipleChange(event): void{
-        this.multi_imgae = [];
+        let multi_imgae = [];
         let obj_image: any;
         if(event.target.files && event.target.files.length > 0) {
             for(let i = 0; i < event.target.files.length; i++){
                 let file = event.target.files[i];
                 obj_image = {
-                    filename: file.name,
-                    filetype: file.type,
-                    value: file,
+                    image: {
+                        filename: file.name,
+                        filetype: file.type,
+                        value: file,
+                    }
                 }
-                this.multi_imgae.push(obj_image);
+                multi_imgae.push(obj_image);
             }
+            this.formPost.value.posts_image = multi_imgae;
         }
     }
 
@@ -120,38 +125,41 @@ export class FormPostComponent implements OnInit {
         author: Lam
     */
     onSubmit(): void{
-        this.formPost.value.post_type = parseInt(this.formPost.value.post_type);
-        let post_form_data = this.convertFormGroupToFormData(this.formPost);
-        let value_form = this.formPost.value;
-        if(!this.post.id){
-            this.postService.addPost(post_form_data).subscribe(
-                (data) => {
-                    this.router.navigate(['/post/list', { message_post: value_form.name}]);
-                },
-                (error) => {
-                    if(error.code === 400){
-                        this.errorMessage = error.message;
-                    }else{
-                        this.router.navigate(['/error', { message: error.message}]);
+        if(this.formPost.invalid){
+            ValidateSubmit.validateAllFormFields(this.formPost);
+        }else{
+            this.formPost.value.post_type = parseInt(this.formPost.value.post_type);
+            let post_form_data = this.convertFormGroupToFormData(this.formPost);
+            let value_form = this.formPost.value;
+            if(!this.post.id){
+                this.postService.addPost(post_form_data).subscribe(
+                    (data) => {
+                        this.router.navigate(['/post/list', { message_post: value_form.name}]);
+                    },
+                    (error) => {
+                        if(error.code === 400){
+                            this.errorMessage = error.message;
+                        }else{
+                            this.router.navigate(['/error', { message: error.message}]);
+                        }
                     }
-                }
-            );
-        }else {
-            this.postService.updatePost(post_form_data, this.post.id).subscribe(
-                (data) => {
-                    this.post = data;
-                    this.router.navigate(['/post/list', { message_put: value_form.name}]);
-                },
-                (error) => {
-                    if(error.code === 400){
-                        this.errorMessage = error.message;
-                    }else{
-                        this.router.navigate(['/error', { message: error.message}]);
+                );
+            }else {
+                this.postService.updatePost(post_form_data, this.post.id).subscribe(
+                    (data) => {
+                        this.post = data;
+                        this.router.navigate(['/post/list', { message_put: value_form.name}]);
+                    },
+                    (error) => {
+                        if(error.code === 400){
+                            this.errorMessage = error.message;
+                        }else{
+                            this.router.navigate(['/error', { message: error.message}]);
+                        }
                     }
-                }
-            );
+                );
+            }
         }
-        
     }
 
     /*
@@ -217,6 +225,10 @@ export class FormPostComponent implements OnInit {
                     promotionFormData.append(k, '');
                 } else if (k === 'image') {
                     promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                } else if(k === 'posts_image'){
+                    Object.keys(promotionValues[k]).forEach(l => { 
+                        promotionFormData.append(k, promotionValues[k][l].image.value);
+                    });
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
                 }
