@@ -17,13 +17,23 @@
 	        </div>
 	        <div class="col-sm-2">
 	            <input type="number" class="form-control no-arrow" formControlName="fee"
-					[(ngModel)]='fee' required pattern="\d*">
-
+				 	>
+				{{feeAddForm.controls.fee.value}}
 				<div *ngIf="(feeAddForm.controls.fee.pristine && submitted)" class="feeAddForm_error" >
 					Fee is required.
 				</div>
-				<div *ngIf="(feeAddForm.controls.fee.dirty && feeAddForm.controls.fee.invalid)" class="feeAddForm_error" >
-					Fee is numberric.
+				<div *ngIf="feeAddForm.controls.fee.invalid && (feeAddForm.controls.fee.dirty)"
+				     class="feeAddForm_error">
+				  
+				  <div *ngIf="feeAddForm.controls.fee.errors.max">
+				    Fee is over big.
+				  </div>
+				  <div *ngIf="feeAddForm.controls.fee.errors.min">
+				    Fee is greater 0.
+				  </div>
+					<div *ngIf="feeAddForm.controls.fee.errors.required">
+				    Fee is required.
+				  </div>
 				</div>
 	        </div>
 	       <select formControlName="fee_type" id="fee_type" class="form-control">

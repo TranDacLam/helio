@@ -30,15 +30,24 @@ export class UserPermissionComponent implements OnInit {
   getUserRight(id: number){
   	this.userPermissionService.getUserRight(id).subscribe(
   		data =>{
-        this.user_list_right = [];
-  			this.user_list_right = data;
+        
+        let self = this;
+        this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
+            self.user_list_right = [];
+            self.user_list_right = data;
+            dtInstance.destroy();
+            self.dtTrigger.next();
+
+        });
   		},
   		error =>{
           
   		}
   	)
   }
-    
+    ngAfterViewInit(): void {
+    this.dtTrigger.next();
+  }
     rerender(){
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
           // Destroy the table first
@@ -69,25 +78,26 @@ export class UserPermissionComponent implements OnInit {
           }
   		},
   		error =>{
-          
 
   		}
   	)
   }
   setRoleUser( ){
-        var list_id = [];
-        this.user_list_right.forEach((item)=>{
-          list_id.push(item.id);
-        })
-        var role_id = $('.role_checkbox:checked').val();
-        this.userPermissionService.setRoleUser( list_id, role_id).subscribe(
-          data =>{
-            
-          },
-          error =>{
-            
-          }
-        )
+  
+        this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
+            var list_id = dtInstance.column(1).data().toArray();
+            var role_id = $('.role_checkbox:checked').val();
+            this.userPermissionService.setRoleUser( list_id, role_id).subscribe(
+              data =>{
+
+              },
+              error =>{
+                
+              }
+            )
+        });
+
+        
     
 
   }
