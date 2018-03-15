@@ -87,7 +87,7 @@ export class EditPromotionLabelComponent implements OnInit {
             this.promotionLabelService.updatePromotionLabel(this.formPromotionLabel.value, this.promotion_label.id, this.lang)
                 .subscribe(
                 (data) => {
-                    this.router.navigate(['/promotion-label/list', { message_post: this.formPromotionLabel.value.name}]);
+                    this.router.navigate(['/promotion-label/list', { message_put: this.formPromotionLabel.value.name}]);
                 },
                 (error) => {
                     if(error.code === 400){

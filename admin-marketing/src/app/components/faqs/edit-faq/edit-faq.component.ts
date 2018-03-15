@@ -130,7 +130,7 @@ export class EditFaqComponent implements OnInit {
         let that = this;
         bootbox.confirm({
             title: "Bạn có chắc chắn",
-            message: "Bạn muốn xóa sự kiện này?",
+            message: "Bạn muốn xóa câu hỏi thường gặp này?",
             buttons: {
                 cancel: {
                     label: "Hủy"

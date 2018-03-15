@@ -57,18 +57,24 @@
             <div class="row text-center" *ngIf="fb_status">
                 <div class="col-xs-4 col-sm-4">
                     <h4>Chưa trả lời</h4>
-                    <p><a [routerLink]="['/feedback-list', 
-                        { star_date: start_date, end_date: end_date }]">
+                    <p><a [routerLink]="['/feedback-list']" 
+                        [queryParams]="{status: 'no_process' , star_date: start_date, end_date: end_date }">
                         {{ fb_status.no_process }}
                     </a></p>
                 </div>
                 <div class="col-xs-3 col-sm-3">
                     <h4>Đã trả lời</h4>
-                    <p>{{ fb_status.answered }}</p>
+                    <p><a [routerLink]="['/feedback-list']" 
+                        [queryParams]="{status: 'answered' , star_date: start_date, end_date: end_date }">
+                        {{ fb_status.answered }}
+                    </a></p>
                 </div>
                 <div class="col-xs-5 col-sm-5">
                     <h4>Đã chuyển đến bộ phận liên quan</h4>
-                    <p>{{ fb_status.moved }}</p>
+                    <p><a [routerLink]="['/feedback-list']" 
+                        [queryParams]="{status: 'moved' , star_date: start_date, end_date: end_date }">
+                        {{ fb_status.moved }}
+                    </a></p>
                 </div>
             </div>
         </div> 
@@ -118,23 +124,38 @@
             <div class="row text-center" *ngIf="fb_rate">
                 <div class="col-xs-3 col-sm-3">
                     <h4>Tuyệt vời</h4>
-                    <p>{{ fb_rate.great }}</p>
+                    <p><a [routerLink]="['/feedback-list']" 
+                        [queryParams]="{rate: 'Tuyệt vời' , star_date: start_date, end_date: end_date }">
+                        {{ fb_rate.great }}
+                    </a></p>
                 </div>
                 <div class="col-xs-2 col-sm-2">
                     <h4>Tốt</h4>
-                    <p>{{ fb_rate.good }}</p>
+                    <p><a [routerLink]="['/feedback-list']" 
+                        [queryParams]="{rate: 'Tốt' , star_date: start_date, end_date: end_date }">
+                        {{ fb_rate.good }}
+                    </a></p>
                 </div>
                 <div class="col-xs-2 col-sm-2">
                     <h4>Bình thường</h4>
-                    <p>{{ fb_rate.nomal }}</p>
+                    <p><a [routerLink]="['/feedback-list']" 
+                        [queryParams]="{rate: 'Bình thường' , star_date: start_date, end_date: end_date }">
+                        {{ fb_rate.nomal }}
+                    </a></p>
                 </div>
                 <div class="col-xs-2 col-sm-2">
                     <h4>Xấu</h4>
-                    <p>{{ fb_rate.bad }}</p>
+                    <p><a [routerLink]="['/feedback-list']" 
+                        [queryParams]="{rate: 'Xấu' , star_date: start_date, end_date: end_date }">
+                        {{ fb_rate.bad }}
+                    </a></p>
                 </div>
                 <div class="col-xs-2 col-sm-2">
                     <h4>Không có gì</h4>
-                    <p>{{ fb_rate.notbad }}</p>
+                    <p><a [routerLink]="['/feedback-list']" 
+                        [queryParams]="{rate: 'Không có gì' , star_date: start_date, end_date: end_date }">
+                        {{ fb_rate.notbad }}
+                    </a></p>
                 </div>
             </div>
         </div> 
