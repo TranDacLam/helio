@@ -22,6 +22,9 @@ export class StatisticsFeedbackComponent implements OnInit {
     status_sum: number;
     rate_sum: number;
 
+    start_date: string = '';
+    end_date: string = '';
+
     message_status = '';
     message_rate = '';
 
@@ -64,6 +67,11 @@ export class StatisticsFeedbackComponent implements OnInit {
 
         start = $('#startD_status').val() ? String($('#startD_status').val()) : '';
         end = $('#endD_status').val() ? String($('#endD_status').val()) : '';
+
+        // Get date to set params dispatch list feedback
+        this.start_date = start;
+        this.end_date = end;
+
         if(start === '' && end === ''){
             this.message_status = '* Vui lòng chọn ngày.';
             return;

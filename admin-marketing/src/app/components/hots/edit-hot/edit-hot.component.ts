@@ -12,6 +12,7 @@ import { HotService } from '../../../shared/services/hot.service';
 export class EditHotComponent implements OnInit {
 
     hot: Hot;
+    lang = 'vi';
 
     constructor(
         private hotService: HotService,
@@ -19,6 +20,11 @@ export class EditHotComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
         this.getHot();
     }
 
@@ -30,7 +36,7 @@ export class EditHotComponent implements OnInit {
     */
     getHot(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.hotService.getHot(id).subscribe(data => {
+        this.hotService.getHot(id, this.lang).subscribe(data => {
             this.hot = data;
         });
     }

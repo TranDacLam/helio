@@ -5,6 +5,7 @@ import { PromotionLabel } from '../../../shared/class/promotion-label';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import * as datatable_config from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -24,6 +25,8 @@ export class ListPromotionLabelComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
+    dtOptions: any = {};
+
     promotion_labels: PromotionLabel[];
     promotion_labels_del = []; // Get array id to delete all id promotion label
     length_promotion_labels: number;
@@ -31,9 +34,12 @@ export class ListPromotionLabelComponent implements OnInit {
     message_result = ''; // Message error
     errorMessage = '';
 
+    lang: string = 'vi';
+
     constructor(private promotionLabelService: PromotionLabelService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
+        this.dtOptions = datatable_config.data_config('Nhãn Khuyến Mãi').dtOptions;
         this.getPromotionLabels();
 
         /*
@@ -56,7 +62,7 @@ export class ListPromotionLabelComponent implements OnInit {
         Author: Lam
     */
     getPromotionLabels(){
-        this.promotionLabelService.getPromotionLabels().subscribe(
+        this.promotionLabelService.getPromotionLabels(this.lang).subscribe(
             (data) => {
                 this.promotion_labels = data;
                 this.length_promotion_labels = this.promotion_labels.length;
@@ -140,7 +146,7 @@ export class ListPromotionLabelComponent implements OnInit {
         Author: Lam
     */
     onDeletePromotionLabel(){
-        this.promotionLabelService.onDelPromotionLabelSelect(this.promotion_labels_del).subscribe(
+        this.promotionLabelService.onDelPromotionLabelSelect(this.promotion_labels_del, this.lang).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     this.promotion_labels_del.forEach(function(element) {
@@ -154,6 +160,38 @@ export class ListPromotionLabelComponent implements OnInit {
                 this.errorMessage = '';
             }
         );
+    }
+
+    /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.promotion_labels = null;
+            this.lang = 'vi';
+            this.getPromotionLabels();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangEN(){
+        if(this.lang === 'vi'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.promotion_labels = null;
+            this.lang = 'en';
+            this.getPromotionLabels();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
     }
 
 }

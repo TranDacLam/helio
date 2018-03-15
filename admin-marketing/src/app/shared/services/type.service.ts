@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { api } from '../utils/api';
+import { env } from './../../../environments/environment';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
 
 @Injectable()
 export class TypeService {
-
-    private urlTypeList = api.type_list;
 
     httpOptions: any;
     token: any = '';
@@ -29,8 +28,9 @@ export class TypeService {
         function getEvents(): Get all notification
         author: Lam
     */
-    getTypes(): Observable<any>{
-        return this.http.get(this.urlTypeList, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    getTypes(lang): Observable<any>{
+        const url_getTypes = `${env.api_domain_root}/${lang}/api/${api.type_list}`;
+        return this.http.get(url_getTypes, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     // exception

@@ -29,6 +29,8 @@ export class EditFaqComponent implements OnInit {
 
     errorMessage: any; // Messages error
 
+    lang = 'vi';
+
     constructor(
         private faqService: FaqService,
         private fb: FormBuilder,
@@ -38,6 +40,11 @@ export class EditFaqComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
         this.getFaq();
         this.getCategories();
     }
@@ -51,7 +58,7 @@ export class EditFaqComponent implements OnInit {
     */
     getFaq(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.faqService.getFaq(id).subscribe(
+        this.faqService.getFaq(id, this.lang).subscribe(
             (data) => {
                 this.faq = data;
                 this.creatForm();
@@ -79,7 +86,7 @@ export class EditFaqComponent implements OnInit {
         @author: Lam
     */ 
     getCategories(): void{
-        this.categoryService.getAllCategory().subscribe(
+        this.categoryService.getAllCategory(this.lang).subscribe(
             (data) => {
                 this.categories = data;
             },
@@ -100,7 +107,7 @@ export class EditFaqComponent implements OnInit {
             ValidateSubmit.validateAllFormFields(this.formFaq);
         }else{
             this.formFaq.value.category = parseInt(this.formFaq.value.category);
-            this.faqService.updateFaq(this.formFaq.value, this.faq.id).subscribe(
+            this.faqService.updateFaq(this.formFaq.value, this.faq.id, this.lang).subscribe(
                 (data) => {
                     this.router.navigate(['/faq/list', { message_put: this.formFaq.value.question}]);
                 },
@@ -148,7 +155,7 @@ export class EditFaqComponent implements OnInit {
     */
     onDelete(): void {
         const id = this.faq.id;
-        this.faqService.onDelFaq(id).subscribe(
+        this.faqService.onDelFaq(id, this.lang).subscribe(
             (data) => {
                 this.router.navigate(['/faq/list', { message_del: 'success'}]);
             },
