@@ -12,6 +12,7 @@ export class User {
 	city: string;
     avatar: string|any;
 	password: string;
+    new_password: string;
 	role: number;
     username_mapping: string;
     date_mapping: string;

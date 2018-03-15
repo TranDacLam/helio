@@ -34,6 +34,7 @@
    			<tr *ngFor ="let user of users" id="delete{{user.id}}">
    				<td><input type="checkbox" id="check_{{user.id}}"
    					value={{user.id}} name=""
+   					[checked]="checkbox"
    					(change)="checkItemChange($event, user)"/></td>
    				<td class="title-email"><a routerLink="/user-detail/{{ user.id }}" >{{ user.email }}</a></td>
         		<td *ngIf="user.role.name">{{ user.role.name }}</td>

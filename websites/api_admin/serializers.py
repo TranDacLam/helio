@@ -176,7 +176,12 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'is_show')
 
 class DenominationSerializer(serializers.ModelSerializer):
-
+    denomination = serializers.CharField(required=True, validators=[
+        UniqueValidator(
+            queryset=Denomination.objects.all(),
+            message =('This denomination has already existed')
+            )
+        ])
     class Meta:
         model = Denomination
         fields = ('id', 'denomination')
@@ -232,6 +237,8 @@ class FeeSerializer(serializers.ModelSerializer):
 
 
 class BannerSerializer(serializers.ModelSerializer):
+
+    image = serializers.ImageField(required=False, allow_empty_file=True)
 
     class Meta:
         model = Banner
@@ -401,13 +408,11 @@ class UserRoleDisplaySerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
-class UserRoleSerializer(serializers.ModelSerializer):
-
+class UserCreateSerializer(serializers.ModelSerializer):
     birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required = False)
-    password = serializers.CharField(write_only=True, required=False)
     phone = serializers.CharField(max_length=11, min_length=9, validators=[UniqueValidator(queryset=User.objects.all())])
+    password= serializers.CharField(write_only=True)
     
-
     class Meta:
         model = User
         fields = '__all__'
@@ -426,6 +431,29 @@ class UserRoleSerializer(serializers.ModelSerializer):
             user.is_staff = True
         user.save()
         return user
+
+class UserRoleSerializer(serializers.ModelSerializer):
+
+    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required = False)
+    phone = serializers.CharField(max_length=11, min_length=9, validators=[UniqueValidator(queryset=User.objects.all())])
+    new_password = serializers.CharField(required=False,allow_null=True, allow_blank=True)
+    password = serializers.CharField(required=False,allow_null=True, allow_blank=True)
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
+    def validate_birth_date(self, value):
+        if value >= datetime.now().date():
+            raise serializers.ValidationError("Birthday must less then today")
+        return value
+
+    def validate(self, data):
+        new_password = data['new_password']
+        is_staff = data['is_staff']
+        if (is_staff == False and new_password):
+            raise serializers.ValidationError("Cannot change password of customer user")
+        return data;
             
     def update(self, instance, validated_data):
 
@@ -440,18 +468,10 @@ class UserRoleSerializer(serializers.ModelSerializer):
         instance.country = validated_data.get('country', instance.country)
         instance.city = validated_data.get('city', instance.city)
         instance.address = validated_data.get('address', instance.address)
-        # if validated_data['password'] !=  instance.password:
-            # print 'set password'
-            # instance.set_password(validated_data['password'])
         instance.role = validated_data.get('role', instance.role)
         instance.is_active = validated_data.get('is_active', instance.is_active)
-        if instance.role_id == 6:
-            instance.is_staff = False
-        else:
-            instance.is_staff = True
         instance.save()
         return instance
-
 
 class GameSerializer(serializers.ModelSerializer):
 
