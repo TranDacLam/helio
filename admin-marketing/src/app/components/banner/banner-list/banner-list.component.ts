@@ -24,6 +24,7 @@ export class BannerListComponent implements OnInit {
 
     banner_del: any;
 
+    checkbox:boolean = false;
     message_result: string = ""; // Display message result
     errorMessage: string; // Show error from server
     record: string ="Banner";
@@ -92,13 +93,15 @@ export class BannerListComponent implements OnInit {
         if(event.target.checked){
             this.banners.forEach(function(element) {
                 arr_del.push(element.id);
-                $('#' + element.id).prop('checked', true);
+                // $('#' + element.id).prop('checked', true);
             });
+            this.checkbox = true;
             this.banner_del = arr_del;
             this.message_result = "";
         }else{
+            this.checkbox = false;
             this.banners.forEach((item, index) => {
-                $('#'+ item.id).prop('checked', false);
+                // $('#'+ item.id).prop('checked', false);
                 this.banner_del.splice(index, this.banners.length);
             });
         }

@@ -19,7 +19,7 @@ export class DenominationAddComponent implements OnInit {
     errorMessage: string;
     
     denoForm: FormGroup;
-    data:any;
+    data:string='';
     
     constructor(
         private router: Router,
@@ -42,6 +42,7 @@ export class DenominationAddComponent implements OnInit {
         @author: Trangle
     */
     addDenomination(denomination:any) {
+        console.log(this.denoForm.value['denomination']);
         var denoArr = [];
         let denomi = this.convert_format_currency(this.data);
         denomination.denomination = denomi

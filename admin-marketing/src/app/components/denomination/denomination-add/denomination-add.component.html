@@ -21,15 +21,13 @@
                 <input class='form-control' name="denomination" 
                 formControlName="denomination" id="denomination"
                 placeholder="Tên Mệnh Giá Nạp Tiền"
-                [ngModel]="data"
+                
                 (click)="removeMessage(errorMessage)"
                 (keyup) ="format_currency($event.target.value)"
                 > 
                 <show-error-valid [control]="denoForm.get('denomination')"></show-error-valid>
-                <div *ngIf='errorMessage'>
-                    <em [ngStyle]="{'color': 'red'}">
+                <div class="errors" *ngIf='errorMessage'>
                     {{errorMessage}}
-                    </em>
                 </div>
             </div>
             <div class="col-md-2">
@@ -41,7 +39,6 @@
         <div class="col-sm-2"></div>
         <div class='col-sm-8'>
             <button (click)="addDenomination(denoForm.value)"
-            [disabled]="denoForm.invalid"
             class="pull-right btn btn-info">Lưu lại</button>
         </div>
     </div>  

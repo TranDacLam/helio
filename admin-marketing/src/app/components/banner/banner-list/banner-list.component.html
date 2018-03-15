@@ -33,7 +33,7 @@
    			<tr *ngFor ="let banner of banners" id="delete{{banner.id}}">
    				<td><input type="checkbox"
    					value={{banner.id}} name="banner[]" id="{{banner.id}}"
-   					(change)="checkItemChange($event, banner)"/></td>
+   					(change)="checkItemChange($event, banner)" [checked]="checkbox" /></td>
    				<td><a routerLink="/banner-detail/{{ banner.id }}"> {{ banner.sub_url }}</a></td>
    			</tr>
     	</tbody>

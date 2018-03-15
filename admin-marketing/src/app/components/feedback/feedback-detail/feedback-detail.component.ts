@@ -20,11 +20,10 @@ declare var bootbox:any;
 export class FeedbackDetailComponent implements OnInit {
 
 	feedbackForm: FormGroup;
-	@Input() feedback: Feedback;
+	feedback: Feedback;
 
   	feedbacks: Feedback[];
   	status = Status; // List rating
-    formFeed = new Feedback();
     
     errorMessage: string;
 
@@ -35,7 +34,7 @@ export class FeedbackDetailComponent implements OnInit {
     	private fb: FormBuilder,
         private router: Router
   		) {
-  			this.createFormFeedback();
+  			
   		 }
 
   	ngOnInit() {
@@ -48,16 +47,16 @@ export class FeedbackDetailComponent implements OnInit {
      */
   	createFormFeedback() {
   		this.feedbackForm = this.fb.group({
-	        name: [this.formFeed.name],
-	        email: [this.formFeed.email],
-	        phone: [this.formFeed.phone],
-	        subject: [this.formFeed.subject],
-	        message: [this.formFeed.message],
-	        feedback_type: [this.formFeed.feedback_type],
-	        sent_date: [this.formFeed.sent_date],
-	        rate: [this.formFeed.rate],
-	        status: [this.formFeed.status],
-	        answer: [this.formFeed.answer, [Validators.maxLength(1000)]],     
+	        name: [this.feedback.name],
+	        email: [this.feedback.email],
+	        phone: [this.feedback.phone],
+	        subject: [this.feedback.subject],
+	        message: [this.feedback.message],
+	        feedback_type: [this.feedback.feedback_type],
+	        sent_date: [this.feedback.sent_date],
+	        rate: [this.feedback.rate],
+	        status: [this.feedback.status],
+	        answer: [this.feedback.answer, [Validators.maxLength(1000)]],     
       })
   	}
   	/*
@@ -67,7 +66,10 @@ export class FeedbackDetailComponent implements OnInit {
   	getFeedback() {
     	const id = +this.route.snapshot.paramMap.get('id');
     	this.feedbackService.getFeedbackById(id).subscribe(
-            feedback => this.feedback = feedback,
+            feedback => {
+                this.feedback = feedback,
+                this.createFormFeedback();
+            },
             error =>  this.router.navigate(['/error', { message: error }])
         );
     }
@@ -88,7 +90,8 @@ export class FeedbackDetailComponent implements OnInit {
         @author: TrangLe
     */
     updateFeedback() {
-    	this.feedbackService.updateFeedbackById(this.feedback)
+
+    	this.feedbackService.updateFeedbackById(this.feedbackForm.value, this.feedback.id)
     	    .subscribe(
                 () => this.router.navigate(['/feedback-list', { message_put: this.feedback.name} ]),
                 (error) =>  {

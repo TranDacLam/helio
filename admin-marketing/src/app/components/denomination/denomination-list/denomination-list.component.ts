@@ -23,7 +23,7 @@ export class DenominationListComponent implements OnInit {
 
     deno_selected: any;
     selectedAll: any;
-
+    checkbox:boolean= false;
 
     message_result = ''; // Message result
     record: string = "Mệnh Giá Nạp Tiền";
@@ -86,14 +86,13 @@ export class DenominationListComponent implements OnInit {
         if(event.target.checked){
             this.denominations.forEach(function(element) {
                 array_del.push(element.id);
-                $('#' + element.id).prop('checked', true);
             });
+            this.checkbox = true;
             this.deno_selected = array_del;
             this.message_result = "";
         }else{
-
+            this.checkbox = false;
             this.denominations.forEach((item, index) => {
-                $('#'+ item.id).prop('checked', false);
                 this.deno_selected.splice(index, this.denominations.length);
             });
         }
