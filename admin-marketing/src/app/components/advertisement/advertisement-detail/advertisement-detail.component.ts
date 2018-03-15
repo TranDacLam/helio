@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute , Router} from '@angular/router';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 
 import { Advertisement } from '../../../shared/class/advertisement';
 import { AdvertisementService } from '../../../shared/services/advertisement.service';
@@ -55,15 +56,19 @@ export class AdvertisementDetailComponent implements OnInit {
 		@author: TrangLe
 	 */
 	EditAdv() {
-		this.advertisementService.updateAdv(this.advForm.value, this.adv.id).subscribe(
-			() => this.router.navigate(['/advertisement-list', { message_put: this.advForm.value['name']} ]),
-			(error) => {
-				if(error.status == 400) {
-					this.errorMessage = error.json().name
-				} else {
-					this.router.navigate(['/error', { message: error.json().message }])
+		if (this.advForm.invalid) {
+			ValidateSubmit.validateAllFormFields(this.advForm);
+		} else {
+			this.advertisementService.updateAdv(this.advForm.value, this.adv.id).subscribe(
+				() => this.router.navigate(['/advertisement-list', { message_put: this.advForm.value['name']} ]),
+				(error) => {
+					if(error.status == 400) {
+						this.errorMessage = error.json().name
+					} else {
+						this.router.navigate(['/error', { message: error.json().message }])
+					}
 				}
-			}
 			);
+		}
 	}
 }

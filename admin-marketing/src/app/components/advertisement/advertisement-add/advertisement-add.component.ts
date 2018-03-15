@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+
 import { Advertisement } from '../../../shared/class/advertisement';
 import { AdvertisementService } from '../../../shared/services/advertisement.service';
 
@@ -40,18 +42,22 @@ export class AdvertisementAddComponent implements OnInit {
         @author: TrangLe
      */
    	CreateAdv() {
-   		this.advertisementService.addAdvertisement( this.advForm.value ).subscribe(
-			(resultAdv) => {
-				this.advs.push(resultAdv);
-                this.router.navigate(['/advertisement-list', { message_post: this.advForm.value['name']} ])
-			},
-            (error) => {
-                if (error.status == 400 ) {
-                    this.errorMessage = error.json()
-                } else {
-                    this.router.navigate(['/error', { message: error.json().message }])
+        if( this.advForm.invalid) {
+            ValidateSubmit.validateAllFormFields(this.advForm);
+        } else {
+       		this.advertisementService.addAdvertisement( this.advForm.value ).subscribe(
+    			(resultAdv) => {
+    				this.advs.push(resultAdv);
+                    this.router.navigate(['/advertisement-list', { message_post: this.advForm.value['name']} ])
+    			},
+                (error) => {
+                    if (error.status == 400 ) {
+                        this.errorMessage = error.json()
+                    } else {
+                        this.router.navigate(['/error', { message: error.json().message }])
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 }

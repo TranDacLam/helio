@@ -4,6 +4,9 @@
 	border-bottom: 2px solid black;
 	padding: 0 0 10px 0px;
 }
+.card-list {
+	margin-top: -10px;
+}
 a.pull-left {
 	color: #333333;
 }
@@ -15,4 +18,7 @@ a.pull-left:hover {
 }
 .button-banner {
 	margin-left: 15px;
+}
+.mb-30{
+    margin-bottom: 30px;
 }

@@ -176,7 +176,7 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'is_show')
 
 class DenominationSerializer(serializers.ModelSerializer):
-    denomination = serializers.CharField(required=True, validators=[
+    denomination = serializers.IntegerField(required=True, validators=[
         UniqueValidator(
             queryset=Denomination.objects.all(),
             message =('This denomination has already existed')
@@ -510,6 +510,10 @@ class TypeSerializer(serializers.ModelSerializer):
         return instance
 
 class HotAdvsSerializer(serializers.ModelSerializer):
+
+    image = serializers.ImageField(required=False, allow_empty_file=True)
+    sub_url_register = serializers.CharField(required=False,allow_null=True, allow_blank=True)
+    sub_url_view_detail = serializers.CharField(required=False, allow_null=True, allow_blank=True)
 
     class Meta:
         model = Hot_Advs
