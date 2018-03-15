@@ -2,15 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { api } from '../utils/api';
+import { env } from './../../../environments/environment';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
 
 @Injectable()
 export class FaqService {
-
-    private urlFaq = api.faq;
-    private urlFaqList = api.faq_list;
 
     httpOptions: any;
     token: any = '';
@@ -30,20 +28,23 @@ export class FaqService {
         function getEvents(): Get all notification
         author: Lam
     */
-    getFaqs(): Observable<any>{
-        return this.http.get(this.urlFaqList, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    getFaqs(lang): Observable<any>{
+        const url_getFaqs = `${env.api_domain_root}/${lang}/api/${api.faq_list}`;
+        return this.http.get(url_getFaqs, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    getFaq(id: number): Observable<any>{
-        let url_detail_faq = `${this.urlFaq}${id}`;
-        return this.http.get(url_detail_faq, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    getFaq(id: number, lang): Observable<any>{
+        const url_getFaq = `${env.api_domain_root}/${lang}/api/${api.faq}${id}`;
+        return this.http.get(url_getFaq, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
         function onDelEventSelect(): Delete all event selected
         author: Lam
     */
-    onDelFaqSelect(arr): Observable<any>{
+    onDelFaqSelect(arr, lang): Observable<any>{
+        const url_onDelFaqSelect = `${env.api_domain_root}/${lang}/api/${api.faq_list}`;
+
         let param = {
             list_id: arr
         }
@@ -53,24 +54,25 @@ export class FaqService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(this.urlFaqList, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_onDelFaqSelect, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    addFaq(value): Observable<any>{
+    addFaq(value, lang): Observable<any>{
+        const url_addFaq = `${env.api_domain_root}/${lang}/api/${api.faq}`;
         let body = JSON.stringify(value); // String payload
-        return this.http.post(this.urlFaq, body, this.httpOptions)
+        return this.http.post(url_addFaq, body, this.httpOptions)
             .map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    updateFaq(value, id: number): Observable<any>{
-        let url_update_faq = `${this.urlFaq}${id}/`;
-        return this.http.put(url_update_faq, JSON.stringify(value), this.httpOptions)
+    updateFaq(value, id: number, lang): Observable<any>{
+        const url_updateFaq = `${env.api_domain_root}/${lang}/api/${api.faq}${id}/`;
+        return this.http.put(url_updateFaq, JSON.stringify(value), this.httpOptions)
             .map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    onDelFaq(id: number): Observable<any>{
-        const url_del_faq = `${this.urlFaq}${id}/`;
-        return this.http.delete(url_del_faq, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    onDelFaq(id: number, lang): Observable<any>{
+        const url_onDelFaq = `${env.api_domain_root}/${lang}/api/${api.faq}${id}/`;
+        return this.http.delete(url_onDelFaq, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     // exception

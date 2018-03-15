@@ -14,6 +14,8 @@ export class EditEventComponent implements OnInit {
     event: Event;
     type_http = "put"; // type http to form event component 
 
+    lang = 'vi';
+
     constructor(
         private eventService: EventService,
         private route: ActivatedRoute,
@@ -21,6 +23,11 @@ export class EditEventComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
         this.getEvent();
     }
 
@@ -32,7 +39,7 @@ export class EditEventComponent implements OnInit {
     */
     getEvent(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.eventService.getEvent(id).subscribe(
+        this.eventService.getEvent(id, this.lang).subscribe(
             (data) => {
                 this.event = data;
             },

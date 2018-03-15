@@ -11,7 +11,7 @@
 <div class="row text-center">
     <h1>QUẢN LÝ HOT</h1>
 </div>
-<div class="row mt-50 mb-30 custom-title">
+<div class="row mt-50 mb-15 custom-title">
     <div class="col-xs-6 col-sm-6">
         <a class="btn custom-button" routerLink="/">
             <i class="fa fas fa-arrow-left icon-button"></i>
@@ -19,7 +19,7 @@
         </a>
     </div>
     <div class="col-xs-6 col-sm-6">
-        <a class="btn custom-button pull-right" routerLink="/hot/add">
+        <a class="btn custom-button pull-right" [routerLink]="['/hot/add/', {lang: lang}]">
              <i class="fa fas fa-plus icon-button"></i>
             TẠO HOT MỚI
         </a>
@@ -31,18 +31,30 @@
         <h4>{{message_result}}</h4>
     </div>
 </div>
-<div>
+<div class="row mb-30 language">
+    <div class="col-xs-12 col-sm-12">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
+                (click)="changeLangVI()"
+            >VI</button>
+            <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
+                (click)="changeLangEN()"
+            >EN</button>
+        </div> 
+    </div>
+</div>
+<div class="custom_table">
     <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="hots">
         <thead>
             <tr>
-                <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
+                <th class="checkbox_all"><input type="checkbox" (change)="onSelectAll($event)"/></th>
                 <th>Hot</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let hot of hots" id="del-{{hot.id}}">
                 <td><input type="checkbox" (change)="onSelectCKB($event, hot)" [checked]="select_checked"/></td>
-                <td><a routerLink="/hot/edit/{{ hot.id }}">{{ hot.name }}</a></td>
+                <td><a [routerLink]="['/hot/edit/', hot.id, {lang: lang}]">{{ hot.name }}</a></td>
             </tr>
         </tbody>
     </table>

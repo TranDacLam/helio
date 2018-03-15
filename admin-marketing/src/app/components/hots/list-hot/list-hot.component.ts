@@ -34,6 +34,8 @@ export class ListHotComponent implements OnInit {
     message_result = ''; // Message error
     errorMessage = '';
 
+    lang: string = 'vi';
+
     constructor(private hotService: HotService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
@@ -60,7 +62,7 @@ export class ListHotComponent implements OnInit {
         Author: Lam
     */
     getHots(){
-        this.hotService.getHots().subscribe(
+        this.hotService.getHots(this.lang).subscribe(
             (data) => {
                 this.hots = data;
                 this.length_hots = this.hots.length;
@@ -144,7 +146,7 @@ export class ListHotComponent implements OnInit {
         Author: Lam
     */
     onDeleteHot(){
-        this.hotService.onDelHotSelect(this.hots_del).subscribe(
+        this.hotService.onDelHotSelect(this.hots_del, this.lang).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     this.hots_del.forEach(function(element) {
@@ -157,5 +159,37 @@ export class ListHotComponent implements OnInit {
                 this.message_result = 'Xóa thành công.';
             }
         );
+    }
+
+    /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.hots = null;
+            this.lang = 'vi';
+            this.getHots();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangEN(){
+        if(this.lang === 'vi'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.hots = null;
+            this.lang = 'en';
+            this.getHots();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
     }
 }

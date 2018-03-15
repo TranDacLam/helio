@@ -227,7 +227,7 @@ export class FormPostComponent implements OnInit {
                     promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
                 } else if(k === 'posts_image'){
                     Object.keys(promotionValues[k]).forEach(l => { 
-                        promotionFormData.append(k, promotionValues[k][l].image.value);
+                        promotionFormData.append('posts_image', promotionValues[k][l].image.value);
                     });
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
