@@ -166,9 +166,13 @@ export class ListFaqComponent implements OnInit {
     */
     changeLangVI(){
         if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
             this.faqs = null;
             this.lang = 'vi';
             this.getFaqs();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
         }
     }
 
@@ -178,9 +182,13 @@ export class ListFaqComponent implements OnInit {
     */
     changeLangEN(){
         if(this.lang === 'vi'){
+            $('.custom_table').attr('style', 'height: 640px');
             this.faqs = null;
             this.lang = 'en';
             this.getFaqs();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
         }
     }
 

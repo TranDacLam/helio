@@ -172,9 +172,13 @@ export class ListEventComponent implements OnInit {
     */
     changeLangVI(){
         if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
             this.events = null;
             this.lang = 'vi';
             this.getEvents();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
         }
     }
 
@@ -183,10 +187,14 @@ export class ListEventComponent implements OnInit {
         Author: Lam
     */
     changeLangEN(){
+        $('.custom_table').attr('style', 'height: 640px');
         if(this.lang === 'vi'){
             this.events = null;
             this.lang = 'en';
             this.getEvents();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
         }
     }
 
