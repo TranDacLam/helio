@@ -6,7 +6,7 @@ import { PromotionService } from '../../../shared/services/promotion.service';
 import { User } from '../../../shared/class/user';
 import { Promotion } from '../../../shared/class/promotion'
 import { env } from '../../../../environments/environment';
-import { Globals } from './../../../shared/commons/globals';
+import { VariableGlobals } from './../../../shared/commons/variable_globals';
 
 declare var bootbox:any;
 declare var $: any;
@@ -37,7 +37,7 @@ export class UserPromotionComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute, 
         private promotionService: PromotionService,
-        private globals: Globals
+        private variable_globals: VariableGlobals
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -45,7 +45,7 @@ export class UserPromotionComponent implements OnInit {
     ngOnInit() {
     	this.getUsersPromotion();
         setTimeout(()=>{
-            this.user_current = this.globals.user_current;
+            this.user_current = this.variable_globals.user_current;
         },100);
     }
 
