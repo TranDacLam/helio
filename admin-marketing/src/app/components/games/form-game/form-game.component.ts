@@ -63,9 +63,9 @@ export class FormGameComponent implements OnInit {
     */ 
     creatForm(): void{
         this.formGame = this.fb.group({
-            name: [this.game.name, Validators.required],
-            image: [this.game.image],
-            short_description: [this.game.short_description, Validators.required],
+            name: [this.game.name, [Validators.required, Validators.maxLength(255)]],
+            image: [this.game.image, [Validators.maxLength(1000)]],
+            short_description: [this.game.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.game.content, Validators.required],
             game_type: [this.game.game_type ? this.game.game_type : '', Validators.required],
             is_draft: [this.game.is_draft],

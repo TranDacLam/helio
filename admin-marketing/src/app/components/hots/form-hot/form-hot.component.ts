@@ -63,9 +63,9 @@ export class FormHotComponent implements OnInit {
     */ 
     creatForm(): void{
         this.formHot = this.fb.group({
-            name: [this.hot.name, Validators.required],
-            image: [this.hot.image, Validators.required],
-            sub_url: [this.hot.sub_url, Validators.required],
+            name: [this.hot.name, [Validators.required, Validators.maxLength(255)]],
+            image: [this.hot.image, [Validators.required, Validators.maxLength(1000)]],
+            sub_url: [this.hot.sub_url, [Validators.required, Validators.maxLength(1000)]],
             is_show: [this.hot.is_show],
             is_clear_image: [false]
         });

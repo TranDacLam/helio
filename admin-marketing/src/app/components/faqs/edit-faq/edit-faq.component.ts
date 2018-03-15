@@ -75,7 +75,7 @@ export class EditFaqComponent implements OnInit {
     */ 
     creatForm(): void{
         this.formFaq = this.fb.group({
-            question: [this.faq.question, Validators.required],
+            question: [this.faq.question, [Validators.required, Validators.maxLength(255)]],
             answer: [this.faq.answer, Validators.required],
             category: [this.faq.category ? this.faq.category : '', Validators.required],
         });

@@ -87,10 +87,10 @@ export class PromotionFormComponent implements OnInit {
     private creatPromotionForm(): void {
         this.promotionForm = this.fb.group({
             id: [this.promotion.id],
-            name: [this.promotion.name, [Validators.required]],
-            image: [this.promotion.image],
-            image_thumbnail: [this.promotion.image_thumbnail],
-            short_description: [this.promotion.short_description, [Validators.required]],
+            name: [this.promotion.name, [Validators.required, Validators.maxLength(255)]],
+            image: [this.promotion.image, [Validators.maxLength(1000)]],
+            image_thumbnail: [this.promotion.image_thumbnail, [Validators.maxLength(1000)]],
+            short_description: [this.promotion.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.promotion.content, [Validators.required]],
             promotion_category: [this.promotion.promotion_category ? this.promotion.promotion_category : ''],
             promotion_label: [this.promotion.promotion_label ? this.promotion.promotion_label : ''],
