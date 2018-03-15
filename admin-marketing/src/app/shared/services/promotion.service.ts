@@ -34,7 +34,7 @@ export class PromotionService {
         @author: diemnguyen
     */
     getUsersPromotion(id: number): Observable<any> {
-        let user_promotion_url = `${api.user_promotion}${id}`
+        let user_promotion_url = `${api.user_promotion}${id}/`
         return this.http.get(user_promotion_url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 
     }
@@ -52,7 +52,7 @@ export class PromotionService {
         @author: diemnguyen
     */
     getPromotionById(id: number): Observable<any> {
-        let promotion_detail_url = `${api.promotion}${id}`;
+        let promotion_detail_url = `${api.promotion}${id}/`;
         return this.http.get(promotion_detail_url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
@@ -62,7 +62,7 @@ export class PromotionService {
         @author: diemnguyen
     */
     deletePromotionById(id: number): Observable<any> {
-        let promotion_detail_url = `${api.promotion}${id}`;
+        let promotion_detail_url = `${api.promotion}${id}/`;
         return this.http.delete(promotion_detail_url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 

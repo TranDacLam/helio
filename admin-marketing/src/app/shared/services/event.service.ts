@@ -33,7 +33,7 @@ export class EventService {
     }
 
     getEvent(id: number, lang): Observable<any>{
-        const url_getEvent = `${env.api_domain_root}/${lang}/api/${api.event}${id}`;
+        const url_getEvent = `${env.api_domain_root}/${lang}/api/${api.event}${id}/`;
         return this.http.get(url_getEvent, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 

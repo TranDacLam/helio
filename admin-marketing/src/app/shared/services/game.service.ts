@@ -37,7 +37,7 @@ export class GameService {
     }
 
     getGame(id: number, lang): Observable<any>{
-        const url_getGame = `${env.api_domain_root}/${lang}/api/${api.game}${id}`;
+        const url_getGame = `${env.api_domain_root}/${lang}/api/${api.game}${id}/`;
         return this.http.get(url_getGame, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 

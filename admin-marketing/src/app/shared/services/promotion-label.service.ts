@@ -52,7 +52,7 @@ export class PromotionLabelService {
         author: Lam
     */ 
 	getPromotionLabel(id: number, lang): Observable<any>{
-        const url_getPromotionLabel = `${env.api_domain_root}/${lang}/api/${api.promotion_label}${id}`;
+        const url_getPromotionLabel = `${env.api_domain_root}/${lang}/api/${api.promotion_label}${id}/`;
         return this.http.get(url_getPromotionLabel, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 

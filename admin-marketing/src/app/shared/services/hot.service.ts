@@ -34,7 +34,7 @@ export class HotService {
     }
 
     getHot(id: number, lang): Observable<any>{
-        const url_getHot = `${env.api_domain_root}/${lang}/api/${api.hot}${id}`;
+        const url_getHot = `${env.api_domain_root}/${lang}/api/${api.hot}${id}/`;
         return this.http.get(url_getHot, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
