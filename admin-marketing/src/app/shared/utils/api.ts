@@ -7,9 +7,9 @@ export const api = {
     promotion_list: env.api_domain + 'promotion_list/',
     /* URL User Promotion ( GET, PUT list promotion )*/
     user_promotion: env.api_domain + 'user_promotion/',
-    notification: env.api_domain + 'notification/',
-    user_notification: env.api_domain + 'user_notification/',
-    notification_list: env.api_domain + 'notification_list/',
+    notification: 'notification/',
+    user_notification: 'user_notification/',
+    notification_list: 'notification_list/',
     user: env.api_domain + 'user/',
     user_embed: env.api_domain + 'user_embed/',
     relate: env.api_domain + 'relate/',
@@ -35,7 +35,7 @@ export const api = {
     fee: env.api_domain + 'fee/',
     fee_list: env.api_domain + 'fee_list/',
 
-    category_notifications: env.api_domain +'category_notifications/',
+    category_notifications: 'category_notifications/',
 
     hot: 'hot/',
     hot_list: 'hot_list/',
@@ -74,6 +74,6 @@ export const api = {
 
     account_users: env.api_domain + 'accounts/users/',
 
-    notification_push: env.api_domain + 'notification/push/',
+    notification_push: 'notification/push/',
 
 };

@@ -44,7 +44,7 @@
     </div>
 </div>
 <div class="custom_table">
-    <table datatable class="row-border hover" *ngIf="promotion_labels">
+    <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="promotion_labels">
         <thead>
             <tr>
                 <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
@@ -66,7 +66,7 @@
         </select>
     </div>
     <div class="col-md-3">
-        {{ promotion_labels_del.length }} của {{ promotion_labels.length }} được chọn 
+        {{ promotion_labels_del.length }} của {{ length_promotion_labels }} được chọn 
         <button class="btn btn-danger" (click)="deletePormotionLabelEvent()">Thực hiện</button>
     </div>
 </div>
