@@ -26,8 +26,8 @@ export const api = {
 
     hot_advs: env.api_domain + 'hot_advs/',
 
-    promotion_label: env.api_domain + 'promotion_label/',
-    promotion_label_list: env.api_domain + 'promotion_label_list/',
+    promotion_label: 'promotion_label/',
+    promotion_label_list: 'promotion_label_list/',
     promotion_type: env.api_domain + 'promotion-type/',
 
 

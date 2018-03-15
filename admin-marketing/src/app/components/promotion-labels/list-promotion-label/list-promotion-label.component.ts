@@ -31,6 +31,8 @@ export class ListPromotionLabelComponent implements OnInit {
     message_result = ''; // Message error
     errorMessage = '';
 
+    lang: string = 'vi';
+
     constructor(private promotionLabelService: PromotionLabelService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
@@ -56,7 +58,7 @@ export class ListPromotionLabelComponent implements OnInit {
         Author: Lam
     */
     getPromotionLabels(){
-        this.promotionLabelService.getPromotionLabels().subscribe(
+        this.promotionLabelService.getPromotionLabels(this.lang).subscribe(
             (data) => {
                 this.promotion_labels = data;
                 this.length_promotion_labels = this.promotion_labels.length;
@@ -140,7 +142,7 @@ export class ListPromotionLabelComponent implements OnInit {
         Author: Lam
     */
     onDeletePromotionLabel(){
-        this.promotionLabelService.onDelPromotionLabelSelect(this.promotion_labels_del).subscribe(
+        this.promotionLabelService.onDelPromotionLabelSelect(this.promotion_labels_del, this.lang).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     this.promotion_labels_del.forEach(function(element) {
@@ -154,6 +156,38 @@ export class ListPromotionLabelComponent implements OnInit {
                 this.errorMessage = '';
             }
         );
+    }
+
+    /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.promotion_labels = null;
+            this.lang = 'vi';
+            this.getPromotionLabels();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangEN(){
+        if(this.lang === 'vi'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.promotion_labels = null;
+            this.lang = 'en';
+            this.getPromotionLabels();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
     }
 
 }
