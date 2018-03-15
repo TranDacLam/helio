@@ -33,6 +33,7 @@ export class FormEventComponent implements OnInit {
     msg_clear_image = '';
 
     api_domain: string = '';
+    lang = 'vi';
 
     constructor(
         private eventService: EventService,
@@ -46,6 +47,11 @@ export class FormEventComponent implements OnInit {
 
     ngOnInit() {
         this.creatForm();
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
     }
 
     /*
@@ -107,7 +113,7 @@ export class FormEventComponent implements OnInit {
             let event_form_data = this.convertFormGroupToFormData(this.formEvent);
             let value_form = this.formEvent.value;
             if(this.type_http == 'post'){
-                this.eventService.addEvent(event_form_data).subscribe(
+                this.eventService.addEvent(event_form_data, this.lang).subscribe(
                     (data) => {
                         this.router.navigate(['/event/list', { message_post: value_form.name}]);
                     },
@@ -124,7 +130,7 @@ export class FormEventComponent implements OnInit {
                     this.formEvent.get('is_clear_image').setValue(false);
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                 }else{
-                    this.eventService.updateEvent(event_form_data, this.event.id).subscribe(
+                    this.eventService.updateEvent(event_form_data, this.event.id, this.lang).subscribe(
                         (data) => {
                             this.router.navigate(['/event/list', { message_put: value_form.name}]);
                         },
@@ -174,7 +180,7 @@ export class FormEventComponent implements OnInit {
     */
     onDelete(): void {
         const id = this.event.id;
-        this.eventService.onDelEvent(id).subscribe(
+        this.eventService.onDelEvent(id, this.lang).subscribe(
             (data) => {
                 this.router.navigate(['/event/list', { message_del: 'success'}]);
             },

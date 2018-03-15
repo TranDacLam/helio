@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers } from '@angular/http';
 import { api } from '../utils/api';
+import { env } from './../../../environments/environment';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
@@ -27,8 +28,9 @@ export class CategoryService {
         function getCategoryNotifications(): Get all Category Notifications
         author: Lam
     */
-    getAllCategory(): Observable<any> {
-        return this.http.get(api.category_list, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    getAllCategory(lang): Observable<any> {
+        const url = `${env.api_domain_root}/${lang}/api/${api.category_list}`; 
+        return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     // exception

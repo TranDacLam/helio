@@ -34,6 +34,7 @@ export class FormGameComponent implements OnInit {
     msg_clear_image = '';
 
     api_domain: string = '';
+    lang = 'vi';
 
     constructor(
         private gameService: GameService,
@@ -48,6 +49,11 @@ export class FormGameComponent implements OnInit {
 
     ngOnInit() {
         this.creatForm();
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
         this.getTypes();
     }
 
@@ -72,7 +78,7 @@ export class FormGameComponent implements OnInit {
         @author: Lam
     */ 
     getTypes(): void{
-        this.typeService.getTypes().subscribe(
+        this.typeService.getTypes(this.lang).subscribe(
             (data) => {
                 this.types = data;
             },
@@ -116,7 +122,7 @@ export class FormGameComponent implements OnInit {
             let game_form_data = this.convertFormGroupToFormData(this.formGame);
             let value_form = this.formGame.value;
             if(!this.game.id){
-                this.gameService.addGame(game_form_data).subscribe(
+                this.gameService.addGame(game_form_data, this.lang).subscribe(
                     (data) => {
                         this.router.navigate(['/game/list', { message_post: value_form.name}]);
                     },
@@ -129,7 +135,7 @@ export class FormGameComponent implements OnInit {
                     this.formGame.get('is_clear_image').setValue(false);
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                 }else{
-                    this.gameService.updateGame(game_form_data, this.game.id).subscribe(
+                    this.gameService.updateGame(game_form_data, this.game.id, this.lang).subscribe(
                         (data) => {
                             this.game = data;
                             this.router.navigate(['/game/list', { message_put: value_form.name}]);
@@ -177,7 +183,7 @@ export class FormGameComponent implements OnInit {
     */
     onDelete(): void {
         const id = this.game.id;
-        this.gameService.onDelGame(id).subscribe(
+        this.gameService.onDelGame(id, this.lang).subscribe(
             (data) => {
                 this.router.navigate(['/game/list', { message_del: 'success'}]);
             },

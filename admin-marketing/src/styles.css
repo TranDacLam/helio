@@ -252,6 +252,19 @@ h1.h1-title {
 .dataTables_scrollBody{
     min-height: 433px;
 }
+
+/*
+    Button change language
+    author: Lam;
+*/
+.language button {
+    width: 50px;
+}
+.language button.btn:focus {
+    outline: none;
+}
+
+
 @media only screen and (max-width : 768px) {
     .multiselect_user .datatable-content{
         width: 100%;

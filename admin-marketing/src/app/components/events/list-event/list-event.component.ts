@@ -7,6 +7,7 @@ import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
 import * as datatable_config from '../../../shared/commons/datatable_config';
 
+
 declare var bootbox:any;
 
 @Component({
@@ -34,7 +35,13 @@ export class ListEventComponent implements OnInit {
     message_result = ''; // Message success
     errorMessage = '';
 
-    constructor(private eventService: EventService, private route: ActivatedRoute, private router: Router) { }
+    lang: string = 'vi';
+
+    constructor(
+        private eventService: EventService, 
+        private route: ActivatedRoute, 
+        private router: Router,
+    ) { }
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Sự Kiện').dtOptions;
@@ -60,7 +67,7 @@ export class ListEventComponent implements OnInit {
         Author: Lam
     */
     getEvents(){
-        this.eventService.getEvents().subscribe(
+        this.eventService.getEvents(this.lang).subscribe(
             (data) => {
                 this.events = data;
                 this.length_events = this.events.length;
@@ -143,7 +150,7 @@ export class ListEventComponent implements OnInit {
         Author: Lam
     */
     onDeleteEvent(){
-        this.eventService.onDelEventSelect(this.events_del).subscribe(
+        this.eventService.onDelEventSelect(this.events_del, this.lang).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     this.events_del.forEach(function(element) {
@@ -156,6 +163,39 @@ export class ListEventComponent implements OnInit {
                 this.message_result = 'Xóa thành công.';
             }
         );
+    }
+
+
+    /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.events = null;
+            this.lang = 'vi';
+            this.getEvents();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangEN(){
+        if(this.lang === 'vi'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.events = null;
+            this.lang = 'en';
+            this.getEvents();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
     }
 
 }

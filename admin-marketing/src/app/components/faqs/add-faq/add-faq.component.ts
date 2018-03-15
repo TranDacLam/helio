@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Faq } from '../../../shared/class/faq';
 import { FaqService } from '../../../shared/services/faq.service';
@@ -27,15 +27,23 @@ export class AddFaqComponent implements OnInit {
 
     errorMessage: any; // Messages error
 
+    lang = 'vi';
+
     constructor(
         private faqService: FaqService,
         private fb: FormBuilder,
         private router: Router,
+        private route: ActivatedRoute,
         private categoryService: CategoryService
     ) { }
 
     ngOnInit() {
         this.creatForm();
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
         this.getCategories();
     }
 
@@ -56,7 +64,7 @@ export class AddFaqComponent implements OnInit {
         @author: Lam
     */ 
     getCategories(): void{
-        this.categoryService.getAllCategory().subscribe(
+        this.categoryService.getAllCategory(this.lang).subscribe(
             (data) => {
                 this.categories = data;
             },
@@ -77,7 +85,7 @@ export class AddFaqComponent implements OnInit {
             ValidateSubmit.validateAllFormFields(this.formFaq);
         }else{
             this.formFaq.value.category = parseInt(this.formFaq.value.category);
-            this.faqService.addFaq(this.formFaq.value).subscribe(
+            this.faqService.addFaq(this.formFaq.value, this.lang).subscribe(
                 (data) => {
                     this.router.navigate(['/faq/list', { message_post: this.formFaq.value.question}]);
                 },

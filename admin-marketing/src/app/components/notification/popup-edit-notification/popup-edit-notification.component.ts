@@ -21,12 +21,19 @@ export class PopupEditNotificationComponent implements OnInit {
     noti: Notification;
     type_http = "put_popup"; // type http to form notification component 
 
+    lang = 'vi';
+
     constructor(
         private notificationService: NotificationService,
         private route: ActivatedRoute
     ) { }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
         this.getNotification();
     }
 
@@ -38,7 +45,7 @@ export class PopupEditNotificationComponent implements OnInit {
     */
     getNotification(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.notificationService.getNotification(id).subscribe(data => {
+        this.notificationService.getNotification(id, this.lang).subscribe(data => {
             this.noti = data;
         });
     }

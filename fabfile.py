@@ -77,7 +77,7 @@ def deploy():
 
         with cd('admin-marketing'):
             run('npm install')
-            sudo("ng build  --env=%s --output-path=/var/www/html/helio_admin"%ENV)
+            run("ng build --env=%s --output-path=build/helio_admin"%ENV)
             
     with cd(PROJECT_PATH):
         with cd('websites'):
