@@ -34,6 +34,8 @@ export class ListNotificationComponent implements OnInit {
     message_result = ''; // Message error
     errorMessage = '';
 
+    lang: string = 'vi';
+
     constructor(private notificationService: NotificationService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
@@ -60,7 +62,7 @@ export class ListNotificationComponent implements OnInit {
         Author: Lam
     */
     getNotifications(){
-        this.notificationService.getNotifications().subscribe(
+        this.notificationService.getNotifications(this.lang).subscribe(
             (data) => {
                 this.notifications = data;
                 this.length_notification = this.notifications.length;
@@ -145,7 +147,7 @@ export class ListNotificationComponent implements OnInit {
         Author: Lam
     */
     onDelelteNoti(){
-        this.notificationService.onDelNotiSelect(this.notifications_del).subscribe(
+        this.notificationService.onDelNotiSelect(this.notifications_del, this.lang).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     this.notifications_del.forEach(function(element) {
@@ -157,6 +159,38 @@ export class ListNotificationComponent implements OnInit {
                 this.message_result = 'Xóa thành công.';
             }
         );
+    }
+
+    /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.notifications = null;
+            this.lang = 'vi';
+            this.getNotifications();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangEN(){
+        if(this.lang === 'vi'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.notifications = null;
+            this.lang = 'en';
+            this.getNotifications();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
     }
 
 }

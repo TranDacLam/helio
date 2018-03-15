@@ -5,6 +5,7 @@ import { PromotionLabel } from '../../../shared/class/promotion-label';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import * as datatable_config from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -24,6 +25,8 @@ export class ListPromotionLabelComponent implements OnInit {
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
+    dtOptions: any = {};
+
     promotion_labels: PromotionLabel[];
     promotion_labels_del = []; // Get array id to delete all id promotion label
     length_promotion_labels: number;
@@ -36,6 +39,7 @@ export class ListPromotionLabelComponent implements OnInit {
     constructor(private promotionLabelService: PromotionLabelService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
+        this.dtOptions = datatable_config.data_config('Nhãn Khuyến Mãi').dtOptions;
         this.getPromotionLabels();
 
         /*

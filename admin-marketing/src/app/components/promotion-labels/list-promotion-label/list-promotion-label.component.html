@@ -44,7 +44,7 @@
     </div>
 </div>
 <div class="custom_table">
-    <table datatable class="row-border hover" *ngIf="promotion_labels">
+    <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="promotion_labels">
         <thead>
             <tr>
                 <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
