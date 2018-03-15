@@ -1,9 +1,5 @@
 export class Advertisement {
-	constructor(
-		public id: number,
-		public name: string,
-		public is_show: boolean
-		) {
-
-	}
+ 	id: number;
+ 	name: string;
+	is_show: boolean;
 }

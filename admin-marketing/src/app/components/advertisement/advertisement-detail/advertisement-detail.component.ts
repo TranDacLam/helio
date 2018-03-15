@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute , Router} from '@angular/router';
 
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Advertisement } from '../../../shared/class/advertisement';
 import { AdvertisementService } from '../../../shared/services/advertisement.service';
 
@@ -10,17 +12,28 @@ import { AdvertisementService } from '../../../shared/services/advertisement.ser
   styleUrls: ['./advertisement-detail.component.css']
 })
 export class AdvertisementDetailComponent implements OnInit {
+
 	@Input() adv: Advertisement;
 	errorMessage: string ="";
+	advForm: FormGroup;
+
 	constructor(
 		private advertisementService: AdvertisementService,
 		private route: ActivatedRoute,
-		private router: Router
+		private router: Router,
+		private fb: FormBuilder,
 		) { }
 
 	ngOnInit() {
 		this.getAdv();
 	}
+
+	createForm() {
+        this.advForm = this.fb.group({
+          name: [this.adv.name, [Validators.required, Validators.maxLength(255)]],
+          is_show: [this.adv.is_show]
+        });
+    }
 	/*
 		GET: Get Advertiment By Id
 		Call service advertiment
@@ -31,6 +44,7 @@ export class AdvertisementDetailComponent implements OnInit {
 		this.advertisementService.getAdvertisement(id).subscribe(
 			(result) => {
         		this.adv = result;
+        		this.createForm();
       		},
       		(error) => this.router.navigate(['/error', { message: error }])
         );
@@ -41,8 +55,8 @@ export class AdvertisementDetailComponent implements OnInit {
 		@author: TrangLe
 	 */
 	EditAdv() {
-		this.advertisementService.updateAdv(this.adv).subscribe(
-			() => this.router.navigate(['/advertisement-list', { message_put: this.adv.name} ]),
+		this.advertisementService.updateAdv(this.advForm.value, this.adv.id).subscribe(
+			() => this.router.navigate(['/advertisement-list', { message_put: this.advForm.value['name']} ]),
 			(error) => {
 				if(error.status == 400) {
 					this.errorMessage = error.json().name
