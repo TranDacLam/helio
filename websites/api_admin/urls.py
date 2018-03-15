@@ -6,8 +6,8 @@ from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token
 urlpatterns = [
 
 	url(r'^promotion_list/$', views.PromotionList.as_view(), name="promotion-list"),
-	url(r'^promotion/(?P<id>[0-9]+)/$', views.PromotionDetail.as_view(), name="promotion"),
-	url(r'^promotion/$', views.PromotionDetail.as_view(), name="promotion-add"),
+	url(r'^promotion_detail/(?P<id>[0-9]+)/$', views.PromotionDetail.as_view(), name="promotion"),
+	url(r'^promotion_detail/$', views.PromotionDetail.as_view(), name="promotion-add"),
 
 	url(r'^user_promotion/(?P<id>[0-9]+)/$', views.PromotionUser.as_view(), name="user-promotion"),
 	
@@ -26,8 +26,8 @@ urlpatterns = [
 
 
 	url(r'^notification_list/$', views.NotificationList.as_view(), name="notification-list"),
-	url(r'^notification/(?P<id>[0-9]+)/$', views.NotificationDetail.as_view(), name="notification"),
-	url(r'^notification/$', views.NotificationDetail.as_view(), name="notification"),
+	url(r'^notification_detail/(?P<id>[0-9]+)/$', views.NotificationDetail.as_view(), name="notification"),
+	url(r'^notification_detail/$', views.NotificationDetail.as_view(), name="notification"),
 	
 	url(r'^user_notification/(?P<id>[0-9]+)/$', views.NotificationUser.as_view(), name="user-promotion"),
 
@@ -44,28 +44,28 @@ urlpatterns = [
 	url(r'^category_notifications/$', views.CategoryNotifications.as_view(), name="category-notifications"),
 	url(r'^fee_list/$', views.FeeListAPI.as_view(), name="fees"),
 	
-	url(r'^event/$', views.EventAPI.as_view(), name="event"),
-	url(r'^event/(?P<id>[0-9]+)/$', views.EventAPI.as_view(), name="event-detail"),
+	url(r'^event_detail/$', views.EventAPI.as_view(), name="event"),
+	url(r'^event_detail/(?P<id>[0-9]+)/$', views.EventAPI.as_view(), name="event-detail"),
 	url(r'^event_list/$', views.EventListAPI.as_view(), name="event-list"),
 
 	url(r'^banner/$', views.BannerView.as_view(), name="banner"),
 	url(r'^banner/(?P<pk>[0-9]+)/$', views.BannerViewDetail.as_view(), name="banner-detail"),
 
-	url(r'^promotion_label/$', views.PromotionLabelAPI.as_view(), name="promotion-label"),
-	url(r'^promotion_label/(?P<id>[0-9]+)/$', views.PromotionLabelAPI.as_view(), name="promotion-label-detail"),
+	url(r'^promotion_label_detail/$', views.PromotionLabelAPI.as_view(), name="promotion-label"),
+	url(r'^promotion_label_detail/(?P<id>[0-9]+)/$', views.PromotionLabelAPI.as_view(), name="promotion-label-detail"),
 	url(r'^promotion_label_list/$', views.PromotionLabelListAPI.as_view(), name="promotion-label-list"),
 	
-	url(r'^hot/$', views.HotAPI.as_view(), name="hot"),
-	url(r'^hot/(?P<id>[0-9]+)/$', views.HotAPI.as_view(), name="hot-detail"),
+	url(r'^hot_detail/$', views.HotAPI.as_view(), name="hot"),
+	url(r'^hot_detail/(?P<id>[0-9]+)/$', views.HotAPI.as_view(), name="hot-detail"),
 	url(r'^hot_list/$', views.HotListAPI.as_view(), name="hot-list"),
 
-	url(r'^post/$', views.PostAPI.as_view(), name="post"),
-	url(r'^post/(?P<id>[0-9]+)/$', views.PostAPI.as_view(), name="post-detail"),
+	url(r'^post_detail/$', views.PostAPI.as_view(), name="post"),
+	url(r'^post_detail/(?P<id>[0-9]+)/$', views.PostAPI.as_view(), name="post-detail"),
 	url(r'^post_list/$', views.PostListAPI.as_view(), name="post-list"),
 	url(r'^post_type_list/$', views.PostTypeListAPI.as_view(), name="post-type-list"),
 
-	url(r'^faq/$', views.FAQAPI.as_view(), name="faq"),
-	url(r'^faq/(?P<id>[0-9]+)/$', views.FAQAPI.as_view(), name="faq-detail"),
+	url(r'^faq_detail/$', views.FAQAPI.as_view(), name="faq"),
+	url(r'^faq_detail/(?P<id>[0-9]+)/$', views.FAQAPI.as_view(), name="faq-detail"),
 	url(r'^faq_list/$', views.FAQListAPI.as_view(), name="faq-list"),
 	url(r'^generator_QR_code/(?P<id>[0-9]+)/$', views.GeneratorQRCode.as_view(), name="generator-QR-code"),
 	url(r'^category_list/$', views.CategoryList.as_view(), name="category-list"),
@@ -78,8 +78,8 @@ urlpatterns = [
 	url(r'^upload_file/$', views.postUpload, name="upload-file"),
 
 
-	url(r'^game/$', views.GameAPI.as_view(), name="game"),
-	url(r'^game/(?P<id>[0-9]+)/$', views.GameAPI.as_view(), name="game-detail"),
+	url(r'^game_detail/$', views.GameAPI.as_view(), name="game"),
+	url(r'^game_detail/(?P<id>[0-9]+)/$', views.GameAPI.as_view(), name="game-detail"),
 	url(r'^game_list/$', views.GameListAPI.as_view(), name="game-list"),
 	url(r'^type_list/$', views.TypeListAPI.as_view(), name="type-list"),
 

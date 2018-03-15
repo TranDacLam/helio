@@ -2,12 +2,12 @@ import { env } from '../../../environments/environment';
 
 export const api = {
     /* URL Promotion Detail Page*/
-    promotion: env.api_domain + 'promotion/',
+    promotion: env.api_domain + 'promotion_detail/',
     /* URL Promotion List ( GET, DELETE list promotion )*/
     promotion_list: env.api_domain + 'promotion_list/',
     /* URL User Promotion ( GET, PUT list promotion )*/
     user_promotion: env.api_domain + 'user_promotion/',
-    notification: env.api_domain + 'notification/',
+    notification: env.api_domain + 'notification_detail/',
     user_notification: env.api_domain + 'user_notification/',
     notification_list: env.api_domain + 'notification_list/',
     user: env.api_domain + 'user/',
@@ -26,7 +26,7 @@ export const api = {
 
     hot_advs: env.api_domain + 'hot_advs/',
 
-    promotion_label: env.api_domain + 'promotion_label/',
+    promotion_label: env.api_domain + 'promotion_label_detail/',
     promotion_label_list: env.api_domain + 'promotion_label_list/',
     promotion_type: env.api_domain + 'promotion-type/',
 
@@ -37,13 +37,13 @@ export const api = {
 
     category_notifications: env.api_domain +'category_notifications/',
 
-    hot: env.api_domain + 'hot/',
+    hot: env.api_domain + 'hot_detail/',
     hot_list: env.api_domain + 'hot_list/',
 
-    post: env.api_domain + 'post/',
+    post: env.api_domain + 'post_detail/',
     post_list: env.api_domain + 'post_list/',
 
-    event: env.api_domain + 'event/',
+    event: env.api_domain + 'event_detail/',
 
     event_list: env.api_domain + 'event_list/',
 
@@ -62,11 +62,11 @@ export const api = {
 
     role: env.api_domain + 'role/',
 
-    faq: env.api_domain + 'faq/',
+    faq: env.api_domain + 'faq_detail/',
 
     faq_list: env.api_domain + 'faq_list/',
 
-    game: env.api_domain + 'game/',
+    game: env.api_domain + 'game_detail/',
 
     game_list: env.api_domain + 'game_list/',
 
