@@ -86,7 +86,7 @@ export class EditFaqComponent implements OnInit {
         @author: Lam
     */ 
     getCategories(): void{
-        this.categoryService.getAllCategory(this.lang).subscribe(
+        this.categoryService.getAllCategory().subscribe(
             (data) => {
                 this.categories = data;
             },

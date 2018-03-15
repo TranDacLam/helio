@@ -41,15 +41,15 @@
             data-loading-text="<i class='fa fa-spinner fa-spin'></i>Tạo QR Code">Tạo QR Code</button>
     </div>
     <div class="col-sm-4 pull-right">
-        <a *ngIf="!notification_id" class="btn custom-button btn-block" [routerLink]="['/notification/add']" [queryParams]="{promotion: promotion.id}">
+        <a *ngIf="!notification_id" class="btn custom-button btn-block" [routerLink]="['/notification/add', {promotion: promotion.id, lang: lang}]">
             <i class="fa fas fa-plus icon-button"></i>
             TẠO THÔNG BÁO CHO KHUYẾN MÃI
         </a>
-        <a *ngIf="notification_id" class="btn custom-button btn-block" [routerLink]="['/notification/edit', notification_id]">
+        <a *ngIf="notification_id" class="btn custom-button btn-block" [routerLink]="['/notification/edit/', notification_id, {lang: lang}]">
             <i class="fa fas fa-pencil-square-oicon-button"></i>
             CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI
         </a>
-        <a class="btn custom-button btn-block" [routerLink]="['/promotions/report/', promotion.id]">TỔNG HỢP TRIỂN KHAI KHUYẾN MÃI</a>
+        <a class="btn custom-button btn-block" [routerLink]="['/promotions/report/', promotion.id, {lang: lang}]">TỔNG HỢP TRIỂN KHAI KHUYẾN MÃI</a>
     </div>
 </div>
 

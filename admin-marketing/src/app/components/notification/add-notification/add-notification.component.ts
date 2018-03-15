@@ -13,6 +13,8 @@ export class AddNotificationComponent implements OnInit {
     type_http = "post"; // type http to form notification component
     promotion_id: number; // get id promotion
 
+    lang: string;
+
     constructor(private route: ActivatedRoute) { }
 
     ngOnInit() {
@@ -20,10 +22,14 @@ export class AddNotificationComponent implements OnInit {
             Use route to get params promotion id from url
             Author: Lam
         */
-        const id = +this.route.snapshot.queryParamMap.get('promotion');
-        if(id > 0){
-            this.promotion_id = id;
-        }
+        this.route.params.subscribe(params => {
+            if(params.promotion){
+                this.promotion_id = +params.promotion;
+            }
+            if(params.promotion){
+                this.lang = params.lang;
+            }
+        });
     }
 
 }

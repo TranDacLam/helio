@@ -36,6 +36,7 @@ export class FormNotificationComponent implements OnInit {
     @Input() noti: Notification; // Get notification from component parent
     @Input() type_http; // Get type http from component parent
     @Input() promotion_id; // Get type http from component parent
+    @Input() lang_promotion; // Get lang from component parent
     
     // Return 1 object to parent
     @Output() update_noti: EventEmitter<Notification> = new EventEmitter<Notification>();
@@ -69,6 +70,8 @@ export class FormNotificationComponent implements OnInit {
                 this.lang = params.lang;
             }
         });
+        this.lang = this.lang_promotion ? this.lang_promotion : this.lang;
+
         this.getCategory();
         this.creatForm();
     }

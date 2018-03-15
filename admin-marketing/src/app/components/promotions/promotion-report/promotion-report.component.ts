@@ -20,7 +20,7 @@ export class PromotionReportComponent implements OnInit {
 
     dtOptions: any = {};
 
-    dtTrigger: Subject<any> = new Subject();
+    lang = 'vi';
 
   	constructor(
         private promotionService: PromotionService,
@@ -29,6 +29,11 @@ export class PromotionReportComponent implements OnInit {
     ) { }
 
   	ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
         this.getPromotion();
         this.dtOptions = datatable_config.data_config('Tổng Hợp Triển Khai Khuyến Mãi').dtOptions;
   	}
@@ -39,7 +44,7 @@ export class PromotionReportComponent implements OnInit {
     */
     getPromotion() {
         const id = +this.route.snapshot.paramMap.get('id');
-        this.promotionService.getPromotionById(id).subscribe(
+        this.promotionService.getPromotionById(id, this.lang).subscribe(
             (data) => {
                 this.promotion = data;
             }, 

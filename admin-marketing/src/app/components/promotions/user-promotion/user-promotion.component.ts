@@ -33,6 +33,8 @@ export class UserPromotionComponent implements OnInit {
     notification_id: number;
     message_result: string = "";
 
+    lang = 'vi';
+
     constructor(
         private router: Router,
         private route: ActivatedRoute, 
@@ -43,6 +45,12 @@ export class UserPromotionComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
+
     	this.getUsersPromotion();
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
@@ -52,7 +60,7 @@ export class UserPromotionComponent implements OnInit {
     getUsersPromotion(){
         const promotion_id = +this.route.snapshot.paramMap.get('id');
 
-        this.promotionService.getUsersPromotion(promotion_id).subscribe(
+        this.promotionService.getUsersPromotion(promotion_id, this.lang).subscribe(
             (data)=> {
                 this.notification_id = data.notification_id;
                 this.promotion = data.promotion_detail;
@@ -86,7 +94,7 @@ export class UserPromotionComponent implements OnInit {
 
     updateUser(list_user_id){
         const promotion_id = +this.route.snapshot.paramMap.get('id');
-        this.promotionService.updateUserPromotion(promotion_id, list_user_id).subscribe(
+        this.promotionService.updateUserPromotion(promotion_id, list_user_id, this.lang).subscribe(
             (data)=> {
                 if (data.status == 204) {
                     this.message_result = "Lưu thành công"

@@ -67,7 +67,11 @@ export class PromotionFormComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
 
         this.getAllCategory();
         this.getPromotionTypes();
@@ -108,7 +112,7 @@ export class PromotionFormComponent implements OnInit {
         @author: diemnguyen
     */ 
     getAllCategory(): void{
-        this.categoryService.getAllCategory(this.lang).subscribe(
+        this.categoryService.getAllCategory().subscribe(
             (data) => {
                 this.categorys = data;
             },
@@ -180,7 +184,7 @@ export class PromotionFormComponent implements OnInit {
                 Case 1: Promotion id is null then call save service
             */
             if(this.promotion.id) {
-                this.promotionService.updatePromotion(promotionFormData, this.promotion.id).subscribe(
+                this.promotionService.updatePromotion(promotionFormData, this.promotion.id, this.lang).subscribe(
                     (data) => {
                         // Navigate to promotion page where success
                         that.router.navigate(['/promotions', {'action': 'Sửa "', 'promotion_name': this.promotionForm.value['name']}]);
@@ -194,7 +198,7 @@ export class PromotionFormComponent implements OnInit {
                     }
                 );
             } else {
-                this.promotionService.savePromotion(promotionFormData).subscribe(
+                this.promotionService.savePromotion(promotionFormData, this.lang).subscribe(
                     (data) => {
                         // Navigate to promotion page where success
                         that.router.navigate(['/promotions', {'action': 'Tạo mới "', 'promotion_name': this.promotionForm.value['name']}]);
@@ -236,7 +240,7 @@ export class PromotionFormComponent implements OnInit {
                 callback: function (result) {
                     if(result) {
                         // Call service delete promotion by id
-                        that.promotionService.deletePromotionById(id).subscribe(
+                        that.promotionService.deletePromotionById(id, that.lang).subscribe(
                             (data) => {
                                 that.router.navigate(['/promotions', {'action': 'Xóa "', 'promotion_name': that.promotion.name}]);
                             }, 
