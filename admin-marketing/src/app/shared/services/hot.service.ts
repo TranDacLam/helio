@@ -2,15 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { api } from '../utils/api';
+import { env } from './../../../environments/environment';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
 
 @Injectable()
 export class HotService {
-
-    private urlHot = api.hot;
-    private urlHotList = api.hot_list;
 
     httpOptions: any;
     token: any = '';
@@ -30,20 +28,23 @@ export class HotService {
         function getHots(): Get all hot
         author: Lam
     */
-    getHots(): Observable<any>{
-        return this.http.get(this.urlHotList, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    getHots(lang): Observable<any>{
+        const url_getHots = `${env.api_domain_root}/${lang}/api/${api.hot_list}`;
+        return this.http.get(url_getHots, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    getHot(id: number): Observable<any>{
-        let url_hot_id = `${this.urlHot}${id}`;
-        return this.http.get(url_hot_id, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    getHot(id: number, lang): Observable<any>{
+        const url_getHot = `${env.api_domain_root}/${lang}/api/${api.hot}${id}`;
+        return this.http.get(url_getHot, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
         function onDelHotSelect(): Delete all hot selected
         author: Lam
     */
-    onDelHotSelect(arr): Observable<any>{
+    onDelHotSelect(arr, lang): Observable<any>{
+        const url_onDelHotSelect = `${env.api_domain_root}/${lang}/api/${api.hot_list}`;
+
         let param = {
             list_id: arr
         }
@@ -53,13 +54,15 @@ export class HotService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(this.urlHotList, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_onDelHotSelect, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    addHot(value: FormData): Observable<any>{
+    addHot(value: FormData, lang): Observable<any>{
+        const url_addHot = `${env.api_domain_root}/${lang}/api/${api.hot}`;
+
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            xhr.open('POST', api.hot);
+            xhr.open('POST', url_addHot);
             xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.send(value);
 
@@ -76,11 +79,12 @@ export class HotService {
         });
     }
 
-    updateHot(value: FormData, id: number): Observable<any>{
-        let url_update_hot = `${this.urlHot}${id}/`;
+    updateHot(value: FormData, id: number, lang): Observable<any>{
+        const url_updateHot = `${env.api_domain_root}/${lang}/api/${api.hot}${id}/`;
+
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            xhr.open('PUT', url_update_hot);
+            xhr.open('PUT', url_updateHot);
             xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.send(value);
 
@@ -97,9 +101,9 @@ export class HotService {
         });
     }
 
-    onDelHot(id): Observable<any>{
-        const url_del = `${this.urlHot}${id}/`;
-        return this.http.delete(url_del, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    onDelHot(id, lang): Observable<any>{
+        const url_onDelHot = `${env.api_domain_root}/${lang}/api/${api.hot}${id}/`;
+        return this.http.delete(url_onDelHot, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     // exception

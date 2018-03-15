@@ -138,7 +138,7 @@ export class PromotionFormComponent implements OnInit {
         @author: diemnguyen
     */ 
     getPromotionLabels(): void{
-        this.promotionLabelService.getPromotionLabels().subscribe(
+        this.promotionLabelService.getPromotionLabels(this.lang).subscribe(
             (data) => {
                 this.promotionLabels = data;
             },

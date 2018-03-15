@@ -181,8 +181,8 @@ export class ListGameComponent implements OnInit {
         Author: Lam
     */
     changeLangEN(){
-        $('.custom_table').attr('style', 'height: 640px');
         if(this.lang === 'vi'){
+            $('.custom_table').attr('style', 'height: 640px');
             this.games = null;
             this.lang = 'en';
             this.getGames();

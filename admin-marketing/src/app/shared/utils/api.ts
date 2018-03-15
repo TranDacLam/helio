@@ -37,8 +37,8 @@ export const api = {
 
     category_notifications: env.api_domain +'category_notifications/',
 
-    hot: env.api_domain + 'hot/',
-    hot_list: env.api_domain + 'hot_list/',
+    hot: 'hot/',
+    hot_list: 'hot_list/',
 
     post: env.api_domain + 'post/',
     post_list: env.api_domain + 'post_list/',
