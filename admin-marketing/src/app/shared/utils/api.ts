@@ -66,11 +66,11 @@ export const api = {
 
     faq_list: 'faq_list/',
 
-    game: env.api_domain + 'game/',
+    game: 'game/',
 
-    game_list: env.api_domain + 'game_list/',
+    game_list: 'game_list/',
 
-    type_list: env.api_domain + 'type_list/',
+    type_list: 'type_list/',
 
     account_users: env.api_domain + 'accounts/users/',
 

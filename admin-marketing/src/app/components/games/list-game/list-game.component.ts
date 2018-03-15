@@ -34,6 +34,8 @@ export class ListGameComponent implements OnInit {
     message_result = ''; // Message error
     errorMessage = '';
 
+    lang: string = 'vi';
+
     constructor(private gameService: GameService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
@@ -60,7 +62,7 @@ export class ListGameComponent implements OnInit {
         Author: Lam
     */
     getGames(){
-        this.gameService.getGames().subscribe(
+        this.gameService.getGames(this.lang).subscribe(
             (data) => {
                 this.games = data;
                 this.length_games = this.games.length;
@@ -143,7 +145,7 @@ export class ListGameComponent implements OnInit {
         Author: Lam
     */
     onDelelteGame(){
-        this.gameService.onDelGameSelect(this.games_del).subscribe(
+        this.gameService.onDelGameSelect(this.games_del, this.lang).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     this.games_del.forEach(function(element) {
@@ -156,6 +158,38 @@ export class ListGameComponent implements OnInit {
                 this.message_result = 'Xóa thành công.';
             }
         );
+    }
+
+     /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.games = null;
+            this.lang = 'vi';
+            this.getGames();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangEN(){
+        $('.custom_table').attr('style', 'height: 640px');
+        if(this.lang === 'vi'){
+            this.games = null;
+            this.lang = 'en';
+            this.getGames();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
     }
 
 }
