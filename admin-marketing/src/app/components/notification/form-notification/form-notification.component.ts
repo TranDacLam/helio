@@ -50,6 +50,7 @@ export class FormNotificationComponent implements OnInit {
     msg_clear_image = ''; // message clear image
 
     api_domain: string = '';
+    lang = 'vi';
 
     constructor(
         private notificationService: NotificationService,
@@ -63,6 +64,11 @@ export class FormNotificationComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
         this.getCategory();
         this.creatForm();
     }
@@ -90,7 +96,7 @@ export class FormNotificationComponent implements OnInit {
         author: Lam
     */ 
     getCategory(): void{
-        this.categoryNotificationService.getCategoryNotifications().subscribe(
+        this.categoryNotificationService.getCategoryNotifications(this.lang).subscribe(
             (data) => {
                 this.categories = data.message;
             },
@@ -136,7 +142,7 @@ export class FormNotificationComponent implements OnInit {
             let noti_form_data = this.convertFormGroupToFormData(this.formNotification);
             let value_form = this.formNotification.value;
             if(this.type_http == 'post'){
-                this.notificationService.addNoti(noti_form_data).subscribe(
+                this.notificationService.addNoti(noti_form_data, this.lang).subscribe(
                     (data) => {
                         this.router.navigate(['/notification/list', { message_post: value_form.subject}]);
                     },
@@ -153,7 +159,7 @@ export class FormNotificationComponent implements OnInit {
                     this.formNotification.get('is_clear_image').setValue(false);
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                 }else{
-                    this.notificationService.updateNoti(noti_form_data, this.noti.id).subscribe(
+                    this.notificationService.updateNoti(noti_form_data, this.noti.id, this.lang).subscribe(
                         (data) => {
                             this.noti = data;
                             if(this.type_http == "put"){
@@ -184,7 +190,7 @@ export class FormNotificationComponent implements OnInit {
     */
     getNotification(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.notificationService.getNotification(id).subscribe(data => {
+        this.notificationService.getNotification(id, this.lang).subscribe(data => {
             this.noti = data;
             this.update_noti.emit(this.noti);
         });
@@ -223,7 +229,7 @@ export class FormNotificationComponent implements OnInit {
     */
     onDelete(): void {
         const id = this.noti.id;
-        this.notificationService.onDelNoti(id).subscribe(
+        this.notificationService.onDelNoti(id, this.lang).subscribe(
             (data) => {
                 this.router.navigate(['/notification/list', { message_del: 'success'}]);
             },

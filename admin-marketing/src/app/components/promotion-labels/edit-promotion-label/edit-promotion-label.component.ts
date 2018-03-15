@@ -26,6 +26,8 @@ export class EditPromotionLabelComponent implements OnInit {
 
     errorMessage = ''; // Messages error
 
+    lang = 'vi';
+
     constructor(
         private promotionLabelService: PromotionLabelService,
         private fb: FormBuilder,
@@ -34,6 +36,11 @@ export class EditPromotionLabelComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
         this.getPromotionLabel();
     }
 
@@ -46,7 +53,7 @@ export class EditPromotionLabelComponent implements OnInit {
     */
     getPromotionLabel(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.promotionLabelService.getPromotionLabel(id).subscribe(
+        this.promotionLabelService.getPromotionLabel(id, this.lang).subscribe(
             (data) => {
                 this.promotion_label = data;
                 this.creatForm();
@@ -77,7 +84,8 @@ export class EditPromotionLabelComponent implements OnInit {
          if(this.formPromotionLabel.invalid){
             ValidateSubmit.validateAllFormFields(this.formPromotionLabel);
         }else{
-            this.promotionLabelService.updatePromotionLabel(this.formPromotionLabel.value, this.promotion_label.id).subscribe(
+            this.promotionLabelService.updatePromotionLabel(this.formPromotionLabel.value, this.promotion_label.id, this.lang)
+                .subscribe(
                 (data) => {
                     this.router.navigate(['/promotion-label/list', { message_post: this.formPromotionLabel.value.name}]);
                 },
@@ -125,7 +133,7 @@ export class EditPromotionLabelComponent implements OnInit {
     */
     onDelete(): void {
         const id = this.promotion_label.id;
-        this.promotionLabelService.onDelPromotionLabel(id).subscribe(
+        this.promotionLabelService.onDelPromotionLabel(id, this.lang).subscribe(
             (data) => {
                 this.router.navigate(['/promotion-label/list', { message_del: 'success'}]);
             }

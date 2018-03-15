@@ -13,6 +13,8 @@ export class EditGameComponent implements OnInit {
 
     game: Game;
 
+    lang = 'vi';
+
     constructor(
         private gameService: GameService,
         private route: ActivatedRoute,
@@ -20,6 +22,11 @@ export class EditGameComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
         this.getGame();
     }
 
@@ -31,7 +38,7 @@ export class EditGameComponent implements OnInit {
     */
     getGame(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.gameService.getGame(id).subscribe(
+        this.gameService.getGame(id, this.lang).subscribe(
             (data) => {
                 this.game = data;
             },
