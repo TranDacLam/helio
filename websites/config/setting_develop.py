@@ -14,13 +14,12 @@ DATABASES = {
     'sql_db': {
         'NAME': 'ECS7',
         'ENGINE': 'sqlserver_pymssql',
-        'HOST': '113.160.225.204:1433',
+        'HOST': '172.16.12.16',
         'USER': 'sa',
-        'PASSWORD': 'vooc2017',
+        'PASSWORD': 'Helio@2017',
         'PORT':1433
     }
 }
-
 gettext = lambda s: s
 LANGUAGES = (
     ('vi', gettext('Vietnamese')),
