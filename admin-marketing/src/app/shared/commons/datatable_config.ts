@@ -28,6 +28,9 @@ export let data_config = function(record) {
             },
             responsive: true,
             pagingType: "full_numbers",
+            columnDefs: [
+                { orderable: false, targets: 0 }
+            ]
         },
         scrollX: true
     };

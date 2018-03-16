@@ -73,7 +73,7 @@ export class ListEventComponent implements OnInit {
                 this.length_events = this.events.length;
             },
             (error) => {
-                if(error.code === 403){
+                if(error.code === 400){
                     this.errorMessage = error.message;
                 }else{
                     this.router.navigate(['/error', { message: error.message}]);
