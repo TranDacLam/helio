@@ -99,7 +99,7 @@
 					</div>
 		        	<div class="col-sm-8">	
 						<div class="input-group">
-			                <input type="text" class="form-control event-date" formControlName="birth_date" name="birth_date" [owlDateTime]="dtBirtday"
+			                <input type="text" class="form-control event-date" formControlName="birth_date" id="birth_date" name="birth_date" [owlDateTime]="dtBirtday"
 			                />         
 			                <owl-date-time [pickerType]="'calendar'"  #dtBirtday></owl-date-time>
 			                <span class="input-group-addon" [owlDateTimeTrigger]="dtBirtday">
