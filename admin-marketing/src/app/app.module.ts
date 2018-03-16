@@ -99,7 +99,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { UserPermissionComponent } from './components/user-permission/user-permission.component';
 import { UserPermissionService } from './shared/services/user-permission.service';
 import { LoginComponent } from './components/login/login.component';
-import { Globals } from './shared/commons/globals';
+import { VariableGlobals } from './shared/commons/variable_globals';
 import { OpenTimeComponent } from './components/open-time/open-time.component';
 import { PromotionReportComponent } from './components/promotions/promotion-report/promotion-report.component';
 
@@ -205,7 +205,7 @@ import { PromotionReportComponent } from './components/promotions/promotion-repo
     DatePipe,
     {provide: RECAPTCHA_LANGUAGE, useValue: 'vi'},
     UserPermissionService,
-    Globals
+    VariableGlobals
   ],
   bootstrap: [AppComponent]
 })

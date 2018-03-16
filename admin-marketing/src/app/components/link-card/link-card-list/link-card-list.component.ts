@@ -51,8 +51,8 @@ export class LinkCardListComponent implements OnInit {
         this.getAllLinkCards();
 
         this.route.params.subscribe(params => {
-            if(params.message){
-                this.message_result = 'Xóa thành công.';
+            if(params.message_del){
+                this.message_result = 'Xóa liên kết thẻ thành công.';
                 setTimeout(()=>{
                     this.message_result = '';
                 },7000);

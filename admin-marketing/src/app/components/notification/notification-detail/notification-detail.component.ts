@@ -4,7 +4,7 @@ import { Notification } from '../../../shared/class/notification';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Globals } from './../../../shared/commons/globals';
+import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import 'rxjs/add/observable/throw';
 
 
@@ -37,7 +37,7 @@ export class NotificationDetailComponent implements OnInit {
         private notificationService: NotificationService, 
         private route: ActivatedRoute,
         private router: Router,
-        private globals: Globals
+        private variable_globals: VariableGlobals
     ) { }
 
     ngOnInit() {
@@ -49,7 +49,7 @@ export class NotificationDetailComponent implements OnInit {
 
         this.getUserNotification();
         setTimeout(()=>{
-            this.user_current = this.globals.user_current;
+            this.user_current = this.variable_globals.user_current;
         },100);
         
     }

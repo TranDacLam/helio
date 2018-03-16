@@ -56,13 +56,13 @@ export class FormPostComponent implements OnInit {
     */ 
     creatForm(): void{
         this.formPost = this.fb.group({
-            name: [this.post.name, Validators.required],
-            image: [this.post.image],
-            short_description: [this.post.short_description, Validators.required],
+            name: [this.post.name, [Validators.required, Validators.maxLength(255)]],
+            image: [this.post.image, [Validators.maxLength(1000)]],
+            short_description: [this.post.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.post.content, Validators.required],
             post_type: [this.post.post_type ? this.post.post_type : '', Validators.required],
             pin_to_top: [this.post.pin_to_top ? this.post.pin_to_top : false],
-            key_query: [this.post.key_query, Validators.required],
+            key_query: [this.post.key_query, [Validators.required, Validators.maxLength(255)]],
             is_clear_image: [false],
             posts_image: [this.post.posts_image]
         });

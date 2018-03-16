@@ -13,21 +13,21 @@
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right" *ngIf="globals.user_current">
+                <ul class="nav navbar-nav navbar-right" *ngIf="variable_globals.user_current">
                     <li class="active">
                         <a href="#">
-                            <ng-container *ngIf="globals.user_current.full_name">
-                                {{globals.user_current.full_name}}
+                            <ng-container *ngIf="variable_globals.user_current.full_name">
+                                {{variable_globals.user_current.full_name}}
                             </ng-container>
-                            <ng-container *ngIf="!globals.user_current.full_name">
-                                {{globals.user_current.email}}
+                            <ng-container *ngIf="!variable_globals.user_current.full_name">
+                                {{variable_globals.user_current.email}}
                             </ng-container>
                         </a>
                     </li>
                     <li class="hidden-xs"><a>/</a></li>
                     <li><a  class="login" (click)="logout()">Logout</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right" *ngIf="!globals.user_current">
+                <ul class="nav navbar-nav navbar-right" *ngIf="!variable_globals.user_current">
                     <li><a routerLink="/login" class="login">Login</a></li>
                 </ul>
             </div>

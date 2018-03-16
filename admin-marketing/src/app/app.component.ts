@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from './shared/class/user';
 import { UserService } from './shared/services/user.service';
-import { Globals } from './shared/commons/globals';
+import { VariableGlobals } from './shared/commons/variable_globals';
 
 
 @Component({
@@ -18,7 +18,7 @@ export class AppComponent {
     constructor(
         private router: Router,
         private userService: UserService,
-        private globals: Globals
+        public variable_globals: VariableGlobals
     ) { 
         this.token = localStorage.getItem('auth_token');
         if(this.token){
@@ -32,7 +32,7 @@ export class AppComponent {
     */
     logout(){
         localStorage.removeItem('auth_token');
-        this.globals.user_current = null;
+        this.variable_globals.user_current = null;
         this.router.navigate(['/login', { message: 'success'}]);
     }
 
@@ -43,7 +43,7 @@ export class AppComponent {
     getUserByToken(value){
         this.userService.getUserByToken(value).subscribe(
             (data) => {
-                this.globals.user_current = data;
+                this.variable_globals.user_current = data;
             },
             (error) => {
                 localStorage.removeItem('auth_token');                    
