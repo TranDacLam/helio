@@ -443,7 +443,7 @@ class Roles_Permission(DateTimeModel):
         ('read', 'Read')
     )
     model_name = models.CharField(max_length=255)
-    role = models.ForeignKey(Roles,related_name='permission_roles_rel' on_delete=models.CASCADE)
+    role = models.ForeignKey(Roles,related_name='permission_roles_rel', on_delete=models.CASCADE)
     permission = models.CharField(max_length=255, choices=PERMISSION) 
 
     def __str__(self):
