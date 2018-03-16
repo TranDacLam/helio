@@ -3,17 +3,17 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item"><a routerLink="/hot-advs-list">Hot Advs</a></li>
-            <li class="breadcrumb-item"><a routerLink="/hot-advs-add">Thêm Hot Advs</a></li>
+            <li class="breadcrumb-item"><a routerLink="/hot-advs-list">Hot Ads</a></li>
+            <li class="breadcrumb-item"><a routerLink="/hot-advs-add">Thêm Hot Ads</a></li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
 <div class='title-hot-advs row'>
-    <a class="pull-left" routerLink="/hot-advs-add">Thêm Hot Advs</a>
+    <a class="pull-left" routerLink="/hot-advs-add">Thêm Hot Ads</a>
 </div>
 <form [formGroup]="formHotAds" enctype="multipart/form-data">
-	<div class="col-md-8">
+	<div class="col-md-12">
 		<div class="form-group row">
 			<div class="col-sm-3">
 				<label class="center-block"> Tên:</label>
@@ -49,9 +49,7 @@
 				<label class="center-block"> Nội Dung:</label>
 			</div>
         	<div class="col-sm-8">	
-				<textarea row="8" class='form-control' name="content" 
-				formControlName="content"
-				></textarea>
+				<ckeditor formControlName="content" [config]="ckEditorConfig"> </ckeditor>
 				<div *ngIf="errorMessage">
 					<p class='errors'> {{ errorMessage.content }} </p>
 				</div>
@@ -65,25 +63,25 @@
         	<div class="col-sm-8">	
 				<div class="row">
 					<div class="col-md-3">
-						<button type="button" class="btn btn-info">Đăng kí</button>
+						<button type="button" class="btn btn-info">Đăng Ký</button>
 					</div>
 					<div class="form-check col-md-3">
 					    <input type="checkbox" class="form-check-input" id="is_register" formControlName="is_register">
-					    <label class="form-check-label" for="is_register">Hiển thị</label>
+					    <label class="form-check-label" for="is_register">Hiển Thị</label>
 					</div>
 					<div class="col-md-3">
-						<button type="button" class='btn btn-success'>Xem chi tiết</button>
+						<button type="button" class='btn btn-success'>Xem Chi Tiết</button>
 					</div>
 					<div class="form-check col-md-3">
 					    <input type="checkbox" class="form-check-input" id="is_view_detail" formControlName="is_view_detail">
-					    <label class="form-check-label" for="is_view_detail">Hiển thị</label>
+					    <label class="form-check-label" for="is_view_detail">Hiển Thị</label>
 					</div>
 				</div>
         	</div>
         </div>
         <div class="form-group row">
 			<div class="col-sm-3">
-				<label class="center-block"> Sub_url button Đăng kí:</label>
+				<label class="center-block"> Sub_url Button Đăng kí:</label>
 			</div>
         	<div class="col-sm-8">	
 				<input class='form-control' name="sub_url_register" 
@@ -97,7 +95,7 @@
         </div>
         <div class="form-group row">
 			<div class="col-sm-3">
-				<label class="center-block"> Sub_url button Xem chi tiết:</label>
+				<label class="center-block"> Sub_url Button Xem Chi Tiết:</label>
 			</div>
         	<div class="col-sm-8">	
 				<input class='form-control' name="sub_url_view_detail" 
@@ -111,11 +109,11 @@
         </div>
         <div class="form-group row">
         	<div class="col-sm-3">
-				<label class="center-block"> Trạng thái:</label>
+				<label class="center-block"> Trạng Thái:</label>
 			</div>
         	<div class="form-check col-sm-8">
 			    <input  formControlName="is_draft" type="checkbox" class="form-check-input" id="is_draft">
-			    <label class="form-check-label" for="is_draft">Is Draf</label>
+			    <label class="form-check-label" for="is_draft">Is Draft</label>
 			</div>
         </div>
 	</div>

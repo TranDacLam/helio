@@ -2,6 +2,7 @@ import { Component,ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { HotAdvs } from '../../../shared/class/hot-advs';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { HotAdvsService } from '../../../shared/services/hot-advs.service';
 
 import { Router } from "@angular/router";
@@ -20,6 +21,8 @@ export class HotAdvsAddComponent implements OnInit {
 
     errorMessage:string = '';
 
+    ckEditorConfig:any;
+
   	constructor(
   		private fb: FormBuilder,
         private hotAdvsService: HotAdvsService,
@@ -28,6 +31,10 @@ export class HotAdvsAddComponent implements OnInit {
 
   	ngOnInit() {
   		this.creatForm();
+        this.ckEditorConfig = {
+            // filebrowserUploadUrl: 'http://127.0.0.1:8000/vi/api/upload_file/'
+
+        };
   	}
 
   	// Create form to add Hot advs
@@ -35,11 +42,11 @@ export class HotAdvsAddComponent implements OnInit {
         this.formHotAds = this.fb.group({
             name: [this.hot_advs_form.name, [Validators.required]],
             content: [this.hot_advs_form.content, [Validators.required]],
-            image: [this.hot_advs_form.image, [Validators.required]],
+            image: [this.hot_advs_form.image],
             is_register: [false],
             is_view_detail: [false],
-            sub_url_register: [this.hot_advs_form.sub_url_register, [Validators.required]],
-            sub_url_view_detail: [this.hot_advs_form.sub_url_view_detail, [Validators.required]],
+            sub_url_register: [this.hot_advs_form.sub_url_register],
+            sub_url_view_detail: [this.hot_advs_form.sub_url_view_detail],
             is_draft: [false],
         });
     }
@@ -61,21 +68,24 @@ export class HotAdvsAddComponent implements OnInit {
     createHotAdvs() {
         var self = this;
         let hotAdvsFormGroup = this.convertFormGroupToFormData(this.formHotAds);
-
-        this.hotAdvsService.CreateHotAdvs(hotAdvsFormGroup).subscribe(
-            (result) => {
-                self.hot_advs.push(result);
-                self.router.navigate(['/hot-advs-list', { message_post: this.formHotAds.value['name']} ])
-            },
-            (error) => {
-                if(error.code == 400) {
-                    self.errorMessage = error.message
-                } else {
-                    this.router.navigate(['/error', { message: error.message }]);
+        if( this.formHotAds.invalid) {
+            ValidateSubmit.validateAllFormFields(this.formHotAds);
+        } else {
+            this.hotAdvsService.CreateHotAdvs(hotAdvsFormGroup).subscribe(
+                (result) => {
+                    self.hot_advs.push(result);
+                    self.router.navigate(['/hot-advs-list', { message_post: this.formHotAds.value['name']} ])
+                },
+                (error) => {
+                    if(error.code == 400) {
+                        self.errorMessage = error.message
+                    } else {
+                        this.router.navigate(['/error', { message: error.message }]);
+                    }
+                    
                 }
-                
-            }
-        )
+            )
+        }
     }
     /*
         Convert form group to form data to submit form

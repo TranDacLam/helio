@@ -6,7 +6,7 @@ import { PromotionService } from '../../../shared/services/promotion.service';
 import { User } from '../../../shared/class/user';
 import { Promotion } from '../../../shared/class/promotion'
 import { env } from '../../../../environments/environment';
-import { Globals } from './../../../shared/commons/globals';
+import { VariableGlobals } from './../../../shared/commons/variable_globals';
 
 declare var bootbox:any;
 declare var $: any;
@@ -33,26 +33,34 @@ export class UserPromotionComponent implements OnInit {
     notification_id: number;
     message_result: string = "";
 
+    lang = 'vi';
+
     constructor(
         private router: Router,
         private route: ActivatedRoute, 
         private promotionService: PromotionService,
-        private globals: Globals
+        private variable_globals: VariableGlobals
     ) { 
         this.api_domain = env.api_domain_root;
     }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
+
     	this.getUsersPromotion();
         setTimeout(()=>{
-            this.user_current = this.globals.user_current;
+            this.user_current = this.variable_globals.user_current;
         },100);
     }
 
     getUsersPromotion(){
         const promotion_id = +this.route.snapshot.paramMap.get('id');
 
-        this.promotionService.getUsersPromotion(promotion_id).subscribe(
+        this.promotionService.getUsersPromotion(promotion_id, this.lang).subscribe(
             (data)=> {
                 this.notification_id = data.notification_id;
                 this.promotion = data.promotion_detail;
@@ -86,7 +94,7 @@ export class UserPromotionComponent implements OnInit {
 
     updateUser(list_user_id){
         const promotion_id = +this.route.snapshot.paramMap.get('id');
-        this.promotionService.updateUserPromotion(promotion_id, list_user_id).subscribe(
+        this.promotionService.updateUserPromotion(promotion_id, list_user_id, this.lang).subscribe(
             (data)=> {
                 if (data.status == 204) {
                     this.message_result = "Lưu thành công"

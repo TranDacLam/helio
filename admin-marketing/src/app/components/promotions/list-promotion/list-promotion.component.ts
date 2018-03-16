@@ -43,12 +43,12 @@ export class ListPromotionComponent implements OnInit {
     message_result: string = "";
 
     api_domain:string = "";
+    lang: string = 'vi';
 
     /*
         Using trigger becase fetching the list of feedbacks can be quite long
         thus we ensure the data is fetched before rensering
     */ 
-    dtTrigger: Subject<any> = new Subject();
 
     constructor(
         private promotionService: PromotionService,
@@ -74,11 +74,10 @@ export class ListPromotionComponent implements OnInit {
         @author: diemnguyen 
     */
     getAllPromotion() {
-        this.promotionService.getAllPromotion().subscribe(
+        this.promotionService.getAllPromotion(this.lang).subscribe(
             (data) => {
                 this.promotion_list = data;
                 this.length_all = data.length;
-                this.dtTrigger.next();
             }, 
             (error) => {
                 this.router.navigate(['/error']);
@@ -176,7 +175,7 @@ export class ListPromotionComponent implements OnInit {
             let list_id_selected = dtInstance.cells('.selected', 1).data().toArray();
 
             // Call API remove list promotion selected
-            this.promotionService.deletePromotionList(list_id_selected).subscribe(
+            this.promotionService.deletePromotionList(list_id_selected, this.lang).subscribe(
                 (data) => {
                     if (data.status == 204) {
                         this.message_result = "Xóa "+ this.length_selected + " khuyến mãi thành công"
@@ -196,5 +195,36 @@ export class ListPromotionComponent implements OnInit {
         });
     }
 
+    /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.promotion_list = null;
+            this.lang = 'vi';
+            this.getAllPromotion();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangEN(){
+        if(this.lang === 'vi'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.promotion_list = null;
+            this.lang = 'en';
+            this.getAllPromotion();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
 
 }

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Denomination } from '../../../shared/class/denomination';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 
 import { DenominationService } from '../../../shared/services/denomination.service';
 import { Router } from "@angular/router";
@@ -19,7 +20,7 @@ export class DenominationAddComponent implements OnInit {
     errorMessage: string;
     
     denoForm: FormGroup;
-    data:any;
+    data:string='';
     
     constructor(
         private router: Router,
@@ -42,24 +43,29 @@ export class DenominationAddComponent implements OnInit {
         @author: Trangle
     */
     addDenomination(denomination:any) {
-        var denoArr = [];
-        let denomi = this.convert_format_currency(this.data);
-        denomination.denomination = denomi
-        denoArr.push(denomination);
+        if (this.denoForm.invalid) {
+            ValidateSubmit.validateAllFormFields(this.denoForm);
+        } else {
+            var denoArr = [];
+            let denomi = this.convert_format_currency(this.data);
+            denomination.denomination = denomi
+            denoArr.push(denomination);
 
-        this.denominationService.createDenomination(denomination)
-        .subscribe(
-            (denomination) => {
-                this.denominations.push(denomination); 
-                this.router.navigate(['/denomination-list', { message_post: this.data} ])   
-            },
-            (error) =>  {
-                if(error.status == 400) {
-                    this.errorMessage = error.json().denomination[0];
-                } else {
-                    this.router.navigate(['/error', { message: error.json().message }]);
+            this.denominationService.createDenomination(denomination)
+            .subscribe(
+                (denomination) => {
+                    this.denominations.push(denomination); 
+                    this.router.navigate(['/denomination-list', { message_post: this.data} ])   
+                },
+                (error) =>  {
+                    if(error.status == 400) {
+                        this.errorMessage = error.json().denomination[0];
+                    } else {
+                        this.router.navigate(['/error', { message: error.json().message }]);
+                    }
                 }
-            })
+            )
+        }
     }
     /* 
         Return errorMessage = '', when click input tag 

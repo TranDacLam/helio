@@ -75,7 +75,7 @@ export class EditFaqComponent implements OnInit {
     */ 
     creatForm(): void{
         this.formFaq = this.fb.group({
-            question: [this.faq.question, Validators.required],
+            question: [this.faq.question, [Validators.required, Validators.maxLength(255)]],
             answer: [this.faq.answer, Validators.required],
             category: [this.faq.category ? this.faq.category : '', Validators.required],
         });
@@ -86,7 +86,7 @@ export class EditFaqComponent implements OnInit {
         @author: Lam
     */ 
     getCategories(): void{
-        this.categoryService.getAllCategory(this.lang).subscribe(
+        this.categoryService.getAllCategory().subscribe(
             (data) => {
                 this.categories = data;
             },
@@ -130,7 +130,7 @@ export class EditFaqComponent implements OnInit {
         let that = this;
         bootbox.confirm({
             title: "Bạn có chắc chắn",
-            message: "Bạn muốn xóa sự kiện này?",
+            message: "Bạn muốn xóa câu hỏi thường gặp này?",
             buttons: {
                 cancel: {
                     label: "Hủy"

@@ -2,14 +2,16 @@ import { env } from '../../../environments/environment';
 
 export const api = {
     /* URL Promotion Detail Page*/
-    promotion: env.api_domain + 'promotion/',
+    promotion: 'promotion_detail/',
     /* URL Promotion List ( GET, DELETE list promotion )*/
-    promotion_list: env.api_domain + 'promotion_list/',
+    promotion_list: 'promotion_list/',
     /* URL User Promotion ( GET, PUT list promotion )*/
-    user_promotion: env.api_domain + 'user_promotion/',
-    notification: 'notification/',
+    user_promotion: 'user_promotion/',
+
+    notification: 'notification_detail/',
     user_notification: 'user_notification/',
     notification_list: 'notification_list/',
+
     user: env.api_domain + 'user/',
     user_embed: env.api_domain + 'user_embed/',
     relate: env.api_domain + 'relate/',
@@ -26,8 +28,9 @@ export const api = {
 
     hot_advs: env.api_domain + 'hot_advs/',
 
-    promotion_label: 'promotion_label/',
+    promotion_label: 'promotion_label_detail/',
     promotion_label_list: 'promotion_label_list/',
+
     promotion_type: env.api_domain + 'promotion-type/',
 
 
@@ -37,20 +40,20 @@ export const api = {
 
     category_notifications: 'category_notifications/',
 
-    hot: 'hot/',
+    hot: 'hot_detail/',
     hot_list: 'hot_list/',
 
-    post: env.api_domain + 'post/',
+    post: env.api_domain + 'post_detail/',
     post_list: env.api_domain + 'post_list/',
 
-    event: 'event/',
 
+    event: 'event_detail/',
     event_list: 'event_list/',
 
     /* URL generator QR Code from Promotion ID ( POST )*/
     generator_QR_code: env.api_domain + 'generator_QR_code/',
     /* Get All Category */
-    category_list: 'category_list/',
+    category_list: env.api_domain + 'category_list/',
     post_type_list: env.api_domain +'post_type_list/',
     login: env.api_domain +'accounts/login/',
 
@@ -62,11 +65,10 @@ export const api = {
 
     role: env.api_domain + 'role/',
 
-    faq: 'faq/',
-
+    faq: 'faq_detail/',
     faq_list: 'faq_list/',
 
-    game: 'game/',
+    game: 'game_detail/',
 
     game_list: 'game_list/',
 

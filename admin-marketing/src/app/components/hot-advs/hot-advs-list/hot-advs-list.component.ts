@@ -24,6 +24,8 @@ export class HotAdvsListComponent implements OnInit {
 
 	hot_advs : HotAdvs [];
 
+    checkbox:boolean = false;
+
   	message_result:string = ''; // Message result
 
     record: String = "Hot Advs";
@@ -79,14 +81,16 @@ export class HotAdvsListComponent implements OnInit {
         if(event.target.checked){
             this.hot_advs.forEach(function(element) {
                 array_del.push(element.id);
-                $('#'+element.id).prop('checked', true);
+                // $('#'+element.id).prop('checked', true);
             });
+            this.checkbox = true;
             this.hot_adv_selected = array_del;
             this.message_result = "";
         }else{
+            this.checkbox = false
             this.hot_advs.forEach((item, index) => {
         		this.hot_adv_selected.splice(index, this.hot_advs.length);
-                $('#'+item.id).prop('checked', false);
+                // $('#'+item.id).prop('checked', false);
      		});
         }
     }

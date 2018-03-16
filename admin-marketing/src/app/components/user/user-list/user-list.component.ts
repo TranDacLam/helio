@@ -24,6 +24,8 @@ export class UserListComponent implements OnInit {
 
 	user_selected: any;
 
+    checkbox:boolean = false;
+
   	message_result: string = ''; // Message result
     record: string = "User";
 
@@ -97,13 +99,15 @@ export class UserListComponent implements OnInit {
         if(event.target.checked){
             this.users.forEach(function(element) {
                 array_del.push(element.id);
-                $('#check_'+element.id).prop('checked', true);
+                // $('#check_'+element.id).prop('checked', true);
             });
+            this.checkbox = true;
             this.user_selected = array_del;
             this.message_result = "";
         }else{
+            this.checkbox = false;
             this.users.forEach((item, index) => {
-                $('#check_'+item.id).prop('checked', false);
+                // $('#check_'+item.id).prop('checked', false);
         		this.user_selected.splice(index, this.users.length);
      		});
         }

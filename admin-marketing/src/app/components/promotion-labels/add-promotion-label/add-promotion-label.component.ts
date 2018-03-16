@@ -49,7 +49,7 @@ export class AddPromotionLabelComponent implements OnInit {
     */ 
     creatForm(): void{
         this.formPromotionLabel = this.fb.group({
-            name: [this.promotion_label.name, Validators.required]
+            name: [this.promotion_label.name, [Validators.required, Validators.maxLength(255)]]
         });
     }
 

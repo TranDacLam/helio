@@ -34,7 +34,7 @@ export class FaqService {
     }
 
     getFaq(id: number, lang): Observable<any>{
-        const url_getFaq = `${env.api_domain_root}/${lang}/api/${api.faq}${id}`;
+        const url_getFaq = `${env.api_domain_root}/${lang}/api/${api.faq}${id}/`;
         return this.http.get(url_getFaq, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 

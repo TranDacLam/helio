@@ -33,7 +33,7 @@
     	<tbody>
    			<tr *ngFor ="let denomination of denominations" id="delete{{denomination.id}}">
    				<td><input type="checkbox" id={{denomination.id}}
-   					value={{denomination.id}} name=""
+   					value={{denomination.id}} name="" [checked]="checkbox"
    					(change)="checkItemChange($event, denomination)"/></td>
         		<td>{{ denomination.denomination | number }}</td>
    			</tr>

@@ -30,7 +30,7 @@ export class NotificationService {
         author: Lam
     */
     getNotification(id: number, lang): Observable<any> {
-        const url_getNotification = `${env.api_domain_root}/${lang}/api/${api.notification}${id}`;
+        const url_getNotification = `${env.api_domain_root}/${lang}/api/${api.notification}${id}/`;
         return this.http.get(url_getNotification, this.httpOptions).map((res: Response) => res.json())
             .catch(this.handleError);
     }
@@ -131,7 +131,7 @@ export class NotificationService {
         author: Lam
     */
     getUserNotification(id, lang): Observable<any> {
-        const url_getUserNotification = `${env.api_domain_root}/${lang}/api/${api.user_notification}${id}`;
+        const url_getUserNotification = `${env.api_domain_root}/${lang}/api/${api.user_notification}${id}/`;
         return this.http.get(url_getUserNotification, this.httpOptions).map((res: Response) => res.json())
             .catch(this.handleError);
     }

@@ -36,6 +36,7 @@ export class FormNotificationComponent implements OnInit {
     @Input() noti: Notification; // Get notification from component parent
     @Input() type_http; // Get type http from component parent
     @Input() promotion_id; // Get type http from component parent
+    @Input() lang_promotion; // Get lang from component parent
     
     // Return 1 object to parent
     @Output() update_noti: EventEmitter<Notification> = new EventEmitter<Notification>();
@@ -69,6 +70,8 @@ export class FormNotificationComponent implements OnInit {
                 this.lang = params.lang;
             }
         });
+        this.lang = this.lang_promotion ? this.lang_promotion : this.lang;
+
         this.getCategory();
         this.creatForm();
     }
@@ -79,13 +82,13 @@ export class FormNotificationComponent implements OnInit {
     */ 
     creatForm(): void{
         this.formNotification = this.fb.group({
-            subject: [this.noti.subject, [Validators.required]],
+            subject: [this.noti.subject, [Validators.required, Validators.maxLength(255)]],
             message: [this.noti.message],
-            image: [this.noti.image],
-            sub_url: [this.noti.sub_url, Validators.required],
+            image: [this.noti.image, [Validators.maxLength(1000)]],
+            sub_url: [this.noti.sub_url, [Validators.required, Validators.maxLength(255)]],
             category: [this.noti.category ? this.noti.category : '', Validators.required],
             is_QR_code: [this.noti.is_QR_code ? this.noti.is_QR_code : false],
-            location: [this.noti.location],
+            location: [this.noti.location, [Validators.maxLength(500)]],
             is_clear_image: [false],
             promotion_id: [this.promotion_id ? this.promotion_id : null]
         });

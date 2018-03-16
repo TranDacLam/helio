@@ -53,11 +53,11 @@ export class ListEventComponent implements OnInit {
         */
         this.route.params.subscribe(params => {
             if(params.message_put){
-                this.message_result = `${message.edit} ${params.message_put} ${message.success}`;
+                this.message_result = `${message.edit} "${params.message_put}" ${message.success}`;
             }else if(params.message_post){
-                this.message_result = `${message.create_new} ${params.message_post} ${message.success}`;
+                this.message_result = `${message.create_new} "${params.message_post}" ${message.success}`;
             }else if(params.message_del){
-                this.message_result = 'Xóa thành công.';
+                this.message_result = 'Xóa sự kiện thành công.';
             }
         });
     }
@@ -121,7 +121,7 @@ export class ListEventComponent implements OnInit {
         if ( this.events_del.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.events_del.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.events_del.length + " sự kiện đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -138,7 +138,7 @@ export class ListEventComponent implements OnInit {
             });
 
         } else  {
-            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+            bootbox.alert("Vui lòng chọn sự kiện cần xóa");
         }
         
     }
@@ -156,11 +156,12 @@ export class ListEventComponent implements OnInit {
                     this.events_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.message_result = 'Xóa '+ this.events_del.length +' sự kiện thành công.';
                     this.length_events = this.length_events - this.events_del.length;
                     this.events_del = [];
                 });
                 this.select_checked = false;
-                this.message_result = 'Xóa thành công.';
+                this.errorMessage = '';
             }
         );
     }

@@ -23,12 +23,19 @@ export class EditPromotionComponent implements OnInit {
 
     promotion: Promotion;
 
+    lang = 'vi';
+
     constructor(
         private promotionService: PromotionService, 
         private route: ActivatedRoute
     ) { }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
         this.getPromotion();
     }
 
@@ -38,7 +45,7 @@ export class EditPromotionComponent implements OnInit {
     */
     getPromotion() {
         const id = +this.route.snapshot.paramMap.get('id');
-        this.promotionService.getPromotionById(id).subscribe((data) => {
+        this.promotionService.getPromotionById(id, this.lang).subscribe((data) => {
             this.promotion = data;
         }, (error) => {
         

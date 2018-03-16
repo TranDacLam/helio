@@ -25,7 +25,6 @@
                         <div class="col-sm-8">
                 			<input class='form-control' name="name" 
                 			formControlName="name"
-                            [(ngModel)]="feedback.name"
                             [readonly]="true"
                 			>
                         </div>
@@ -37,7 +36,6 @@
                         <div class='col-sm-8'>
                             <input class='form-control' name="email" 
                             formControlName="email"
-                            [(ngModel)]="feedback.email"
                             [readonly]="true">
                         </div>
                     </div>
@@ -48,7 +46,6 @@
                         <div class="col-sm-8">
                             <input class='form-control' name="phone" 
                             formControlName="phone"
-                            [(ngModel)]="feedback.phone"
                             [readonly]="true"
                             >
                         </div>
@@ -61,7 +58,7 @@
                             <textarea rows=3 class='form-control' name="subject" 
                             formControlName="subject"
                             [readonly]="true"
-                            [(ngModel)]="feedback.subject">
+                            >
                             </textarea> 
                         </div>
                     </div>
@@ -73,7 +70,7 @@
                             <textarea rows=3 class='form-control' name="message" 
                             formControlName="message"
                             [readonly]="true"
-                            [(ngModel)]="feedback.message">
+                            >
                             </textarea> 
                         </div>
                     </div>
@@ -85,7 +82,7 @@
                              <input  class='form-control' name="feedback_type" 
                             formControlName="feedback_type"
                             [readonly]="true"
-                            [(ngModel)]="feedback.feedback_type">
+                            >
                         </div>
                     </div>
                     <div class="form-group row">
@@ -96,7 +93,6 @@
                            <input type='date' class='form-control' name="sent_date" 
                             formControlName="sent_date"
                             [readonly]="true"
-                            [(ngModel)]="feedback.sent_date"
                             > 
                         </div>
                     </div>
@@ -108,7 +104,6 @@
                             <input class='form-control' name="rate" 
                             formControlName="rate"
                             [readonly]="true"
-                            [(ngModel)]="feedback.rate"
                             >
                         </div> 
                     </div>
@@ -118,7 +113,7 @@
                         </div>
                         <div class="col-md-8">
                             <select class='form-control' name="status" 
-                            formControlName="status" [(ngModel)]="feedback.status">
+                            formControlName="status">
                                 <option *ngFor="let status of status" [ngValue]="status" [selected]="status === feedback.status">
                                     {{status}}
                                 </option>
@@ -132,16 +127,15 @@
                         <div class="col-md-8">
                              <textarea rows=5 class='form-control' name="answer" 
                             formControlName="answer"
-                            [(ngModel)]="feedback.answer"
                             >
                             </textarea>
                             <show-error-valid [control]="feedbackForm.get('answer')"></show-error-valid>
+                            <div *ngIf="errorMessage">
+                                <em [ngStyle]="{'color': 'red'}">
+                                    {{ errorMessage.answer}}
+                                </em>
+                            </div>
                         </div>
-                    </div>
-                    <div *ngIf="errorMessage">
-                        <em [ngStyle]="{'color': 'red'}">
-                            {{errorMessage}}
-                        </em>
                     </div>
                 </div>
             </div>

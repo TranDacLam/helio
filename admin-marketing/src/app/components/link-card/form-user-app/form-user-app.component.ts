@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../../shared/class/user';
 import { LinkCardService } from '../../../shared/services/link-card.service';
 import { DateValidators } from './../../../shared/validators/date-validators';
@@ -34,7 +35,11 @@ export class FormUserAppComponent implements OnInit {
 
     errorMessage = '';
 
-    constructor(private fb: FormBuilder, private linkCardService: LinkCardService) { }
+    constructor(
+        private fb: FormBuilder, 
+        private linkCardService: LinkCardService,
+        private router: Router
+    ) { }
 
     ngOnInit() {;
         this.userAppForm();
@@ -106,8 +111,12 @@ export class FormUserAppComponent implements OnInit {
                     this.msg_error = null;
                 },
                 (error) => {
-                    this.msg_error = error.message;
-                    this.msg_success = '';
+                    if(error.code === 400){
+                        this.msg_error = error.message;
+                        this.msg_success = '';
+                    }else{
+                        this.router.navigate(['/error', { message: error.message}]);
+                    }
                 }
             );
         }

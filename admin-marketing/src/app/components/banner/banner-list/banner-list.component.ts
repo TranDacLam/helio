@@ -23,9 +23,13 @@ export class BannerListComponent implements OnInit {
     banners: Banner[];
 
     banner_del: any;
+    // length_banners: number;
 
+    checkbox:boolean = false;
     message_result: string = ""; // Display message result
     errorMessage: string; // Show error from server
+    lang: string = 'vi';
+
     record: string ="Banner";
 
     // Inject the DataTableDirective into the dtElement property
@@ -35,7 +39,7 @@ export class BannerListComponent implements OnInit {
 
      // Using trigger becase fetching the list of banners can be quite long
 	// thus we ensure the data is fetched before rensering
-	dtTrigger: Subject<any> = new Subject();
+	// dtTrigger: Subject<any> = new Subject();
 
      constructor(
         private route: ActivatedRoute,
@@ -72,7 +76,8 @@ export class BannerListComponent implements OnInit {
         this.bannerService.getAllBanner().subscribe(
             (result) => {
                 this.banners = result;
-                this.dtTrigger.next(); 
+                // this.length_banners = this.banners.length;
+                // this.dtTrigger.next(); 
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.json().message }])
@@ -92,13 +97,15 @@ export class BannerListComponent implements OnInit {
         if(event.target.checked){
             this.banners.forEach(function(element) {
                 arr_del.push(element.id);
-                $('#' + element.id).prop('checked', true);
+                // $('#' + element.id).prop('checked', true);
             });
+            this.checkbox = true;
             this.banner_del = arr_del;
             this.message_result = "";
         }else{
+            this.checkbox = false;
             this.banners.forEach((item, index) => {
-                $('#'+ item.id).prop('checked', false);
+                // $('#'+ item.id).prop('checked', false);
                 this.banner_del.splice(index, this.banners.length);
             });
         }
@@ -179,5 +186,38 @@ export class BannerListComponent implements OnInit {
                this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
                }
           );  
-     }  
+    }
+
+     /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            $('.custom-table').attr('style', 'height: 640px');
+            this.banners = null;
+            this.lang = 'vi';
+            this.getAllBanners();
+            setTimeout(()=>{
+                $('.custom-table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangEN(){
+        if(this.lang === 'vi'){
+            $('.custom-table').attr('style', 'height: 640px');
+            this.banners = null;
+            this.lang = 'en';
+            this.getAllBanners();
+            setTimeout(()=>{
+                $('.custom-table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+  
 }

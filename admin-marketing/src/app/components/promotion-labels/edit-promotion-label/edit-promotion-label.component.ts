@@ -70,7 +70,7 @@ export class EditPromotionLabelComponent implements OnInit {
     */ 
     creatForm(): void{
         this.formPromotionLabel = this.fb.group({
-            name: [this.promotion_label.name, Validators.required]
+            name: [this.promotion_label.name, [Validators.required, Validators.maxLength(255)]]
         });
     }
 
@@ -87,7 +87,7 @@ export class EditPromotionLabelComponent implements OnInit {
             this.promotionLabelService.updatePromotionLabel(this.formPromotionLabel.value, this.promotion_label.id, this.lang)
                 .subscribe(
                 (data) => {
-                    this.router.navigate(['/promotion-label/list', { message_post: this.formPromotionLabel.value.name}]);
+                    this.router.navigate(['/promotion-label/list', { message_put: this.formPromotionLabel.value.name}]);
                 },
                 (error) => {
                     if(error.code === 400){
