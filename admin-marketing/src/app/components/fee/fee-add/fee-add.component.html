@@ -17,7 +17,7 @@
 	        </div>
 	        <div class="col-sm-2">
 	            <input type="number" class="form-control no-arrow" formControlName="fee"
-					[(ngModel)]='fee' required pattern="\d*">
+					required pattern="\d*">
 
 				<div *ngIf="(feeAddForm.controls.fee.pristine && submitted)" class="feeAddForm_error" >
 					Fee is required.
