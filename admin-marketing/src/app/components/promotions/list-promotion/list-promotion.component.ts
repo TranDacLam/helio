@@ -31,7 +31,7 @@ declare var $: any;
 export class ListPromotionComponent implements OnInit {
     dtOptions: any = {};
 
-	promotion_list: Promotion[] = [];
+	promotion_list: Promotion[];
 
 
     @ViewChild(DataTableDirective)
