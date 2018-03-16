@@ -29,6 +29,8 @@ export class EditFaqComponent implements OnInit {
 
     errorMessage: any; // Messages error
 
+    lang = 'vi';
+
     constructor(
         private faqService: FaqService,
         private fb: FormBuilder,
@@ -38,6 +40,11 @@ export class EditFaqComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
         this.getFaq();
         this.getCategories();
     }
@@ -51,7 +58,7 @@ export class EditFaqComponent implements OnInit {
     */
     getFaq(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.faqService.getFaq(id).subscribe(
+        this.faqService.getFaq(id, this.lang).subscribe(
             (data) => {
                 this.faq = data;
                 this.creatForm();
@@ -68,7 +75,7 @@ export class EditFaqComponent implements OnInit {
     */ 
     creatForm(): void{
         this.formFaq = this.fb.group({
-            question: [this.faq.question, Validators.required],
+            question: [this.faq.question, [Validators.required, Validators.maxLength(255)]],
             answer: [this.faq.answer, Validators.required],
             category: [this.faq.category ? this.faq.category : '', Validators.required],
         });
@@ -100,7 +107,7 @@ export class EditFaqComponent implements OnInit {
             ValidateSubmit.validateAllFormFields(this.formFaq);
         }else{
             this.formFaq.value.category = parseInt(this.formFaq.value.category);
-            this.faqService.updateFaq(this.formFaq.value, this.faq.id).subscribe(
+            this.faqService.updateFaq(this.formFaq.value, this.faq.id, this.lang).subscribe(
                 (data) => {
                     this.router.navigate(['/faq/list', { message_put: this.formFaq.value.question}]);
                 },
@@ -123,7 +130,7 @@ export class EditFaqComponent implements OnInit {
         let that = this;
         bootbox.confirm({
             title: "Bạn có chắc chắn",
-            message: "Bạn muốn xóa sự kiện này?",
+            message: "Bạn muốn xóa câu hỏi thường gặp này?",
             buttons: {
                 cancel: {
                     label: "Hủy"
@@ -148,7 +155,7 @@ export class EditFaqComponent implements OnInit {
     */
     onDelete(): void {
         const id = this.faq.id;
-        this.faqService.onDelFaq(id).subscribe(
+        this.faqService.onDelFaq(id, this.lang).subscribe(
             (data) => {
                 this.router.navigate(['/faq/list', { message_del: 'success'}]);
             },

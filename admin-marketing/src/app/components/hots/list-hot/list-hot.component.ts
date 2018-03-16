@@ -34,6 +34,8 @@ export class ListHotComponent implements OnInit {
     message_result = ''; // Message error
     errorMessage = '';
 
+    lang: string = 'vi';
+
     constructor(private hotService: HotService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
@@ -46,11 +48,11 @@ export class ListHotComponent implements OnInit {
         */
         this.route.params.subscribe(params => {
             if(params.message_put){
-                this.message_result = `${message.edit} ${params.message_put} ${message.success}`;
+                this.message_result = `${message.edit} "${params.message_put}" ${message.success}`;
             }else if(params.message_post){
-                this.message_result = `${message.create_new} ${params.message_post} ${message.success}`;
+                this.message_result = `${message.create_new} "${params.message_post}" ${message.success}`;
             }else if(params.message_del){
-                this.message_result = 'Xóa thành công.';
+                this.message_result = 'Xóa Hot thành công.';
             }
         });
     }
@@ -60,7 +62,7 @@ export class ListHotComponent implements OnInit {
         Author: Lam
     */
     getHots(){
-        this.hotService.getHots().subscribe(
+        this.hotService.getHots(this.lang).subscribe(
             (data) => {
                 this.hots = data;
                 this.length_hots = this.hots.length;
@@ -115,7 +117,7 @@ export class ListHotComponent implements OnInit {
         if ( this.hots_del.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.hots_del.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.hots_del.length + " Hot đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -132,7 +134,7 @@ export class ListHotComponent implements OnInit {
             });
 
         } else  {
-            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+            bootbox.alert("Vui lòng chọn Hot cần xóa");
         }
         
     }
@@ -144,18 +146,51 @@ export class ListHotComponent implements OnInit {
         Author: Lam
     */
     onDeleteHot(){
-        this.hotService.onDelHotSelect(this.hots_del).subscribe(
+        this.hotService.onDelHotSelect(this.hots_del, this.lang).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     this.hots_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.message_result = 'Xóa '+ this.hots_del.length +' Hot thành công.';
                     this.length_hots = this.length_hots - this.hots_del.length;
                     this.hots_del = [];
                 });
                 this.select_checked = false;
-                this.message_result = 'Xóa thành công.';
+                this.errorMessage  = '';
             }
         );
+    }
+
+    /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.hots = null;
+            this.lang = 'vi';
+            this.getHots();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangEN(){
+        if(this.lang === 'vi'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.hots = null;
+            this.lang = 'en';
+            this.getHots();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
     }
 }

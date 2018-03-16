@@ -50,6 +50,8 @@ export class PromotionFormComponent implements OnInit {
     errors: any = "";
     apply_date: Date = new Date();
 
+    lang = 'vi';
+
     constructor(
         private promotionService: PromotionService,
         private categoryService: CategoryService,
@@ -65,7 +67,11 @@ export class PromotionFormComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
 
         this.getAllCategory();
         this.getPromotionTypes();
@@ -85,10 +91,10 @@ export class PromotionFormComponent implements OnInit {
     private creatPromotionForm(): void {
         this.promotionForm = this.fb.group({
             id: [this.promotion.id],
-            name: [this.promotion.name, [Validators.required]],
-            image: [this.promotion.image],
-            image_thumbnail: [this.promotion.image_thumbnail],
-            short_description: [this.promotion.short_description, [Validators.required]],
+            name: [this.promotion.name, [Validators.required, Validators.maxLength(255)]],
+            image: [this.promotion.image, [Validators.maxLength(1000)]],
+            image_thumbnail: [this.promotion.image_thumbnail, [Validators.maxLength(1000)]],
+            short_description: [this.promotion.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.promotion.content, [Validators.required]],
             promotion_category: [this.promotion.promotion_category ? this.promotion.promotion_category : ''],
             promotion_label: [this.promotion.promotion_label ? this.promotion.promotion_label : ''],
@@ -136,7 +142,7 @@ export class PromotionFormComponent implements OnInit {
         @author: diemnguyen
     */ 
     getPromotionLabels(): void{
-        this.promotionLabelService.getPromotionLabels().subscribe(
+        this.promotionLabelService.getPromotionLabels(this.lang).subscribe(
             (data) => {
                 this.promotionLabels = data;
             },
@@ -178,7 +184,7 @@ export class PromotionFormComponent implements OnInit {
                 Case 1: Promotion id is null then call save service
             */
             if(this.promotion.id) {
-                this.promotionService.updatePromotion(promotionFormData, this.promotion.id).subscribe(
+                this.promotionService.updatePromotion(promotionFormData, this.promotion.id, this.lang).subscribe(
                     (data) => {
                         // Navigate to promotion page where success
                         that.router.navigate(['/promotions', {'action': 'Sửa "', 'promotion_name': this.promotionForm.value['name']}]);
@@ -192,7 +198,7 @@ export class PromotionFormComponent implements OnInit {
                     }
                 );
             } else {
-                this.promotionService.savePromotion(promotionFormData).subscribe(
+                this.promotionService.savePromotion(promotionFormData, this.lang).subscribe(
                     (data) => {
                         // Navigate to promotion page where success
                         that.router.navigate(['/promotions', {'action': 'Tạo mới "', 'promotion_name': this.promotionForm.value['name']}]);
@@ -234,7 +240,7 @@ export class PromotionFormComponent implements OnInit {
                 callback: function (result) {
                     if(result) {
                         // Call service delete promotion by id
-                        that.promotionService.deletePromotionById(id).subscribe(
+                        that.promotionService.deletePromotionById(id, that.lang).subscribe(
                             (data) => {
                                 that.router.navigate(['/promotions', {'action': 'Xóa "', 'promotion_name': that.promotion.name}]);
                             }, 

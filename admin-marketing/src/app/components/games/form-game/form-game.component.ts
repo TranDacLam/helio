@@ -34,6 +34,7 @@ export class FormGameComponent implements OnInit {
     msg_clear_image = '';
 
     api_domain: string = '';
+    lang = 'vi';
 
     constructor(
         private gameService: GameService,
@@ -48,6 +49,11 @@ export class FormGameComponent implements OnInit {
 
     ngOnInit() {
         this.creatForm();
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
         this.getTypes();
     }
 
@@ -57,9 +63,9 @@ export class FormGameComponent implements OnInit {
     */ 
     creatForm(): void{
         this.formGame = this.fb.group({
-            name: [this.game.name, Validators.required],
-            image: [this.game.image],
-            short_description: [this.game.short_description, Validators.required],
+            name: [this.game.name, [Validators.required, Validators.maxLength(255)]],
+            image: [this.game.image, [Validators.maxLength(1000)]],
+            short_description: [this.game.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.game.content, Validators.required],
             game_type: [this.game.game_type ? this.game.game_type : '', Validators.required],
             is_draft: [this.game.is_draft],
@@ -72,7 +78,7 @@ export class FormGameComponent implements OnInit {
         @author: Lam
     */ 
     getTypes(): void{
-        this.typeService.getTypes().subscribe(
+        this.typeService.getTypes(this.lang).subscribe(
             (data) => {
                 this.types = data;
             },
@@ -116,7 +122,7 @@ export class FormGameComponent implements OnInit {
             let game_form_data = this.convertFormGroupToFormData(this.formGame);
             let value_form = this.formGame.value;
             if(!this.game.id){
-                this.gameService.addGame(game_form_data).subscribe(
+                this.gameService.addGame(game_form_data, this.lang).subscribe(
                     (data) => {
                         this.router.navigate(['/game/list', { message_post: value_form.name}]);
                     },
@@ -129,7 +135,7 @@ export class FormGameComponent implements OnInit {
                     this.formGame.get('is_clear_image').setValue(false);
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                 }else{
-                    this.gameService.updateGame(game_form_data, this.game.id).subscribe(
+                    this.gameService.updateGame(game_form_data, this.game.id, this.lang).subscribe(
                         (data) => {
                             this.game = data;
                             this.router.navigate(['/game/list', { message_put: value_form.name}]);
@@ -152,7 +158,7 @@ export class FormGameComponent implements OnInit {
         let that = this;
         bootbox.confirm({
             title: "Bạn có chắc chắn",
-            message: "Bạn muốn xóa sự kiện này?",
+            message: "Bạn muốn xóa trò chơi này?",
             buttons: {
                 cancel: {
                     label: "Hủy"
@@ -177,7 +183,7 @@ export class FormGameComponent implements OnInit {
     */
     onDelete(): void {
         const id = this.game.id;
-        this.gameService.onDelGame(id).subscribe(
+        this.gameService.onDelGame(id, this.lang).subscribe(
             (data) => {
                 this.router.navigate(['/game/list', { message_del: 'success'}]);
             },

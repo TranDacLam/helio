@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PromotionLabel } from '../../../shared/class/promotion-label';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
@@ -25,14 +25,22 @@ export class AddPromotionLabelComponent implements OnInit {
 
     errorMessage: any; // Messages error
 
+    lang = 'vi';
+
     constructor(
         private promotionLabelService: PromotionLabelService,
         private fb: FormBuilder,
         private router: Router,
+        private route: ActivatedRoute
     ) { }
 
     ngOnInit() {
         this.creatForm();
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
     }
 
     /*
@@ -41,7 +49,7 @@ export class AddPromotionLabelComponent implements OnInit {
     */ 
     creatForm(): void{
         this.formPromotionLabel = this.fb.group({
-            name: [this.promotion_label.name, Validators.required]
+            name: [this.promotion_label.name, [Validators.required, Validators.maxLength(255)]]
         });
     }
 
@@ -55,7 +63,7 @@ export class AddPromotionLabelComponent implements OnInit {
         if(this.formPromotionLabel.invalid){
             ValidateSubmit.validateAllFormFields(this.formPromotionLabel);
         }else{
-            this.promotionLabelService.addPromotionLabel(this.formPromotionLabel.value).subscribe(
+            this.promotionLabelService.addPromotionLabel(this.formPromotionLabel.value, this.lang).subscribe(
                 (data) => {
                     this.router.navigate(['/promotion-label/list', { message_post: this.formPromotionLabel.value.name}]);
                 },

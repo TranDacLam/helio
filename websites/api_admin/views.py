@@ -283,7 +283,7 @@ class AdvertisementView(APIView):
         Get all Advertisement
         """
         try:
-            adv_list = Advertisement.objects.all()
+            adv_list = Advertisement.objects.all().order_by('-created')
             serializer = admin_serializers.AdvertisementSerializer(
                 adv_list, many=True)
             return Response(serializer.data)
@@ -395,11 +395,12 @@ class DenominationView(APIView):
         Get all Denomination to list 
         """
         try:
-            list_denomination = Denomination.objects.all()
+            list_denomination = Denomination.objects.all().order_by('-created')
             serializer = admin_serializers.DenominationSerializer(
                 list_denomination, many=True)
             return Response(serializer.data)
         except Exception, e:
+            print e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
@@ -459,13 +460,13 @@ class FeedbackView(APIView):
             kwargs = {}
             try:
                 if start_date:
-                    kwargs['sent_date__gte'] = timezone.make_aware(datetime.strptime(
+                    kwargs['created__gte'] = timezone.make_aware(datetime.strptime(
                         start_date, "%d/%m/%Y"))
-                    print kwargs['sent_date__gte']
+                    print kwargs['created__gte']
                 if end_date:
-                    kwargs['sent_date__lte'] = timezone.make_aware(datetime.strptime(
+                    kwargs['created__lte'] = timezone.make_aware(datetime.strptime(
                         end_date, "%d/%m/%Y") + timedelta(days=1))
-                    print kwargs['sent_date__lte']
+                    print kwargs['created__lte']
                 if status:
                     kwargs['status'] = status
                     print kwargs['status']
@@ -485,7 +486,7 @@ class FeedbackView(APIView):
                     queryset, many=True)
                 return Response(serializer.data)
             else:
-                queryset = FeedBack.objects.all()
+                queryset = FeedBack.objects.all().order_by('-created')
                 serializer = admin_serializers.FeedBackSerializer(
                     queryset, many=True)
                 return Response(serializer.data)
@@ -1161,7 +1162,7 @@ class BannerView(APIView):
         """
         print "Method GET"
         try:
-            banners = Banner.objects.all()
+            banners = Banner.objects.all().order_by('-created')
             serializer = admin_serializers.BannerSerializer(banners, many=True)
             return Response(serializer.data)
 
@@ -1922,7 +1923,7 @@ class UserListView(APIView):
     def get(self, request, format=None):
         print "METHOD GET"
         try:
-            users = User.objects.all()
+            users = User.objects.all().order_by('-created')
             serializer = admin_serializers.UserRoleDisplaySerializer(
                 users, many=True)
             return Response(serializer.data)
@@ -1940,7 +1941,7 @@ class UserListView(APIView):
     def post(self, request, format=None):
         print "METHOD POST"
         try:
-            serializer = admin_serializers.UserRoleSerializer(
+            serializer = admin_serializers.UserCreateSerializer(
                 data=request.data)
             if serializer.is_valid():
                 serializer.save()
@@ -2021,11 +2022,13 @@ class UserDetailView(APIView):
             serializer = admin_serializers.UserRoleSerializer(user, data=request.data)
 
             if serializer.is_valid():
-                if(self.request.user.role_id == 1):
-                    if (user.is_staff == True):
-                        user.set_password(self.request.data.get("password"))
-                    return Response({"code": 405, "message":"Can not change password user"}, status=405)
-                return Response({"code": 405, "message":"Just System Admin change password user"}, status=405)
+                if(serializer.validated_data['new_password']):
+                    if(self.request.user.role_id == 1):
+                        user.set_password(self.request.data.get("new_password"))
+                    else:
+                        raise serializer.ValidationError("Just System Admin Change password") 
+                else:
+                    user.password = self.request.data.get('password', user.password)
                 serializer.save()
                 return Response(serializer.data)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
@@ -2212,7 +2215,7 @@ class HotAdvsView(APIView):
 
     def get(self, request):
         try:
-            hot_advs = Hot_Advs.objects.all()
+            hot_advs = Hot_Advs.objects.all().order_by('-created')
             serializer = admin_serializers.HotAdvsSerializer(
                 hot_advs, many=True)
             return Response(serializer.data)

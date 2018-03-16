@@ -5,7 +5,7 @@ import { AuthService } from './../../shared/services/auth.service';
 import { User } from './../../shared/class/user';
 import { env } from './../../../environments/environment';
 import 'rxjs/add/observable/throw';
-import { Globals } from './../../shared/commons/globals';
+import { VariableGlobals } from './../../shared/commons/variable_globals';
 import { UserService } from './../../shared/services/user.service';
 
 
@@ -31,14 +31,14 @@ export class LoginComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private route: ActivatedRoute,
-        private globals: Globals,
+        public variable_globals: VariableGlobals,
         private userService: UserService
     ) { 
         this.key_recaptcha = env.key_recaptcha 
     }
 
     ngOnInit() {
-        if(this.globals.user_current){
+        if(this.variable_globals.user_current){
             this.router.navigateByUrl('/');
         }
         // Show message
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
     getUserByToken(value){
         this.userService.getUserByToken(value).subscribe(
             (data) => {
-                this.globals.user_current = data;
+                this.variable_globals.user_current = data;
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.message}]);

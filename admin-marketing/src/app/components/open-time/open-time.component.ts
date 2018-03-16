@@ -106,4 +106,8 @@ export class OpenTimeComponent implements OnInit {
         });
     }
 
+    onSubmit(){
+        
+    }
+
 }

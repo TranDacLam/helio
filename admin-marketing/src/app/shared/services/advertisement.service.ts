@@ -57,8 +57,8 @@ export class AdvertisementService {
 		POST: Update detail Advertiment
 		@author: TrangLe
 	 */
-	updateAdv(adv: Advertisement): Observable<Advertisement> {
-		const id = adv.id;
+	updateAdv(adv, id:number): Observable<Advertisement> {
+		// const id = adv.id;
 		var body = JSON.stringify(adv);
 		const url = `${api.advertisement}${id}/`;
 		return this.http.put(url,body, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);

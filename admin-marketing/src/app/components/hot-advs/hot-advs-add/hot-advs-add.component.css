@@ -16,3 +16,6 @@ a.pull-left {
 p.errors {
 	color: red;
 }
+.form-check {
+	margin-top: 5px;
+}

@@ -65,8 +65,7 @@ export class FeedbackService {
   	/*
   		PUT: Edit Feedback By ID
   	 */
-	updateFeedbackById(feedback: Feedback): Observable<any> {
-		const id = feedback.id;
+	updateFeedbackById(feedback, id:number): Observable<any> {
 		const url = `${api.feedback}${id}/`;
 		var body = JSON.stringify(feedback);
 		return this.http.put(url,body,this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);

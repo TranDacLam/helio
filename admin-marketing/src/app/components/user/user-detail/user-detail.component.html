@@ -11,8 +11,8 @@
 <!-- End breadcrumb -->
 <div *ngIf="user">
 	<form [formGroup]="formUser" novalidate (ngSubmit)="onSubmit()">
-		<div *ngIf="errors" class="alert alert-danger fade in">
-		   <span >{{ errors }}</span>.
+		<div *ngIf="errorMessage" class="alert alert-danger fade in">
+		   <span >{{ errorMessage.non_field_errors }}</span>.
 		</div>
 		<div class="row content-user">
 			<p class=title-user-edit>Sửa Thông tin User</p>
@@ -203,20 +203,21 @@
 						<label class="center-block"> Mật khẩu mới:</label>
 					</div>
 		        	<div class="col-sm-8">	
-						<input class='input-password form-control' type="password" name="password" 
-						formControlName="password" id="password"
+						<input class='input-password form-control' type="password" name="new_password" 
+						formControlName="new_password" id="password"
 						#input
 						[readonly]="readonly_value"
 						>
 						<button (click)="showPassword(input)" type="button" class="file-icon btn btn-default"><span class="fa fa-eye"></span></button>
-						<show-error-valid [control]="formUser.get('password')"></show-error-valid>
+						<show-error-valid [control]="formUser.get('new_password')"></show-error-valid>
 						<div *ngIf="errorMessage">
 							<p class='errors'> {{ errorMessage.password }} </p>
 						</div>
 						<input type="checkbox" (change)="ChangeReadonly($event)">  Thay đổi mật khẩu(Chức năng này chì dành cho System Admin)
-							
 		        	</div>
 	        	</div>
+	        	<input class='form-control' name="is_staff" 
+					formControlName="is_staff" type="hidden">
 			</div>
 		</div>
 		<div class='col-md-12'>

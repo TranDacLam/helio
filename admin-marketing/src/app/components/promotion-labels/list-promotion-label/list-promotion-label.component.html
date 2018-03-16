@@ -11,7 +11,7 @@
 <div class="row text-center">
     <h1>Nhãn Khuyến Mãi</h1>
 </div>
-<div class="row mt-50 mb-30 custom-title">
+<div class="row mt-50 mb-15 custom-title">
     <div class="col-xs-6 col-sm-6">
         <a class="btn custom-button" routerLink="/">
             <i class="fa fas fa-arrow-left icon-button"></i>
@@ -19,7 +19,7 @@
         </a>
     </div>
     <div class="col-xs-6 col-sm-6">
-        <a class="btn custom-button pull-right" routerLink="/promotion-label/add">
+        <a class="btn custom-button pull-right" [routerLink]="['/promotion-label/add/', {lang: lang}]">
             <i class="fa fas fa-plus icon-button"></i>
             TẠO MỚI NHÃN KHUYẾN MÃI
         </a>
@@ -31,8 +31,20 @@
         <h4>{{message_result}}</h4>
     </div>
 </div>
-<div>
-    <table datatable class="row-border hover" *ngIf="promotion_labels">
+<div class="row mb-30 language">
+    <div class="col-xs-12 col-sm-12">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
+                (click)="changeLangVI()"
+            >VI</button>
+            <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
+                (click)="changeLangEN()"
+            >EN</button>
+        </div> 
+    </div>
+</div>
+<div class="custom_table">
+    <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="promotion_labels">
         <thead>
             <tr>
                 <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
@@ -42,7 +54,7 @@
         <tbody>
             <tr *ngFor="let promotion_label of promotion_labels" id="del-{{promotion_label.id}}">
                 <td><input type="checkbox" (change)="onSelectCKB($event, promotion_label)" [checked]="select_checked"/></td>
-                <td><a routerLink="/promotion-label/edit/{{ promotion_label.id }}">{{ promotion_label.name }}</a></td>
+                <td><a [routerLink]="['/promotion-label/edit/', promotion_label.id, {lang: lang}]">{{ promotion_label.name }}</a></td>
             </tr>
         </tbody>
     </table>
@@ -54,7 +66,7 @@
         </select>
     </div>
     <div class="col-md-3">
-        {{ promotion_labels_del.length }} của {{ promotion_labels.length }} được chọn 
+        {{ promotion_labels_del.length }} của {{ length_promotion_labels }} được chọn 
         <button class="btn btn-danger" (click)="deletePormotionLabelEvent()">Thực hiện</button>
     </div>
 </div>

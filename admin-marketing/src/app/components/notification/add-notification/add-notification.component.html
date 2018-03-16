@@ -9,10 +9,19 @@
     </nav>
 </div>
 <!-- End breadcrumb -->
+<div class="row mt-50 mb-15 custom-title" *ngIf="promotion_id">
+    <div class="col-xs-6 col-sm-6">
+        <a class="btn custom-button" [routerLink]="['/users-promotions/', promotion_id]">
+            <i class="fa fas fa-arrow-left icon-button"></i>
+            TRỞ VỀ TRANG QUẢN LÝ CHI TIẾT KHUYẾN MÃI
+        </a>
+    </div>
+</div>
 <div class="row mt-30 mb-30">
     <div class="col-xs-12 col-md-12">
         <h3>Thêm Thông Báo</h3>
         <hr/>
     </div>
 </div>
-<form-notification [noti]="noti" [type_http]="type_http" [promotion_id]="promotion_id"></form-notification>
+<form-notification [noti]="noti" [type_http]="type_http" [promotion_id]="promotion_id" [lang_promotion]="lang">
+</form-notification>

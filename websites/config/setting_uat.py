@@ -36,3 +36,6 @@ PUSH_NOTIFICATIONS_SETTINGS = {
     "APNS_USE_SANDBOX": True,
     "APNS_TOPIC": "vn.vooc.helio.mobile",
 }
+
+BASE_URL_DMZ_API = ""
+DMZ_API_TOKEN = ""

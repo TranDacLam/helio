@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { api } from '../utils/api';
+import { env } from './../../../environments/environment';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
 
@@ -11,9 +12,6 @@ const httpOptions = {
 
 @Injectable()
 export class GameService {
-
-    private urlGame = api.game;
-    private urlGameList = api.game_list;
     
     httpOptions: any;
     token: any = '';
@@ -33,20 +31,23 @@ export class GameService {
         function getEvents(): Get all notification
         author: Lam
     */
-    getGames(): Observable<any>{
-        return this.http.get(this.urlGameList, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    getGames(lang): Observable<any>{
+        const url_getGames = `${env.api_domain_root}/${lang}/api/${api.game_list}`;
+        return this.http.get(url_getGames, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    getGame(id: number): Observable<any>{
-        let url_detail_game = `${this.urlGame}${id}`;
-        return this.http.get(url_detail_game, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    getGame(id: number, lang): Observable<any>{
+        const url_getGame = `${env.api_domain_root}/${lang}/api/${api.game}${id}/`;
+        return this.http.get(url_getGame, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
         function onDelEventSelect(): Delete all event selected
         author: Lam
     */
-    onDelGameSelect(arr): Observable<any>{
+    onDelGameSelect(arr, lang): Observable<any>{
+        const url_onDelGameSelect = `${env.api_domain_root}/${lang}/api/${api.game_list}`;
+
         let param = {
             list_id: arr
         }
@@ -56,13 +57,14 @@ export class GameService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(this.urlGameList, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_onDelGameSelect, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    addGame(value: FormData): Observable<any>{
+    addGame(value: FormData, lang): Observable<any>{
+        const url_addGame = `${env.api_domain_root}/${lang}/api/${api.game}`;
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            xhr.open('POST', api.game);
+            xhr.open('POST', url_addGame);
             xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.send(value);
 
@@ -79,11 +81,11 @@ export class GameService {
         });
     }
 
-    updateGame(value: FormData, id: number): Observable<any>{
-        let url_update_game = `${this.urlGame}${id}/`;
+    updateGame(value: FormData, id: number, lang): Observable<any>{
+        const url_updateGame = `${env.api_domain_root}/${lang}/api/${api.game}${id}/`;
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            xhr.open('PUT', url_update_game);
+            xhr.open('PUT', url_updateGame);
             xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.send(value);
 
@@ -100,9 +102,9 @@ export class GameService {
         });
     }
 
-    onDelGame(id): Observable<any>{
-        const url_del_game = `${this.urlGame}${id}/`;
-        return this.http.delete(url_del_game, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    onDelGame(id, lang): Observable<any>{
+        const url_onDelGame = `${env.api_domain_root}/${lang}/api/${api.game}${id}/`;
+        return this.http.delete(url_onDelGame, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
 

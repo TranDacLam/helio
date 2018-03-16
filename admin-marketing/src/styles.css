@@ -195,6 +195,12 @@ h1.h1-title {
 .dataTables_wrapper{
     margin-bottom: 20px;
 }
+.dataTable thead tr>th:first-child{
+    background-image: none;
+}
+.custom_table thead tr>th:first-child{
+    width: 60px;
+}
 
 
 /* 
@@ -252,6 +258,23 @@ h1.h1-title {
 .dataTables_scrollBody{
     min-height: 433px;
 }
+
+/*
+    Button change language
+    author: Lam;
+*/
+.language button {
+    width: 50px;
+}
+.language button.btn:focus {
+    outline: none;
+}
+.alert h4{
+    padding-left: 15px;
+    font-size: 14px;
+}
+
+
 @media only screen and (max-width : 768px) {
     .multiselect_user .datatable-content{
         width: 100%;

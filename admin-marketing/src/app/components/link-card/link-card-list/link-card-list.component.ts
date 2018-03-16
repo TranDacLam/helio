@@ -24,6 +24,8 @@ export class LinkCardListComponent implements OnInit {
 	link_cards: User[];
 
     link_card_del: any;
+
+    checkbox:boolean = false;
     
     message_result: string = ""; // Display message result
     errorMessage: string;
@@ -51,8 +53,8 @@ export class LinkCardListComponent implements OnInit {
         this.getAllLinkCards();
 
         this.route.params.subscribe(params => {
-            if(params.message){
-                this.message_result = 'Xóa thành công.';
+            if(params.message_del){
+                this.message_result = 'Xóa liên kết thẻ thành công.';
                 setTimeout(()=>{
                     this.message_result = '';
                 },7000);
@@ -88,14 +90,16 @@ export class LinkCardListComponent implements OnInit {
         if (event.target.checked) {
             this.link_cards.forEach(function(element) {
             arr.push(element.id);
-            $('#'+element.id).prop('checked', true);
+            // $('#'+element.id).prop('checked', true);
           });
+            this.checkbox = true;
             this.link_card_del = arr
             this.message_result = "";
         } else {
+            this.checkbox = false;
             this.link_cards.forEach((item, index) => {
-                this.link_card_del.splice(index, this.link_cards.length);
-                $('#'+item.id).prop('checked', false);
+            this.link_card_del.splice(index, this.link_cards.length);
+                // $('#'+item.id).prop('checked', false);
         });
     }
     }

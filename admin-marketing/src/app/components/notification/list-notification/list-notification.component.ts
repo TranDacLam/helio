@@ -34,6 +34,8 @@ export class ListNotificationComponent implements OnInit {
     message_result = ''; // Message error
     errorMessage = '';
 
+    lang: string = 'vi';
+
     constructor(private notificationService: NotificationService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
@@ -46,11 +48,11 @@ export class ListNotificationComponent implements OnInit {
         */
         this.route.params.subscribe(params => {
             if(params.message_put){
-                this.message_result = `${message.edit} ${params.message_put} ${message.success}`;
+                this.message_result = `${message.edit} "${params.message_put}" ${message.success}`;
             }else if(params.message_post){
-                this.message_result = `${message.create_new} ${params.message_post} ${message.success}`;
+                this.message_result = `${message.create_new} "${params.message_post}" ${message.success}`;
             }else if(params.message_del){
-                this.message_result = 'Xóa thành công.';
+                this.message_result = 'Xóa thông báo thành công.';
             }
         });
     }
@@ -60,7 +62,7 @@ export class ListNotificationComponent implements OnInit {
         Author: Lam
     */
     getNotifications(){
-        this.notificationService.getNotifications().subscribe(
+        this.notificationService.getNotifications(this.lang).subscribe(
             (data) => {
                 this.notifications = data;
                 this.length_notification = this.notifications.length;
@@ -116,7 +118,7 @@ export class ListNotificationComponent implements OnInit {
         if ( this.notifications_del.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.notifications_del.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.notifications_del.length + " thông báo đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -133,7 +135,7 @@ export class ListNotificationComponent implements OnInit {
             });
 
         } else  {
-            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+            bootbox.alert("Vui lòng chọn thông báo cần xóa");
         }
         
     }
@@ -145,18 +147,52 @@ export class ListNotificationComponent implements OnInit {
         Author: Lam
     */
     onDelelteNoti(){
-        this.notificationService.onDelNotiSelect(this.notifications_del).subscribe(
+        this.notificationService.onDelNotiSelect(this.notifications_del, this.lang).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     this.notifications_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.message_result = 'Xóa '+ this.notifications_del.length +' thông báo thành công.';
                     this.length_notification = this.length_notification - this.notifications_del.length;
                     this.notifications_del = [];
                 });
-                this.message_result = 'Xóa thành công.';
+                this.select_checked = false;
+                this.errorMessage = '';
             }
         );
+    }
+
+    /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.notifications = null;
+            this.lang = 'vi';
+            this.getNotifications();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangEN(){
+        if(this.lang === 'vi'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.notifications = null;
+            this.lang = 'en';
+            this.getNotifications();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
     }
 
 }

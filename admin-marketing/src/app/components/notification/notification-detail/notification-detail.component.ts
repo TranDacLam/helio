@@ -4,7 +4,7 @@ import { Notification } from '../../../shared/class/notification';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Globals } from './../../../shared/commons/globals';
+import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import 'rxjs/add/observable/throw';
 
 
@@ -31,17 +31,25 @@ export class NotificationDetailComponent implements OnInit {
     messageError = '';
     user_current: User;
 
+    lang = 'vi';
+
     constructor(
         private notificationService: NotificationService, 
         private route: ActivatedRoute,
         private router: Router,
-        private globals: Globals
+        private variable_globals: VariableGlobals
     ) { }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
+
         this.getUserNotification();
         setTimeout(()=>{
-            this.user_current = this.globals.user_current;
+            this.user_current = this.variable_globals.user_current;
         },100);
         
     }
@@ -54,7 +62,7 @@ export class NotificationDetailComponent implements OnInit {
     */
     getUserNotification(): void{
         const id = +this.route.snapshot.paramMap.get('id');
-        this.notificationService.getUserNotification(id).subscribe(
+        this.notificationService.getUserNotification(id, this.lang).subscribe(
             (data) => {
                 this.noti_detail = data.notification_detail;
                 this.user_list_left = data.user_all;
@@ -72,7 +80,7 @@ export class NotificationDetailComponent implements OnInit {
     */
     getNotification(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.notificationService.getNotification(id).subscribe(
+        this.notificationService.getNotification(id, this.lang).subscribe(
             (data) => {
                 this.noti_detail = data;
             },
@@ -107,10 +115,10 @@ export class NotificationDetailComponent implements OnInit {
         Author: Lam
     */
     update_user_noti(event){
-        if(this.user_current.role === 1 && this.noti_detail.sent_date){
+        if(!this.noti_detail.sent_date || (this.user_current.role === 1 && this.noti_detail.sent_date)){
             if(event.length > 0){
                 const id = +this.route.snapshot.paramMap.get('id');
-                this.notificationService.updateUserNoti(id, event).subscribe(
+                this.notificationService.updateUserNoti(id, event, this.lang).subscribe(
                     (data) => {
                         this.messageSuccess = "Lưu thành công.";
                         setTimeout(()=>{
@@ -162,7 +170,7 @@ export class NotificationDetailComponent implements OnInit {
     */
     sendNotification(){
         const id = this.noti_detail.id;
-        this.notificationService.sendNotification(id).subscribe(
+        this.notificationService.sendNotification(id, this.lang).subscribe(
             (data) => {
                 this.getNotification();
                 this.messageSuccess = data.message;

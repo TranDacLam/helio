@@ -36,6 +36,7 @@ export class FormHotComponent implements OnInit {
     msg_clear_image = '';
 
     api_domain: string = '';
+    lang = 'vi';
 
     constructor(
         private hotService: HotService,
@@ -49,6 +50,11 @@ export class FormHotComponent implements OnInit {
 
     ngOnInit() {
         this.creatForm();
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
     }
 
     /*
@@ -57,9 +63,9 @@ export class FormHotComponent implements OnInit {
     */ 
     creatForm(): void{
         this.formHot = this.fb.group({
-            name: [this.hot.name, Validators.required],
-            image: [this.hot.image, Validators.required],
-            sub_url: [this.hot.sub_url, Validators.required],
+            name: [this.hot.name, [Validators.required, Validators.maxLength(255)]],
+            image: [this.hot.image, [Validators.required, Validators.maxLength(1000)]],
+            sub_url: [this.hot.sub_url, [Validators.required, Validators.maxLength(1000)]],
             is_show: [this.hot.is_show],
             is_clear_image: [false]
         });
@@ -97,7 +103,7 @@ export class FormHotComponent implements OnInit {
             let hot_form_data = this.convertFormGroupToFormData(this.formHot);
             let value_form = this.formHot.value;
             if(!this.hot.id){
-                this.hotService.addHot(hot_form_data).subscribe(
+                this.hotService.addHot(hot_form_data, this.lang).subscribe(
                     (data) => {
                         this.router.navigate(['/hot/list', { message_post: value_form.name}]);
                     },
@@ -114,7 +120,7 @@ export class FormHotComponent implements OnInit {
                     this.formHot.get('is_clear_image').setValue(false);
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                 }else{
-                    this.hotService.updateHot(hot_form_data, this.hot.id).subscribe(
+                    this.hotService.updateHot(hot_form_data, this.hot.id, this.lang).subscribe(
                         (data) => {
                             this.router.navigate(['/hot/list', { message_put: value_form.name}]);
                         },
@@ -165,7 +171,7 @@ export class FormHotComponent implements OnInit {
     */
     onDelete(): void {
         const id = this.hot.id;
-        this.hotService.onDelHot(id).subscribe(
+        this.hotService.onDelHot(id, this.lang).subscribe(
             (data) => {
                 this.router.navigate(['/hot/list', { message_del: 'success'}]);
             }

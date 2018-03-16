@@ -7,6 +7,7 @@ import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
 import * as datatable_config from '../../../shared/commons/datatable_config';
 
+
 declare var bootbox:any;
 
 @Component({
@@ -34,7 +35,13 @@ export class ListEventComponent implements OnInit {
     message_result = ''; // Message success
     errorMessage = '';
 
-    constructor(private eventService: EventService, private route: ActivatedRoute, private router: Router) { }
+    lang: string = 'vi';
+
+    constructor(
+        private eventService: EventService, 
+        private route: ActivatedRoute, 
+        private router: Router,
+    ) { }
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Sự Kiện').dtOptions;
@@ -46,11 +53,11 @@ export class ListEventComponent implements OnInit {
         */
         this.route.params.subscribe(params => {
             if(params.message_put){
-                this.message_result = `${message.edit} ${params.message_put} ${message.success}`;
+                this.message_result = `${message.edit} "${params.message_put}" ${message.success}`;
             }else if(params.message_post){
-                this.message_result = `${message.create_new} ${params.message_post} ${message.success}`;
+                this.message_result = `${message.create_new} "${params.message_post}" ${message.success}`;
             }else if(params.message_del){
-                this.message_result = 'Xóa thành công.';
+                this.message_result = 'Xóa sự kiện thành công.';
             }
         });
     }
@@ -60,7 +67,7 @@ export class ListEventComponent implements OnInit {
         Author: Lam
     */
     getEvents(){
-        this.eventService.getEvents().subscribe(
+        this.eventService.getEvents(this.lang).subscribe(
             (data) => {
                 this.events = data;
                 this.length_events = this.events.length;
@@ -114,7 +121,7 @@ export class ListEventComponent implements OnInit {
         if ( this.events_del.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.events_del.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.events_del.length + " sự kiện đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -131,7 +138,7 @@ export class ListEventComponent implements OnInit {
             });
 
         } else  {
-            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+            bootbox.alert("Vui lòng chọn sự kiện cần xóa");
         }
         
     }
@@ -143,19 +150,53 @@ export class ListEventComponent implements OnInit {
         Author: Lam
     */
     onDeleteEvent(){
-        this.eventService.onDelEventSelect(this.events_del).subscribe(
+        this.eventService.onDelEventSelect(this.events_del, this.lang).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     this.events_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.message_result = 'Xóa '+ this.events_del.length +' sự kiện thành công.';
                     this.length_events = this.length_events - this.events_del.length;
                     this.events_del = [];
                 });
                 this.select_checked = false;
-                this.message_result = 'Xóa thành công.';
+                this.errorMessage = '';
             }
         );
+    }
+
+
+    /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.events = null;
+            this.lang = 'vi';
+            this.getEvents();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangEN(){
+        if(this.lang === 'vi'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.events = null;
+            this.lang = 'en';
+            this.getEvents();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
     }
 
 }

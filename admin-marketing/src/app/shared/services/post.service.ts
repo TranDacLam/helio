@@ -34,7 +34,7 @@ export class PostService {
     }
 
     getPost(id: number): Observable<any>{
-        let url_post_id = `${this.urlPost}${id}`;
+        let url_post_id = `${this.urlPost}${id}/`;
         return this.http.get(url_post_id, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 

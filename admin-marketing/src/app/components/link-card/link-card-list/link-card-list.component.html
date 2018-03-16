@@ -43,6 +43,7 @@
                     name="{{ link_card.id }}"
                     value="{{ link_card.id }}"
                     id="{{ link_card.id }}"
+                    [checked]="checkbox"
                     (change)="changeCheckboxLinkCard($event, link_card)"
                     />
                 </label>

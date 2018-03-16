@@ -34,6 +34,8 @@ export class ListFaqComponent implements OnInit {
     message_result = ''; // Message error
     errorMessage: any;
 
+    lang: string = 'vi';
+
     constructor(private faqService: FaqService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
@@ -46,11 +48,11 @@ export class ListFaqComponent implements OnInit {
         */
         this.route.params.subscribe(params => {
             if(params.message_put){
-                this.message_result = `${message.edit} ${params.message_put} ${message.success}`;
+                this.message_result = `${message.edit} "${params.message_put}" ${message.success}`;
             }else if(params.message_post){
-                this.message_result = `${message.create_new} ${params.message_post} ${message.success}`;
+                this.message_result = `${message.create_new} "${params.message_post}" ${message.success}`;
             }else if(params.message_del){
-                this.message_result = 'Xóa thành công.';
+                this.message_result = 'Xóa câu hỏi thường gặp thành công.';
             }
         });
     }
@@ -60,7 +62,7 @@ export class ListFaqComponent implements OnInit {
         Author: Lam
     */
     getFaqs(){
-        this.faqService.getFaqs().subscribe(
+        this.faqService.getFaqs(this.lang).subscribe(
             (data) => {
                 this.faqs = data;
                 this.length_faqs = this.faqs.length;
@@ -114,7 +116,7 @@ export class ListFaqComponent implements OnInit {
         if ( this.faqs_del.length > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.faqs_del.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.faqs_del.length + " câu hỏi thường gặp đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -131,7 +133,7 @@ export class ListFaqComponent implements OnInit {
             });
 
         } else  {
-            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+            bootbox.alert("Vui lòng chọn câu hỏi thường gặp cần xóa");
         }
         
     }
@@ -143,19 +145,52 @@ export class ListFaqComponent implements OnInit {
         Author: Lam
     */
     onDelelteFaq(){
-        this.faqService.onDelFaqSelect(this.faqs_del).subscribe(
+        this.faqService.onDelFaqSelect(this.faqs_del, this.lang).subscribe(
             (data) => {
                 this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     this.faqs_del.forEach(function(element) {
                         dtInstance.rows('#del-'+element).remove().draw();
                     });
+                    this.message_result = "Xóa "+ this.faqs_del.length +" câu hỏi thường gặp thành công."
                     this.length_faqs = this.length_faqs - this.faqs_del.length;
                     this.faqs_del = [];
                 });
                 this.select_checked = false;
-                this.message_result = "Xóa thành công."
+                this.errorMessage = '';
             }
         );
+    }
+
+    /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.faqs = null;
+            this.lang = 'vi';
+            this.getFaqs();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: Lam
+    */
+    changeLangEN(){
+        if(this.lang === 'vi'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.faqs = null;
+            this.lang = 'en';
+            this.getFaqs();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
     }
 
 }

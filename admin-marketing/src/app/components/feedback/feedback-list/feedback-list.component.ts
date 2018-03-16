@@ -25,6 +25,8 @@ export class FeedbackListComponent implements OnInit {
     feedback_del: any;
     allFeedbacks: any;
 
+    checkbox:boolean =false;
+
     message_result: string = ""; // Display message result
     errorMessage: string;
     record: string = "Phản Hồi";
@@ -99,14 +101,16 @@ export class FeedbackListComponent implements OnInit {
         if (event.target.checked) {
             this.feedbacks.forEach(function(element) {
                 arrFeedback_del.push(element.id)
-                $('#'+element.id).prop('checked', true);
+                // $('#'+element.id).prop('checked', true);
             });
+            this.checkbox = true;
             this.feedback_del = arrFeedback_del
             this.message_result = "";
         } else {
+            this.checkbox = false;
             this.feedbacks.forEach((item, index) => {
                 this.feedback_del.splice(index, this.feedbacks.length);
-                $('#'+item.id).prop('checked', false);
+                // $('#'+item.id).prop('checked', false);
             });
         }
     }
