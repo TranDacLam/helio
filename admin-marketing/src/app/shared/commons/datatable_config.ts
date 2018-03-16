@@ -5,7 +5,7 @@
 export let data_config = function(record) {
     return {
         record: record,
-        order: [[ 1, 'asc' ]], 
+        order: [[ 1, 'desc' ]], 
         dtOptions : {
             // Declare the use of the extension in the dom parameter
             language: {
