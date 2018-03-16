@@ -44,48 +44,48 @@ class UserSerializer(SetCustomErrorMessagesMixin, serializers.ModelSerializer):
         return user
 
 
-class HotsSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField(max_length=255)
-    sub_url = serializers.CharField(max_length=1000)
-    image = serializers.ImageField(max_length=1000)
-    is_show = serializers.BooleanField()
+class HotsSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Hot
+        fields = ('id', 'name', 'sub_url', 'image', 'is_show')
 
 
-class CategorySerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField(max_length=255)
-    description = serializers.CharField()
+
+class CategorySerializer(serializers.ModelSerializer):
+ 
+    class Meta:
+        model = Category
+        fields = ('id', 'name', 'description')
 
 
-class TypeSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField(max_length=255)
-    description = serializers.CharField()
+class TypeSerializer(serializers.ModelSerializer):
     category = CategorySerializer(many=False)
+    class Meta:
+        model = Type
+        fields = ('id', 'name', 'description', 'category')
 
 
 class GameSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField(max_length=255)
-    short_description = serializers.CharField()
-    image = serializers.ImageField(max_length=1000)
     game_type = TypeSerializer(many=False)
+    class Meta:
+        model = Type
+        fields = ('id', 'name', 'short_description', 'image', 'game_type')
 
 
-class GameDetailSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField(max_length=255)
-    short_description = serializers.CharField()
-    content = serializers.CharField()
-    image = serializers.ImageField(max_length=1000)
+class GameDetailSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Game
+        fields = ('id', 'name', 'short_description', 'content', 'image')
 
 
-class FAQsSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    question = serializers.CharField(max_length=255)
-    answer = serializers.CharField()
+class FAQsSerializer(serializers.ModelSerializer):
+
     category = CategorySerializer(many=False)
+    class Meta:
+        model = FAQ
+        fields = ('id', 'question', 'answer', 'category')
 
 
 class EntertainmentDetailSerializer(serializers.Serializer):

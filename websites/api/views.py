@@ -23,6 +23,9 @@ from rest_framework.permissions import AllowAny
 from django.utils.translation import ugettext_lazy as _
 import datetime
 from django.utils import timezone
+from django.http import JsonResponse
+import requests
+import json
 
 
 def custom_exception_handler(exc, context):
@@ -651,25 +654,18 @@ def card_information(request, card_id):
                 "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
             return Response(error, status=400)
 
-        print card_id
-        cursor = connections['sql_db'].cursor()
+        result = {}
 
-        query_str = """ WITH UPGRADE_INFO AS (SELECT Customer_Id, Transaction_DateTime FROM (SELECT DISTINCT ROW_NUMBER() OVER(partition by C.Customer_Id Order by Transaction_DateTime DESC) AS RN_C, 
-                                     C.Customer_Id, CT.Transaction_DateTime FROM Cards C 
-                                     INNER JOIN Card_Transactions CT ON CT.Card_Barcode = C.Card_Barcode 
-                                     WHERE Transaction_Type = 506 AND C.Customer_Id IS NOT NULL) AS TEMP WHERE RN_C = 1)
+        headers =  {'Authorization': settings.DMZ_API_TOKEN}
+        card_information_api_url = '{}card/{}/information/'.format(settings.BASE_URL_DMZ_API, card_id)
 
-                SELECT C.Card_Added, C.Card_Status, C.Card_State, C.Cash_Balance, C.Bonus_Balance, C.ETickets,
-                     Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, Cust.EMail, Cust.Mobile_Phone, 
-                     UI.Transaction_DateTime, C.ReIssued_To_Card, Cust.Customer_Id  FROM Cards C
-                 LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id
-                 LEFT JOIN UPGRADE_INFO UI ON Cust.Customer_Id = UI.Customer_Id WHERE C.Card_Barcode = {0}"""
-
-        # print query_str.format(card_id)
-
-        cursor.execute(query_str.format(card_id))
-        result = utils.card_information_mapper(cursor.fetchone(), request.user.is_staff)
-
+        # Call DMZ get card infomation
+        response = requests.get(card_information_api_url, headers=headers)
+        # Get data from dmz reponse
+        result = response.json()
+        # Translate error message when code is 400
+        if response.status_code == 400:
+            result["message"] = _(result["message"])
         return Response(result)
 
     except Exception, e:
@@ -691,31 +687,17 @@ def play_transactions(request):
                     "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
                 return Response(error, status=400)
 
-            filter_id = request.GET.get("filter_id", "")
-            sub_query = ""
-            if filter_id:
-                if not helper.is_int(filter_id):
-                    errors = {"code": 400, "message": _(
-                        "This value must be is integer."), "fields": "filter_id"}
-                    return Response(errors, status=400)
-                filter_object = Transaction_Type.objects.get(pk=filter_id)
-                sub_query = " WHERE transaction_type like '" + filter_object.name + "'"
 
-            cursor = connections['sql_db'].cursor()
+            headers =  {'Authorization': settings.DMZ_API_TOKEN}
+            card_information_api_url = '{}transactions/play/'.format(settings.BASE_URL_DMZ_API)
 
-            query_str = """ WITH PLAY_TRANSACTION AS (SELECT PT.Transaction_DateTime, PT.Transaction_Amount, GD.Game_Description,
-                                     (CASE WHEN GD.Game_Group_Id = 0 THEN 'Refund' ELSE 'Play' END) AS transaction_type
-                                     FROM Play_Transactions PT
-                                     LEFT JOIN Game_Swipers GS ON PT.Game_Id = GS.Game_Id
-                                     LEFT JOIN Game_Details GD ON GS.Game_ML_Id = GD.Game_ML_Id
-                                     WHERE PT.Card_Barcode = {0})
-                            SELECT TOP 50 * FROM PLAY_TRANSACTION {1} ORDER BY Transaction_DateTime DESC"""
-
-            print query_str.format(card_id, sub_query)
-
-            cursor.execute(query_str.format(card_id, sub_query))
-            result = utils.play_transactions_mapper(cursor.fetchall())
-
+            # Call DMZ get card infomation
+            response = requests.get(card_information_api_url, params=request.GET, headers=headers)
+            # Get data from dmz reponse
+            result = response.json()
+            # Translate error message when code is 400
+            if response.status_code == 400:
+                result["message"] = _(result["message"])
             return Response(result)
         else:
             error = {"code": 400, "message": _("You don't have permission to access."), "fields": ""}
@@ -740,17 +722,16 @@ def card_transactions(request):
                     "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
                 return Response(error, status=400)
 
-            cursor = connections['sql_db'].cursor()
+            headers =  {'Authorization': settings.DMZ_API_TOKEN}
+            card_information_api_url = '{}transactions/play/'.format(settings.BASE_URL_DMZ_API)
 
-            query_str = """ SELECT TOP 50 ST.Transaction_DateTime, SCT.Cash_Amount FROM Sale_Card_Transactions SCT 
-                                     INNER JOIN Sale_Transactions ST ON ST.Transaction_Id = SCT.Transaction_Id
-                                     WHERE SCT.Card_Barcode = {0} ORDER BY ST.Transaction_DateTime DESC"""
-
-            cursor.execute(query_str.format(card_id))
-
-            print query_str.format(card_id)
-            result = utils.card_transactions_mapper(cursor.fetchall())
-
+            # Call DMZ get card infomation
+            response = requests.get(card_information_api_url, params=request.GET, headers=headers)
+            # Get data from dmz reponse
+            result = response.json()
+            # Translate error message when code is 400
+            if response.status_code == 400:
+                result["message"] = _(result["message"])
             return Response(result)
         else:
             error = {"code": 400, "message": _("You don't have permission to access."), "fields": ""}
@@ -776,17 +757,16 @@ def reissue_history(request):
                     "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
                 return Response(error, status=400)
 
-            cursor = connections['sql_db'].cursor()
+            headers =  {'Authorization': settings.DMZ_API_TOKEN}
+            card_information_api_url = '{}transactions/play/'.format(settings.BASE_URL_DMZ_API)
 
-            query_str = """WITH REISSUE_HISTORY AS (SELECT CT.Transaction_DateTime, CT.Card_Barcode, CT.Transfer_Card_Barcode,
-                                     (CASE WHEN CT.Transaction_Type = 506 THEN 'Upgraded' ELSE 'Reissue' END) AS Transaction_Type_Txt, 
-                                     CT.Transaction_Type FROM Card_Transactions CT
-                                     WHERE CT.Transaction_Type IN (500, 501, 506) AND CT.Card_Barcode = {0})
-
-                            SELECT TOP 50 * FROM REISSUE_HISTORY ORDER BY Transaction_DateTime DESC"""
-
-            cursor.execute(query_str.format(card_id))
-            result = utils.reissue_history_mapper(cursor.fetchall())
+            # Call DMZ get card infomation
+            response = requests.get(card_information_api_url, params=request.GET, headers=headers)
+            # Get data from dmz reponse
+            result = response.json()
+            # Translate error message when code is 400
+            if response.status_code == 400:
+                result["message"] = _(result["message"])
             return Response(result)
         else:
             error = {"code": 400, "message": _("You don't have permission to access."), "fields": ""}
