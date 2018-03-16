@@ -258,7 +258,7 @@ class UserDetail(APIView):
                 instance=user, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
 
         except User.DoesNotExist, e:
@@ -942,13 +942,15 @@ class UserEmbedDetail(APIView):
                 data=request.data)
 
             if serializer.is_valid():
+                # convert string to date
+                birth_date = datetime.strptime(serializer.data['birth_date'], "%d/%m/%Y").date()
                 query_str = """UPDATE Customers SET Firstname = '{4}',Surname = '', Email = '{6}',
                  Mobile_Phone = '{2}', DOB = '{1}', PostCode = '{3}', Address1 = '{5}'  
                 WHERE Customers.Customer_Id IN (SELECT Cust.Customer_Id  
                 FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
                 WHERE C.Card_Barcode = '{0}')"""
 
-                cursor.execute(query_str.format(barcode, serializer.data['birth_date'], serializer.data['phone'], serializer.data[
+                cursor.execute(query_str.format(barcode, birth_date, serializer.data['phone'], serializer.data[
                                'personal_id'], serializer.data['full_name'], serializer.data['address'], serializer.data['email']))
 
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
@@ -1341,7 +1343,7 @@ class EventAPI(APIView):
         try:
             event = Event.objects.get(id=id)
             event.delete()
-            return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
 
         except Event.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
@@ -1378,7 +1380,7 @@ class EventListAPI(APIView):
                 events = Event.objects.filter(id__in=list_id)
                 if events:
                     events.delete()
-                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
                 return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
         except Exception, e:
@@ -1451,7 +1453,7 @@ class PromotionLabelAPI(APIView):
         try:
             promotionLabel = Promotion_Label.objects.get(id=id)
             promotionLabel.delete()
-            return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
 
         except Promotion_Label.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
@@ -1489,7 +1491,7 @@ class PromotionLabelListAPI(APIView):
                     id__in=list_id)
                 if promotionLabels:
                     promotionLabels.delete()
-                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
                 return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
 
@@ -1560,7 +1562,7 @@ class HotAPI(APIView):
         try:
             hot = Hot.objects.get(id=id)
             hot.delete()
-            return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
 
         except Hot.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
@@ -1595,7 +1597,7 @@ class HotListAPI(APIView):
                 hots = Hot.objects.filter(id__in=list_id)
                 if hots:
                     hots.delete()
-                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
                 return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
 
@@ -1686,7 +1688,7 @@ class PostAPI(APIView):
         try:
             post = Post.objects.get(id=id)
             post.delete()
-            return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
 
         except Post.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found Post.", "fields": ""}, status=400)
@@ -1723,7 +1725,7 @@ class PostListAPI(APIView):
                 posts = Post.objects.filter(id__in=list_id)
                 if posts:
                     posts.delete()
-                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
                 return Response({"code": 400, "message": "Not Found Posts.", "fields": ""}, status=400)
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
 
@@ -1810,7 +1812,7 @@ class FAQAPI(APIView):
         try:
             faq = FAQ.objects.get(id=id)
             faq.delete()
-            return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
 
         except FAQ.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found FAQ.", "fields": ""}, status=400)
@@ -1846,7 +1848,7 @@ class FAQListAPI(APIView):
                 faqs = FAQ.objects.filter(id__in=list_id)
                 if faqs:
                     faqs.delete()
-                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
                 return Response({"code": 400, "message": "Not Found FAQs.", "fields": ""}, status=400)
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
 
@@ -2138,7 +2140,7 @@ class GameAPI(APIView):
         try:
             game = Game.objects.get(id=id)
             game.delete()
-            return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
 
         except Game.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found Game.", "fields": ""}, status=400)
@@ -2174,7 +2176,7 @@ class GameListAPI(APIView):
                 games = Game.objects.filter(id__in=list_id)
                 if games:
                     games.delete()
-                    return Response({"code": 200, "status": "success", "fields": ""}, status=200)
+                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
                 return Response({"code": 400, "message": "Not Found Games.", "fields": ""}, status=400)
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
 
