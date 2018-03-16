@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 
 import { Router } from "@angular/router";
 
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { BannerService } from '../../../shared/services/banner.service';
 import { Banner, positions } from '../../../shared/class/banner';
 
@@ -19,6 +20,7 @@ export class BannerAddComponent implements OnInit {
     errorMessage: string;
     positions = positions;
     isSelected = true; // Set value default selcted 
+    lang: string = 'vi';
 
 
     constructor(
@@ -39,7 +41,7 @@ export class BannerAddComponent implements OnInit {
     */
     createForm() {
         this.formBanner = this.fb.group({
-            image: [this.banner_form.image, [Validators.required]],
+            image: [this.banner_form.image],
             sub_url: [this.banner_form.sub_url, [Validators.required]],
             position: [this.banner_form.position, [Validators.required]],
             is_show: [false]
@@ -66,22 +68,26 @@ export class BannerAddComponent implements OnInit {
         @author: TrangLe
      */
     createBanner(){
-        var self = this;
-        let bannerFormGroup = this.convertFormGroupToFormData(this.formBanner);
+        if(this.formBanner.invalid){
+            ValidateSubmit.validateAllFormFields(this.formBanner);
+        } else {
+            var self = this;
+            let bannerFormGroup = this.convertFormGroupToFormData(this.formBanner);
 
-        this.bannerService.CreateBanner(bannerFormGroup).subscribe(
-            (result) => {
-                self.banners.push(result);
-                self.router.navigate(['/banner-list', { message_post: this.formBanner.value['sub_url']} ])     
-            },
-            (error) =>  {
-                if( error.code == 400 ){
-                    self.errorMessage = error.message
-                } else {
-                    self.router.navigate(['/error', {message: error}])
+            this.bannerService.CreateBanner(bannerFormGroup, this.lang).subscribe(
+                (result) => {
+                    self.banners.push(result);
+                    self.router.navigate(['/banner-list', { message_post: this.formBanner.value['sub_url']} ])     
+                },
+                (error) =>  {
+                    if( error.code == 400 ){
+                        self.errorMessage = error.message
+                    } else {
+                        self.router.navigate(['/error', {message: error}])
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 
     /*

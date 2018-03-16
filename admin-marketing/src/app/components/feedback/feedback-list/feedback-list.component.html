@@ -11,7 +11,12 @@
 
 <div class='row title-feedback'>
 	<a class="pull-left" routerLink="/feedback-list">Phản hồi</a>
-	<a class="pull-right" routerLink="/feedback/statistics">Thống kê tình trạng phản hồi</a>
+    <a class="pull-right" routerLink="/feedback/statistics">
+        <div class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus"></span>
+            Thống kê tình trạng phản hồi
+        </div>
+    </a>
 </div>
 <div *ngIf="message_result" class="alert alert-success">
     {{ message_result }}
@@ -45,10 +50,10 @@
             </td>
             <td><a routerLink="/feedback-detail/{{ feedback.id }}">{{ feedback.subject }}</a></td>
             <td><a routerLink="/feedback-detail/{{ feedback.id }}">{{ feedback.name }}</a></td>
-            <td>{{ feedback.sent_date |date: 'dd/MM/yyyy'}}</td>
+            <td>{{ feedback.created |date: 'dd/MM/yyyy'}}</td>
             <td>{{ feedback.rate }}</td>
             <td>{{ feedback.status }}</td>
-            <td>{{ feedback.sent_date|date: 'dd/MM/yyyy' }}</td>
+            <td>{{ feedback.modified|date: 'dd/MM/yyyy' }}</td>
         </tr>
     </tbody>
 </table>

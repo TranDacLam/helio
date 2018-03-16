@@ -9,60 +9,62 @@
 </div>
 <!-- End breadcrumb -->
 <div class='row content-banner'>
-	<a class="pull-left" routerLink="/banner-list">Banner</a>
-	<a class="pull-right" routerLink="/banner-add">
-		<div class="btn btn-primary">
-			<span class="glyphicon glyphicon-plus"></span>
-			Thêm banner
-		</div>
-	</a>
+    <a class="pull-left" routerLink="/banner-list">Banner</a>
+    <a class="pull-right" [routerLink]="['/banner-add/', {lang: lang}]">
+        <div class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus"></span>
+            Thêm banner
+        </div>
+    </a>
 </div>
 <br>
 <div class="table card-list">
-	<div class="alert alert-success" *ngIf="message_result">
+    <div class="alert alert-success" *ngIf="message_result">
         {{message_result}}
     </div>
     <div class="row mb-30 language">
-	    <div class="col-xs-12 col-sm-12">
-	        <div class="btn-group pull-right">
-	            <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
-	                (click)="changeLangVI()"
-	            >VI</button>
-	            <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
-	                (click)="changeLangEN()"
-	            >EN</button>
-	        </div> 
-	    </div>
-	</div>
-	<div class="custom-table">
-		<table id="table-banner" datatable [dtOptions]='dtOptions' class='row-border hover'>
-			<thead>
-		      	<tr>
-		      		<th class='checkbox-banner'><input type="checkbox" id="allCheck" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/></th>
-		      		<th>Banner</th>
-		      	</tr>
-	    	</thead>
-	    	<tbody>
-	   			<tr *ngFor ="let banner of banners" id="delete{{banner.id}}">
-	   				<td><input type="checkbox"
-	   					value={{banner.id}} name="banner[]" id="{{banner.id}}"
-	   					(change)="checkItemChange($event, banner)" [checked]="checkbox" /></td>
-	   				<td><a routerLink="/banner-detail/{{ banner.id }}"> {{ banner.sub_url }}</a></td>
-	   			</tr>
-	    	</tbody>
-		</table>
-	</div>
-	<hr>
-	<div class='row' *ngIf="banners">
-		<div class="col-md-3">
-			<select name="" class="form-control">
-				<option value="">Xóa các banner được chọn</option>
-			</select>
-		</div>
-		<div class="col-md-3" >
-			{{banner_del.length}} của {{banners.length}} được chọn
-			<button (click)="confirmDelete()" type="button" class="button-banner btn btn-danger">Thực hiện</button>
-		</div>
-	</div>
+        <div class="col-xs-12 col-sm-12">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
+                    (click)="changeLangVI()"
+                >VI</button>
+                <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
+                    (click)="changeLangEN()"
+                >EN</button>
+            </div> 
+        </div>
+    </div>
+    <div class="custom-table">
+        <table id="table-user" *ngIf="banners" datatable [dtOptions]='dtOptions' class='row-border hover'>
+            <thead>
+                <tr>
+                    <th class='checkbox-banner'><input type="checkbox" id="allCheck" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/></th>
+                    <th>Banner</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor ="let banner of banners" id="delete{{banner.id}}">
+                    <td><input type="checkbox"
+                        value={{banner.id}} name="banner[]" id="{{banner.id}}"
+                        (change)="checkItemChange($event, banner)" [checked]="checkbox" /></td>
+                    <td>
+                        <a [routerLink]="['/banner-detail/', banner.id, {lang: lang}]">{{ banner.sub_url }}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <div class='row' *ngIf="banners">
+        <div class="col-md-3">
+            <select name="" class="form-control">
+                <option value="">Xóa các banner được chọn</option>
+            </select>
+        </div>
+        <div class="col-md-3" >
+            {{banner_del.length}} của {{banners.length}} được chọn
+            <button (click)="confirmDelete()" type="button" class="button-banner btn btn-danger">Thực hiện</button>
+        </div>
+    </div>
 </div>
 

@@ -96,6 +96,7 @@ export class AdvertisementListComponent implements OnInit {
         if(event.target.checked){
             this.advs.forEach(function(element) {
                 listAdv_del.push(element.id);
+                $('#'+element.id).prop('checked', true);
             });
             this.checkbox = true;
             this.advs_delete = listAdv_del;
@@ -104,6 +105,7 @@ export class AdvertisementListComponent implements OnInit {
             this.checkbox = false;
             this.advs.forEach((item, index) => {
                 this.advs_delete.splice(index, this.advs.length);
+                $('#'+item.id).prop('checked', false);
             });
         }
     }
@@ -144,7 +146,7 @@ export class AdvertisementListComponent implements OnInit {
         if(this.advs_delete !== null && this.advs_delete.length > 0 ){
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.advs_delete.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.advs_delete.length + " quảng cáo đã chọn",
                 buttons: {
                     confirm: {
                         label: 'Xóa',
