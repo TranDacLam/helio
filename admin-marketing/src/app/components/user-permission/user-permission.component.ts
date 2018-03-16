@@ -25,20 +25,27 @@ export class UserPermissionComponent implements OnInit {
   dtElements: QueryList<DataTableDirective>;
   dtOptions_left: any = {};
   dtOptions_right: any = {};
-  dtTrigger: Subject<any> = new Subject();
+  dtTrigger_left: Subject<any> = new Subject();
+  dtTrigger_right: Subject<any> = new Subject();
+  // check 2 button move is checked
+  move_is_click: boolean = false;
 
   getUserRight(id: number){
   	this.userPermissionService.getUserRight(id).subscribe(
   		data =>{
-        
+        // reload datatable
         let self = this;
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
             self.user_list_right = [];
             self.user_list_right = data;
+            dtInstance.clear().draw();
             dtInstance.destroy();
-            self.dtTrigger.next();
-
+            self.dtTrigger_right.next();
         });
+        if (this.move_is_click){
+          this.move_is_click = false;
+          this.getUserLeft();
+        }
   		},
   		error =>{
           
@@ -46,21 +53,23 @@ export class UserPermissionComponent implements OnInit {
   	)
   }
     ngAfterViewInit(): void {
-    this.dtTrigger.next();
+    this.dtTrigger_right.next();
+    this.dtTrigger_left.next();
+
   }
-    rerender(){
-        this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
-          // Destroy the table first
-          dtInstance.destroy();
-          // Call the dtTrigger to rerender again
-          this.dtTrigger.next();
-      });
-    }
 
   getUserLeft(){
   	this.userPermissionService.getUserLeft().subscribe(
   		data =>{
-  			this.user_list_left = data;
+        // reload datatable
+        let self = this;
+        this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
+            self.user_list_left = [];
+            self.user_list_left = data;
+            dtInstance.clear().draw();
+            dtInstance.destroy();
+            self.dtTrigger_left.next();
+        });
   		},
   		error =>{
           
@@ -169,6 +178,7 @@ export class UserPermissionComponent implements OnInit {
         @author: diemnguyen
     */
     move_right(): void {
+        this.move_is_click = true;
         let selected_temp: any;
         this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
             selected_temp = dtInstance.rows( '.selected' ).data();
@@ -183,6 +193,8 @@ export class UserPermissionComponent implements OnInit {
         @author: diemnguyen
     */
     move_left(): void {
+        this.move_is_click = true;
+
         let selected_temp: any;
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
             selected_temp = dtInstance.rows( '.selected' ).data();
