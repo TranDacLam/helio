@@ -27,6 +27,7 @@ export class AdvertisementListComponent implements OnInit {
 	advs : Advertisement[];
 
 	advs_delete: any; // Contains all checkbox were selected
+    checkbox:boolean = false;
 
 	message_result: string = ''; // Message result
     record: string = "Quảng Cáo";
@@ -95,13 +96,13 @@ export class AdvertisementListComponent implements OnInit {
         if(event.target.checked){
             this.advs.forEach(function(element) {
                 listAdv_del.push(element.id);
-                $('#' + element.id).prop('checked', true);
-          });
+            });
+            this.checkbox = true;
             this.advs_delete = listAdv_del;
             this.message_result = "";
         }else{
+            this.checkbox = false;
             this.advs.forEach((item, index) => {
-                $('#'+item.id).prop('checked', false);
                 this.advs_delete.splice(index, this.advs.length);
             });
         }

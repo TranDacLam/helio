@@ -34,6 +34,7 @@
    			<tr *ngFor ="let hot_adv of hot_advs" id="delete{{hot_adv.id}}">
    				<td><input type="checkbox" id="{{hot_adv.id}}"
    					value={{hot_adv.id}} name=""
+   					[checked]="checkbox"
    					(change)="checkItemChange($event, hot_adv)"/></td>
         		<td>{{ hot_adv.name }}</td>
    			</tr>

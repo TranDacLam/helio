@@ -38,6 +38,7 @@
                 name="{{ feedback.id }}"
                 value="{{ feedback.id }}"
                 id="{{ feedback.id }}"
+                [checked]="checkbox"
                 (change)="changeCheckboxFeedback($event, feedback)"
                 />
                 </label>

@@ -9,7 +9,7 @@ export class DenominationValidators {
 		if(denomiValues === null && denomiVal !== '') {
 			return {
                 'denominationValidate': {
-                    'message': 'Please valid format denomination.'
+                    'message': 'Vui lòng nhập mệnh giá tiền hợp lệ.'
                 }
             };
 		}
