@@ -5,7 +5,7 @@
 export let data_config = function(record) {
     return {
         record: record,
-        order: [[ 1, 'desc' ]], 
+        order: [[ 0, 'desc' ]], 
         dtOptions : {
             // Declare the use of the extension in the dom parameter
             language: {
@@ -28,6 +28,7 @@ export let data_config = function(record) {
             },
             responsive: true,
             pagingType: "full_numbers",
+            order: [[ 1, 'desc' ]],
             columnDefs: [
                 { orderable: false, targets: 0 }
             ]

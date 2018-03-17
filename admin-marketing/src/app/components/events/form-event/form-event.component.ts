@@ -103,6 +103,18 @@ export class FormEventComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(): void{
+        // set and update valdiator, so error validate ng-datetime "owlDateTimeParse"
+        this.formEvent.controls['start_date'].setValidators([DateValidators.checkDate, 
+            DateValidators.formatStartDate, DateValidators.requiredStartDate]);
+        this.formEvent.controls['start_date'].updateValueAndValidity();
+        this.formEvent.controls['end_date'].setValidators([DateValidators.checkDate, 
+            DateValidators.formatEndDate, DateValidators.requiredStartDate]);
+        this.formEvent.controls['end_date'].updateValueAndValidity();
+        this.formEvent.controls['start_time'].setValidators([DateValidators.formatStartTime]);
+        this.formEvent.controls['start_time'].updateValueAndValidity();
+        this.formEvent.controls['end_time'].setValidators([DateValidators.formatEndTime]);
+        this.formEvent.controls['end_time'].updateValueAndValidity();
+        
         if(this.formEvent.invalid){
             ValidateSubmit.validateAllFormFields(this.formEvent);
         }else{
