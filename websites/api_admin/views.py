@@ -2285,7 +2285,8 @@ class RoleListAPI(APIView):
 """
     UserRoleList
     @author :Hoangnguyen
- 
+    case 1: get user by role_id
+    case 2: get user is staff, no role
 """
 
 
@@ -2296,9 +2297,11 @@ class UserRoleListAPI(APIView):
         try:
             role_id = self.request.query_params.get('role_id', None)
             if role_id:
+                # get user by role_id
                 role = Roles.objects.get(id=role_id)
                 users = role.user_role_rel.all()
             else:
+                # get user is staff, no role
                 users = User.objects.filter(is_staff=True, role__isnull=True)
             userSerializer = admin_serializers.UserSerializer(users, many=True)
             return Response(userSerializer.data)
@@ -2315,7 +2318,11 @@ class UserRoleListAPI(APIView):
     SetRole
     @author :Hoangnguyen
     check role exist
-    check user has no role
+    case 1: set role for users
+            clear all users of role
+            set role for user
+    case 2: clear all users of role
+    
     
 """
 
@@ -2326,14 +2333,19 @@ class SetRoleAPI(APIView):
     def put(self, request, role_id):
         try:
             role = Roles.objects.get(id=role_id)
-            list_id = request.data.get('list_id', None)
-            if list_id:
-                users = User.objects.filter(id__in=list_id)
-                if users:
-                    role.user_role_rel.set(users)
-                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            if 'list_id' in request.data:
+                list_id = request.data.get('list_id', None )
+                if list_id:
+                    # set role for users
+                    users = User.objects.filter(id__in=list_id)
+                    if users:
+                        role.user_role_rel.set(users)
+                        return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 400, "message": "Not Found users.", "fields": ""}, status=400)
+                #list_id is empty then clear all user of role
+                role.user_role_rel.clear()
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
 
-                return Response({"code": 400, "message": "Not Found users.", "fields": ""}, status=400)
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
 
         except Roles.DoesNotExist, e:
