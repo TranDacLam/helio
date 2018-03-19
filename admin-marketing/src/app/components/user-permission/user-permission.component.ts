@@ -254,7 +254,7 @@ export class UserPermissionComponent implements OnInit {
                 sSearch: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
                 lengthMenu: "Hiển thị _MENU_ dòng",
-                sZeroRecords:  "Không tìm thấy dòng nào phù hợp",
+                sZeroRecords:  "Không tìm thấy User nào phù hợp",
                 info: "Hiển thị _START_ đến _END_ của _TOTAL_",
                 paginate: {
                     'first': "Đầu",
@@ -284,12 +284,12 @@ export class UserPermissionComponent implements OnInit {
                 sSearch: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
                 lengthMenu: "Hiển thị _MENU_ dòng",
-                sZeroRecords:  "Không tìm thấy dòng nào phù hợp",
+                sZeroRecords:  "Không tìm thấy User nào phù hợp",
                 info: "Hiển thị _START_ đến _END_ của _TOTAL_",
                 paginate: {
                     'first': "Đầu",
                     'last': "Cuối",
-                    'next': "Sau",
+                    'next': "Sau", 
                     'previous': "Trước"
                 }
             },

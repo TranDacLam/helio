@@ -235,6 +235,14 @@ class FeeSerializer(serializers.ModelSerializer):
         model = Fee
         exclude = ('created', 'modified')
 
+    def create(self, validated_data):
+        fee = Fee.objects.create( **validated_data )
+        return fee
+        
+    def validate(self, data):
+        data['position'] = data.pop('get_position_display')
+        return data
+
 
 class BannerSerializer(serializers.ModelSerializer):
 

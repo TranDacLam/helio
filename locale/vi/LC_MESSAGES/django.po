@@ -584,8 +584,8 @@ msgid "Moved to related department"
 msgstr "Đã chuyển đến bộ phận liên quan"
 
 msgid "Ticket transfer fee"
-msgstr "Phí chuyển ticket"
+msgstr "Phí Chuyển Ticket"
 
 msgid "Deposit fee"
-msgstr "Phí nộp tiền"
+msgstr "Phí Nạp Tiền"
 

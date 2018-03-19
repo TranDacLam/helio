@@ -1121,7 +1121,7 @@ class FeeListAPI(APIView):
 
     def get(self, request, format=None):
         try:
-            fee = Fee.objects.all()
+            fee = Fee.objects.all().order_by('-created')
             feeSerializer = admin_serializers.FeeSerializer(fee, many=True)
             return Response(feeSerializer.data)
 
@@ -1365,7 +1365,7 @@ class EventListAPI(APIView):
 
     def get(self, request, format=None):
         try:
-            events = Event.objects.all()
+            events = Event.objects.all().order_by('-created')
             eventSerializer = admin_serializers.EventSerializer(
                 events, many=True)
             return Response(eventSerializer.data)
@@ -1475,7 +1475,7 @@ class PromotionLabelListAPI(APIView):
 
     def get(self, request):
         try:
-            promotionLabels = Promotion_Label.objects.all()
+            promotionLabels = Promotion_Label.objects.all().order_by('-created')
             promotionLabelSerializer = admin_serializers.PromotionLabelSerializer(
                 promotionLabels, many=True)
             return Response(promotionLabelSerializer.data)
@@ -1583,7 +1583,7 @@ class HotListAPI(APIView):
 
     def get(self, request):
         try:
-            hot = Hot.objects.all()
+            hot = Hot.objects.all().order_by('-created')
             hotSerializer = admin_serializers.HotSerializer(hot, many=True)
             return Response(hotSerializer.data)
         except Exception, e:
@@ -1711,7 +1711,7 @@ class PostListAPI(APIView):
 
     def get(self, request):
         try:
-            post = Post.objects.all()
+            post = Post.objects.all().order_by('-created')
             postSerializer = admin_serializers.PostSerializer(post, many=True)
             return Response(postSerializer.data)
         except Exception, e:
@@ -1747,7 +1747,7 @@ class PostTypeListAPI(APIView):
 
     def get(self, request):
         try:
-            post_Type = Post_Type.objects.all()
+            post_Type = Post_Type.objects.all().order_by('-created')
             postSerializer = admin_serializers.PostTypeSerializer(
                 post_Type, many=True)
             return Response(postSerializer.data)
@@ -1834,7 +1834,7 @@ class FAQListAPI(APIView):
 
     def get(self, request):
         try:
-            faq = FAQ.objects.all()
+            faq = FAQ.objects.all().order_by('-created')
             faqSerializer = admin_serializers.FAQSerializer(faq, many=True)
             return Response(faqSerializer.data)
         except Exception, e:
@@ -2162,7 +2162,7 @@ class GameListAPI(APIView):
 
     def get(self, request):
         try:
-            game = Game.objects.all()
+            game = Game.objects.all().order_by('-created')
             gameSerializer = admin_serializers.GameSerializer(game, many=True)
             return Response(gameSerializer.data)
         except Exception, e:
@@ -2198,7 +2198,7 @@ class TypeListAPI(APIView):
 
     def get(self, request):
         try:
-            types = Type.objects.all()
+            types = Type.objects.all().order_by('-created')
             typeSerializer = admin_serializers.TypeSerializer(types, many=True)
             return Response(typeSerializer.data)
         except Exception, e:
@@ -2274,7 +2274,7 @@ class RoleListAPI(APIView):
 
     def get(self, request):
         try:
-            roles = Roles.objects.all()
+            roles = Roles.objects.all().order_by('id')
             roleSerializer = admin_serializers.RoleSerializer(roles, many=True)
             return Response(roleSerializer.data)
         except Exception, e:
@@ -2300,10 +2300,10 @@ class UserRoleListAPI(APIView):
             if role_id:
                 # get user by role_id
                 role = Roles.objects.get(id=role_id)
-                users = role.user_role_rel.all()
+                users = role.user_role_rel.all().order_by('-date_joined')
             else:
                 # get user is staff, no role
-                users = User.objects.filter(is_staff=True, role__isnull=True)
+                users = User.objects.filter(is_staff=True, role__isnull=True).order_by('-date_joined')
             userSerializer = admin_serializers.UserSerializer(users, many=True)
             return Response(userSerializer.data)
 
