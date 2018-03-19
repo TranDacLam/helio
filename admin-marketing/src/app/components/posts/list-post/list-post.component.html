@@ -11,9 +11,9 @@
 <div class="row text-center">
     <h1>Quản Lý Bài Viết</h1>
 </div>
-<div class="row mt-50 mb-30 custom-title">
+<div class="row mt-50 mb-15 custom-title">
     <div class="col-xs-12 col-sm-12">
-        <a class="btn custom-button pull-right" routerLink="/post/add">
+        <a class="btn custom-button pull-right" [routerLink]="['/post/add/', {lang: lang}]">
             <i class="fa fas fa-plus icon-button"></i>
             TẠO BÀI VIẾT MỚI
         </a>
@@ -25,18 +25,32 @@
         <h4>{{message_result}}</h4>
     </div>
 </div>
-<div>
-    <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="posts">
+<div class="row mb-30 language">
+    <div class="col-xs-12 col-sm-12">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
+                (click)="changeLangVI()"
+            >VI</button>
+            <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
+                (click)="changeLangEN()"
+            >EN</button>
+        </div> 
+    </div>
+</div>
+<div class="custom_table">
+    <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="posts">
         <thead>
             <tr>
-                <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
+                <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                <th>ID</th>
                 <th>Bài Viết</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let post of posts" id="del-{{post.id}}">
-                <td><input type="checkbox" (change)="onSelectCKB($event, post)" [checked]="select_checked"/></td>
-                <td><a routerLink="/post/edit/{{ post.id }}">{{ post.name }}</a></td>
+            <tr class="row-data" *ngFor="let post of posts">
+                <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                <td>{{ post.id }}</td>
+                <td><a [routerLink]="['/post/edit/', post.id, {lang: lang}]">{{ post.name }}</a></td>
             </tr>
         </tbody>
     </table>
@@ -48,7 +62,7 @@
         </select>
     </div>
     <div class="col-md-3">
-        {{ posts_del.length }} của {{ length_posts }} được chọn 
+        {{ length_selected }} của {{ length_all }} được chọn 
         <button class="btn btn-danger" (click)="deletePostEvent()">Thực hiện</button>
     </div>
 </div>

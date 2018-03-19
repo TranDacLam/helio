@@ -12,6 +12,7 @@ import { PostService } from '../../../shared/services/post.service';
 export class EditPostComponent implements OnInit {
 
     post: Post;
+    lang = 'vi';
 
     constructor(
         private postService: PostService,
@@ -20,6 +21,11 @@ export class EditPostComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
         this.getPost();
     }
 
@@ -31,7 +37,7 @@ export class EditPostComponent implements OnInit {
     */
     getPost(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.postService.getPost(id).subscribe(
+        this.postService.getPost(id, this.lang).subscribe(
             (data) => {
                 this.post = data;
             },

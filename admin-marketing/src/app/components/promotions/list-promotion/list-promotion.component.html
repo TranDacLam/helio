@@ -41,7 +41,7 @@
 <div class="row custom_table">
     <div class="col-md-12">
         <div class="datatable-content">
-            <table id="promotion_table_id" datatable [dtOptions]="dtOptions"  dt-instance="dtInstanceCallback" class="row-border hover"  *ngIf="promotion_list">
+            <table id="table_id" datatable [dtOptions]="dtOptions"  dt-instance="dtInstanceCallback" class="row-border hover"  *ngIf="promotion_list">
                 <thead>
                     <tr>
                         <th class="text-center"><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"></th>
