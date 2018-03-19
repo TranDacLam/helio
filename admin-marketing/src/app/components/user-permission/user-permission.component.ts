@@ -105,7 +105,7 @@ export class UserPermissionComponent implements OnInit {
       this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
           var list_id = dtInstance.column(1).data().toArray();
           var role_id = $('.role_checkbox:checked').val();
-          this.userPermissionService.setRoleUser( list_id, 67).subscribe(
+          this.userPermissionService.setRoleUser( list_id, role_id).subscribe(
             data =>{
 
             },
@@ -120,6 +120,7 @@ export class UserPermissionComponent implements OnInit {
       @author: hoangnguyen 
   */
   move_left_all(){
+    this.move_is_click = true;
     let selected_temp: any;
       this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
           selected_temp = dtInstance.rows( 'tr' ).data();
@@ -188,7 +189,6 @@ export class UserPermissionComponent implements OnInit {
         @author: hoangnguyen 
     */
     selectCheckboxRight(event) {   
-        console.log(event);
         $(event.target).closest( "tr" ).toggleClass( "selected" );
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
             // Any row not selected then checked all button is not checked
