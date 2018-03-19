@@ -61,7 +61,7 @@ export class FormEventComponent implements OnInit {
     creatForm(): void{
         this.formEvent = this.fb.group({
             name: [this.event.name, [Validators.required, Validators.maxLength(255)]],
-            image: [this.event.image, [Validators.maxLength(1000)]],
+            image: [this.event.image],
             short_description: [this.event.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.event.content, Validators.required],
             start_date: [this.event.start_date ? moment(this.event.start_date,"DD/MM/YYYY").toDate() : '', 

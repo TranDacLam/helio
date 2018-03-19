@@ -250,7 +250,7 @@ h1.h1-title {
 .multiselect_user #DataTables_Table_1_wrapper {
     overflow: auto !important;
 }
-.dataTables_scrollBody{
+.multiselect_user .dataTables_scrollBody{
     min-height: 433px;
 }
 
