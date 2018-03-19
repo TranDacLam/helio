@@ -4,6 +4,7 @@ import { FeeService } from '../../../shared/services/fee.service';
 import { Subject } from 'rxjs/Subject';
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
+import { data_config } from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
 
@@ -29,6 +30,7 @@ export class FeeListComponent implements OnInit {
    errorText: string;
    // list consist of id to delete list 
    list_id = [];
+   record: string ="Phí Giao Dịch";
 
    // action when hover
    hoverIn(fee){
@@ -111,6 +113,16 @@ export class FeeListComponent implements OnInit {
           bootbox.confirm({ 
             title: "Bạn có chắc chắn",
             message: "Bạn muốn xóa " + this.list_id.length + " phần tử đã chọn",
+             buttons: {
+              confirm: {
+                  label: 'OK',
+                  className: 'btn-primary'
+              },
+              cancel: {
+                  label: 'Hủy',
+                  className: 'btn-default'
+              }
+              },  
             callback: function(result){ 
               /* result is a boolean; true = OK, false = Cancel*/
               if (result){
@@ -203,22 +215,7 @@ export class FeeListComponent implements OnInit {
 
   ngOnInit() {
   	this.getFees();
-  	this.dtOptions = {
-      language: {
-            search: 'Tìm kiếm',
-            searchPlaceholder: ' Nhập thông tin tìm kiếm',
-            lengthMenu: 'Hiển thị _MENU_ Phí Giao Dịch',
-            info: "Hiển thị _START_ tới _END_ của _TOTAL_ Phí",
-            paginate: {
-            "first":      "Đầu",
-            "last":       "Cuối",
-            "next":       "Sau",
-            "previous":   "Trước"
-          },
-          zeroRecords: 'Không có phản hồi nào để hiển thị',
-          infoEmpty: ""
-          },
-    };
+     this.dtOptions = data_config(this.record).dtOptions;
   }
 
 }

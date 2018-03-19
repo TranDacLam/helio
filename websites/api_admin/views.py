@@ -108,7 +108,7 @@ class PromotionDetail(APIView):
                 # print "serializer.user_implementer"
                 serializer.save()
                 return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
         except Exception, e:
             print 'PromotionDetailView POST', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -126,7 +126,7 @@ class PromotionDetail(APIView):
                 serializer.save()
                 return Response(serializer.data)
             print serializer.errors
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status = 400)
         except Exception, e:
             print 'PromotionDetailView PUT', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -676,7 +676,7 @@ class NotificationDetail(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status = 400)
         except Exception, e:
             print 'NotificationDetailView PUT', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -691,7 +691,8 @@ class NotificationDetail(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status = 400)
+            
         except Exception, e:
             print 'NotificationDetailView PUT', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1427,7 +1428,7 @@ class PromotionLabelAPI(APIView):
             if promotionLabelSerializer.is_valid():
                 promotionLabelSerializer.save()
                 return Response(promotionLabelSerializer.data)
-            return Response(promotionLabelSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"code": 400, "message": promotionLabelSerializer.errors, "fields": ""}, status = 400)
 
         except Exception, e:
             print "PromotionLabelAPI ", e
