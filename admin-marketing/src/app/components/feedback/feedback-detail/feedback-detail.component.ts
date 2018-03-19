@@ -95,6 +95,7 @@ export class FeedbackDetailComponent implements OnInit {
     	    .subscribe(
                 () => this.router.navigate(['/feedback-list', { message_put: this.feedback.name} ]),
                 (error) =>  {
+                    console.log(error);
                     if (error.status == 400) {
                         this.errorMessage = error.json().message
                     } else {

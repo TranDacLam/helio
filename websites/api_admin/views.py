@@ -1925,7 +1925,7 @@ class UserListView(APIView):
     def get(self, request, format=None):
         print "METHOD GET"
         try:
-            users = User.objects.all().order_by('-created')
+            users = User.objects.all().order_by('-date_joined')
             serializer = admin_serializers.UserRoleDisplaySerializer(
                 users, many=True)
             return Response(serializer.data)

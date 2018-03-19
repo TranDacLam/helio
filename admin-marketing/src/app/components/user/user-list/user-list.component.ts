@@ -99,7 +99,7 @@ export class UserListComponent implements OnInit {
         if(event.target.checked){
             this.users.forEach(function(element) {
                 array_del.push(element.id);
-                // $('#check_'+element.id).prop('checked', true);
+                $('#check_'+element.id).prop('checked', true);
             });
             this.checkbox = true;
             this.user_selected = array_del;
@@ -107,7 +107,7 @@ export class UserListComponent implements OnInit {
         }else{
             this.checkbox = false;
             this.users.forEach((item, index) => {
-                // $('#check_'+item.id).prop('checked', false);
+                $('#check_'+item.id).prop('checked', false);
         		this.user_selected.splice(index, this.users.length);
      		});
         }
@@ -151,7 +151,7 @@ export class UserListComponent implements OnInit {
         if(this.user_selected !== null && this.user_selected.length > 0 ){
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.user_selected.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.user_selected.length + " user đã chọn",
                 buttons: {
                     confirm: {
                         label: 'Xóa',

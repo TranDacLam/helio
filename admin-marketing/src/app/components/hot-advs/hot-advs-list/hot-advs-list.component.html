@@ -3,17 +3,17 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item"><a routerLink="/hot-advs-list">Hot Advs</a></li>
+            <li class="breadcrumb-item"><a routerLink="/hot-advs-list">Hot Ads</a></li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
 <div class='row title-hot-advs'>
-	<a class="pull-left" routerLink="/hot-advs-list">Hot Advs</a>
+	<a class="pull-left" routerLink="/hot-advs-list">Hot Ads</a>
 	<a class="pull-right" routerLink="/hot-advs-add">
 		<div class="btn btn-primary">
 			<span class="glyphicon glyphicon-plus"></span>
-			Thêm Hot Advs
+			Thêm Hot Ads
 		</div>
 	</a>
 </div>
@@ -27,7 +27,7 @@
 	      	<tr>
 	      		<th class="checkbox-hot-advs"><input type="checkbox" id="allCheck" name="allCheckHotAdvs" value="allCheckHotAdvs"(change)="checkAllHotAdvs($event)"/></th>
 
-	        	<th>Hot Advs</th>
+	        	<th>Hot Ads</th>
 	      	</tr>
     	</thead>
     	<tbody>
@@ -44,12 +44,12 @@
 	<div class='row'>
 		<div class="col-md-3">
 			<select name="" class="form-control">
-				<option value="">Xóa các hot advs được chọn</option>
+				<option value="">Xóa các Hot Ads được chọn</option>
 			</select>
 		</div>
 		<div class="col-md-3">
 			{{hot_adv_selected.length}} của {{hot_advs.length}} được chọn
-			<button (click)="confirmDelete()" type="button" class="btn btn-danger">Thực hiện</button>
+			<button (click)="confirmDelete()" type="button" class=" button-hot-ads btn btn-danger">Thực hiện</button>
 		</div>
 	</div>
 </div>

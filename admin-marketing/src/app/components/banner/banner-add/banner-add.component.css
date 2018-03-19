@@ -1,3 +1,21 @@
 p.errors {
 	color: red;
 }
+.title-banner {
+	margin: 10px 0;
+	border-bottom: 2px solid black;
+	padding: 10px 0;
+}
+.title-banner a {
+	text-decoration: none;
+	list-style-type: none;
+	color: black;
+}
+.area-form-banner {
+	margin: 20px 0;
+}
+.footer-banner {
+	border-top: 2px solid black;
+	margin-top: 10px;
+	padding: 20px 0;
+}

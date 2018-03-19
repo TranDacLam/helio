@@ -101,7 +101,7 @@ export class FeedbackListComponent implements OnInit {
         if (event.target.checked) {
             this.feedbacks.forEach(function(element) {
                 arrFeedback_del.push(element.id)
-                // $('#'+element.id).prop('checked', true);
+                $('#'+element.id).prop('checked', true);
             });
             this.checkbox = true;
             this.feedback_del = arrFeedback_del
@@ -110,7 +110,7 @@ export class FeedbackListComponent implements OnInit {
             this.checkbox = false;
             this.feedbacks.forEach((item, index) => {
                 this.feedback_del.splice(index, this.feedbacks.length);
-                // $('#'+item.id).prop('checked', false);
+                $('#'+item.id).prop('checked', false);
             });
         }
     }
@@ -146,7 +146,7 @@ export class FeedbackListComponent implements OnInit {
         if(this.feedback_del !== null && this.feedback_del.length > 0 ){
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.feedback_del.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.feedback_del.length + " phản hồi đã chọn",
                 buttons: {
                     confirm: {
                         label: 'Xóa',

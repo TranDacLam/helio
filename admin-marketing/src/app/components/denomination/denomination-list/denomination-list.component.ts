@@ -86,6 +86,7 @@ export class DenominationListComponent implements OnInit {
         if(event.target.checked){
             this.denominations.forEach(function(element) {
                 array_del.push(element.id);
+                $('#'+element.id).prop('checked', true);
             });
             this.checkbox = true;
             this.deno_selected = array_del;
@@ -94,6 +95,7 @@ export class DenominationListComponent implements OnInit {
             this.checkbox = false;
             this.denominations.forEach((item, index) => {
                 this.deno_selected.splice(index, this.denominations.length);
+                $('#'+item.id).prop('checked', true);
             });
         }
     }

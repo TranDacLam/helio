@@ -1,4 +1,5 @@
 import { FormControl, FormBuilder, FormArray, ValidationErrors } from '@angular/forms';
+import * as moment from 'moment';
 
 export class UserValidators {
 
@@ -9,7 +10,7 @@ export class UserValidators {
 		if(passValues === null && passVal !== '') {
 			return {
                 'passwordValidate': {
-                    'message': 'Password must be between 8 and 32 digits long and include at least one numeric digit.'
+                    'message': 'Mật khẩu phải dài từ 8 đến 32 chữ số và bao gồm ít nhất một chữ số.'
                 }
             };
 		}
@@ -26,11 +27,39 @@ export class UserValidators {
 		if(phoneValues === null && phone !== '') {
 			return {
 				'phoneValidate': {
-					'message': 'Please enter number phone valid'
+					'message': 'Vui lòng nhập số điện thoại hợp lệ.'
 				}
 			};
 		}
 		return null;	
+	}
+
+	static emailValidators(fc: FormControl):ValidationErrors {
+		let emailRegx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+		let email = fc.value;
+		let emailValue = email ? email.match(emailRegx): '';
+
+		if(emailValue === null && email !== '') {
+			return {
+				'emailValidate': {
+					'message': 'Vui lòng nhập địa chỉ email hợp lệ.'
+				}
+			}
+		}
+		return null;
+	}
+
+	static birtdateValidators(fc: FormControl): ValidationErrors {
+		let birtdate = $('#birth_date').val() ? moment($('#birth_date').val(), "DD/MM/YYYY").toDate() : '';
+		var today = new Date();
+		if (birtdate > today) {
+			return {
+				'birtdateValidate': {
+					'message': 'Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại'
+				}
+			}
+		}
+		return null;
 	}
 }
 
