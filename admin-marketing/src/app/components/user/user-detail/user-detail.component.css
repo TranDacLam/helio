@@ -17,6 +17,7 @@ p.errors {
 p.title-user-edit {
 	border-bottom: 2px solid black;
 	padding: 10px 0;
+	font-size: 34px;
 }
 p.info-users {
 	padding: 15px 0;
