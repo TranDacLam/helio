@@ -358,11 +358,17 @@ class AdvertisementDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        advertisement = self.get_object(pk)
-        advertisement.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        try: 
+            advertisement = self.get_object(pk)
+            advertisement.delete()
 
-
+            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+        except Advertisement.DoesNotExist, e:
+            return Response({"code": 400, "message": "Not Found Game.", "fields": ""}, status=400)
+        except Exception, e:
+            print "AdvertisementApI", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
 """
 Get PromotionType
 @author: Trangle
@@ -588,7 +594,7 @@ class UserLinkCardList(APIView):
 
             if user_linked_id:
                 queryset = User.objects.filter(
-                    pk__in=user_linked_id).delete()
+                    pk__in=user_linked_id).update(barcode=None, username_mapping=None, date_mapping=None)
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
@@ -1254,9 +1260,14 @@ class BannerViewDetail(APIView):
             return Response(error, status=500)
 
     def delete(self, request, pk, format=None):
-        banner = self.get_object(pk)
-        banner.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        try:
+            banner = self.get_object(pk)
+            banner.delete()
+            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+        except Exception, e:
+            print "BannerViewApi", e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
 
 
 """
@@ -2028,7 +2039,7 @@ class UserDetailView(APIView):
                     if(self.request.user.role_id == 1):
                         user.set_password(self.request.data.get("new_password"))
                     else:
-                        raise serializer.ValidationError("Just System Admin Change password") 
+                        return Response({"code": 405, "message": "Just System Admin Change password", "fields": ""}, status=405) 
                 else:
                     user.password = self.request.data.get('password', user.password)
                 serializer.save()
@@ -2051,9 +2062,9 @@ class UserDetailView(APIView):
             if role_id == 1:
                 print "role_id", role_id
                 user.delete()
+                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             else:
-                return Response({"code": 405, "message": "Just System Admin accept delete"}, status=405)
-            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 405, "message": "Just System Admin accept delete", "fields": ""}, status=405)
         except Exception, e:
             print 'UserDetailView PUT', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}

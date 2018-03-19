@@ -11,4 +11,12 @@
 .btn-link-card {
 	margin-left: 15px;
 }
+p.title {
+	font-size: 34px;
+}
+.custom-title {
+	margin: 15px 0px;
+	border-bottom: 2px solid black;
+	padding: 0 0 10px 0px;
+}
 /*End contetn link-card users*/

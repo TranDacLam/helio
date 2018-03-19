@@ -3,6 +3,10 @@
 	border-bottom: 2px solid #333;
 	margin: 10px 0 20px 0;
 	padding: 10px 0;
+
+}
+p.title {
+	font-size: 34px;
 }
 a.pull-left {
 	color: #333;
