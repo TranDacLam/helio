@@ -28,7 +28,6 @@ export let data_config = function(record) {
             },
             responsive: true,
             pagingType: "full_numbers",
-            order: [[ 1, 'desc' ]],
             columnDefs: [
                 { orderable: false, targets: 0 }
             ]

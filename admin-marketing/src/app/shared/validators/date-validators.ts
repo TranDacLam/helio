@@ -12,7 +12,7 @@ export class DateValidators {
         if(c.dirty){
             const message = {
                 'fomatDate': {
-                    'message': 'Ngày bắt đầu nhỏ hơn ngày kết thúc'
+                    'message': 'Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu'
                 }
             };
             let start = $('#start_date').val() ? moment($('#start_date').val(), "DD/MM/YYYY").toDate() : '';
@@ -38,7 +38,7 @@ export class DateValidators {
             }else if(dateValues === null){
                 return {
                     'fomatDate': {
-                        'message': 'Định dạng ngày phải là dd/MM/yyyy'
+                        'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/MM/yyy'
                     }
                 };
             }
@@ -60,7 +60,7 @@ export class DateValidators {
             }else if(dateValues === null){
                 return {
                     'fomatDate': {
-                        'message': 'Định dạng ngày phải là dd/MM/yyyy'
+                        'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/MM/yyy'
                     }
                 };
             }
@@ -77,7 +77,7 @@ export class DateValidators {
         if(getValDate === ''){
             return {
                 'required_date': {
-                    'message': 'Trường này bắt buộc'
+                    'message': 'Trường không được bỏ trống'
                 }
             };
         }
@@ -93,7 +93,7 @@ export class DateValidators {
         if(getValDate === ''){
             return {
                 'required_date': {
-                    'message': 'Trường này bắt buộc'
+                    'message': 'Trường không được bỏ trống'
                 }
             };
         }
@@ -114,13 +114,13 @@ export class DateValidators {
         if(getValTime === ''){
             return {
                 'required_time': {
-                    'message': 'Trường này bắt buộc'
+                    'message': 'Trường không được bỏ trống'
                 }
             };
         }else if(timeValues === null){
             return {
                 'fomatDate': {
-                    'message': 'Định dạng thời gian không đúng'
+                    'message': 'Định dạng thời gian sai. Vui lòng chọn lại thời gian HH:mm'
                 }
             };
         }
@@ -141,13 +141,13 @@ export class DateValidators {
         if(getValTime === ''){
             return {
                 'required_time': {
-                    'message': 'Trường này bắt buộc'
+                    'message': 'Trường không được bỏ trống'
                 }
             };
         }else if(timeValues === null){
             return {
                 'fomatDate': {
-                    'message': 'Định dạng thời gian không đúng'
+                    'message': 'Định dạng thời gian sai. Vui lòng chọn lại thời gian HH:mm'
                 }
             };
         }
@@ -167,7 +167,7 @@ export class DateValidators {
         }else if(dateValues === null){
             return {
                 'fomatDate': {
-                    'message': 'Định dạng ngày phải là dd/MM/yyyy'
+                    'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/MM/yyy'
                 }
             };
         }
