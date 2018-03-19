@@ -61,6 +61,8 @@ export class BannerListComponent implements OnInit {
                 this.message_result = " Thêm "+ params.message_post + " thành công.";
             } else if ( params.message_put ) {
                 this.message_result = "  Chỉnh sửa  "+ params.message_put + " thành công.";
+            } else if(params.message_del) {
+                this.message_result = "  Xóa  "+ params.message_del + " thành công.";
             } else {
                 this.message_result = "";
            }

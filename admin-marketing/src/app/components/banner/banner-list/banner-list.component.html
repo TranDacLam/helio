@@ -3,13 +3,15 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a routerLink="/banner-list">Banner</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Banner</li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
+<div class="row text-center">
+    <p class="title">Banner</p>
+</div>
 <div class='row content-banner'>
-    <a class="pull-left" routerLink="/banner-list">Banner</a>
     <a class="pull-right" [routerLink]="['/banner-add/', {lang: lang}]">
         <div class="btn btn-primary">
             <span class="glyphicon glyphicon-plus"></span>

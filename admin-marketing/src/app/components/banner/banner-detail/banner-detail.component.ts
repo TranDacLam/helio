@@ -7,6 +7,9 @@ import { BannerService } from '../../../shared/services/banner.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { env } from '../../../../environments/environment';
 
+// Using bootbox 
+declare var bootbox:any;
+
 @Component({
   selector: 'app-banner-detail',
   templateUrl: './banner-detail.component.html',
@@ -86,7 +89,7 @@ export class BannerDetailComponent implements OnInit {
             this.formBanner.get(input_id).setValue({ filename: file.name, filetype: file.type, value: file });
         }
     }
-    onSubmit() {
+    updateBanner() {
         if(this.formBanner.invalid){
             ValidateSubmit.validateAllFormFields(this.formBanner);
         } else {
@@ -106,6 +109,18 @@ export class BannerDetailComponent implements OnInit {
                 }
             );
         }
+    }
+
+    deleteBanner() {
+        const id = this.banner.id;
+        this.bannerService.deleteUserById(id, this.lang).subscribe(
+            (data) => {
+                this.router.navigate(['/banner-list', { message_del: this.banner.sub_url}]);
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message }])
+            }
+        );
     }
 
     /*
@@ -134,5 +149,28 @@ export class BannerDetailComponent implements OnInit {
             });
         }
         return bannerFormData;
+    }
+
+    confirmDelete(banner: Banner) {
+        bootbox.confirm({
+            title: "Bạn có chắc chắn?",
+            message: "Bạn muốn xóa Banner này.",
+            buttons: {
+                confirm: {
+                    label: 'Xóa',
+                    className: 'btn-success',
+                },
+                cancel: {
+                    label: 'Hủy',
+                    className: 'pull-left btn-danger',
+                }
+            },
+            callback: (result)=> {
+                if(result) {
+                    // Check result = true. call function callback
+                    this.deleteBanner()
+                }
+            }
+        });
     }
 }
