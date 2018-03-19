@@ -380,7 +380,7 @@ class Fee(DateTimeModel):
     )
     POSITION_TYPE = (
         ('tickets', _('Ticket transfer fee')),
-        ('deposit', 'Deposit fee')
+        ('deposit', _('Deposit fee'))
     )
     fee = models.IntegerField(default=0)
     fee_type = models.CharField(max_length=20, choices=FEE_TYPE, default="%")

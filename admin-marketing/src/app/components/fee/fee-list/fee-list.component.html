@@ -1,15 +1,12 @@
 <ol class="breadcrumb">
     <li><a routerLink='/'>Trang Chủ</a></li>
-    <li class="active">Quản Lý Phí Giao Dịch</li>
+    <li class="active">Phí Giao Dịch</li>
  </ol>
 <div class="row text-center">
     <h1>PHÍ GIAO DỊCH</h1>
 </div>
 <div class="row mt-30 mb-30">
-    <div class="col-xs-6 col-sm-6">
-        <a class="btn custom_btn" routerLink="/">TRỞ VỀ TRANG QUẢN TRỊ</a>
-    </div>
-    <div class="col-xs-6 col-sm-6">
+    <div class="col-xs-6 col-sm-6 pull-right">
         <a class="btn custom_btn pull-right" routerLink="/fee/add">
 			<span class="glyphicon glyphicon-plus"></span>
 			THÊM PHÍ GIAO DỊCH
@@ -56,7 +53,7 @@
 <div class='row under-table'>
 	<div class="col-md-3">
 		<select name="" class="form-control">
-			<option value="">Xóa các phí dịch được chọn</option>
+			<option value="">Xóa các phí giao dịch được chọn</option>
 		</select>
 	</div>
 	<div class="col-md-3" *ngIf="fees" >

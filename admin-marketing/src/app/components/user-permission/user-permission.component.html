@@ -19,7 +19,15 @@
 		<p>Chưa có Quyền nào.</p>
 	</div>
 </div>
-
+<div class="row head-table">
+    <div class="col-md-6 text-center">
+            DANH SÁCH TẤT CẢ USER
+        
+    </div>
+    <div class="col-md-6 text-center">
+            DANH SÁCH TẤT CẢ USER ĐƯỢC CHỌN
+    </div>     
+</div>
 <div class="row multiselect_user">
     <div class="col-md-5 datatable-content">
         <table datatable  [dtOptions]="dtOptions_left"  [dtTrigger]="dtTrigger_left" class="row-border hover">
@@ -52,6 +60,7 @@
         <button class="btn btn-danger move_item" (click)="move_left()"> <i class="fa fa-long-arrow-left" aria-hidden="true"></i> </button>
     </div>
     <div class="col-md-5 datatable-content">
+     
         <table id='table_right' datatable [dtOptions]="dtOptions_right" [dtTrigger]="dtTrigger_right"  class="row-border hover">
             <thead>
                 <tr>
@@ -78,6 +87,9 @@
         </table>
     </div>
 </div>
-<div class="row multiselect_footer">
+<div class="row multiselect_footer pull-right">
+    <button class="btn btn-danger" (click)="move_left_all()" >XÓA TẤT CẢ</button>
+
     <button class="btn btn-success" (click)="setRoleUser()" >LƯU</button>
 </div>
+
