@@ -92,15 +92,15 @@ export class PromotionFormComponent implements OnInit {
         this.promotionForm = this.fb.group({
             id: [this.promotion.id],
             name: [this.promotion.name, [Validators.required, Validators.maxLength(255)]],
-            image: [this.promotion.image, [Validators.maxLength(1000)]],
-            image_thumbnail: [this.promotion.image_thumbnail, [Validators.maxLength(1000)]],
+            image: [this.promotion.image],
+            image_thumbnail: [this.promotion.image_thumbnail],
             short_description: [this.promotion.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.promotion.content, [Validators.required]],
             promotion_category: [this.promotion.promotion_category ? this.promotion.promotion_category : ''],
             promotion_label: [this.promotion.promotion_label ? this.promotion.promotion_label : ''],
             promotion_type: [this.promotion.promotion_type ? this.promotion.promotion_type.id : ''],
             apply_date: [this.promotion.apply_date ? moment(this.promotion.apply_date,"DD/MM/YYYY").toDate() : '',
-                [DateValidators.checkDate, DateValidators.formatStartDate]],
+                [DateValidators.formatStartDate]],
             end_date: [this.promotion.end_date ? moment(this.promotion.end_date,"DD/MM/YYYY").toDate() : '',
                 [DateValidators.checkDate, DateValidators.formatEndDate]],
             is_draft: [this.promotion.is_draft],
@@ -172,7 +172,11 @@ export class PromotionFormComponent implements OnInit {
         @author: diemnguyen
     */
     saveEvent(): void {
-         if(this.promotionForm.invalid){
+        this.promotionForm.controls['apply_date'].setValidators([DateValidators.formatEndDate]);
+        this.promotionForm.controls['apply_date'].updateValueAndValidity();
+        this.promotionForm.controls['end_date'].setValidators([DateValidators.checkDate, DateValidators.formatEndDate]);
+        this.promotionForm.controls['end_date'].updateValueAndValidity();
+        if(this.promotionForm.invalid){
             ValidateSubmit.validateAllFormFields(this.promotionForm);
         }else{
             this.errors = '';

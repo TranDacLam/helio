@@ -47,6 +47,7 @@
         </div>
         <div class="col-sm-8">
             <input type="text" class="form-control" formControlName="sub_url"/>
+            <show-error-valid [control]="formNotification.get('sub_url')"></show-error-valid>
         </div>
     </div>
 

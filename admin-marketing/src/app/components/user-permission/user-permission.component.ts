@@ -4,9 +4,9 @@ import { User } from '../../shared/class/user';
 import { Role } from '../../shared/class/role';
 import { UserPermissionService } from '../../shared/services/user-permission.service';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/observable/throw';
 import { Subject } from 'rxjs/Subject';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -16,7 +16,7 @@ import { Subject } from 'rxjs/Subject';
 })
 export class UserPermissionComponent implements OnInit {
 
-  constructor( private userPermissionService: UserPermissionService) { }
+  constructor( private userPermissionService: UserPermissionService, private router:Router) { }
 
   user_list_left: User[];
   user_list_right: User[];
@@ -27,9 +27,13 @@ export class UserPermissionComponent implements OnInit {
   dtOptions_right: any = {};
   dtTrigger_left: Subject<any> = new Subject();
   dtTrigger_right: Subject<any> = new Subject();
-  // check 2 button move is checked
+  // check 2 button move is checked, if checked reload left table
   move_is_click: boolean = false;
 
+  /*
+      Event get User in table right
+      @author: hoangnguyen 
+  */
   getUserRight(id: number){
   	this.userPermissionService.getUserRight(id).subscribe(
   		data =>{
@@ -42,22 +46,22 @@ export class UserPermissionComponent implements OnInit {
             dtInstance.destroy();
             self.dtTrigger_right.next();
         });
+        // if button move is click, reload table left
         if (this.move_is_click){
           this.move_is_click = false;
           this.getUserLeft();
         }
   		},
   		error =>{
-          
+        this.router.navigate(['/error', { message: error.json().message}]);  
   		}
   	)
   }
-    ngAfterViewInit(): void {
-    this.dtTrigger_right.next();
-    this.dtTrigger_left.next();
 
-  }
-
+   /*
+      Event get User in table left
+      @author: hoangnguyen 
+  */
   getUserLeft(){
   	this.userPermissionService.getUserLeft().subscribe(
   		data =>{
@@ -72,12 +76,14 @@ export class UserPermissionComponent implements OnInit {
         });
   		},
   		error =>{
-          
-
+         this.router.navigate(['/error', { message: error.json().message}]);
   		}
   	)
   }
-
+  /*
+      Event get Role in above table
+      @author: hoangnguyen 
+  */
   getRoles(){
   	this.userPermissionService.getRoles().subscribe(
   		data =>{
@@ -87,32 +93,48 @@ export class UserPermissionComponent implements OnInit {
           }
   		},
   		error =>{
-
+        this.router.navigate(['/error', { message: error.json().message}]);
   		}
   	)
   }
+  /*
+      Event set Role for user selected
+      @author: hoangnguyen 
+  */
   setRoleUser( ){
-  
-        this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
-            var list_id = dtInstance.column(1).data().toArray();
-            var role_id = $('.role_checkbox:checked').val();
-            this.userPermissionService.setRoleUser( list_id, role_id).subscribe(
-              data =>{
+      this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
+          var list_id = dtInstance.column(1).data().toArray();
+          var role_id = $('.role_checkbox:checked').val();
+          this.userPermissionService.setRoleUser( list_id, role_id).subscribe(
+            data =>{
 
-              },
-              error =>{
-                
-              }
-            )
-        });
-
-        
-    
-
+            },
+            error =>{
+              this.router.navigate(['/error', { message: error.json().message}]);
+            }
+          )
+      });
   }
   /*
+      Event move all item to right table
+      @author: hoangnguyen 
+  */
+  move_left_all(){
+    this.move_is_click = true;
+    let selected_temp: any;
+      this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
+          selected_temp = dtInstance.rows( 'tr' ).data();
+          dtInstance.rows('tr').remove().draw();
+      });
+
+      this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
+           dtInstance.rows.add(selected_temp).draw();
+      });
+  }
+
+  /*
         Event select All Button on header table
-        @author: diemnguyen 
+        @author: hoangnguyen 
     */
     selectAllEventLeft(event) {
         this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -130,7 +152,7 @@ export class UserPermissionComponent implements OnInit {
 
     /*
         Event select All Button on header table
-        @author: diemnguyen 
+        @author: hoangnguyen 
     */
     selectAllEventRight(event) {
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -150,7 +172,7 @@ export class UserPermissionComponent implements OnInit {
         Event select checbox on row
             Case1: all row are checked then checkbox all on header is checked
             Case1: any row is not checked then checkbox all on header is not checked
-        @author: diemnguyen 
+        @author: hoangnguyen 
     */
     selectCheckboxLeft(event) {   
         $(event.target).closest( "tr" ).toggleClass( "selected" );
@@ -164,7 +186,7 @@ export class UserPermissionComponent implements OnInit {
         Event select checbox on row
             Case1: all row are checked then checkbox all on header is checked
             Case1: any row is not checked then checkbox all on header is not checked
-        @author: diemnguyen 
+        @author: hoangnguyen 
     */
     selectCheckboxRight(event) {   
         $(event.target).closest( "tr" ).toggleClass( "selected" );
@@ -175,9 +197,15 @@ export class UserPermissionComponent implements OnInit {
     }
     /*
         Move all row is checked to right tatble
-        @author: diemnguyen
+        @author: hoangnguyen
     */
     move_right(): void {
+      // uncheck for input select all
+        let is_check_all = $('#select-all-left').prop('checked');
+        if (is_check_all){
+          $('#select-all-left').prop('checked', false);
+        }
+
         this.move_is_click = true;
         let selected_temp: any;
         this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -193,8 +221,13 @@ export class UserPermissionComponent implements OnInit {
         @author: diemnguyen
     */
     move_left(): void {
-        this.move_is_click = true;
+      // uncheck for input select all 
+        let is_check_all = $('#select-all-right').prop('checked');
+        if (is_check_all){
+          $('#select-all-right').prop('checked', false);
+        }
 
+        this.move_is_click = true;
         let selected_temp: any;
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
             selected_temp = dtInstance.rows( '.selected' ).data();
@@ -221,7 +254,7 @@ export class UserPermissionComponent implements OnInit {
                 sSearch: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
                 lengthMenu: "Hiển thị _MENU_ dòng",
-                sZeroRecords:  "Không tìm thấy dòng nào phù hợp",
+                sZeroRecords:  "Không tìm thấy User nào phù hợp",
                 info: "Hiển thị _START_ đến _END_ của _TOTAL_",
                 paginate: {
                     'first': "Đầu",
@@ -251,12 +284,12 @@ export class UserPermissionComponent implements OnInit {
                 sSearch: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
                 lengthMenu: "Hiển thị _MENU_ dòng",
-                sZeroRecords:  "Không tìm thấy dòng nào phù hợp",
+                sZeroRecords:  "Không tìm thấy User nào phù hợp",
                 info: "Hiển thị _START_ đến _END_ của _TOTAL_",
                 paginate: {
                     'first': "Đầu",
                     'last': "Cuối",
-                    'next': "Sau",
+                    'next': "Sau", 
                     'previous': "Trước"
                 }
             },
@@ -267,6 +300,12 @@ export class UserPermissionComponent implements OnInit {
                 return row;
             }
         }  
+    }
+
+  ngAfterViewInit(): void {
+    this.dtTrigger_right.next();
+    this.dtTrigger_left.next();
+
   }
 
 }

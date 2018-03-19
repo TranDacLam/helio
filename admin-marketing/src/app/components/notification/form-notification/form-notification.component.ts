@@ -83,8 +83,8 @@ export class FormNotificationComponent implements OnInit {
     creatForm(): void{
         this.formNotification = this.fb.group({
             subject: [this.noti.subject, [Validators.required, Validators.maxLength(255)]],
-            message: [this.noti.message],
-            image: [this.noti.image, [Validators.maxLength(1000)]],
+            message: [this.noti.message, [Validators.required]],
+            image: [this.noti.image],
             sub_url: [this.noti.sub_url, [Validators.required, Validators.maxLength(255)]],
             category: [this.noti.category ? this.noti.category : '', Validators.required],
             is_QR_code: [this.noti.is_QR_code ? this.noti.is_QR_code : false],
