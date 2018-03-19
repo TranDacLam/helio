@@ -288,7 +288,7 @@ class Gift(DateTimeModel):
 
 @python_2_unicode_compatible
 class Advertisement(DateTimeModel):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     is_show = models.BooleanField('Show', default=False)
 
     def __str__(self):
@@ -297,7 +297,7 @@ class Advertisement(DateTimeModel):
 
 @python_2_unicode_compatible
 class Promotion_Label(DateTimeModel):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -323,7 +323,7 @@ class OpenTime(DateTimeModel):
 
 @python_2_unicode_compatible
 class Notification(DateTimeModel):
-    subject = models.CharField(max_length=255)
+    subject = models.CharField(max_length=255, unique=True)
     message = models.TextField()
     image = models.ImageField(max_length=1000, null=True, blank=True)
     sub_url = models.CharField(max_length=255, null=True, blank=True)
@@ -404,7 +404,7 @@ class Denomination(DateTimeModel):
 
 @python_2_unicode_compatible
 class Promotion_Type(DateTimeModel):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -430,7 +430,21 @@ class Hot_Advs(DateTimeModel):
 
 @python_2_unicode_compatible
 class Roles(DateTimeModel): 
-    name = models.CharField(max_length=255)   
+    name = models.CharField(max_length=255, unique=True)   
 
     def __str__(self):
         return '%s' % (self.name)   
+
+@python_2_unicode_compatible
+class Roles_Permission(DateTimeModel): 
+    PERMISSION =(
+        ('full', 'Full'),
+        ('change', 'Change'),
+        ('read', 'Read')
+    )
+    model_name = models.CharField(max_length=255)
+    role = models.ForeignKey(Roles,related_name='permission_roles_rel', on_delete=models.CASCADE)
+    permission = models.CharField(max_length=255, choices=PERMISSION) 
+
+    def __str__(self):
+        return '%s' % (self.model_name)  

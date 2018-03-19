@@ -51,6 +51,18 @@ PROCESS_ID = {
     'api' : '/tmp/helio_api_web.pid'
 }
 
+OUTPUT_ANGULAR = {
+    'development': '/home/adminvn/sites/build_angular',
+    'api': None,
+    'uat': None,
+    'production': None,
+}
+
+ANGULAR_ENV = {
+    'development': 'development',
+    'production': 'production'
+}
+
 env.hosts = [SERVERS[ENV]]
 env.user = USERS[ENV]
 env.password = PASSWORDS[ENV]
@@ -62,10 +74,26 @@ DEBUG = True
 
 VERBOSITY = ('', '') if DEBUG else ('-q', '-v 0')
 
-def restart_app_server():
+def restart_web_server():
     """ Restarts remote nginx and uwsgi.4
     """
-    sudo("uwsgi --reload /tmp/helio_web.pid")
+    with cd(PROJECT_PATH):
+        with cd('websites'):
+            with prefix(env.activate):
+                run('pip install -r ../requirements.txt')
+                run('python manage.py collectstatic --noinput')
+                run('python manage.py migrate')
+                if ENV == "production":
+                    sudo('systemctl restart uwsgi_helio')
+                else:
+                    sudo('su -s /bin/bash www-data -c "%s;%s" '%(env.activate,"uwsgi --reload %s"%PROCESS_ID[ENV]))
+
+def restart_admin_marketing():
+    with cd(PROJECT_PATH):
+        with cd('admin-marketing'):
+            run('npm install')
+            run("ng build --prod --environment=%s --base-href=/marketing/ --output-path=%s"%(ANGULAR_ENV[ENV], OUTPUT_ANGULAR[ENV]))
+            run("rsync -av %s/* build/helio_admin/"%(OUTPUT_ANGULAR[ENV]))
 
 def deploy():
     with cd(PROJECT_PATH):
@@ -75,20 +103,11 @@ def deploy():
         # run('git reset --hard origin/master')
         run('find . -name "*.pyc" -exec rm -rf {} \;')
 
-        with cd('admin-marketing'):
-            run('npm install')
-            run("ng build --env=%s --output-path=build/helio_admin"%ENV)
+    restart_web_server()
+    restart_admin_marketing()
+        
             
-    with cd(PROJECT_PATH):
-        with cd('websites'):
-            with prefix(env.activate):
-                run('pip install -r ../requirements.txt')
-                run('python manage.py collectstatic --noinput')
-                if ENV == "production":
-                    sudo('systemctl restart uwsgi_helio')
-                else:
-                    sudo('su -s /bin/bash www-data -c "%s;%s" '%(env.activate,"uwsgi --reload %s"%PROCESS_ID[ENV]))
-
+    
             
 
 
