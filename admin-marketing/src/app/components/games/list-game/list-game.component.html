@@ -9,16 +9,10 @@
 </div>
 <!-- End breadcrumb -->
 <div class="row text-center">
-    <h1>QUẢN LÝ TRÒ CHƠI</h1>
+    <h1>Quản Lý Trò Chơi</h1>
 </div>
 <div class="row mt-50 mb-15 custom-title">
-    <div class="col-xs-6 col-sm-6">
-        <a class="btn custom-button" routerLink="/">
-            <i class="fa fas fa-arrow-left icon-button"></i>
-            TRỞ VỀ TRANG QUẢN TRỊ
-        </a>
-    </div>
-    <div class="col-xs-6 col-sm-6">
+    <div class="col-xs-12 col-sm-12">
         <a class="btn custom-button pull-right" [routerLink]="['/game/add/', {lang: lang}]">
             <i class="fa fas fa-plus icon-button"></i>
             TẠO TRÒ CHƠI MỚI
@@ -44,16 +38,18 @@
     </div>
 </div>
 <div class="custom_table">
-    <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="games">
+    <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="games">
         <thead>
             <tr>
-                <th class="checkbox_all"><input type="checkbox" (change)="onSelectAll($event)"/></th>
+                <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                <th>ID</th>
                 <th>Trò Chơi</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let game of games" id="del-{{game.id}}">
-                <td><input type="checkbox" (change)="onSelectCKB($event, game)" [checked]="select_checked"/></td>
+            <tr class="row-data" *ngFor="let game of games">
+                <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                <td>{{ game.id }}</td>
                 <td><a [routerLink]="['/game/edit/', game.id, {lang: lang}]">{{ game.name }}</a></td>
             </tr>
         </tbody>
@@ -66,7 +62,7 @@
         </select>
     </div>
     <div class="col-md-3">
-        {{ games_del.length }} của {{ length_games }} được chọn 
+        {{ length_selected }} của {{ length_all }} được chọn 
         <button class="btn btn-danger" (click)="deleteGameEvent()">Thực hiện</button>
     </div>
 </div>

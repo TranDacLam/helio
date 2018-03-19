@@ -90,7 +90,7 @@ export class LinkCardListComponent implements OnInit {
         if (event.target.checked) {
             this.link_cards.forEach(function(element) {
             arr.push(element.id);
-            // $('#'+element.id).prop('checked', true);
+            $('#'+element.id).prop('checked', true);
           });
             this.checkbox = true;
             this.link_card_del = arr
@@ -99,7 +99,7 @@ export class LinkCardListComponent implements OnInit {
             this.checkbox = false;
             this.link_cards.forEach((item, index) => {
             this.link_card_del.splice(index, this.link_cards.length);
-                // $('#'+item.id).prop('checked', false);
+                $('#'+item.id).prop('checked', false);
         });
     }
     }
@@ -132,7 +132,7 @@ export class LinkCardListComponent implements OnInit {
         if(this.link_card_del !== null && this.link_card_del.length > 0 ){
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.link_card_del.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.link_card_del.length + " thẻ liên kết đã chọn",
                 buttons: {
                     confirm: {
                         label: 'Xóa',

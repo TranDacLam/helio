@@ -60,7 +60,20 @@ export class ListPromotionComponent implements OnInit {
 
     ngOnInit() {
     	this.getAllPromotion();
-        this.dtOptions = datatable_config.data_config('Khuyến Mãi').dtOptions;
+        this.dtOptions = datatable_config.data_config('Nhãn Khuyến Mãi');
+        let dt_options_custom = {
+            drawCallback: (setting) => {
+                this.checkSelectAllCheckbox();
+            },
+            columnDefs: [
+                { 
+                    orderable: false, 
+                    targets: 0 
+                }
+            ]
+        };
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
+
         this.route.params.subscribe(params => {
             if (params && params.action) {
                 this.message_result = params.action + params.promotion_name + '" thành công.';
@@ -83,6 +96,7 @@ export class ListPromotionComponent implements OnInit {
                 this.router.navigate(['/error']);
             });
     }
+
     /*
         Event select checbox on row
             Case1: all row are checked then checkbox all on header is checked
@@ -91,30 +105,32 @@ export class ListPromotionComponent implements OnInit {
     */
     selectCheckbox(event) {   
         $(event.target).closest( "tr" ).toggleClass( "selected" );
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-            this.length_selected = dtInstance.rows('.selected').count();
-            // Any row not selected then checked all button is not checked
-            $('#select-all').prop('checked', this.length_selected == this.length_all);
-        });
+        this.getLengthSelected();
+        this.checkSelectAllCheckbox();
     }
 
+    checkSelectAllCheckbox() {
+        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        this.getLengthSelected();
+    }
     /*
         Event select All Button on header table
         @author: diemnguyen 
     */
     selectAllEvent(event) {
+        if( event.target.checked ) {
+            $("#table_id tr").addClass('selected');
+        } else {
+            $("#table_id tr").removeClass('selected');
+        }
+        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        this.getLengthSelected();
+    }
+
+    getLengthSelected(){
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-            dtInstance.rows().every( function () {
-                let row = this.node();
-                if( event.target.checked ) {
-                    $(row).addClass('selected');
-                } else {
-                    $(row).removeClass('selected');
-                }
-                $(row).find('input:checkbox').prop('checked', event.target.checked);
-            });
             this.length_selected = dtInstance.rows('.selected').count();
-        });
+        })
     }
 
     /*

@@ -8,14 +8,11 @@
     </nav>
 </div>
 <!-- End breadcrumb -->
+<div class="row text-center">
+    <h1>Quản Lý Khuyến Mãi</h1>
+</div>
 <div class="row mt-50 mb-15 custom-title">
-    <div class="col-xs-12 col-sm-6">
-        <a class="btn custom-button" routerLink="/">
-            <i class="fa fas fa-arrow-left icon-button"></i>
-            TRỞ VỀ TRANG QUẢN TRỊ
-        </a>
-    </div>
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-xs-12 col-sm-12">
         <a class="btn custom-button pull-right" [routerLink]="['/promotions/add/', {lang: lang}]">
             <i class="fa fas fa-plus icon-button"></i>
             TẠO KHUYẾN MÃI MỚI
@@ -44,7 +41,7 @@
 <div class="row custom_table">
     <div class="col-md-12">
         <div class="datatable-content">
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover"  *ngIf="promotion_list">
+            <table id="table_id" datatable [dtOptions]="dtOptions"  dt-instance="dtInstanceCallback" class="row-border hover"  *ngIf="promotion_list">
                 <thead>
                     <tr>
                         <th class="text-center"><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"></th>
@@ -59,7 +56,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let promotion of promotion_list">
+                    <tr class="row-data" *ngFor="let promotion of promotion_list">
                         <td class="text-center"><input type="checkbox" (change)="selectCheckbox($event);"/></td>
                         <td>{{ promotion.id }}</td>
                         <td><a [routerLink]="['/promotions/', promotion.id, 'change', {lang: lang}]">{{ promotion.name }}</a></td>

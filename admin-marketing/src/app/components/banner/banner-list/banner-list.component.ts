@@ -18,6 +18,10 @@ declare var bootbox:any;
 })
 export class BannerListComponent implements OnInit {
 
+    // Inject the DataTableDirective into the dtElement property
+    @ViewChild(DataTableDirective)
+    dtElement: DataTableDirective;
+
     dtOptions: any = {};
 
     banners: Banner[];
@@ -31,10 +35,6 @@ export class BannerListComponent implements OnInit {
     lang: string = 'vi';
 
     record: string ="Banner";
-
-    // Inject the DataTableDirective into the dtElement property
-    @ViewChild(DataTableDirective)
-    dtElement: DataTableDirective;
 
 
      // Using trigger becase fetching the list of banners can be quite long
@@ -56,16 +56,16 @@ export class BannerListComponent implements OnInit {
         // Call function getAllBanners()
         this.getAllBanners();
 
-          this.route.params.subscribe(params => {
-               if( params.message_post ){
-                    this.message_result = " Thêm "+ params.message_post + " thành công.";
-               } else if ( params.message_put ) {
-                    this.message_result = "  Chỉnh sửa  "+ params.message_put + " thành công.";
-               } else {
-                    this.message_result = "";
-               }
-          });
-     }
+        this.route.params.subscribe(params => {
+            if( params.message_post ){
+                this.message_result = " Thêm "+ params.message_post + " thành công.";
+            } else if ( params.message_put ) {
+                this.message_result = "  Chỉnh sửa  "+ params.message_put + " thành công.";
+            } else {
+                this.message_result = "";
+           }
+        });
+    }
 
     /*
         GET: Get All Banner
@@ -73,11 +73,12 @@ export class BannerListComponent implements OnInit {
         @author: TrangLe
      */
      getAllBanners() {
-        this.bannerService.getAllBanner().subscribe(
+        this.banners = null;
+        this.bannerService.getAllBanner(this.lang).subscribe(
             (result) => {
                 this.banners = result;
+                // this.dtTrigger.next();
                 // this.length_banners = this.banners.length;
-                // this.dtTrigger.next(); 
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.json().message }])
@@ -97,7 +98,7 @@ export class BannerListComponent implements OnInit {
         if(event.target.checked){
             this.banners.forEach(function(element) {
                 arr_del.push(element.id);
-                // $('#' + element.id).prop('checked', true);
+                $('#' + element.id).prop('checked', true);
             });
             this.checkbox = true;
             this.banner_del = arr_del;
@@ -105,7 +106,7 @@ export class BannerListComponent implements OnInit {
         }else{
             this.checkbox = false;
             this.banners.forEach((item, index) => {
-                // $('#'+ item.id).prop('checked', false);
+                $('#'+ item.id).prop('checked', false);
                 this.banner_del.splice(index, this.banners.length);
             });
         }
@@ -142,7 +143,7 @@ export class BannerListComponent implements OnInit {
         if(this.banner_del !== null && this.banner_del.length > 0 ){
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.banner_del.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.banner_del.length + " banner đã chọn",
                 buttons: {
                     confirm: {
                         label: 'Xóa',
@@ -169,7 +170,7 @@ export class BannerListComponent implements OnInit {
         @author: TrangLe
      */
      deleteBannersCheckbox() {
-        this.bannerService.deleteBannerSelected(this.banner_del).subscribe(
+        this.bannerService.deleteBannerSelected(this.banner_del, this.lang).subscribe(
           (data) => {
                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                     var self = this;
@@ -194,12 +195,12 @@ export class BannerListComponent implements OnInit {
     */
     changeLangVI(){
         if(this.lang === 'en'){
-            $('.custom-table').attr('style', 'height: 640px');
-            this.banners = null;
+            $('.custom_table').attr('style', 'height: 640px');
             this.lang = 'vi';
+            this.banners = null;
             this.getAllBanners();
             setTimeout(()=>{
-                $('.custom-table').attr('style', 'height: auto');
+                $('.custom_table').attr('style', 'height: auto');
             },100);
         }
     }
@@ -210,12 +211,12 @@ export class BannerListComponent implements OnInit {
     */
     changeLangEN(){
         if(this.lang === 'vi'){
-            $('.custom-table').attr('style', 'height: 640px');
-            this.banners = null;
+            $('.custom_table').attr('style', 'height: 640px');
             this.lang = 'en';
+            this.banners=null;
             this.getAllBanners();
             setTimeout(()=>{
-                $('.custom-table').attr('style', 'height: auto');
+                $('.custom_table').attr('style', 'height: auto');
             },100);
         }
     }

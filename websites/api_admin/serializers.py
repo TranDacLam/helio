@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from core.models import *
@@ -176,10 +177,10 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'is_show')
 
 class DenominationSerializer(serializers.ModelSerializer):
-    denomination = serializers.IntegerField(required=True, validators=[
+    denomination = serializers.IntegerField(required=True,validators=[
         UniqueValidator(
             queryset=Denomination.objects.all(),
-            message =('This denomination has already existed')
+            message =('Mệnh giá nộp tiền này đã tồn tại')
             )
         ])
     class Meta:
@@ -188,9 +189,15 @@ class DenominationSerializer(serializers.ModelSerializer):
 
 class FeedBackSerializer(serializers.ModelSerializer):
 
+    STATUS_CHOICES = (
+        ('Chưa xử lý', 'Chưa xử lý'),
+        ('Đã trả lời', 'Đã trả lời'),
+        ('Đã chuyển đến bộ phận liên quan', 'Đã chuyển đến bộ phận liên quan'),
+        )
+    status = serializers.ChoiceField(choices=STATUS_CHOICES)
     class Meta:
         model = FeedBack
-        fields = ('id', 'name', 'email', 'phone', 'subject', 'message', 'rate', 'sent_date', 'feedback_type', 'status','answer', 'created')     
+        fields = ('id', 'name', 'email', 'phone', 'subject', 'message', 'rate', 'sent_date', 'feedback_type', 'status','answer', 'created', 'modified')     
 
 class NotificationSerializer(serializers.ModelSerializer):
 
@@ -522,6 +529,13 @@ class HotAdvsSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(required=False, allow_empty_file=True)
     sub_url_register = serializers.CharField(required=False,allow_null=True, allow_blank=True)
     sub_url_view_detail = serializers.CharField(required=False, allow_null=True, allow_blank=True)
+    
+    name = serializers.CharField(required=True, max_length=255,validators=[
+        UniqueValidator(
+            queryset=Hot_Advs.objects.all(),
+            message =('Hot Ads này đã tồn tại')
+            )
+        ])
 
     class Meta:
         model = Hot_Advs

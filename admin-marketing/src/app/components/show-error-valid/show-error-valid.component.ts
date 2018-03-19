@@ -16,7 +16,7 @@ export class ShowErrorValidComponent implements OnInit {
     // Type and message validate
     private static readonly errorMessages = {
        'email': () => 'Email không đúng định dạng',
-       'required': () => 'Trường này bắt buộc',
+       'required': () => 'Trường không được bỏ trống',
        'minlength': (params) => 'Số ký tự tối thiểu là ' + params.requiredLength,
        'maxlength': (params) => 'Số ký tự cho phép tối đa là ' + params.requiredLength,
        'pattern': (params) => 'The required pattern is: ' + params.requiredPattern,
@@ -33,6 +33,8 @@ export class ShowErrorValidComponent implements OnInit {
        'passwordValidate': (param) => param.message,
        'phoneValidate': (param) => param.message,
        'denominationValidate': (param) => param.message,
+       'emailValidate': (param) => param.message,
+       'birtdateValidate': (parame) => parame.message,
     };
 
     @Input()

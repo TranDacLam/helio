@@ -27,10 +27,11 @@ export class ListGameComponent implements OnInit {
 
     dtOptions: any = {};
 
+    length_all: Number = 0;
+    length_selected: Number = 0;
+
     games: Game[];
-    games_del = []; // Get array id to delete all id game
-    length_games: number;
-    select_checked = false; // Check/uncheck all game
+
     message_result = ''; // Message error
     errorMessage = '';
 
@@ -39,7 +40,24 @@ export class ListGameComponent implements OnInit {
     constructor(private gameService: GameService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
-        this.dtOptions = datatable_config.data_config('Trò Chơi').dtOptions;
+        this.dtOptions = datatable_config.data_config('Trò Chơi');
+        let dt_options_custom = {
+            drawCallback: (setting) => {
+                this.checkSelectAllCheckbox();
+            },
+            columnDefs: [
+                {
+                    targets: 1,
+                    visible: false
+                },
+                { 
+                    orderable: false, 
+                    targets: 0 
+                }
+            ]
+        };
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
+
         this.getGames();
 
         /*
@@ -65,10 +83,10 @@ export class ListGameComponent implements OnInit {
         this.gameService.getGames(this.lang).subscribe(
             (data) => {
                 this.games = data;
-                this.length_games = this.games.length;
+                this.length_all = this.games.length;
             },
             (error) => {
-                if(error.code === 403){
+                if(error.code === 400){
                     this.errorMessage = error.message;
                 }else{
                     this.router.navigate(['/error', { message: error.message}]);
@@ -78,33 +96,44 @@ export class ListGameComponent implements OnInit {
     }
 
     /*
-        Function onSelectCKB(): checked/uncheck add/delete id to array games_del
-        Author: Lam
+        Event select checbox on row
+            Case1: all row are checked then checkbox all on header is checked
+            Case1: any row is not checked then checkbox all on header is not checked
+        @author: Lam 
     */
-    onSelectCKB(event, game){
-        if(event.target.checked){
-            this.games_del.push(game.id);
-        }else{
-            this.games_del = this.games_del.filter(k => k !== game.id);
+    selectCheckbox(event) {   
+        $(event.target).closest( "tr" ).toggleClass( "selected" );
+        this.getLengthSelected();
+        this.checkSelectAllCheckbox();
+    }
+
+    // input checkall checked/unchecked
+    checkSelectAllCheckbox() {
+        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        this.getLengthSelected();
+    }
+    /*
+        Event select All Button on header table
+        @author: Lam 
+    */
+    selectAllEvent(event) {
+        if( event.target.checked ) {
+            $("#table_id tr").addClass('selected');
+        } else {
+            $("#table_id tr").removeClass('selected');
         }
+        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        this.getLengthSelected();
     }
 
     /*
-        Function onSelectAll(): checked/uncheck add/delete all id game to array games_del
-        Author: Lam
+        Function getLengthSelected(): draw length selected
+        @author: Lam
     */
-    onSelectAll(event){
-        this.games_del = [];
-        let array_del = [];
-        if(event.target.checked){
-            this.games.forEach(function(element) {
-                array_del.push(element.id);
-            });
-            this.games_del = array_del;
-            this.select_checked = true;
-        }else{
-            this.select_checked = false;
-        }
+    getLengthSelected(){
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            this.length_selected = dtInstance.rows('.selected').count();
+        })
     }
 
     /*
@@ -113,10 +142,10 @@ export class ListGameComponent implements OnInit {
     */
     deleteGameEvent(){
         let that = this;
-        if ( this.games_del.length > 0 ) {
+        if ( this.length_selected > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.games_del.length + " trò chơi đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " trò chơi đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -145,20 +174,32 @@ export class ListGameComponent implements OnInit {
         Author: Lam
     */
     onDelelteGame(){
-        this.gameService.onDelGameSelect(this.games_del, this.lang).subscribe(
-            (data) => {
-                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                    this.games_del.forEach(function(element) {
-                        dtInstance.rows('#del-'+element).remove().draw();
-                    });
-                    this.message_result = 'Xóa '+ this.games_del.length +' trò chơi thành công.';
-                    this.length_games = this.length_games - this.games_del.length;
-                    this.games_del = [];
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            // Get list promotion id selected
+            let get_list_id = dtInstance.cells('.selected', 1).data().toArray();
+            // array string to array number
+            let list_id_selected = get_list_id.map(Number);
+
+            // Call API remove list promotion selected
+            this.gameService.onDelGameSelect(list_id_selected, this.lang).subscribe(
+                (data) => {
+                    if (data.code === 204) {
+                        this.message_result = "Xóa "+ this.length_selected + " trò chơi thành công"
+
+                        // Remove all promotion selected on UI
+                        dtInstance.rows('.selected').remove().draw();
+                        // Reset count promotion
+                        this.length_all =  dtInstance.rows().count();
+                        this.length_selected = 0;
+                        this.errorMessage = '';
+                    } else {
+                        this.router.navigate(['/error', { message: error.message}]);
+                    }
+                }, 
+                (error) => {
+                    this.router.navigate(['/error', { message: error.message}]);
                 });
-                this.select_checked = false;
-                this.errorMessage = '';
-            }
-        );
+        });
     }
 
      /*

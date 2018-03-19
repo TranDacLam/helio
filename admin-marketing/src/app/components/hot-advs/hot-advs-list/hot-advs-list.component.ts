@@ -28,7 +28,7 @@ export class HotAdvsListComponent implements OnInit {
 
   	message_result:string = ''; // Message result
 
-    record: String = "Hot Advs";
+    record: String = "Hot Ads";
     
   	// Inject the DataTableDirective into the dtElement property
   	@ViewChild(DataTableDirective)
@@ -81,7 +81,7 @@ export class HotAdvsListComponent implements OnInit {
         if(event.target.checked){
             this.hot_advs.forEach(function(element) {
                 array_del.push(element.id);
-                // $('#'+element.id).prop('checked', true);
+                $('#'+element.id).prop('checked', true);
             });
             this.checkbox = true;
             this.hot_adv_selected = array_del;
@@ -90,7 +90,7 @@ export class HotAdvsListComponent implements OnInit {
             this.checkbox = false
             this.hot_advs.forEach((item, index) => {
         		this.hot_adv_selected.splice(index, this.hot_advs.length);
-                // $('#'+item.id).prop('checked', false);
+                $('#'+item.id).prop('checked', false);
      		});
         }
     }
@@ -121,7 +121,7 @@ export class HotAdvsListComponent implements OnInit {
         if(this.hot_adv_selected !== null && this.hot_adv_selected.length > 0 ){
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.hot_adv_selected.length + " phần tử đã chọn",
+                message: "Bạn muốn xóa " + this.hot_adv_selected.length + " Hot Ads đã chọn",
                 buttons: {
                     confirm: {
                         label: 'Xóa',
@@ -140,7 +140,7 @@ export class HotAdvsListComponent implements OnInit {
                 }
             });
         } else {
-            bootbox.alert("Vui lòng chọn hot advs để xóa");
+            bootbox.alert("Vui lòng chọn Hot Ads để xóa");
         } 
     }
     deleteHotAdvsCheckbox() {
@@ -155,7 +155,7 @@ export class HotAdvsListComponent implements OnInit {
                     });
                     this.hot_adv_selected = [];
                 });
-               this.message_result = "Xóa Hot Advs thành công";
+               this.message_result = "Xóa Hot Ads thành công";
             },
             (error) => {
                this.router.navigate(['/error', { message: error.json().message }])

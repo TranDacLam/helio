@@ -42,12 +42,15 @@ export class UserMultiselectComponent implements OnInit {
             }], 
             order: [[ 1, 'asc' ]],
             scrollX: true,
+            scrollY: "400px",
+            scrollCollapse: true,
             language: {
                 sSearch: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
                 lengthMenu: "Hiển thị _MENU_ dòng",
-                sZeroRecords:  "Không tìm thấy dòng nào phù hợp",
+                sZeroRecords:  " ",
                 info: "Hiển thị _START_ đến _END_ của _TOTAL_",
+                infoEmpty: "Hiển thị 0 đến 0 của 0",
                 paginate: {
                     'first': "Đầu",
                     'last': "Cuối",
@@ -72,12 +75,15 @@ export class UserMultiselectComponent implements OnInit {
             }], 
             order: [[ 1, 'asc' ]],
             scrollX: true,
+            scrollY: "400px",
+            scrollCollapse: true,
             language: {
                 sSearch: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
                 lengthMenu: "Hiển thị _MENU_ dòng",
-                sZeroRecords:  "Không tìm thấy dòng nào phù hợp",
+                sZeroRecords:  " ",
                 info: "Hiển thị _START_ đến _END_ của _TOTAL_",
+                infoEmpty: "Hiển thị 0 đến 0 của 0",
                 paginate: {
                     'first': "Đầu",
                     'last': "Cuối",

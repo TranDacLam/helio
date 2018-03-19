@@ -34,7 +34,7 @@ export class DenominationAddComponent implements OnInit {
 
     createForm() {
         this.denoForm = this.fb.group({
-          denomination: ['', [Validators.required, DenominationValidators.denominationValidators]],
+           denomination: ['', [Validators.required, Validators.maxLength(11), DenominationValidators.denominationValidators]],
         });
     }
     /* 
@@ -61,7 +61,8 @@ export class DenominationAddComponent implements OnInit {
                     if(error.status == 400) {
                         this.errorMessage = error.json().denomination[0];
                     } else {
-                        this.router.navigate(['/error', { message: error.json().message }]);
+                        console.log(error);
+                        // this.router.navigate(['/error', { message: error.json().message }]);
                     }
                 }
             )

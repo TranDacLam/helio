@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Banner, positions } from '../../../shared/class/banner';
 import { BannerService } from '../../../shared/services/banner.service';
 
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { env } from '../../../../environments/environment';
 
 @Component({
@@ -20,6 +21,8 @@ export class BannerDetailComponent implements OnInit {
     positions = positions;
     api_domain:string = "";
 
+    lang: string = 'vi';
+
   	constructor( 
   		private bannerService: BannerService,
   		private route: ActivatedRoute,
@@ -31,6 +34,11 @@ export class BannerDetailComponent implements OnInit {
        }
 
   	ngOnInit() {
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
   		this.getBannerById();
   	}
 
@@ -40,7 +48,7 @@ export class BannerDetailComponent implements OnInit {
     */
     createForm() {
         this.formBanner = this.fb.group({
-            image: [this.banner_form.image, [Validators.required]],
+            image: [this.banner_form.image],
             sub_url: [this.banner_form.sub_url, [Validators.required]],
             position: [this.banner_form.position, [Validators.required]],
             is_show: [false]
@@ -54,7 +62,7 @@ export class BannerDetailComponent implements OnInit {
   	 */
   	getBannerById() {
   		const id = +this.route.snapshot.paramMap.get('id');
-    	this.bannerService.getBannerById(id)
+    	this.bannerService.getBannerById(id, this.lang)
     	.subscribe(
         	(banner) => {
                 this.banner = banner;
@@ -79,21 +87,25 @@ export class BannerDetailComponent implements OnInit {
         }
     }
     onSubmit() {
-        var self = this;
-        let bannerFormGroup = this.convertFormGroupToFormData(this.formBanner);
-        this.bannerService.updateBanner(bannerFormGroup, this.banner.id).subscribe(
-                (data) => {
-                    // Navigate to promotion page where success
-                    this.router.navigate(['/banner-list', { message_put: this.formBanner.value['sub_url']} ])
-                }, 
-                (error) => {
-                    if(error.code == 400) {
-                        this.errorMessage = error.message
-                    } else {
-                       self.router.navigate(['/error', { message: error.message }]);
+        if(this.formBanner.invalid){
+            ValidateSubmit.validateAllFormFields(this.formBanner);
+        } else {
+            var self = this;
+            let bannerFormGroup = this.convertFormGroupToFormData(this.formBanner);
+            this.bannerService.updateBanner(bannerFormGroup, this.banner.id, this.lang).subscribe(
+                    (data) => {
+                        // Navigate to promotion page where success
+                        this.router.navigate(['/banner-list', { message_put: this.formBanner.value['sub_url']} ])
+                    }, 
+                    (error) => {
+                        if(error.code == 400) {
+                            this.errorMessage = error.message
+                        } else {
+                           self.router.navigate(['/error', { message: error.message }]);
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 
     /*

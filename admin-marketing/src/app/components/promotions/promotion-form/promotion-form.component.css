@@ -8,3 +8,7 @@
 form .event-date{
     width: 40%;
 }
+.custom-date{
+	padding-left: 15px;
+	padding-right: 15px;
+}
