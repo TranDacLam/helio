@@ -213,11 +213,6 @@ h1.h1-title {
     border-color: black;
     margin-bottom: 10px;
 }
-.custom-title .custom-button:hover{
-    color: #fff;
-    background-color: #337ab7;
-    border-color: #337ab7;
-}
 .custom-title .icon-button {
     font-size: 14px;
     padding-right: 9px;
