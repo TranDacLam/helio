@@ -41,7 +41,7 @@ export class ListFaqComponent implements OnInit {
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Câu Hỏi Thường Gặp');
-        let draw_callback = {
+        let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
             },
@@ -56,7 +56,7 @@ export class ListFaqComponent implements OnInit {
                 }
             ]
         };
-        this.dtOptions = {...this.dtOptions, ...draw_callback };
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
 
         this.getFaqs();
 
