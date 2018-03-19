@@ -3,7 +3,7 @@
     <li class="active"><a routerLink="/user-permission">Quản Lý Phân quyền User</a></li>
  </ol>
 <div class="row text-center">
-    <h1>PHÂN QUYỀN USER</h1>
+    <h1 class="page-name">PHÂN QUYỀN USER</h1>
 </div>
 <div class="row">
 	<div *ngIf="roles" class="wrap-head">
@@ -54,16 +54,17 @@
                 </tr>
             </tbody>
         </table>
+        <button class="btn btn-primary pull-right">CHỌN TẤT CẢ</button>
+
     </div>
     <div class="col-md-2 button-move">
         <button class="btn btn-danger move_item" (click)="move_right()"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i> </button>
         <button class="btn btn-danger move_item" (click)="move_left()"> <i class="fa fa-long-arrow-left" aria-hidden="true"></i> </button>
     </div>
     <div class="col-md-5 datatable-content">
-     
         <table id='table_right' datatable [dtOptions]="dtOptions_right" [dtTrigger]="dtTrigger_right"  class="row-border hover">
             <thead>
-                <tr>
+                <tr class="title-row">
                     <th><input type="checkbox" name="select_all_right" id="select-all-right" (change)="selectAllEventRight($event);"/></th>
                     <th>Username</th>
                     <th>Họ Và Tên</th>
@@ -85,11 +86,10 @@
                 </tr>
             </tbody>
         </table>
+        <div class="pull-right">
+            <button class="btn btn-primary"  >CHỌN TẤT CẢ</button>
+            <button class="btn btn-success" (click)="setRoleUser()" >LƯU</button>
+        </div>
     </div>
-</div>
-<div class="row multiselect_footer pull-right">
-    <button class="btn btn-danger" (click)="move_left_all()" >XÓA TẤT CẢ</button>
-
-    <button class="btn btn-success" (click)="setRoleUser()" >LƯU</button>
 </div>
 
