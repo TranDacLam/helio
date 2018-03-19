@@ -28,7 +28,7 @@
         <div>
             <p><label>ID : </label> {{promotion.id}}</p>
             <p><label>Tên Khuyến Mãi : </label> {{promotion.name}}</p>
-            <p><label>Tình Trạng : </label>{{ promotion.is_draft ? "Draft" : "Đã Triển Khai" }}</p>
+            <p><label>Tình Trạng : </label> {{ promotion.is_draft ? "Draft" : "Đã Triển Khai" }}</p>
             <p><label>Ngày Tạo : </label> {{promotion.created | date : 'dd/MM/yyyy'}}</p>
             <p><label>Người Triển Khai :</label> {{ promotion.user_implementer?.email }}</p>
             <p><label>Loại Khuyến Mãi : </label> {{ promotion.promotion_type?.name }}</p>

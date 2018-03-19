@@ -24,7 +24,7 @@ export class FeeAddComponent implements OnInit {
           this.router.navigate(['/fee/list']);
          },
       error => {
-        this.messageResult = error.statusText;
+          this.router.navigate(['/error']);
       });
     }
   	
@@ -33,7 +33,7 @@ export class FeeAddComponent implements OnInit {
 
   ngOnInit() {
   	this.feeAddForm = this.formBuilder.group({
-      fee: [null, Validators.required],
+      fee: [null, [Validators.required, Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(2147483647)]],
       position: [null, Validators.required],
       fee_type: [ 'vnd', Validators.required],
       is_apply: [false ],

@@ -82,6 +82,7 @@ def restart_web_server():
             with prefix(env.activate):
                 run('pip install -r ../requirements.txt')
                 run('python manage.py collectstatic --noinput')
+                run('python manage.py migrate')
                 if ENV == "production":
                     sudo('systemctl restart uwsgi_helio')
                 else:
