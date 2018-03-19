@@ -66,7 +66,7 @@ export class ListPostComponent implements OnInit {
                 this.length_posts = this.posts.length;
             },
             (error) => {
-                if(error.code === 403){
+                if(error.code === 400){
                     this.errorMessage = error.message;
                 }else{
                     this.router.navigate(['/error', { message: error.message}]);

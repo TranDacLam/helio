@@ -12,7 +12,7 @@ export class NumberValidators {
         if(phoneValues === null && phone !== '') {
             return {
                 'phoneValidate': {
-                    'message': 'Please enter number phone valid'
+                    'message': 'Vui lòng nhập số điện thoại hợp lệ'
                 }
             };
         }
@@ -29,7 +29,7 @@ export class NumberValidators {
         if(personIDValues === null && personID !== '') {
             return {
                 'phoneValidate': {
-                    'message': 'Please enter number person id valid'
+                    'message': 'Vui lòng nhập số chứng minh nhân dân hợp lệ'
                 }
             };
         }
