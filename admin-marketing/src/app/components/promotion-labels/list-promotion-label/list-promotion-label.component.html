@@ -38,17 +38,22 @@
     </div>
 </div>
 <div class="custom_table">
-    <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="promotion_labels">
+    <table datatable class="row-border hover" id="table_id" [dtOptions]="dtOptions"  
+        dt-instance="dtInstanceCallback" *ngIf="promotion_labels">
         <thead>
             <tr>
-                <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
+                <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                <th>ID</th>
                 <th>Nhãn Khuyến Mãi</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let promotion_label of promotion_labels" id="del-{{promotion_label.id}}">
-                <td><input type="checkbox" (change)="onSelectCKB($event, promotion_label)" [checked]="select_checked"/></td>
-                <td><a [routerLink]="['/promotion-label/edit/', promotion_label.id, {lang: lang}]">{{ promotion_label.name }}</a></td>
+            <tr class="row-data" *ngFor="let promotion_label of promotion_labels">
+                <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                <td>{{ promotion_label.id }}</td>
+                <td><a [routerLink]="['/promotion-label/edit/', promotion_label.id, {lang: lang}]">
+                    {{ promotion_label.name }}
+                </a></td>
             </tr>
         </tbody>
     </table>
@@ -60,7 +65,7 @@
         </select>
     </div>
     <div class="col-md-3">
-        {{ promotion_labels_del.length }} của {{ length_promotion_labels }} được chọn 
+        {{ length_selected }} của {{ length_all }} được chọn 
         <button class="btn btn-danger" (click)="deletePormotionLabelEvent()">Thực hiện</button>
     </div>
 </div>

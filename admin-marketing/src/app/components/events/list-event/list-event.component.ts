@@ -28,10 +28,11 @@ export class ListEventComponent implements OnInit {
 
     dtOptions: any = {};
 
+    length_all: Number = 0;
+    length_selected: Number = 0;
+
     events: Event[];
-    events_del = []; // Get array id to delete all id event
-    length_events: number;
-    select_checked = false; // Check/uncheck all event
+
     message_result = ''; // Message success
     errorMessage = '';
 
@@ -44,7 +45,24 @@ export class ListEventComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.dtOptions = datatable_config.data_config('Sự Kiện').dtOptions;
+        this.dtOptions = datatable_config.data_config('Sự Kiện');
+        let draw_callback = {
+            drawCallback: (setting) => {
+                this.checkSelectAllCheckbox();
+            },
+            columnDefs: [
+                {
+                    targets: 1,
+                    visible: false
+                },
+                { 
+                    orderable: false, 
+                    targets: 0 
+                }
+            ]
+        };
+        this.dtOptions = {...this.dtOptions, ...draw_callback };
+
         this.getEvents();
 
         /*
@@ -70,7 +88,7 @@ export class ListEventComponent implements OnInit {
         this.eventService.getEvents(this.lang).subscribe(
             (data) => {
                 this.events = data;
-                this.length_events = this.events.length;
+                this.length_all = this.events.length;
             },
             (error) => {
                 if(error.code === 400){
@@ -83,45 +101,57 @@ export class ListEventComponent implements OnInit {
     }
 
     /*
-        Function onSelectCKB(): checked/uncheck add/delete id to array events_del
-        Author: Lam
+        Event select checbox on row
+            Case1: all row are checked then checkbox all on header is checked
+            Case1: any row is not checked then checkbox all on header is not checked
+        @author: Lam 
     */
-    onSelectCKB(event, value){
-        if(event.target.checked){
-            this.events_del.push(value.id);
-        }else{
-            this.events_del = this.events_del.filter(k => k !== value.id);
+    selectCheckbox(event) {   
+        $(event.target).closest( "tr" ).toggleClass( "selected" );
+        this.getLengthSelected();
+        this.checkSelectAllCheckbox();
+    }
+
+    // input checkall checked/unchecked
+    checkSelectAllCheckbox() {
+        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        this.getLengthSelected();
+    }
+    /*
+        Event select All Button on header table
+        @author: Lam 
+    */
+    selectAllEvent(event) {
+        if( event.target.checked ) {
+            $("#table_id tr").addClass('selected');
+        } else {
+            $("#table_id tr").removeClass('selected');
         }
+        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        this.getLengthSelected();
     }
 
     /*
-        Function onSelectAll(): checked/uncheck add/delete all id event to array events_del
-        Author: Lam
+        Function getLengthSelected(): draw length selected
+        @author: Lam
     */
-    onSelectAll(event){
-        this.events_del = [];
-        let array_del = [];
-        if(event.target.checked){
-            this.events.forEach(function(element) {
-                array_del.push(element.id);
-            });
-            this.events_del = array_del;
-            this.select_checked = true;
-        }else{
-            this.select_checked = false;
-        }
+    getLengthSelected(){
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            this.length_selected = dtInstance.rows('.selected').count();
+        })
     }
 
     /*
         Function deleteEvent(): confirm delete
         @author: Lam
     */
+
     deleteEvent(){
         let that = this;
-        if ( this.events_del.length > 0 ) {
+        if ( this.length_selected > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.events_del.length + " sự kiện đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " sự kiện đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -150,20 +180,32 @@ export class ListEventComponent implements OnInit {
         Author: Lam
     */
     onDeleteEvent(){
-        this.eventService.onDelEventSelect(this.events_del, this.lang).subscribe(
-            (data) => {
-                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                    this.events_del.forEach(function(element) {
-                        dtInstance.rows('#del-'+element).remove().draw();
-                    });
-                    this.message_result = 'Xóa '+ this.events_del.length +' sự kiện thành công.';
-                    this.length_events = this.length_events - this.events_del.length;
-                    this.events_del = [];
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            // Get list promotion id selected
+            let get_list_id = dtInstance.cells('.selected', 1).data().toArray();
+            // array string to array number
+            let list_id_selected = get_list_id.map(Number);
+
+            // Call API remove list promotion selected
+            this.eventService.onDelEventSelect(list_id_selected, this.lang).subscribe(
+                (data) => {
+                    if (data.code === 204) {
+                        this.message_result = "Xóa "+ this.length_selected + " sự kiện thành công"
+
+                        // Remove all promotion selected on UI
+                        dtInstance.rows('.selected').remove().draw();
+                        // Reset count promotion
+                        this.length_all =  dtInstance.rows().count();
+                        this.length_selected = 0;
+                        this.errorMessage = '';
+                    } else {
+                        this.router.navigate(['/error', { message: error.message}]);
+                    }
+                }, 
+                (error) => {
+                    this.router.navigate(['/error', { message: error.message}]);
                 });
-                this.select_checked = false;
-                this.errorMessage = '';
-            }
-        );
+        });
     }
 
 

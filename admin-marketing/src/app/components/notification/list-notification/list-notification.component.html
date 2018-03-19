@@ -38,10 +38,10 @@
     </div>
 </div>
 <div class="custom_table">
-    <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="notifications">
+    <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="notifications">
         <thead>
             <tr>
-                <th><input type="checkbox" (change)="onSelectAll($event)"/></th>
+                <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
                 <th>ID</th>
                 <th>Tên thông báo</th>
                 <th>Tình trạng</th>
@@ -51,12 +51,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let noti of notifications" id="del-{{noti.id}}">
+            <tr class="row-data" *ngFor="let noti of notifications">
                 <td *ngIf="noti.sent_date">
                     <input type="checkbox" disabled/>
                 </td>
                 <td *ngIf="!noti.sent_date">
-                    <input type="checkbox" (change)="onSelectCKB($event, noti)" [checked]="select_checked"/>
+                    <input type="checkbox" (change)="selectCheckbox($event);"/>
                 </td>
                 <td>{{ noti.id }}</td>
                 <td><a [routerLink]="['/notification/edit/', noti.id, {lang: lang}]">{{ noti.subject }}</a></td>
@@ -76,7 +76,7 @@
         </select>
     </div>
     <div class="col-md-3">
-        {{ notifications_del.length }} của {{ length_notification }} được chọn
+        {{ length_selected }} của {{ length_all }} được chọn
         <button class="btn btn-danger" (click)="deleteNotificationEvent()">Thực hiện</button>
     </div>
 </div>
