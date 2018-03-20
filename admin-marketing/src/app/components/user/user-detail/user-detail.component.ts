@@ -2,6 +2,8 @@ import { Component,ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { ToastrService } from 'ngx-toastr';
+
 import { User } from '../../../shared/class/user';
 import { UserService } from '../../../shared/services/user.service';
 import { UserValidators } from './../../../shared/validators/user-validators';
@@ -39,6 +41,7 @@ export class UserDetailComponent implements OnInit {
         private userService:  UserService,
         private router: Router,
         private datePipe: DatePipe,
+        private toastr: ToastrService,
         ) { 
             this.api_domain = env.api_domain_root;
         }
@@ -50,7 +53,6 @@ export class UserDetailComponent implements OnInit {
 
 	// Create Form 
 	createFormUser() {
-        console.log(this.user);
 		this.formUser = this.fb.group({
         email: [this.user.email, [Validators.required, UserValidators.emailValidators]],
         full_name: [this.user.full_name, [Validators.required]],
@@ -96,7 +98,8 @@ export class UserDetailComponent implements OnInit {
             this.userService.updateUser(userFormGroup, this.user.id).subscribe(
                 (data) => {
                     // Navigate to promotion page where success
-                    self.router.navigate(['/user-list', { message_put: this.formUser.value['email']} ])
+                    self.toastr.success(`Chỉnh sửa "${this.formUser.value.email}" thành công`);
+                    self.router.navigate(['/user-list']);
                 }, 
                 (error) => {
                     if(error.code == 400) {
@@ -120,7 +123,8 @@ export class UserDetailComponent implements OnInit {
         this.userService.deleteUserById(user)
             .subscribe(
                 () => {
-                    this.router.navigate(['/user-list', { message_del: user.email} ]);
+                    this.toastr.success(`Xóa "${user.email}" thành công`);
+                    this.router.navigate(['/user-list']);
                 },
                 (error) =>  {
                     if(error.status == 405) {
@@ -150,8 +154,14 @@ export class UserDetailComponent implements OnInit {
         else type= "text" is show
      */
  	showPassword(input: any): any {
- 		input.type = input.type === 'password' ? 'text' : 'password';
- 	}
+        if (input.type = input.type === "password") {
+            input.type = "text";
+            $('span#toggleShowHide').addClass('fa fa-eye').removeClass('fa-eye-slash');
+        } else {
+            input.type = "password";
+            $('span#toggleShowHide').addClass('fa-eye-slash').removeClass('fa-eye');
+        }
+     }
 
  	// Change attribute readonly password
  	ChangeReadonly(event) {

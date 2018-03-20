@@ -3,7 +3,7 @@ import { DataTableDirective } from 'angular-datatables';
 
 import { Subject } from 'rxjs/Subject';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
 import { User } from '../../../shared/class/user';
 import { UserService } from '../../../shared/services/user.service';
 import { data_config } from '../../../shared/commons/datatable_config';
@@ -24,7 +24,6 @@ export class UserListComponent implements OnInit {
     length_all: Number = 0;
     length_selected: Number = 0;
 
-  	message_result: string = ''; // Message result
     record: string = "User";
 
  	// Inject the DataTableDirective into the dtElement property
@@ -41,6 +40,7 @@ export class UserListComponent implements OnInit {
   		private route: ActivatedRoute,
         private userService: UserService,
         private router: Router,
+        private toastr: ToastrService,
   		) {
   			this.users = [];
   		}
@@ -66,18 +66,6 @@ export class UserListComponent implements OnInit {
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
         // Get All User
 	  	this.getAllUser();
-
-        this.route.params.subscribe(params => {
-            if( params.message_post ){
-                this.message_result = " Thêm "+ params.message_post + " thành công.";
-            } else if ( params.message_put ) {
-                this.message_result = "  Chỉnh sửa "+ params.message_put + " thành công.";
-            } else if( params.message_del ) {
-                this.message_result = " Xóa " + params.message_del + " thành công.";
-            } else {
-                this.message_result = "";
-            }
-        });
   	}
 
   	/* 
@@ -105,7 +93,6 @@ export class UserListComponent implements OnInit {
     */
     selectCheckbox(event) {   
         $(event.target).closest( "tr" ).toggleClass( "selected" );
-        this.message_result = '';
         this.getLengthSelected();
         this.checkSelectAllCheckbox();
     }
@@ -122,7 +109,6 @@ export class UserListComponent implements OnInit {
     selectAllEvent(event) {
         if( event.target.checked ) {
             $("#table_id tr").addClass('selected');
-            this.message_result = '';
         } else {
             $("#table_id tr").removeClass('selected');
         }
@@ -172,7 +158,7 @@ export class UserListComponent implements OnInit {
                 }
             });
         } else {
-            bootbox.alert("Vui lòng chọn user để xóa");
+            this.toastr.warning(`Vui lòng chọn user cần xóa`);
         } 
     }
 
@@ -187,7 +173,7 @@ export class UserListComponent implements OnInit {
             // Call API remove list promotion selected
             this.userService.deleteUserSelected(list_id_selected).subscribe(
                 (data) => {
-                    this.message_result = "Xóa "+ this.length_selected + " user thành công"
+                    this.toastr.success(`Xóa ${this.length_selected} user thành công`);
 
                     // Remove all promotion selected on UI
                     dtInstance.rows('.selected').remove().draw();

@@ -5,6 +5,8 @@ import { Router } from "@angular/router";
 import { User } from '../../../shared/class/user';
 import { Role } from '../../../shared/class/role';
 
+import { ToastrService } from 'ngx-toastr';
+
 import { UserService } from '../../../shared/services/user.service';
 import { RoleService } from '../../../shared/services/role.service';
 import { UserValidators } from './../../../shared/validators/user-validators';
@@ -38,6 +40,7 @@ export class UserAddComponent implements OnInit {
         private roleService: RoleService,
         private router: Router,
         private datePipe: DatePipe,
+        private toastr: ToastrService,
 		) {
 	}
 
@@ -98,7 +101,8 @@ export class UserAddComponent implements OnInit {
             this.userService.createUser(userFormGroup).subscribe(
                 (data) => {
                     self.users.push(data);
-                    self.router.navigate(['/user-list', { message_post: this.formUser.value['email']} ]);
+                    this.toastr.success(`Thêm ${this.formUser.value['email']} thành công`);
+                    self.router.navigate(['/user-list']);
                 },
                 (error) => {
                     if(error.code == 400) {
@@ -139,7 +143,6 @@ export class UserAddComponent implements OnInit {
             input.type = "password";
             $('span#toggleShowHide').addClass('fa-eye-slash').removeClass('fa-eye');
         }
- 		// input.type = input.type === 'password' ? 'text' : 'password';
  	}
     /*
         Convert form group to form data to submit form

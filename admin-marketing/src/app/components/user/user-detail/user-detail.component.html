@@ -212,7 +212,7 @@
 						#input
 						[readonly]="readonly_value"
 						>
-						<button (click)="showPassword(input)" type="button" class="file-icon btn btn-default"><span class="fa fa-eye"></span></button>
+						<button (click)="showPassword(input)" type="button" class="file-icon btn btn-default"><span id="toggleShowHide" class="fa fa-eye-slash"></span></button>
 						<show-error-valid [control]="formUser.get('new_password')"></show-error-valid>
 						<div *ngIf="errorMessage">
 							<p class='errors'> {{ errorMessage.password }} </p>

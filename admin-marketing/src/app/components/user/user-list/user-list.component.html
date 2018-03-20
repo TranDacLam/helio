@@ -21,9 +21,6 @@
 </div>
 <br>
 <div class="table card-list">
-	<div class="alert alert-success" *ngIf="message_result">
-        {{message_result}}
-    </div>
 	<table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" *ngIf="users">
         <thead>
             <tr>
