@@ -51,7 +51,7 @@ export class UserListComponent implements OnInit {
 
   	ngOnInit() {
         // Call data_config
-  		this.dtOptions = data_config(this.record).dtOptions;
+  		this.dtOptions = data_config(this.record);
 
         // Get All User
 	  	this.getAllUser();

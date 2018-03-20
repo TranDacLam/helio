@@ -21,9 +21,8 @@ export class DenominationListComponent implements OnInit {
     dtOptions: any = {};
     denominations: Denomination[];
 
-    deno_selected: any;
-    selectedAll: any;
-    checkbox:boolean= false;
+    length_all: Number = 0;
+    length_selected: Number = 0;
 
     message_result = ''; // Message result
     record: string = "Mệnh Giá Nạp Tiền";
@@ -42,13 +41,30 @@ export class DenominationListComponent implements OnInit {
         private router: Router,
         ) {
         this.denominations = [];
-        this.deno_selected = [];
     }
 
     ngOnInit() {
         // Call data_config 
-        this.dtOptions = data_config(this.record).dtOptions;
+        this.dtOptions = data_config(this.record);
+        let dt_options_custom = {
+            drawCallback: (setting) => {
+                this.checkSelectAllCheckbox();
+            },
+            columnDefs: [
+                {
+                    targets: 1,
+                    visible: false
+                },
+                { 
+                    orderable: false, 
+                    targets: 0 
+                }
+            ]
+        };
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
+
         this.getAllDenomination();
+
         this.route.params.subscribe(params => {
             if(params.message_post){
                 this.message_result = " Thêm "+ params.message_post + " thành công.";
@@ -66,6 +82,7 @@ export class DenominationListComponent implements OnInit {
 		this.denominationService.getAllDenomination().subscribe(
 			(result) => {
 				this.denominations = result;
+                this.length_all = this.denominations.length;
 				this.dtTrigger.next();
 			},
             (error) => {
@@ -74,54 +91,46 @@ export class DenominationListComponent implements OnInit {
         );
 	}
 	/*
-        Check all denomination selected
-        Step: Create array to save id checked
-            Checking all checked
-            True: push id to array, item checkbox = True, message_result = ''
-            False: Remove all id from deno_selected, item checkbox = False
-        @author: TrangLe 
-     */
-	checkAllDeno(event){
-        let array_del = [];
-        if(event.target.checked){
-            this.denominations.forEach(function(element) {
-                array_del.push(element.id);
-                $('#'+element.id).prop('checked', true);
-            });
-            this.checkbox = true;
-            this.deno_selected = array_del;
-            this.message_result = "";
-        }else{
-            this.checkbox = false;
-            this.denominations.forEach((item, index) => {
-                this.deno_selected.splice(index, this.denominations.length);
-                $('#'+item.id).prop('checked', true);
-            });
-        }
+        Event select checbox on row
+            Case1: all row are checked then checkbox all on header is checked
+            Case1: any row is not checked then checkbox all on header is not checked
+        @author: Lam 
+    */
+    selectCheckbox(event) {   
+        $(event.target).closest( "tr" ).toggleClass( "selected" );
+        this.message_result = '';
+        this.getLengthSelected();
+        this.checkSelectAllCheckbox();
     }
 
-	/*
-        Check each item selected
-        Check item checkbox is checked
-            True: push id in array, if deno_selected.lenght = denominations.length -> all checkbox = true
-            False: remove id in array, all checkbox = false 
-        @author: Trangle 
-     */
-	checkItemChange(event, deno) {
-		if(event.target.checked){
-            this.deno_selected.push(deno.id);
-            if(this.deno_selected.length == this.denominations.length) {
-                $('#allCheck').prop('checked', true);
-            }
-            this.message_result = "";
+    // input checkall checked/unchecked
+    checkSelectAllCheckbox() {
+        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        this.getLengthSelected();
+    }
+    /*
+        Event select All Button on header table
+        @author: Lam 
+    */
+    selectAllEvent(event) {
+        if( event.target.checked ) {
+            $("#table_id tr").addClass('selected');
+            this.message_result = '';
+        } else {
+            $("#table_id tr").removeClass('selected');
         }
-        else{
+        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        this.getLengthSelected();
+    }
 
-            let index = this.deno_selected.indexOf(deno.id);
-            this.deno_selected.splice(index, 1);
-
-            $('#allCheck').prop('checked', false);
-        }
+    /*
+        Function getLengthSelected(): draw length selected
+        @author: Lam
+    */
+    getLengthSelected(){
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            this.length_selected = dtInstance.rows('.selected').count();
+        })
     }
     
     confirmDelete() {
@@ -129,10 +138,10 @@ export class DenominationListComponent implements OnInit {
             True: Show confirm and call function deleteFeedbackCheckbox 
             False: show alert
         */
-        if(this.deno_selected !== null && this.deno_selected.length > 0 ){
+        if(this.length_selected > 0 ){
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.deno_selected.length + " Mệnh giá nạp tiền đã chọn?",
+                message: "Bạn muốn xóa " + this.length_selected + " Mệnh giá nạp tiền đã chọn?",
                 buttons: {
                     confirm: {
                         label: 'Xóa',
@@ -154,24 +163,29 @@ export class DenominationListComponent implements OnInit {
             bootbox.alert("Vui lòng chọn mệnh giá nạp tiền để xóa");
         } 
     }
+
 	// Delete All select checkbox
 	deleteDenominationCheckbox() {
-        this.denominationService.deleteAllDenosSelected(this.deno_selected).subscribe(
-            (result) => {
-                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                    var self = this;
-                    this.deno_selected.forEach(function(e){
-                        dtInstance.rows('#delete'+e).remove().draw();
-                        var deno_item = self.denominations.find(deno => deno.id == e);
-                        self.denominations = self.denominations.filter(denominations => denominations !== deno_item);
-                    });
-                    this.deno_selected = [];
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            // Get list promotion id selected
+            let get_list_id = dtInstance.cells('.selected', 1).data().toArray();
+            // array string to array number
+            let list_id_selected = get_list_id.map(Number);
+
+            // Call API remove list promotion selected
+            this.denominationService.deleteAllDenosSelected(list_id_selected).subscribe(
+                (data) => {
+                    this.message_result = "Xóa "+ this.length_selected + " mệnh giá nạp tiền thành công"
+
+                    // Remove all promotion selected on UI
+                    dtInstance.rows('.selected').remove().draw();
+                    // Reset count promotion
+                    this.length_all =  dtInstance.rows().count();
+                    this.length_selected = 0;
+                },
+                (error) => {
+                    this.router.navigate(['/error', { message: error.json().message }]);
                 });
-                this.message_result = "Xóa mệnh giá nạp tiền thành công";
-            },
-            (error) => {
-                this.router.navigate(['/error', { message: error.json().message }]);
-            }
-            );
+            });
     }
 }

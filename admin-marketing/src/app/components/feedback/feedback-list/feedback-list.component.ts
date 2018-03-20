@@ -49,7 +49,7 @@ export class FeedbackListComponent implements OnInit {
 
 	ngOnInit() {
         // Call dataTable
-        this.dtOptions = data_config(this.record).dtOptions;
+        this.dtOptions = data_config(this.record);
         
         // Call get all feedback
         this.getAllFeedbacks();

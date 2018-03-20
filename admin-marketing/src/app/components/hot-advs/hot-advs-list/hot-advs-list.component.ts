@@ -49,7 +49,7 @@ export class HotAdvsListComponent implements OnInit {
 
   	ngOnInit() {
         this.getHotAdvs();
-  		this.dtOptions = data_config(this.record).dtOptions;
+  		this.dtOptions = data_config(this.record);
 	  	
         this.route.params.subscribe(params => {
             if( params.message_post ){
