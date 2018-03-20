@@ -6,6 +6,7 @@ import { LinkCardService } from '../../../shared/services/link-card.service';
 import { DateValidators } from './../../../shared/validators/date-validators';
 import { NumberValidators } from './../../../shared/validators/number-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 
 @Component({
@@ -30,7 +31,6 @@ export class FormUserAppComponent implements OnInit {
     // Enable/Disable input field when change input checkbox
     dis_input_app = {full_name: true, email: true, phone: true, birth_date: true, personal_id: true, address: true};
 
-    msg_success = ''; // Message show error
     msg_error: any;
 
     errorMessage = '';
@@ -38,7 +38,8 @@ export class FormUserAppComponent implements OnInit {
     constructor(
         private fb: FormBuilder, 
         private linkCardService: LinkCardService,
-        private router: Router
+        private router: Router,
+        private toastr: ToastrService
     ) { }
 
     ngOnInit() {;
@@ -116,13 +117,12 @@ export class FormUserAppComponent implements OnInit {
             this.linkCardService.updateUserApp(this.appForm.value, id).subscribe(
                 (data) => {
                     this.searchEmail(this.appForm.value.email);
-                    this.msg_success = data.message;
+                    this.toastr.success(`${data.message}`);
                     this.msg_error = null;
                 },
                 (error) => {
                     if(error.code === 400){
                         this.msg_error = error.message;
-                        this.msg_success = '';
                     }else{
                         this.router.navigate(['/error', { message: error.message}]);
                     }

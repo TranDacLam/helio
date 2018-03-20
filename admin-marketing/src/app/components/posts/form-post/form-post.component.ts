@@ -8,6 +8,7 @@ import { PostType } from './../../../shared/class/post-type';
 import { PostTypeService } from '../../../shared/services/post-type.service';
 import { PostImage } from './../../../shared/class/post-image';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ToastrService } from 'ngx-toastr';
 import { env } from '../../../../environments/environment';
 import 'rxjs/add/observable/throw';
 
@@ -41,7 +42,8 @@ export class FormPostComponent implements OnInit {
         private fb: FormBuilder,
         private location: Location,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private toastr: ToastrService
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -140,7 +142,8 @@ export class FormPostComponent implements OnInit {
             if(!this.post.id){
                 this.postService.addPost(post_form_data, this.lang).subscribe(
                     (data) => {
-                        this.router.navigate(['/post/list', { message_post: value_form.name}]);
+                        this.toastr.success(`Thêm mới "${value_form.name}" thành công`);
+                        this.router.navigate(['/post/list']);
                     },
                     (error) => {
                         if(error.code === 400){
@@ -154,7 +157,8 @@ export class FormPostComponent implements OnInit {
                 this.postService.updatePost(post_form_data, this.post.id, this.lang).subscribe(
                     (data) => {
                         this.post = data;
-                        this.router.navigate(['/post/list', { message_put: value_form.name}]);
+                        this.toastr.success(`Chỉnh sửa "${value_form.name}" thành công`);
+                        this.router.navigate(['/post/list']);
                     },
                     (error) => {
                         if(error.code === 400){
@@ -203,7 +207,8 @@ export class FormPostComponent implements OnInit {
         const id = this.post.id;
         this.postService.onDelPost(id, this.lang).subscribe(
             (data) => {
-                this.router.navigate(['/post/list', { message_del: 'success'}]);
+                this.toastr.success(`Xóa "${this.formPost.value.name}" thành công`);
+                this.router.navigate(['/post/list']);
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.message}]);

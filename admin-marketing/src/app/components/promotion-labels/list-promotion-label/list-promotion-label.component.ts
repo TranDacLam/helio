@@ -74,11 +74,7 @@ export class ListPromotionLabelComponent implements OnInit {
                 this.length_all = this.promotion_labels.length;
             },
             (error) => {
-                if(error.code === 403){
-                    this.toastr.error(`${error.message}`);
-                }else{
-                    this.router.navigate(['/error', { message: error.message}]);
-                }
+                this.router.navigate(['/error', { message: error.message}]);
             }
         );
     }

@@ -6,6 +6,7 @@ import { LinkCardService } from '../../../shared/services/link-card.service';
 import { Location } from '@angular/common';
 import { FormUserAppComponent } from '../form-user-app/form-user-app.component';
 import { FormUserEmbedComponent } from '../form-user-embed/form-user-embed.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-add-link-card',
@@ -29,12 +30,12 @@ export class AddLinkCardComponent implements OnInit {
 
     // Check input fields 2 form
     status_error = {full_name: false, email: false, phone: false, birth_date: false, personal_id: false, address: false};
-    errorMessage = '';
 
     constructor(
         private linkCardService: LinkCardService, 
         private location: Location,
         private router: Router,
+        private toastr: ToastrService
     ) { }
 
     ngOnInit() {
@@ -68,14 +69,19 @@ export class AddLinkCardComponent implements OnInit {
         });
         
         if(isValid){
-            this.errorMessage = "Lỗi, yêu cầu các trường thông tin tài khoản và thẻ phải trùng nhau."; 
+            this.toastr.error(`Lỗi, yêu cầu các trường thông tin tài khoản và thẻ phải trùng nhau`);
         }else{
             this.linkCardService.relate(user_app.email, user_embed.barcode).subscribe(
                 (data) => {
-                    this.router.navigate(['/link-card/detail/', user_app.id,{ email: user_app.email, barcode: user_embed.barcode, message: 'success'}]);
+                    this.toastr.error(`Bạn đã thực hiện liên kết thẻ với tài khoản Helio thành công.`);
+                    this.router.navigate(['/link-card/detail/', user_app.id,{ email: user_app.email, barcode: user_embed.barcode}]);
                 },
                 (error) => {
-                    this.errorMessage = error.message; 
+                    if(error.code === 400){
+                        this.toastr.error(`${error.message}`);
+                    }else{
+                        this.router.navigate(['/error', { message: error.message}]);
+                    }
                 }
             );
         }

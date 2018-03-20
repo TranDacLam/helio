@@ -5,6 +5,7 @@ import { NotificationService } from '../../../shared/services/notification.servi
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
+import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 
 
@@ -27,8 +28,6 @@ export class NotificationDetailComponent implements OnInit {
     user_list_right: User[]; // List user selected
 
     is_update: boolean = false; // Check input checkbox Update Notification
-    messageSuccess = '';
-    messageError = '';
     user_current: User;
 
     lang = 'vi';
@@ -37,7 +36,8 @@ export class NotificationDetailComponent implements OnInit {
         private notificationService: NotificationService, 
         private route: ActivatedRoute,
         private router: Router,
-        private variable_globals: VariableGlobals
+        private variable_globals: VariableGlobals,
+        private toastr: ToastrService
     ) { }
 
     ngOnInit() {
@@ -116,24 +116,17 @@ export class NotificationDetailComponent implements OnInit {
     */
     update_user_noti(event){
         if(!this.noti_detail.sent_date || (this.user_current.role === 1 && this.noti_detail.sent_date)){
-            if(event.length > 0){
-                const id = +this.route.snapshot.paramMap.get('id');
-                this.notificationService.updateUserNoti(id, event, this.lang).subscribe(
-                    (data) => {
-                        this.messageSuccess = "Lưu thành công.";
-                        setTimeout(()=>{
-                              this.messageSuccess = '';
-                        },5000);
-                    },
-                    (error) => {
-                        this.messageSuccess = error.message;
-                    }
-                );
-            }else{
-                bootbox.alert("Vui lòng chọn user");
-            }
+            const id = +this.route.snapshot.paramMap.get('id');
+            this.notificationService.updateUserNoti(id, event, this.lang).subscribe(
+                (data) => {
+                    this.toastr.success(`Lưu thành công`);
+                },
+                (error) => {
+                    this.router.navigate(['/error', { message: error.message}]);
+                }
+            );
         }else{
-            bootbox.alert("Chức năng này chỉ dành cho System Admin");
+            this.toastr.warning(`Chức năng này chỉ dành cho System Admin`);
         }
         
         
@@ -173,16 +166,10 @@ export class NotificationDetailComponent implements OnInit {
         this.notificationService.sendNotification(id, this.lang).subscribe(
             (data) => {
                 this.getNotification();
-                this.messageSuccess = data.message;
-                setTimeout(()=>{
-                      this.messageSuccess = '';
-                },10000);
+                this.toastr.success(`${data.message}`);
             },
             (error) => {
-                this.messageError = error.message;
-                setTimeout(()=>{
-                      this.messageError = '';
-                },10000);
+                this.toastr.error(`${error.message}`);
             }
         );
     }

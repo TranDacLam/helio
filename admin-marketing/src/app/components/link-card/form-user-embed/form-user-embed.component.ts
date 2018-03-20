@@ -6,6 +6,7 @@ import { LinkCardService } from '../../../shared/services/link-card.service';
 import { DateValidators } from './../../../shared/validators/date-validators';
 import { NumberValidators } from './../../../shared/validators/number-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 
 @Component({
@@ -39,7 +40,8 @@ export class FormUserEmbedComponent implements OnInit {
     constructor(
         private fb: FormBuilder, 
         private linkCardService: LinkCardService,
-        private router: Router
+        private router: Router,
+        private toastr: ToastrService
     ) { }
 
     ngOnInit() {
@@ -127,13 +129,12 @@ export class FormUserEmbedComponent implements OnInit {
             this.linkCardService.updateUserEmbed(this.embedForm.value).subscribe(
                 (data) => {
                     this.searchBarcode(this.embedForm.value.barcode);
-                    this.msg_success = data.message;
+                    this.toastr.success(`${data.message}`);
                     this.msg_error = null;
                 },
                 (error) => {
                     if(error.code === 400){
                         this.msg_error = error.message;
-                        this.msg_success = '';
                     }else{
                         this.router.navigate(['/error', { message: error.message}]);
                     }
