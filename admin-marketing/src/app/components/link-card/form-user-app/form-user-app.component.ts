@@ -97,6 +97,14 @@ export class FormUserAppComponent implements OnInit {
     }
 
     /*
+        Function stripText(): numbers only
+        Author: Lam
+    */
+    stripText(control: FormControl) {
+        control.setValue(control.value.replace(/[^0-9]/g, ''));
+    }
+
+    /*
         Function onSubmitApp(): call service function updateUserApp() to update user app
         Author: Lam
     */
