@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { PromotionLabel } from '../../../shared/class/promotion-label';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -24,7 +25,7 @@ export class EditPromotionLabelComponent implements OnInit {
 
     formPromotionLabel: FormGroup;
 
-    errorMessage = ''; // Messages error
+    errorMessage :any; // Messages error
 
     lang = 'vi';
 
@@ -32,7 +33,8 @@ export class EditPromotionLabelComponent implements OnInit {
         private promotionLabelService: PromotionLabelService,
         private fb: FormBuilder,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private toastr: ToastrService
     ) { }
 
     ngOnInit() {
@@ -87,7 +89,8 @@ export class EditPromotionLabelComponent implements OnInit {
             this.promotionLabelService.updatePromotionLabel(this.formPromotionLabel.value, this.promotion_label.id, this.lang)
                 .subscribe(
                 (data) => {
-                    this.router.navigate(['/promotion-label/list', { message_put: this.formPromotionLabel.value.name}]);
+                    this.toastr.success(`Chỉnh sửa "${this.formPromotionLabel.value.name}" thành công`);
+                    this.router.navigate(['/promotion-label/list']);
                 },
                 (error) => {
                     if(error.code === 400){
@@ -135,7 +138,8 @@ export class EditPromotionLabelComponent implements OnInit {
         const id = this.promotion_label.id;
         this.promotionLabelService.onDelPromotionLabel(id, this.lang).subscribe(
             (data) => {
-                this.router.navigate(['/promotion-label/list', { message_del: 'success'}]);
+                this.toastr.success(`Xóa "${this.formPromotionLabel.value.name}" thành công`);
+                this.router.navigate(['/promotion-label/list']);
             }
         );
     }
