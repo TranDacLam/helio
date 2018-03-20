@@ -194,6 +194,8 @@ import { PromotionReportComponent } from './components/promotions/promotion-repo
     CalendarModule,
     ToastrModule.forRoot({
         positionClass: 'toast-top-full-width',
+        maxOpened: 1,
+        autoDismiss: true
     }), // ToastrModule added
   ],
   providers: [

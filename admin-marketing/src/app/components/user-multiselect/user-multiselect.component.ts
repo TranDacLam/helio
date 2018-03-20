@@ -203,8 +203,9 @@ export class UserMultiselectComponent implements OnInit {
              dtInstance.rows.add(selected_temp).draw();
         });
         $("#table_id_2 tr input:checkbox").prop('checked', false);
-        $("#table_id_2 tr").removeClass('selected');
-        $('#select-all-right').prop('checked', false);
+        this.is_button_left = false;
+        this.is_button_rigth = false;
+
     }
     /*
         Move all row is checked to left tatble
@@ -221,8 +222,8 @@ export class UserMultiselectComponent implements OnInit {
              dtInstance.rows.add(selected_temp).draw();
         });
         $("#table_id_1 tr input:checkbox").prop('checked', false);
-        $("#table_id_1 tr").removeClass('selected');
-        $('#select-all-left').prop('checked', false);
+        this.is_button_left = false;
+        this.is_button_rigth = false;
     }
 
     /*
@@ -253,13 +254,13 @@ export class UserMultiselectComponent implements OnInit {
 
     // input checkall checked/unchecked
     checkSelectAllCheckboxLeft() {
-        $('#select-all-left').prop('checked', $("#table_id_1 tr.row-data:not(.selected)").length === 0);
+        $('#select-all-left').prop('checked', $("#table_id_1 tbody tr:not(.selected)").length === 0);
     }
 
     // input checkall checked/unchecked
     checkSelectAllCheckboxRight() {
         if(this.user_list_right){
-            $('#select-all-right').prop('checked', $("#table_id_2 tr.row-data:not(.selected)").length === 0);
+            $('#select-all-right').prop('checked', $("#table_id_2 tbody tr:not(.selected)").length === 0);
         }
     }
 
@@ -270,6 +271,8 @@ export class UserMultiselectComponent implements OnInit {
     onSave(): void {
         $('#select-all-left').prop('checked', false);
         $('#select-all-right').prop('checked', false);
+        this.is_button_left = false;
+        this.is_button_rigth = false;
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
             this.save.emit(dtInstance.column(1).data().toArray());
         });
