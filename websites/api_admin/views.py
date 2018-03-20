@@ -880,7 +880,7 @@ class UserEmbedDetail(APIView):
                     return Response({"code": 400, "message": "Barcode is numberic", "fields": ""}, status=400)
                 cursor = connections['sql_db'].cursor()
                 query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, 
-                                    Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id  
+                                    Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id
                                 FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
                                 WHERE C.Card_Barcode = {0}"""
                 cursor.execute(query_str.format(barcode))
@@ -891,7 +891,7 @@ class UserEmbedDetail(APIView):
                     return Response({"code": 400, "message": "Barcode not found.", "fields": ""}, status=400)
                 # check Customer_Id is exist
                 if not item[7]:
-                    return Response({"code": 400, "message": "Tikets do not sign up with user", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": "Card has no user", "fields": ""}, status=400)
 
                 result = {}
                 first_name = item[0] if item[0] else ''  # Firstname
@@ -1009,7 +1009,7 @@ class RelateAPI(APIView):
                 # check user embed is exist by check Customer_Id
                 if not userembed_item:
                     return Response({"code": 400, "message": "Not found Userembed.", "fields": ""}, status=400)
-
+                # custumer_id is null
                 if not userembed_item[0]:
                     return Response({"code": 400, "message": "Tikets do not sign up with user", "fields": ""}, status=400)
                 # check user embed is related

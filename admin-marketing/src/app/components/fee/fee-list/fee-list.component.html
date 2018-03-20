@@ -22,20 +22,22 @@
 	</div>
 </div>
 <div class="wrapper-table">
-	<table datatable [dtOptions]="dtOptions" *ngIf="fees" class="row-border hover">
+	<table datatable [dtOptions]="dtOptions" *ngIf="fees" id="table_id" class="row-border hover">
 	<thead>
 		<tr class="">
-			<th><input id='selectAll' type="checkbox" name="" (change)="selectAll($event);"></th>
+			<th><input id='select-all' type="checkbox" name="" (change)="selectAllEvent($event);"></th>
+			<th>ID</th>
 			<th>Phí</th>
 			<th>Vị trí</th>
 			<th></th>
 		</tr>
 	</thead>
 	<tbody *ngIf="fees">
-		<tr *ngFor="let fee of fees" id={{fee.id}}>
+		<tr *ngFor="let fee of fees" id={{fee.id}} class="row-data">
 			<td class="checkbox-tb">
-				<input type="checkbox" name="{{fee.id}}" id='checkbox_{{fee.id}}'[value]=fee.id (change)="triggerItem($event.target.checked, fee.id);" >
+				<input type="checkbox" name="{{fee.id}}" id='checkbox_{{fee.id}}'[value]=fee.id (change)="selectCheckbox($event);" >
 			</td>
+			<td>{{fee.id}}</td>
 			<td class="fee-tb">{{fee.fee}} {{fee.fee_type}}</td>
 			<td class="position-tb">{{fee.position}}</td>
 			<td *ngIf="fee.is_apply">

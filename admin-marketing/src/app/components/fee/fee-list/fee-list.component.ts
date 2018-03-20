@@ -4,7 +4,8 @@ import { FeeService } from '../../../shared/services/fee.service';
 import { Subject } from 'rxjs/Subject';
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
-import { data_config } from '../../../shared/commons/datatable_config';
+import * as datatable_config from '../../../shared/commons/datatable_config';
+
 
 declare var bootbox:any;
 
@@ -31,7 +32,7 @@ export class FeeListComponent implements OnInit {
    // list consist of id to delete list 
    list_id = [];
    record: string ="Phí Giao Dịch";
-
+   length_selected: number;
    // action when hover
    hoverIn(fee){
      fee.isHover = true;
@@ -52,55 +53,6 @@ export class FeeListComponent implements OnInit {
 		});
    }
    
-   /*
-    selectAll FUNCTION
-    set list_id is empty
-    if selectAll is check push all id to list_id
-    author: Hoangnguyen
-   */
-   selectAll(event){
-     this.list_id = []
-     if(event.target.checked){
-        for (var i in this.fees){
-            $('#checkbox_'+this.fees[i].id).prop('checked', true);
-            this.list_id.push(this.fees[i].id);
-        }
-     }else{
-       for (var i in this.fees){
-            $('#checkbox_'+this.fees[i].id).prop('checked', false);
-        }
-     }
-   }
-
-   /*
-      triggerItem FUNCTION
-      when check checkbox
-      push id to list_id
-      when uncheck checkbox
-      remove id in list_id 
-      author: Hoangnguyen
-   */
-    triggerItem( checked: boolean, id: any){
-       if(checked){
-         // when check checkbox
-         this.list_id.push(id);
-         // checked all fee then inout selectAll is checked
-         if (this.list_id.length == this.fees.length){
-           $('#selectAll').prop('checked', true);
-         }
-
-       }else{
-         //when uncheck checkbox
-         var index = this.list_id.indexOf(id);
-         this.list_id.splice(index, 1);
-         // uncheck selectAll
-         let selectAll = $('#selectAll').prop('checked');
-         if(selectAll){
-           $('#selectAll').prop('checked', false);
-         }
-       }
-    }
-
     /*
       confirm_delete FUNCTION
       if list_id exist show popup confirm
@@ -212,10 +164,61 @@ export class FeeListComponent implements OnInit {
        }
        );
    }
+    /*
+        Event select checbox on row
+            Case1: all row are checked then checkbox all on header is checked
+            Case1: any row is not checked then checkbox all on header is not checked
+        @author: Lam 
+    */
+    selectCheckbox(event) {   
+        $(event.target).closest( "tr" ).toggleClass( "selected" );
+        this.getLengthSelected();
+        this.checkSelectAllCheckbox();
+    }
+
+    // input checkall checked/unchecked
+    checkSelectAllCheckbox() {
+        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        this.getLengthSelected();
+    }
+    /*
+        Event select All Button on header table
+        @author: Lam 
+    */
+    selectAllEvent(event) {
+        if( event.target.checked ) {
+            $("#table_id tr").addClass('selected');
+        } else {
+            $("#table_id tr").removeClass('selected');
+        }
+        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        this.getLengthSelected();
+    }
+    getLengthSelected(){
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          this.length_selected = dtInstance.rows('.selected').count();
+      })
+    }
 
   ngOnInit() {
   	this.getFees();
-     this.dtOptions = data_config(this.record).dtOptions;
+     this.dtOptions = datatable_config.data_config('Phí Giao Dịch');
+        let dt_options_custom = {
+            drawCallback: (setting) => {
+                this.checkSelectAllCheckbox();
+            },
+            columnDefs: [
+                {
+                    targets: 1,
+                    visible: false
+                },
+                { 
+                    orderable: false, 
+                    targets: 0 
+                }
+            ]
+        };
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
   }
 
 }
