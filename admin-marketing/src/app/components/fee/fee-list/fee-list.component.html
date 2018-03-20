@@ -13,19 +13,11 @@
 		</a>
     </div>
 </div>
-<div class="row">
-	<div *ngIf="errorText" class="alert-danger">
-		<div class="alert alert-danger" role="alert">
-		  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-		  {{errorText}}
-		</div>
-	</div>
-</div>
 <div class="wrapper-table">
 	<table datatable [dtOptions]="dtOptions" *ngIf="fees" id="table_id" class="row-border hover">
 	<thead>
 		<tr class="">
-			<th><input id='select-all' type="checkbox" name="" (change)="selectAllEvent($event);"></th>
+			<th id="th-checkall"><input id='select-all' type="checkbox" name="" (change)="selectAllEvent($event);"></th>
 			<th>ID</th>
 			<th>Phí</th>
 			<th>Vị trí</th>
@@ -59,7 +51,8 @@
 		</select>
 	</div>
 	<div class="col-md-3" *ngIf="fees" >
-		 {{list_id.length}} của {{fees.length}} được chọn
+
+		 {{length_selected}} của {{length_all}} được chọn
 		<button type="button" class="btn btn-danger" (click)="confirm_delete();">Thực hiện</button>
 	</div>
 </div>
