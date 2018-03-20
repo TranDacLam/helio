@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-sm-7">
                         <input type="text" class="form-control" formControlName="barcode"
-                        [readonly]="dis_input_embed.barcode" (input)="stripText(embedForm.get('barcode'))"/>
+                        [readonly]="dis_input_embed.barcode" (input)="stripText(embedForm.value.barcode, 'barcode')" />
                         <show-error-valid [control]="embedForm.get('barcode')"></show-error-valid>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                         <label class="col-form-label form-check-label">Số Điện Thoại</label>
                     </div>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" formControlName="phone" (input)="stripText(embedForm.get('phone'))"
+                        <input type="text" class="form-control" formControlName="phone" (input)="stripText(embedForm.value.phone, 'phone')"
                         [readonly]="dis_input_embed.phone" [class.error_user]="status_error.phone"/>
                         <show-error-valid [control]="embedForm.get('phone')"></show-error-valid>
                     </div>
@@ -81,7 +81,7 @@
                         <label class="col-form-label form-check-label">Chứng Minh Nhân Dân</label>
                     </div>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" formControlName="personal_id" (input)="stripText(embedForm.get('personal_id'))"
+                        <input type="text" class="form-control" formControlName="personal_id" (input)="stripText(embedForm.value.personal_id, 'personal_id')"
                         [readonly]="dis_input_embed.personal_id" [class.error_user]="status_error.personal_id"/>
                         <show-error-valid [control]="embedForm.get('personal_id')"></show-error-valid>
                     </div>
@@ -111,7 +111,7 @@
                 <div class="col-sm-9">
                     <div id="imaginary_container"> 
                         <div class="input-group stylish-input-group">
-                            <input type="text" class="form-control" id="get_barcode" placeholder="Search"
+                            <input type="text" class="form-control" id="get_barcode" placeholder="Nhập card barcode cần tìm"
                                 #search_barcode (input)="stripBarcode(search_barcode.value)"/>
                             <span class="input-group-addon">
                                 <button (click)="searchBarcode(search_barcode.value)">

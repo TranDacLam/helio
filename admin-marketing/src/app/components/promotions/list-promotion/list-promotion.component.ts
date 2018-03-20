@@ -60,7 +60,7 @@ export class ListPromotionComponent implements OnInit {
 
     ngOnInit() {
     	this.getAllPromotion();
-        this.dtOptions = datatable_config.data_config('Nhãn Khuyến Mãi');
+        this.dtOptions = datatable_config.data_config('Khuyến Mãi');
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();

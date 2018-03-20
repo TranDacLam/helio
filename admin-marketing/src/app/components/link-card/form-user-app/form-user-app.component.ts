@@ -100,8 +100,8 @@ export class FormUserAppComponent implements OnInit {
         Function stripText(): numbers only
         Author: Lam
     */
-    stripText(control: FormControl) {
-        control.setValue(control.value.replace(/[^0-9]/g, ''));
+    stripText(value, field) {
+        this.appForm.get(field).setValue(value.replace(/[^0-9]/g, ''));
     }
 
     /*
@@ -115,6 +115,7 @@ export class FormUserAppComponent implements OnInit {
             let id = this.user_app.id;
             this.linkCardService.updateUserApp(this.appForm.value, id).subscribe(
                 (data) => {
+                    this.searchEmail(this.appForm.value.email);
                     this.msg_success = data.message;
                     this.msg_error = null;
                 },

@@ -42,7 +42,7 @@
                         <label class="col-form-label form-check-label">Số Điện Thoại</label>
                     </div>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" formControlName="phone" (input)="stripText(appForm.get('phone'))"
+                        <input type="text" class="form-control" formControlName="phone" (input)="stripText(appForm.value.phone, 'phone')"
                         [readonly]="dis_input_app.phone" [class.error_user]="status_error.phone"/>
                         <show-error-valid [control]="appForm.get('phone')"></show-error-valid>
                     </div>
@@ -68,7 +68,7 @@
                         <label class="col-form-label form-check-label">Chứng Minh Nhân Dân</label>
                     </div>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" formControlName="personal_id" (input)="stripText(appForm.get('personal_id'))"
+                        <input type="text" class="form-control" formControlName="personal_id" (input)="stripText(appForm.value.personal_id, 'personal_id')"
                         [readonly]="dis_input_app.personal_id" [class.error_user]="status_error.personal_id"/>
                         <show-error-valid [control]="appForm.get('personal_id')"></show-error-valid>
                     </div>
@@ -98,7 +98,7 @@
                 <div class="col-sm-9">
                     <div id="imaginary_container"> 
                         <div class="input-group stylish-input-group">
-                            <input type="text" class="form-control" placeholder="Search" 
+                            <input type="text" class="form-control" placeholder="Nhập email cần tìm" 
                                 #search_email />
                             <span class="input-group-addon">
                                 <button (click)="searchEmail(search_email.value)">
