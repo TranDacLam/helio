@@ -30,15 +30,10 @@ table.dataTable thead .sorting_desc{
 }
 .under-table{
 	margin-bottom: 50px;
+}  
+.page-name{
+    font-size: 34px;
 }
-.custom_btn{
-	color: black;
-    background-color: #fff;
-    border-color: black;
-    margin-bottom: 10px;
+#th-checkall{
+	padding: 10px;
 }
-.custom_btn:hover{
-	color: #fff;
-    background-color: #337ab7;
-    border-color: #2e6da4;
-}    

@@ -104,8 +104,8 @@ export class FormUserEmbedComponent implements OnInit {
         Function stripText(): numbers only
         Author: Lam
     */
-    stripText(control: FormControl) {
-        control.setValue(control.value.replace(/[^0-9]/g, ''));
+    stripText(value, field) {
+        this.embedForm.get(field).setValue(value.replace(/[^0-9]/g, ''));
     }
 
     /*

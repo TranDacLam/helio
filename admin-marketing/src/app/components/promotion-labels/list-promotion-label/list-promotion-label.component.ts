@@ -3,7 +3,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PromotionLabel } from '../../../shared/class/promotion-label';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
-import { message } from '../../../shared/utils/message';
+import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 import * as datatable_config from '../../../shared/commons/datatable_config';
 
@@ -32,12 +32,14 @@ export class ListPromotionLabelComponent implements OnInit {
 
     promotion_labels: PromotionLabel[];
 
-    message_result = ''; // Message error
-    errorMessage = '';
-
     lang: string = 'vi';
 
-    constructor(private promotionLabelService: PromotionLabelService, private route: ActivatedRoute, private router: Router) { }
+    constructor(
+        private promotionLabelService: PromotionLabelService, 
+        private route: ActivatedRoute, 
+        private router: Router,
+        private toastr: ToastrService
+    ) { }
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Nhãn Khuyến Mãi');
@@ -59,20 +61,6 @@ export class ListPromotionLabelComponent implements OnInit {
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
 
         this.getPromotionLabels();
-
-        /*
-            Use route to get params from url
-            Author: Lam
-        */
-        this.route.params.subscribe(params => {
-            if(params.message_put){
-                this.message_result = `${message.edit} "${params.message_put}" ${message.success}`;
-            }else if(params.message_post){
-                this.message_result = `${message.create_new} "${params.message_post}" ${message.success}`;
-            }else if(params.message_del){
-                this.message_result = 'Xóa nhãn khuyến mãi thành công.';
-            }
-        });
     }
 
     /*
@@ -87,8 +75,7 @@ export class ListPromotionLabelComponent implements OnInit {
             },
             (error) => {
                 if(error.code === 403){
-                    this.errorMessage = error.message;
-                    this.message_result = '';
+                    this.toastr.error(`${error.message}`);
                 }else{
                     this.router.navigate(['/error', { message: error.message}]);
                 }
@@ -163,7 +150,7 @@ export class ListPromotionLabelComponent implements OnInit {
             });
 
         } else  {
-            bootbox.alert("Vui lòng chọn nhãn khuyến mãi cần xóa");
+            this.toastr.warning(`Vui lòng chọn nhãn khuyến mãi cần xóa`);
         }
         
     }
@@ -185,14 +172,13 @@ export class ListPromotionLabelComponent implements OnInit {
             this.promotionLabelService.onDelPromotionLabelSelect(list_id_selected, this.lang).subscribe(
                 (data) => {
                     if (data.code === 204) {
-                        this.message_result = "Xóa "+ this.length_selected + " nhãn khuyến mãi thành công"
+                        this.toastr.success(`Xóa ${this.length_selected} nhãn khuyến mãi thành công`);
 
                         // Remove all promotion selected on UI
                         dtInstance.rows('.selected').remove().draw();
                         // Reset count promotion
                         this.length_all =  dtInstance.rows().count();
                         this.length_selected = 0;
-                        this.errorMessage = '';
                     } else {
                         this.router.navigate(['/error', { message: data.message}]);
                     }
