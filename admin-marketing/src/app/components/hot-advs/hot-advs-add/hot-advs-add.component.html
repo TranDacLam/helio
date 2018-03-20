@@ -4,13 +4,14 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
             <li class="breadcrumb-item"><a routerLink="/hot-advs-list">Hot Ads</a></li>
-            <li class="breadcrumb-item"><a routerLink="/hot-advs-add">Thêm Hot Ads</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thêm Hot Ads</li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
 <div class='title-hot-advs row'>
-    <a class="pull-left" routerLink="/hot-advs-add">Thêm Hot Ads</a>
+	<p class="title text-center">Thêm Hot Ads</p>
+    <p></p>
 </div>
 <form [formGroup]="formHotAds" enctype="multipart/form-data">
 	<div class="col-md-12">

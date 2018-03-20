@@ -4,14 +4,13 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang chủ</a></li>
             <li class="breadcrumb-item"><a routerLink="/banner-list">Banner</a></li>
-            <li class="breadcrumb-item"><a routerLink="/banner-detail">Chỉnh sửa Banner</a></li>
-            
+             <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa Banner</li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
 <div class='title-banner row'>
-    <a class="pull-left" routerLink="/banner-add">Chỉnh sửa Banner</a>
+    <p class="title text-center">Chỉnh sửa Banner</p>
 </div>
 <form [formGroup]="formBanner" (ngSubmit)="onSubmit()">
 <div class="col-md-8 area-form-banner">
@@ -72,7 +71,8 @@
 </div>
 <div class='clearfix'></div>
 <div class="row footer-banner">
-    <button type="submit" class="pull-right btn btn-info">Lưu lại</button>
+    <button type="submit" class="pull-right btn btn-info" (click)="updateBanner()">Lưu lại</button>
+    <button type="submit" class="pull-left btn btn-danger" (click)="confirmDelete(banner)">Xóa</button>
 </div>
 </form>
 

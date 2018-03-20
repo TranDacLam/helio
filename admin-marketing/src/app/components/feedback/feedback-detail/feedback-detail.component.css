@@ -4,7 +4,10 @@
 	border-bottom: 2px solid black;
 }
 .form-feedback {
-	margin-left: 10px;
+	margin-left: 15px;
+}
+p.title {
+	font-size: 34px;
 }
 a.title-feedback {
 	padding: 5px 0px;

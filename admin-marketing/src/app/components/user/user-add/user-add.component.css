@@ -7,10 +7,8 @@ button.clear-file.btn.btn-danger {
 	border-bottom: 2px solid black;
 	padding: 10px 0;
 }
-.title-user a {
-	text-decoration: none;
-	list-style-type: none;
-	color: black;
+p.title {
+	font-size: 34px;
 }
 .content-form-add-user {
 	border-bottom: 2px solid black;

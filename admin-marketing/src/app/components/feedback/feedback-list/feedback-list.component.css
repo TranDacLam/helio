@@ -18,6 +18,9 @@
 	text-decoration: none;
 	color: #333333;
 }
+p.title {
+	font-size: 34px;
+}
 .title-feedback a:hover {
 	text-decoration: none;
 }

@@ -7,6 +7,9 @@ import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { Advertisement } from '../../../shared/class/advertisement';
 import { AdvertisementService } from '../../../shared/services/advertisement.service';
 
+// Using bootbox 
+declare var bootbox:any;
+
 @Component({
   selector: 'app-advertisement-detail',
   templateUrl: './advertisement-detail.component.html',
@@ -71,4 +74,34 @@ export class AdvertisementDetailComponent implements OnInit {
 			);
 		}
 	}
+	deleteAdv(adv: Advertisement) {
+    	this.advertisementService.deleteAdvById(adv)
+            .subscribe(
+                () => this.router.navigate(['/advertisement-list', { message_del: adv.name} ]),
+                error =>  this.router.navigate(['/error', { message: error.json().message }])
+           );
+    }
+
+	confirmDelete(adv: Advertisement) {
+        bootbox.confirm({
+            title: "Bạn có chắc chắn?",
+            message: "Bạn muốn xóa Quảng Cáo này.",
+            buttons: {
+                confirm: {
+                    label: 'Xóa',
+                    className: 'btn-success',
+                },
+                cancel: {
+                    label: 'Hủy',
+                    className: 'pull-left btn-danger',
+                }
+            },
+            callback: (result)=> {
+                if(result) {
+                    // Check result = true. call function callback
+                    this.deleteAdv(adv)
+                }
+            }
+        });
+    }
 }

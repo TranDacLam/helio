@@ -88,21 +88,20 @@ export class UserDetailComponent implements OnInit {
         var self = this;
         let userFormGroup = this.convertFormGroupToFormData(this.formUser);
         this.userService.updateUser(userFormGroup, this.user.id).subscribe(
-                (data) => {
-                    // Navigate to promotion page where success
-                    self.router.navigate(['/user-list', { message_put: this.formUser.value['email']} ])
-                }, 
-                (error) => {
-                    if(error.code == 400) {
-                        this.errorMessage = error.message
-                    } else if(error.code == 405) {
-                        this.errors = error.message;
-                    } else {
-                       self.router.navigate(['/error', { message: error.message }]);
-                    }
+            (data) => {
+                // Navigate to promotion page where success
+                self.router.navigate(['/user-list', { message_put: this.formUser.value['email']} ])
+            }, 
+            (error) => {
+                if(error.code == 400) {
+                    this.errorMessage = error.message
+                } else if(error.code == 405) {
+                    this.errors = error.message;
+                } else {
+                   self.router.navigate(['/error', { message: error.message }]);
                 }
-            );
-
+            }
+        );
     }
 
     /*

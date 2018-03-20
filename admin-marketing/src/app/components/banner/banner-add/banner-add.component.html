@@ -4,14 +4,13 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang chủ</a></li>
             <li class="breadcrumb-item"><a routerLink="/banner-list">Banner</a></li>
-            <li class="breadcrumb-item"><a routerLink="/banner-add">Thêm Banner</a></li>
-
+            <li class="breadcrumb-item active" aria-current="page">Thêm Banner</li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
 <div class='title-banner row'>
-    <a class="pull-left" routerLink="/banner-add">Thêm Banner</a>
+    <p class="title text-center">Thêm Banner</p>
 </div>
 <form [formGroup]="formBanner" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
     <div class="col-md-8 area-form-banner">

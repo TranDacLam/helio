@@ -94,6 +94,10 @@ export class BannerService {
             }
         });
     }
+    deleteUserById(id: number, lang): Observable<any> {
+        let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`
+        return this.http.delete(url,this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    }
 
     deleteBannerSelected(banner_id, lang): Observable<any> {
       let url = `${env.api_domain_root}/${lang}/api/${api.banner}`;
