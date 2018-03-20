@@ -199,7 +199,7 @@ export class ListEventComponent implements OnInit {
                         this.length_selected = 0;
                         this.errorMessage = '';
                     } else {
-                        this.router.navigate(['/error', { message: error.message}]);
+                        this.router.navigate(['/error', { message: data.message}]);
                     }
                 }, 
                 (error) => {
