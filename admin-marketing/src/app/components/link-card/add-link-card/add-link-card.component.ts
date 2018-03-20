@@ -52,9 +52,11 @@ export class AddLinkCardComponent implements OnInit {
         let user_app = this.userappComponent.user_app;
         let user_embed = this.userembedComponent.user_embed;
         let isValid = false;
+        let field_compare = {'full_name': '', 'email': '', 'phone': '', 'birth_date': '', 
+            'personal_id': '', 'address': ''};
 
         Object.entries(user_app).forEach(([key, val]) => {
-            if(key !== 'id'){
+            if(key in field_compare){
                 if(user_app[key] !== user_embed[key]){
                     this.status_error[key] = true;
                     isValid = true;

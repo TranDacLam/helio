@@ -101,6 +101,22 @@ export class FormUserEmbedComponent implements OnInit {
     }
 
     /*
+        Function stripText(): numbers only
+        Author: Lam
+    */
+    stripText(control: FormControl) {
+        control.setValue(control.value.replace(/[^0-9]/g, ''));
+    }
+
+    /*
+        Function stripText(): numbers only
+        Author: Lam
+    */
+    stripBarcode(search_barcode) {
+        $('#get_barcode').val(search_barcode.replace(/[^0-9]/g, ''));
+    }
+
+    /*
         Function onSubmitEmbed(): call service function updateUserEmbed() to update user embed
         Author: Lam
     */
