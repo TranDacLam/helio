@@ -192,7 +192,9 @@ import { PromotionReportComponent } from './components/promotions/promotion-repo
     RecaptchaModule.forRoot(), // Keep in mind the "forRoot"-magic nuances!
     RecaptchaFormsModule,
     CalendarModule,
-    ToastrModule.forRoot(), // ToastrModule added
+    ToastrModule.forRoot({
+        positionClass: 'toast-top-full-width',
+    }), // ToastrModule added
   ],
   providers: [
     AdvertisementService,
