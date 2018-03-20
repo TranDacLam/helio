@@ -284,7 +284,7 @@ class AdvertisementView(APIView):
         Get all Advertisement
         """
         try:
-            adv_list = Advertisement.objects.all()
+            adv_list = Advertisement.objects.all().order_by('-created')
             serializer = admin_serializers.AdvertisementSerializer(
                 adv_list, many=True)
             return Response(serializer.data)
@@ -402,7 +402,7 @@ class DenominationView(APIView):
         Get all Denomination to list 
         """
         try:
-            list_denomination = Denomination.objects.all()
+            list_denomination = Denomination.objects.all().order_by('-created')
             serializer = admin_serializers.DenominationSerializer(
                 list_denomination, many=True)
             return Response(serializer.data)
@@ -493,7 +493,7 @@ class FeedbackView(APIView):
                     queryset, many=True)
                 return Response(serializer.data)
             else:
-                queryset = FeedBack.objects.all()
+                queryset = FeedBack.objects.all().order_by('-created')
                 serializer = admin_serializers.FeedBackSerializer(
                     queryset, many=True)
                 return Response(serializer.data)
@@ -1172,7 +1172,7 @@ class BannerView(APIView):
         """
         print "Method GET"
         try:
-            banners = Banner.objects.all()
+            banners = Banner.objects.all().order_by('-created')
             serializer = admin_serializers.BannerSerializer(banners, many=True)
             return Response(serializer.data)
 
@@ -2230,7 +2230,7 @@ class HotAdvsView(APIView):
 
     def get(self, request):
         try:
-            hot_advs = Hot_Advs.objects.all()
+            hot_advs = Hot_Advs.objects.all().order_by('-created')
             serializer = admin_serializers.HotAdvsSerializer(
                 hot_advs, many=True)
             return Response(serializer.data)

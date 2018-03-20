@@ -23,10 +23,11 @@
 	                <input class='form-control' name="name" 
 	                placeholder="Tên" 
 	                formControlName="name" 
+	                (click)='removeMessage()'
 	                />
 	                <show-error-valid [control]="advForm.get('name')"></show-error-valid>
 	                <div class="errors" *ngIf="errorMessage">
-	                    {{ errorMessage.name }}
+	                    {{ errorMessage }}
 	                </div>
 	            </div>
 	        </div>

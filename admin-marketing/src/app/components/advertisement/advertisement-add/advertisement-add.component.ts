@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ToastrService } from 'ngx-toastr'
 
 import { Advertisement } from '../../../shared/class/advertisement';
 import { AdvertisementService } from '../../../shared/services/advertisement.service';
@@ -20,6 +21,7 @@ export class AdvertisementAddComponent implements OnInit {
    		private advertisementService: AdvertisementService,
         private router: Router,
         private fb: FormBuilder,
+        private toastr: ToastrService,
    	){ }
 
    	advs: Advertisement[] = [];
@@ -48,7 +50,8 @@ export class AdvertisementAddComponent implements OnInit {
        		this.advertisementService.addAdvertisement( this.advForm.value ).subscribe(
     			(resultAdv) => {
     				this.advs.push(resultAdv);
-                    this.router.navigate(['/advertisement-list', { message_post: this.advForm.value['name']} ])
+                    this.toastr.success(`Thêm ${this.advForm.value['name']} thành công`);
+                    this.router.navigate(['/advertisement-list'])
     			},
                 (error) => {
                     if (error.status == 400 ) {
@@ -59,5 +62,8 @@ export class AdvertisementAddComponent implements OnInit {
                 }
             );
         }
+    }
+    removeMessage() {
+        this.errorMessage = '';
     }
 }
