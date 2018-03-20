@@ -23,7 +23,7 @@ export class FeedbackDetailComponent implements OnInit {
 	feedback: Feedback;
 
   	feedbacks: Feedback[];
-  	status = Status; // List rating
+  	tus = Status; // List rating
     
     errorMessage: string;
 
@@ -90,7 +90,6 @@ export class FeedbackDetailComponent implements OnInit {
         @author: TrangLe
     */
     updateFeedback() {
-
     	this.feedbackService.updateFeedbackById(this.feedbackForm.value, this.feedback.id)
     	    .subscribe(
                 () => this.router.navigate(['/feedback-list', { message_put: this.feedback.name} ]),

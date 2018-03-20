@@ -55,7 +55,7 @@ export class UserValidators {
 		if (birtdate > today) {
 			return {
 				'birtdateValidate': {
-					'message': 'Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại'
+					'message': 'Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại.'
 				}
 			}
 		}
