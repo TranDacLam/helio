@@ -115,6 +115,7 @@ export class FormUserAppComponent implements OnInit {
             let id = this.user_app.id;
             this.linkCardService.updateUserApp(this.appForm.value, id).subscribe(
                 (data) => {
+                    this.searchEmail(this.appForm.value.email);
                     this.msg_success = data.message;
                     this.msg_error = null;
                 },

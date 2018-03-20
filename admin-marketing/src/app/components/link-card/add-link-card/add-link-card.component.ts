@@ -57,6 +57,7 @@ export class AddLinkCardComponent implements OnInit {
 
         Object.entries(user_app).forEach(([key, val]) => {
             if(key in field_compare){
+                console.log(key);
                 if(user_app[key] !== user_embed[key]){
                     this.status_error[key] = true;
                     isValid = true;

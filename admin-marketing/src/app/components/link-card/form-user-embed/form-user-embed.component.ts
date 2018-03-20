@@ -126,6 +126,7 @@ export class FormUserEmbedComponent implements OnInit {
         }else{
             this.linkCardService.updateUserEmbed(this.embedForm.value).subscribe(
                 (data) => {
+                    this.searchBarcode(this.embedForm.value.barcode);
                     this.msg_success = data.message;
                     this.msg_error = null;
                 },
