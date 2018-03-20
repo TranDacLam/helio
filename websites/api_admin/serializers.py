@@ -442,7 +442,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
     email = serializers.CharField(required=True, validators=[
         UniqueValidator(
             queryset = User.objects.all(),
-            message = _('This email is already taken')
+            message = _('This email is already taken. Please, try again')
             )
         ])
     password= serializers.CharField(write_only=True)
@@ -478,7 +478,7 @@ class UserRoleSerializer(serializers.ModelSerializer):
     email = serializers.CharField(required=True, validators=[
         UniqueValidator(
             queryset = User.objects.all(),
-            message = _('This email is already taken')
+            message = _('This email is already taken. Please, try again')
             )
         ])
     new_password = serializers.CharField(required=False,allow_null=True, allow_blank=True)
