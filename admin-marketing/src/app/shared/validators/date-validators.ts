@@ -38,7 +38,7 @@ export class DateValidators {
             }else if(dateValues === null){
                 return {
                     'fomatDate': {
-                        'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/MM/yyy'
+                        'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/mm/yyyy'
                     }
                 };
             }
@@ -60,7 +60,7 @@ export class DateValidators {
             }else if(dateValues === null){
                 return {
                     'fomatDate': {
-                        'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/MM/yyy'
+                        'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/mm/yyyy'
                     }
                 };
             }
@@ -167,7 +167,7 @@ export class DateValidators {
         }else if(dateValues === null){
             return {
                 'fomatDate': {
-                    'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/MM/yyy'
+                    'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/mm/yyyy'
                 }
             };
         }
