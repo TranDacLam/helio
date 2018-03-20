@@ -8,6 +8,7 @@ import { env } from '../../../../environments/environment';
 import { DateValidators } from './../../../shared/validators/date-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -41,6 +42,7 @@ export class FormEventComponent implements OnInit {
         private location: Location,
         private router: Router,
         private route: ActivatedRoute,
+        private toastr: ToastrService
     ) {
         this.api_domain = env.api_domain_root;
     }
@@ -127,7 +129,8 @@ export class FormEventComponent implements OnInit {
             if(this.type_http == 'post'){
                 this.eventService.addEvent(event_form_data, this.lang).subscribe(
                     (data) => {
-                        this.router.navigate(['/event/list', { message_post: value_form.name}]);
+                        this.toastr.success(`Thêm mới "${value_form.name}" thành công`);
+                        this.router.navigate(['/event/list']);
                     },
                     (error) => {
                         if(error.code === 400){
@@ -144,7 +147,8 @@ export class FormEventComponent implements OnInit {
                 }else{
                     this.eventService.updateEvent(event_form_data, this.event.id, this.lang).subscribe(
                         (data) => {
-                            this.router.navigate(['/event/list', { message_put: value_form.name}]);
+                            this.toastr.success(`Chỉnh sửa "${value_form.name}" thành công`);
+                            this.router.navigate(['/event/list']);
                         },
                         (error) => {
                             if(error.code === 400){
@@ -194,7 +198,8 @@ export class FormEventComponent implements OnInit {
         const id = this.event.id;
         this.eventService.onDelEvent(id, this.lang).subscribe(
             (data) => {
-                this.router.navigate(['/event/list', { message_del: 'success'}]);
+                this.toastr.success(`Xóa "${this.formEvent.value.name}" thành công`);
+                this.router.navigate(['/event/list']);
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.message}]);
