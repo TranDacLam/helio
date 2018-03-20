@@ -43,8 +43,8 @@ export const api = {
     hot: 'hot_detail/',
     hot_list: 'hot_list/',
 
-    post: env.api_domain + 'post_detail/',
-    post_list: env.api_domain + 'post_list/',
+    post: 'post_detail/',
+    post_list: 'post_list/',
 
 
     event: 'event_detail/',
@@ -54,7 +54,7 @@ export const api = {
     generator_QR_code: env.api_domain + 'generator_QR_code/',
     /* Get All Category */
     category_list: env.api_domain + 'category_list/',
-    post_type_list: env.api_domain +'post_type_list/',
+    post_type_list: 'post_type_list/',
     login: env.api_domain +'accounts/login/',
 
     role_list: env.api_domain + 'role_list/',

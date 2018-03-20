@@ -59,43 +59,21 @@ export class ListPromotionComponent implements OnInit {
     }
 
     ngOnInit() {
-        let record ="Khuyen mai ";
     	this.getAllPromotion();
-        this.dtOptions = {
-            record: record,
-            order: [ 1, 'desc'], 
-            columnDefs: [ {
-                targets: 0,
-                orderable: false
-            } ],
-            dtOptions : {
-                // Declare the use of the extension in the dom parameter
-                language: {
-                    sSearch: '',
-                    searchPlaceholder: ' Nhập thông tin tìm kiếm',
-                    lengthMenu: `Hiển thị _MENU_ ${record}`,
-                    info: `Hiển thị _START_ tới _END_ của _TOTAL_ ${record}`,
-                    paginate: {
-                        "first":      "Đầu",
-                        "last":       "Cuối",
-                        "next":       "Sau",
-                        "previous":   "Trước"
-                    },
-                    select: {
-                        rows: ''
-                    },
-                    sInfoFiltered: "",
-                    zeroRecords: `Không có ${record} nào để hiển thị`,
-                    infoEmpty: ""
-                },
-                responsive: true,
-                pagingType: "full_numbers",
-            },
-            scrollX: true,
+        this.dtOptions = datatable_config.data_config('Nhãn Khuyến Mãi');
+        let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
-            }
-        }
+            },
+            columnDefs: [
+                { 
+                    orderable: false, 
+                    targets: 0 
+                }
+            ]
+        };
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
+
         this.route.params.subscribe(params => {
             if (params && params.action) {
                 this.message_result = params.action + params.promotion_name + '" thành công.';
@@ -127,17 +105,13 @@ export class ListPromotionComponent implements OnInit {
     */
     selectCheckbox(event) {   
         $(event.target).closest( "tr" ).toggleClass( "selected" );
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-            this.length_selected = dtInstance.rows('.selected').count();
-        });
+        this.getLengthSelected();
         this.checkSelectAllCheckbox();
     }
 
     checkSelectAllCheckbox() {
-        $('#select-all').prop('checked', $("#promotion_table_id tr.row-data:not(.selected)").length == 0);
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-            this.length_selected = dtInstance.rows('.selected').count();
-        })
+        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        this.getLengthSelected();
     }
     /*
         Event select All Button on header table
@@ -145,11 +119,15 @@ export class ListPromotionComponent implements OnInit {
     */
     selectAllEvent(event) {
         if( event.target.checked ) {
-            $("#promotion_table_id tr").addClass('selected');
+            $("#table_id tr").addClass('selected');
         } else {
-            $("#promotion_table_id tr").removeClass('selected');
+            $("#table_id tr").removeClass('selected');
         }
-        $("#promotion_table_id tr input:checkbox").prop('checked', event.target.checked);
+        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        this.getLengthSelected();
+    }
+
+    getLengthSelected(){
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             this.length_selected = dtInstance.rows('.selected').count();
         })

@@ -38,16 +38,18 @@
     </div>
 </div>
 <div class="custom_table">
-    <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="games">
+    <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="games">
         <thead>
             <tr>
-                <th class="checkbox_all"><input type="checkbox" (change)="onSelectAll($event)"/></th>
+                <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                <th>ID</th>
                 <th>Trò Chơi</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let game of games" id="del-{{game.id}}">
-                <td><input type="checkbox" (change)="onSelectCKB($event, game)" [checked]="select_checked"/></td>
+            <tr class="row-data" *ngFor="let game of games">
+                <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                <td>{{ game.id }}</td>
                 <td><a [routerLink]="['/game/edit/', game.id, {lang: lang}]">{{ game.name }}</a></td>
             </tr>
         </tbody>
@@ -60,7 +62,7 @@
         </select>
     </div>
     <div class="col-md-3">
-        {{ games_del.length }} của {{ length_games }} được chọn 
+        {{ length_selected }} của {{ length_all }} được chọn 
         <button class="btn btn-danger" (click)="deleteGameEvent()">Thực hiện</button>
     </div>
 </div>

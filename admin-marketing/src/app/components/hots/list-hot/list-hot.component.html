@@ -38,16 +38,18 @@
     </div>
 </div>
 <div class="custom_table">
-    <table datatable class="row-border hover" [dtOptions]='dtOptions' *ngIf="hots">
+    <table datatable class="row-border hover" dt-instance="dtInstanceCallback" id="table_id" [dtOptions]='dtOptions' *ngIf="hots">
         <thead>
             <tr>
-                <th class="checkbox_all"><input type="checkbox" (change)="onSelectAll($event)"/></th>
+                <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                <th>ID</th>
                 <th>Hot</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let hot of hots" id="del-{{hot.id}}">
-                <td><input type="checkbox" (change)="onSelectCKB($event, hot)" [checked]="select_checked"/></td>
+            <tr class="row-data" *ngFor="let hot of hots">
+                <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                <td>{{ hot.id }}</td>
                 <td><a [routerLink]="['/hot/edit/', hot.id, {lang: lang}]">{{ hot.name }}</a></td>
             </tr>
         </tbody>
@@ -60,7 +62,7 @@
         </select>
     </div>
     <div class="col-md-3">
-        {{ hots_del.length }} của {{ length_hots }} được chọn 
+        {{ length_selected }} của {{ length_all }} được chọn 
         <button class="btn btn-danger" (click)="deleteHotEvent()">Thực hiện</button>
     </div>
 </div>

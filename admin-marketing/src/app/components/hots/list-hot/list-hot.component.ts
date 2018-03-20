@@ -27,10 +27,11 @@ export class ListHotComponent implements OnInit {
 
     dtOptions: any = {};
 
+    length_all: Number = 0;
+    length_selected: Number = 0;
+
     hots: Hot[];
-    hots_del = []; // Get array id to delete all id hot
-    length_hots: number;
-    select_checked = false; // Check/uncheck all hot
+
     message_result = ''; // Message error
     errorMessage = '';
 
@@ -39,7 +40,24 @@ export class ListHotComponent implements OnInit {
     constructor(private hotService: HotService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
-        this.dtOptions = datatable_config.data_config('Hot').dtOptions;
+        this.dtOptions = datatable_config.data_config('Hot');
+        let dt_options_custom = {
+            drawCallback: (setting) => {
+                this.checkSelectAllCheckbox();
+            },
+            columnDefs: [
+                {
+                    targets: 1,
+                    visible: false
+                },
+                { 
+                    orderable: false, 
+                    targets: 0 
+                }
+            ]
+        };
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
+
         this.getHots();
 
         /*
@@ -65,7 +83,7 @@ export class ListHotComponent implements OnInit {
         this.hotService.getHots(this.lang).subscribe(
             (data) => {
                 this.hots = data;
-                this.length_hots = this.hots.length;
+                this.length_all = this.hots.length;
             },
             (error) => {
                 if(error.code === 400){
@@ -78,34 +96,44 @@ export class ListHotComponent implements OnInit {
     }
 
     /*
-        Function onSelectCKB(): checked/uncheck add/delete id to array hots_del
-        Author: Lam
+        Event select checbox on row
+            Case1: all row are checked then checkbox all on header is checked
+            Case1: any row is not checked then checkbox all on header is not checked
+        @author: Lam 
     */
-    onSelectCKB(event, value){
-        if(event.target.checked){
-            this.hots_del.push(value.id);
-        }else{
-            this.hots_del = this.hots_del.filter(k => k !== value.id);
-        }
+    selectCheckbox(event) {   
+        $(event.target).closest( "tr" ).toggleClass( "selected" );
+        this.getLengthSelected();
+        this.checkSelectAllCheckbox();
     }
 
+    // input checkall checked/unchecked
+    checkSelectAllCheckbox() {
+        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        this.getLengthSelected();
+    }
+    /*
+        Event select All Button on header table
+        @author: Lam 
+    */
+    selectAllEvent(event) {
+        if( event.target.checked ) {
+            $("#table_id tr").addClass('selected');
+        } else {
+            $("#table_id tr").removeClass('selected');
+        }
+        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        this.getLengthSelected();
+    }
 
     /*
-        Function onSelectAll(): checked/uncheck add/delete all id hot to array hots_del
-        Author: Lam
+        Function getLengthSelected(): draw length selected
+        @author: Lam
     */
-    onSelectAll(event){
-        this.hots_del = [];
-        let array_del = [];
-        if(event.target.checked){
-            this.hots.forEach(function(element) {
-                array_del.push(element.id);
-            });
-            this.hots_del = array_del;
-            this.select_checked = true;
-        }else{
-            this.select_checked = false;
-        }
+    getLengthSelected(){
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            this.length_selected = dtInstance.rows('.selected').count();
+        })
     }
 
     /*
@@ -114,10 +142,10 @@ export class ListHotComponent implements OnInit {
     */
     deleteHotEvent(){
         let that = this;
-        if ( this.hots_del.length > 0 ) {
+        if ( this.length_selected > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.hots_del.length + " Hot đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " Hot đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -146,20 +174,32 @@ export class ListHotComponent implements OnInit {
         Author: Lam
     */
     onDeleteHot(){
-        this.hotService.onDelHotSelect(this.hots_del, this.lang).subscribe(
-            (data) => {
-                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                    this.hots_del.forEach(function(element) {
-                        dtInstance.rows('#del-'+element).remove().draw();
-                    });
-                    this.message_result = 'Xóa '+ this.hots_del.length +' Hot thành công.';
-                    this.length_hots = this.length_hots - this.hots_del.length;
-                    this.hots_del = [];
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            // Get list promotion id selected
+            let get_list_id = dtInstance.cells('.selected', 1).data().toArray();
+            // array string to array number
+            let list_id_selected = get_list_id.map(Number);
+
+            // Call API remove list promotion selected
+            this.hotService.onDelHotSelect(list_id_selected, this.lang).subscribe(
+                (data) => {
+                    if (data.code === 204) {
+                        this.message_result = "Xóa "+ this.length_selected + " Hot thành công"
+
+                        // Remove all promotion selected on UI
+                        dtInstance.rows('.selected').remove().draw();
+                        // Reset count promotion
+                        this.length_all =  dtInstance.rows().count();
+                        this.length_selected = 0;
+                        this.errorMessage = '';
+                    } else {
+                        this.router.navigate(['/error', { message: error.message}]);
+                    }
+                }, 
+                (error) => {
+                    this.router.navigate(['/error', { message: error.message}]);
                 });
-                this.select_checked = false;
-                this.errorMessage  = '';
-            }
-        );
+        });
     }
 
     /*

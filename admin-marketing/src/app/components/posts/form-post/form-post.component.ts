@@ -33,6 +33,7 @@ export class FormPostComponent implements OnInit {
     errorMessage: any; // Messages error
     msg_clear_image = '';
     api_domain: string = '';
+    lang = 'vi';
 
     constructor(
         private postService: PostService,
@@ -48,6 +49,11 @@ export class FormPostComponent implements OnInit {
     ngOnInit() {
         this.getPostTypes();
         this.creatForm();
+        this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
     }
 
     /*
@@ -69,7 +75,7 @@ export class FormPostComponent implements OnInit {
     }
 
     getPostTypes(){
-        this.postTypeService.getPostTypes().subscribe(
+        this.postTypeService.getPostTypes(this.lang).subscribe(
             (data) => {
                 this.post_types = data;
             } 
@@ -132,7 +138,7 @@ export class FormPostComponent implements OnInit {
             let post_form_data = this.convertFormGroupToFormData(this.formPost);
             let value_form = this.formPost.value;
             if(!this.post.id){
-                this.postService.addPost(post_form_data).subscribe(
+                this.postService.addPost(post_form_data, this.lang).subscribe(
                     (data) => {
                         this.router.navigate(['/post/list', { message_post: value_form.name}]);
                     },
@@ -145,7 +151,7 @@ export class FormPostComponent implements OnInit {
                     }
                 );
             }else {
-                this.postService.updatePost(post_form_data, this.post.id).subscribe(
+                this.postService.updatePost(post_form_data, this.post.id, this.lang).subscribe(
                     (data) => {
                         this.post = data;
                         this.router.navigate(['/post/list', { message_put: value_form.name}]);
@@ -195,7 +201,7 @@ export class FormPostComponent implements OnInit {
     */
     onDelete(): void {
         const id = this.post.id;
-        this.postService.onDelPost(id).subscribe(
+        this.postService.onDelPost(id, this.lang).subscribe(
             (data) => {
                 this.router.navigate(['/post/list', { message_del: 'success'}]);
             },
