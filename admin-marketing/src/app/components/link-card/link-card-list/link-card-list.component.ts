@@ -49,7 +49,7 @@ export class LinkCardListComponent implements OnInit {
 
   	ngOnInit() {
         // Customize DataTable
-  		this.dtOptions = data_config(this.record).dtOptions;
+  		this.dtOptions = data_config(this.record);
         this.getAllLinkCards();
 
         this.route.params.subscribe(params => {

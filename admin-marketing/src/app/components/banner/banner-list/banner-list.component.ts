@@ -52,7 +52,7 @@ export class BannerListComponent implements OnInit {
 
     ngOnInit() {
         // Call dataTable
-        this.dtOptions = data_config(this.record).dtOptions;
+        this.dtOptions = data_config(this.record);
         // Call function getAllBanners()
         this.getAllBanners();
 
