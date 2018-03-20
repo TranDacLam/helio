@@ -4,7 +4,8 @@ import { FeeService } from '../../../shared/services/fee.service';
 import { Subject } from 'rxjs/Subject';
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
-import { data_config } from '../../../shared/commons/datatable_config';
+import * as datatable_config from '../../../shared/commons/datatable_config';
+
 
 declare var bootbox:any;
 
@@ -27,10 +28,10 @@ export class FeeListComponent implements OnInit {
    // data for datatable render
    fees: Fee[];
    // text error
-   errorText: string;
-   // list consist of id to delete list 
-   list_id = [];
+   errorMessage: string;
    record: string ="Phí Giao Dịch";
+   length_selected: number;
+   length_all: number;
 
    // action when hover
    hoverIn(fee){
@@ -44,75 +45,67 @@ export class FeeListComponent implements OnInit {
    getFees(){
    	return this.feeService.getFees().subscribe(
    		success => {
-        this.errorText = null;
+        this.errorMessage = null;
    			this.fees = success; 
+        this.length_all = success.length;
    		},
 		error => {
       this.router.navigate(['/error']);
 		});
    }
-   
-   /*
-    selectAll FUNCTION
-    set list_id is empty
-    if selectAll is check push all id to list_id
-    author: Hoangnguyen
-   */
-   selectAll(event){
-     this.list_id = []
-     if(event.target.checked){
-        for (var i in this.fees){
-            $('#checkbox_'+this.fees[i].id).prop('checked', true);
-            this.list_id.push(this.fees[i].id);
-        }
-     }else{
-       for (var i in this.fees){
-            $('#checkbox_'+this.fees[i].id).prop('checked', false);
-        }
-     }
-   }
-
-   /*
-      triggerItem FUNCTION
-      when check checkbox
-      push id to list_id
-      when uncheck checkbox
-      remove id in list_id 
-      author: Hoangnguyen
-   */
-    triggerItem( checked: boolean, id: any){
-       if(checked){
-         // when check checkbox
-         this.list_id.push(id);
-         // checked all fee then inout selectAll is checked
-         if (this.list_id.length == this.fees.length){
-           $('#selectAll').prop('checked', true);
-         }
-
-       }else{
-         //when uncheck checkbox
-         var index = this.list_id.indexOf(id);
-         this.list_id.splice(index, 1);
-         // uncheck selectAll
-         let selectAll = $('#selectAll').prop('checked');
-         if(selectAll){
-           $('#selectAll').prop('checked', false);
-         }
-       }
+       /*
+        Event select checbox on row
+            Case1: all row are checked then checkbox all on header is checked
+            Case1: any row is not checked then checkbox all on header is not checked
+        @author: hoangnguyen 
+    */
+    selectCheckbox(event) {   
+        $(event.target).closest( "tr" ).toggleClass( "selected" );
+        this.getLengthSelected();
+        this.checkSelectAllCheckbox();
     }
-
+    /*
+        event auto checked/unchecked checkall
+        @author: hoangnguyen 
+    */
+    checkSelectAllCheckbox() {
+        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        this.getLengthSelected();
+    }
+    /*
+        Event select All Button on header table
+        @author: hoangnguyen 
+    */
+    selectAllEvent(event) {
+        if( event.target.checked ) {
+            $("#table_id tr").addClass('selected');
+        } else {
+            $("#table_id tr").removeClass('selected');
+        }
+        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        this.getLengthSelected();
+    }
+    /*
+        Event select All Button on header table
+        @author: hoangnguyen 
+    */
+    getLengthSelected(){
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          this.length_selected = dtInstance.rows('.selected').count();
+      })
+    }
     /*
       confirm_delete FUNCTION
-      if list_id exist show popup confirm
+      if length_selected exist show popup confirm
       else show popup alert
       author: Hoangnguyen
     */
     confirm_delete(){
       let self = this;
-      if( this.list_id.length > 0 ){
+      if( this.length_selected > 0 ){
           bootbox.confirm({ 
             title: "Bạn có chắc chắn",
-            message: "Bạn muốn xóa " + this.list_id.length + " phần tử đã chọn",
+            message: "Bạn muốn xóa " + this.length_selected + " phần tử đã chọn",
              buttons: {
               confirm: {
                   label: 'OK',
@@ -136,32 +129,25 @@ export class FeeListComponent implements OnInit {
     }
     /*
       deleteFee FUNCTION
-      part 1:
-         delete fee in this.fees
-      part 2:
-         delete row in datatable
-         set list_id empty
       author: Hoangnguyen
     */
      deleteFee(){
-       this.feeService.deleteListFee(this.list_id).subscribe( 
-         (success) => {
-              let self = this;
-              this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                  this.list_id.forEach(function(item){
-                      // delete fee in this.fees
-                      self.fees = self.fees.filter( fee => fee.id !== item  );
-                      // delete row in datatable
-                      dtInstance.rows('#'+item).remove().draw();
-                  });
-                 this.list_id = []
-              });
-           },
-         error =>{
-          // this.errorText = error.json().message;
-          this.router.navigate(['/error']);
+       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            // Get list promotion id selected
+            let list_id_selected = dtInstance.cells('.selected', 1).data().toArray();
+            this.feeService.deleteListFee(list_id_selected).subscribe(
+                (data) => {
+                    // Remove all promotion selected on UI
+                    dtInstance.rows('.selected').remove().draw();
+                    // Reset count promotion
+                    this.length_all =  dtInstance.rows().count();
+                    this.length_selected = 0;
+                    this.errorMessage = '';
+                }, 
+                (error) => {
+                    this.router.navigate(['/error', { message: error.message}]);
+                });
         });
-       return true;
      }
    
    /*
@@ -174,10 +160,9 @@ export class FeeListComponent implements OnInit {
 
    */
    apply_fee(id: number){
-     
      this.feeService.applyFee(id).subscribe(
        success => {
-           this.errorText = null;
+           this.errorMessage = null;
            var fee = this.fees.find( fee => fee.id == id);
            this.fees.filter( item =>{ 
              if(item.is_apply == true && item.position == fee.position) 
@@ -188,7 +173,7 @@ export class FeeListComponent implements OnInit {
        error => {
          // this.errorText = error.json().message
           this.router.navigate(['/error']);
-       }
+         }
        );
    }
 
@@ -200,7 +185,7 @@ export class FeeListComponent implements OnInit {
    cancel_apply_fee(id: number){
      this.feeService.applyFee(id).subscribe(
        success => {
-          this.errorText = null;
+          this.errorMessage = null;
           var fee = this.fees.find( fee => fee.id == id);
           if(fee.is_apply){
             fee.is_apply = false;
@@ -213,9 +198,26 @@ export class FeeListComponent implements OnInit {
        );
    }
 
+
   ngOnInit() {
   	this.getFees();
-     this.dtOptions = data_config(this.record);
+     this.dtOptions = datatable_config.data_config('Phí Giao Dịch');
+        let dt_options_custom = {
+            drawCallback: (setting) => {
+                this.checkSelectAllCheckbox();
+            },
+            columnDefs: [
+                {
+                    targets: 1,
+                    visible: false
+                },
+                { 
+                    orderable: false, 
+                    targets: 0 
+                }
+            ]
+        };
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
   }
 
 }

@@ -19,20 +19,18 @@
 	            <input type="number" class="form-control no-arrow" formControlName="fee"
 				#fee  step="1" onkeydown="javascript: return event.keyCode == 69 ? false : true">
 				<div *ngIf="(feeAddForm.controls.fee.pristine && submitted)" class="feeAddForm_error" >
-					Fee is required.
+					Trường này bắt buộc.
 				</div>
-				<div *ngIf="feeAddForm.controls.fee.invalid && (feeAddForm.controls.fee.dirty)"
-				     class="feeAddForm_error">
-				  
-				  <div *ngIf="feeAddForm.controls.fee.errors.max">
-				    Fee is over big.
-				  </div>
-				  <div *ngIf="feeAddForm.controls.fee.errors.min">
-				    Fee is greater 0.
-				  </div>
+				<div *ngIf="feeAddForm.controls.fee.invalid && (feeAddForm.controls.fee.dirty)" class="feeAddForm_error">
+					<div *ngIf="feeAddForm.controls.fee.errors.max">
+				    	Gía trị quá lơn.
+				  	</div>
+				  	<div *ngIf="feeAddForm.controls.fee.errors.min">
+				    	Gía trị phải lớn hơn 0.
+				  	</div>
 					<div *ngIf="feeAddForm.controls.fee.errors.required">
-				    Fee is required.
-				  </div>
+					    Trường này bắt buộc.
+					</div>
 				</div>
 	        </div>
 	       <select formControlName="fee_type" id="fee_type" class="form-control">
@@ -50,7 +48,7 @@
 				<input type="radio" value="deposit" formControlName="position" id="deposit">
 	            <label for="deposit"> Phí Nạp Tiền</label>
 				<div [hidden]="feeAddForm.controls.position.valid || (feeAddForm.controls.position.pristine && !submitted)" class="feeAddForm_error">
-					Position is required.
+					Trường này bắt buộc.
 				</div>
 	        </div>
 	    </div>

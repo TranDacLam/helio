@@ -283,7 +283,7 @@ class AdvertisementView(APIView):
         Get all Advertisement
         """
         try:
-            adv_list = Advertisement.objects.all().order_by('-created')
+            adv_list = Advertisement.objects.all()
             serializer = admin_serializers.AdvertisementSerializer(
                 adv_list, many=True)
             return Response(serializer.data)
@@ -401,7 +401,7 @@ class DenominationView(APIView):
         Get all Denomination to list 
         """
         try:
-            list_denomination = Denomination.objects.all().order_by('-created')
+            list_denomination = Denomination.objects.all()
             serializer = admin_serializers.DenominationSerializer(
                 list_denomination, many=True)
             return Response(serializer.data)
@@ -492,7 +492,7 @@ class FeedbackView(APIView):
                     queryset, many=True)
                 return Response(serializer.data)
             else:
-                queryset = FeedBack.objects.all().order_by('-created')
+                queryset = FeedBack.objects.all()
                 serializer = admin_serializers.FeedBackSerializer(
                     queryset, many=True)
                 return Response(serializer.data)
@@ -635,7 +635,7 @@ class NotificationList(APIView):
 
                 Notification.objects.filter(
                     pk__in=list_notification_id).delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
+                return Response({"code": 204, "message": "success", "fields": ""}, status=204)
 
             return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
         except ValueError:
@@ -902,7 +902,7 @@ class UserEmbedDetail(APIView):
                     return Response({"code": 400, "message": "Barcode is numberic", "fields": ""}, status=400)
                 cursor = connections['sql_db'].cursor()
                 query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, 
-                                    Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id  
+                                    Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id
                                 FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
                                 WHERE C.Card_Barcode = {0}"""
                 cursor.execute(query_str.format(barcode))
@@ -913,7 +913,7 @@ class UserEmbedDetail(APIView):
                     return Response({"code": 400, "message": "Barcode not found.", "fields": ""}, status=400)
                 # check Customer_Id is exist
                 if not item[7]:
-                    return Response({"code": 400, "message": "Tikets do not sign up with user", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": "Card has no user", "fields": ""}, status=400)
 
                 result = {}
                 first_name = item[0] if item[0] else ''  # Firstname
@@ -1031,7 +1031,7 @@ class RelateAPI(APIView):
                 # check user embed is exist by check Customer_Id
                 if not userembed_item:
                     return Response({"code": 400, "message": "Not found Userembed.", "fields": ""}, status=400)
-
+                # custumer_id is null
                 if not userembed_item[0]:
                     return Response({"code": 400, "message": "Tikets do not sign up with user", "fields": ""}, status=400)
                 # check user embed is related
@@ -1143,7 +1143,7 @@ class FeeListAPI(APIView):
 
     def get(self, request, format=None):
         try:
-            fee = Fee.objects.all().order_by('-created')
+            fee = Fee.objects.all()
             feeSerializer = admin_serializers.FeeSerializer(fee, many=True)
             return Response(feeSerializer.data)
 
@@ -1160,7 +1160,7 @@ class FeeListAPI(APIView):
                 fees = Fee.objects.filter(id__in=list_id)
                 if fees:
                     fees.delete()
-                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 204, "message": "success", "fields": ""}, status=204)
                 return Response({"code": 400, "message": "Not Found Fee", "fields": ""}, status=400)
             return Response({"code": 400, "message": "List_id field is required", "fields": ""}, status=400)
 
@@ -1187,7 +1187,7 @@ class BannerView(APIView):
         """
         print "Method GET"
         try:
-            banners = Banner.objects.all().order_by('-created')
+            banners = Banner.objects.all()
             serializer = admin_serializers.BannerSerializer(banners, many=True)
             return Response(serializer.data)
 
@@ -1371,7 +1371,7 @@ class EventAPI(APIView):
         try:
             event = Event.objects.get(id=id)
             event.delete()
-            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 204, "message": "success", "fields": ""}, status=204)
 
         except Event.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
@@ -1392,7 +1392,7 @@ class EventListAPI(APIView):
 
     def get(self, request, format=None):
         try:
-            events = Event.objects.all().order_by('-created')
+            events = Event.objects.all()
             eventSerializer = admin_serializers.EventSerializer(
                 events, many=True)
             return Response(eventSerializer.data)
@@ -1408,7 +1408,7 @@ class EventListAPI(APIView):
                 events = Event.objects.filter(id__in=list_id)
                 if events:
                     events.delete()
-                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 204, "message": "success", "fields": ""}, status=204)
                 return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
         except Exception, e:
@@ -1481,7 +1481,7 @@ class PromotionLabelAPI(APIView):
         try:
             promotionLabel = Promotion_Label.objects.get(id=id)
             promotionLabel.delete()
-            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 204, "message": "success", "fields": ""}, status=204)
 
         except Promotion_Label.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
@@ -1502,7 +1502,7 @@ class PromotionLabelListAPI(APIView):
 
     def get(self, request):
         try:
-            promotionLabels = Promotion_Label.objects.all().order_by('-created')
+            promotionLabels = Promotion_Label.objects.all()
             promotionLabelSerializer = admin_serializers.PromotionLabelSerializer(
                 promotionLabels, many=True)
             return Response(promotionLabelSerializer.data)
@@ -1519,7 +1519,7 @@ class PromotionLabelListAPI(APIView):
                     id__in=list_id)
                 if promotionLabels:
                     promotionLabels.delete()
-                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 204, "message": "success", "fields": ""}, status=204)
                 return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
 
@@ -1590,7 +1590,7 @@ class HotAPI(APIView):
         try:
             hot = Hot.objects.get(id=id)
             hot.delete()
-            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 204, "message": "success", "fields": ""}, status=204)
 
         except Hot.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
@@ -1610,7 +1610,7 @@ class HotListAPI(APIView):
 
     def get(self, request):
         try:
-            hot = Hot.objects.all().order_by('-created')
+            hot = Hot.objects.all()
             hotSerializer = admin_serializers.HotSerializer(hot, many=True)
             return Response(hotSerializer.data)
         except Exception, e:
@@ -1625,7 +1625,7 @@ class HotListAPI(APIView):
                 hots = Hot.objects.filter(id__in=list_id)
                 if hots:
                     hots.delete()
-                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 204, "message": "success", "fields": ""}, status=204)
                 return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
 
@@ -1716,7 +1716,7 @@ class PostAPI(APIView):
         try:
             post = Post.objects.get(id=id)
             post.delete()
-            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 204, "message": "success", "fields": ""}, status=204)
 
         except Post.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found Post.", "fields": ""}, status=400)
@@ -1738,7 +1738,7 @@ class PostListAPI(APIView):
 
     def get(self, request):
         try:
-            post = Post.objects.all().order_by('-created')
+            post = Post.objects.all()
             postSerializer = admin_serializers.PostSerializer(post, many=True)
             return Response(postSerializer.data)
         except Exception, e:
@@ -1753,7 +1753,7 @@ class PostListAPI(APIView):
                 posts = Post.objects.filter(id__in=list_id)
                 if posts:
                     posts.delete()
-                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 204, "message": "success", "fields": ""}, status=204)
                 return Response({"code": 400, "message": "Not Found Posts.", "fields": ""}, status=400)
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
 
@@ -1774,7 +1774,7 @@ class PostTypeListAPI(APIView):
 
     def get(self, request):
         try:
-            post_Type = Post_Type.objects.all().order_by('-created')
+            post_Type = Post_Type.objects.all()
             postSerializer = admin_serializers.PostTypeSerializer(
                 post_Type, many=True)
             return Response(postSerializer.data)
@@ -1840,7 +1840,7 @@ class FAQAPI(APIView):
         try:
             faq = FAQ.objects.get(id=id)
             faq.delete()
-            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 204, "message": "success", "fields": ""}, status=204)
 
         except FAQ.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found FAQ.", "fields": ""}, status=400)
@@ -1861,7 +1861,7 @@ class FAQListAPI(APIView):
 
     def get(self, request):
         try:
-            faq = FAQ.objects.all().order_by('-created')
+            faq = FAQ.objects.all()
             faqSerializer = admin_serializers.FAQSerializer(faq, many=True)
             return Response(faqSerializer.data)
         except Exception, e:
@@ -1876,7 +1876,7 @@ class FAQListAPI(APIView):
                 faqs = FAQ.objects.filter(id__in=list_id)
                 if faqs:
                     faqs.delete()
-                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 204, "message": "success", "fields": ""}, status=204)
                 return Response({"code": 400, "message": "Not Found FAQs.", "fields": ""}, status=400)
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
 
@@ -2168,7 +2168,7 @@ class GameAPI(APIView):
         try:
             game = Game.objects.get(id=id)
             game.delete()
-            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 204, "message": "success", "fields": ""}, status=204)
 
         except Game.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found Game.", "fields": ""}, status=400)
@@ -2189,7 +2189,7 @@ class GameListAPI(APIView):
 
     def get(self, request):
         try:
-            game = Game.objects.all().order_by('-created')
+            game = Game.objects.all()
             gameSerializer = admin_serializers.GameSerializer(game, many=True)
             return Response(gameSerializer.data)
         except Exception, e:
@@ -2204,7 +2204,7 @@ class GameListAPI(APIView):
                 games = Game.objects.filter(id__in=list_id)
                 if games:
                     games.delete()
-                    return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 204, "message": "success", "fields": ""}, status=204)
                 return Response({"code": 400, "message": "Not Found Games.", "fields": ""}, status=400)
             return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
 
@@ -2225,7 +2225,7 @@ class TypeListAPI(APIView):
 
     def get(self, request):
         try:
-            types = Type.objects.all().order_by('-created')
+            types = Type.objects.all()
             typeSerializer = admin_serializers.TypeSerializer(types, many=True)
             return Response(typeSerializer.data)
         except Exception, e:
@@ -2245,7 +2245,7 @@ class HotAdvsView(APIView):
 
     def get(self, request):
         try:
-            hot_advs = Hot_Advs.objects.all().order_by('-created')
+            hot_advs = Hot_Advs.objects.all()
             serializer = admin_serializers.HotAdvsSerializer(
                 hot_advs, many=True)
             return Response(serializer.data)
