@@ -10,78 +10,78 @@
             <form [formGroup]="appForm" novalidate>
                 <div class="form-group row">
                     <div class="col-sm-5 form-check">
-                        <input class="form-check-input" type="checkbox" 
+                        <input class="form-check-input" type="checkbox" [disabled]="is_disable_checkbox"
                         (change)="dis_input_app.full_name = !dis_input_app.full_name" />&emsp;
                         <label class="col-form-label form-check-label">Họ Và Tên</label>
                     </div>
                     <div class="col-sm-7">
                         <input type="text" class="form-control" formControlName="full_name"
-                        [readonly]="dis_input_app.full_name" [class.error_user]="status_error.full_name"/>
+                        [attr.disabled]="dis_input_app.full_name ? 'disabled' : null" [class.error_user]="status_error.full_name"/>
                         <show-error-valid [control]="appForm.get('full_name')"></show-error-valid>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-sm-5 form-check">
-                        <input class="form-check-input" type="checkbox"
+                        <input class="form-check-input" type="checkbox" [disabled]="is_disable_checkbox"
                         (change)="dis_input_app.email = !dis_input_app.email" />&emsp;
                         <label class="col-form-label form-check-label">Email</label>
                     </div>
                     <div class="col-sm-7">
                         <input type="text" class="form-control" formControlName="email"
-                        [readonly]="dis_input_app.email" [class.error_user]="status_error.email"/>
+                        [attr.disabled]="dis_input_app.email ? 'disabled' : null" [class.error_user]="status_error.email"/>
                         <show-error-valid [control]="appForm.get('email')"></show-error-valid>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-sm-5 form-check">
-                        <input class="form-check-input" type="checkbox"
+                        <input class="form-check-input" type="checkbox" [disabled]="is_disable_checkbox"
                         (change)="dis_input_app.phone = !dis_input_app.phone" />&emsp;
                         <label class="col-form-label form-check-label">Số Điện Thoại</label>
                     </div>
                     <div class="col-sm-7">
                         <input type="text" class="form-control" formControlName="phone" (input)="stripText(appForm.value.phone, 'phone')"
-                        [readonly]="dis_input_app.phone" [class.error_user]="status_error.phone"/>
+                        [attr.disabled]="dis_input_app.phone ? 'disabled' : null" [class.error_user]="status_error.phone"/>
                         <show-error-valid [control]="appForm.get('phone')"></show-error-valid>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-sm-5 form-check">
-                        <input class="form-check-input" type="checkbox"
+                        <input class="form-check-input" type="checkbox" [disabled]="is_disable_checkbox"
                         (change)="dis_input_app.birth_date = !dis_input_app.birth_date" />&emsp;
                         <label class="col-form-label form-check-label">Ngày Sinh</label>
                     </div>
                     <div class="col-sm-7">
                         <input type="text" class="form-control" formControlName="birth_date"
-                        [readonly]="dis_input_app.birth_date" [class.error_user]="status_error.birth_date"/>
+                        [attr.disabled]="dis_input_app.birth_date ? 'disabled' : null" [class.error_user]="status_error.birth_date"/>
                         <show-error-valid [control]="appForm.get('birth_date')"></show-error-valid>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-sm-5 form-check">
-                        <input class="form-check-input" type="checkbox"
+                        <input class="form-check-input" type="checkbox" [disabled]="is_disable_checkbox"
                         (change)="dis_input_app.personal_id = !dis_input_app.personal_id" />&emsp;
                         <label class="col-form-label form-check-label">Chứng Minh Nhân Dân</label>
                     </div>
                     <div class="col-sm-7">
                         <input type="text" class="form-control" formControlName="personal_id" (input)="stripText(appForm.value.personal_id, 'personal_id')"
-                        [readonly]="dis_input_app.personal_id" [class.error_user]="status_error.personal_id"/>
+                        [attr.disabled]="dis_input_app.personal_id ? 'disabled' : null" [class.error_user]="status_error.personal_id"/>
                         <show-error-valid [control]="appForm.get('personal_id')"></show-error-valid>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-sm-5 form-check">
-                        <input class="form-check-input" type="checkbox"
+                        <input class="form-check-input" type="checkbox" [disabled]="is_disable_checkbox"
                         (change)="dis_input_app.address = !dis_input_app.address" />&emsp;
                         <label class="col-form-label form-check-label">Địa Chỉ</label>
                     </div>
                     <div class="col-sm-7">
                         <input type="text" class="form-control" formControlName="address"
-                        [readonly]="dis_input_app.address" [class.error_user]="status_error.address"/>
+                        [attr.disabled]="dis_input_app.address ? 'disabled' : null" [class.error_user]="status_error.address"/>
                         <show-error-valid [control]="appForm.get('address')"></show-error-valid>
                     </div>
                 </div>

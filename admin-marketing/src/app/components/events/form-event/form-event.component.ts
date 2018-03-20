@@ -67,14 +67,14 @@ export class FormEventComponent implements OnInit {
             short_description: [this.event.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.event.content, Validators.required],
             start_date: [this.event.start_date ? moment(this.event.start_date,"DD/MM/YYYY").toDate() : '', 
-                [DateValidators.checkDate, DateValidators.formatStartDate, DateValidators.requiredStartDate]],
+                [DateValidators.formatStartDate, DateValidators.requiredStartDate]],
             end_date: [this.event.end_date ? moment(this.event.end_date,"DD/MM/YYYY").toDate() : '', 
                 [DateValidators.checkDate, DateValidators.formatEndDate, DateValidators.requiredStartDate]],
             start_time: [this.event.start_time ? moment(this.event.start_time,"HH:mm").format() : '', 
                 [DateValidators.formatStartTime]],
             end_time: [this.event.end_time ? moment(this.event.end_time,"HH:mm").format() : '',
                 [DateValidators.formatEndTime]],
-            is_draft: [this.event.is_draft],
+            is_draft: [this.event.is_draft === true ? true : false],
             is_clear_image: [false]
         });
     }

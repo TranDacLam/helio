@@ -15,7 +15,7 @@
     <div class="col-xs-12 col-sm-12">
         <a class="btn custom-button pull-right" [routerLink]="['/game/add/', {lang: lang}]">
             <i class="fa fas fa-plus icon-button"></i>
-            TẠO TRÒ CHƠI MỚI
+            THÊM TRÒ CHƠI MỚI
         </a>
     </div>
     <div class="col-xs-12 col-sm-12 mt-15 messsage_error alert alert-danger" *ngIf="errorMessage">
@@ -61,7 +61,7 @@
             <option value="1">Xóa các phản hồi được chọn</option>
         </select>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 dels-list">
         {{ length_selected }} của {{ length_all }} được chọn 
         <button class="btn btn-danger" (click)="deleteGameEvent()">Thực hiện</button>
     </div>

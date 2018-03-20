@@ -42,11 +42,17 @@ export class UserMultiselectComponent implements OnInit {
     ngOnInit() {
         this.dtOptions_left = {
             pagingType: "full_numbers",
-            columnDefs: [{
-                orderable: false,
-                className: "dt-center",
-                targets: 0
-            }], 
+            columnDefs: [
+                {
+                    orderable: false,
+                    className: "dt-center",
+                    targets: 0
+                },
+                {
+                    targets: 1,
+                    visible: false
+                }
+            ], 
             order: [[ 1, 'asc' ]],
             scrollX: true,
             scrollY: "400px",
@@ -55,7 +61,7 @@ export class UserMultiselectComponent implements OnInit {
                 sSearch: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
                 lengthMenu: "Hiển thị _MENU_ dòng",
-                sZeroRecords:  " ",
+                sZeroRecords:  "Không có user nào phù hợp để hiển thị",
                 info: "Hiển thị _START_ đến _END_ của _TOTAL_",
                 infoEmpty: "Hiển thị 0 đến 0 của 0",
                 paginate: {
@@ -78,11 +84,17 @@ export class UserMultiselectComponent implements OnInit {
 
         this.dtOptions_right = {
             pagingType: "full_numbers",
-            columnDefs: [{
-                orderable: false,
-                className: "dt-center",
-                targets: 0
-            }], 
+            columnDefs: [
+                {
+                    orderable: false,
+                    className: "dt-center",
+                    targets: 0
+                },
+                {
+                    targets: 1,
+                    visible: false
+                }
+            ], 
             order: [[ 1, 'asc' ]],
             scrollX: true,
             scrollY: "400px",
@@ -91,7 +103,7 @@ export class UserMultiselectComponent implements OnInit {
                 sSearch: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
                 lengthMenu: "Hiển thị _MENU_ dòng",
-                sZeroRecords:  " ",
+                sZeroRecords:  "Không có user nào phù hợp để hiển thị",
                 info: "Hiển thị _START_ đến _END_ của _TOTAL_",
                 infoEmpty: "Hiển thị 0 đến 0 của 0",
                 paginate: {
@@ -125,6 +137,7 @@ export class UserMultiselectComponent implements OnInit {
                 $(row).find('input:checkbox').prop('checked', true);
             });
             this.is_button_left = true;
+            $('#select-all-left').prop('checked', true);
         });
     }
 
@@ -136,6 +149,7 @@ export class UserMultiselectComponent implements OnInit {
                 $(row).find('input:checkbox').prop('checked', false);
             });
             this.is_button_left = false;
+            $('#select-all-left').prop('checked', false);
         });
     }
 
@@ -151,6 +165,9 @@ export class UserMultiselectComponent implements OnInit {
                 $(row).find('input:checkbox').prop('checked', true);
             });
             this.is_button_rigth = true;
+            if($('#table_id_2 tr').hasClass('selected')){
+                $('#select-all-right').prop('checked', true);
+            }
         });
     }
 
@@ -162,6 +179,7 @@ export class UserMultiselectComponent implements OnInit {
                 $(row).find('input:checkbox').prop('checked', false);
             });
             this.is_button_rigth = false;
+            $('#select-all-right').prop('checked', false);
         });
     }
 

@@ -17,6 +17,8 @@ import { DatePipe } from '@angular/common';
 import { DateValidators } from './../../../shared/validators/date-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { ToastrService } from 'ngx-toastr';
+import { User } from './../../../shared/class/user';
+import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { env } from '../../../../environments/environment';
 import * as moment from 'moment';
 
@@ -40,6 +42,7 @@ export class PromotionFormComponent implements OnInit {
     promotionTypes: PromotionType[];
     promotionLabels: PromotionLabel[];
     categorys: Category[];
+    user_current: User;
 
     promotionForm: FormGroup;
     ckEditorConfig:any;
@@ -62,7 +65,8 @@ export class PromotionFormComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private datePipe: DatePipe,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private variable_globals: VariableGlobals,
     ) {
         this.api_domain = env.api_domain_root;
     }
@@ -73,6 +77,9 @@ export class PromotionFormComponent implements OnInit {
                 this.lang = params.lang;
             }
         });
+        setTimeout(()=>{
+            this.user_current = this.variable_globals.user_current;
+        },100);
 
         this.getAllCategory();
         this.getPromotionTypes();

@@ -32,6 +32,7 @@ export class FormUserAppComponent implements OnInit {
     dis_input_app = {full_name: true, email: true, phone: true, birth_date: true, personal_id: true, address: true};
 
     msg_error: any;
+    is_disable_checkbox: boolean = true;
 
     errorMessage = '';
 
@@ -82,9 +83,11 @@ export class FormUserAppComponent implements OnInit {
                     address: this.user_app.address
                 });
                 this.errorMessage = '';
+                this.is_disable_checkbox = false;
             },
             (error) => { 
                 this.errorMessage = error.message; 
+                this.is_disable_checkbox = true;
                 this.appForm.setValue({
                     full_name: null,
                     email: null,

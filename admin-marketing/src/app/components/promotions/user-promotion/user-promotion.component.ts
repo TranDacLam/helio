@@ -78,12 +78,8 @@ export class UserPromotionComponent implements OnInit {
         Author: Lam
     */
     updateUserPromotion(list_user_id) {
-        if(this.promotion.is_save === false){
-            if(list_user_id.length > 0){
-                this.updateUser(list_user_id)
-            }else{
-                this.toastr.warning(`Vui lòng chọn user`);
-            }
+        if(this.promotion.is_draft === true){
+            this.updateUser(list_user_id)
         }else{
             if(this.user_current.role === 1){
                 this.updateUser(list_user_id);

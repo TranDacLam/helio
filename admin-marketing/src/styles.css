@@ -276,6 +276,18 @@ h1.h1-title {
 #toast-container{
     font-size: 16px;
 }
+
+/*
+    Deletes list
+    author: Lam;
+*/
+.dels-list{
+    padding-left: 0px;
+}
+.dels-list button{
+    margin-left: 10px;
+}
+
 @media only screen and (max-width : 768px) {
     .multiselect_user .datatable-content{
         width: 100%;

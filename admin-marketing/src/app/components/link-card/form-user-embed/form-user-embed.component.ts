@@ -34,6 +34,7 @@ export class FormUserEmbedComponent implements OnInit {
 
     msg_success = ''; // Message show error
     msg_error: any;
+    is_disable_checkbox: boolean = true;
 
     errorMessage = '';
 
@@ -86,9 +87,11 @@ export class FormUserEmbedComponent implements OnInit {
                     address: this.user_embed.address
                 });
                 this.errorMessage = '';
+                this.is_disable_checkbox = false;
             },
             (error) => { 
                 this.errorMessage = error.message; 
+                this.is_disable_checkbox = true;
                 this.embedForm.setValue({
                     barcode: null,
                     full_name: null,
