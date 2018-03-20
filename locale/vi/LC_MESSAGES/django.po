@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-20 22:44+0700\n"
+"POT-Creation-Date: 2018-03-20 22:57+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -830,6 +830,14 @@ msgstr "Mệnh giá nạp tiền này đã tồn tại."
 #: websites/api_admin/serializers.py:236
 msgid "Birthday must less then today"
 msgstr "Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại."
+
+#: websites/api_admin/serializers.py:295
+msgid "Start day is before than End day"
+msgstr "Ngày bắt đầu phải trước hơn ngày kết thúc."
+
+#: websites/api_admin/serializers.py:297
+msgid "Start time is before than End time"
+msgstr "Giờ bắt đầu phải trước giờ kết thúc."
 
 #: websites/api_admin/serializers.py:549
 msgid "This Hot Ads is already taken"
