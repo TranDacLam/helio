@@ -428,7 +428,12 @@ class UserRoleDisplaySerializer(serializers.ModelSerializer):
 
 class UserCreateSerializer(serializers.ModelSerializer):
     birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required = False)
-    phone = serializers.CharField(max_length=11, min_length=9, validators=[UniqueValidator(queryset=User.objects.all())])
+    phone = serializers.CharField(max_length=11, min_length=9,required=True,validators=[
+        UniqueValidator(
+            queryset=User.objects.all(),
+            message =_('This phone is already taken. Please, try again')
+            )
+        ])
     password= serializers.CharField(write_only=True)
     
     class Meta:
@@ -441,7 +446,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        user = super(UserRoleSerializer, self).create(validated_data)
+        user = super(UserCreateSerializer, self).create(validated_data)
         user.set_password(validated_data['password'])
         if user.role_id == 6:
             user.is_staff = False
@@ -453,7 +458,12 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class UserRoleSerializer(serializers.ModelSerializer):
 
     birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required = False)
-    phone = serializers.CharField(max_length=11, min_length=9, validators=[UniqueValidator(queryset=User.objects.all())])
+    phone = serializers.CharField(max_length=11, min_length=9,required=True,validators=[
+        UniqueValidator(
+            queryset=User.objects.all(),
+            message =_('This phone is already taken. Please, try again')
+            )
+        ])
     new_password = serializers.CharField(required=False,allow_null=True, allow_blank=True)
     password = serializers.CharField(required=False,allow_null=True, allow_blank=True)
 
