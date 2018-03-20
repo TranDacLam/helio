@@ -4,6 +4,7 @@ import { Denomination } from '../../../shared/class/denomination';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ToastrService } from 'ngx-toastr';
 
 import { DenominationService } from '../../../shared/services/denomination.service';
 import { Router } from "@angular/router";
@@ -26,6 +27,7 @@ export class DenominationAddComponent implements OnInit {
         private router: Router,
         private fb: FormBuilder,
         private denominationService: DenominationService,
+        private toastr: ToastrService,
         ) { }
 
     ngOnInit() {
@@ -55,14 +57,14 @@ export class DenominationAddComponent implements OnInit {
             .subscribe(
                 (denomination) => {
                     this.denominations.push(denomination); 
-                    this.router.navigate(['/denomination-list', { message_post: this.data} ])   
+                    this.toastr.success(`Thêm ${this.data} thành công`);
+                    this.router.navigate(['/denomination-list'])   
                 },
                 (error) =>  {
                     if(error.status == 400) {
                         this.errorMessage = error.json().denomination[0];
                     } else {
-                        console.log(error);
-                        // this.router.navigate(['/error', { message: error.json().message }]);
+                        this.router.navigate(['/error', { message: error.json().message }]);
                     }
                 }
             )

@@ -14,13 +14,12 @@
 </div>
 <div class=' row area-form-feedback' >
     <div *ngIf='feedback'>
-        <div>{{ feedback.status }}</div>
         <form [formGroup]="feedbackForm" novalidate>
             <div class="row form-feedback">
                 <div class="col-md-8 ">
                 	<div class="form-group row">
                         <div class="col-sm-3">
-                            <label class="center-block"> Họ tên:</label>
+                            <label class="center-block"> Họ tên</label>
                         </div>
                         <div class="col-sm-8">
                 			<input class='form-control' name="name" 
@@ -31,7 +30,7 @@
                 	</div>
                     <div class="form-group row">
                         <div class="col-sm-3">
-                            <label class="center-block"> Email:</label>
+                            <label class="center-block"> Email</label>
                         </div>
                         <div class='col-sm-8'>
                             <input class='form-control' name="email" 
@@ -41,7 +40,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-3">
-                            <label class="center-block"> Số điện thoại:</label>
+                            <label class="center-block"> Số điện thoại</label>
                         </div>
                         <div class="col-sm-8">
                             <input class='form-control' name="phone" 
@@ -52,7 +51,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-3">
-                            <label class="center-block"> Chủ đề:</label>
+                            <label class="center-block"> Chủ đề</label>
                         </div>
                         <div class="col-sm-8">
                             <textarea rows=3 class='form-control' name="subject" 
@@ -64,7 +63,7 @@
                     </div>
                     <div class="form-group row">
                         <div class='col-sm-3'>
-                            <label class="center-block">Nội dung:</label>
+                            <label class="center-block">Nội dung</label>
                         </div>
                         <div class='col-sm-8'>
                             <textarea rows=3 class='form-control' name="message" 
@@ -76,7 +75,7 @@
                     </div>
                     <div class="form-group row">
                         <div class='col-sm-3'>
-                            <label class="center-block"> Loại:</label>
+                            <label class="center-block"> Loại</label>
                         </div>
                         <div class="col-sm-8">
                              <input  class='form-control' name="feedback_type" 
@@ -87,7 +86,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3">
-                            <label class="center-block"> Ngày nhận:</label>
+                            <label class="center-block"> Ngày nhận</label>
                         </div>
                         <div class="col-md-8">
                            <input type='date' class='form-control' name="sent_date" 
@@ -98,7 +97,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3">
-                            <label class="center-block"> Rating:</label>
+                            <label class="center-block"> Rating</label>
                         </div>
                         <div class='col-md-8'>
                             <input class='form-control' name="rate" 
@@ -109,7 +108,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3">
-                            <label class="center-block"> Trạng thái xử lý:</label>
+                            <label class="center-block"> Trạng thái xử lý</label>
                         </div>
                         <div class="col-md-8">
                             <select class='form-control' name="status" 
@@ -122,7 +121,7 @@
                     </div> 
                     <div class="form-group row">
                         <div class='col-md-3'>
-                            <label class="center-block"> Câu trả lời:</label>
+                            <label class="center-block"> Câu trả lời</label>
                         </div>
                         <div class="col-md-8">
                              <textarea rows=5 class='form-control' name="answer" 
@@ -130,11 +129,9 @@
                             >
                             </textarea>
                             <show-error-valid [control]="feedbackForm.get('answer')"></show-error-valid>
-                            <div *ngIf="errorMessage">
-                                <em [ngStyle]="{'color': 'red'}">
-                                    {{ errorMessage.answer}}
-                                </em>
-                            </div>
+                            <p class ="errors" *ngIf="errorMessage">
+                                {{ errorMessage.answer}}
+                            </p>
                         </div>
                     </div>
                 </div>
