@@ -28,6 +28,7 @@ from rest_framework.permissions import IsAuthenticated
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.utils.translation import ugettext_lazy as _
 
 """
     Get Promotion
@@ -2040,7 +2041,7 @@ class UserDetailView(APIView):
                     if(self.request.user.role_id == 1):
                         user.set_password(self.request.data.get("new_password"))
                     else:
-                        return Response({"code": 405, "message": "Just System Admin Change password", "fields": ""}, status=405) 
+                        return Response({"code": 405, "message": _("Just System Admin Change password"), "fields": ""}, status=405) 
                 else:
                     user.password = self.request.data.get('password', user.password)
                 serializer.save()
@@ -2065,7 +2066,7 @@ class UserDetailView(APIView):
                 user.delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             else:
-                return Response({"code": 405, "message": "Just System Admin accept delete", "fields": ""}, status=405)
+                return Response({"code": 405, "message": _("Just System Admin accept delete"), "fields": ""}, status=405)
         except Exception, e:
             print 'UserDetailView PUT', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}

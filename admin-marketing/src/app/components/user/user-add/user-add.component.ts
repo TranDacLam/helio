@@ -8,6 +8,7 @@ import { Role } from '../../../shared/class/role';
 import { UserService } from '../../../shared/services/user.service';
 import { RoleService } from '../../../shared/services/role.service';
 import { UserValidators } from './../../../shared/validators/user-validators';
+import { NumberValidators } from './../../../shared/validators/number-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 
 import { DatePipe } from '@angular/common';
@@ -52,9 +53,9 @@ export class UserAddComponent implements OnInit {
  	createForm() {
  		this.formUser = this.fb.group({
             email: [this.user_form.email, [Validators.required, UserValidators.emailValidators]],
-            full_name: [this.user_form.full_name],
-            phone: [this.user_form.phone, [Validators.required,UserValidators.phoneValidators]],
-            personal_id: [this.user_form.personal_id],
+            full_name: [this.user_form.full_name, [Validators.required]],
+            phone: [this.user_form.phone, [Validators.required,NumberValidators.validPhone]],
+            personal_id: [this.user_form.personal_id, [NumberValidators.validPersonID]],
             country: [this.user_form.country],
             address: [this.user_form.address],
             city: [this.user_form.city],
@@ -129,9 +130,16 @@ export class UserAddComponent implements OnInit {
         if type='passwod' is hide
         else type='text' is show
         @author: Trangle
-    */    
+    */   
  	showPassword(input: any): any {
- 		input.type = input.type === 'password' ? 'text' : 'password';
+        if (input.type = input.type === "password") {
+            input.type = "text";
+            $('span#toggleShowHide').addClass('fa fa-eye').removeClass('fa-eye-slash');
+        } else {
+            input.type = "password";
+            $('span#toggleShowHide').addClass('fa-eye-slash').removeClass('fa-eye');
+        }
+ 		// input.type = input.type === 'password' ? 'text' : 'password';
  	}
     /*
         Convert form group to form data to submit form

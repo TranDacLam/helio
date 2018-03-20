@@ -11,8 +11,8 @@
 <!-- End breadcrumb -->
 <div *ngIf="user">
 	<form [formGroup]="formUser" novalidate (ngSubmit)="onSubmit()">
-		<div *ngIf="errorMessage" class="alert alert-danger fade in">
-		   <span >{{ errorMessage.non_field_errors }}</span>.
+		<div *ngIf="errorMessage.non_field_errors" class="alert alert-danger fade in">
+		   <span >{{ errorMessage.non_field_errors }}</span>
 		</div>
 		<div *ngIf="errors" class="alert alert-danger fade in">
 			<span >{{ errors }}</span>.
@@ -22,7 +22,7 @@
 			<div class="col-md-8">
 				<div class="form-group row">
 					<div class="col-sm-3">
-						<label class="center-block"> Email:</label>
+						<label class="center-block"> Email</label>
 					</div>
 					<div class="col-sm-8">	
 						<input class='form-control' name="email"
@@ -37,15 +37,16 @@
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-3">
-						<label class="center-block">Loại User:</label>
+						<label class="center-block">Loại User</label>
 					</div>
 					<div class="col-sm-8">
-						{{ user.role.name }}
+						<input type="hidden" name="role" formControlName="role">
+						{{ user.role?.name }}
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-3">
-						<label class="center-block">Trạng thái:</label>
+						<label class="center-block">Trạng thái</label>
 					</div>
 					<div class="col-sm-8">	
 						<input type="checkbox" name="is_active" value=""
@@ -57,7 +58,7 @@
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-3">
-						<label class="center-block">Push thông báo:</label>
+						<label class="center-block">Push thông báo</label>
 					</div>
 					<div class="col-sm-8">	
 						<span><i class="fa fa-check-square" aria-hidden="true"></i></span>
@@ -65,13 +66,13 @@
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-3">
-						<label class="center-block">Ngày tạo:</label>
+						<label class="center-block">Ngày tạo</label>
 					</div>
 					<div class="col-sm-3">	
 						{{ user.modified | date:"dd/MM/yyyy" }}
 					</div>
 					<div class="col-sm-3">
-						<label class="center-block">Ngày cập nhật:</label>
+						<label class="center-block">Ngày cập nhật</label>
 					</div>
 					<div class="col-sm-3">	
 						{{ user.date_joined | date:"dd/MM/yyyy" }}
@@ -84,7 +85,7 @@
 			<div class="col-md-8">
 				<div class="form-group row">
 					<div class="col-sm-3">
-						<label class="center-block"> Họ và Tên:</label>
+						<label class="center-block"> Họ và Tên</label>
 					</div>
 					<div class="col-sm-8">	
 						<input class='form-control' name="full_name" 
@@ -98,7 +99,7 @@
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-3">
-						<label class="center-block">Ngày sinh:</label>
+						<label class="center-block">Ngày sinh</label>
 					</div>
 		        	<div class="col-sm-8">	
 						<div class="input-group">
@@ -117,7 +118,7 @@
 	        	</div>
 	        	<div class="form-group row">
 					<div class="col-sm-3">
-						<label class="center-block">Số điện thoại:</label>
+						<label class="center-block">Số điện thoại</label>
 					</div>
 		        	<div class="col-sm-8">	
 						<input class='form-control' name="phone" 
@@ -131,7 +132,7 @@
 	        	</div>
 	        	<div class="form-group row">
 					<div class="col-sm-3">
-						<label class="center-block">Chứng minh nhân dân:</label>
+						<label class="center-block">Chứng minh nhân dân</label>
 					</div>
 		        	<div class="col-sm-8">	
 						<input class='form-control' name="personal_id" 
@@ -145,7 +146,7 @@
 	        	</div>
 		        <div class="form-group row">
 					<div class="col-sm-3">
-						<label class="center-block">Quốc gia :</label>
+						<label class="center-block">Quốc gia </label>
 					</div>
 		        	<div class="col-sm-8">	
 						<input class='form-control' name="country" 
@@ -159,7 +160,7 @@
 		        </div>
 		        <div class="form-group row">
 					<div class="col-sm-3">
-						<label class="center-block">Địa chỉ:</label>
+						<label class="center-block">Địa chỉ</label>
 					</div>
 		        	<div class="col-sm-8">	
 						<input class='form-control' name="address" 
@@ -173,7 +174,7 @@
 		        </div>
 		        <div class="form-group row">
 					<div class="col-sm-3">
-						<label class="center-block">Thành phố:</label>
+						<label class="center-block">Thành phố</label>
 					</div>
 		        	<div class="col-sm-8">	
 						<input class='form-control' name="city" 
@@ -187,13 +188,13 @@
 		        </div>
 		        <div class="form-group row">
 			        <div class="col-sm-3">
-			            <label class="center-block">Hình Ảnh:</label>
+			            <label class="center-block">Hình Ảnh</label>
 			        </div>
 			        <div class="col-sm-8">
 			        	<p *ngIf="user.avatar">
-			                <span>Currently: <a href="{{api_domain}}{{user.avatar}}" target="_blank">{{user.avatar}}</a></span>
+			                <span>Currently <a href="{{api_domain}}{{user.avatar}}" target="_blank">{{user.avatar}}</a></span>
 			            </p>
-		            	<input type="file" id="avatar" class="form-control" accept="image/*"
+		            	<input type="file" id="avatar" accept="image/*"
 		            	(change)="onFileChange($event)"/>
 		            	<show-error-valid [control]="formUser.get('avatar')"></show-error-valid>
 		            	<div *ngIf="errorMessage">
@@ -203,7 +204,7 @@
 		    	</div>
 		    	<div class="form-group row">
 					<div class="col-sm-3">
-						<label class="center-block"> Mật khẩu mới:</label>
+						<label class="center-block"> Mật khẩu mới</label>
 					</div>
 		        	<div class="col-sm-8">	
 						<input class='input-password form-control' type="password" name="new_password" 

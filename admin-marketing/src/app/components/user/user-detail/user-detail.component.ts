@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../../shared/class/user';
 import { UserService } from '../../../shared/services/user.service';
 import { UserValidators } from './../../../shared/validators/user-validators';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { NumberValidators } from './../../../shared/validators/number-validators';
 
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
@@ -48,18 +50,19 @@ export class UserDetailComponent implements OnInit {
 
 	// Create Form 
 	createFormUser() {
+        console.log(this.user);
 		this.formUser = this.fb.group({
         email: [this.user.email, [Validators.required, UserValidators.emailValidators]],
-        full_name: [this.user.full_name],
+        full_name: [this.user.full_name, [Validators.required]],
         birth_date: [this.user.birth_date ? moment(this.user.birth_date,"DD/MM/YYYY").toDate() : null, [UserValidators.birtdateValidators]],
-        phone: [this.user.phone, [Validators.required,UserValidators.phoneValidators]],
-        personal_id: [this.user.personal_id],
+        phone: [this.user.phone, [Validators.required,NumberValidators.validPhone]],
+        personal_id: [this.user.personal_id, [NumberValidators.validPersonID]],
         country: [this.user.country],
         address: [this.user.address],
         city: [this.user.city],
         avatar: [this.user.avatar],
         new_password: ['', [UserValidators.passwordValidators]],
-        role: [this.user.role['id'] ? this.user.role['id'] : ''],
+        role: [this.user.role ? this.user.role['id'] : ''],
         is_active: [this.user.is_active],
         is_staff:[this.user.is_staff]
     })
@@ -85,23 +88,27 @@ export class UserDetailComponent implements OnInit {
     }
 
     onSubmit() {
-        var self = this;
-        let userFormGroup = this.convertFormGroupToFormData(this.formUser);
-        this.userService.updateUser(userFormGroup, this.user.id).subscribe(
-            (data) => {
-                // Navigate to promotion page where success
-                self.router.navigate(['/user-list', { message_put: this.formUser.value['email']} ])
-            }, 
-            (error) => {
-                if(error.code == 400) {
-                    this.errorMessage = error.message
-                } else if(error.code == 405) {
-                    this.errors = error.message;
-                } else {
-                   self.router.navigate(['/error', { message: error.message }]);
+        if (this.formUser.invalid) {
+            ValidateSubmit.validateAllFormFields(this.formUser);
+        } else {
+            var self = this;
+            let userFormGroup = this.convertFormGroupToFormData(this.formUser);
+            this.userService.updateUser(userFormGroup, this.user.id).subscribe(
+                (data) => {
+                    // Navigate to promotion page where success
+                    self.router.navigate(['/user-list', { message_put: this.formUser.value['email']} ])
+                }, 
+                (error) => {
+                    if(error.code == 400) {
+                        this.errorMessage = error.message
+                    } else if(error.code == 405) {
+                        this.errors = error.message;
+                    } else {
+                       self.router.navigate(['/error', { message: error.message }]);
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 
     /*
