@@ -6,4 +6,9 @@
 	width:150px;
 	margin: 0 auto;
 }
-
+.page-name{
+    font-size: 34px;
+}
+.title-row{
+	height: 71px;
+}
