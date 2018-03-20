@@ -40,6 +40,7 @@ export class ListEventComponent implements OnInit {
         private eventService: EventService, 
         private route: ActivatedRoute, 
         private router: Router,
+        private toastr: ToastrService
     ) { }
 
     ngOnInit() {

@@ -11,5 +11,5 @@ export class Notification {
     location: string;
     is_draft: boolean;
     is_clear_image: boolean;
-    promotion_id: number;
+    promotion: number;
 }

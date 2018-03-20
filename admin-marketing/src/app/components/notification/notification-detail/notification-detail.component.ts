@@ -32,6 +32,8 @@ export class NotificationDetailComponent implements OnInit {
 
     lang = 'vi';
 
+    promotion_id: number;
+
     constructor(
         private notificationService: NotificationService, 
         private route: ActivatedRoute,
@@ -67,6 +69,7 @@ export class NotificationDetailComponent implements OnInit {
                 this.noti_detail = data.notification_detail;
                 this.user_list_left = data.user_all;
                 this.user_list_right = data.user_notification;
+                this.promotion_id = data.notification_detail.promotion;
             }
         );
 

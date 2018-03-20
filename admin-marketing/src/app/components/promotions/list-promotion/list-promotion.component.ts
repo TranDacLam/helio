@@ -196,7 +196,7 @@ export class ListPromotionComponent implements OnInit {
                         this.length_all =  dtInstance.rows().count();
                         this.length_selected = 0;
                     } else {
-                        this.router.navigate(['/error', { message: error.message}]);
+                        this.router.navigate(['/error', { message: data.message}]);
                     }
                 }, 
                 (error) => {

@@ -92,7 +92,7 @@ export class FormNotificationComponent implements OnInit {
             is_QR_code: [this.noti.is_QR_code ? this.noti.is_QR_code : false],
             location: [this.noti.location, [Validators.maxLength(500)]],
             is_clear_image: [false],
-            promotion_id: [this.promotion_id ? this.promotion_id : null]
+            promotion: [this.promotion_id ? this.promotion_id : null]
         });
     }
 
@@ -150,7 +150,11 @@ export class FormNotificationComponent implements OnInit {
                 this.notificationService.addNoti(noti_form_data, this.lang).subscribe(
                     (data) => {
                         this.toastr.success(`Thêm mới "${value_form.subject}" thành công`);
-                        this.router.navigate(['/notification/list']);
+                        if(this.promotion_id){
+                            this.router.navigate(['/notification/detail/', data.id, {lang: this.lang}]);
+                        }else{
+                            this.router.navigate(['/notification/list']);
+                        }
                     },
                     (error) => {
                         if(error.code === 400){
@@ -170,7 +174,11 @@ export class FormNotificationComponent implements OnInit {
                             this.noti = data;
                             if(this.type_http == "put"){
                                 this.toastr.success(`Chỉnh sửa "${value_form.subject}" thành công`);
-                                this.router.navigate(['/notification/list']);
+                                if(this.promotion_id){
+                                    this.router.navigate(['/notification/detail/', data.id, {lang: this.lang}]);
+                                }else{
+                                    this.router.navigate(['/notification/list']);
+                                }
                             }else if(this.type_http == 'put_popup'){
                                 this.getNotification();
                                 $('#UpdateNoti').modal('toggle');

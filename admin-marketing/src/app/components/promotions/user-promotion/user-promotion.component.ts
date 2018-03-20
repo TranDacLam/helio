@@ -69,7 +69,7 @@ export class UserPromotionComponent implements OnInit {
                 this.user_list_right = data.user_promotion;
             }, 
             (error) => {
-                this.router.navigate(['/error'], { message: error.message});
+                this.router.navigate(['/error', { message: error.message}]);
             });
     }
 

@@ -56,7 +56,7 @@
         </table>
     </div>
 </div>
-<div class="row multiselect_footer">
+<div class="row multiselect_footer" *ngIf="!promotion_id">
     <div class="col-xs-6 col-md-6">
         <button class="btn button-selectall pull-right" *ngIf="!is_button_left" (click)="selectAllEventLeft($event)">CHỌN TẤT CẢ</button>
         <button class="btn button-selectall pull-right" *ngIf="is_button_left" (click)="cancelSelectAllEventLeft($event)">BỎ CHỌN TẤT CẢ</button>

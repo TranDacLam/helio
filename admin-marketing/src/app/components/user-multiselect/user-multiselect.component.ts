@@ -27,6 +27,10 @@ export class UserMultiselectComponent implements OnInit {
     @Input('user_list_right') 
     user_list_right: User[] = [];
 
+    @Input('promotion_id') 
+    promotion_id: number;
+
+
     @Output()
     save: EventEmitter<number[]> = new EventEmitter<number[]>();
 
