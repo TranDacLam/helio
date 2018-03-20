@@ -35,7 +35,7 @@ export class PromotionReportComponent implements OnInit {
             }
         });
         this.getPromotion();
-        this.dtOptions = datatable_config.data_config('Tổng Hợp Triển Khai Khuyến Mãi').dtOptions;
+        this.dtOptions = datatable_config.data_config('Tổng Hợp Triển Khai Khuyến Mãi');
   	}
 
     /*

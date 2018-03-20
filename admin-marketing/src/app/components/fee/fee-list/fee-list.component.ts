@@ -215,7 +215,7 @@ export class FeeListComponent implements OnInit {
 
   ngOnInit() {
   	this.getFees();
-     this.dtOptions = data_config(this.record).dtOptions;
+     this.dtOptions = data_config(this.record);
   }
 
 }
