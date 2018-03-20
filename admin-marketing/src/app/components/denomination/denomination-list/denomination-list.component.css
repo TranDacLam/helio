@@ -7,6 +7,9 @@
 	border-bottom: 2px solid black;
 	padding: 0 0 10px 0px;
 }
+p.title {
+	font-size: 34px;
+}
 a.pull-left {
 	color: #333333;
 }

@@ -4,6 +4,9 @@
 	margin: 10px 0 20px 0;
 	padding: 10px 0;
 }
+p.title {
+	font-size: 34px;
+}
 /*End title-ad*/
 .form-adv-add {
 	padding: 0 15px;

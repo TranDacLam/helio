@@ -16,6 +16,9 @@ a.pull-left {
 a.pull-left:hover {
 	text-decoration: none;
 }
+p.title {
+	font-size: 34px;
+}
 td.title-email a {
 	text-decoration: none;
 	color: black;

@@ -4,7 +4,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
             <li class="breadcrumb-item"><a routerLink="/user-list">User</a></li>
-            <li class="breadcrumb-item"><a routerLink="/user-detail">Sửa Thông tin User</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sửa thông tin User</li>
         </ol>
     </nav>
 </div>
@@ -14,8 +14,11 @@
 		<div *ngIf="errorMessage" class="alert alert-danger fade in">
 		   <span >{{ errorMessage.non_field_errors }}</span>.
 		</div>
+		<div *ngIf="errors" class="alert alert-danger fade in">
+			<span >{{ errors }}</span>.
+		</div>
 		<div class="row content-user">
-			<p class=title-user-edit>Sửa Thông tin User</p>
+			<p class="title-user-edit text-center">Sửa thông tin User</p>
 			<div class="col-md-8">
 				<div class="form-group row">
 					<div class="col-sm-3">

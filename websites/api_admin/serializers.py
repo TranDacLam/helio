@@ -8,7 +8,8 @@ import core.constants as const
 import sys
 from django.core import exceptions
 import django.contrib.auth.password_validation as validators
-from rest_framework import serializers    
+from rest_framework import serializers  
+from django.utils.translation import ugettext_lazy as _  
 
 class Base64ImageField(serializers.ImageField):
     """
@@ -180,7 +181,7 @@ class DenominationSerializer(serializers.ModelSerializer):
     denomination = serializers.IntegerField(required=True,validators=[
         UniqueValidator(
             queryset=Denomination.objects.all(),
-            message =('Mệnh giá nộp tiền này đã tồn tại')
+            message =_('This denomination is already taken')
             )
         ])
     class Meta:
@@ -189,15 +190,17 @@ class DenominationSerializer(serializers.ModelSerializer):
 
 class FeedBackSerializer(serializers.ModelSerializer):
 
-    STATUS_CHOICES = (
-        ('Chưa xử lý', 'Chưa xử lý'),
-        ('Đã trả lời', 'Đã trả lời'),
-        ('Đã chuyển đến bộ phận liên quan', 'Đã chuyển đến bộ phận liên quan'),
-        )
-    status = serializers.ChoiceField(choices=STATUS_CHOICES)
+    status = serializers.CharField(source='get_status_display')
+    feedback_type = serializers.CharField(source='get_feedback_type_display')
+
     class Meta:
         model = FeedBack
         fields = ('id', 'name', 'email', 'phone', 'subject', 'message', 'rate', 'sent_date', 'feedback_type', 'status','answer', 'created', 'modified')     
+
+    def validate(self, data):
+        data['status'] = data.pop('get_status_display')
+        data['feedback_type'] = data.pop('get_feedback_type_display')
+        return data
 
 class NotificationSerializer(serializers.ModelSerializer):
 
@@ -230,7 +233,7 @@ class UserEmbedSerializer(serializers.Serializer):
 
     def validate_birth_date(self, value):
         if value >= datetime.now().date():
-            raise serializers.ValidationError("Birthday must less then today")
+            raise serializers.ValidationError(_("Birthday must less then today"))
         return value
 
 class FeeSerializer(serializers.ModelSerializer):
@@ -533,7 +536,7 @@ class HotAdvsSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True, max_length=255,validators=[
         UniqueValidator(
             queryset=Hot_Advs.objects.all(),
-            message =('Hot Ads này đã tồn tại')
+            message =_('This Hot Ads is already taken')
             )
         ])
 

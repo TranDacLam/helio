@@ -52,6 +52,12 @@ export class AdvertisementService {
 		const url = `${api.advertisement}${id}/`;
 		return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
+
+	deleteAdvById(adv: Advertisement): Observable<Advertisement> {
+		const id = adv.id;
+		const url = `${api.advertisement}${id}/`;
+		return this.http.delete(url,this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+	}
 	
 	/*
 		POST: Update detail Advertiment

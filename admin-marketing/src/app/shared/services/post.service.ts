@@ -78,7 +78,7 @@ export class PostService {
         });
     }
 
-    updatePost(value: FormData, id: number): Observable<any>{
+    updatePost(value: FormData, id: number, lang): Observable<any>{
         const url_updatePost = `${env.api_domain_root}/${lang}/api/${api.post}${id}/`;
 
         return Observable.create(observer => {
@@ -100,7 +100,7 @@ export class PostService {
         });
     }
 
-    onDelPost(id: number): Observable<any>{
+    onDelPost(id: number, lang): Observable<any>{
         const url_onDelPost = `${env.api_domain_root}/${lang}/api/${api.post}${id}/`;
         return this.http.delete(url_onDelPost, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }

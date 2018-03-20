@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-23 03:25+0000\n"
+"POT-Creation-Date: 2018-03-20 08:24+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,370 +18,916 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+#: templates/admin/login.html:26 templates/admin/login.html:71
+msgid "Log in"
+msgstr ""
 
-# START MAIN MENU
-msgid "menu.product"
-msgstr "PRODUCT"
+#: templates/admin/login.html:31
+msgid "Please correct the error below."
+msgstr ""
 
-msgid "menu.night_life"
-msgstr "NIGHT LIFE"
+#: templates/admin/login.html:31
+msgid "Please correct the errors below."
+msgstr ""
 
-msgid "menu.powercard"
-msgstr "POWERCARD"
+#: templates/admin/login.html:61
+msgid "Forgotten your password or username?"
+msgstr ""
 
-msgid "menu.event"
-msgstr "EVENT"
-
-msgid "menu.promotion"
-msgstr "PROMOTION"
-
-msgid "menu.faq"
-msgstr "FAQs"
-
-msgid "menu.helio_photos"
-msgstr "HELIO PHOTOS"
-# END MAIN MENU
-
-# START SUB MENU
-msgid "menu.submenu.play"
-msgstr "Helio Play"
-
-msgid "menu.submenu.kids"
-msgstr "Helio Kids"
-
-msgid "menu.submenu.night_life"
-msgstr "Night Life"
-
-msgid "menu.submenu.coffee"
-msgstr "Coffee & Bakery"
-
-msgid "menu.submenu.ortherproduct"
-msgstr "Other Product"
-
-msgid "menu.submenu.redemption_store"
-msgstr "Redemption Store"
-# END SUB MENU
-
-# START BUTTON
-msgid "btn.click_now"
-msgstr "Click now"
-
-msgid "btn.view_all"
-msgstr "View all"
-
-msgid "btn.view_more"
-msgstr "View more"
-
-msgid "btn.view_detail"
-msgstr "View detail"
-# END BUTTON
-
-# START HOME PAGE
-msgid "homepage.title.section.game"
-msgstr "ENTERTAINMENT SYSTEM"
-
-msgid "homepage.title.section.redemption_store"
-msgstr "REDEMPTION STORE"
-
-msgid "homepage.title.section.powercard"
-msgstr "POWERCARD"
-
-msgid "homepage.title.section.event"
-msgstr "HELIO CENTER EVENT"
-
-msgid "homepage.title.section.entertaiment"
-msgstr "ENTERTAINMENT CENTER AT DA NANG"
-
-msgid "homepage.text.night_life"
-msgstr "NIGHT LIFE"
-
-msgid "homepage.text.play"
-msgstr "PLAY"
-
-msgid "homepage.text.kids"
-msgstr "KIDS"
-
-msgid "homepage.text.coffee"
-msgstr "COFFEE"
-
-# END HOME PAGE
-
-# START FAQs REDEMPTION STORE
-msgid "redemption_store.title.section.faq"
-msgstr "FREQUENTLY ASKED QUESTION"
-# END FAQs REDEMPTION STORE
-
-# START FAQs POWERCARD
-msgid "powercard.title.section.faq"
-msgstr "FREQUENTLY ASKED QUESTION"
-# END FAQs POWERCARD
-
-# START POWERCARD
-msgid "powercard.btn.view_full"
-msgstr "SHOW MORE"
-# END POWERCARD
-
-# START EXPERIENCE DETAIl
-msgid "experiencepage.btn.all_experience" 
-msgstr "ALL EXPERIENCE"
-
-msgid "experiencepage.other_experience" 
-msgstr "OTHER EXPERIENCE"
-# END EXPERIENCE DETAIl
-
-# START EVENT
-msgid "eventpage.title.all_event" 
-msgstr "ALL EVENT"
-
-msgid "eventpage.btn.all_event" 
-msgstr "ALL EVENT"
-
-msgid "eventpage.other_event" 
-msgstr "OTHER EVENT"
-
-msgid "eventpage.days" 
-msgstr "DAYS"
-
-msgid "eventpage.hours" 
-msgstr "HOURS"
-
-msgid "eventpage.minutes" 
-msgstr "MINUTES"
-
-msgid "eventpage.seconds" 
-msgstr "SECONDS"
-
-msgid "eventpage.finished" 
-msgstr "FINISHED EVENT"
-
-msgid "eventpage.current" 
-msgstr "CURRENT EVENT"
-
-msgid "eventpage.future" 
-msgstr "FUTURE EVENT"
-# END EVENT
-
-# START PROMOTION DETAIl
-msgid "promotionpage.btn.all_promotion" 
-msgstr "ALL PROMOTION"
-
-msgid "promotionpage.other_promotion" 
-msgstr "OTHER PROMOTION"
-
-msgid "promotionpage.menu.all" 
-msgstr "ALL"
-# END PROMOTION DETAIl
-
-# START CAREER DETAIl
-msgid "careerpage.btn.all_career" 
-msgstr "ALL CAREER"
-
-msgid "careerpage.other_career" 
-msgstr "OTHER CAREER"
-# END CAREER DETAIl
-
-# START NEW DETAIl
-msgid "newpage.btn.all_news" 
-msgstr "ALL NEWS"
-
-msgid "newpage.other_new" 
-msgstr "OTHER NEWS"
-# END NEW DETAIl
-
-# START FAQS
-msgid "faqspage.header.title"
-msgstr "FAQs"
-
-msgid "faqspage.header.description"
-msgstr "Frequently asked questions help you have more good experience when you go to Helio Center."
-
-msgid "faqspage.text.support_more"
-msgstr "SUPPORT MORE"
-
-msgid "faqspage.text.contact_us"
-msgstr "CONTACT US"
-# END FAQs
-
-# START CONTACT 
-msgid "contact.header.title"
-msgstr "CONTACT"
-
-msgid "contact.header.description"
-msgstr "Frequently asked questions help you have more good experience when you go to Helio Center. Frequently asked questions help you have more good experience when you go to Helio Center."
-
-msgid "contact.btn.send"
-msgstr "SEND MESSAGE" 
-
-msgid "contact.lable.title.name"
-msgstr "Your name" 
-
-msgid "contact.lable.title.email"
-msgstr "Email" 
-
-msgid "contact.lable.title.phone"
-msgstr "Phone number" 
-
-msgid "contact.lable.title.subject"
-msgstr "Subject" 
-
-msgid "contact.lable.title.message"
-msgstr "Main message"
-
-msgid "contact.message_success"
-msgstr "Your message was sent successfully!"
-
-msgid "contact.message_error"
-msgstr "Please fix errors below"
-
-msgid "This field is required."
-msgstr "This field is required."
-# END CONTACT
-
-# START OTHER PRODUCT
-msgid "other_product.header.title"
-msgstr "OTHER PRODUCT"
-
-msgid "other_product.header.description"
-msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu sit amet viverra. Donec sit amet enim a velit varius eleifend eget vitae eros. Nulla in vulputate justo. Suspendisse potenti."
-# END OTHER PRODUCT
-
-# START ADMIN PROMOTION DETAIL
-msgid "admin_promotion.message_success"
-msgstr "Save success!"
-
-msgid "admin_promotion.message_promotion_install"
-msgstr "Promotion for user install app first. This action cannot apply."
-
-msgid "admin_promotion.btn_back_admin"
-msgstr "BACK TO ADMIN PROMOTION"
-
-msgid "admin_promotion.btn_save"
-msgstr "SAVE"
-# START ADMIN PROMOTION DETAIL
-
-# START HELIO PHOTO
-msgid "helio_photo.total_image"
-msgstr "images"
 # END HELIO PHOTO
-
-#START FOOTER
+# START FOOTER
+#: templates/footer.html:22
 msgid "footer.contact.address"
 msgstr "2/9 str, Hoa Cuong Bac Ward, Hai Chau Dist, Da Nang City, Viet Nam"
 
+#: templates/footer.html:30
 msgid "footer.menu.home"
 msgstr "HOME"
 
+#: templates/footer.html:31
 msgid "footer.menu.about"
 msgstr "ABOUTS"
 
+#: templates/footer.html:32
 msgid "footer.menu.career"
 msgstr "CAREER"
 
+#: templates/footer.html:33
 msgid "footer.menu.contact"
 msgstr "CONTACT"
 
+#: templates/footer.html:38
 msgid "footer.menu.news"
 msgstr "NEWS"
 
+#: templates/footer.html:39
 msgid "footer.menu.experience"
 msgstr "EXPERIENCE"
 
+#: templates/footer.html:40
+msgid "footer.menu.terms_of_use"
+msgstr "TERM & CONDITION"
+
+#: templates/footer.html:41
 msgid "footer.menu.policy"
 msgstr "POLICY"
 
-msgid "footer.menu.terms_of_use"
-msgstr "TERM & CONDITION"   
-
+#: templates/footer.html:72
 msgid "footer.text_right"
 msgstr "Powered by"
 
+#: templates/footer.html:72
 msgid "footer.text_company"
-msgstr "KhoiPhat, Ltd."   
-#END FOOTER
+msgstr "KhoiPhat, Ltd."
 
+# START MAIN MENU
+#: templates/header.html:56
+msgid "menu.product"
+msgstr "PRODUCT"
 
-#START EMAIL TEMPLATE
+# END MAIN MENU
+# START SUB MENU
+#: templates/header.html:58
+msgid "menu.submenu.play"
+msgstr "Helio Play"
 
+#: templates/header.html:59
+msgid "menu.submenu.kids"
+msgstr "Helio Kids"
+
+#: templates/header.html:60
+msgid "menu.submenu.night_life"
+msgstr "Night Life"
+
+#: templates/header.html:61
+msgid "menu.submenu.coffee"
+msgstr "Coffee & Bakery"
+
+#: templates/header.html:62
+msgid "menu.submenu.redemption_store"
+msgstr "Redemption Store"
+
+#: templates/header.html:63
+msgid "menu.submenu.ortherproduct"
+msgstr "Other Product"
+
+#: templates/header.html:66
+msgid "menu.night_life"
+msgstr "NIGHT LIFE"
+
+#: templates/header.html:67
+msgid "menu.powercard"
+msgstr "POWERCARD"
+
+#: templates/header.html:68
+msgid "menu.event"
+msgstr "EVENT"
+
+#: templates/header.html:69
+msgid "menu.promotion"
+msgstr "PROMOTION"
+
+#: templates/header.html:70
+msgid "menu.helio_photos"
+msgstr "HELIO PHOTOS"
+
+#: templates/header.html:71
+msgid "menu.faq"
+msgstr "FAQs"
+
+#: templates/multiupload/change_form.html:7
+#: templates/multiupload/change_list.html:7
+#: templates/multiupload/upload.html:51 templates/multiupload/upload.html:56
+msgid "Multiupload"
+msgstr ""
+
+#: templates/multiupload/upload.html:47 templates/multiupload/upload.html:53
+msgid "Home"
+msgstr ""
+
+#: templates/multiupload/upload.html:62
+msgid "back"
+msgstr ""
+
+#: templates/multiupload/upload.html:69
+msgid "Add files"
+msgstr ""
+
+#: templates/multiupload/upload.html:74
+msgid "Start upload"
+msgstr ""
+
+#: templates/multiupload/upload.html:78
+msgid "Cancel upload"
+msgstr ""
+
+#: templates/multiupload/upload.html:82 templates/multiupload/upload.html:201
+msgid "Delete"
+msgstr ""
+
+#: templates/multiupload/upload.html:191
+msgid "File is too big"
+msgstr ""
+
+#: templates/multiupload/upload.html:192
+msgid "File is too small"
+msgstr ""
+
+#: templates/multiupload/upload.html:193
+msgid "Filetype not allowed"
+msgstr ""
+
+#: templates/multiupload/upload.html:194
+msgid "Max number of files exceeded"
+msgstr ""
+
+#: templates/multiupload/upload.html:195
+msgid "Uploaded bytes exceed file size"
+msgstr ""
+
+#: templates/multiupload/upload.html:196
+msgid "Empty file upload result"
+msgstr ""
+
+#: templates/multiupload/upload.html:198
+msgid "Error"
+msgstr ""
+
+#: templates/multiupload/upload.html:199
+msgid "Start"
+msgstr ""
+
+#: templates/multiupload/upload.html:200
+msgid "Cancel"
+msgstr ""
+
+#: templates/multiupload/upload.html:202
+msgid "Title"
+msgstr ""
+
+#: templates/websites/admin_marketing.html:21
+msgid "Notification Management"
+msgstr ""
+
+#: templates/websites/admin_marketing.html:22
+#, fuzzy
+#| msgid "promotionpage.menu.all"
+msgid "Promotion Management"
+msgstr "ALL"
+
+# END OTHER PRODUCT
+# START ADMIN PROMOTION DETAIL
+#: templates/websites/admin_notification_detail.html:20
+#: templates/websites/admin_promotion_detail.html:21
+msgid "admin_promotion.message_success"
+msgstr "Save success!"
+
+#: templates/websites/admin_notification_detail.html:23
+msgid "BACK TO ADMIN NOTIFICATION"
+msgstr ""
+
+#: templates/websites/admin_notification_detail.html:47
+msgid "Send Notification"
+msgstr ""
+
+#: templates/websites/admin_notification_detail.html:67
+#: templates/websites/admin_promotion_detail.html:72
+msgid "admin_promotion.btn_save"
+msgstr "SAVE"
+
+#: templates/websites/admin_notifications.html:22
+#: templates/websites/admin_promotions.html:21
+msgid "BACK TO ADMIN MANAGEMENT"
+msgstr ""
+
+#: templates/websites/admin_notifications.html:40
+#: templates/websites/admin_promotions.html:39
+#: templates/websites/carrer_detail.html:60
+#: templates/websites/event_detail.html:94
+#: templates/websites/experience.html:58
+#: templates/websites/experience_detail.html:77
+#: templates/websites/new_detail.html:60 templates/websites/news.html:58
+#: templates/websites/promotion_detail.html:60
+msgid "btn.view_detail"
+msgstr "View detail"
+
+#: templates/websites/admin_promotion_detail.html:24
+msgid "admin_promotion.message_promotion_install"
+msgstr "Promotion for user install app first. This action cannot apply."
+
+#: templates/websites/admin_promotion_detail.html:27
+msgid "admin_promotion.btn_back_admin"
+msgstr "BACK TO ADMIN PROMOTION"
+
+# END FOOTER
+# START EMAIL TEMPLATE
+#: templates/websites/api/registration/new_user_notification.html:63
 msgid "mail.hello"
 msgstr "Hello"
 
+#: templates/websites/api/registration/new_user_notification.html:63
 msgid "mail.register.header"
 msgstr "you have registered for the Helio center."
 
+#: templates/websites/api/registration/new_user_notification.html:66
 msgid "mail.register.content1"
 msgstr "Use this account email to sign in to "
 
+#: templates/websites/api/registration/new_user_notification.html:66
 msgid "mail.register.content2"
-msgstr "on your computer or mobile device to enjoy a more personalized experience."
+msgstr ""
+"on your computer or mobile device to enjoy a more personalized experience."
 
+#: templates/websites/api/registration/new_user_notification.html:78
 msgid "mail.register.content3"
 msgstr "Account Email: "
 
+#: templates/websites/api/registration/new_user_notification.html:86
 msgid "mail.register.footer1"
 msgstr "If this account was set up in error, please call "
 
+#: templates/websites/api/registration/new_user_notification.html:86
 msgid "mail.register.footer2"
 msgstr "for assistance."
 
+#: templates/websites/api/registration/new_user_notification.html:90
 msgid "mail.register.footer3"
 msgstr "Thank you,"
 
+#: templates/websites/api/registration/new_user_notification.html:92
 msgid "mail.register.footer4"
 msgstr "Helio Center Support Team."
 
+#: templates/websites/api/registration/new_user_notification_subject.txt:1
+msgid "Create Account Helio Successfully"
+msgstr ""
+
+#: templates/websites/api/registration/verify_email.html:63
 msgid "mail.verify.header"
 msgstr "Helio Account"
 
+#: templates/websites/api/registration/verify_email.html:66
+#: templates/websites/api/registration/verify_email.html:88
 msgid "mail.verify.code"
 msgstr "Security code"
 
+#: templates/websites/api/registration/verify_email.html:78
 msgid "mail.verify.content"
 msgstr "Please use the following security code for the Helio account"
 
+#: templates/websites/api/registration/verify_email.html:93
 msgid "mail.verify.footer"
 msgstr "Thank,"
 
+#: templates/websites/api/registration/verify_email.html:95
 msgid "mail.verify.footer2"
 msgstr "The Helio account team."
 
+#: templates/websites/careers.html:63 templates/websites/events.html:235
+#: templates/websites/experience.html:63 templates/websites/faqs.html:77
+#: templates/websites/helio_kids.html:141
+#: templates/websites/helio_play.html:139 templates/websites/news.html:63
+#: templates/websites/power_card.html:73 templates/websites/promotions.html:125
+#: templates/websites/redemption_store.html:148
+msgid "btn.view_more"
+msgstr "View more"
+
+#: templates/websites/carrer_detail.html:48
+msgid "careerpage.other_career"
+msgstr "OTHER CAREER"
+
+# END PROMOTION DETAIl
+# START CAREER DETAIl
+#: templates/websites/carrer_detail.html:51
+msgid "careerpage.btn.all_career"
+msgstr "ALL CAREER"
+
+# END FAQs
+# START CONTACT 
+#: templates/websites/contact.html:27
+msgid "contact.header.title"
+msgstr "CONTACT"
+
+#: templates/websites/contact.html:33
+msgid "contact.header.description"
+msgstr ""
+"Frequently asked questions help you have more good experience when you go to "
+"Helio Center. Frequently asked questions help you have more good experience "
+"when you go to Helio Center."
+
+#: templates/websites/contact.html:40
+msgid "contact.message_success"
+msgstr "Your message was sent successfully!"
+
+#: templates/websites/contact.html:41
+msgid "contact.message_error"
+msgstr "Please fix errors below"
+
+#: templates/websites/contact.html:52
+msgid "contact.lable.title.name"
+msgstr "Your name"
+
+#: templates/websites/contact.html:57
+msgid "contact.lable.title.email"
+msgstr "Email"
+
+#: templates/websites/contact.html:61
+msgid "contact.lable.title.phone"
+msgstr "Phone number"
+
+#: templates/websites/contact.html:67
+msgid "contact.lable.title.subject"
+msgstr "Subject"
+
+#: templates/websites/contact.html:71
+msgid "contact.lable.title.message"
+msgstr "Main message"
+
+#: templates/websites/contact.html:82
+msgid "contact.btn.send"
+msgstr "SEND MESSAGE"
+
+#: templates/websites/email/contact_email.html:65
 msgid "mail.contact.content1"
 msgstr "You have been recieved a contact from"
 
+#: templates/websites/email/contact_email.html:65
 msgid "mail.contact.content2"
 msgstr "with the following message"
 
+#: templates/websites/email/contact_email.html:74
 msgid "mail.contact.email"
 msgstr "User Email"
 
+#: templates/websites/email/contact_email.html:79
 msgid "mail.contact.phone"
 msgstr "Phone Number"
 
-#START EMAIL TEMPLATE
+#: templates/websites/event_detail.html:32 templates/websites/events.html:42
+#: templates/websites/events.html:164 templates/websites/events.html:211
+msgid "eventpage.days"
+msgstr "DAYS"
 
-msgid "Popular"
+#: templates/websites/event_detail.html:36 templates/websites/events.html:46
+#: templates/websites/events.html:168 templates/websites/events.html:215
+msgid "eventpage.hours"
+msgstr "HOURS"
+
+#: templates/websites/event_detail.html:40 templates/websites/events.html:50
+#: templates/websites/events.html:172 templates/websites/events.html:219
+msgid "eventpage.minutes"
+msgstr "MINUTES"
+
+#: templates/websites/event_detail.html:44 templates/websites/events.html:54
+#: templates/websites/events.html:176 templates/websites/events.html:223
+msgid "eventpage.seconds"
+msgstr "SECONDS"
+
+#: templates/websites/event_detail.html:49 templates/websites/events.html:59
+#: templates/websites/events.html:147 templates/websites/events.html:194
+msgid "eventpage.finished"
+msgstr "FINISHED EVENT"
+
+#: templates/websites/event_detail.html:52 templates/websites/events.html:62
+#: templates/websites/events.html:148 templates/websites/events.html:195
+msgid "eventpage.current"
+msgstr "CURRENT EVENT"
+
+#: templates/websites/event_detail.html:82
+msgid "eventpage.other_event"
+msgstr "OTHER EVENT"
+
+#: templates/websites/event_detail.html:85
+msgid "eventpage.btn.all_event"
+msgstr "ALL EVENT"
+
+# END EXPERIENCE DETAIl
+# START EVENT
+#: templates/websites/events.html:133
+msgid "eventpage.title.all_event"
+msgstr "ALL EVENT"
+
+#: templates/websites/events.html:146 templates/websites/events.html:193
+msgid "eventpage.future"
+msgstr "FUTURE EVENT"
+
+# END SUB MENU
+# START BUTTON
+#: templates/websites/events.html:154 templates/websites/events.html:201
+#: templates/websites/helio_kids.html:102
+#: templates/websites/helio_kids.html:127
+#: templates/websites/helio_play.html:100
+#: templates/websites/helio_play.html:125 templates/websites/home.html:259
+#: templates/websites/home.html:261 templates/websites/home.html:332
+#: templates/websites/home.html:334 templates/websites/promotions.html:86
+#: templates/websites/promotions.html:111
+msgid "btn.click_now"
+msgstr "Click now"
+
+#: templates/websites/experience_detail.html:65
+msgid "experiencepage.other_experience"
+msgstr "OTHER EXPERIENCE"
+
+# END POWERCARD
+# START EXPERIENCE DETAIl
+#: templates/websites/experience_detail.html:68
+msgid "experiencepage.btn.all_experience"
+msgstr "ALL EXPERIENCE"
+
+# END NEW DETAIl
+# START FAQS
+#: templates/websites/faqs.html:20
+msgid "faqspage.header.title"
+msgstr "FAQs"
+
+#: templates/websites/faqs.html:26
+msgid "faqspage.header.description"
+msgstr ""
+"Frequently asked questions help you have more good experience when you go to "
+"Helio Center."
+
+#: templates/websites/faqs.html:89
+msgid "faqspage.text.support_more"
+msgstr "SUPPORT MORE"
+
+#: templates/websites/faqs.html:92
+msgid "faqspage.text.contact_us"
+msgstr "CONTACT US"
+
+# START ADMIN PROMOTION DETAIL
+# START HELIO PHOTO
+#: templates/websites/helio_photos.html:48
+msgid "helio_photo.total_image"
+msgstr "images"
+
+#: templates/websites/helio_photos.html:50 templates/websites/home.html:349
+msgid "btn.view_all"
+msgstr "View all"
+
+# END BUTTON
+# START HOME PAGE
+#: templates/websites/home.html:64
+msgid "homepage.title.section.game"
+msgstr "ENTERTAINMENT SYSTEM"
+
+#: templates/websites/home.html:70 templates/websites/home.html:87
+msgid "homepage.text.night_life"
+msgstr "NIGHT LIFE"
+
+#: templates/websites/home.html:73 templates/websites/home.html:135
+msgid "homepage.text.play"
+msgstr "PLAY"
+
+#: templates/websites/home.html:76 templates/websites/home.html:177
+msgid "homepage.text.kids"
+msgstr "KIDS"
+
+#: templates/websites/home.html:79 templates/websites/home.html:219
+msgid "homepage.text.coffee"
+msgstr "COFFEE"
+
+#: templates/websites/home.html:100
+#, fuzzy
+#| msgid "homepage.text.night_life"
+msgid "homepage.text.night_life.description"
+msgstr "NIGHT LIFE"
+
+#: templates/websites/home.html:258
+msgid "homepage.title.section.redemption_store"
+msgstr "REDEMPTION STORE"
+
+#: templates/websites/home.html:295
+msgid "homepage.title.section.entertaiment"
+msgstr "ENTERTAINMENT CENTER AT DA NANG"
+
+#: templates/websites/home.html:299
+msgid "KNOW ABOUT HELIO CENTER"
 msgstr ""
 
-msgid "Users"
+#: templates/websites/home.html:331
+msgid "homepage.title.section.powercard"
+msgstr "POWERCARD"
+
+#: templates/websites/home.html:346
+msgid "homepage.title.section.event"
+msgstr "HELIO CENTER EVENT"
+
+#: templates/websites/new_detail.html:48
+msgid "newpage.other_new"
+msgstr "OTHER NEWS"
+
+# END CAREER DETAIl
+# START NEW DETAIl
+#: templates/websites/new_detail.html:51
+msgid "newpage.btn.all_news"
+msgstr "ALL NEWS"
+
+# END CONTACT
+# START OTHER PRODUCT
+#: templates/websites/other_product.html:32
+msgid "other_product.header.title"
+msgstr "OTHER PRODUCT"
+
+#: templates/websites/other_product.html:38
+msgid "other_product.header.description"
+msgstr ""
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis "
+"nunc est. Proin rutrum viverra neque eu porta. Fusce fringilla bibendum arcu "
+"sit amet viverra. Donec sit amet enim a velit varius eleifend eget vitae "
+"eros. Nulla in vulputate justo. Suspendisse potenti."
+
+# END FAQs POWERCARD
+# START POWERCARD
+#: templates/websites/power_card.html:54
+msgid "powercard.btn.view_full"
+msgstr "SHOW MORE"
+
+# END FAQs REDEMPTION STORE
+# START FAQs POWERCARD
+#: templates/websites/power_card.html:68
+msgid "powercard.title.section.faq"
+msgstr "FREQUENTLY ASKED QUESTION"
+
+#: templates/websites/promotion_detail.html:48
+msgid "promotionpage.other_promotion"
+msgstr "OTHER PROMOTION"
+
+# END EVENT
+# START PROMOTION DETAIl
+#: templates/websites/promotion_detail.html:51
+msgid "promotionpage.btn.all_promotion"
+msgstr "ALL PROMOTION"
+
+#: templates/websites/promotions.html:54
+msgid "promotionpage.menu.all"
+msgstr "ALL"
+
+# END HOME PAGE
+# START FAQs REDEMPTION STORE
+#: templates/websites/redemption_store.html:143
+msgid "redemption_store.title.section.faq"
+msgstr "FREQUENTLY ASKED QUESTION"
+
+#: websites/api/serializers.py:31
+msgid "This email is already taken. Please, try again"
 msgstr ""
 
+#: websites/api/serializers.py:34
+msgid "This phone is already taken. Please, try again"
+msgstr ""
+
+#: websites/api/utils.py:41
+msgid "Either message_plain or message_html should be not None"
+msgstr ""
+
+#: websites/api/views.py:101
+#, fuzzy
+#| msgid "This field is required."
+msgid "The email field is required."
+msgstr "This field is required."
+
+#: websites/api/views.py:118
+msgid "Send security code to email successfully."
+msgstr ""
+
+#: websites/api/views.py:122
+msgid "Email matching query does not exist."
+msgstr ""
+
+#: websites/api/views.py:137
+msgid ""
+"Please check required fields : [email, secure_code, password1, password2]"
+msgstr ""
+
+#: websites/api/views.py:140
+msgid "Password does not match."
+msgstr ""
+
+#: websites/api/views.py:149
+msgid "Reset Password Successfully."
+msgstr ""
+
+#: websites/api/views.py:152
+msgid "The secure code matching query does not exist."
+msgstr ""
+
+#: websites/api/views.py:169
+msgid "Upload avatar error. Please contact administartor"
+msgstr ""
+
+#: websites/api/views.py:189
+msgid "This phone number has already. Please choice another."
+msgstr ""
+
+#: websites/api/views.py:198
+msgid "Birth day invalid format (YYYY-MM-DD)."
+msgstr ""
+
+#: websites/api/views.py:212
+msgid "Update infomation user successfully."
+msgstr ""
+
+#: websites/api/views.py:216 websites/api/views.py:239
+msgid "Cannot update infomation user. Please contact administrator."
+msgstr ""
+
+#: websites/api/views.py:235
+msgid "Update device unique successfully."
+msgstr ""
+
+#: websites/api/views.py:260 websites/api/views.py:806
+msgid "Internal Server Error. Please contact administrator."
+msgstr ""
+
+#: websites/api/views.py:280
+msgid "Please check required fields : [old_password, new_password]"
+msgstr ""
+
+#: websites/api/views.py:289
+msgid "OldPassword does not match."
+msgstr ""
+
+#: websites/api/views.py:296
+msgid "Update password for user successfully."
+msgstr ""
+
+#: websites/api/views.py:300
+msgid "Cannot update password for user. Please contact administrator."
+msgstr ""
+
+#: websites/api/views.py:325
+msgid "Cannot send feedback. Please contact administrator."
+msgstr ""
+
+#: websites/api/views.py:575
+msgid "This value must be is integer."
+msgstr ""
+
+#: websites/api/views.py:654 websites/api/views.py:687
+#: websites/api/views.py:722 websites/api/views.py:757
+#, fuzzy
+#| msgid "This field is required."
+msgid "Card id field is required."
+msgstr "This field is required."
+
+#: websites/api/views.py:703 websites/api/views.py:737
+#: websites/api/views.py:772
+msgid "You don't have permission to access."
+msgstr ""
+
+#: websites/api/views.py:791
+#, fuzzy
+#| msgid "This field is required."
+msgid "Date request is required."
+msgstr "This field is required."
+
+#: websites/api/views.py:862
+#, fuzzy
+#| msgid "This field is required."
+msgid "Notification Id is required."
+msgstr "This field is required."
+
+#: websites/api/views.py:864
+msgid "Anonymous User Cannot Update Notification"
+msgstr ""
+
+#: websites/api/views.py:870
+msgid "Successfull"
+msgstr ""
+
+#: websites/api/views.py:910
+msgid "Turn off notification successful."
+msgstr ""
+
+#: websites/api/views.py:912 websites/api/views.py:933
+#: websites/api/views.py:1027 websites/api/views.py:1084
+#: websites/api/views.py:1122 websites/api/views.py:1169
+msgid "Anonymous User Cannot Call This Action."
+msgstr ""
+
+#: websites/api/views.py:916 websites/api/views.py:937
+#: websites/api/views.py:1088 websites/api/views.py:1130
+msgid "Internal Server Error. Please Contact Administrator."
+msgstr ""
+
+#: websites/api/views.py:931
+msgid "Turn on notification successful."
+msgstr ""
+
+#: websites/api/views.py:973
+msgid "Cannot add new notification. Please contact administrator."
+msgstr ""
+
+#: websites/api/views.py:1024
+msgid "Push Notification Successfull"
+msgstr ""
+
+#: websites/api/views.py:1035
+msgid "Cannot push notification. Please contact administrator."
+msgstr ""
+
+#: websites/api/views.py:1056 websites/api/views.py:1107
+#, fuzzy
+#| msgid "This field is required."
+msgid "The device_uid field is required."
+msgstr "This field is required."
+
+#: websites/api/views.py:1082
+msgid "Connect device successful."
+msgstr ""
+
+#: websites/api/views.py:1120
+msgid "Disconnect device successful."
+msgstr ""
+
+#: websites/api/views.py:1125 websites/api/views.py:1127
+msgid "Cannot disconnect device. DeviceID not found."
+msgstr ""
+
+#: websites/api/views.py:1148
+#, fuzzy
+#| msgid "This field is required."
+msgid "The promotion_id is required."
+msgstr "This field is required."
+
+#: websites/api/views.py:1159 websites/api/views.py:1210
+#: websites/api/views.py:1212
+msgid "Error. User or Deivce Have get gift from promotion."
+msgstr ""
+
+#: websites/api/views.py:1172
+msgid "Promotion for user does not matching. Please check again."
+msgstr ""
+
+#: websites/api/views.py:1176 websites/api/views.py:1181
+#: websites/api/views.py:1227
+msgid "Your account not apply current promotion. Please contact administrator."
+msgstr ""
+
+#: websites/api/views.py:1199
+msgid "Error. DeivceID of user is empty. Please check again."
+msgstr ""
+
+#: websites/api_admin/serializers.py:184
+msgid "This denomination is already taken"
+msgstr ""
+
+#: websites/api_admin/serializers.py:236
+msgid "Birthday must less then today"
+msgstr ""
+
+#: websites/api_admin/serializers.py:539
+msgid "This Hot Ads is already taken"
+msgstr ""
+
+#: websites/config/setting_api.py:28 websites/config/setting_develop.py:25
+#: websites/config/setting_local.py:26 websites/config/setting_production.py:28
+msgid "Vietnamese"
+msgstr ""
+
+#: websites/config/setting_api.py:29 websites/config/setting_develop.py:26
+#: websites/config/setting_local.py:27
+msgid "English"
+msgstr ""
+
+#: websites/core/custom_models.py:64
+msgid "Staff Status"
+msgstr ""
+
+#: websites/core/custom_models.py:65
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+#: websites/core/custom_models.py:69
+msgid "Active"
+msgstr ""
+
+#: websites/core/custom_models.py:70
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+#: websites/core/custom_models.py:73
+msgid "Date Joined"
+msgstr ""
+
+#: websites/core/custom_models.py:76 websites/core/models.py:23
+msgid "Modified Date"
+msgstr ""
+
+#: websites/core/custom_models.py:77
+msgid "Code Verify"
+msgstr ""
+
+#: websites/core/custom_models.py:80
+msgid "Anonymous User"
+msgstr ""
+
+#: websites/core/forms.py:27
+msgid "This field is required."
+msgstr "This field is required."
+
+#: websites/core/models.py:20
+msgid "Created Date"
+msgstr ""
+
+#: websites/core/models.py:149
+msgid "Image"
+msgstr ""
+
+#: websites/core/models.py:151
+msgid "Image Thumbnail"
+msgstr ""
+
+#: websites/core/models.py:162
+msgid "Apply Date"
+msgstr ""
+
+#: websites/core/models.py:163
+msgid "End Date"
+msgstr ""
+
+#: websites/core/models.py:244
 msgid "Feedback"
 msgstr ""
 
+#: websites/core/models.py:245
 msgid "Contact"
 msgstr ""
 
+#: websites/core/models.py:248
 msgid "No Process"
 msgstr ""
 
+#: websites/core/models.py:249
 msgid "Answered"
 msgstr ""
 
+#: websites/core/models.py:250
 msgid "Moved to related department"
 msgstr ""
 
+#: websites/core/models.py:259 websites/core/models.py:336
+msgid "Sent Date"
+msgstr ""
+
+#: websites/core/models.py:382
 msgid "Ticket transfer fee"
 msgstr ""
 
+#: websites/core/models.py:383
 msgid "Deposit fee"
 msgstr ""
 
+#: websites/core/pipeline.py:24
+msgid "Email is ready in system. Please choice another email."
+msgstr ""
+
+#: websites/core/pipeline.py:61
+msgid "Account is not active. Please contact support team."
+msgstr ""
+
+#: websites/main/custom_jwt.py:43 websites/main/custom_jwt.py:46
+msgid "Invalid token."
+msgstr ""

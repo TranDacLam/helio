@@ -8,6 +8,9 @@
 .checkbox-hot-advs {
 	padding: 10px;
 }
+p.title {
+	font-size: 34px;
+}
 a.pull-left {
 	color: #333333;
 }

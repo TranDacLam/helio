@@ -30,6 +30,9 @@ export class UserMultiselectComponent implements OnInit {
     @Output()
     save: EventEmitter<number[]> = new EventEmitter<number[]>();
 
+    is_button_left: boolean = false;
+    is_button_rigth: boolean = false;
+
     constructor() { }
 
     ngOnInit() {
@@ -64,6 +67,9 @@ export class UserMultiselectComponent implements OnInit {
                 });
                 return row;
             },
+            drawCallback: (setting) => {
+                this.checkSelectAllCheckboxLeft();
+            }
         }
 
         this.dtOptions_right = {
@@ -96,6 +102,9 @@ export class UserMultiselectComponent implements OnInit {
                     this.selectCheckboxRight(event);
                 });
                 return row;
+            },
+            drawCallback: (setting) => {
+                this.checkSelectAllCheckboxRight();
             }
         }
     }
@@ -108,13 +117,21 @@ export class UserMultiselectComponent implements OnInit {
         this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.rows().every( function () {
                 let row = this.node();
-                if( event.target.checked ) {
-                    $(row).addClass('selected');
-                } else {
-                    $(row).removeClass('selected');
-                }
-                $(row).find('input:checkbox').prop('checked', event.target.checked);
+                $(row).addClass('selected');
+                $(row).find('input:checkbox').prop('checked', true);
             });
+            this.is_button_left = true;
+        });
+    }
+
+    cancelSelectAllEventLeft(event){
+        this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.rows().every( function () {
+                let row = this.node();
+                $(row).removeClass('selected');
+                $(row).find('input:checkbox').prop('checked', false);
+            });
+            this.is_button_left = false;
         });
     }
 
@@ -126,13 +143,21 @@ export class UserMultiselectComponent implements OnInit {
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.rows().every( function () {
                 let row = this.node();
-                if( event.target.checked ) {
-                    $(row).addClass('selected');
-                } else {
-                    $(row).removeClass('selected');
-                }
-                $(row).find('input:checkbox').prop('checked', event.target.checked);
+                $(row).addClass('selected');
+                $(row).find('input:checkbox').prop('checked', true);
             });
+            this.is_button_rigth = true;
+        });
+    }
+
+    cancelSelectAllEventRight(event){
+        this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.rows().every( function () {
+                let row = this.node();
+                $(row).removeClass('selected');
+                $(row).find('input:checkbox').prop('checked', false);
+            });
+            this.is_button_rigth = false;
         });
     }
 
@@ -177,6 +202,9 @@ export class UserMultiselectComponent implements OnInit {
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
              dtInstance.rows.add(selected_temp).draw();
         });
+        $("#table_id_2 tr input:checkbox").prop('checked', false);
+        $("#table_id_2 tr").removeClass('selected');
+        $('#select-all-right').prop('checked', false);
     }
     /*
         Move all row is checked to left tatble
@@ -192,12 +220,56 @@ export class UserMultiselectComponent implements OnInit {
         this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
              dtInstance.rows.add(selected_temp).draw();
         });
+        $("#table_id_1 tr input:checkbox").prop('checked', false);
+        $("#table_id_1 tr").removeClass('selected');
+        $('#select-all-left').prop('checked', false);
     }
+
+    /*
+        Event select All Button on header table
+        @author: Lam 
+    */
+    selectAllPageLeft(event) {
+        if( event.target.checked ) {
+            $("#table_id_1 tr").addClass('selected');
+        } else {
+            $("#table_id_1 tr").removeClass('selected');
+        }
+        $("#table_id_1 tr input:checkbox").prop('checked', event.target.checked);
+    }
+
+    /*
+        Event select All Button on header table
+        @author: Lam 
+    */
+    selectAllPageRight(event) {
+        if( event.target.checked ) {
+            $("#table_id_2 tr").addClass('selected');
+        } else {
+            $("#table_id_2 tr").removeClass('selected');
+        }
+        $("#table_id_2 tr input:checkbox").prop('checked', event.target.checked);
+    }
+
+    // input checkall checked/unchecked
+    checkSelectAllCheckboxLeft() {
+        $('#select-all-left').prop('checked', $("#table_id_1 tr.row-data:not(.selected)").length === 0);
+    }
+
+    // input checkall checked/unchecked
+    checkSelectAllCheckboxRight() {
+        if(this.user_list_right){
+            $('#select-all-right').prop('checked', $("#table_id_2 tr.row-data:not(.selected)").length === 0);
+        }
+    }
+
 
     /*
         @author: diemnguyen
     */
     onSave(): void {
+        $('#select-all-left').prop('checked', false);
+        $('#select-all-right').prop('checked', false);
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
             this.save.emit(dtInstance.column(1).data().toArray());
         });

@@ -4,17 +4,17 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang chủ</a></li>
             <li class="breadcrumb-item"><a routerLink="/feedback-list">Phản hồi</a></li>
-            <li class="breadcrumb-item"><a routerLink="/feedback-detail">{{feedback?.name}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{feedback?.name}}</li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
-
+<div class="row edit-feedback text-center">
+    <p class="title">Chỉnh sửa phản hồi</p>
+</div>
 <div class=' row area-form-feedback' >
-    <div class='row edit-feedback'>
-    	<a class="pull-left title-feedback">Chỉnh sửa phản hồi</a>
-    </div>
     <div *ngIf='feedback'>
+        <div>{{ feedback.status }}</div>
         <form [formGroup]="feedbackForm" novalidate>
             <div class="row form-feedback">
                 <div class="col-md-8 ">
@@ -114,7 +114,7 @@
                         <div class="col-md-8">
                             <select class='form-control' name="status" 
                             formControlName="status">
-                                <option *ngFor="let status of status" [ngValue]="status" [selected]="status === feedback.status">
+                                <option *ngFor="let status of tus" [value]="status">
                                     {{status}}
                                 </option>
                             </select>
