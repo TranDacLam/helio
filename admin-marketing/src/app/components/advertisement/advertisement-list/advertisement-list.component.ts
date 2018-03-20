@@ -53,7 +53,7 @@ export class AdvertisementListComponent implements OnInit {
     ngOnInit() {
 
         // Call dataTable 
-        this.dtOptions = data_config(this.record).dtOptions;
+        this.dtOptions = data_config(this.record);
 
         // Call function get all adv
         this.getAllAdvertisement();

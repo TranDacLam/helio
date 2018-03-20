@@ -24,22 +24,22 @@
 	<div class="alert alert-success" *ngIf="message_result">
         {{message_result}}
     </div>
-	<table id="table-denomination" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
-		<thead>
-	      	<tr>
-	      		<th class='check-denomi'><input type="checkbox" id="allCheck" name="allCheckDeno" value="allCheckDeno"(change)="checkAllDeno($event)"/></th>
-	        	<th>Mệnh Giá Nạp Tiền</th>
-	      	</tr>
-    	</thead>
-    	<tbody>
-   			<tr *ngFor ="let denomination of denominations" id="delete{{denomination.id}}">
-   				<td><input type="checkbox" id={{denomination.id}}
-   					value={{denomination.id}} name="" [checked]="checkbox"
-   					(change)="checkItemChange($event, denomination)"/></td>
-        		<td>{{ denomination.denomination | number }}</td>
-   			</tr>
-    	</tbody>
-	</table>
+	<table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" *ngIf="denominations">
+        <thead>
+            <tr>
+                <th class='check-denomi'><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                <th>ID</th>
+                <th>Mệnh Giá Nạp Tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="row-data" *ngFor="let denomination of denominations">
+                <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                <td>{{ denomination.id }}</td>
+                <td>{{denomination.denomination | number}}</td>
+            </tr>
+        </tbody>
+    </table>
 	<hr>
 	<div class='row'>
 		<div class="col-md-3">
@@ -48,7 +48,7 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			{{deno_selected.length}} của {{denominations.length}} được chọn
+			{{length_selected}} của {{length_all}} được chọn
 			<button (click)="confirmDelete()" type="button" class="button-deno btn btn-danger">Thực hiện</button>
 		</div>
 	</div>
