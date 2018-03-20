@@ -20,19 +20,19 @@ msgstr ""
 
 #: templates/admin/login.html:26 templates/admin/login.html:71
 msgid "Log in"
-msgstr ""
+msgstr "Đăng nhập"
 
 #: templates/admin/login.html:31
 msgid "Please correct the error below."
-msgstr ""
+msgstr "Hãy sửa lỗi bên dưới"
 
 #: templates/admin/login.html:31
 msgid "Please correct the errors below."
-msgstr ""
+msgstr "Hãy sửa lỗi bên dưới"
 
 #: templates/admin/login.html:61
 msgid "Forgotten your password or username?"
-msgstr ""
+msgstr "Quên mật khẩu hoặc tài khoản"
 
 # END HELIO PHOTO
 # START FOOTER
@@ -868,7 +868,7 @@ msgstr ""
 
 #: websites/core/custom_models.py:76 websites/core/models.py:23
 msgid "Modified Date"
-msgstr ""
+msgstr "Ngày sửa"
 
 #: websites/core/custom_models.py:77
 msgid "Code Verify"
@@ -876,7 +876,7 @@ msgstr ""
 
 #: websites/core/custom_models.py:80
 msgid "Anonymous User"
-msgstr ""
+msgstr "Tài khoản khách"
 
 #: websites/core/forms.py:27
 msgid "This field is required."
@@ -884,11 +884,11 @@ msgstr "Trường này không được bỏ trống."
 
 #: websites/core/models.py:20
 msgid "Created Date"
-msgstr ""
+msgstr "Ngày tạo"
 
 #: websites/core/models.py:149
 msgid "Image"
-msgstr ""
+msgstr "Hình ảnh"
 
 #: websites/core/models.py:151
 msgid "Image Thumbnail"
@@ -896,11 +896,11 @@ msgstr ""
 
 #: websites/core/models.py:162
 msgid "Apply Date"
-msgstr ""
+msgstr "Ngày áp dụng"
 
 #: websites/core/models.py:163
 msgid "End Date"
-msgstr ""
+msgstr "Ngày kết thúc"
 
 #: websites/core/models.py:244
 msgid "Feedback"
