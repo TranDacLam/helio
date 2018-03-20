@@ -16,7 +16,7 @@ import { PromotionLabelService } from '../../../shared/services/promotion-label.
 import { DatePipe } from '@angular/common';
 import { DateValidators } from './../../../shared/validators/date-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
-
+import { ToastrService } from 'ngx-toastr';
 import { env } from '../../../../environments/environment';
 import * as moment from 'moment';
 
@@ -61,7 +61,8 @@ export class PromotionFormComponent implements OnInit {
         private location: Location,
         private router: Router,
         private route: ActivatedRoute,
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
+        private toastr: ToastrService
     ) {
         this.api_domain = env.api_domain_root;
     }
@@ -132,7 +133,7 @@ export class PromotionFormComponent implements OnInit {
                 this.promotionTypes = data;
             },
             (error) => {
-                this.router.navigate(['/error']);
+                this.router.navigate(['/error', { message: error.message}]);
             }
         );
     }
@@ -147,7 +148,7 @@ export class PromotionFormComponent implements OnInit {
                 this.promotionLabels = data;
             },
             (error) => {
-                this.router.navigate(['/error']);
+                this.router.navigate(['/error', { message: error.message}]);
             }
         );
     }
@@ -191,7 +192,8 @@ export class PromotionFormComponent implements OnInit {
                 this.promotionService.updatePromotion(promotionFormData, this.promotion.id, this.lang).subscribe(
                     (data) => {
                         // Navigate to promotion page where success
-                        that.router.navigate(['/promotions', {'action': 'Sửa "', 'promotion_name': this.promotionForm.value['name']}]);
+                        this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
+                        that.router.navigate(['/promotions']);
                     }, 
                     (error) => {
                         if(error.code === 400){
@@ -205,7 +207,8 @@ export class PromotionFormComponent implements OnInit {
                 this.promotionService.savePromotion(promotionFormData, this.lang).subscribe(
                     (data) => {
                         // Navigate to promotion page where success
-                        that.router.navigate(['/promotions', {'action': 'Tạo mới "', 'promotion_name': this.promotionForm.value['name']}]);
+                        this.toastr.success(`Thêm mới "${this.promotionForm.value.name}" thành công`);
+                        that.router.navigate(['/promotions']);
                     }, 
                     (error) => {
                         if(error.code === 400){
@@ -246,10 +249,11 @@ export class PromotionFormComponent implements OnInit {
                         // Call service delete promotion by id
                         that.promotionService.deletePromotionById(id, that.lang).subscribe(
                             (data) => {
-                                that.router.navigate(['/promotions', {'action': 'Xóa "', 'promotion_name': that.promotion.name}]);
+                                that.toastr.success(`Xóa "${that.promotion.name}" thành công`);
+                                that.router.navigate(['/promotions']);
                             }, 
                             (error) => {
-                                that.router.navigate(['/error']);
+                                that.router.navigate(['/error', { message: error.message}]);
                             });
                     }
                 }

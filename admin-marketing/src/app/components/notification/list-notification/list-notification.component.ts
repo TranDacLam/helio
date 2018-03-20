@@ -71,7 +71,7 @@ export class ListNotificationComponent implements OnInit {
                 this.length_all = this.notifications.length;
             },
             (error) => {
-                this.router.navigate(['/error']);
+                this.router.navigate(['/error'], { message: error.message});
             }
         );
     }
