@@ -947,7 +947,6 @@ msgstr "Role không tồn tại"
 #: websites/api_admin/views.py:2358
 msgid "Not Found users."
 msgstr "User không tồn tại"
->>>>>>> develop
 
 #: websites/config/setting_api.py:28 websites/config/setting_develop.py:25
 #: websites/config/setting_local.py:26 websites/config/setting_production.py:28
