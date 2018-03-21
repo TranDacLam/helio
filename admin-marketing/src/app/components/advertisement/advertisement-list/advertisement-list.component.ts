@@ -31,6 +31,7 @@ export class AdvertisementListComponent implements OnInit {
     length_selected: Number = 0;
 
     record: string = "Quảng Cáo";
+    lang: string = 'vi';
     
 	// Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
@@ -40,7 +41,7 @@ export class AdvertisementListComponent implements OnInit {
         Using trigger becase fetching the list of feedbacks can be quite long
         thus we ensure the data is fetched before rensering
     */ 
-    dtTrigger: Subject<any> = new Subject();
+    // dtTrigger: Subject<any> = new Subject();
 
     constructor(
         private advertisementService: AdvertisementService,
@@ -80,11 +81,11 @@ export class AdvertisementListComponent implements OnInit {
         @author: TrangLe 
     */
   	getAllAdvertisement() {
-  		this.advertisementService.getAllAdvertisement().subscribe(
+        this.advs = null;
+  		this.advertisementService.getAllAdvertisement(this.lang).subscribe(
   			(result) => {
   				this.advs = result;
                 this.length_all = this.advs.length;
-  				this.dtTrigger.next();
   			},
             (error) => {
                 this.router.navigate(['/error', { message: error.json().message }])
@@ -96,7 +97,7 @@ export class AdvertisementListComponent implements OnInit {
         Event select checbox on row
             Case1: all row are checked then checkbox all on header is checked
             Case1: any row is not checked then checkbox all on header is not checked
-        @author: Lam 
+        @author: TrangLe 
     */
     selectCheckbox(event) {   
         $(event.target).closest( "tr" ).toggleClass( "selected" );
@@ -111,7 +112,7 @@ export class AdvertisementListComponent implements OnInit {
     }
     /*
         Event select All Button on header table
-        @author: Lam 
+        @author: TrangLe 
     */
     selectAllEvent(event) {
         if( event.target.checked ) {
@@ -125,7 +126,7 @@ export class AdvertisementListComponent implements OnInit {
 
     /*
         Function getLengthSelected(): draw length selected
-        @author: Lam
+        @author: TrangLe
     */
     getLengthSelected(){
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -182,9 +183,9 @@ export class AdvertisementListComponent implements OnInit {
             let list_id_selected = get_list_id.map(Number);
 
             // Call API remove list promotion selected
-            this.advertisementService.deleteAllAdvsSelected(list_id_selected).subscribe(
+            this.advertisementService.deleteAllAdvsSelected(list_id_selected, this.lang).subscribe(
                 (data) => {
-                    this.toastr.success(`Xóa ${this.length_selected} user thành công`);
+                    this.toastr.success(`Xóa ${this.length_selected} quảng cáo thành công`);
 
                     // Remove all promotion selected on UI
                     dtInstance.rows('.selected').remove().draw();
@@ -197,4 +198,35 @@ export class AdvertisementListComponent implements OnInit {
                 });
             });
     }
+
+     /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: TrangLe
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.lang = 'vi';
+            this.getAllAdvertisement();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: TrangLe
+    */
+    changeLangEN(){
+        if(this.lang === 'vi'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.lang = 'en';
+            this.getAllAdvertisement();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+  
 }

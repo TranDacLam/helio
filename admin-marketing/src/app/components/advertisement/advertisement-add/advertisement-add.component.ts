@@ -28,6 +28,7 @@ export class AdvertisementAddComponent implements OnInit {
    	errorMessage: string = "";
    	is_show = false;
     advForm: FormGroup;
+    lang: string = 'vi';
 
    	ngOnInit() {
        this.createForm();
@@ -47,7 +48,7 @@ export class AdvertisementAddComponent implements OnInit {
         if( this.advForm.invalid) {
             ValidateSubmit.validateAllFormFields(this.advForm);
         } else {
-       		this.advertisementService.addAdvertisement( this.advForm.value ).subscribe(
+       		this.advertisementService.addAdvertisement( this.advForm.value, this.lang ).subscribe(
     			(resultAdv) => {
     				this.advs.push(resultAdv);
                     this.toastr.success(`Thêm ${this.advForm.value['name']} thành công`);

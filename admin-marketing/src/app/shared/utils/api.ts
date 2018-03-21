@@ -22,7 +22,7 @@ export const api = {
 
     feedback: env.api_domain + 'feedback/',
 
-    advertisement: env.api_domain + 'advertisement/',
+    advertisement:'advertisement/',
 
     denomination: env.api_domain + 'denomination/',
 
