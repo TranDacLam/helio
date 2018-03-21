@@ -12,13 +12,6 @@
 <div class="row text-center">
     <h1 class="h1-title">CHI TIẾT KHUYÊN MÃI</h1>
 </div>
-<div *ngIf="message_result" class="row">
-    <div class="col-md-12">
-        <div *ngIf="message_result" class="alert alert-success">
-            {{ message_result }}
-        </div>
-    </div>
-</div>
 <div class="row mb-20 custom-title"  *ngIf="promotion">
     <div class="col-sm-6">
         <a class="btn custom-button mb-20" routerLink="/promotions">
@@ -45,8 +38,8 @@
             <i class="fa fas fa-plus icon-button"></i>
             TẠO THÔNG BÁO CHO KHUYẾN MÃI
         </a>
-        <a *ngIf="notification_id" class="btn custom-button btn-block" [routerLink]="['/notification/edit/', notification_id, {lang: lang}]">
-            <i class="fa fas fa-pencil-square-oicon-button"></i>
+        <a *ngIf="notification_id" class="btn custom-button btn-block" [routerLink]="['/notification/edit/', notification_id, {promotion: promotion.id, lang: lang}]">
+            <i class="fa fas fa-pencil-square-o icon-button"></i>
             CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI
         </a>
         <a class="btn custom-button btn-block" [routerLink]="['/promotions/report/', promotion.id, {lang: lang}]">TỔNG HỢP TRIỂN KHAI KHUYẾN MÃI</a>

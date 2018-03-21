@@ -8,6 +8,7 @@ import { CategoryNotification } from '../../../shared/class/category-notificatio
 import { NotificationService } from '../../../shared/services/notification.service';
 import { CategoryNotificationService } from '../../../shared/services/category-notification.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 import { env } from '../../../../environments/environment';
 
@@ -59,7 +60,8 @@ export class FormNotificationComponent implements OnInit {
         private fb: FormBuilder,
         private location: Location,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private toastr: ToastrService
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -90,7 +92,7 @@ export class FormNotificationComponent implements OnInit {
             is_QR_code: [this.noti.is_QR_code ? this.noti.is_QR_code : false],
             location: [this.noti.location, [Validators.maxLength(500)]],
             is_clear_image: [false],
-            promotion_id: [this.promotion_id ? this.promotion_id : null]
+            promotion: [this.promotion_id ? this.promotion_id : null]
         });
     }
 
@@ -104,7 +106,7 @@ export class FormNotificationComponent implements OnInit {
                 this.categories = data.message;
             },
             (error) => {
-                this.errorMessage = error.message; 
+                this.router.navigate(['/error', { message: error.message}]);
             }
         );
     }
@@ -147,7 +149,12 @@ export class FormNotificationComponent implements OnInit {
             if(this.type_http == 'post'){
                 this.notificationService.addNoti(noti_form_data, this.lang).subscribe(
                     (data) => {
-                        this.router.navigate(['/notification/list', { message_post: value_form.subject}]);
+                        this.toastr.success(`Thêm mới "${value_form.subject}" thành công`);
+                        if(this.promotion_id){
+                            this.router.navigate(['/notification/detail/', data.id, {lang: this.lang}]);
+                        }else{
+                            this.router.navigate(['/notification/list']);
+                        }
                     },
                     (error) => {
                         if(error.code === 400){
@@ -166,10 +173,16 @@ export class FormNotificationComponent implements OnInit {
                         (data) => {
                             this.noti = data;
                             if(this.type_http == "put"){
-                                this.router.navigate(['/notification/list', { message_put: value_form.subject}]);
+                                this.toastr.success(`Chỉnh sửa "${value_form.subject}" thành công`);
+                                if(this.promotion_id){
+                                    this.router.navigate(['/notification/detail/', data.id, {lang: this.lang}]);
+                                }else{
+                                    this.router.navigate(['/notification/list']);
+                                }
                             }else if(this.type_http == 'put_popup'){
                                 this.getNotification();
                                 $('#UpdateNoti').modal('toggle');
+                                this.toastr.success(`Chỉnh sửa "${value_form.subject}" thành công`);
                             }
                         },
                         (error) => {
@@ -234,7 +247,8 @@ export class FormNotificationComponent implements OnInit {
         const id = this.noti.id;
         this.notificationService.onDelNoti(id, this.lang).subscribe(
             (data) => {
-                this.router.navigate(['/notification/list', { message_del: 'success'}]);
+                this.toastr.success(`Xóa "${this.formNotification.value.subject}" thành công`);
+                this.router.navigate(['/notification/list']);
             },
             (error) => {
                  this.router.navigate(['/error', { message: error.message}]);

@@ -30,10 +30,10 @@
 </div>
 <div class="row multiselect_user">
     <div class="col-md-5 datatable-content">
-        <table datatable  [dtOptions]="dtOptions_left"  [dtTrigger]="dtTrigger_left" class="row-border hover">
+        <table datatable  [dtOptions]="dtOptions_left"  [dtTrigger]="dtTrigger_left" class="row-border hover" id="table_id_1">
             <thead>
-                <tr>
-                    <th><input type="checkbox" name="select_all_left" id="select-all-left" (change)="selectAllEventLeft($event);"/></th>
+                <tr class="title-row">
+                    <th><input type="checkbox" name="select_all_left" id="select-all-left" (change)="selectAllPageLeft($event);"/></th>
                     <th>Username</th>
                     <th>Họ Và Tên</th>
                     <th>Ngày Sinh</th>
@@ -54,18 +54,18 @@
                 </tr>
             </tbody>
         </table>
-        <button class="btn btn-primary pull-right">CHỌN TẤT CẢ</button>
-
+        <button *ngIf="!check_all_left" class="btn btn-primary pull-right" (click)="selectAllEventLeft(true);" >CHỌN TẤT CẢ</button>
+        <button *ngIf="check_all_left" class="btn btn-primary pull-right" (click)="selectAllEventLeft(false);" >XOÁ TẤT CẢ</button>
     </div>
     <div class="col-md-2 button-move">
         <button class="btn btn-danger move_item" (click)="move_right()"> <i class="fa fa-long-arrow-right" aria-hidden="true"></i> </button>
         <button class="btn btn-danger move_item" (click)="move_left()"> <i class="fa fa-long-arrow-left" aria-hidden="true"></i> </button>
     </div>
     <div class="col-md-5 datatable-content">
-        <table id='table_right' datatable [dtOptions]="dtOptions_right" [dtTrigger]="dtTrigger_right"  class="row-border hover">
+        <table id='table_id_2' datatable [dtOptions]="dtOptions_right" [dtTrigger]="dtTrigger_right"  class="row-border hover">
             <thead>
                 <tr class="title-row">
-                    <th><input type="checkbox" name="select_all_right" id="select-all-right" (change)="selectAllEventRight($event);"/></th>
+                    <th><input type="checkbox" name="select_all_right" id="select-all-right" (change)="selectAllPageRight($event);"/></th>
                     <th>Username</th>
                     <th>Họ Và Tên</th>
                     <th>Ngày Sinh</th>
@@ -87,8 +87,9 @@
             </tbody>
         </table>
         <div class="pull-right">
-            <button class="btn btn-primary"  >CHỌN TẤT CẢ</button>
-            <button class="btn btn-success" (click)="setRoleUser()" >LƯU</button>
+            <button *ngIf="!check_all_right" class="btn btn-primary " (click)="selectAllEventRight(true);" >CHỌN TẤT CẢ</button>
+            <button *ngIf="check_all_right" class="btn btn-primary" (click)="selectAllEventRight(false);" >XOÁ TẤT CẢ</button>
+            <button class="btn btn-success btn-save pull-right" (click)="setRoleUser()" >LƯU</button>
         </div>
     </div>
 </div>

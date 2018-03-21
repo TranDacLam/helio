@@ -27,6 +27,10 @@ export class UserMultiselectComponent implements OnInit {
     @Input('user_list_right') 
     user_list_right: User[] = [];
 
+    @Input('promotion_id') 
+    promotion_id: number;
+
+
     @Output()
     save: EventEmitter<number[]> = new EventEmitter<number[]>();
 
@@ -38,11 +42,17 @@ export class UserMultiselectComponent implements OnInit {
     ngOnInit() {
         this.dtOptions_left = {
             pagingType: "full_numbers",
-            columnDefs: [{
-                orderable: false,
-                className: "dt-center",
-                targets: 0
-            }], 
+            columnDefs: [
+                {
+                    orderable: false,
+                    className: "dt-center",
+                    targets: 0
+                },
+                {
+                    targets: 1,
+                    visible: false
+                }
+            ], 
             order: [[ 1, 'asc' ]],
             scrollX: true,
             scrollY: "400px",
@@ -51,7 +61,7 @@ export class UserMultiselectComponent implements OnInit {
                 sSearch: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
                 lengthMenu: "Hiển thị _MENU_ dòng",
-                sZeroRecords:  " ",
+                sZeroRecords:  "Không có user nào phù hợp để hiển thị",
                 info: "Hiển thị _START_ đến _END_ của _TOTAL_",
                 infoEmpty: "Hiển thị 0 đến 0 của 0",
                 paginate: {
@@ -74,11 +84,17 @@ export class UserMultiselectComponent implements OnInit {
 
         this.dtOptions_right = {
             pagingType: "full_numbers",
-            columnDefs: [{
-                orderable: false,
-                className: "dt-center",
-                targets: 0
-            }], 
+            columnDefs: [
+                {
+                    orderable: false,
+                    className: "dt-center",
+                    targets: 0
+                },
+                {
+                    targets: 1,
+                    visible: false
+                }
+            ], 
             order: [[ 1, 'asc' ]],
             scrollX: true,
             scrollY: "400px",
@@ -87,7 +103,7 @@ export class UserMultiselectComponent implements OnInit {
                 sSearch: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
                 lengthMenu: "Hiển thị _MENU_ dòng",
-                sZeroRecords:  " ",
+                sZeroRecords:  "Không có user nào phù hợp để hiển thị",
                 info: "Hiển thị _START_ đến _END_ của _TOTAL_",
                 infoEmpty: "Hiển thị 0 đến 0 của 0",
                 paginate: {
@@ -121,6 +137,7 @@ export class UserMultiselectComponent implements OnInit {
                 $(row).find('input:checkbox').prop('checked', true);
             });
             this.is_button_left = true;
+            $('#select-all-left').prop('checked', true);
         });
     }
 
@@ -132,6 +149,7 @@ export class UserMultiselectComponent implements OnInit {
                 $(row).find('input:checkbox').prop('checked', false);
             });
             this.is_button_left = false;
+            $('#select-all-left').prop('checked', false);
         });
     }
 
@@ -147,6 +165,9 @@ export class UserMultiselectComponent implements OnInit {
                 $(row).find('input:checkbox').prop('checked', true);
             });
             this.is_button_rigth = true;
+            if($('#table_id_2 tr').hasClass('selected')){
+                $('#select-all-right').prop('checked', true);
+            }
         });
     }
 
@@ -158,6 +179,7 @@ export class UserMultiselectComponent implements OnInit {
                 $(row).find('input:checkbox').prop('checked', false);
             });
             this.is_button_rigth = false;
+            $('#select-all-right').prop('checked', false);
         });
     }
 
@@ -203,8 +225,9 @@ export class UserMultiselectComponent implements OnInit {
              dtInstance.rows.add(selected_temp).draw();
         });
         $("#table_id_2 tr input:checkbox").prop('checked', false);
-        $("#table_id_2 tr").removeClass('selected');
-        $('#select-all-right').prop('checked', false);
+        this.is_button_left = false;
+        this.is_button_rigth = false;
+
     }
     /*
         Move all row is checked to left tatble
@@ -221,8 +244,8 @@ export class UserMultiselectComponent implements OnInit {
              dtInstance.rows.add(selected_temp).draw();
         });
         $("#table_id_1 tr input:checkbox").prop('checked', false);
-        $("#table_id_1 tr").removeClass('selected');
-        $('#select-all-left').prop('checked', false);
+        this.is_button_left = false;
+        this.is_button_rigth = false;
     }
 
     /*
@@ -253,13 +276,13 @@ export class UserMultiselectComponent implements OnInit {
 
     // input checkall checked/unchecked
     checkSelectAllCheckboxLeft() {
-        $('#select-all-left').prop('checked', $("#table_id_1 tr.row-data:not(.selected)").length === 0);
+        $('#select-all-left').prop('checked', $("#table_id_1 tbody tr:not(.selected)").length === 0);
     }
 
     // input checkall checked/unchecked
     checkSelectAllCheckboxRight() {
         if(this.user_list_right){
-            $('#select-all-right').prop('checked', $("#table_id_2 tr.row-data:not(.selected)").length === 0);
+            $('#select-all-right').prop('checked', $("#table_id_2 tbody tr:not(.selected)").length === 0);
         }
     }
 
@@ -270,6 +293,8 @@ export class UserMultiselectComponent implements OnInit {
     onSave(): void {
         $('#select-all-left').prop('checked', false);
         $('#select-all-right').prop('checked', false);
+        this.is_button_left = false;
+        this.is_button_rigth = false;
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
             this.save.emit(dtInstance.column(1).data().toArray());
         });

@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PromotionService } from '../../../shared/services/promotion.service';
 import { Promotion } from '../../../shared/class/promotion';
 import * as datatable_config from '../../../shared/commons/datatable_config';
-
+import { ToastrService } from 'ngx-toastr';
 import { env } from '../../../../environments/environment';
 
 declare var bootbox:any;
@@ -53,7 +53,8 @@ export class ListPromotionComponent implements OnInit {
     constructor(
         private promotionService: PromotionService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private toastr: ToastrService
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -73,13 +74,6 @@ export class ListPromotionComponent implements OnInit {
             ]
         };
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
-
-        this.route.params.subscribe(params => {
-            if (params && params.action) {
-                this.message_result = params.action + params.promotion_name + '" thành công.';
-            }
-        });
-        
     }
 
     /*
@@ -93,7 +87,7 @@ export class ListPromotionComponent implements OnInit {
                 this.length_all = data.length;
             }, 
             (error) => {
-                this.router.navigate(['/error']);
+                this.router.navigate(['/error', {message: error.message}]);
             });
     }
 
@@ -142,7 +136,7 @@ export class ListPromotionComponent implements OnInit {
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.length_selected + " khuyến mãi đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " khuyến mãi đã chọn?",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -159,7 +153,7 @@ export class ListPromotionComponent implements OnInit {
             });
 
         } else  {
-            bootbox.alert("Vui lòng chọn khuyến mãi cần xóa");
+            this.toastr.warning(`Vui lòng chọn khuyến mãi cần xóa`);
         }
         
     }
@@ -194,7 +188,7 @@ export class ListPromotionComponent implements OnInit {
             this.promotionService.deletePromotionList(list_id_selected, this.lang).subscribe(
                 (data) => {
                     if (data.status == 204) {
-                        this.message_result = "Xóa "+ this.length_selected + " khuyến mãi thành công"
+                        this.toastr.success(`Xóa ${this.length_selected} khuyến mãi thành công`);
 
                         // Remove all promotion selected on UI
                         dtInstance.rows('.selected').remove().draw();
@@ -202,11 +196,11 @@ export class ListPromotionComponent implements OnInit {
                         this.length_all =  dtInstance.rows().count();
                         this.length_selected = 0;
                     } else {
-                        this.router.navigate(['/error']);
+                        this.router.navigate(['/error', { message: data.message}]);
                     }
                 }, 
                 (error) => {
-                    this.router.navigate(['/error']);
+                    this.router.navigate(['/error', { message: error.message}]);
                 });
         });
     }

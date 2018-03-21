@@ -15,6 +15,7 @@ export class EditNotificationComponent implements OnInit {
     type_http = "put"; // type http to form notification component 
 
     lang = 'vi';
+    promotion_id: number; // get id promotion
 
     constructor(
         private notificationService: NotificationService,
@@ -26,6 +27,9 @@ export class EditNotificationComponent implements OnInit {
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;
+            }
+            if(params.promotion){
+                this.promotion_id = +params.promotion;
             }
         });
         this.getNotification();

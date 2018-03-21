@@ -15,7 +15,7 @@
     <div class="col-xs-12 col-sm-12">
         <a class="btn custom-button pull-right" [routerLink]="['/promotion-label/add/', {lang: lang}]">
             <i class="fa fas fa-plus icon-button"></i>
-            TẠO MỚI NHÃN KHUYẾN MÃI
+            THÊM MỚI NHÃN KHUYẾN MÃI
         </a>
     </div>
 </div>
@@ -58,7 +58,7 @@
             <option value="1">Xóa các phản hồi được chọn</option>
         </select>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 dels-list">
         {{ length_selected }} của {{ length_all }} được chọn 
         <button class="btn btn-danger" (click)="deletePormotionLabelEvent()">Thực hiện</button>
     </div>

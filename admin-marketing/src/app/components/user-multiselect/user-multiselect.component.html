@@ -4,7 +4,7 @@
             <thead>
                 <tr>
                     <th><input type="checkbox" name="select_all_left" id="select-all-left" (change)="selectAllPageLeft($event);"/></th>
-                    <th>Username</th>
+                    <th>ID</th>
                     <th>Họ Và Tên</th>
                     <th>Ngày Sinh</th>
                     <th>Email</th>
@@ -34,7 +34,7 @@
             <thead>
                 <tr>
                     <th><input type="checkbox" name="select_all_right" id="select-all-right" (change)="selectAllPageRight($event);"/></th>
-                    <th>Username</th>
+                    <th>ID</th>
                     <th>Họ Và Tên</th>
                     <th>Ngày Sinh</th>
                     <th>Email</th>
@@ -56,7 +56,7 @@
         </table>
     </div>
 </div>
-<div class="row multiselect_footer">
+<div class="row multiselect_footer" *ngIf="!promotion_id">
     <div class="col-xs-6 col-md-6">
         <button class="btn button-selectall pull-right" *ngIf="!is_button_left" (click)="selectAllEventLeft($event)">CHỌN TẤT CẢ</button>
         <button class="btn button-selectall pull-right" *ngIf="is_button_left" (click)="cancelSelectAllEventLeft($event)">BỎ CHỌN TẤT CẢ</button>

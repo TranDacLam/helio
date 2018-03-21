@@ -7,6 +7,7 @@ import { HotService } from '../../../shared/services/hot.service';
 import { DateValidators } from './../../../shared/validators/date-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { env } from '../../../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -43,7 +44,8 @@ export class FormHotComponent implements OnInit {
         private fb: FormBuilder,
         private location: Location,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private toastr: ToastrService
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -105,7 +107,8 @@ export class FormHotComponent implements OnInit {
             if(!this.hot.id){
                 this.hotService.addHot(hot_form_data, this.lang).subscribe(
                     (data) => {
-                        this.router.navigate(['/hot/list', { message_post: value_form.name}]);
+                        this.toastr.success(`Thêm mới "${value_form.name}" thành công`);
+                        this.router.navigate(['/hot/list']);
                     },
                     (error) => {
                         if(error.code === 400){
@@ -122,7 +125,8 @@ export class FormHotComponent implements OnInit {
                 }else{
                     this.hotService.updateHot(hot_form_data, this.hot.id, this.lang).subscribe(
                         (data) => {
-                            this.router.navigate(['/hot/list', { message_put: value_form.name}]);
+                            this.toastr.success(`Chỉnh sửa "${value_form.name}" thành công`);
+                            this.router.navigate(['/hot/list']);
                         },
                         (error) => {
                             if(error.code === 400){
@@ -173,7 +177,11 @@ export class FormHotComponent implements OnInit {
         const id = this.hot.id;
         this.hotService.onDelHot(id, this.lang).subscribe(
             (data) => {
-                this.router.navigate(['/hot/list', { message_del: 'success'}]);
+                this.toastr.success(`Xóa "${this.formHot.value.name}" thành công`);
+                this.router.navigate(['/hot/list']);
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
             }
         );
     }

@@ -297,9 +297,9 @@ class EventSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data['start_date'] > data['end_date']:
-            raise serializers.ValidationError("Start day is before than End day")
+            raise serializers.ValidationError(_("Start day is before than End day"))
         if data['start_date'] == data['end_date'] and data['start_time'] >= data['end_time']:
-            raise serializers.ValidationError("Start time is before than End time")
+            raise serializers.ValidationError(_("Start time is before than End time"))
         return data
     # override mehod update because name field is unique
     def update(self, instance, validated_data):

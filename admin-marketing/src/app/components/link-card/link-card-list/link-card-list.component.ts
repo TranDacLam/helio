@@ -65,7 +65,6 @@ export class LinkCardListComponent implements OnInit {
             ]
         };
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
-
         this.getAllLinkCards();
   	}
 
