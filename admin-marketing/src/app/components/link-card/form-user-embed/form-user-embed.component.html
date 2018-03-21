@@ -41,7 +41,7 @@
                         <label class="col-form-label form-check-label">Email</label>
                     </div>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" formControlName="email"
+                        <input type="text" class="form-control" formControlName="email" (input)="embedForm(appForm.value.email)"
                         [attr.disabled]="dis_input_embed.email ? 'disabled' : null" [class.error_user]="status_error.email"/>
                         <show-error-valid [control]="embedForm.get('email')"></show-error-valid>
                     </div>

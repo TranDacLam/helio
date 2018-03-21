@@ -71,6 +71,7 @@ export class UserMultiselectComponent implements OnInit {
                     'previous': "Trước"
                 }
             },
+            "sDom": "<'row'<'col-md-12'f><'col-md-12 info_search'><'col-md-12'l>>rt<'row'<'col-md-12'i><'col-md-12'p>>",
             rowCallback: (row: Node, data: any[] | Object, index: number) => {
                 $('td', row).find('input:checkbox').off().bind('change', event => {
                     this.selectCheckboxLeft(event);
@@ -81,7 +82,7 @@ export class UserMultiselectComponent implements OnInit {
                 this.checkSelectAllCheckboxLeft();
             }
         }
-
+        
         this.dtOptions_right = {
             pagingType: "full_numbers",
             columnDefs: [
@@ -113,6 +114,7 @@ export class UserMultiselectComponent implements OnInit {
                     'previous': "Trước"
                 }
             },
+            "sDom": "<'row'<'col-md-12'f><'col-md-12 info_search'><'col-md-12'l>>rt<'row'<'col-md-12'i><'col-md-12'p>>",
             rowCallback: (row: Node, data: any[] | Object, index: number) => {
                 $('td', row).find('input:checkbox').off().bind('change', () => {
                     this.selectCheckboxRight(event);
@@ -123,11 +125,15 @@ export class UserMultiselectComponent implements OnInit {
                 this.checkSelectAllCheckboxRight();
             }
         }
+
+        setTimeout(()=>{    //<<<---    using ()=> syntax
+            $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
+        },400);
     }
 
     /*
-        Event select All Button on header table
-        @author: diemnguyen 
+        Event Button "Chon Tat Ca" select all user left
+        @author: Lam 
     */
     selectAllEventLeft(event) {
         this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -141,6 +147,10 @@ export class UserMultiselectComponent implements OnInit {
         });
     }
 
+    /*
+        Event Button "Bo Chon Tat Ca" select all user left
+        @author: Lam 
+    */
     cancelSelectAllEventLeft(event){
         this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.rows().every( function () {
@@ -154,8 +164,8 @@ export class UserMultiselectComponent implements OnInit {
     }
 
     /*
-        Event select All Button on header table
-        @author: diemnguyen 
+        Event Button "Chon Tat Ca" select all user right
+        @author: Lam 
     */
     selectAllEventRight(event) {
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -171,6 +181,10 @@ export class UserMultiselectComponent implements OnInit {
         });
     }
 
+    /*
+        Event Button "Bo Chon Tat Ca" select all user right
+        @author: Lam 
+    */
     cancelSelectAllEventRight(event){
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.rows().every( function () {

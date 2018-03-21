@@ -88,7 +88,7 @@ export class PromotionService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(xhr.response);
+                        observer.error(JSON.parse(xhr.response));
                     }
                 }
             }
@@ -116,7 +116,7 @@ export class PromotionService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(xhr.response);
+                        observer.error(JSON.parse(xhr.response));
                     }
                 }
             }

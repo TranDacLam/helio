@@ -183,7 +183,7 @@ export class ListPromotionComponent implements OnInit {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             // Get list promotion id selected
             let list_id_selected = dtInstance.cells('.selected', 1).data().toArray();
-            console.log(list_id_selected);
+
             // Call API remove list promotion selected
             this.promotionService.deletePromotionList(list_id_selected, this.lang).subscribe(
                 (data) => {

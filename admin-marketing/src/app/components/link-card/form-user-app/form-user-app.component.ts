@@ -109,6 +109,14 @@ export class FormUserAppComponent implements OnInit {
     }
 
     /*
+        Function stripEmail(): remove space
+        Author: Lam
+    */
+    stripEmail(value){
+        this.appForm.get('email').setValue(value.replace(/ /g,""));
+    }
+
+    /*
         Function onSubmitApp(): call service function updateUserApp() to update user app
         Author: Lam
     */

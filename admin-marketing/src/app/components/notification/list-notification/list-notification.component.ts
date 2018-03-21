@@ -90,7 +90,11 @@ export class ListNotificationComponent implements OnInit {
 
     // input checkall checked/unchecked
     checkSelectAllCheckbox() {
-        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        if($('#table_id tbody tr').hasClass('selected')){
+            $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").not("#table_id .disabled_checkbox").length == 0);
+        }else{
+            $('#select-all').prop('checked', false);
+        }
         this.getLengthSelected();
     }
     /*
@@ -100,10 +104,13 @@ export class ListNotificationComponent implements OnInit {
     selectAllEvent(event) {
         if( event.target.checked ) {
             $("#table_id tr").addClass('selected');
+            if($("#table_id tr").hasClass('disabled_checkbox')){
+                $("#table_id .disabled_checkbox").removeClass('selected');
+            }
         } else {
             $("#table_id tr").removeClass('selected');
         }
-        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        $("#table_id tr input:checkbox").not("#table_id .disabled_checkbox input:checkbox").prop('checked', event.target.checked);
         this.getLengthSelected();
     }
 
