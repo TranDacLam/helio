@@ -388,6 +388,9 @@ class Fee(DateTimeModel):
         max_length=50, choices=POSITION_TYPE, default="tickets")
     is_apply = models.BooleanField('Is Apply', default=False)
 
+    class Meta:
+        unique_together = ('fee', 'fee_type', 'position')
+
     def __str__(self):
         return '%s' % (self.fee)
 

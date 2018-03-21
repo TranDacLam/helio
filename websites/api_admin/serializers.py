@@ -244,7 +244,7 @@ class UserEmbedSerializer(serializers.Serializer):
 class FeeSerializer(serializers.ModelSerializer):
     fee = serializers.IntegerField(required=True, max_value = 2147483647)
     fee_type = serializers.CharField(required=True)
-    position = serializers.CharField(source='get_position_display')
+    # position = serializers.CharField(source='get_position_display')
 
     class Meta:
         model = Fee
@@ -254,9 +254,9 @@ class FeeSerializer(serializers.ModelSerializer):
         fee = Fee.objects.create( **validated_data )
         return fee
         
-    def validate(self, data):
-        data['position'] = data.pop('get_position_display')
-        return data
+    # def validate(self, data):
+    #     data['position'] = data.pop('get_position_display')
+    #     return data
 
 
 class BannerSerializer(serializers.ModelSerializer):
