@@ -8,11 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2018-03-20 11:34+0700\n"
-=======
 "POT-Creation-Date: 2018-03-20 22:57+0700\n"
->>>>>>> develop
+
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -842,7 +839,6 @@ msgstr "Mệnh giá nạp tiền này đã tồn tại."
 msgid "Birthday must less then today"
 msgstr "Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại."
 
-<<<<<<< HEAD
 #: websites/api_admin/serializers.py:439 websites/api_admin/serializers.py:475
 
 #| msgid "This Hot Ads is already taken"
@@ -869,7 +865,7 @@ msgstr "Chỉ có System Admin mới được quyền thay đổi được mật
 #: websites/api_admin/views.py:2069
 msgid "Just System Admin accept delete"
 msgstr "Chỉ có System Admin mới được quyền xóa"
-=======
+
 #: websites/api_admin/serializers.py:295
 msgid "Start day is before than End day"
 msgstr "Ngày bắt đầu phải trước hơn ngày kết thúc."
@@ -951,7 +947,6 @@ msgstr "Role không tồn tại"
 #: websites/api_admin/views.py:2358
 msgid "Not Found users."
 msgstr "User không tồn tại"
->>>>>>> develop
 
 #: websites/config/setting_api.py:28 websites/config/setting_develop.py:25
 #: websites/config/setting_local.py:26 websites/config/setting_production.py:28

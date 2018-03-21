@@ -67,7 +67,7 @@ export class UserAddComponent implements OnInit {
             is_active: [this.user_form.is_active],
             is_staff: [this.user_form.is_staff],
             role: [this.user_form.role, [Validators.required]],
-            birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date,"DD/MM/YYYY").toDate() : null, [UserValidators.birtdateValidators]],
+            birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date,"DD/MM/YYYY").toDate() : null, [UserValidators.birtdateValidators, UserValidators.formatBirtday]],
         });
  	}
 
@@ -138,10 +138,10 @@ export class UserAddComponent implements OnInit {
  	showPassword(input: any): any {
         if (input.type = input.type === "password") {
             input.type = "text";
-            $('span#toggleShowHide').addClass('fa fa-eye').removeClass('fa-eye-slash');
+            $('span#toggleShowHide').addClass('fa-eye-slash').removeClass('fa-eye');
         } else {
             input.type = "password";
-            $('span#toggleShowHide').addClass('fa-eye-slash').removeClass('fa-eye');
+            $('span#toggleShowHide').addClass('fa-eye').removeClass('fa-eye-slash');
         }
  	}
     /*

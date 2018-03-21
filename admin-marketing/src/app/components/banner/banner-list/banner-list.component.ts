@@ -4,6 +4,7 @@ import { Http, Response } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subject } from 'rxjs/Subject';
+import { ToastrService } from 'ngx-toastr';
 
 import { Banner } from '../../../shared/class/banner';
 import { BannerService } from '../../../shared/services/banner.service';
@@ -26,11 +27,9 @@ export class BannerListComponent implements OnInit {
 
     banners: Banner[];
 
-    banner_del: any;
-    // length_banners: number;
+    length_all: Number = 0;
+    length_selected: Number = 0;
 
-    checkbox:boolean = false;
-    message_result: string = ""; // Display message result
     errorMessage: string; // Show error from server
     lang: string = 'vi';
 
@@ -45,107 +44,102 @@ export class BannerListComponent implements OnInit {
         private route: ActivatedRoute,
         private bannerService: BannerService,
         private router: Router,
+        private toastr: ToastrService,
         ) { 
-        this.banner_del = [];
         this.banners = [];
      }
 
     ngOnInit() {
         // Call dataTable
         this.dtOptions = data_config(this.record);
+        let dt_options_custom = {
+            drawCallback: (setting) => {
+                this.checkSelectAllCheckbox();
+            },
+            columnDefs: [
+                {
+                    targets: 1,
+                    visible: false
+                },
+                { 
+                    orderable: false, 
+                    targets: 0 
+                }
+            ]
+        };
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
         // Call function getAllBanners()
         this.getAllBanners();
-
-        this.route.params.subscribe(params => {
-            if( params.message_post ){
-                this.message_result = " Thêm "+ params.message_post + " thành công.";
-            } else if ( params.message_put ) {
-                this.message_result = "  Chỉnh sửa  "+ params.message_put + " thành công.";
-            } else if(params.message_del) {
-                this.message_result = "  Xóa  "+ params.message_del + " thành công.";
-            } else {
-                this.message_result = "";
-           }
-        });
+    }
+    /*
+        Event select checbox on row
+            Case1: all row are checked then checkbox all on header is checked
+            Case1: any row is not checked then checkbox all on header is not checked
+        @author: TrangLe 
+    */
+    selectCheckbox(event) {   
+        $(event.target).closest( "tr" ).toggleClass( "selected" );
+        this.getLengthSelected();
+        this.checkSelectAllCheckbox();
     }
 
+    // input checkall checked/unchecked
+    checkSelectAllCheckbox() {
+        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        this.getLengthSelected();
+    }
+    /*
+        Event select All Button on header table
+        @author: TrangLe 
+    */
+    selectAllEvent(event) {
+        if( event.target.checked ) {
+            $("#table_id tr").addClass('selected');
+        } else {
+            $("#table_id tr").removeClass('selected');
+        }
+        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        this.getLengthSelected();
+    }
+
+    /*
+        Function getLengthSelected(): draw length selected
+        @author: TrangLe
+    */
+    getLengthSelected(){
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            this.length_selected = dtInstance.rows('.selected').count();
+        })
+    }
     /*
         GET: Get All Banner
         Call service banner
         @author: TrangLe
      */
-     getAllBanners() {
+    getAllBanners() {
         this.banners = null;
         this.bannerService.getAllBanner(this.lang).subscribe(
             (result) => {
                 this.banners = result;
                 // this.dtTrigger.next();
-                // this.length_banners = this.banners.length;
+                this.length_all = this.banners.length;
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.json().message }])
             }
-        )};
+        )
+    };
 
-    /*
-        Function: Select All Banner
-        Step: Create array to save id checked
-            Checking all checked
-            True: push id to array, item checkbox = True, message_result = ''
-            False: Remove all id from banner_del, item checkbox = False
-        @author: TrangLe
-     */
-    checkAllBanner(event) {
-        let arr_del = []; 
-        if(event.target.checked){
-            this.banners.forEach(function(element) {
-                arr_del.push(element.id);
-                $('#' + element.id).prop('checked', true);
-            });
-            this.checkbox = true;
-            this.banner_del = arr_del;
-            this.message_result = "";
-        }else{
-            this.checkbox = false;
-            this.banners.forEach((item, index) => {
-                $('#'+ item.id).prop('checked', false);
-                this.banner_del.splice(index, this.banners.length);
-            });
-        }
-    }
 
-    /*
-        Function: Check each item checkbox
-        Check item checkbox is checked
-            True: push id in array, if banner_del.lenght = banners.length -> all checkbox = true
-            False: remove id in array, all checkbox = false
-        @author: Trangle
-     */
-    checkItemChange(event, banner) {
-        if(event.target.checked){
-            this.banner_del.push(banner.id);
-            if(this.banner_del.length == this.banners.length) {
-                $('#allCheck').prop('checked', true);
-            }
-            this.message_result = "";
-        }
-        else{
-            let index = this.banner_del.indexOf(banner.id);
-            this.banner_del.splice(index, 1);
-
-            $('#allCheck').prop('checked', false);
-        }
-    }
-    
     confirmDelete() {
         /* Check banner_del not null and length >0
             True: Show confirm and call function deleteFeedbackCheckbox 
             False: show alert
         */
-        if(this.banner_del !== null && this.banner_del.length > 0 ){
+        if(this.length_selected > 0 ){
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.banner_del.length + " banner đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " banner đã chọn",
                 buttons: {
                     confirm: {
                         label: 'Xóa',
@@ -164,7 +158,7 @@ export class BannerListComponent implements OnInit {
                 }
             });
         } else {
-            bootbox.alert("Vui lòng chọn banner để xóa");
+            this.toastr.warning(`Vui lòng chọn banner để xóa`);
         } 
     }
     /*
@@ -172,23 +166,27 @@ export class BannerListComponent implements OnInit {
         @author: TrangLe
      */
      deleteBannersCheckbox() {
-        this.bannerService.deleteBannerSelected(this.banner_del, this.lang).subscribe(
-          (data) => {
-               this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                    var self = this;
-                    this.banner_del.forEach(function(element) {
-                        dtInstance.rows('#delete'+element).remove().draw();
-                        var banner_item = self.banners.find(banner => banner.id == element);
-                        self.banners = self.banners.filter(banners => banners !== banner_item);
-                    });
-                    this.banner_del = [];
-               });
-               this.message_result = "Xóa banner thành công";
-          },
-          (error) => {
-               this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
-               }
-          );  
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            // Get list promotion id selected
+            let get_list_id = dtInstance.cells('.selected', 1).data().toArray();
+            // array string to array number
+            let list_id_selected = get_list_id.map(Number);
+
+            // Call API remove list promotion selected
+            this.bannerService.deleteBannerSelected(list_id_selected, this.lang).subscribe(
+                (data) => {
+                    this.toastr.success(`Xóa ${this.length_selected} banner thành công`);
+
+                    // Remove all promotion selected on UI
+                    dtInstance.rows('.selected').remove().draw();
+                    // Reset count promotion
+                    this.length_all =  dtInstance.rows().count();
+                    this.length_selected = 0;
+                },
+                (error) => {
+                    this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
+                });
+            }); 
     }
 
      /*

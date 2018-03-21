@@ -35,6 +35,7 @@ export class ShowErrorValidComponent implements OnInit {
        'denominationValidate': (param) => param.message,
        'emailValidate': (param) => param.message,
        'birtdateValidate': (parame) => parame.message,
+       'fomatBirtdate':(parame) => parame.message,
     };
 
     @Input()
