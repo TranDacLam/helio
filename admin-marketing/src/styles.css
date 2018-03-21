@@ -173,18 +173,6 @@ h1.h1-title {
 
 /* END DATATABLE */
 
-@media (min-width: 768px) {
-    /* START HEADER*/
-    #header-wrapper .navbar-default .navbar-nav>li>a {
-        padding: 40px 15px;
-    }
-
-    #header-wrapper .navbar-default .navbar-nav>li>a:last-child {
-        padding-right: 0px;
-    }
-    /* END HEADER*/
-}
-
 /* Table */
 .dataTables_paginate{
     margin-top: 20px;
@@ -202,7 +190,6 @@ h1.h1-title {
     width: 60px;
 }
 
-
 /* 
     Custom button add
     author: Lam; 
@@ -217,6 +204,10 @@ h1.h1-title {
     font-size: 14px;
     padding-right: 9px;
 }
+.custom-title .icon-button-right {
+    font-size: 14px;
+    padding-left: 9px;
+}
 .custom-title{
     margin: 20px 0;
     border-bottom: 2px solid #111111;
@@ -230,22 +221,22 @@ h1.h1-title {
     custom multi select user
     author: Lam; 
 */
-.multiselect_user{
-    margin-top: 40px;
+.multiselect_user h4{
+    margin-bottom: 40px;
 }
 .multiselect_user .row-border{
     font-size: 12px;
 }
 .multiselect_user .datatable-content{
     width: 47%;
+    border: 1px solid;
 }
 .multiselect_user .button-move{
     width: 6%;
-    margin-top: 20%;
+    margin-top: 25%;
 }
 .multiselect_user .button-move button{
     margin-top: 10px;
-    margin-left: 15px;
 }
 .multiselect_user #DataTables_Table_1_wrapper {
     overflow: auto !important;
@@ -253,6 +244,19 @@ h1.h1-title {
 .multiselect_user .dataTables_scrollBody{
     min-height: 433px;
 }
+.multiselect_user .dataTables_filter{
+    float: left;
+}
+.multiselect_user .dataTables_filter input{
+    margin-left: 0px;
+}
+.multiselect_user .info_search{
+    margin-top: -10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid;
+    padding-bottom: 5px;
+}
+
 
 /*
     Button change language
@@ -286,6 +290,30 @@ h1.h1-title {
 }
 .dels-list button{
     margin-left: 10px;
+}
+/*
+    Show list error form from server
+    author: Lam;
+*/
+.error_msg{
+    color: red;
+    font-size: 16px;
+}
+
+@media (min-width: 768px) {
+    /* START HEADER*/
+    #header-wrapper .navbar-default .navbar-nav>li>a {
+        padding: 40px 15px;
+    }
+
+    #header-wrapper .navbar-default .navbar-nav>li>a:last-child {
+        padding-right: 0px;
+    }
+    /* END HEADER*/
+
+    .multiselect_user .datatable-content{
+        min-height: 805px;
+    }
 }
 
 @media only screen and (max-width : 768px) {

@@ -56,6 +56,11 @@ export class AddLinkCardComponent implements OnInit {
         let field_compare = {'full_name': '', 'email': '', 'phone': '', 'birth_date': '', 
             'personal_id': '', 'address': ''};
 
+        if(user_app.barcode){
+            this.toastr.error(`Tài khooản hoặc mã thẻ này đã được liên kết. Vui lòng kiểm tra lại.`);
+            return;
+        }
+
         Object.entries(user_app).forEach(([key, val]) => {
             if(key in field_compare){
                 if(user_app[key] !== user_embed[key]){
@@ -72,7 +77,7 @@ export class AddLinkCardComponent implements OnInit {
         }else{
             this.linkCardService.relate(user_app.email, user_embed.barcode).subscribe(
                 (data) => {
-                    this.toastr.error(`Bạn đã thực hiện liên kết thẻ với tài khoản Helio thành công.`);
+                    this.toastr.success(`Bạn đã thực hiện liên kết thẻ với tài khoản Helio thành công.`);
                     this.router.navigate(['/link-card/detail/', user_app.id,{ email: user_app.email, barcode: user_embed.barcode}]);
                 },
                 (error) => {
@@ -84,6 +89,7 @@ export class AddLinkCardComponent implements OnInit {
                 }
             );
         }
+        
     }
 
 }
