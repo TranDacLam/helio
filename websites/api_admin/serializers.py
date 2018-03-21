@@ -63,7 +63,7 @@ class Base64ImageField(serializers.ImageField):
 class UserSerializer(serializers.ModelSerializer):
 
     birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], allow_null = True)
-    username_mapping = serializers.DateField(format="HH:mm:ss-%d/%m/%Y", input_formats=['HH:mm:ss-%d/%m/%Y'], allow_null = True)
+    date_mapping = serializers.DateField(format="HH:mm:ss-%d/%m/%Y", input_formats=['HH:mm:ss-%d/%m/%Y'], allow_null = True, required=False)
 
     class Meta:
         model = User
@@ -226,11 +226,11 @@ class NotificationSerializer(serializers.ModelSerializer):
 class UserEmbedSerializer(serializers.Serializer):
     full_name = serializers.CharField(required=True)
     birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required=True)
-    personal_id = serializers.IntegerField(required=True)
+    personal_id = serializers.CharField(required=True)
     email = serializers.CharField(required=True)
     address = serializers.CharField(required=True)
-    phone = serializers.IntegerField(required=True)
-    barcode = serializers.IntegerField(required=True)
+    phone = serializers.CharField(required=True)
+    barcode = serializers.CharField(required=True)
 
     def validate_birth_date(self, value):
         if value >= datetime.now().date():
