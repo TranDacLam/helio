@@ -3,6 +3,7 @@ import { FeedbackService } from '../../../shared/services/feedback.service'
 import { Router } from '@angular/router';
 import 'rxjs/add/observable/throw';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -25,10 +26,11 @@ export class StatisticsFeedbackComponent implements OnInit {
     start_date: string = '';
     end_date: string = '';
 
-    message_status = '';
-    message_rate = '';
-
-    constructor(private feedbackService: FeedbackService, private router: Router) {}
+    constructor(
+        private feedbackService: FeedbackService, 
+        private router: Router,
+        private toastr: ToastrService
+    ) {}
 
     ngOnInit() {
         this.getStatisticFeedback();
@@ -73,7 +75,7 @@ export class StatisticsFeedbackComponent implements OnInit {
         this.end_date = end;
 
         if(start === '' && end === ''){
-            this.message_status = '* Vui lòng chọn ngày.';
+            this.toastr.warning(`Vui lòng chọn ngày.`);
             return;
         }
 
@@ -81,7 +83,6 @@ export class StatisticsFeedbackComponent implements OnInit {
             (data) => {
                 this.fb_status = data.message.status;
                 this.status_sum = data.message.status_sum;
-                this.message_status = '';
             },
             (error) => {
                 this.router.navigate(['/error', {message: error.message}]);
@@ -108,7 +109,7 @@ export class StatisticsFeedbackComponent implements OnInit {
         start = $('#startD_rate').val() ? String($('#startD_rate').val()) : '';
         end = $('#endD_rate').val() ? String($('#endD_rate').val()) : '';
         if(start === '' && end === ''){
-            this.message_rate = '* Vui lòng chọn ngày.';
+            this.toastr.warning(`Vui lòng chọn ngày.`);
             return;
         }
 
@@ -116,7 +117,6 @@ export class StatisticsFeedbackComponent implements OnInit {
             (data) => {
                 this.fb_rate = data.message.rate;
                 this.rate_sum = data.message.rate_sum;
-                this.message_rate = '';
             },
             (error) => {
                 this.router.navigate(['/error', {message: error.message}]);
@@ -176,19 +176,11 @@ export class StatisticsFeedbackComponent implements OnInit {
         isCheckDate = this.checkDate(startD, endD);
 
         if(isFormatDate === false){
-            if(event === 'status'){
-                this.message_status = msg_formatD;
-            }else{
-                this.message_rate = msg_formatD;
-            }
+            this.toastr.warning(`${msg_formatD}`);
             return false;
         }else{
             if(isCheckDate === false){
-                if(event === 'status'){
-                    this.message_status = msg_checkD;
-                }else{
-                    this.message_rate = msg_checkD;
-                }
+                this.toastr.warning(`${msg_checkD}`);
                 return false;
             }
         }

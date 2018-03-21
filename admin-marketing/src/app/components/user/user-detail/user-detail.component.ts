@@ -2,9 +2,13 @@ import { Component,ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { ToastrService } from 'ngx-toastr';
+
 import { User } from '../../../shared/class/user';
 import { UserService } from '../../../shared/services/user.service';
 import { UserValidators } from './../../../shared/validators/user-validators';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { NumberValidators } from './../../../shared/validators/number-validators';
 
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
@@ -37,6 +41,7 @@ export class UserDetailComponent implements OnInit {
         private userService:  UserService,
         private router: Router,
         private datePipe: DatePipe,
+        private toastr: ToastrService,
         ) { 
             this.api_domain = env.api_domain_root;
         }
@@ -50,16 +55,16 @@ export class UserDetailComponent implements OnInit {
 	createFormUser() {
 		this.formUser = this.fb.group({
         email: [this.user.email, [Validators.required, UserValidators.emailValidators]],
-        full_name: [this.user.full_name],
+        full_name: [this.user.full_name, [Validators.required]],
         birth_date: [this.user.birth_date ? moment(this.user.birth_date,"DD/MM/YYYY").toDate() : null, [UserValidators.birtdateValidators]],
-        phone: [this.user.phone, [Validators.required,UserValidators.phoneValidators]],
-        personal_id: [this.user.personal_id],
+        phone: [this.user.phone, [Validators.required,NumberValidators.validPhone]],
+        personal_id: [this.user.personal_id, [NumberValidators.validPersonID]],
         country: [this.user.country],
         address: [this.user.address],
         city: [this.user.city],
         avatar: [this.user.avatar],
         new_password: ['', [UserValidators.passwordValidators]],
-        role: [this.user.role['id'] ? this.user.role['id'] : ''],
+        role: [this.user.role ? this.user.role['id'] : ''],
         is_active: [this.user.is_active],
         is_staff:[this.user.is_staff]
     })
@@ -85,23 +90,32 @@ export class UserDetailComponent implements OnInit {
     }
 
     onSubmit() {
-        var self = this;
-        let userFormGroup = this.convertFormGroupToFormData(this.formUser);
-        this.userService.updateUser(userFormGroup, this.user.id).subscribe(
-            (data) => {
-                // Navigate to promotion page where success
-                self.router.navigate(['/user-list', { message_put: this.formUser.value['email']} ])
-            }, 
-            (error) => {
-                if(error.code == 400) {
-                    this.errorMessage = error.message
-                } else if(error.code == 405) {
-                    this.errors = error.message;
-                } else {
-                   self.router.navigate(['/error', { message: error.message }]);
+        if (this.formUser.invalid) {
+            ValidateSubmit.validateAllFormFields(this.formUser);
+        } else {
+            var self = this;
+            let userFormGroup = this.convertFormGroupToFormData(this.formUser);
+            this.userService.updateUser(userFormGroup, this.user.id).subscribe(
+                (data) => {
+                    // Navigate to promotion page where success
+                    self.toastr.success(`Chỉnh sửa "${this.formUser.value.email}" thành công`);
+                    self.router.navigate(['/user-list']);
+                }, 
+                (error) => {
+                    if(error.code == 400) {
+                        if (error.message.non_field_errors) {
+                            self.toastr.error(`${error.message.non_field_errors}`);
+                        } else {
+                            this.errorMessage = error.message
+                        }
+                    } else if(error.code == 405) {
+                        self.toastr.error(`${error.message}`);
+                    } else {
+                       self.router.navigate(['/error', { message: error.message }]);
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 
     /*
@@ -113,11 +127,12 @@ export class UserDetailComponent implements OnInit {
         this.userService.deleteUserById(user)
             .subscribe(
                 () => {
-                    this.router.navigate(['/user-list', { message_del: user.email} ]);
+                    this.toastr.success(`Xóa "${user.email}" thành công`);
+                    this.router.navigate(['/user-list']);
                 },
                 (error) =>  {
                     if(error.status == 405) {
-                        this.errors = error.json().message
+                        this.toastr.error(`${error.json().message}`);
                     } else {
                         this.router.navigate(['/error', { message: error.json().message }])
                     }
@@ -143,8 +158,14 @@ export class UserDetailComponent implements OnInit {
         else type= "text" is show
      */
  	showPassword(input: any): any {
- 		input.type = input.type === 'password' ? 'text' : 'password';
- 	}
+        if (input.type = input.type === "password") {
+            input.type = "text";
+            $('span#toggleShowHide').addClass('fa fa-eye').removeClass('fa-eye-slash');
+        } else {
+            input.type = "password";
+            $('span#toggleShowHide').addClass('fa-eye-slash').removeClass('fa-eye');
+        }
+     }
 
  	// Change attribute readonly password
  	ChangeReadonly(event) {

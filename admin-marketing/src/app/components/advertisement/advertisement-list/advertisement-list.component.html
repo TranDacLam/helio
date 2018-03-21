@@ -20,24 +20,35 @@
 	</a>
 </div>
 <br>
-<div class="table card-list">
-	<div class="alert alert-success" *ngIf="message_result">
-        {{message_result}}
+<div class="row mb-30 language">
+    <div class="col-xs-12 col-sm-12">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
+                (click)="changeLangVI()"
+            >VI</button>
+            <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
+                (click)="changeLangEN()"
+            >EN</button>
+        </div> 
     </div>
-	<table id="table-adv" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
-		<thead>
-	      	<tr>
-	      		<th class="checkbox-adv"><input type="checkbox" id="allAdvs" value="allAdvs" name="allAdvs" (change)="checkAllAdv($event)"></th>
-	        	<th>Quảng Cáo</th>
-	      	</tr>
-    	</thead>
-    	<tbody>
-   			<tr *ngFor ="let adv of advs" id="delete{{adv.id}}" >
-   				<td><input type="checkbox" [checked]="checkbox" id="{{adv.id}}" value="{{adv.id}}" name="" (change)="changeCheckboxAdv($event, adv)"></td>
-        		<td><a routerLink="/advertisement-detail/{{adv.id}}" >{{ adv.name }}</a></td>
-   			</tr>	
-    	</tbody>
-	</table>
+</div>
+<div class="custom-table">
+	<table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="advs">
+        <thead>
+            <tr>
+                <th class="checkbox-adv"><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                <th>ID</th>
+                <th>Quảng Cáo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="row-data" *ngFor="let adv of advs">
+                <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                <td>{{ adv.id }}</td>
+                <td><a [routerLink]="['/advertisement-detail/', adv.id, {lang: lang}]">{{ adv.name }}</a></td>
+            </tr>
+        </tbody>
+    </table>
 	<hr>
 	<div class='row'>
 		<div class="col-md-3">
@@ -46,7 +57,7 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			{{advs_delete.length}} của {{advs.length}} được chọn
+			{{length_selected}} của {{length_all}} được chọn
 			<button (click)="confirmDelete()" type="button" class="button-adv btn btn-danger">Thực hiện</button>
 		</div>
 	</div>

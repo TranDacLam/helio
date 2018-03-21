@@ -3,7 +3,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../../../shared/class/post';
 import { PostService } from '../../../shared/services/post.service';
-import { message } from '../../../shared/utils/message';
+import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 import * as datatable_config from '../../../shared/commons/datatable_config';
 
@@ -32,12 +32,14 @@ export class ListPostComponent implements OnInit {
 
     posts: Post[];
 
-    message_result = ''; // Message error
-    errorMessage = '';
-
     lang: string = 'vi';
 
-    constructor(private postService: PostService, private route: ActivatedRoute, private router: Router) { }
+    constructor(
+        private postService: PostService, 
+        private route: ActivatedRoute, 
+        private router: Router,
+        private toastr: ToastrService
+    ) { }
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Bài Viết');
@@ -59,20 +61,6 @@ export class ListPostComponent implements OnInit {
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
 
         this.getPosts();
-
-        /*
-            Use route to get params from url
-            Author: Lam
-        */
-        this.route.params.subscribe(params => {
-            if(params.message_put){
-                this.message_result = `${message.edit} "${params.message_put}" ${message.success}`;
-            }else if(params.message_post){
-                this.message_result = `${message.create_new} "${params.message_post}" ${message.success}`;
-            }else if(params.message_del){
-                this.message_result = 'Xóa bài viết thành công.';
-            }
-        });
     }
 
     /*
@@ -86,11 +74,7 @@ export class ListPostComponent implements OnInit {
                 this.length_all = this.posts.length;
             },
             (error) => {
-                if(error.code === 400){
-                    this.errorMessage = error.message;
-                }else{
-                    this.router.navigate(['/error', { message: error.message}]);
-                }
+                this.router.navigate(['/error', { message: error.message}]);
             }
         );
     }
@@ -145,7 +129,7 @@ export class ListPostComponent implements OnInit {
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.length_selected + " bài viết đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " bài viết đã chọn?",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -162,7 +146,7 @@ export class ListPostComponent implements OnInit {
             });
 
         } else  {
-            bootbox.alert("Vui lòng chọn bài viết cần xóa");
+            this.toastr.warning(`Vui lòng chọn bài viết cần xóa`);
         }
         
     }
@@ -184,14 +168,13 @@ export class ListPostComponent implements OnInit {
             this.postService.onDelPostSelect(list_id_selected, this.lang).subscribe(
                 (data) => {
                     if (data.code === 204) {
-                        this.message_result = "Xóa "+ this.length_selected + " bài viết thành công"
+                        this.toastr.success(`Xóa ${this.length_selected} bài viết thành công`);
 
                         // Remove all promotion selected on UI
                         dtInstance.rows('.selected').remove().draw();
                         // Reset count promotion
                         this.length_all =  dtInstance.rows().count();
                         this.length_selected = 0;
-                        this.errorMessage = '';
                     } else {
                         this.router.navigate(['/error', { message: data.message}]);
                     }

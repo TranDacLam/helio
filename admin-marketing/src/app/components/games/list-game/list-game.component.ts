@@ -5,6 +5,7 @@ import { Game } from '../../../shared/class/game';
 import { GameService } from '../../../shared/services/game.service';
 import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
+import { ToastrService } from 'ngx-toastr';
 import * as datatable_config from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
@@ -37,7 +38,12 @@ export class ListGameComponent implements OnInit {
 
     lang: string = 'vi';
 
-    constructor(private gameService: GameService, private route: ActivatedRoute, private router: Router) { }
+    constructor(
+        private gameService: GameService, 
+        private route: ActivatedRoute, 
+        private router: Router,
+        private toastr: ToastrService
+    ) { }
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Trò Chơi');
@@ -59,20 +65,6 @@ export class ListGameComponent implements OnInit {
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
 
         this.getGames();
-
-        /*
-            Use route to get params from url
-            Author: Lam
-        */
-        this.route.params.subscribe(params => {
-            if(params.message_put){
-                this.message_result = `${message.edit} "${params.message_put}" ${message.success}`;
-            }else if(params.message_post){
-                this.message_result = `${message.create_new} "${params.message_post}" ${message.success}`;
-            }else if(params.message_del){
-                this.message_result = 'Xóa trò chơi thành công.';
-            }
-        });
     }
 
     /*
@@ -86,11 +78,7 @@ export class ListGameComponent implements OnInit {
                 this.length_all = this.games.length;
             },
             (error) => {
-                if(error.code === 400){
-                    this.errorMessage = error.message;
-                }else{
-                    this.router.navigate(['/error', { message: error.message}]);
-                }
+                this.router.navigate(['/error', { message: error.message}]);
             }
         );
     }
@@ -145,7 +133,7 @@ export class ListGameComponent implements OnInit {
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.length_selected + " trò chơi đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " trò chơi đã chọn?",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -162,7 +150,7 @@ export class ListGameComponent implements OnInit {
             });
 
         } else  {
-            bootbox.alert("Vui lòng chọn trò chơi cần xóa");
+            this.toastr.warning(`Vui lòng chọn trò chơi cần xóa`);
         }
         
     }
@@ -184,7 +172,7 @@ export class ListGameComponent implements OnInit {
             this.gameService.onDelGameSelect(list_id_selected, this.lang).subscribe(
                 (data) => {
                     if (data.code === 204) {
-                        this.message_result = "Xóa "+ this.length_selected + " trò chơi thành công"
+                        this.toastr.success(`Xóa ${this.length_selected} trò chơi thành công`);
 
                         // Remove all promotion selected on UI
                         dtInstance.rows('.selected').remove().draw();

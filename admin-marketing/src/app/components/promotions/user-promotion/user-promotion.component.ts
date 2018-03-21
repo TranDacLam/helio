@@ -7,6 +7,7 @@ import { User } from '../../../shared/class/user';
 import { Promotion } from '../../../shared/class/promotion'
 import { env } from '../../../../environments/environment';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
+import { ToastrService } from 'ngx-toastr';
 
 declare var bootbox:any;
 declare var $: any;
@@ -31,7 +32,6 @@ export class UserPromotionComponent implements OnInit {
     api_domain:string = "";
 
     notification_id: number;
-    message_result: string = "";
 
     lang = 'vi';
 
@@ -39,7 +39,8 @@ export class UserPromotionComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute, 
         private promotionService: PromotionService,
-        private variable_globals: VariableGlobals
+        private variable_globals: VariableGlobals,
+        private toastr: ToastrService
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -68,7 +69,7 @@ export class UserPromotionComponent implements OnInit {
                 this.user_list_right = data.user_promotion;
             }, 
             (error) => {
-                this.router.navigate(['/error']);
+                this.router.navigate(['/error', { message: error.message}]);
             });
     }
 
@@ -77,17 +78,13 @@ export class UserPromotionComponent implements OnInit {
         Author: Lam
     */
     updateUserPromotion(list_user_id) {
-        if(this.promotion.is_save === false){
-            if(list_user_id.length > 0){
-                this.updateUser(list_user_id)
-            }else{
-                bootbox.alert("Vui lòng chọn user");
-            }
+        if(this.promotion.is_draft === true){
+            this.updateUser(list_user_id)
         }else{
             if(this.user_current.role === 1){
                 this.updateUser(list_user_id);
             }else{
-                bootbox.alert("Chức năng này chỉ dành cho System Admin");
+                this.toastr.warning(`Chức năng này chỉ dành cho System Admin`);
             }
         }
 	}
@@ -97,11 +94,11 @@ export class UserPromotionComponent implements OnInit {
         this.promotionService.updateUserPromotion(promotion_id, list_user_id, this.lang).subscribe(
             (data)=> {
                 if (data.status == 204) {
-                    this.message_result = "Lưu thành công"
+                    this.toastr.success(`Lưu thành công`);
                 } 
             }, 
             (error) => {
-                this.router.navigate(['/error']);
+                this.router.navigate(['/error', { message: error.message}]);
             }
         );
     }
@@ -118,7 +115,7 @@ export class UserPromotionComponent implements OnInit {
                 element.button('reset');
             }, 
             (error) => {
-                this.router.navigate(['/error']);
+                this.router.navigate(['/error', { message: error.message}]);
             });
     }
 

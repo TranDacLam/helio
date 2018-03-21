@@ -5,6 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Denomination }  from '../../../shared/class/denomination';
+import { ToastrService } from 'ngx-toastr';
 
 import { DenominationService } from '../../../shared/services/denomination.service';
 import { data_config } from '../../../shared/commons/datatable_config';
@@ -24,7 +25,6 @@ export class DenominationListComponent implements OnInit {
     length_all: Number = 0;
     length_selected: Number = 0;
 
-    message_result = ''; // Message result
     record: string = "Mệnh Giá Nạp Tiền";
 
     // Inject the DataTableDirective into the dtElement property
@@ -39,6 +39,7 @@ export class DenominationListComponent implements OnInit {
         private denominationService: DenominationService,
         private route: ActivatedRoute,
         private router: Router,
+        private toastr: ToastrService,
         ) {
         this.denominations = [];
     }
@@ -64,14 +65,6 @@ export class DenominationListComponent implements OnInit {
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
 
         this.getAllDenomination();
-
-        this.route.params.subscribe(params => {
-            if(params.message_post){
-                this.message_result = " Thêm "+ params.message_post + " thành công.";
-            } else {
-                this.message_result = "";
-            }
-        });
     }
 	/* 
         Get All Denomination
@@ -98,7 +91,6 @@ export class DenominationListComponent implements OnInit {
     */
     selectCheckbox(event) {   
         $(event.target).closest( "tr" ).toggleClass( "selected" );
-        this.message_result = '';
         this.getLengthSelected();
         this.checkSelectAllCheckbox();
     }
@@ -115,7 +107,6 @@ export class DenominationListComponent implements OnInit {
     selectAllEvent(event) {
         if( event.target.checked ) {
             $("#table_id tr").addClass('selected');
-            this.message_result = '';
         } else {
             $("#table_id tr").removeClass('selected');
         }
@@ -160,7 +151,7 @@ export class DenominationListComponent implements OnInit {
                 }
             });
         } else {
-            bootbox.alert("Vui lòng chọn mệnh giá nạp tiền để xóa");
+            this.toastr.warning(`Vui lòng chọn mệnh giá nạp tiền để xóa`);
         } 
     }
 
@@ -175,7 +166,7 @@ export class DenominationListComponent implements OnInit {
             // Call API remove list promotion selected
             this.denominationService.deleteAllDenosSelected(list_id_selected).subscribe(
                 (data) => {
-                    this.message_result = "Xóa "+ this.length_selected + " mệnh giá nạp tiền thành công"
+                    this.toastr.success(`Xóa ${this.length_selected} mệnh giá nạp tiền thành công`);
 
                     // Remove all promotion selected on UI
                     dtInstance.rows('.selected').remove().draw();

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { LinkCardService } from '../../../shared/services/link-card.service';
 import { User } from '../../../shared/class/user';
+import { ToastrService } from 'ngx-toastr';
 
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
@@ -23,11 +24,9 @@ export class LinkCardListComponent implements OnInit {
 	dtOptions: any = {};
 	link_cards: User[];
 
-    link_card_del: any;
-
-    checkbox:boolean = false;
+    length_all: Number = 0;
+    length_selected: Number = 0;
     
-    message_result: string = ""; // Display message result
     errorMessage: string;
     record: string = "Thẻ Liên Kết";
 
@@ -42,26 +41,31 @@ export class LinkCardListComponent implements OnInit {
   		private route: ActivatedRoute,
         private linkCardService: LinkCardService,
         private router: Router,
+        private toastr: ToastrService,
   		) { 
-  		this.link_card_del = [];
         this.link_cards = [];
   	}
 
   	ngOnInit() {
         // Customize DataTable
   		this.dtOptions = data_config(this.record);
+        let dt_options_custom = {
+            drawCallback: (setting) => {
+                this.checkSelectAllCheckbox();
+            },
+            columnDefs: [
+                {
+                    targets: 1,
+                    visible: false
+                },
+                { 
+                    orderable: false, 
+                    targets: 0 
+                }
+            ]
+        };
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
         this.getAllLinkCards();
-
-        this.route.params.subscribe(params => {
-            if(params.message_del){
-                this.message_result = 'Xóa liên kết thẻ thành công.';
-                setTimeout(()=>{
-                    this.message_result = '';
-                },7000);
-            }else{
-                this.message_result = '';
-            }
-        });
   	}
 
     /*
@@ -73,51 +77,14 @@ export class LinkCardListComponent implements OnInit {
       this.linkCardService.getAllLinkedUsers().subscribe(
         (result) => {
           this.link_cards = result;
+          this.length_all = this.link_cards.length;
           // Caling the DT trigger to manually render the table
           this.dtTrigger.next();
         },
         (error) => this.router.navigate(['/error', { message: error }])
         )
   	}
-    /*
-        Function: Select all Checkbox
-        Step: Check event checked
-        True: Push id to arr
-        @author: TrangLe
-     */
-  	selectAllCheckbox(event) {
-        let arr = [];
-        if (event.target.checked) {
-            this.link_cards.forEach(function(element) {
-            arr.push(element.id);
-            $('#'+element.id).prop('checked', true);
-          });
-            this.checkbox = true;
-            this.link_card_del = arr
-            this.message_result = "";
-        } else {
-            this.checkbox = false;
-            this.link_cards.forEach((item, index) => {
-            this.link_card_del.splice(index, this.link_cards.length);
-                $('#'+item.id).prop('checked', false);
-        });
-    }
-    }
-
-  	changeCheckboxLinkCard(event, linkCard) {
-  		if(event.target.checked) {
-            this.link_card_del.push(linkCard.id);
-            if(this.link_cards.length == this.link_card_del.length) {
-                $('allCheck').prop('checked', true);
-            }
-            this.message_result = "";
-        } else {
-            let index = this.link_card_del.indexOf(linkCard.id);
-            this.link_card_del.splice(index, 1);
-
-            $('allCheck').prop('checked', false);
-        }
-  	}
+    
 
     /*
         Confirm Delete Checkbox Selected
@@ -129,10 +96,10 @@ export class LinkCardListComponent implements OnInit {
             True: Show confirm and call function deleteFeedbackCheckbox 
             False: show alert
         */
-        if(this.link_card_del !== null && this.link_card_del.length > 0 ){
+        if(this.length_selected > 0 ){
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.link_card_del.length + " thẻ liên kết đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " thẻ liên kết đã chọn",
                 buttons: {
                     confirm: {
                         label: 'Xóa',
@@ -151,8 +118,49 @@ export class LinkCardListComponent implements OnInit {
                 }
             });
         } else {
-            bootbox.alert("Vui lòng chọn thẻ liên kết để xóa");
+            this.toastr.warning(`Vui lòng chọn thẻ liên kết để xóa`);
         } 
+    }
+
+    /*
+        Event select checbox on row
+            Case1: all row are checked then checkbox all on header is checked
+            Case1: any row is not checked then checkbox all on header is not checked
+        @author: Lam 
+    */
+    selectCheckbox(event) {   
+        $(event.target).closest( "tr" ).toggleClass( "selected" );
+        this.getLengthSelected();
+        this.checkSelectAllCheckbox();
+    }
+
+    // input checkall checked/unchecked
+    checkSelectAllCheckbox() {
+        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        this.getLengthSelected();
+    }
+    /*
+        Event select All Button on header table
+        @author: Lam 
+    */
+    selectAllEvent(event) {
+        if( event.target.checked ) {
+            $("#table_id tr").addClass('selected');
+        } else {
+            $("#table_id tr").removeClass('selected');
+        }
+        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        this.getLengthSelected();
+    }
+
+    /*
+        Function getLengthSelected(): draw length selected
+        @author: Lam
+    */
+    getLengthSelected(){
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            this.length_selected = dtInstance.rows('.selected').count();
+        })
     }
     /*
         Function: Delete all selected
@@ -160,21 +168,26 @@ export class LinkCardListComponent implements OnInit {
      */
 
   	deleteLinkCardCheckbox() {
-        this.linkCardService.deleteAllUserLinkedSelected(this.link_card_del).subscribe(
-            (result) => {
-                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                        var self = this;
-                        this.link_card_del.forEach(function(e){
-                            dtInstance.rows('#delete'+e).remove().draw();
-                            var link_card_item = self.link_cards.find(link_card => link_card.id == e);
-                            self.link_cards = self.link_cards.filter(link_cards => link_cards !== link_card_item);
-                        });
-                        this.link_card_del = [];
-                   });
-                this.message_result = "Xóa thẻ liên kết thành công";
-            },
-            (error) => {
-                this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            // Get list promotion id selected
+            let get_list_id = dtInstance.cells('.selected', 1).data().toArray();
+            // array string to array number
+            let list_id_selected = get_list_id.map(Number);
+
+            // Call API remove list promotion selected
+            this.linkCardService.deleteAllUserLinkedSelected(list_id_selected).subscribe(
+                (data) => {
+                    this.toastr.success(`Xóa ${this.length_selected} thẻ liên kết thành công`);
+
+                    // Remove all promotion selected on UI
+                    dtInstance.rows('.selected').remove().draw();
+                    // Reset count promotion
+                    this.length_all =  dtInstance.rows().count();
+                    this.length_selected = 0;
+                },
+                (error) => {
+                    this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
+                });
             }
         );
     }

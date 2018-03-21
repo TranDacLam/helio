@@ -8,7 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< HEAD
+"POT-Creation-Date: 2018-03-20 11:34+0700\n"
+=======
 "POT-Creation-Date: 2018-03-20 22:57+0700\n"
+>>>>>>> develop
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -823,14 +827,49 @@ msgstr ""
 msgid "Error. DeivceID of user is empty. Please check again."
 msgstr "Lỗi. Người dùng hiện tại không có device_id. Vui lòng xác minh lại."
 
-#: websites/api_admin/serializers.py:184
+#: websites/api_admin/serializers.py:178
+
+#| msgid "This denomination is already taken"
+msgid "This advertisement is already taken"
+msgstr "Quảng cáo này đã tồn tại."
+
+#: websites/api_admin/serializers.py:189
 msgid "This denomination is already taken"
 msgstr "Mệnh giá nạp tiền này đã tồn tại."
 
-#: websites/api_admin/serializers.py:236
+#: websites/api_admin/serializers.py:241 websites/api_admin/serializers.py:456
+#: websites/api_admin/serializers.py:493
 msgid "Birthday must less then today"
 msgstr "Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại."
 
+<<<<<<< HEAD
+#: websites/api_admin/serializers.py:439 websites/api_admin/serializers.py:475
+
+#| msgid "This Hot Ads is already taken"
+msgid "This phone is already taken"
+msgstr "Số điện thoại này đã tồn tại."
+
+#: websites/api_admin/serializers.py:445 websites/api_admin/serializers.py:481
+#| msgid "This denomination is already taken"
+msgid "This email is already taken"
+msgstr "Địa chỉ email này đã tồn tại."
+
+#: websites/api_admin/serializers.py:500
+msgid "Cannot change password of customer user"
+msgstr "Không thể thay đổi mật khẩu của Customer User."
+
+#: websites/api_admin/serializers.py:566
+msgid "This Hot Ads is already taken"
+msgstr "Hot Ads này đã tồn tại."
+
+#: websites/api_admin/views.py:2044
+msgid "Just System Admin Change password"
+msgstr "Chỉ có System Admin mới được quyền thay đổi được mật khẩu."
+
+#: websites/api_admin/views.py:2069
+msgid "Just System Admin accept delete"
+msgstr "Chỉ có System Admin mới được quyền xóa"
+=======
 #: websites/api_admin/serializers.py:295
 msgid "Start day is before than End day"
 msgstr "Ngày bắt đầu phải trước hơn ngày kết thúc."
@@ -912,6 +951,7 @@ msgstr "Role không tồn tại"
 #: websites/api_admin/views.py:2358
 msgid "Not Found users."
 msgstr "User không tồn tại"
+>>>>>>> develop
 
 #: websites/config/setting_api.py:28 websites/config/setting_develop.py:25
 #: websites/config/setting_local.py:26 websites/config/setting_production.py:28

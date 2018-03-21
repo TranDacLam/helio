@@ -74,11 +74,7 @@ export class ListPromotionLabelComponent implements OnInit {
                 this.length_all = this.promotion_labels.length;
             },
             (error) => {
-                if(error.code === 403){
-                    this.toastr.error(`${error.message}`);
-                }else{
-                    this.router.navigate(['/error', { message: error.message}]);
-                }
+                this.router.navigate(['/error', { message: error.message}]);
             }
         );
     }
@@ -133,7 +129,7 @@ export class ListPromotionLabelComponent implements OnInit {
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.length_selected + " nhãn khuyến mãi đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " nhãn khuyến mãi đã chọn?",
                 buttons: {
                     cancel: {
                         label: "Hủy"

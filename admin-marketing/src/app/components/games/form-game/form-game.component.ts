@@ -8,6 +8,7 @@ import { Type } from '../../../shared/class/type';
 import { TypeService } from '../../../shared/services/type.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { env } from '../../../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -42,7 +43,8 @@ export class FormGameComponent implements OnInit {
         private fb: FormBuilder,
         private location: Location,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private toastr: ToastrService
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -124,7 +126,8 @@ export class FormGameComponent implements OnInit {
             if(!this.game.id){
                 this.gameService.addGame(game_form_data, this.lang).subscribe(
                     (data) => {
-                        this.router.navigate(['/game/list', { message_post: value_form.name}]);
+                        this.toastr.success(`Thêm mới "${value_form.name}" thành công`);
+                        this.router.navigate(['/game/list']);
                     },
                     (error) => {
                         { this.errorMessage = error.message; } 
@@ -138,7 +141,8 @@ export class FormGameComponent implements OnInit {
                     this.gameService.updateGame(game_form_data, this.game.id, this.lang).subscribe(
                         (data) => {
                             this.game = data;
-                            this.router.navigate(['/game/list', { message_put: value_form.name}]);
+                            this.toastr.success(`Chỉnh sửa "${value_form.name}" thành công`);
+                            this.router.navigate(['/game/list']);
                         },
                         (error) => {
                             { this.errorMessage = error.message; } 
@@ -185,7 +189,8 @@ export class FormGameComponent implements OnInit {
         const id = this.game.id;
         this.gameService.onDelGame(id, this.lang).subscribe(
             (data) => {
-                this.router.navigate(['/game/list', { message_del: 'success'}]);
+                this.toastr.success(`Xóa "${this.formGame.value.name}" thành công`);
+                this.router.navigate(['/game/list']);
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.message}]);

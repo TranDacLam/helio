@@ -16,7 +16,7 @@ export class ShowErrorValidComponent implements OnInit {
     // Type and message validate
     private static readonly errorMessages = {
        'email': () => 'Email không đúng định dạng',
-       'required': () => 'Trường không được bỏ trống',
+       'required': () => 'Trường này không được bỏ trống',
        'minlength': (params) => 'Số ký tự tối thiểu là ' + params.requiredLength,
        'maxlength': (params) => 'Số ký tự cho phép tối đa là ' + params.requiredLength,
        'pattern': (params) => 'The required pattern is: ' + params.requiredPattern,

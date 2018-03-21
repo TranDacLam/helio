@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { NgForm } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import { Location } from '@angular/common';
 
@@ -32,7 +33,8 @@ export class FeedbackDetailComponent implements OnInit {
   		private route: ActivatedRoute,
   		private location: Location,
     	private fb: FormBuilder,
-        private router: Router
+        private router: Router,
+        private toastr: ToastrService,
   		) {
   			
   		 }
@@ -81,7 +83,10 @@ export class FeedbackDetailComponent implements OnInit {
     deleteFeedback(feedback: Feedback) {
     	this.feedbackService.deleteFeedbackById(feedback)
             .subscribe(
-                () => this.router.navigate(['/feedback-list', { message_del: feedback.name} ]),
+                () => {
+                    this.toastr.success(`Xóa ${feedback.name} thành công`);
+                    this.router.navigate(['/feedback-list']);
+                },
                 error =>  this.router.navigate(['/error', { message: error.json().message }])
            );
     }
@@ -92,9 +97,11 @@ export class FeedbackDetailComponent implements OnInit {
     updateFeedback() {
     	this.feedbackService.updateFeedbackById(this.feedbackForm.value, this.feedback.id)
     	    .subscribe(
-                () => this.router.navigate(['/feedback-list', { message_put: this.feedback.name} ]),
+                () => {
+                    this.toastr.success(`Chỉnh sửa ${this.feedback.name} thành công`);
+                    this.router.navigate(['/feedback-list']);
+                },
                 (error) =>  {
-                    console.log(error);
                     if (error.status == 400) {
                         this.errorMessage = error.json().message
                     } else {

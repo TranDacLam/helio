@@ -3,6 +3,7 @@ import { ActivatedRoute , Router} from '@angular/router';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ToastrService } from 'ngx-toastr';
 
 import { Advertisement } from '../../../shared/class/advertisement';
 import { AdvertisementService } from '../../../shared/services/advertisement.service';
@@ -21,11 +22,14 @@ export class AdvertisementDetailComponent implements OnInit {
 	errorMessage: string ="";
 	advForm: FormGroup;
 
+	lang: string = 'vi';
+
 	constructor(
 		private advertisementService: AdvertisementService,
 		private route: ActivatedRoute,
 		private router: Router,
 		private fb: FormBuilder,
+		private toastr: ToastrService,
 		) { }
 
 	ngOnInit() {
@@ -45,7 +49,7 @@ export class AdvertisementDetailComponent implements OnInit {
 	 */
 	getAdv() {
 		const id = +this.route.snapshot.paramMap.get('id');
-		this.advertisementService.getAdvertisement(id).subscribe(
+		this.advertisementService.getAdvertisement(id, this.lang).subscribe(
 			(result) => {
         		this.adv = result;
         		this.createForm();
@@ -62,8 +66,11 @@ export class AdvertisementDetailComponent implements OnInit {
 		if (this.advForm.invalid) {
 			ValidateSubmit.validateAllFormFields(this.advForm);
 		} else {
-			this.advertisementService.updateAdv(this.advForm.value, this.adv.id).subscribe(
-				() => this.router.navigate(['/advertisement-list', { message_put: this.advForm.value['name']} ]),
+			this.advertisementService.updateAdv(this.advForm.value, this.adv.id, this.lang).subscribe(
+				() => {
+					this.toastr.success(`Chỉnh sửa ${this.advForm.value['name']} thành công`);
+					this.router.navigate(['/advertisement-list']);
+				},
 				(error) => {
 					if(error.status == 400) {
 						this.errorMessage = error.json().name
@@ -75,9 +82,12 @@ export class AdvertisementDetailComponent implements OnInit {
 		}
 	}
 	deleteAdv(adv: Advertisement) {
-    	this.advertisementService.deleteAdvById(adv)
+    	this.advertisementService.deleteAdvById(adv.id, this.lang)
             .subscribe(
-                () => this.router.navigate(['/advertisement-list', { message_del: adv.name} ]),
+                () => {
+                	this.toastr.success(`Xóa ${adv.name} thành công`);
+                	this.router.navigate(['/advertisement-list']);
+                },
                 error =>  this.router.navigate(['/error', { message: error.json().message }])
            );
     }
@@ -103,5 +113,8 @@ export class AdvertisementDetailComponent implements OnInit {
                 }
             }
         });
+    }
+    removeMessage() {
+    	this.errorMessage = '';
     }
 }
