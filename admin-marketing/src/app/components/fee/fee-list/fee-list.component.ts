@@ -5,6 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
 import * as datatable_config from '../../../shared/commons/datatable_config';
+import { ToastrService } from 'ngx-toastr';
 
 
 declare var bootbox:any;
@@ -16,7 +17,7 @@ declare var bootbox:any;
 })
 export class FeeListComponent implements OnInit {
 
-  constructor( private feeService: FeeService, private router: Router ) {
+  constructor( private feeService: FeeService, private router: Router, private toastr: ToastrService ) {
 
    }
 
@@ -141,6 +142,7 @@ export class FeeListComponent implements OnInit {
                     dtInstance.rows('.selected').remove().draw();
                     // Reset count promotion
                     this.length_all =  dtInstance.rows().count();
+                    this.toastr.success(`Xóa ${this.length_selected} Phí Giao Dịch thành công`);
                     this.length_selected = 0;
                     this.errorMessage = '';
                 }, 
@@ -148,6 +150,7 @@ export class FeeListComponent implements OnInit {
                     this.router.navigate(['/error', { message: error.message}]);
                 });
         });
+
      }
    
    /*

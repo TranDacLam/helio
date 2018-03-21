@@ -901,7 +901,7 @@ class UserEmbedDetail(APIView):
 
             if barcode:
                 if not barcode.isdigit():
-                    return Response({"code": 400, "message": "Barcode is numberic", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Barcode is numberic"), "fields": ""}, status=400)
                 cursor = connections['sql_db'].cursor()
                 query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, 
                                     Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id, C.Card_State
@@ -912,17 +912,17 @@ class UserEmbedDetail(APIView):
                 item = cursor.fetchone()
                 # check item is exist
                 if not item:
-                    return Response({"code": 400, "message": "Barcode not found.", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Barcode not found."), "fields": ""}, status=400)
                 # card_state is 0 or 1 or 2
                 if item[8] != 0:
                     if item[8] == 2:
-                        return Response({"code": 400, "message": "Card is used.", "fields": ""}, status=400)
+                        return Response({"code": 400, "message": _("Card is used."), "fields": ""}, status=400)
                     if item[8] == 1:
-                        return Response({"code": 400, "message": "Card is locked.", "fields": ""}, status=400)
-                    return Response({"code": 400, "message": "Card is invalid.", "fields": ""}, status=400)
+                        return Response({"code": 400, "message": _("Card is locked."), "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Card is invalid."), "fields": ""}, status=400)
                 # check Customer_Id is exist
                 if not item[7]:
-                    return Response({"code": 400, "message": "Card has no user.", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
 
                 result = {}
                 first_name = item[0] if item[0] else ''  # Firstname
@@ -973,17 +973,17 @@ class UserEmbedDetail(APIView):
             cursor.execute(query_barcode.format(barcode))
             item = cursor.fetchone()
             if not item:
-                return Response({"code": 400, "message": "Barcode not found", "fields": ""}, status=400)
+                return Response({"code": 400, "message": _("Barcode not found"), "fields": ""}, status=400)
             # card_state is 0 or 1 or 2
             if item[0] != 0:
                 if item[0] == 2:
-                    return Response({"code": 400, "message": "Card is used.", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Card is used."), "fields": ""}, status=400)
                 if item[0] == 1:
-                    return Response({"code": 400, "message": "Card is locked.", "fields": ""}, status=400)
-                return Response({"code": 400, "message": "Card is invalid.", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Card is locked."), "fields": ""}, status=400)
+                return Response({"code": 400, "message": _("Card is invalid."), "fields": ""}, status=400)
             # check Customer_Id is exist
             if not item[1]:
-                return Response({"code": 400, "message": "Card has no user.", "fields": ""}, status=400)
+                return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
             
             serializer = admin_serializers.UserEmbedSerializer(
                 data=request.data)
@@ -1044,7 +1044,7 @@ class RelateAPI(APIView):
 
                 # check user is related
                 if user.barcode:
-                    return Response({"code": 400, "message": "User is related.", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("User is related."), "fields": ""}, status=400)
                 
                 # check user embed is exist
                 cursor = connections['sql_db'].cursor()
@@ -1054,26 +1054,26 @@ class RelateAPI(APIView):
                 cursor.execute(query_str.format(barcode))
                 userembed_item = cursor.fetchone()
                 if not userembed_item:
-                    return Response({"code": 400, "message": "Barcode not found", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Barcode not found"), "fields": ""}, status=400)
                 # card_state is 0 or 1 or 2
                 if userembed_item[0] != 0:
                     if userembed_item[0] == 2:
-                        return Response({"code": 400, "message": "Card is used.", "fields": ""}, status=400)
+                        return Response({"code": 400, "message": _("Card is used."), "fields": ""}, status=400)
                     if userembed_item[0] == 1:
-                        return Response({"code": 400, "message": "Card is locked.", "fields": ""}, status=400)
-                    return Response({"code": 400, "message": "Card is invalid.", "fields": ""}, status=400)
+                        return Response({"code": 400, "message": _("Card is locked."), "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Card is invalid."), "fields": ""}, status=400)
                 # check Customer_Id is exist
                 if not userembed_item[1]:
-                    return Response({"code": 400, "message": "Card has no user.", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
                 
                 # check user embed is related
                 userembed_is_related = User.objects.filter(barcode=barcode)
                 if userembed_is_related:
-                    return Response({"code": 400, "message": "Userembed is related.", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Userembed is related."), "fields": ""}, status=400)
 
                 user.barcode = barcode
                 # TO DO
-                user.username_mapping = request.user.username
+                user.username_mapping = request.user.email
                 user.date_mapping = datetime.now()
                 user.save()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
