@@ -63,6 +63,7 @@ class Base64ImageField(serializers.ImageField):
 class UserSerializer(serializers.ModelSerializer):
 
     birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], allow_null = True)
+    date_mapping = serializers.DateField(format="HH:mm:ss-%d/%m/%Y", input_formats=['HH:mm:ss-%d/%m/%Y'], allow_null = True, required=False)
 
     class Meta:
         model = User
@@ -112,13 +113,9 @@ class PromotionDisplaySerializer(serializers.ModelSerializer):
     apply_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
     end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
     user_implementer = UserSerializer(many=False, required=False, read_only=False)
-    # image = Base64ImageField(
-    #     max_length=None, use_url=True,
-    # )
     class Meta:
         model = Promotion
         fields = '__all__'
-from rest_framework.fields import CurrentUserDefault
 
 class PromotionSerializer(serializers.ModelSerializer):
     apply_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
@@ -135,12 +132,13 @@ class PromotionSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         # If this promotion is public then set user
-
         if not validated_data.get('is_draft'):
             validated_data['user_implementer'] = self.context['request'].user
         return Promotion.objects.create(**validated_data)
+
     def update(self, instance, validated_data):
         image = validated_data.get('image', instance.image)
+
         if image:
             instance.image = image
         image_thumbnail = validated_data.get('image_thumbnail', instance.image_thumbnail)
@@ -150,13 +148,6 @@ class PromotionSerializer(serializers.ModelSerializer):
         # Is this promotion change from draft to public then set user
         if instance.is_draft and not validated_data.get('is_draft'):
             instance.user_implementer = self.context['request'].user
-
-        # print is_draft, instance.is_draft
-
-        # if promotion_type_data:
-        #     print promotion_type_data
-        #     promotion_type = Promotion_Type.objects.get_or_create(**promotion_type_data)[0]
-        #     validated_data['promotion_type'] = promotion_type
 
         instance.name = validated_data.get('name', instance.name)
         instance.short_description = validated_data.get('short_description', instance.short_description)
@@ -230,11 +221,11 @@ class NotificationSerializer(serializers.ModelSerializer):
 class UserEmbedSerializer(serializers.Serializer):
     full_name = serializers.CharField(required=True)
     birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required=True)
-    personal_id = serializers.IntegerField(required=True)
+    personal_id = serializers.CharField(required=True)
     email = serializers.CharField(required=True)
     address = serializers.CharField(required=True)
-    phone = serializers.IntegerField(required=True)
-    barcode = serializers.IntegerField(required=True)
+    phone = serializers.CharField(required=True)
+    barcode = serializers.CharField(required=True)
 
     def validate_birth_date(self, value):
         if value >= datetime.now().date():
@@ -424,7 +415,7 @@ class RolesSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
         
 class UserRoleDisplaySerializer(serializers.ModelSerializer):
-
+    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required = False)
     role = RolesSerializer(many=False, required=False, read_only=False)
 
     class Meta:

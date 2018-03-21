@@ -52,7 +52,6 @@ export class AdvertisementService {
 	 */
 	getAdvertisement(id: number, lang): Observable<Advertisement> {
 		const url = `${env.api_domain_root}/${lang}/api/${api.advertisement}${id}/`;
-		console.log(url);
 		return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 

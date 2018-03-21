@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FeeService } from '../../../shared/services/fee.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-fee-add',
@@ -10,7 +11,13 @@ import { Router } from '@angular/router';
 })
 export class FeeAddComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private feeService: FeeService, private router: Router) { }
+  constructor(
+    private formBuilder: FormBuilder, 
+    private feeService: FeeService, 
+    private router: Router,
+    private toastr: ToastrService) {
+
+    }
 
   feeAddForm: FormGroup;
   messageResult: String;
@@ -21,9 +28,10 @@ export class FeeAddComponent implements OnInit {
     this.submitted = true;
     if (isValid){
       this.feeService.createFee(value).subscribe(
-      (result) => {
-           this.messageResult = "success"; 
+      result => {
+          this.messageResult = "success";
           this.router.navigate(['/fee/list']);
+          this.toastr.success(`Thêm mới "${this.feeAddForm.value.fee} ${this.feeAddForm.value.fee_type}" thành công`);
          },
       (error) => {
           if(error.code === 400){

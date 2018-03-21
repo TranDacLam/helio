@@ -56,7 +56,7 @@ export class UserDetailComponent implements OnInit {
 		this.formUser = this.fb.group({
         email: [this.user.email, [Validators.required, UserValidators.emailValidators]],
         full_name: [this.user.full_name, [Validators.required]],
-        birth_date: [this.user.birth_date ? moment(this.user.birth_date,"DD/MM/YYYY").toDate() : null, [UserValidators.birtdateValidators]],
+        birth_date: [this.user.birth_date ? moment(this.user.birth_date,"DD/MM/YYYY").toDate() : '', [UserValidators.birtdateValidators, UserValidators.formatBirtday]],
         phone: [this.user.phone, [Validators.required,NumberValidators.validPhone]],
         personal_id: [this.user.personal_id, [NumberValidators.validPersonID]],
         country: [this.user.country],

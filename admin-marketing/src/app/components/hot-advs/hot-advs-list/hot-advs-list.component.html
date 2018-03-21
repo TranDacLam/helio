@@ -21,27 +21,22 @@
 </div>
 <br>
 <div class="table card-list">
-	<div class="alert alert-success" *ngIf="message_result">
-        {{message_result}}
-    </div>
-	<table id="table-hot-advs" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
-		<thead>
-	      	<tr>
-	      		<th class="checkbox-hot-advs"><input type="checkbox" id="allCheck" name="allCheckHotAdvs" value="allCheckHotAdvs"(change)="checkAllHotAdvs($event)"/></th>
-
-	        	<th>Hot Ads</th>
-	      	</tr>
-    	</thead>
-    	<tbody>
-   			<tr *ngFor ="let hot_adv of hot_advs" id="delete{{hot_adv.id}}">
-   				<td><input type="checkbox" id="{{hot_adv.id}}"
-   					value={{hot_adv.id}} name=""
-   					[checked]="checkbox"
-   					(change)="checkItemChange($event, hot_adv)"/></td>
-        		<td>{{ hot_adv.name }}</td>
-   			</tr>
-    	</tbody>
-	</table>
+	<table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" *ngIf="hot_advs">
+        <thead>
+            <tr>
+                <th class='checkbox-hot-advs'><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                <th>ID</th>
+                <th>Hot Ads</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="row-data" *ngFor="let hot_adv of hot_advs">
+                <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                <td>{{ hot_adv.id }}</td>
+                <td>{{ hot_adv.name }}</td>
+            </tr>
+        </tbody>
+    </table>
 	<hr>
 	<div class='row'>
 		<div class="col-md-3">
@@ -50,7 +45,7 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			{{hot_adv_selected.length}} của {{hot_advs.length}} được chọn
+			{{length_selected}} của {{length_all}} được chọn
 			<button (click)="confirmDelete()" type="button" class=" button-hot-ads btn btn-danger">Thực hiện</button>
 		</div>
 	</div>

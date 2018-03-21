@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Banner, positions } from '../../../shared/class/banner';
 import { BannerService } from '../../../shared/services/banner.service';
-
+import { ToastrService } from 'ngx-toastr';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { env } from '../../../../environments/environment';
 
@@ -31,6 +31,7 @@ export class BannerDetailComponent implements OnInit {
   		private route: ActivatedRoute,
         private fb: FormBuilder,
         private router: Router,
+        private toastr: ToastrService,
   	) {
         this.createForm();
         this.api_domain = env.api_domain_root;
@@ -98,7 +99,8 @@ export class BannerDetailComponent implements OnInit {
             this.bannerService.updateBanner(bannerFormGroup, this.banner.id, this.lang).subscribe(
                     (data) => {
                         // Navigate to promotion page where success
-                        this.router.navigate(['/banner-list', { message_put: this.formBanner.value['sub_url']} ])
+                        this.toastr.success(`Chỉnh sửa ${this.formBanner.value['sub_url']} thành công`);
+                        this.router.navigate(['/banner-list']);
                     }, 
                     (error) => {
                         if(error.code == 400) {
@@ -115,7 +117,8 @@ export class BannerDetailComponent implements OnInit {
         const id = this.banner.id;
         this.bannerService.deleteUserById(id, this.lang).subscribe(
             (data) => {
-                this.router.navigate(['/banner-list', { message_del: this.banner.sub_url}]);
+                this.toastr.success(`Xóa ${this.banner.sub_url} thành công`);
+                this.router.navigate(['/banner-list']);
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.message }])

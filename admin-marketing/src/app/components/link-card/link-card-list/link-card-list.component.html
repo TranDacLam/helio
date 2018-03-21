@@ -44,7 +44,7 @@
             <td>{{ link_card.full_name }}</td>
             <td>{{ link_card.phone }}</td>
             <td>{{ link_card.birth_date }}</td>
-            <td>{{ link_card.date_mapping }}</td>
+            <td>{{ link_card.date_mapping | date:"dd/MM/yyyy HH:mm" }}</td>
             <td>{{ link_card.username_mapping }}</td>
         </tr>
     </tbody>
