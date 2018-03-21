@@ -424,7 +424,7 @@ class RolesSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
         
 class UserRoleDisplaySerializer(serializers.ModelSerializer):
-
+    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required = False)
     role = RolesSerializer(many=False, required=False, read_only=False)
 
     class Meta:

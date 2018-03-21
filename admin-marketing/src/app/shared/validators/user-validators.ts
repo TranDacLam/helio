@@ -62,6 +62,24 @@ export class UserValidators {
 		return null;
 	}
 
+	static formatBirtday(c: FormControl): ValidationErrors {
+        if(c.dirty){
+            let validatePattern = /^(\d{1,2})(\/)(\d{1,2})(\/)(\d{4})$/;
+            let getValDate = String($('#birth_date').val());
+            let dateValues = getValDate.match(validatePattern);
+            if(getValDate === ''){
+                return null;
+            }else if(dateValues === null){
+                return {
+                    'fomatBirtdate': {
+                        'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/mm/yyyy'
+                    }
+                };
+            }
+            return null;
+        }
+    }
+
 	
 }
 
