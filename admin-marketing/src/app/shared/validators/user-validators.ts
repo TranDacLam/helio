@@ -10,7 +10,7 @@ export class UserValidators {
 		if(passValues === null && passVal !== '') {
 			return {
                 'passwordValidate': {
-                    'message': 'Mật khẩu phải dài từ 8 đến 32 chữ số và bao gồm ít nhất một chữ số.'
+                    'message': 'Mật khẩu hợp lệ phải có ít nhất 6 ký tự bao gồm cả chữ và số.'
                 }
             };
 		}
@@ -61,5 +61,25 @@ export class UserValidators {
 		}
 		return null;
 	}
+
+	static formatBirtday(c: FormControl): ValidationErrors {
+        if(c.dirty){
+            let validatePattern = /^(\d{1,2})(\/)(\d{1,2})(\/)(\d{4})$/;
+            let getValDate = String($('#birth_date').val());
+            let dateValues = getValDate.match(validatePattern);
+            if(getValDate === ''){
+                return null;
+            }else if(dateValues === null){
+                return {
+                    'fomatBirtdate': {
+                        'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/mm/yyyy'
+                    }
+                };
+            }
+            return null;
+        }
+    }
+
+	
 }
 

@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { HotAdvs } from '../../../shared/class/hot-advs';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { HotAdvsService } from '../../../shared/services/hot-advs.service';
+import { ToastrService } from 'ngx-toastr';
 
 import { Router } from "@angular/router";
 
@@ -27,6 +28,7 @@ export class HotAdvsAddComponent implements OnInit {
   		private fb: FormBuilder,
         private hotAdvsService: HotAdvsService,
         private router: Router,
+        private toastr: ToastrService,
   		) {}
 
   	ngOnInit() {
@@ -74,7 +76,8 @@ export class HotAdvsAddComponent implements OnInit {
             this.hotAdvsService.CreateHotAdvs(hotAdvsFormGroup).subscribe(
                 (result) => {
                     self.hot_advs.push(result);
-                    self.router.navigate(['/hot-advs-list', { message_post: this.formHotAds.value['name']} ])
+                    this.toastr.success(`Thêm ${this.formHotAds.value['name']} banner thành công`);
+                    self.router.navigate(['/hot-advs-list'])
                 },
                 (error) => {
                     if(error.code == 400) {

@@ -29,6 +29,8 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
+from django.utils.translation import ugettext_lazy as _
+
 """
     Get Promotion
     @author: diemnguyen
@@ -283,7 +285,7 @@ class AdvertisementView(APIView):
         Get all Advertisement
         """
         try:
-            adv_list = Advertisement.objects.all()
+            adv_list = Advertisement.objects.all().order_by('-created')
             serializer = admin_serializers.AdvertisementSerializer(
                 adv_list, many=True)
             return Response(serializer.data)
@@ -315,8 +317,8 @@ class AdvertisementView(APIView):
             adv_id = self.request.data.get('adv_id', None)
             print "Adv_id", adv_id
             if adv_id:
-                queryset = Advertisement.objects.filter(
-                    pk__in=adv_id).delete()
+                # queryset = Advertisement.objects.filter(
+                #     pk__in=adv_id).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
@@ -401,7 +403,7 @@ class DenominationView(APIView):
         Get all Denomination to list 
         """
         try:
-            list_denomination = Denomination.objects.all()
+            list_denomination = Denomination.objects.all().order_by('-created')
             serializer = admin_serializers.DenominationSerializer(
                 list_denomination, many=True)
             return Response(serializer.data)
@@ -492,7 +494,7 @@ class FeedbackView(APIView):
                     queryset, many=True)
                 return Response(serializer.data)
             else:
-                queryset = FeedBack.objects.all()
+                queryset = FeedBack.objects.all().order_by('-created')
                 serializer = admin_serializers.FeedBackSerializer(
                     queryset, many=True)
                 return Response(serializer.data)
@@ -635,7 +637,7 @@ class NotificationList(APIView):
 
                 Notification.objects.filter(
                     pk__in=list_notification_id).delete()
-                return Response({"code": 204, "message": "success", "fields": ""}, status=204)
+                return Response({"code": 204, "message": "success", "fields": ""}, status=200)
 
             return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
         except ValueError:
@@ -899,21 +901,28 @@ class UserEmbedDetail(APIView):
 
             if barcode:
                 if not barcode.isdigit():
-                    return Response({"code": 400, "message": "Barcode is numberic", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Barcode is numberic"), "fields": ""}, status=400)
                 cursor = connections['sql_db'].cursor()
                 query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, 
-                                    Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id
+                                    Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id, C.Card_State
                                 FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
-                                WHERE C.Card_Barcode = {0}"""
+                                WHERE C.Card_Barcode = {0} """
                 cursor.execute(query_str.format(barcode))
                 item = {}
                 item = cursor.fetchone()
                 # check item is exist
                 if not item:
-                    return Response({"code": 400, "message": "Barcode not found.", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Barcode not found."), "fields": ""}, status=400)
+                # card_state is 0 or 1 or 2
+                if item[8] != 0:
+                    if item[8] == 2:
+                        return Response({"code": 400, "message": _("Card is used."), "fields": ""}, status=400)
+                    if item[8] == 1:
+                        return Response({"code": 400, "message": _("Card is locked."), "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Card is invalid."), "fields": ""}, status=400)
                 # check Customer_Id is exist
                 if not item[7]:
-                    return Response({"code": 400, "message": "Card has no user", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
 
                 result = {}
                 first_name = item[0] if item[0] else ''  # Firstname
@@ -927,6 +936,9 @@ class UserEmbedDetail(APIView):
                 result["address"] = item[4] if item[4] else None  # Address1
                 result["email"] = item[5] if item[5] else None  # EMail
                 result["phone"] = item[6] if item[6] else None  # Phone
+                result["customer_id"] = item[7] if item[7] else None #customer_id
+                result["cards_state"] = item[8] if item[8] == 0 else None #cards_state
+
                 return Response({"code": 200, "message": result, "fields": ""}, status=200)
 
             return Response({"code": 400, "message": 'Bacode is required', "fields": ""}, status=400)
@@ -955,12 +967,24 @@ class UserEmbedDetail(APIView):
         try:
             cursor = connections['sql_db'].cursor()
 
-            query_barcode = """SELECT Card_Barcode FROM Cards WHERE Cards.Card_Barcode = '{0}'"""
+            query_barcode = """SELECT C.Card_State, Cust.Customer_Id
+                                FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
+                                WHERE C.Card_Barcode = {0}"""
             cursor.execute(query_barcode.format(barcode))
-            check_barcode = cursor.fetchone()
-            if not check_barcode:
-                return Response({"code": 400, "message": "Barcode not found", "fields": ""}, status=400)
-
+            item = cursor.fetchone()
+            if not item:
+                return Response({"code": 400, "message": _("Barcode not found"), "fields": ""}, status=400)
+            # card_state is 0 or 1 or 2
+            if item[0] != 0:
+                if item[0] == 2:
+                    return Response({"code": 400, "message": _("Card is used."), "fields": ""}, status=400)
+                if item[0] == 1:
+                    return Response({"code": 400, "message": _("Card is locked."), "fields": ""}, status=400)
+                return Response({"code": 400, "message": _("Card is invalid."), "fields": ""}, status=400)
+            # check Customer_Id is exist
+            if not item[1]:
+                return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
+            
             serializer = admin_serializers.UserEmbedSerializer(
                 data=request.data)
 
@@ -1003,7 +1027,7 @@ class RelateAPI(APIView):
 
     def post(self, request, format=None):
         """
-            - check user by email
+            - check user exist by email
             - check user is related
             - check user embed is exist
             - check user embed is related
@@ -1020,29 +1044,37 @@ class RelateAPI(APIView):
 
                 # check user is related
                 if user.barcode:
-                    return Response({"code": 400, "message": "User is related.", "fields": ""}, status=400)
-
+                    return Response({"code": 400, "message": _("User is related."), "fields": ""}, status=400)
+                
+                # check user embed is exist
                 cursor = connections['sql_db'].cursor()
-                query_str = """SELECT Cust.Customer_Id
+                query_str = """SELECT C.Card_State, Cust.Customer_Id
                     FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
                     WHERE C.Card_Barcode = '{0}'"""
                 cursor.execute(query_str.format(barcode))
                 userembed_item = cursor.fetchone()
-                # check user embed is exist by check Customer_Id
                 if not userembed_item:
-                    return Response({"code": 400, "message": "Not found Userembed.", "fields": ""}, status=400)
-                # custumer_id is null
-                if not userembed_item[0]:
-                    return Response({"code": 400, "message": "Tikets do not sign up with user", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Barcode not found"), "fields": ""}, status=400)
+                # card_state is 0 or 1 or 2
+                if userembed_item[0] != 0:
+                    if userembed_item[0] == 2:
+                        return Response({"code": 400, "message": _("Card is used."), "fields": ""}, status=400)
+                    if userembed_item[0] == 1:
+                        return Response({"code": 400, "message": _("Card is locked."), "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Card is invalid."), "fields": ""}, status=400)
+                # check Customer_Id is exist
+                if not userembed_item[1]:
+                    return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
+                
                 # check user embed is related
                 userembed_is_related = User.objects.filter(barcode=barcode)
                 if userembed_is_related:
-                    return Response({"code": 400, "message": "Userembed is related.", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Userembed is related."), "fields": ""}, status=400)
 
                 user.barcode = barcode
                 # TO DO
-                user.username_mapping = request.user.username
-                user.date_mapping = datetime.now().date()
+                user.username_mapping = request.user.email
+                user.date_mapping = datetime.now()
                 user.save()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
 
@@ -1160,9 +1192,9 @@ class FeeListAPI(APIView):
                 fees = Fee.objects.filter(id__in=list_id)
                 if fees:
                     fees.delete()
-                    return Response({"code": 204, "message": "success", "fields": ""}, status=204)
-                return Response({"code": 400, "message": "Not Found Fee", "fields": ""}, status=400)
-            return Response({"code": 400, "message": "List_id field is required", "fields": ""}, status=400)
+                    return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": _("Not Found Fee"), "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found list_id"), "fields": ""}, status=400)
 
         except Exception, e:
             print "FeeListAPI ", e
@@ -1187,7 +1219,7 @@ class BannerView(APIView):
         """
         print "Method GET"
         try:
-            banners = Banner.objects.all()
+            banners = Banner.objects.all().order_by('-created')
             serializer = admin_serializers.BannerSerializer(banners, many=True)
             return Response(serializer.data)
 
@@ -1301,7 +1333,7 @@ class CategoryNotifications(APIView):
             category_noti_list = Category_Notification.objects.all()
             serializer = admin_serializers.CategoryNotificationSerializer(
                 category_noti_list, many=True)
-            return Response({"code": 200, "message": serializer.data, "fields": ""}, status=200)
+            return Response({"code": 204, "message": serializer.data, "fields": ""}, status=200)
 
         except Exception, e:
             print "FeeAPI ", e
@@ -1325,7 +1357,7 @@ class EventAPI(APIView):
             eventSerializer = admin_serializers.EventSerializer(event)
             return Response(eventSerializer.data)
         except Event.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Event."), "fields": ""}, status=400)
 
         except Exception, e:
             print "EventAPI ", e
@@ -1360,7 +1392,7 @@ class EventAPI(APIView):
             return Response({"code": 400, "message": eventSerializer.errors, "fields": ""}, status=400)
 
         except Event.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Event."), "fields": ""}, status=400)
 
         except Exception, e:
             print "EventAPI", e
@@ -1371,10 +1403,10 @@ class EventAPI(APIView):
         try:
             event = Event.objects.get(id=id)
             event.delete()
-            return Response({"code": 204, "message": "success", "fields": ""}, status=204)
+            return Response({"code": 204, "message": "success", "fields": ""}, status=200)
 
         except Event.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Event."), "fields": ""}, status=400)
         except Exception, e:
             print "EventAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1408,9 +1440,9 @@ class EventListAPI(APIView):
                 events = Event.objects.filter(id__in=list_id)
                 if events:
                     events.delete()
-                    return Response({"code": 204, "message": "success", "fields": ""}, status=204)
-                return Response({"code": 400, "message": "Not Found Event.", "fields": ""}, status=400)
-            return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
+                    return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": _("Not Found Event."), "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
         except Exception, e:
             print "EventListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1442,7 +1474,7 @@ class PromotionLabelAPI(APIView):
             return Response(promotionLabelSerializer.data)
 
         except Promotion_Label.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Promotion Label."), "fields": ""}, status=400)
         except Exception, e:
             print "PromotionLabelAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1481,10 +1513,10 @@ class PromotionLabelAPI(APIView):
         try:
             promotionLabel = Promotion_Label.objects.get(id=id)
             promotionLabel.delete()
-            return Response({"code": 204, "message": "success", "fields": ""}, status=204)
+            return Response({"code": 204, "message": "success", "fields": ""}, status=200)
 
         except Promotion_Label.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Promotion Label."), "fields": ""}, status=400)
         except Exception, e:
             print "PromotionLabelAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1519,9 +1551,9 @@ class PromotionLabelListAPI(APIView):
                     id__in=list_id)
                 if promotionLabels:
                     promotionLabels.delete()
-                    return Response({"code": 204, "message": "success", "fields": ""}, status=204)
-                return Response({"code": 400, "message": "Not Found Promotion Label.", "fields": ""}, status=400)
-            return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
+                    return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": _("Not Found Promotion Label."), "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
         except Exception, e:
             print "PromotionLabelListAPI", e
@@ -1546,7 +1578,7 @@ class HotAPI(APIView):
             return Response(hotSerializer.data)
 
         except Hot.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Hot."), "fields": ""}, status=400)
         except Exception, e:
             print "HotAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1579,7 +1611,7 @@ class HotAPI(APIView):
             return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
 
         except Hot.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Hot."), "fields": ""}, status=400)
 
         except Exception, e:
             print "HotAPI", e
@@ -1590,10 +1622,10 @@ class HotAPI(APIView):
         try:
             hot = Hot.objects.get(id=id)
             hot.delete()
-            return Response({"code": 204, "message": "success", "fields": ""}, status=204)
+            return Response({"code": 204, "message": "success", "fields": ""}, status=200)
 
         except Hot.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Hot."), "fields": ""}, status=400)
         except Exception, e:
             print "HotAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1625,9 +1657,9 @@ class HotListAPI(APIView):
                 hots = Hot.objects.filter(id__in=list_id)
                 if hots:
                     hots.delete()
-                    return Response({"code": 204, "message": "success", "fields": ""}, status=204)
-                return Response({"code": 400, "message": "Not Found Hot.", "fields": ""}, status=400)
-            return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
+                    return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": _("Not Found Hot."), "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
         except Exception, e:
             print "HotListAPI", e
@@ -1651,7 +1683,7 @@ class PostAPI(APIView):
             return Response(postSerializer.data)
 
         except Post.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Post.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Post."), "fields": ""}, status=400)
 
         except Exception, e:
             print "PostAPI ", e
@@ -1692,7 +1724,7 @@ class PostAPI(APIView):
                             is_clear_image_item = item.get( 'is_clear_image', None)
                             post_image = Post_Image.objects.filter( id = item_id )
                             if not post_image:
-                                return Response({"code": 400, "message": "Not Found Post Image.", "fields": ""}, status=400)
+                                return Response({"code": 400, "message": _("Not Found Post Image."), "fields": ""}, status=400)
                             if is_clear_image_item:
                                 post_image.delete()
                                 break
@@ -1716,10 +1748,10 @@ class PostAPI(APIView):
         try:
             post = Post.objects.get(id=id)
             post.delete()
-            return Response({"code": 204, "message": "success", "fields": ""}, status=204)
+            return Response({"code": 204, "message": "success", "fields": ""}, status=200)
 
         except Post.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Post.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Post."), "fields": ""}, status=400)
         except Exception, e:
             print "PostAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1753,9 +1785,9 @@ class PostListAPI(APIView):
                 posts = Post.objects.filter(id__in=list_id)
                 if posts:
                     posts.delete()
-                    return Response({"code": 204, "message": "success", "fields": ""}, status=204)
-                return Response({"code": 400, "message": "Not Found Posts.", "fields": ""}, status=400)
-            return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
+                    return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": _("Not Found Posts."), "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
         except Exception, e:
             print "HotListAPI", e
@@ -1800,7 +1832,7 @@ class FAQAPI(APIView):
             return Response(faqSerializer.data)
 
         except FAQ.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found FAQ.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found FAQ."), "fields": ""}, status=400)
         except Exception, e:
             print "FAQAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1830,7 +1862,7 @@ class FAQAPI(APIView):
             return Response({"code": 400, "message": faqSerializer.errors, "fields": ""}, status=400)
 
         except FAQ.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found FAQ.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found FAQ."), "fields": ""}, status=400)
         except Exception, e:
             print "FAQAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1840,10 +1872,10 @@ class FAQAPI(APIView):
         try:
             faq = FAQ.objects.get(id=id)
             faq.delete()
-            return Response({"code": 204, "message": "success", "fields": ""}, status=204)
+            return Response({"code": 204, "message": "success", "fields": ""}, status=200)
 
         except FAQ.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found FAQ.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found FAQ."), "fields": ""}, status=400)
         except Exception, e:
             print "FAQAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -1876,9 +1908,9 @@ class FAQListAPI(APIView):
                 faqs = FAQ.objects.filter(id__in=list_id)
                 if faqs:
                     faqs.delete()
-                    return Response({"code": 204, "message": "success", "fields": ""}, status=204)
-                return Response({"code": 400, "message": "Not Found FAQs.", "fields": ""}, status=400)
-            return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
+                    return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": _("Not Found FAQs."), "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
         except Exception, e:
             print "FAQListAPI", e
@@ -2056,7 +2088,7 @@ class UserDetailView(APIView):
                     if(self.request.user.role_id == 1):
                         user.set_password(self.request.data.get("new_password"))
                     else:
-                        return Response({"code": 405, "message": "Just System Admin Change password", "fields": ""}, status=405) 
+                        return Response({"code": 405, "message": _("Just System Admin Change password"), "fields": ""}, status=405) 
                 else:
                     user.password = self.request.data.get('password', user.password)
                 serializer.save()
@@ -2081,7 +2113,7 @@ class UserDetailView(APIView):
                 user.delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             else:
-                return Response({"code": 405, "message": "Just System Admin accept delete", "fields": ""}, status=405)
+                return Response({"code": 405, "message": _("Just System Admin accept delete"), "fields": ""}, status=405)
         except Exception, e:
             print 'UserDetailView PUT', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -2124,7 +2156,7 @@ class GameAPI(APIView):
             return Response(gameSerializer.data)
 
         except Game.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Game.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Game."), "fields": ""}, status=400)
         except Exception, e:
             print "GameAPI ", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -2158,7 +2190,7 @@ class GameAPI(APIView):
             return Response({"code": 400, "message": gameSerializer.errors, "fields": ""}, status=400)
 
         except Game.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Game.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Game."), "fields": ""}, status=400)
         except Exception, e:
             print "GameAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -2168,10 +2200,10 @@ class GameAPI(APIView):
         try:
             game = Game.objects.get(id=id)
             game.delete()
-            return Response({"code": 204, "message": "success", "fields": ""}, status=204)
+            return Response({"code": 204, "message": "success", "fields": ""}, status=200)
 
         except Game.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Game.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Game."), "fields": ""}, status=400)
         except Exception, e:
             print "GameAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -2204,9 +2236,9 @@ class GameListAPI(APIView):
                 games = Game.objects.filter(id__in=list_id)
                 if games:
                     games.delete()
-                    return Response({"code": 204, "message": "success", "fields": ""}, status=204)
-                return Response({"code": 400, "message": "Not Found Games.", "fields": ""}, status=400)
-            return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
+                    return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 400, "message": _("Not Found Games."), "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
         except Exception, e:
             print "GameListAPI", e
@@ -2245,7 +2277,7 @@ class HotAdvsView(APIView):
 
     def get(self, request):
         try:
-            hot_advs = Hot_Advs.objects.all()
+            hot_advs = Hot_Advs.objects.all().order_by('-created')
             serializer = admin_serializers.HotAdvsSerializer(
                 hot_advs, many=True)
             return Response(serializer.data)
@@ -2335,7 +2367,7 @@ class UserRoleListAPI(APIView):
             return Response(userSerializer.data)
 
         except Roles.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Role.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Role."), "fields": ""}, status=400)
         except Exception, e:
             print "UserListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -2369,15 +2401,15 @@ class SetRoleAPI(APIView):
                     if users:
                         role.user_role_rel.set(users)
                         return Response({"code": 200, "message": "success", "fields": ""}, status=200)
-                    return Response({"code": 400, "message": "Not Found users.", "fields": ""}, status=400)
+                    return Response({"code": 400, "message": _("Not Found users."), "fields": ""}, status=400)
                 #list_id is empty then clear all user of role
                 role.user_role_rel.clear()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
 
-            return Response({"code": 400, "message": "Not Found list_id.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
         except Roles.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not Found Role.", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found Role."), "fields": ""}, status=400)
         except Exception, e:
             print "UserListAPI", e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}

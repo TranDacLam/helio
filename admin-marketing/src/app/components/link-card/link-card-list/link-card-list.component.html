@@ -19,15 +19,11 @@
         </div>
     </a>
 </div>
-<div *ngIf="message_result" class="alert alert-success">
-    {{ message_result }}
-</div>
-<table id="table_link_card" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class=" row hover">
-	<thead>
-		<tr class="tr-link-card">
-            <th class="checkbox-link-card"><input type="checkbox" id="allCheck"
-                name="allLinkCards" value="allLinkCards" (change)="selectAllCheckbox($event);"/>
-            </th>
+<table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" *ngIf="link_cards">
+    <thead>
+        <tr>
+            <th class="checkbox-link-card"><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+            <th>ID</th>
             <th>Card Bardoce</th>
             <th>Email</th>
             <th>Họ và Tên </th>
@@ -36,20 +32,11 @@
             <th>Ngày mapping</th>
             <th>Tài Khoản Thực Hiện Mapping</th>
         </tr>
-	</thead>
-	<tbody>
-        <tr *ngFor="let link_card of link_cards" id="delete{{link_card.id}}">
-            <td class="tr-link-card">
-                <label class="checkboxSelect">
-                    <input type="checkbox" 
-                    name="{{ link_card.id }}"
-                    value="{{ link_card.id }}"
-                    id="{{ link_card.id }}"
-                    [checked]="checkbox"
-                    (change)="changeCheckboxLinkCard($event, link_card)"
-                    />
-                </label>
-            </td>
+    </thead>
+    <tbody>
+        <tr class="row-data" *ngFor="let link_card of link_cards">
+            <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+            <td>{{ link_card.id }}</td>
             <td>{{ link_card.barcode }}</td>
             <td><a [routerLink]="['../link-card/detail/', link_card.id, { email: link_card.email, barcode: link_card.barcode }]">
                 {{ link_card.email }}</a>
@@ -57,7 +44,7 @@
             <td>{{ link_card.full_name }}</td>
             <td>{{ link_card.phone }}</td>
             <td>{{ link_card.birth_date }}</td>
-            <td>{{ link_card.date_mapping }}</td>
+            <td>{{ link_card.date_mapping | date:"dd/MM/yyyy HH:mm" }}</td>
             <td>{{ link_card.username_mapping }}</td>
         </tr>
     </tbody>
@@ -70,7 +57,7 @@
 		</select>
 	</div>
 	<div class="col-md-3">
-		{{link_card_del.length}} của {{link_cards.length}} được chọn
+		{{length_selected}} của {{length_all}} được chọn
 		<button (click)="confirmDelete()" type="button" class="btn-link-card btn btn-danger">Thực hiện</button>
 	</div>
 </div>

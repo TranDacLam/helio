@@ -7,6 +7,8 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 
 import { api } from '../utils/api';
+import { env } from './../../../environments/environment';
+
 import { Advertisement } from '../../shared/class/advertisement';
 
 @Injectable()
@@ -29,8 +31,8 @@ export class AdvertisementService {
 		GET: Get All Advertiment From Service
 		@author: TrangLe
 	 */
-	getAllAdvertisement(): Observable<any>{
-		let urlAdv = `${api.advertisement}`;
+	getAllAdvertisement(lang): Observable<any>{
+		let urlAdv = `${env.api_domain_root}/${lang}/api/${api.advertisement}`;
 		return this.http.get(urlAdv, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
@@ -38,8 +40,8 @@ export class AdvertisementService {
 		POST: Add Advertiment
 		@author: TrangLe
 	 */ 
-	addAdvertisement(adv: Advertisement): Observable<Advertisement> {
-		let urlAdv = `${api.advertisement}`;
+	addAdvertisement(adv: Advertisement, lang): Observable<Advertisement> {
+		let urlAdv = `${env.api_domain_root}/${lang}/api/${api.advertisement}`;
 		return this.http.post(urlAdv, adv, this.httpOptions)
 		.map((res: Response) => res.json()).catch(this.handleError);		
 	}
@@ -48,14 +50,13 @@ export class AdvertisementService {
 		GET: Get Advertiment By Id
 		@author: TrangLe
 	 */
-	getAdvertisement(id: number): Observable<Advertisement> {
-		const url = `${api.advertisement}${id}/`;
+	getAdvertisement(id: number, lang): Observable<Advertisement> {
+		const url = `${env.api_domain_root}/${lang}/api/${api.advertisement}${id}/`;
 		return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
-	deleteAdvById(adv: Advertisement): Observable<Advertisement> {
-		const id = adv.id;
-		const url = `${api.advertisement}${id}/`;
+	deleteAdvById(id:number, lang): Observable<Advertisement> {
+		const url = `${env.api_domain_root}/${lang}/api/${api.advertisement}${id}/`;
 		return this.http.delete(url,this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 	
@@ -63,18 +64,18 @@ export class AdvertisementService {
 		POST: Update detail Advertiment
 		@author: TrangLe
 	 */
-	updateAdv(adv, id:number): Observable<Advertisement> {
+	updateAdv(adv, id:number, lang): Observable<Advertisement> {
 		// const id = adv.id;
 		var body = JSON.stringify(adv);
-		const url = `${api.advertisement}${id}/`;
+		const url = `${env.api_domain_root}/${lang}/api/${api.advertisement}${id}/`;
 		return this.http.put(url,body, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 	/*
 		DELETE: Delete All Advertiment which checked box
 		@author: TrangLe
 	 */
-	deleteAllAdvsSelected(adv_id): Observable<any> {
-		const url = `${api.advertisement}`;
+	deleteAllAdvsSelected(adv_id, lang): Observable<any> {
+		let url = `${env.api_domain_root}/${lang}/api/${api.advertisement}`;
 		let param = {
             adv_id: adv_id
         }

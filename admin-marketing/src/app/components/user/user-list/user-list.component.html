@@ -21,28 +21,24 @@
 </div>
 <br>
 <div class="table card-list">
-	<div class="alert alert-success" *ngIf="message_result">
-        {{message_result}}
-    </div>
-	<table id="table-user" datatable [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" class='row-border hover'>
-		<thead>
-	      	<tr>
-	      		<th class="checkbox-user"><input id="allCheck" type="checkbox" name="allCheckUse" value="allCheckUser"(change)="checkAllUser($event)"/></th>
-	      		<th> Email</th>
-	        	<th>Loại User </th>
-	      	</tr>
-    	</thead>
-    	<tbody>
-   			<tr *ngFor ="let user of users" id="delete{{user.id}}">
-   				<td><input type="checkbox" id="check_{{user.id}}"
-   					value={{user.id}} name=""
-   					[checked]="checkbox"
-   					(change)="checkItemChange($event, user)"/></td>
-   				<td class="title-email"><a routerLink="/user-detail/{{ user.id }}" >{{ user.email }}</a></td>
-        		<td *ngIf="user.role.name">{{ user.role.name }}</td>
-   			</tr>
-    	</tbody>
-	</table>
+	<table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" *ngIf="users">
+        <thead>
+            <tr>
+                <th class="checkbox-user"><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                <th>ID</th>
+                <th> Email</th>
+                <th>Loại User </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="row-data" *ngFor="let user of users">
+                <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                <td>{{ user.id }}</td>
+                <td class="title-email"><a routerLink="/user-detail/{{ user.id }}" >{{ user.email }}</a></td>
+                <td>{{ user.role?.name }}</td>
+            </tr>
+        </tbody>
+    </table>
 	<hr>
 	<div class='row'>
 		<div class="col-md-3">
@@ -51,7 +47,7 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			{{user_selected.length}} của {{users.length}} được chọn
+			{{length_selected}} của {{length_all}} được chọn
 			<button (click)="confirmDelete()" type="button" class="button-user btn btn-danger">Thực hiện</button>
 		</div>
 	</div>

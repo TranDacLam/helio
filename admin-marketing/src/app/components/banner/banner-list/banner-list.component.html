@@ -21,9 +21,6 @@
 </div>
 <br>
 <div class="table card-list">
-    <div class="alert alert-success" *ngIf="message_result">
-        {{message_result}}
-    </div>
     <div class="row mb-30 language">
         <div class="col-xs-12 col-sm-12">
             <div class="btn-group pull-right">
@@ -37,21 +34,19 @@
         </div>
     </div>
     <div class="custom-table">
-        <table id="table-user" *ngIf="banners" datatable [dtOptions]='dtOptions' class='row-border hover'>
+        <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" *ngIf="banners">
             <thead>
                 <tr>
-                    <th class='checkbox-banner'><input type="checkbox" id="allCheck" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/></th>
+                    <th class='checkbox-banner'><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                    <th>ID</th>
                     <th>Banner</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor ="let banner of banners" id="delete{{banner.id}}">
-                    <td><input type="checkbox"
-                        value={{banner.id}} name="banner[]" id="{{banner.id}}"
-                        (change)="checkItemChange($event, banner)" [checked]="checkbox" /></td>
-                    <td>
-                        <a [routerLink]="['/banner-detail/', banner.id, {lang: lang}]">{{ banner.sub_url }}</a>
-                    </td>
+                <tr class="row-data" *ngFor="let banner of banners">
+                    <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                    <td>{{ banner.id }}</td>
+                    <td> <a [routerLink]="['/banner-detail/', banner.id, {lang: lang}]">{{ banner.sub_url }}</a></td>
                 </tr>
             </tbody>
         </table>
@@ -64,7 +59,7 @@
             </select>
         </div>
         <div class="col-md-3" >
-            {{banner_del.length}} của {{banners.length}} được chọn
+            {{length_selected}} của {{length_all}} được chọn
             <button (click)="confirmDelete()" type="button" class="button-banner btn btn-danger">Thực hiện</button>
         </div>
     </div>

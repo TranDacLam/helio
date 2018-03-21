@@ -9,6 +9,9 @@
 p.title {
 	font-size: 34px;
 }
+p.errors {
+	color: red;
+}
 a.title-feedback {
 	padding: 5px 0px;
 	color: black;

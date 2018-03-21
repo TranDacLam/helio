@@ -2,7 +2,7 @@ import { Component,ElementRef,Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Router } from "@angular/router";
-
+import { ToastrService } from 'ngx-toastr';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { BannerService } from '../../../shared/services/banner.service';
 import { Banner, positions } from '../../../shared/class/banner';
@@ -27,6 +27,7 @@ export class BannerAddComponent implements OnInit {
         private fb: FormBuilder,
         private bannerService: BannerService,
         private router: Router,
+        private toastr: ToastrService,
           ) { 
         this.createForm();
     }
@@ -77,7 +78,8 @@ export class BannerAddComponent implements OnInit {
             this.bannerService.CreateBanner(bannerFormGroup, this.lang).subscribe(
                 (result) => {
                     self.banners.push(result);
-                    self.router.navigate(['/banner-list', { message_post: this.formBanner.value['sub_url']} ])     
+                    self.toastr.success(`Thêm ${this.formBanner.value['sub_url']} thành công`);
+                    self.router.navigate(['/banner-list'])     
                 },
                 (error) =>  {
                     if( error.code == 400 ){

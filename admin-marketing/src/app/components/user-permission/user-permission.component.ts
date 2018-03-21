@@ -28,7 +28,9 @@ export class UserPermissionComponent implements OnInit {
   dtTrigger_left: Subject<any> = new Subject();
   dtTrigger_right: Subject<any> = new Subject();
   // check 2 button move is checked, if checked reload left table
-  move_is_click: boolean = false;
+  reload_left_table: boolean = false;
+  check_all_left: boolean = false;
+  check_all_right: boolean = false;
 
   /*
       Event get User in table right
@@ -47,8 +49,8 @@ export class UserPermissionComponent implements OnInit {
             self.dtTrigger_right.next();
         });
         // if button move is click, reload table left
-        if (this.move_is_click){
-          this.move_is_click = false;
+        if (this.reload_left_table){
+          this.reload_left_table = false;
           this.getUserLeft();
         }
   		},
@@ -115,57 +117,68 @@ export class UserPermissionComponent implements OnInit {
           )
       });
   }
-  /*
-      Event move all item to right table
-      @author: hoangnguyen 
-  */
-  move_left_all(){
-    this.move_is_click = true;
-    let selected_temp: any;
-      this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
-          selected_temp = dtInstance.rows( 'tr' ).data();
-          dtInstance.rows('tr').remove().draw();
-      });
-
-      this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
-           dtInstance.rows.add(selected_temp).draw();
-      });
-  }
 
   /*
-        Event select All Button on header table
+        Event select All item on a page
         @author: hoangnguyen 
     */
-    selectAllEventLeft(event) {
+    selectAllPageLeft(event) {
+        if( event.target.checked ) {
+            $("#table_id_1 tr").addClass('selected');
+        } else {
+            $("#table_id_1 tr").removeClass('selected');
+        }
+        $("#table_id_1 tr input:checkbox").prop('checked', event.target.checked);
+    }
+  /*
+        Event select All item
+        @author: hoangnguyen 
+    */
+    selectAllEventLeft(is_selected: boolean) {
         this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.rows().every( function () {
                 let row = this.node();
-                if( event.target.checked ) {
+                if( is_selected ) {
                     $(row).addClass('selected');
+                    $(row).find('input:checkbox').prop('checked', true);
                 } else {
                     $(row).removeClass('selected');
+                    $(row).find('input:checkbox').prop('checked', false);
                 }
-                $(row).find('input:checkbox').prop('checked', event.target.checked);
             });
         });
+         this.check_all_left = (is_selected) ? true: false;
     }
-
     /*
-        Event select All Button on header table
+        Event select All item on a page
         @author: hoangnguyen 
     */
-    selectAllEventRight(event) {
+    selectAllPageRight(event) {
+        if( event.target.checked ) {
+            $("#table_id_2 tr").addClass('selected');
+        } else {
+            $("#table_id_2 tr").removeClass('selected');
+        }
+        $("#table_id_2 tr input:checkbox").prop('checked', event.target.checked);
+    }
+    /*
+        Event select All item
+        @author: hoangnguyen 
+    */
+    selectAllEventRight(is_selected: boolean) {
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.rows().every( function () {
                 let row = this.node();
-                if( event.target.checked ) {
+                if( is_selected ) {
                     $(row).addClass('selected');
+                    $(row).find('input:checkbox').prop('checked', true);
                 } else {
                     $(row).removeClass('selected');
+                    $(row).find('input:checkbox').prop('checked', false);
                 }
-                $(row).find('input:checkbox').prop('checked', event.target.checked);
             });
         });
+         this.check_all_right = (is_selected) ? true: false;
     }
 
     /*
@@ -206,7 +219,7 @@ export class UserPermissionComponent implements OnInit {
           $('#select-all-left').prop('checked', false);
         }
 
-        this.move_is_click = true;
+        this.reload_left_table = true;
         let selected_temp: any;
         this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
             selected_temp = dtInstance.rows( '.selected' ).data();
@@ -215,10 +228,14 @@ export class UserPermissionComponent implements OnInit {
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
              dtInstance.rows.add(selected_temp).draw();
         });
+        // if table right is checkek then uncheck
+        $("#table_id_2 tr input:checkbox").prop('checked', false);
+        $("#table_id_2 tr").removeClass('selected');
+        $('#select-all-right').prop('checked', false);
     }
     /*
         Move all row is checked to left tatble
-        @author: diemnguyen
+        @author: hoangnguyen
     */
     move_left(): void {
       // uncheck for input select all 
@@ -227,7 +244,7 @@ export class UserPermissionComponent implements OnInit {
           $('#select-all-right').prop('checked', false);
         }
 
-        this.move_is_click = true;
+        this.reload_left_table = true;
         let selected_temp: any;
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
             selected_temp = dtInstance.rows( '.selected' ).data();
@@ -237,6 +254,10 @@ export class UserPermissionComponent implements OnInit {
         this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
              dtInstance.rows.add(selected_temp).draw();
         });
+        // if table left is checkek then uncheck
+        $("#table_id_1 tr input:checkbox").prop('checked', false);
+        $("#table_id_1 tr").removeClass('selected');
+        $('#select-all-left').prop('checked', false);
     }
   ngOnInit() {
   	this.getRoles();
@@ -250,6 +271,7 @@ export class UserPermissionComponent implements OnInit {
             }], 
             order: [[ 1, 'asc' ]],
             scrollX: true,
+            scrollY: "400px",
             language: {
                 sSearch: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
@@ -280,6 +302,7 @@ export class UserPermissionComponent implements OnInit {
             }], 
             order: [[ 1, 'asc' ]],
             scrollX: true,
+            scrollY: "400px",
             language: {
                 sSearch: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",

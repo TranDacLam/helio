@@ -63,6 +63,7 @@ class Base64ImageField(serializers.ImageField):
 class UserSerializer(serializers.ModelSerializer):
 
     birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], allow_null = True)
+    date_mapping = serializers.DateField(format="HH:mm:ss-%d/%m/%Y", input_formats=['HH:mm:ss-%d/%m/%Y'], allow_null = True, required=False)
 
     class Meta:
         model = User
@@ -172,7 +173,12 @@ class PromotionSerializer(serializers.ModelSerializer):
 
 
 class AdvertisementSerializer(serializers.ModelSerializer):
-    
+    name = serializers.CharField(required=True,validators=[
+        UniqueValidator(
+            queryset=Advertisement.objects.all(),
+            message =_('This advertisement is already taken')
+            )
+        ])
     class Meta:
         model = Advertisement
         fields = ('id', 'name', 'is_show')
@@ -225,11 +231,11 @@ class NotificationSerializer(serializers.ModelSerializer):
 class UserEmbedSerializer(serializers.Serializer):
     full_name = serializers.CharField(required=True)
     birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required=True)
-    personal_id = serializers.IntegerField(required=True)
+    personal_id = serializers.CharField(required=True)
     email = serializers.CharField(required=True)
     address = serializers.CharField(required=True)
-    phone = serializers.IntegerField(required=True)
-    barcode = serializers.IntegerField(required=True)
+    phone = serializers.CharField(required=True)
+    barcode = serializers.CharField(required=True)
 
     def validate_birth_date(self, value):
         if value >= datetime.now().date():
@@ -292,9 +298,9 @@ class EventSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data['start_date'] > data['end_date']:
-            raise serializers.ValidationError("Start day is before than End day")
+            raise serializers.ValidationError(_("Start day is before than End day"))
         if data['start_date'] == data['end_date'] and data['start_time'] >= data['end_time']:
-            raise serializers.ValidationError("Start time is before than End time")
+            raise serializers.ValidationError(_("Start time is before than End time"))
         return data
     # override mehod update because name field is unique
     def update(self, instance, validated_data):
@@ -419,7 +425,7 @@ class RolesSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
         
 class UserRoleDisplaySerializer(serializers.ModelSerializer):
-
+    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], required = False)
     role = RolesSerializer(many=False, required=False, read_only=False)
 
     class Meta:
@@ -431,7 +437,13 @@ class UserCreateSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(max_length=11, min_length=9,required=True,validators=[
         UniqueValidator(
             queryset=User.objects.all(),
-            message =_('This phone is already taken. Please, try again')
+            message =_('This phone is already taken')
+            )
+        ])
+    email = serializers.CharField(required=True, validators=[
+        UniqueValidator(
+            queryset = User.objects.all(),
+            message = _('This email is already taken. Please, try again')
             )
         ])
     password= serializers.CharField(write_only=True)
@@ -442,7 +454,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     def validate_birth_date(self, value):
         if value >= datetime.now().date():
-            raise serializers.ValidationError("Birthday must less then today")
+            raise serializers.ValidationError(_("Birthday must less then today"))
         return value
 
     def create(self, validated_data):
@@ -461,7 +473,13 @@ class UserRoleSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(max_length=11, min_length=9,required=True,validators=[
         UniqueValidator(
             queryset=User.objects.all(),
-            message =_('This phone is already taken. Please, try again')
+            message =_('This phone is already taken')
+            )
+        ])
+    email = serializers.CharField(required=True, validators=[
+        UniqueValidator(
+            queryset = User.objects.all(),
+            message = _('This email is already taken. Please, try again')
             )
         ])
     new_password = serializers.CharField(required=False,allow_null=True, allow_blank=True)
@@ -473,14 +491,14 @@ class UserRoleSerializer(serializers.ModelSerializer):
 
     def validate_birth_date(self, value):
         if value >= datetime.now().date():
-            raise serializers.ValidationError("Birthday must less then today")
+            raise serializers.ValidationError(_("Birthday must less then today"))
         return value
 
     def validate(self, data):
         new_password = data['new_password']
         is_staff = data['is_staff']
         if (is_staff == False and new_password):
-            raise serializers.ValidationError("Cannot change password of customer user")
+            raise serializers.ValidationError(_("Cannot change password of customer user"))
         return data;
             
     def update(self, instance, validated_data):

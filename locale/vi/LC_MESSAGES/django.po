@@ -8,7 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-20 08:24+0700\n"
+"POT-Creation-Date: 2018-03-20 22:57+0700\n"
+
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -618,7 +619,8 @@ msgstr "NHỮNG CÂU HỎI THƯỜNG GẶP"
 msgid "This email is already taken. Please, try again"
 msgstr "Địa chỉ email đã tồn tại trong hệ thống. Vui lòng chọn email khác."
 
-#: websites/api/serializers.py:34
+#: websites/api/serializers.py:34 websites/api_admin/serializers.py:434
+#: websites/api_admin/serializers.py:464
 msgid "This phone is already taken. Please, try again"
 msgstr "Số điện thoại đã được sử dụng. Vui lòng chọn số khác."
 
@@ -822,17 +824,129 @@ msgstr ""
 msgid "Error. DeivceID of user is empty. Please check again."
 msgstr "Lỗi. Người dùng hiện tại không có device_id. Vui lòng xác minh lại."
 
-#: websites/api_admin/serializers.py:184
+#: websites/api_admin/serializers.py:178
+
+#| msgid "This denomination is already taken"
+msgid "This advertisement is already taken"
+msgstr "Quảng cáo này đã tồn tại."
+
+#: websites/api_admin/serializers.py:189
 msgid "This denomination is already taken"
 msgstr "Mệnh giá nạp tiền này đã tồn tại."
 
-#: websites/api_admin/serializers.py:236
+#: websites/api_admin/serializers.py:241 websites/api_admin/serializers.py:456
+#: websites/api_admin/serializers.py:493
 msgid "Birthday must less then today"
 msgstr "Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại."
 
-#: websites/api_admin/serializers.py:539
+#: websites/api_admin/serializers.py:439 websites/api_admin/serializers.py:475
+
+#| msgid "This Hot Ads is already taken"
+msgid "This phone is already taken"
+msgstr "Số điện thoại này đã tồn tại."
+
+#: websites/api_admin/serializers.py:445 websites/api_admin/serializers.py:481
+#| msgid "This denomination is already taken"
+msgid "This email is already taken"
+msgstr "Địa chỉ email này đã tồn tại."
+
+#: websites/api_admin/serializers.py:500
+msgid "Cannot change password of customer user"
+msgstr "Không thể thay đổi mật khẩu của Customer User."
+
+#: websites/api_admin/serializers.py:566
 msgid "This Hot Ads is already taken"
 msgstr "Hot Ads này đã tồn tại."
+
+#: websites/api_admin/views.py:2044
+msgid "Just System Admin Change password"
+msgstr "Chỉ có System Admin mới được quyền thay đổi được mật khẩu."
+
+#: websites/api_admin/views.py:2069
+msgid "Just System Admin accept delete"
+msgstr "Chỉ có System Admin mới được quyền xóa"
+
+#: websites/api_admin/serializers.py:295
+msgid "Start day is before than End day"
+msgstr "Ngày bắt đầu phải trước hơn ngày kết thúc."
+
+#: websites/api_admin/serializers.py:297
+msgid "Start time is before than End time"
+msgstr "Giờ bắt đầu phải trước giờ kết thúc."
+
+#: websites/api_admin/serializers.py:549
+msgid "This Hot Ads is already taken"
+msgstr "Hot Ads này đã tồn tại."
+
+#: websites/api_admin/views.py:1150
+msgid "Not Found Fee"
+msgstr "Phí không tồn tại."
+
+#: websites/api_admin/views.py:1151
+msgid "Not Found list_id"
+msgstr "list_id không tồn tại."
+
+#: websites/api_admin/views.py:1314 websites/api_admin/views.py:1349
+#: websites/api_admin/views.py:1363 websites/api_admin/views.py:1398
+msgid "Not Found Event."
+msgstr "Sự Kiện không tồn tại."
+
+#: websites/api_admin/views.py:1399 websites/api_admin/views.py:1510
+#: websites/api_admin/views.py:1616 websites/api_admin/views.py:1744
+#: websites/api_admin/views.py:1867 websites/api_admin/views.py:2195
+#: websites/api_admin/views.py:2363
+msgid "Not Found list_id."
+msgstr "list_id không tồn tại."
+
+#: websites/api_admin/views.py:1431 websites/api_admin/views.py:1473
+#: websites/api_admin/views.py:1509
+msgid "Not Found Promotion Label."
+msgstr "Nhãn Khuyến Mãi không tồn tại."
+
+#: websites/api_admin/views.py:1535 websites/api_admin/views.py:1568
+#: websites/api_admin/views.py:1582 websites/api_admin/views.py:1615
+msgid "Not Found Hot."
+msgstr "Hot không tồn tại."
+
+#: websites/api_admin/views.py:1640 websites/api_admin/views.py:1708
+msgid "Not Found Post."
+msgstr "Bài viết không tồn tại."
+
+#: websites/api_admin/views.py:1681
+msgid "Not Found Post Image."
+msgstr "Hình ảnh bài viết không tồn tại."
+
+#: websites/api_admin/views.py:1743
+msgid "Not Found Posts."
+msgstr "Bài viết không tồn tại."
+
+#: websites/api_admin/views.py:1789 websites/api_admin/views.py:1819
+#: websites/api_admin/views.py:1832
+msgid "Not Found FAQ."
+msgstr "FAQ không tồn tại."
+
+#: websites/api_admin/views.py:1866
+msgid "Not Found FAQs."
+msgstr "FAQs không tồn tại"
+
+#: websites/api_admin/views.py:2113 websites/api_admin/views.py:2147
+#: websites/api_admin/views.py:2160
+#, fuzzy
+#| msgid "Not Found Fee"
+msgid "Not Found Game."
+msgstr "Trò chơi không tồn tại."
+
+#: websites/api_admin/views.py:2194
+msgid "Not Found Games."
+msgstr "Trò chơi không tồn tại"
+
+#: websites/api_admin/views.py:2324 websites/api_admin/views.py:2366
+msgid "Not Found Role."
+msgstr "Role không tồn tại"
+
+#: websites/api_admin/views.py:2358
+msgid "Not Found users."
+msgstr "User không tồn tại"
 
 #: websites/config/setting_api.py:28 websites/config/setting_develop.py:25
 #: websites/config/setting_local.py:26 websites/config/setting_production.py:28
