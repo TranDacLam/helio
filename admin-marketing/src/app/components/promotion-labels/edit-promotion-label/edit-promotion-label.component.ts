@@ -140,6 +140,9 @@ export class EditPromotionLabelComponent implements OnInit {
             (data) => {
                 this.toastr.success(`Xóa "${this.formPromotionLabel.value.name}" thành công`);
                 this.router.navigate(['/promotion-label/list']);
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
             }
         );
     }

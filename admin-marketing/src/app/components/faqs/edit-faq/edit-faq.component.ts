@@ -7,6 +7,7 @@ import { Category } from './../../../shared/class/category';
 import { CategoryService } from './../../../shared/services/category.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import 'rxjs/add/observable/throw';
+import { ToastrService } from 'ngx-toastr';
 
 declare var bootbox:any;
 
@@ -36,7 +37,8 @@ export class EditFaqComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private route: ActivatedRoute,
-        private categoryService: CategoryService
+        private categoryService: CategoryService,
+        private toastr: ToastrService
     ) { }
 
     ngOnInit() {
@@ -109,7 +111,8 @@ export class EditFaqComponent implements OnInit {
             this.formFaq.value.category = parseInt(this.formFaq.value.category);
             this.faqService.updateFaq(this.formFaq.value, this.faq.id, this.lang).subscribe(
                 (data) => {
-                    this.router.navigate(['/faq/list', { message_put: this.formFaq.value.question}]);
+                    this.toastr.success(`Chỉnh sửa "${this.formFaq.value.question}" thành công`);
+                    this.router.navigate(['/faq/list']);
                 },
                 (error) => {
                     if(error.code === 400){
@@ -157,7 +160,8 @@ export class EditFaqComponent implements OnInit {
         const id = this.faq.id;
         this.faqService.onDelFaq(id, this.lang).subscribe(
             (data) => {
-                this.router.navigate(['/faq/list', { message_del: 'success'}]);
+                this.toastr.success(`Xóa "${this.formFaq.value.question}" thành công`);
+                this.router.navigate(['/faq/list']);
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.message}]);

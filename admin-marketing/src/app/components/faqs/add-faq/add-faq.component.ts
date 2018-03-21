@@ -6,6 +6,7 @@ import { FaqService } from '../../../shared/services/faq.service';
 import { Category } from './../../../shared/class/category';
 import { CategoryService } from './../../../shared/services/category.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 
 @Component({
@@ -34,7 +35,8 @@ export class AddFaqComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private route: ActivatedRoute,
-        private categoryService: CategoryService
+        private categoryService: CategoryService,
+        private toastr: ToastrService
     ) { }
 
     ngOnInit() {
@@ -87,7 +89,8 @@ export class AddFaqComponent implements OnInit {
             this.formFaq.value.category = parseInt(this.formFaq.value.category);
             this.faqService.addFaq(this.formFaq.value, this.lang).subscribe(
                 (data) => {
-                    this.router.navigate(['/faq/list', { message_post: this.formFaq.value.question}]);
+                    this.toastr.success(`Thêm mới "${this.formFaq.value.question}" thành công`);
+                    this.router.navigate(['/faq/list']);
                 },
                 (error) => {
                     if(error.code === 400){

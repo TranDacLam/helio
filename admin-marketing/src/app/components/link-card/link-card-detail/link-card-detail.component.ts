@@ -4,6 +4,7 @@ import { Customer } from '../../../shared/class/customer';
 import { LinkCardService } from '../../../shared/services/link-card.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 declare var bootbox:any;
 
@@ -18,12 +19,11 @@ export class LinkCardDetailComponent implements OnInit {
     user_app = new User();
     user_embed = new Customer();
 
-    msg_success: string = '';
-
     constructor(
         private linkCardService: LinkCardService, 
         private route: ActivatedRoute,
         private router: Router,
+        private toastr: ToastrService
     ) { }
 
     ngOnInit() {
@@ -42,15 +42,24 @@ export class LinkCardDetailComponent implements OnInit {
         this.route.params.subscribe(params => {
             email = params.email;
             barcode = params.barcode;
-            this.msg_success = params.message ? params.message : '';
         });
 
-        this.linkCardService.getEmail(email).subscribe(data_app => {
-            this.user_app = data_app;
-        });
-        this.linkCardService.getBarcode(barcode).subscribe(data_embed => {
-            this.user_embed = data_embed.message;
-        });
+        this.linkCardService.getEmail(email).subscribe(
+            (data_app) => {
+                this.user_app = data_app;
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message }]);
+            }
+        );
+        this.linkCardService.getBarcode(barcode).subscribe(
+            (data_embed) => {
+                this.user_embed = data_embed.message;
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message }]);
+            }
+        );
     }
 
     /*
@@ -88,7 +97,8 @@ export class LinkCardDetailComponent implements OnInit {
         const id = this.user_app.id;
         this.linkCardService.delLinkCard(id).subscribe(
             (data) => {
-                this.router.navigate(['/link-card-list', { message_del: "success" }]); // redirect list link card
+                this.toastr.error(`Xóa liên kết thẻ thông báo thành công`);
+                this.router.navigate(['/link-card-list']); // redirect list link card
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.message }]); // redirect list link card

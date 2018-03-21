@@ -721,12 +721,28 @@ class NotificationUser(APIView):
     def get(self, request, id):
         try:
             notification_detail = Notification.objects.get(pk=id)
-            notification_user_id_list = User_Notification.objects.filter(
-                notification_id=id).values_list('user_id', flat=True)
-            user_notification_list = User.objects.filter(
-                pk__in=notification_user_id_list)
-            user_all_list = User.objects.filter(
-                ~Q(pk__in=notification_user_id_list))
+            user_all_list = []
+            user_notification_list = []
+
+            # If exist promotion id, get list user from promotion, later set list user for notification
+            if notification_detail.promotion:
+                promotion_id = notification_detail.promotion.id
+                # Get list user ID by promition id
+                notification_user_id_list = Gift.objects.filter(
+                    promotion_id=promotion_id).values_list('user_id', flat=True)
+                # Get all list user ID not exist in promotion user list
+                user_notification_list = User.objects.filter(
+                    pk__in=notification_user_id_list)
+                user_all_list = User.objects.filter(
+                    ~Q(pk__in=notification_user_id_list))
+            else:
+                notification_user_id_list = User_Notification.objects.filter(
+                    notification_id=id).values_list('user_id', flat=True)
+                user_notification_list = User.objects.filter(
+                    pk__in=notification_user_id_list)
+                user_all_list = User.objects.filter(
+                    ~Q(pk__in=notification_user_id_list))
+
             result = {}
             result['notification_detail'] = admin_serializers.NotificationSerializer(
                 notification_detail, many=False).data

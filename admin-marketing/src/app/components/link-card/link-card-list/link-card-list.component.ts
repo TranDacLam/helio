@@ -51,17 +51,6 @@ export class LinkCardListComponent implements OnInit {
         // Customize DataTable
   		this.dtOptions = data_config(this.record);
         this.getAllLinkCards();
-
-        this.route.params.subscribe(params => {
-            if(params.message_del){
-                this.message_result = 'Xóa liên kết thẻ thành công.';
-                setTimeout(()=>{
-                    this.message_result = '';
-                },7000);
-            }else{
-                this.message_result = '';
-            }
-        });
   	}
 
     /*
