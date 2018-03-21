@@ -112,6 +112,8 @@ export class PromotionFormComponent implements OnInit {
             end_date: [this.promotion.end_date ? moment(this.promotion.end_date,"DD/MM/YYYY").toDate() : '',
                 [DateValidators.checkDate, DateValidators.formatEndDate]],
             is_draft: [this.promotion.is_draft],
+            is_clear_image: [false],
+            is_clear_image_thumbnail: [false],
         });
     }
 
