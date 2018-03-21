@@ -28,7 +28,8 @@ from rest_framework.permissions import IsAuthenticated
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from django.utils.translation import ugettext_lazy as _  
+
+from django.utils.translation import ugettext_lazy as _
 
 """
     Get Promotion
@@ -284,7 +285,7 @@ class AdvertisementView(APIView):
         Get all Advertisement
         """
         try:
-            adv_list = Advertisement.objects.all()
+            adv_list = Advertisement.objects.all().order_by('-created')
             serializer = admin_serializers.AdvertisementSerializer(
                 adv_list, many=True)
             return Response(serializer.data)
@@ -316,8 +317,8 @@ class AdvertisementView(APIView):
             adv_id = self.request.data.get('adv_id', None)
             print "Adv_id", adv_id
             if adv_id:
-                queryset = Advertisement.objects.filter(
-                    pk__in=adv_id).delete()
+                # queryset = Advertisement.objects.filter(
+                #     pk__in=adv_id).delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
@@ -402,7 +403,7 @@ class DenominationView(APIView):
         Get all Denomination to list 
         """
         try:
-            list_denomination = Denomination.objects.all()
+            list_denomination = Denomination.objects.all().order_by('-created')
             serializer = admin_serializers.DenominationSerializer(
                 list_denomination, many=True)
             return Response(serializer.data)
@@ -493,7 +494,7 @@ class FeedbackView(APIView):
                     queryset, many=True)
                 return Response(serializer.data)
             else:
-                queryset = FeedBack.objects.all()
+                queryset = FeedBack.objects.all().order_by('-created')
                 serializer = admin_serializers.FeedBackSerializer(
                     queryset, many=True)
                 return Response(serializer.data)
@@ -1189,7 +1190,7 @@ class BannerView(APIView):
         """
         print "Method GET"
         try:
-            banners = Banner.objects.all()
+            banners = Banner.objects.all().order_by('-created')
             serializer = admin_serializers.BannerSerializer(banners, many=True)
             return Response(serializer.data)
 
@@ -2058,7 +2059,7 @@ class UserDetailView(APIView):
                     if(self.request.user.role_id == 1):
                         user.set_password(self.request.data.get("new_password"))
                     else:
-                        return Response({"code": 405, "message": "Just System Admin Change password", "fields": ""}, status=405) 
+                        return Response({"code": 405, "message": _("Just System Admin Change password"), "fields": ""}, status=405) 
                 else:
                     user.password = self.request.data.get('password', user.password)
                 serializer.save()
@@ -2083,7 +2084,7 @@ class UserDetailView(APIView):
                 user.delete()
                 return Response({"code": 200, "message": "success", "fields": ""}, status=200)
             else:
-                return Response({"code": 405, "message": "Just System Admin accept delete", "fields": ""}, status=405)
+                return Response({"code": 405, "message": _("Just System Admin accept delete"), "fields": ""}, status=405)
         except Exception, e:
             print 'UserDetailView PUT', e
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
@@ -2247,7 +2248,7 @@ class HotAdvsView(APIView):
 
     def get(self, request):
         try:
-            hot_advs = Hot_Advs.objects.all()
+            hot_advs = Hot_Advs.objects.all().order_by('-created')
             serializer = admin_serializers.HotAdvsSerializer(
                 hot_advs, many=True)
             return Response(serializer.data)

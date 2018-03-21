@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="custom-table">
-        <table id="table-user" *ngIf="banners" datatable [dtOptions]='dtOptions' class='row-border hover'>
+        <table id="table_id" *ngIf="banners" datatable [dtOptions]='dtOptions' class='row-border hover'>
             <thead>
                 <tr>
                     <th class='checkbox-banner'><input type="checkbox" id="allCheck" name="allCheckBanner" value="allCheckBanner"(change)="checkAllBanner($event)"/></th>

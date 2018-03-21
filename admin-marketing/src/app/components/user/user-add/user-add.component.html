@@ -18,7 +18,7 @@
 		<div class="col-md-8">
 			<div class="form-group row">
 				<div class="col-sm-3">
-					<label class="center-block"> Email:</label>
+					<label class="center-block"> Email</label>
 				</div>
 	        	<div class="col-sm-8">	
 					<input class='form-control' name="email" 
@@ -33,7 +33,7 @@
 	        </div>
 	        <div class="form-group row">
 				<div class="col-sm-3">
-					<label class="center-block">Họ và Tên:</label>
+					<label class="center-block">Họ và Tên</label>
 				</div>
 	        	<div class="col-sm-8">	
 					<input class='form-control' name="full_name" 
@@ -47,7 +47,7 @@
 	        </div>
 	        <div class="form-group row">
 				<div class="col-sm-3">
-					<label class="center-block">Ngày sinh:</label>
+					<label class="center-block">Ngày sinh</label>
 				</div>
 	        	<div class="col-sm-8">
 	        		<div class="input-group">
@@ -65,7 +65,7 @@
 	        </div>
 			<div class="form-group row">
 				<div class="col-sm-3">
-					<label class="center-block">Số điện thoại:</label>
+					<label class="center-block">Số điện thoại</label>
 				</div>
 	        	<div class="col-sm-8">	
 					<input class='form-control' name="phone" 
@@ -79,7 +79,7 @@
 	        </div>
 			<div class="form-group row">
 				<div class="col-sm-3">
-					<label class="center-block">Chứng minh nhân dân:</label>
+					<label class="center-block">Chứng minh nhân dân</label>
 				</div>
 	        	<div class="col-sm-8">	
 					<input class='form-control' name="personal_id" 
@@ -93,7 +93,7 @@
 	        </div>
 	        <div class="form-group row">
 				<div class="col-sm-3">
-					<label class="center-block">Quốc gia :</label>
+					<label class="center-block">Quốc gia </label>
 				</div>
 	        	<div class="col-sm-8">	
 					<input class='form-control' name="country" 
@@ -107,7 +107,7 @@
 	        </div>
 	        <div class="form-group row">
 				<div class="col-sm-3">
-					<label class="center-block">Địa chỉ:</label>
+					<label class="center-block">Địa chỉ</label>
 				</div>
 	        	<div class="col-sm-8">	
 					<input class='form-control' name="address" 
@@ -121,7 +121,7 @@
 	        </div>
 	        <div class="form-group row">
 				<div class="col-sm-3">
-					<label class="center-block">Thành phố:</label>
+					<label class="center-block">Thành phố</label>
 				</div>
 	        	<div class="col-sm-8">	
 					<input class='form-control' name="city" 
@@ -135,10 +135,10 @@
 	        </div>
 	        <div class="form-group row">
 		        <div class="col-sm-3">
-		            <label class="center-block">Hình Ảnh:</label>
+		            <label class="center-block">Hình Ảnh</label>
 		        </div>
 		        <div class="col-sm-8">
-	            	<input type="file" id="avatar" class="form-control" accept="image/*"
+	            	<input type="file" id="avatar" accept="image/*"
 			        (change)="onFileChange($event)"
 			        />
 			        <div *ngIf="errorMessage">
@@ -150,14 +150,14 @@
 	    	</div>
 	        <div class="form-group row">
 				<div class="col-sm-3">
-					<label class="center-block"> Mật khẩu:</label>
+					<label class="center-block"> Mật khẩu</label>
 				</div>
 	        	<div class="col-sm-8">	
 					<input class='input-password form-control' type="password" name="password" 
 					formControlName="password" id="password"
 					#input
 					>
-					<button (click)="showPassword(input)" type="button" class="file-icon btn btn-default"><span class="fa fa-eye"></span></button>
+					<button (click)="showPassword(input)" type="button" class="file-icon btn btn-default"><span id="toggleShowHide" class="fa fa-eye-slash"></span></button>
 					<div *ngIf="errorMessage">
 						<p class='errors'> {{ errorMessage.password }} </p>
 					</div>
@@ -166,12 +166,12 @@
 	        </div>
 	        <div class="form-group row">
 	        	<div class="col-sm-3">
-					<label class="center-block"> Loại User:</label>
+					<label class="center-block"> Loại User</label>
 				</div>
 				<div class="col-sm-8" *ngIf="roles">
 	                <select class='form-control' name="role" 
 	                formControlName="role">
-	                	<option value="" [selected]="isSelected">---- SELECT ----</option>
+	                	<option value="" [selected]="isSelected">Chọn loại User </option>
 	                    <option *ngFor="let role of roles" value="{{ role.id }}">
 	                        {{ role.name }}
 	                    </option>

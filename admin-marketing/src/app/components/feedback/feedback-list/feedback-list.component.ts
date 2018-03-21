@@ -3,6 +3,8 @@ import { DataTableDirective } from 'angular-datatables';
 import { Http, Response } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { ToastrService } from 'ngx-toastr';
+
 import { Feedback } from '../../../shared/class/feedback';
 
 import { FeedbackService } from '../../../shared/services/feedback.service';
@@ -22,12 +24,9 @@ export class FeedbackListComponent implements OnInit {
 	dtOptions: any = {};
     feedbacks: Feedback[];
 
-    feedback_del: any;
-    allFeedbacks: any;
+    length_all: Number = 0;
+    length_selected: Number = 0;
 
-    checkbox:boolean =false;
-
-    message_result: string = ""; // Display message result
     errorMessage: string;
     record: string = "Phản Hồi";
 
@@ -42,14 +41,31 @@ export class FeedbackListComponent implements OnInit {
         private feedbackService: FeedbackService,
         private route: ActivatedRoute,
         private router: Router,
+        private toastr: ToastrService,
     ) {
         this.feedbacks = [];
-        this.feedback_del = [];
     }
 
 	ngOnInit() {
         // Call dataTable
         this.dtOptions = data_config(this.record);
+
+        let dt_options_custom = {
+            drawCallback: (setting) => {
+                this.checkSelectAllCheckbox();
+            },
+            columnDefs: [
+                {
+                    targets: 1,
+                    visible: false
+                },
+                { 
+                    orderable: false, 
+                    targets: 0 
+                },
+            ]
+        };
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
         
         // Call get all feedback
         this.getAllFeedbacks();
@@ -64,16 +80,8 @@ export class FeedbackListComponent implements OnInit {
                     }
                 )
         });
-        this.route.params.subscribe((params: any) => {
-            if(params.message_put){
-                this.message_result = " Chỉnh sửa "+ params.message_put + " thành công.";
-            } else if ( params.message_del ) {
-                this.message_result = "Xóa " +params.message_del + " thành công.";
-            } else {
-                this.message_result = "";
-            }
-        });
-    	}
+        
+	}
 
 	/*
         GET: Get all Feedback To Show
@@ -84,55 +92,56 @@ export class FeedbackListComponent implements OnInit {
 		this.feedbackService.getAllFeedback().subscribe(
 			(feedbacks) => {
 				this.feedbacks = feedbacks;
+                this.length_all = this.feedbacks.length;
 				// Caling the DT trigger to manually render the table
 				this.dtTrigger.next();
 			},
             (error) =>  this.router.navigate(['/error', { message: error.json().message }])
         );
 	}
-    /*
-        Function: Select All Checkbox
-        If checked: Push ID into arrFeedback_del,feedback_selected = True
-        Else: feedback_selected = False
-        @author: Trangle
-     */
-    selectAllCheckbox(event) {
-        let arrFeedback_del = [];
-        if (event.target.checked) {
-            this.feedbacks.forEach(function(element) {
-                arrFeedback_del.push(element.id)
-                $('#'+element.id).prop('checked', true);
-            });
-            this.checkbox = true;
-            this.feedback_del = arrFeedback_del
-            this.message_result = "";
-        } else {
-            this.checkbox = false;
-            this.feedbacks.forEach((item, index) => {
-                this.feedback_del.splice(index, this.feedbacks.length);
-                $('#'+item.id).prop('checked', false);
-            });
-        }
-    }
-    /*
-        Function: Selected each item
-        @author: Trangle
-     */
-    changeCheckboxFeedback(event, feedback) {
-        if(event.target.checked) {
-            this.feedback_del.push(feedback.id);
-            if(this.feedback_del.length == this.feedbacks.length) {
-                $('#allCheck').prop('checked', true);
-            }
-            this.message_result = "";
-        } else {
-            let index = this.feedback_del.indexOf(feedback.id);
-            this.feedback_del.splice(index, 1);
 
-            $('#allCheck').prop('checked', false);
-        }
+      /*
+        Event select checbox on row
+            Case1: all row are checked then checkbox all on header is checked
+            Case1: any row is not checked then checkbox all on header is not checked
+        @author: Lam 
+    */
+    selectCheckbox(event) {   
+        $(event.target).closest( "tr" ).toggleClass( "selected" );
+        this.getLengthSelected();
+        this.checkSelectAllCheckbox();
     }
 
+    // input checkall checked/unchecked
+    checkSelectAllCheckbox() {
+        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        this.getLengthSelected();
+    }
+    /*
+        Event select All Button on header table
+        @author: Lam 
+    */
+    selectAllEvent(event) {
+        if( event.target.checked ) {
+            $("#table_id tr").addClass('selected');
+        } else {
+            $("#table_id tr").removeClass('selected');
+        }
+        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        this.getLengthSelected();
+    }
+
+    /*
+        Function getLengthSelected(): draw length selected
+        @author: Lam
+    */
+    getLengthSelected(){
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            this.length_selected = dtInstance.rows('.selected').count();
+        })
+    }
+
+ 
     /*
         Confirm Delete Checkbox Selected
         Using bootbox plugin
@@ -143,10 +152,10 @@ export class FeedbackListComponent implements OnInit {
             True: Show confirm and call function deleteFeedbackCheckbox 
             False: show alert
         */
-        if(this.feedback_del !== null && this.feedback_del.length > 0 ){
+        if(this.length_selected > 0 ){
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.feedback_del.length + " phản hồi đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " phản hồi đã chọn",
                 buttons: {
                     confirm: {
                         label: 'Xóa',
@@ -165,7 +174,7 @@ export class FeedbackListComponent implements OnInit {
                 }
             });
         } else {
-            bootbox.alert("Vui lòng chọn phản hồi để xóa");
+            this.toastr.warning(`Vui lòng chọn phản hồi cần xóa`);
         } 
     }
 
@@ -175,22 +184,26 @@ export class FeedbackListComponent implements OnInit {
         @author: Trangle
      */
     deleteFeedbackCheckbox() {
-        this.feedbackService.deleteAllFeedbackChecked(this.feedback_del).subscribe(
-            (result) => {
-                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                    var self = this;
-                    this.feedback_del.forEach(function(e){
-                        dtInstance.rows('#delete'+e).remove().draw();
-                        var fed_item = self.feedbacks.find(feedback => feedback.id == e);
-                        self.feedbacks = self.feedbacks.filter(feedbacks => feedbacks !== fed_item);
-                    });
-                this.feedback_del = [];
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            // Get list promotion id selected
+            let get_list_id = dtInstance.cells('.selected', 1).data().toArray();
+            // array string to array number
+            let list_id_selected = get_list_id.map(Number);
+
+            // Call API remove list promotion selected
+            this.feedbackService.deleteAllFeedbackChecked(list_id_selected).subscribe(
+                (data) => {
+                    this.toastr.success(`Xóa ${this.length_selected} phản hồi thành công`);
+
+                    // Remove all promotion selected on UI
+                    dtInstance.rows('.selected').remove().draw();
+                    // Reset count promotion
+                    this.length_all =  dtInstance.rows().count();
+                    this.length_selected = 0;
+                },
+                (error) => {
+                    this.router.navigate(['/error', { message: error.json().message }]);
+                });
             });
-            this.message_result = "Xóa phản hồi thành công";
-           },
-            (error) => {
-                this.router.navigate(['/error', { message: error.json().message }])
-            }
-        );
     }
 }

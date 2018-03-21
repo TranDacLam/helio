@@ -3,7 +3,7 @@ import { DataTableDirective } from 'angular-datatables';
 
 import { Subject } from 'rxjs/Subject';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
 import { User } from '../../../shared/class/user';
 import { UserService } from '../../../shared/services/user.service';
 import { data_config } from '../../../shared/commons/datatable_config';
@@ -19,14 +19,11 @@ declare var bootbox:any;
 export class UserListComponent implements OnInit {
 
 	dtOptions: any = {};
-
 	users: User[];
 
-	user_selected: any;
+    length_all: Number = 0;
+    length_selected: Number = 0;
 
-    checkbox:boolean = false;
-
-  	message_result: string = ''; // Message result
     record: string = "User";
 
  	// Inject the DataTableDirective into the dtElement property
@@ -43,30 +40,32 @@ export class UserListComponent implements OnInit {
   		private route: ActivatedRoute,
         private userService: UserService,
         private router: Router,
-
+        private toastr: ToastrService,
   		) {
   			this.users = [];
-  			this.user_selected = [];
-  		 }
+  		}
 
   	ngOnInit() {
         // Call data_config
   		this.dtOptions = data_config(this.record);
-
+        let dt_options_custom = {
+            drawCallback: (setting) => {
+                this.checkSelectAllCheckbox();
+            },
+            columnDefs: [
+                {
+                    targets: 1,
+                    visible: false
+                },
+                { 
+                    orderable: false, 
+                    targets: 0 
+                },
+            ]
+        };
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
         // Get All User
 	  	this.getAllUser();
-
-        this.route.params.subscribe(params => {
-            if( params.message_post ){
-                this.message_result = " Thêm "+ params.message_post + " thành công.";
-            } else if ( params.message_put ) {
-                this.message_result = "  Chỉnh sửa "+ params.message_put + " thành công.";
-            } else if( params.message_del ) {
-                this.message_result = " Xóa " + params.message_del + " thành công.";
-            } else {
-                this.message_result = "";
-            }
-        });
   	}
 
   	/* 
@@ -77,6 +76,7 @@ export class UserListComponent implements OnInit {
         this.userService.getAllUsers().subscribe(
             (data) => {
                 this.users = data;
+                this.length_all = this.users.length;
                 this.dtTrigger.next();
             },
             (error) => {
@@ -85,58 +85,46 @@ export class UserListComponent implements OnInit {
         )
   	}
 
-  	/* 
-        Checkbox all User
-        Step1: Create array to contain id user to checked
-        Step 2: Check checkbox all user checked
-            True: Push id checked to array_del, assign user_selected = array_del, message_result = ''
-            False: Splice all id from array
-        @author: Trangle
+  	/*
+        Event select checbox on row
+            Case1: all row are checked then checkbox all on header is checked
+            Case1: any row is not checked then checkbox all on header is not checked
+        @author: Lam 
     */
-     
-  	checkAllUser(event){
-        let array_del = [];
-        if(event.target.checked){
-            this.users.forEach(function(element) {
-                array_del.push(element.id);
-                $('#check_'+element.id).prop('checked', true);
-            });
-            this.checkbox = true;
-            this.user_selected = array_del;
-            this.message_result = "";
-        }else{
-            this.checkbox = false;
-            this.users.forEach((item, index) => {
-                $('#check_'+item.id).prop('checked', false);
-        		this.user_selected.splice(index, this.users.length);
-     		});
-        }
+    selectCheckbox(event) {   
+        $(event.target).closest( "tr" ).toggleClass( "selected" );
+        this.getLengthSelected();
+        this.checkSelectAllCheckbox();
     }
 
-  	/* 
-        Change checkbox item
-        Step : Checking checkbox item to checked
-            True: Push id to user_selected, message_result = '', 
-                check length.user_selected = users.length, checkbox all = true
-            False: remove id from user_selected, check all = false
-        @author: Trangle
+    // input checkall checked/unchecked
+    checkSelectAllCheckbox() {
+        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        this.getLengthSelected();
+    }
+    /*
+        Event select All Button on header table
+        @author: Lam 
     */
-  	checkItemChange(event, user) {
-  		if(event.target.checked){
-            this.user_selected.push(user.id);
-            if (this.user_selected.length === this.users.length) {
-                $('#allCheck').prop('checked', true);
-            }
-            this.message_result = "";
-      	}
-      	else{
-            var index = this.user_selected.indexOf(user.id);
-            this.user_selected.splice(index, 1);
+    selectAllEvent(event) {
+        if( event.target.checked ) {
+            $("#table_id tr").addClass('selected');
+        } else {
+            $("#table_id tr").removeClass('selected');
+        }
+        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        this.getLengthSelected();
+    }
 
-            // uncheck selectAll
-            let selectAll = $('#allCheck').prop('checked', false);
-      	}
-  	}
+    /*
+        Function getLengthSelected(): draw length selected
+        @author: Lam
+    */
+    getLengthSelected(){
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            this.length_selected = dtInstance.rows('.selected').count();
+        })
+    }
 
     /*
         Confirm Delete Checkbox Selected
@@ -148,10 +136,10 @@ export class UserListComponent implements OnInit {
             True: Show confirm and call function deleteFeedbackCheckbox 
             False: show alert
         */
-        if(this.user_selected !== null && this.user_selected.length > 0 ){
+        if(this.length_selected> 0 ){
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.user_selected.length + " user đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " user đã chọn",
                 buttons: {
                     confirm: {
                         label: 'Xóa',
@@ -170,29 +158,33 @@ export class UserListComponent implements OnInit {
                 }
             });
         } else {
-            bootbox.alert("Vui lòng chọn user để xóa");
+            this.toastr.warning(`Vui lòng chọn user cần xóa`);
         } 
     }
 
     // Delete All Checkbox
     deleteUsersCheckbox() {
-        this.userService.deleteUserSelected(this.user_selected).subscribe(
-            (data) => {
-                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                    var self = this;
-                    this.user_selected.forEach(function(e){
-                        dtInstance.rows('#delete'+e).remove().draw();
-                        var item = self.users.find(user => user.id == e);
-                        self.users = self.users.filter(users => users !== item);
-                    });
-                    this.user_selected = [];
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            // Get list promotion id selected
+            let get_list_id = dtInstance.cells('.selected', 1).data().toArray();
+            // array string to array number
+            let list_id_selected = get_list_id.map(Number);
+
+            // Call API remove list promotion selected
+            this.userService.deleteUserSelected(list_id_selected).subscribe(
+                (data) => {
+                    this.toastr.success(`Xóa ${this.length_selected} user thành công`);
+
+                    // Remove all promotion selected on UI
+                    dtInstance.rows('.selected').remove().draw();
+                    // Reset count promotion
+                    this.length_all =  dtInstance.rows().count();
+                    this.length_selected = 0;
+                },
+                (error) => {
+                    this.router.navigate(['/error', { message: error.json().message }]);
                 });
-                this.message_result = "Xóa user thành công";
-            },
-            (error) => {
-                this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
-            }
-        )
+            });
     	
     }
 

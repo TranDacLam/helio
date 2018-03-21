@@ -10,7 +10,7 @@ export class UserValidators {
 		if(passValues === null && passVal !== '') {
 			return {
                 'passwordValidate': {
-                    'message': 'Mật khẩu phải dài từ 8 đến 32 chữ số và bao gồm ít nhất một chữ số.'
+                    'message': 'Mật khẩu hợp lệ phải có ít nhất 6 ký tự bao gồm cả chữ và số.'
                 }
             };
 		}
@@ -61,5 +61,7 @@ export class UserValidators {
 		}
 		return null;
 	}
+
+	
 }
 

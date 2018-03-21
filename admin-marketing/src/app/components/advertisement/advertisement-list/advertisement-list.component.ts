@@ -3,6 +3,7 @@ import { DataTableDirective } from 'angular-datatables';
 
 import { Subject } from 'rxjs/Subject';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import { Advertisement }  from '../../../shared/class/advertisement';
 
@@ -26,11 +27,11 @@ export class AdvertisementListComponent implements OnInit {
 
 	advs : Advertisement[];
 
-	advs_delete: any; // Contains all checkbox were selected
-    checkbox:boolean = false;
+    length_all: Number = 0;
+    length_selected: Number = 0;
 
-	message_result: string = ''; // Message result
     record: string = "Quảng Cáo";
+    lang: string = 'vi';
     
 	// Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
@@ -40,99 +41,97 @@ export class AdvertisementListComponent implements OnInit {
         Using trigger becase fetching the list of feedbacks can be quite long
         thus we ensure the data is fetched before rensering
     */ 
-    dtTrigger: Subject<any> = new Subject();
+    // dtTrigger: Subject<any> = new Subject();
 
     constructor(
         private advertisementService: AdvertisementService,
         private route: ActivatedRoute,
         private router: Router,
+        private toastr: ToastrService,
         ) {
         this.advs = [];
-        this.advs_delete = [];
     }
     ngOnInit() {
 
         // Call dataTable 
         this.dtOptions = data_config(this.record);
 
+        let dt_options_custom = {
+            drawCallback: (setting) => {
+                this.checkSelectAllCheckbox();
+            },
+            columnDefs: [
+                {
+                    targets: 1,
+                    visible: false
+                },
+                { 
+                    orderable: false, 
+                    targets: 0 
+                },
+            ]
+        };
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
+
         // Call function get all adv
         this.getAllAdvertisement();
-
-        this.route.params.subscribe(params => {
-            if( params.message_post ){
-                this.message_result = " Thêm "+ params.message_post + " thành công.";
-            } else if ( params.message_put ) {
-                this.message_result = "  Chỉnh sửa  "+ params.message_put + " thành công.";
-            } else if (params.message_del) {
-                this.message_result = "  Xóa  "+ params.message_del + " thành công.";
-            } else {
-                this.message_result = "";
-            }
-        });
     }
   	/*
         GET: Get All Advertiment To Show
         @author: TrangLe 
     */
   	getAllAdvertisement() {
-  		this.advertisementService.getAllAdvertisement().subscribe(
+        this.advs = null;
+  		this.advertisementService.getAllAdvertisement(this.lang).subscribe(
   			(result) => {
   				this.advs = result;
-  				this.dtTrigger.next();
+                this.length_all = this.advs.length;
   			},
             (error) => {
                 this.router.navigate(['/error', { message: error.json().message }])
             }
         );
   	}
-  	/*
-      Checkbox all Adv
-        Step1: Create array to contain id user to checked
-        Step 2: Check checkbox all user checked
-            True: Push id checked to listAdv_del, assign advs_delete = listAdv_del, message_result = ''
-            False: Splice all id from array
-        @author: Trangle
+  	
+      /*
+        Event select checbox on row
+            Case1: all row are checked then checkbox all on header is checked
+            Case1: any row is not checked then checkbox all on header is not checked
+        @author: TrangLe 
     */
-  	checkAllAdv(event) {
-        let listAdv_del = []; 
-        if(event.target.checked){
-            this.advs.forEach(function(element) {
-                listAdv_del.push(element.id);
-                $('#'+element.id).prop('checked', true);
-            });
-            this.checkbox = true;
-            this.advs_delete = listAdv_del;
-            this.message_result = "";
-        }else{
-            this.checkbox = false;
-            this.advs.forEach((item, index) => {
-                this.advs_delete.splice(index, this.advs.length);
-                $('#'+item.id).prop('checked', false);
-            });
-        }
+    selectCheckbox(event) {   
+        $(event.target).closest( "tr" ).toggleClass( "selected" );
+        this.getLengthSelected();
+        this.checkSelectAllCheckbox();
+    }
+
+    // input checkall checked/unchecked
+    checkSelectAllCheckbox() {
+        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        this.getLengthSelected();
     }
     /*
-        Change checkbox item
-        Step : Checking checkbox item to checked
-            True: Push id to advs_delete, message_result = '', 
-                check length.advs_delete = users.length, checkbox all = true
-            False: remove id from advs_delete, check all = false
-        @author: Trangle
-     */
-    changeCheckboxAdv(e, adv){
-        if( e.target.checked ){
-            this.advs_delete.push(adv.id);
-            if (this.advs_delete.length === this.advs.length) {
-                $('#allAdvs').prop('checked', true);
-            }
-            this.message_result = "";
-        } else{
-            let index = this.advs_delete.indexOf(adv.id);
-            this.advs_delete.splice(index, 1);
-
-            // uncheck selectAll
-            $('#allAdvs').prop('checked', false);
+        Event select All Button on header table
+        @author: TrangLe 
+    */
+    selectAllEvent(event) {
+        if( event.target.checked ) {
+            $("#table_id tr").addClass('selected');
+        } else {
+            $("#table_id tr").removeClass('selected');
         }
+        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        this.getLengthSelected();
+    }
+
+    /*
+        Function getLengthSelected(): draw length selected
+        @author: TrangLe
+    */
+    getLengthSelected(){
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            this.length_selected = dtInstance.rows('.selected').count();
+        })
     }
 
     /*
@@ -145,10 +144,10 @@ export class AdvertisementListComponent implements OnInit {
             True: Show confirm and call function deleteFeedbackCheckbox 
             False: show alert
         */
-        if(this.advs_delete !== null && this.advs_delete.length > 0 ){
+        if(this.length_selected > 0 ){
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.advs_delete.length + " quảng cáo đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " quảng cáo đã chọn",
                 buttons: {
                     confirm: {
                         label: 'Xóa',
@@ -167,7 +166,7 @@ export class AdvertisementListComponent implements OnInit {
                 }
             });
         } else {
-            bootbox.alert("Vui lòng chọn quảng cáo để xóa");
+            this.toastr.warning(`Vui lòng chọn quảng cáo cần xóa`);
         } 
     }
 
@@ -177,22 +176,57 @@ export class AdvertisementListComponent implements OnInit {
         @author: Trangle  
      */
     deleteAllCheckAdvs() {
-        this.advertisementService.deleteAllAdvsSelected(this.advs_delete).subscribe(
-            (result) => {
-                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                    var self = this;
-                    this.advs_delete.forEach(function(e){
-                        dtInstance.rows('#delete'+e).remove().draw();
-                        var item = self.advs.find(banner => banner.id == e);
-                        self.advs = self.advs.filter(advs => advs !== item);
-                    });
-                    this.advs_delete = [];
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            // Get list promotion id selected
+            let get_list_id = dtInstance.cells('.selected', 1).data().toArray();
+            // array string to array number
+            let list_id_selected = get_list_id.map(Number);
+
+            // Call API remove list promotion selected
+            this.advertisementService.deleteAllAdvsSelected(list_id_selected, this.lang).subscribe(
+                (data) => {
+                    this.toastr.success(`Xóa ${this.length_selected} quảng cáo thành công`);
+
+                    // Remove all promotion selected on UI
+                    dtInstance.rows('.selected').remove().draw();
+                    // Reset count promotion
+                    this.length_all =  dtInstance.rows().count();
+                    this.length_selected = 0;
+                },
+                (error) => {
+                    this.router.navigate(['/error', { message: error.json().message }]);
                 });
-                this.message_result = "Xóa quảng cáo thành công";
-            },
-            (error) => {
-                this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
-            }
-        );
+            });
     }
+
+     /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Author: TrangLe
+    */
+    changeLangVI(){
+        if(this.lang === 'en'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.lang = 'vi';
+            this.getAllAdvertisement();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+
+    /*
+        Function changeLangEN(): Change language and callback service getEvents()
+        Author: TrangLe
+    */
+    changeLangEN(){
+        if(this.lang === 'vi'){
+            $('.custom_table').attr('style', 'height: 640px');
+            this.lang = 'en';
+            this.getAllAdvertisement();
+            setTimeout(()=>{
+                $('.custom_table').attr('style', 'height: auto');
+            },100);
+        }
+    }
+  
 }
