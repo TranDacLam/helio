@@ -46,7 +46,7 @@ export class FormNotificationComponent implements OnInit {
 
     categories: CategoryNotification[];
 
-    check_QR: boolean = true; // Check enable/disable input Location
+    check_QR: boolean = false; // Check enable/disable input Location
 
     errorMessage: any; // Messages error
     msg_clear_image = ''; // message clear image
@@ -89,8 +89,8 @@ export class FormNotificationComponent implements OnInit {
             image: [this.noti.image],
             sub_url: [this.noti.sub_url, [Validators.required, Validators.maxLength(255)]],
             category: [this.noti.category ? this.noti.category : '', Validators.required],
-            is_QR_code: [this.noti.is_QR_code ? this.noti.is_QR_code : false],
-            location: [this.noti.location, [Validators.maxLength(500)]],
+            is_QR_code: [this.noti.is_QR_code ? this.noti.is_QR_code : true],
+            location: [this.noti.location ? this.noti.location : 'Quầy MBS', [Validators.maxLength(500)]],
             is_clear_image: [false],
             promotion: [this.promotion_id ? this.promotion_id : null]
         });
@@ -266,6 +266,7 @@ export class FormNotificationComponent implements OnInit {
             this.formNotification.get('is_QR_code').setValue(true);
         }else{
             this.check_QR = true;
+            this.formNotification.get('location').setValue(null);
             this.formNotification.get('is_QR_code').setValue(false);
         }
     }

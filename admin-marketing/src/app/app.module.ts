@@ -8,7 +8,7 @@ import { HttpModule } from "@angular/http";
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app.routing';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime'; // date and time
+import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl } from 'ng-pick-datetime'; // date and time
 import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
@@ -105,6 +105,16 @@ import { OpenTimeComponent } from './components/open-time/open-time.component';
 import { PromotionReportComponent } from './components/promotions/promotion-report/promotion-report.component';
 
 
+/*
+    Translate datetime-picker\
+    author: Lam
+*/
+export const DefaultIntl = {
+    /** A label for the cancel button */
+    cancelBtnLabel: 'Hủy',
+    /** A label for the set button */
+    setBtnLabel: 'Chọn',
+}
 
 @NgModule({
   declarations: [
@@ -208,6 +218,7 @@ import { PromotionReportComponent } from './components/promotions/promotion-repo
     CategoryService,
     AuthGuard,
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'vi'},
+    {provide: OwlDateTimeIntl, useValue: DefaultIntl},
     DatePipe,
     {provide: RECAPTCHA_LANGUAGE, useValue: 'vi'},
     UserPermissionService,

@@ -18,6 +18,10 @@
             <i class="fa fas fa-arrow-left icon-button"></i>
             TRỞ VỀ TRANG QUẢN LÝ THÔNG BÁO
         </a>
+        <a *ngIf="promotion_id" class="btn custom-button pull-right" [routerLink]="['/users-promotions/', promotion_id]">
+            ĐI TỚI CHI TIẾT KHUYẾN MÃI
+            <i class="fa fas fa-arrow-right icon-button-right"></i>
+        </a>
     </p>
     <p>ID: {{noti_detail.id}}</p>
     <p>Tên thông báo: {{noti_detail.subject}}</p>

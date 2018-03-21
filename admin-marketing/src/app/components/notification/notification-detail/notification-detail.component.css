@@ -1,17 +1,17 @@
 .mb-30{
     margin-bottom: 30px;
 }
-/deep/ .modal-dialog{
+/deep/ .custom-popup.modal-dialog{
     width: 60%;
 }
-/deep/ .modal-dialog .row .col-sm-2{
+/deep/ .custom-popup.modal-dialog .row .col-sm-2{
     width: 20%;
     margin-left: 20px;
 }
-/deep/ .modal-dialog .row .col-sm-6{
+/deep/ .custom-popup.modal-dialog .row .col-sm-6{
     width: 60%;
 }
-/deep/ .modal-content{
+/deep/ .custom-popup.modal-content{
     padding-bottom: 40px;
 }
 .message-success{

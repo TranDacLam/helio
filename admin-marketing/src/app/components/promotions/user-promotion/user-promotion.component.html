@@ -10,7 +10,7 @@
 </div>
 <!-- End breadcrumb -->
 <div class="row text-center">
-    <h1 class="h1-title">CHI TIẾT KHUYÊN MÃI</h1>
+    <h1 class="h1-title">CHI TIẾT KHUYẾN MÃI</h1>
 </div>
 <div class="row mb-20 custom-title"  *ngIf="promotion">
     <div class="col-sm-6">
@@ -43,6 +43,9 @@
             CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI
         </a>
         <a class="btn custom-button btn-block" [routerLink]="['/promotions/report/', promotion.id, {lang: lang}]">TỔNG HỢP TRIỂN KHAI KHUYẾN MÃI</a>
+        <a class="btn custom-button btn-block" *ngIf="notification_id" [routerLink]="['/notification/detail/', notification_id, {lang: lang}]">
+            ĐI TỚI CHI TIẾT THÔNG BÁO <i class="fa fas fa-arrow-right icon-button-right"></i>
+        </a>
     </div>
 </div>
 
