@@ -102,7 +102,6 @@ export class FeedbackDetailComponent implements OnInit {
                     this.router.navigate(['/feedback-list']);
                 },
                 (error) =>  {
-                    console.log(error);
                     if (error.status == 400) {
                         this.errorMessage = error.json().message
                     } else {

@@ -103,9 +103,13 @@ export class UserDetailComponent implements OnInit {
                 }, 
                 (error) => {
                     if(error.code == 400) {
-                        this.errorMessage = error.message
+                        if (error.message.non_field_errors) {
+                            self.toastr.error(`${error.message.non_field_errors}`);
+                        } else {
+                            this.errorMessage = error.message
+                        }
                     } else if(error.code == 405) {
-                        this.errors = error.message;
+                        self.toastr.error(`${error.message}`);
                     } else {
                        self.router.navigate(['/error', { message: error.message }]);
                     }
@@ -128,7 +132,7 @@ export class UserDetailComponent implements OnInit {
                 },
                 (error) =>  {
                     if(error.status == 405) {
-                        this.errors = error.json().message
+                        this.toastr.error(`${error.json().message}`);
                     } else {
                         this.router.navigate(['/error', { message: error.json().message }])
                     }
