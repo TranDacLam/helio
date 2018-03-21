@@ -35,7 +35,7 @@
                 <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
                 <td>{{ user.id }}</td>
                 <td class="title-email"><a routerLink="/user-detail/{{ user.id }}" >{{ user.email }}</a></td>
-                <td *ngIf="user.role?.name">{{ user.role?.name }}</td>
+                <td>{{ user.role?.name }}</td>
             </tr>
         </tbody>
     </table>
