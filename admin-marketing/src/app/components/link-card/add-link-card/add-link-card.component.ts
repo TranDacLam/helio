@@ -57,7 +57,7 @@ export class AddLinkCardComponent implements OnInit {
             'personal_id': '', 'address': ''};
 
         if(user_app.barcode){
-            this.toastr.error(`Tài khooản hoặc mã thẻ này đã được liên kết. Vui lòng kiểm tra lại.`);
+            this.toastr.error(`Tài khoản và mã thẻ này đã được liên kết. Vui lòng kiểm tra lại.`);
             return;
         }
 

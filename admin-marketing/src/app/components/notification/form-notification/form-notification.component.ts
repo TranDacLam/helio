@@ -49,7 +49,8 @@ export class FormNotificationComponent implements OnInit {
     categories: CategoryNotification[];
     user_current: User;
 
-    check_QR: boolean = false; // Check enable/disable input Location
+    check_QR: boolean = true; // Check enable/disable input QR
+    check_Location: boolean = true; // Check enable/disable input Location
 
     errorMessage: any; // Messages error
     msg_clear_image = ''; // message clear image
@@ -96,8 +97,8 @@ export class FormNotificationComponent implements OnInit {
             image: [this.noti.image],
             sub_url: [this.noti.sub_url, [Validators.maxLength(255)]],
             category: [this.noti.category ? this.noti.category : '', Validators.required],
-            is_QR_code: [this.noti.is_QR_code ? this.noti.is_QR_code : true],
-            location: [this.noti.location ? this.noti.location : 'Quầy MBS', [Validators.maxLength(500)]],
+            is_QR_code: [this.noti.is_QR_code ? this.noti.is_QR_code : false],
+            location: [this.noti.location ? this.noti.location : '', [Validators.maxLength(500)]],
             is_clear_image: [false],
             promotion: [this.promotion_id ? this.promotion_id : null]
         });
@@ -269,12 +270,31 @@ export class FormNotificationComponent implements OnInit {
     */
     isQRCode(event): void{
         if(event == "true"){
-            this.check_QR = false;
+            this.check_Location = false;
             this.formNotification.get('is_QR_code').setValue(true);
         }else{
-            this.check_QR = true;
+            this.check_Location = true;
             this.formNotification.get('location').setValue(null);
             this.formNotification.get('is_QR_code').setValue(false);
+        }
+    }
+
+    chanegCategory(event){
+        let cate_id = parseInt(event.target.value);
+        if(cate_id === 1){
+            this.check_QR = false;
+            this.check_Location = false;
+            this.formNotification.get('is_QR_code').setValue(true);
+            if(this.noti.id){
+                this.formNotification.get('location').setValue(this.noti.location);
+            }else{
+                this.formNotification.get('location').setValue('Quầy MBS');
+            }
+        }else{
+            this.check_QR = true;
+            this.check_Location = true;
+            this.formNotification.get('is_QR_code').setValue(false);
+            this.formNotification.get('location').setValue(null);
         }
     }
 

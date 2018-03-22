@@ -1,6 +1,6 @@
 <ng-container *ngIf="errorMessage">
     <h4 *ngFor="let error of errorMessage | mapToIterable" class="error_msg">
-        {{error.val}}.
+        {{error.val}}
     </h4>
 </ng-container>
 <form [formGroup]="formEvent" novalidate>
@@ -26,7 +26,7 @@
                 <input type="checkbox" formControlName="is_clear_image"/> Xóa
             </p>
             <p *ngIf="msg_clear_image" class="error_msg">{{msg_clear_image}}</p>
-            <input type="file" class="form-control" accept="image/*"
+            <input type="file" accept="image/*"
             (change)="onFileChange($event)" />
         </div>
     </div>
