@@ -10,6 +10,8 @@ import { PromotionService } from '../../../shared/services/promotion.service';
 import { Promotion } from '../../../shared/class/promotion';
 import * as datatable_config from '../../../shared/commons/datatable_config';
 import { ToastrService } from 'ngx-toastr';
+import { VariableGlobals } from './../../../shared/commons/variable_globals';
+import { User } from '../../../shared/class/user';
 import { env } from '../../../../environments/environment';
 
 declare var bootbox:any;
@@ -32,7 +34,7 @@ export class ListPromotionComponent implements OnInit {
     dtOptions: any = {};
 
 	promotion_list: Promotion[];
-
+    user_current: User;
 
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
@@ -54,6 +56,7 @@ export class ListPromotionComponent implements OnInit {
         private promotionService: PromotionService,
         private router: Router,
         private route: ActivatedRoute,
+        private variable_globals: VariableGlobals,
         private toastr: ToastrService
     ) { 
         this.api_domain = env.api_domain_root;
@@ -74,6 +77,9 @@ export class ListPromotionComponent implements OnInit {
             ]
         };
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
+        setTimeout(()=>{
+            this.user_current = this.variable_globals.user_current;
+        },100);
     }
 
     /*
@@ -104,7 +110,11 @@ export class ListPromotionComponent implements OnInit {
     }
 
     checkSelectAllCheckbox() {
-        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        if($('#table_id tbody tr').hasClass('selected')){
+             $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").not("#table_id .disabled_checkbox").length == 0);
+        }else{
+            $('#select-all').prop('checked', false);
+        }
         this.getLengthSelected();
     }
     /*
@@ -114,10 +124,13 @@ export class ListPromotionComponent implements OnInit {
     selectAllEvent(event) {
         if( event.target.checked ) {
             $("#table_id tr").addClass('selected');
+            if($("#table_id tr").hasClass('disabled_checkbox')){
+                $("#table_id .disabled_checkbox").removeClass('selected');
+            }
         } else {
             $("#table_id tr").removeClass('selected');
         }
-        $("#table_id tr input:checkbox").prop('checked', event.target.checked);
+        $("#table_id tr input:checkbox").not("#table_id .disabled_checkbox input:checkbox").prop('checked', event.target.checked);
         this.getLengthSelected();
     }
 
