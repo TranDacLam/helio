@@ -23,6 +23,9 @@
             <p *ngIf="promotion.image">
                 <span>Currently: <a href="{{api_domain}}{{promotion.image}}" target="_blank">{{promotion.image}}</a></span>
             </p>
+            <p *ngIf="promotion.image" class="clear_image">
+                <input type="checkbox" formControlName="is_clear_image"/> Xóa
+            </p>
             <input type="file" class="form-control-file" id="image" accept="image/*" (change)="onFileChange($event)" />
         </div>
     </div>
@@ -34,6 +37,9 @@
         <div class="col-sm-10">
             <p *ngIf="promotion.image_thumbnail">
                 <span>Currently: <a href="{{api_domain}}{{promotion.image_thumbnail}}" target="_blank">{{promotion.image_thumbnail}}</a></span>
+            </p>
+            <p *ngIf="promotion.image_thumbnail" class="clear_image">
+                <input type="checkbox" formControlName="is_clear_image_thumbnail"/> Xóa
             </p>
             <input type="file" class="form-control-file" accept="image/*" id="image_thumbnail" (change)="onFileChange($event)"/>
         </div>

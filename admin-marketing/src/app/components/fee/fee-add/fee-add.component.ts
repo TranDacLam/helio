@@ -21,18 +21,24 @@ export class FeeAddComponent implements OnInit {
 
   feeAddForm: FormGroup;
   messageResult: String;
+  errorMessage: String;
   submitted: boolean= false;
+  
   createFee(value: any, isValid: boolean){
     this.submitted = true;
     if (isValid){
       this.feeService.createFee(value).subscribe(
       result => {
-          this.messageResult = "success"; 
+          this.messageResult = "success";
           this.router.navigate(['/fee/list']);
           this.toastr.success(`Thêm mới "${this.feeAddForm.value.fee} ${this.feeAddForm.value.fee_type}" thành công`);
          },
-      error => {
-          this.router.navigate(['/error']);
+      (error) => {
+          if(error.code === 400){
+              this.errorMessage = error.message;
+          }else{
+              this.router.navigate(['/error', { message: error.message}]);
+          }
       });
     }
   	

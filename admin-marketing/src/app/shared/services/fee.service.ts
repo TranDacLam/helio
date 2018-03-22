@@ -6,7 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import {RequestOptions, Request, RequestMethod, RequestOptionsArgs} from '@angular/http'
 import { api } from '../utils/api';
-
+import "rxjs/add/operator/catch";
 
 @Injectable()
 export class FeeService {
@@ -34,10 +34,7 @@ export class FeeService {
   	getFees(): Observable<Fee[]>{
   		return this.http.get(this.feeUrlList, this.httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
   	}
- 	// throw error
-	handleError(error: Response) {
-		return Observable.throw(error);
-	}
+ 	
 	createFee(fee: Fee ):Observable<Fee>{
   		return this.http.post(this.feeUrl, fee, this.httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
   	}
@@ -54,5 +51,9 @@ export class FeeService {
   	return this.http.put( feeDetailUrl, null, this.httpOptions  ).map((res: Response) => res.json()).catch(this.handleError);
 
 	}
+  // exception
+  private handleError(error: Response) {
+      return Observable.throw(error.json());
+  }
 
 }

@@ -17,4 +17,6 @@ export class Promotion {
     user_implementer: User;
     is_draft: boolean;
     is_save: boolean;
+    is_clear_image: boolean;
+    is_clear_image_thumbnail: boolean;
 }

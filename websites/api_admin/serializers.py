@@ -113,17 +113,15 @@ class PromotionDisplaySerializer(serializers.ModelSerializer):
     apply_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
     end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
     user_implementer = UserSerializer(many=False, required=False, read_only=False)
-    # image = Base64ImageField(
-    #     max_length=None, use_url=True,
-    # )
     class Meta:
         model = Promotion
         fields = '__all__'
-from rest_framework.fields import CurrentUserDefault
 
 class PromotionSerializer(serializers.ModelSerializer):
     apply_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
     end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
+    is_clear_image = serializers.BooleanField(default=False)
+    is_clear_image_thumbnail = serializers.BooleanField(default=False)
 
     class Meta:
         model = Promotion
@@ -136,40 +134,25 @@ class PromotionSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         # If this promotion is public then set user
-
         if not validated_data.get('is_draft'):
             validated_data['user_implementer'] = self.context['request'].user
         return Promotion.objects.create(**validated_data)
+
     def update(self, instance, validated_data):
-        image = validated_data.get('image', instance.image)
-        if image:
-            instance.image = image
-        image_thumbnail = validated_data.get('image_thumbnail', instance.image_thumbnail)
-        if image_thumbnail:
-            instance.image_thumbnail = image_thumbnail
+
+        # If image from request is None then set image = old value
+        if not validated_data.get('is_clear_image') and not validated_data.get('image'):
+            validated_data['image'] = instance.image
+
+        # If image from request is None then set image = old value
+        if not validated_data.get('is_clear_image_thumbnail') and not validated_data.get('image_thumbnail'):
+            validated_data['image_thumbnail'] = instance.image_thumbnail
 
         # Is this promotion change from draft to public then set user
         if instance.is_draft and not validated_data.get('is_draft'):
             instance.user_implementer = self.context['request'].user
 
-        # print is_draft, instance.is_draft
-
-        # if promotion_type_data:
-        #     print promotion_type_data
-        #     promotion_type = Promotion_Type.objects.get_or_create(**promotion_type_data)[0]
-        #     validated_data['promotion_type'] = promotion_type
-
-        instance.name = validated_data.get('name', instance.name)
-        instance.short_description = validated_data.get('short_description', instance.short_description)
-        instance.content = validated_data.get('content', instance.content)
-        instance.promotion_category = validated_data.get('promotion_category', instance.promotion_category)
-        instance.promotion_label = validated_data.get('promotion_label', instance.promotion_label)
-        instance.promotion_type = validated_data.get('promotion_type', instance.promotion_type)
-        instance.apply_date = validated_data.get('apply_date', instance.apply_date)
-        instance.end_date = validated_data.get('end_date', instance.end_date)
-        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
-        instance.save()
-        return instance
+        return super(PromotionSerializer, self).update(instance, validated_data)
 
 
 class AdvertisementSerializer(serializers.ModelSerializer):
@@ -245,7 +228,7 @@ class UserEmbedSerializer(serializers.Serializer):
 class FeeSerializer(serializers.ModelSerializer):
     fee = serializers.IntegerField(required=True, max_value = 2147483647)
     fee_type = serializers.CharField(required=True)
-    position = serializers.CharField(source='get_position_display')
+    # position = serializers.CharField(source='get_position_display')
 
     class Meta:
         model = Fee
@@ -255,9 +238,9 @@ class FeeSerializer(serializers.ModelSerializer):
         fee = Fee.objects.create( **validated_data )
         return fee
         
-    def validate(self, data):
-        data['position'] = data.pop('get_position_display')
-        return data
+    # def validate(self, data):
+    #     data['position'] = data.pop('get_position_display')
+    #     return data
 
 
 class BannerSerializer(serializers.ModelSerializer):
