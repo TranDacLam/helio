@@ -5,11 +5,17 @@
 	    <li class="active" >Thêm Phí Giao Dịch</li>
 	 </ol>
 </nav>
+
 <div class="container">
 	<div class="row mt-30 mb-30">
-	    <h3>Thêm Trò Chơi</h3>
+	    <h3>Thêm Phí</h3>
 	    <hr/>
 	</div>
+	<ng-container *ngIf="errorMessage">
+	    <h4 *ngFor="let error of errorMessage | mapToIterable" class="error_msg">
+	        {{error.val}}.
+	    </h4>
+	</ng-container>
 	<form [formGroup]="feeAddForm" (ngSubmit)="createFee(feeAddForm.value, feeAddForm.valid)">
 		<div class="form-group row">
 	        <div class="col-sm-1">
@@ -23,7 +29,7 @@
 				</div>
 				<div *ngIf="feeAddForm.controls.fee.invalid && (feeAddForm.controls.fee.dirty)" class="feeAddForm_error">
 					<div *ngIf="feeAddForm.controls.fee.errors.max">
-				    	Gía trị quá lơn.
+				    	Gía trị quá lớn.
 				  	</div>
 				  	<div *ngIf="feeAddForm.controls.fee.errors.min">
 				    	Gía trị phải lớn hơn 0.

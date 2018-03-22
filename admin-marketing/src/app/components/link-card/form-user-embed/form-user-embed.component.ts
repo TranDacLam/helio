@@ -114,6 +114,14 @@ export class FormUserEmbedComponent implements OnInit {
     }
 
     /*
+        Function stripEmail(): remove space
+        Author: Lam
+    */
+    stripEmail(value){
+        this.embedForm.get('email').setValue(value.replace(/ /g,""));
+    }
+
+    /*
         Function stripText(): numbers only
         Author: Lam
     */
