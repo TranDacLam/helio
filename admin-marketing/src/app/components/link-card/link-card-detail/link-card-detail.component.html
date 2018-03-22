@@ -149,7 +149,8 @@
                         <label class="col-form-label form-check-label">Thời Gian Mapping</label>
                     </div>
                     <div class="col-sm-7">
-                        {{ user_app.date_mapping | date: 'dd/MM/yyyy' }}
+                        <i class="fa fa-calendar"></i> {{ user_app.date_mapping | date: 'dd/MM/yyyy' }} &ensp;&ensp;&ensp;
+                        <i class="fa fa-clock-o"></i> {{ user_app.date_mapping | date: 'hh:mm' }}
                     </div>
                 </div>
             </form>

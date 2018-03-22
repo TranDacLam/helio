@@ -5,6 +5,8 @@ import { Notification } from '../../../shared/class/notification';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { message } from '../../../shared/utils/message';
 import { ToastrService } from 'ngx-toastr';
+import { VariableGlobals } from './../../../shared/commons/variable_globals';
+import { User } from '../../../shared/class/user';
 import 'rxjs/add/observable/throw';
 import * as datatable_config from '../../../shared/commons/datatable_config';
 
@@ -32,6 +34,7 @@ export class ListNotificationComponent implements OnInit {
     length_selected: Number = 0;
 
     notifications: Notification[];
+    user_current: User;
 
     lang: string = 'vi';
 
@@ -39,6 +42,7 @@ export class ListNotificationComponent implements OnInit {
         private notificationService: NotificationService, 
         private route: ActivatedRoute, 
         private router: Router,
+        private variable_globals: VariableGlobals,
         private toastr: ToastrService
     ) { }
 
@@ -58,6 +62,9 @@ export class ListNotificationComponent implements OnInit {
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
 
         this.getNotifications();
+        setTimeout(()=>{
+            this.user_current = this.variable_globals.user_current;
+        },100);
     }
 
     /*

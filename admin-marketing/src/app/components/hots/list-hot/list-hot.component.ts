@@ -96,7 +96,11 @@ export class ListHotComponent implements OnInit {
 
     // input checkall checked/unchecked
     checkSelectAllCheckbox() {
-        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        if($('#table_id tbody tr').hasClass('selected')){
+            $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        }else{
+            $('#select-all').prop('checked', false);
+        }
         this.getLengthSelected();
     }
     /*

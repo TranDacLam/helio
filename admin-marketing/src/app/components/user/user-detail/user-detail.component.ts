@@ -63,7 +63,7 @@ export class UserDetailComponent implements OnInit {
         address: [this.user.address],
         city: [this.user.city],
         avatar: [this.user.avatar],
-        new_password: ['', [UserValidators.passwordValidators]],
+        new_password: ['', [UserValidators.passwordValidators, Validators.maxLength(32)]],
         role: [this.user.role ? this.user.role['id'] : ''],
         is_active: [this.user.is_active],
         is_staff:[this.user.is_staff]

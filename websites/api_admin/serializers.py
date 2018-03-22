@@ -63,7 +63,6 @@ class Base64ImageField(serializers.ImageField):
 class UserSerializer(serializers.ModelSerializer):
 
     birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], allow_null = True)
-    date_mapping = serializers.DateField(format="HH:mm:ss-%d/%m/%Y", input_formats=['HH:mm:ss-%d/%m/%Y'], allow_null = True, required=False)
 
     class Meta:
         model = User

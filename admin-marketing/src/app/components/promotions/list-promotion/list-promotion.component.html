@@ -56,8 +56,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="row-data" *ngFor="let promotion of promotion_list">
-                        <td class="text-center"><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                    <tr *ngFor="let promotion of promotion_list" 
+                        class="row-data {{(!promotion.is_draft && user_current?.role !== 1) ? 'disabled_checkbox': ''}}">
+                        <td class="text-center">
+                            <input type="checkbox" (change)="selectCheckbox($event);"
+                                [disabled]="!promotion.is_draft && user_current?.role !== 1"
+                            />
+                        </td>
                         <td>{{ promotion.id }}</td>
                         <td><a [routerLink]="['/promotions/', promotion.id, 'change', {lang: lang}]">{{ promotion.name }}</a></td>
                         <td>{{ promotion.is_draft ? "Draft" : "Đã Triển Khai" }}</td>

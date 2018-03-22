@@ -63,7 +63,7 @@ export class UserAddComponent implements OnInit {
             address: [this.user_form.address],
             city: [this.user_form.city],
             avatar: [this.user_form.avatar],
-            password: [this.user_form.password, [Validators.required, UserValidators.passwordValidators]],
+            password: [this.user_form.password, [Validators.required, UserValidators.passwordValidators, Validators.maxLength(32)]],
             is_active: [this.user_form.is_active],
             is_staff: [this.user_form.is_staff],
             role: [this.user_form.role, [Validators.required]],
