@@ -47,7 +47,7 @@ class PromotionList(APIView):
             return Response(serializer.data)
         except Exception, e:
             print 'PromotionListView ', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, format=None):
@@ -70,7 +70,7 @@ class PromotionList(APIView):
             print 'Please enter an integer'
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -97,7 +97,7 @@ class PromotionDetail(APIView):
             return Response(serializer.data)
         except Exception, e:
             print 'PromotionDetailView ', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -113,7 +113,7 @@ class PromotionDetail(APIView):
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
         except Exception, e:
             print 'PromotionDetailView POST', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, id, format=None):
@@ -131,7 +131,7 @@ class PromotionDetail(APIView):
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status = 400)
         except Exception, e:
             print 'PromotionDetailView PUT', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, id, format=None):
@@ -182,7 +182,7 @@ class PromotionUser(APIView):
             return Response({"code": 400, "message": "Promotion not found", "fields": ""}, status=400)
         except Exception, e:
             print 'PromotionUserView ', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, id, format=None):
@@ -222,7 +222,7 @@ class PromotionUser(APIView):
 
         except Exception, e:
             print 'PromotionUserView ', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -250,7 +250,7 @@ class UserDetail(APIView):
             return Response(error, status=400)
         except Exception, e:
             print "UserDetail", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, id):
@@ -260,7 +260,7 @@ class UserDetail(APIView):
                 instance=user, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
 
         except User.DoesNotExist, e:
@@ -268,7 +268,7 @@ class UserDetail(APIView):
 
         except Exception, e:
             print "UserDetail", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -319,11 +319,11 @@ class AdvertisementView(APIView):
             if adv_id:
                 # queryset = Advertisement.objects.filter(
                 #     pk__in=adv_id).delete()
-                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -364,12 +364,12 @@ class AdvertisementDetail(APIView):
             advertisement = self.get_object(pk)
             advertisement.delete()
 
-            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
         except Advertisement.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found Game.", "fields": ""}, status=400)
         except Exception, e:
             print "AdvertisementApI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 """
 Get PromotionType
@@ -386,7 +386,7 @@ class PromotionTypeView(APIView):
                 list_pro_type, many=True)
             return Response(serializer.data)
         except Exception, e:
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -409,7 +409,7 @@ class DenominationView(APIView):
             return Response(serializer.data)
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -425,7 +425,7 @@ class DenominationView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, format=None):
@@ -438,10 +438,10 @@ class DenominationView(APIView):
             if deno_id:
                 queryset = Denomination.objects.filter(
                     pk__in=deno_id).delete()
-                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found list id ", "fields": "id"}, status=400)
         except Exception, e:
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -505,7 +505,7 @@ class FeedbackView(APIView):
             return Response(error, status=400)
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, format=None):
@@ -516,11 +516,11 @@ class FeedbackView(APIView):
             # Check if exist fed_id
             if fed_id:
                 queryset = FeedBack.objects.filter(pk__in=fed_id).delete()
-                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ID ", "fields": "id"}, status=400)
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -554,7 +554,7 @@ class FeedbackDetailView(APIView):
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, pk, format=None):
@@ -597,11 +597,11 @@ class UserLinkCardList(APIView):
             if user_linked_id:
                 queryset = User.objects.filter(
                     pk__in=user_linked_id).update(barcode=None, username_mapping=None, date_mapping=None)
-                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -637,7 +637,7 @@ class NotificationList(APIView):
 
                 Notification.objects.filter(
                     pk__in=list_notification_id).delete()
-                return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
 
             return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
         except ValueError:
@@ -645,7 +645,7 @@ class NotificationList(APIView):
             print 'Please enter an integer'
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -673,7 +673,7 @@ class NotificationDetail(APIView):
             return Response(serializer.data)
         except Exception, e:
             print 'NotificationDetailView GET', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -687,7 +687,7 @@ class NotificationDetail(APIView):
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status = 400)
         except Exception, e:
             print 'NotificationDetailView PUT', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, id, format=None):
@@ -703,7 +703,7 @@ class NotificationDetail(APIView):
             
         except Exception, e:
             print 'NotificationDetailView PUT', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, id, format=None):
@@ -760,7 +760,7 @@ class NotificationUser(APIView):
             return Response(error, status=400)
         except Exception, e:
             print 'NotificationUserView ', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, id):
@@ -795,7 +795,7 @@ class NotificationUser(APIView):
 
         except Exception, e:
             print 'NotificationUserView ', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -877,7 +877,7 @@ class SummaryAPI(APIView):
             return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
         except Exception, e:
             print "SummaryAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -941,18 +941,18 @@ class UserEmbedDetail(APIView):
 
                 return Response({"code": 200, "message": result, "fields": ""}, status=200)
 
-            return Response({"code": 400, "message": 'Bacode is required', "fields": ""}, status=400)
+            return Response({"code": 400, "message": _('Bacode is required'), "fields": ""}, status=400)
 
         # catching db embed error
         except DatabaseError, e:
             print "UserEmbedDetail ", e
             error = {"code": 500,
-                     "message": "Query to DB embed fail", "fields": ""}
+                     "message": _("Query to DB embed fail"), "fields": ""}
             return Response(error, status=500)
 
         except Exception, e:
             print "UserEmbedDetail ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, barcode):
@@ -1000,19 +1000,19 @@ class UserEmbedDetail(APIView):
                 cursor.execute(query_str.format(barcode, birth_date, serializer.data['phone'], serializer.data[
                                'personal_id'], serializer.data['full_name'], serializer.data['address'], serializer.data['email']))
 
-                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
 
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
         # catching db embed error
         except DatabaseError, e:
             print "UserEmbedDetail ", e
             error = {"code": 500,
-                     "message": "Query to DB embed fail", "fields": ""}
+                     "message": _("Query to DB embed fail"), "fields": ""}
             return Response(error, status=500)
 
         except Exception, e:
             print "UserEmbedDetail ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1076,17 +1076,17 @@ class RelateAPI(APIView):
                 user.username_mapping = request.user.email
                 user.date_mapping = datetime.now()
                 user.save()
-                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
 
-            return Response({"code": 400, "message": "Email and barcode is required", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Email and barcode is required"), "fields": ""}, status=400)
 
         except User.DoesNotExist, e:
-            error = {"code": 400, "message": "Email Not Found.", "fields": ""}
+            error = {"code": 400, "message": _("Email Not Found."), "fields": ""}
             return Response(error, status=400)
 
         except Exception, e:
             print "RelateAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, id, format=None):
@@ -1102,16 +1102,16 @@ class RelateAPI(APIView):
                 user.date_mapping = None
                 user.username_mapping = None
                 user.save()
-                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
-            return Response({"code": 400, "message": "User is not related", "fields": ""}, status=400)
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+            return Response({"code": 400, "message": _("User is not related"), "fields": ""}, status=400)
 
         except User.DoesNotExist, e:
-            error = {"code": 400, "message": "Not Found User.", "fields": ""}
+            error = {"code": 400, "message": _("Not Found User."), "fields": ""}
             return Response(error, status=400)
 
         except Exception, e:
             print "RelateAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1141,7 +1141,7 @@ class FeeAPI(APIView):
 
         except Exception, e:
             print "FeeAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, id, format=None):
@@ -1159,7 +1159,7 @@ class FeeAPI(APIView):
                     list_fee.update(is_apply=False)
                 fee.is_apply = True
                 fee.save()
-            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
 
         except Fee.DoesNotExist, e:
             error = {"code": 400, "message": "Not Found Fee.", "fields": ""}
@@ -1167,7 +1167,7 @@ class FeeAPI(APIView):
 
         except Exception, e:
             print "FeeAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1181,7 +1181,7 @@ class FeeListAPI(APIView):
 
         except Exception, e:
             print "FeeListAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, format=None):
@@ -1192,13 +1192,13 @@ class FeeListAPI(APIView):
                 fees = Fee.objects.filter(id__in=list_id)
                 if fees:
                     fees.delete()
-                    return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
                 return Response({"code": 400, "message": _("Not Found Fee"), "fields": ""}, status=400)
             return Response({"code": 400, "message": _("Not Found list_id"), "fields": ""}, status=400)
 
         except Exception, e:
             print "FeeListAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1239,7 +1239,7 @@ class BannerView(APIView):
 
         except Exception, e:
             print "banner ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, format=None):
@@ -1255,11 +1255,11 @@ class BannerView(APIView):
             # Check list id banner is valid
             if banner_id:
                 Banner.objects.filter(pk__in=banner_id).delete()
-                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1287,7 +1287,7 @@ class BannerViewDetail(APIView):
 
         except Exception, e:
             print 'BannerViewDetail ', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, pk, format=None):
@@ -1305,17 +1305,17 @@ class BannerViewDetail(APIView):
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
         except Exception, e:
             print 'BannerViewDetail PUT', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, pk, format=None):
         try:
             banner = self.get_object(pk)
             banner.delete()
-            return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
         except Exception, e:
             print "BannerViewApi", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1337,7 +1337,7 @@ class CategoryNotifications(APIView):
 
         except Exception, e:
             print "FeeAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1361,7 +1361,7 @@ class EventAPI(APIView):
 
         except Exception, e:
             print "EventAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -1375,7 +1375,7 @@ class EventAPI(APIView):
 
         except Exception, e:
             print "EventAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, id):
@@ -1393,20 +1393,20 @@ class EventAPI(APIView):
 
         except Exception, e:
             print "EventAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, id, format=None):
         try:
             event = Event.objects.get(id=id)
             event.delete()
-            return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
 
         except Event.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Event."), "fields": ""}, status=400)
         except Exception, e:
             print "EventAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1427,7 +1427,7 @@ class EventListAPI(APIView):
             return Response(eventSerializer.data)
         except Exception, e:
             print "EventListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request):
@@ -1437,12 +1437,12 @@ class EventListAPI(APIView):
                 events = Event.objects.filter(id__in=list_id)
                 if events:
                     events.delete()
-                    return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
                 return Response({"code": 400, "message": _("Not Found Event."), "fields": ""}, status=400)
             return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
         except Exception, e:
             print "EventListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1474,7 +1474,7 @@ class PromotionLabelAPI(APIView):
             return Response({"code": 400, "message": _("Not Found Promotion Label."), "fields": ""}, status=400)
         except Exception, e:
             print "PromotionLabelAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -1488,7 +1488,7 @@ class PromotionLabelAPI(APIView):
 
         except Exception, e:
             print "PromotionLabelAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, id):
@@ -1503,20 +1503,20 @@ class PromotionLabelAPI(APIView):
 
         except Exception, e:
             print "PromotionLabelAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, id):
         try:
             promotionLabel = Promotion_Label.objects.get(id=id)
             promotionLabel.delete()
-            return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
 
         except Promotion_Label.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Promotion Label."), "fields": ""}, status=400)
         except Exception, e:
             print "PromotionLabelAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1537,7 +1537,7 @@ class PromotionLabelListAPI(APIView):
             return Response(promotionLabelSerializer.data)
         except Exception, e:
             print "PromotionLabelListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request):
@@ -1548,13 +1548,13 @@ class PromotionLabelListAPI(APIView):
                     id__in=list_id)
                 if promotionLabels:
                     promotionLabels.delete()
-                    return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
                 return Response({"code": 400, "message": _("Not Found Promotion Label."), "fields": ""}, status=400)
             return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
         except Exception, e:
             print "PromotionLabelListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1578,7 +1578,7 @@ class HotAPI(APIView):
             return Response({"code": 400, "message": _("Not Found Hot."), "fields": ""}, status=400)
         except Exception, e:
             print "HotAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -1591,7 +1591,7 @@ class HotAPI(APIView):
 
         except Exception, e:
             print "HotAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, id):
@@ -1610,20 +1610,20 @@ class HotAPI(APIView):
 
         except Exception, e:
             print "HotAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, id, format=None):
         try:
             hot = Hot.objects.get(id=id)
             hot.delete()
-            return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
 
         except Hot.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Hot."), "fields": ""}, status=400)
         except Exception, e:
             print "HotAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1642,7 +1642,7 @@ class HotListAPI(APIView):
             return Response(hotSerializer.data)
         except Exception, e:
             print "HotListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request):
@@ -1652,13 +1652,13 @@ class HotListAPI(APIView):
                 hots = Hot.objects.filter(id__in=list_id)
                 if hots:
                     hots.delete()
-                    return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
                 return Response({"code": 400, "message": _("Not Found Hot."), "fields": ""}, status=400)
             return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
         except Exception, e:
             print "HotListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1682,7 +1682,7 @@ class PostAPI(APIView):
 
         except Exception, e:
             print "PostAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -1696,7 +1696,7 @@ class PostAPI(APIView):
 
         except Exception, e:
             print "PostAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, id):
@@ -1733,20 +1733,20 @@ class PostAPI(APIView):
 
         except Exception, e:
             print "PostAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, id, format=None):
         try:
             post = Post.objects.get(id=id)
             post.delete()
-            return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
 
         except Post.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Post."), "fields": ""}, status=400)
         except Exception, e:
             print "PostAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1767,7 +1767,7 @@ class PostListAPI(APIView):
             return Response(postSerializer.data)
         except Exception, e:
             print "HotListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request):
@@ -1777,13 +1777,13 @@ class PostListAPI(APIView):
                 posts = Post.objects.filter(id__in=list_id)
                 if posts:
                     posts.delete()
-                    return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
                 return Response({"code": 400, "message": _("Not Found Posts."), "fields": ""}, status=400)
             return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
         except Exception, e:
             print "HotListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1804,7 +1804,7 @@ class PostTypeListAPI(APIView):
             return Response(postSerializer.data)
         except Exception, e:
             print "PostTypeListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1827,7 +1827,7 @@ class FAQAPI(APIView):
             return Response({"code": 400, "message": _("Not Found FAQ."), "fields": ""}, status=400)
         except Exception, e:
             print "FAQAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -1840,7 +1840,7 @@ class FAQAPI(APIView):
 
         except Exception, e:
             print "FAQAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, id):
@@ -1857,20 +1857,20 @@ class FAQAPI(APIView):
             return Response({"code": 400, "message": _("Not Found FAQ."), "fields": ""}, status=400)
         except Exception, e:
             print "FAQAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, id, format=None):
         try:
             faq = FAQ.objects.get(id=id)
             faq.delete()
-            return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
 
         except FAQ.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found FAQ."), "fields": ""}, status=400)
         except Exception, e:
             print "FAQAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1890,7 +1890,7 @@ class FAQListAPI(APIView):
             return Response(faqSerializer.data)
         except Exception, e:
             print "FAQListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request):
@@ -1900,13 +1900,13 @@ class FAQListAPI(APIView):
                 faqs = FAQ.objects.filter(id__in=list_id)
                 if faqs:
                     faqs.delete()
-                    return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
                 return Response({"code": 400, "message": _("Not Found FAQs."), "fields": ""}, status=400)
             return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
         except Exception, e:
             print "FAQListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1943,7 +1943,7 @@ class CategoryList(APIView):
 
         except Exception, e:
             print "FeeAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -1984,7 +1984,7 @@ class UserListView(APIView):
 
         except Exception, e:
             print "List User", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     """
@@ -2004,7 +2004,7 @@ class UserListView(APIView):
 
         except Exception, e:
             print "User ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     """
@@ -2022,12 +2022,12 @@ class UserListView(APIView):
             # Check list user id
             if user_id:
                 User.objects.filter(pk__in=user_id).delete()
-                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
 
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -2060,7 +2060,7 @@ class UserDetailView(APIView):
             return Response(serializer.data)
         except Exception, e:
             print 'UserDetailView ', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     """
@@ -2089,7 +2089,7 @@ class UserDetailView(APIView):
 
         except Exception, e:
             print 'UserDetailView PUT', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, pk, format=None):
@@ -2103,12 +2103,12 @@ class UserDetailView(APIView):
             if role_id == 1:
                 print "role_id", role_id
                 user.delete()
-                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             else:
                 return Response({"code": 405, "message": _("Just System Admin accept delete"), "fields": ""}, status=405)
         except Exception, e:
             print 'UserDetailView PUT', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 """
@@ -2128,7 +2128,7 @@ class RolesView(APIView):
 
         except Exception, e:
             print 'UserDetailView PUT', e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -2151,7 +2151,7 @@ class GameAPI(APIView):
             return Response({"code": 400, "message": _("Not Found Game."), "fields": ""}, status=400)
         except Exception, e:
             print "GameAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -2165,7 +2165,7 @@ class GameAPI(APIView):
 
         except Exception, e:
             print "GameAPI ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def put(self, request, id):
@@ -2183,20 +2183,20 @@ class GameAPI(APIView):
             return Response({"code": 400, "message": _("Not Found Game."), "fields": ""}, status=400)
         except Exception, e:
             print "GameAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, id, format=None):
         try:
             game = Game.objects.get(id=id)
             game.delete()
-            return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+            return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
 
         except Game.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Game."), "fields": ""}, status=400)
         except Exception, e:
             print "GameAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -2216,7 +2216,7 @@ class GameListAPI(APIView):
             return Response(gameSerializer.data)
         except Exception, e:
             print "GameListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request):
@@ -2226,13 +2226,13 @@ class GameListAPI(APIView):
                 games = Game.objects.filter(id__in=list_id)
                 if games:
                     games.delete()
-                    return Response({"code": 204, "message": "success", "fields": ""}, status=200)
+                    return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
                 return Response({"code": 400, "message": _("Not Found Games."), "fields": ""}, status=400)
             return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
         except Exception, e:
             print "GameListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -2252,7 +2252,7 @@ class TypeListAPI(APIView):
             return Response(typeSerializer.data)
         except Exception, e:
             print "TypeListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -2273,7 +2273,7 @@ class HotAdvsView(APIView):
             return Response(serializer.data)
         except Exception, e:
             print "Hot_advs List", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -2287,7 +2287,7 @@ class HotAdvsView(APIView):
 
         except Exception, e:
             print "Hot_Advs ", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, format=None):
@@ -2303,11 +2303,11 @@ class HotAdvsView(APIView):
             # Check list id Hot_Advs is valid
             if hot_advs_id:
                 Hot_Advs.objects.filter(pk__in=hot_advs_id).delete()
-                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
         except Exception, e:
             print e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -2328,7 +2328,7 @@ class RoleListAPI(APIView):
             return Response(roleSerializer.data)
         except Exception, e:
             print "RoleListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -2360,7 +2360,7 @@ class UserRoleListAPI(APIView):
             return Response({"code": 400, "message": _("Not Found Role."), "fields": ""}, status=400)
         except Exception, e:
             print "UserListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
 
@@ -2390,11 +2390,11 @@ class SetRoleAPI(APIView):
                     users = User.objects.filter(id__in=list_id)
                     if users:
                         role.user_role_rel.set(users)
-                        return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                        return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
                     return Response({"code": 400, "message": _("Not Found users."), "fields": ""}, status=400)
                 #list_id is empty then clear all user of role
                 role.user_role_rel.clear()
-                return Response({"code": 200, "message": "success", "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
 
             return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
@@ -2402,5 +2402,5 @@ class SetRoleAPI(APIView):
             return Response({"code": 400, "message": _("Not Found Role."), "fields": ""}, status=400)
         except Exception, e:
             print "UserListAPI", e
-            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
