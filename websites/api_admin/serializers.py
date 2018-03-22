@@ -142,7 +142,9 @@ class PromotionSerializer(serializers.ModelSerializer):
             # Is this promotion change from draft to public then set user
             if instance.is_draft and not validated_data.get('is_draft'):
                 instance.user_implementer = self.context['request'].user
-                
+            elif not instance.is_draft and validated_data.get('is_draft'):
+                instance.user_implementer = None
+
             # Get flag clear image from request
             is_clear_image = self.context['request'].data.get('is_clear_image')
             # Get flag clear thumbnail image from request
