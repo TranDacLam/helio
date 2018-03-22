@@ -245,7 +245,7 @@ class UserDetail(APIView):
             return Response({"code": 400, "message": "Email is required", "fields": ""}, status=400)
 
         except User.DoesNotExist, e:
-            error = {"code": 400, "message": "Email Not Found.",
+            error = {"code": 400, "message": _("Email Not Found."),
                      "fields": "email"}
             return Response(error, status=400)
         except Exception, e:
@@ -260,11 +260,11 @@ class UserDetail(APIView):
                 instance=user, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("update user success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
 
         except User.DoesNotExist, e:
-            return Response({"code": 400, "message": "Not found user", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Not Found User."), "fields": ""}, status=400)
 
         except Exception, e:
             print "UserDetail", e
@@ -1000,7 +1000,7 @@ class UserEmbedDetail(APIView):
                 cursor.execute(query_str.format(barcode, birth_date, serializer.data['phone'], serializer.data[
                                'personal_id'], serializer.data['full_name'], serializer.data['address'], serializer.data['email']))
 
-                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("update userembed success"), "fields": ""}, status=200)
 
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
         # catching db embed error
@@ -1076,7 +1076,7 @@ class RelateAPI(APIView):
                 user.username_mapping = request.user.email
                 user.date_mapping = datetime.now()
                 user.save()
-                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("relate success"), "fields": ""}, status=200)
 
             return Response({"code": 400, "message": _("Email and barcode is required"), "fields": ""}, status=400)
 
@@ -1102,7 +1102,7 @@ class RelateAPI(APIView):
                 user.date_mapping = None
                 user.username_mapping = None
                 user.save()
-                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+                return Response({"code": 200, "message": _("cancel relate success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": _("User is not related"), "fields": ""}, status=400)
 
         except User.DoesNotExist, e:
