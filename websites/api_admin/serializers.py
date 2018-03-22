@@ -68,15 +68,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields=('id' ,'full_name', 'email', 'phone','barcode','birth_date', 'personal_id', 'address', 'username_mapping', 'date_mapping')
 
-    def update(self, instance, validated_data):
-        instance.full_name = validated_data.get('full_name', instance.full_name)
-        instance.email = validated_data.get('email', instance.email)
-        instance.phone = validated_data.get('phone', instance.phone)
-        instance.birth_date = validated_data.get('birth_date', instance.birth_date)
-        instance.personal_id = validated_data.get('personal_id', instance.personal_id)
-        instance.address = validated_data.get('address', instance.address)
-        instance.save()
-        return instance
 
 
 	# create objects
@@ -292,9 +283,14 @@ class EventSerializer(serializers.ModelSerializer):
         return data
     # override mehod update because name field is unique
     def update(self, instance, validated_data):
-        image = validated_data.get('image', instance.image)
-        if image:
-            instance.image = image
+        if self.context:
+            is_clear_image = self.context['request'].data.get('is_clear_image')
+            if is_clear_image == 'true':
+                instance.image = None
+            else:
+                image = validated_data.get('image', instance.image)
+                if image:
+                    instance.image = image
         instance.name = validated_data.get('name', instance.name)
         instance.short_description = validated_data.get('short_description', instance.short_description)
         instance.content = validated_data.get('content', instance.content)
@@ -313,10 +309,14 @@ class HotSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'sub_url', 'image', 'is_show')
 
     def update(self, instance, validated_data):
-        
-        image = validated_data.get('image', instance.image)
-        if image:
-            instance.image = image
+        if self.context:
+            is_clear_image = self.context['request'].data.get('is_clear_image')
+            if is_clear_image == 'true':
+                instance.image = None
+            else:
+                image = validated_data.get('image', instance.image)
+                if image:
+                    instance.image = image
         instance.name = validated_data.get('name', instance.name)
         instance.sub_url = validated_data.get('sub_url', instance.sub_url)
         instance.is_show = validated_data.get('is_show', instance.is_show)
@@ -514,9 +514,14 @@ class GameSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'short_description', 'content', 'image', 'game_type', 'is_draft')
 
     def update(self, instance, validated_data):
-        image = validated_data.get('image', instance.image)
-        if image:
-            instance.image = image
+        if self.context:
+            is_clear_image = self.context['request'].data.get('is_clear_image')
+            if is_clear_image == 'true':
+                instance.image = None
+            else:
+                image = validated_data.get('image', instance.image)
+                if image:
+                    instance.image = image
         instance.name = validated_data.get('name', instance.name)
         instance.short_description = validated_data.get('short_description', instance.short_description)
         instance.content = validated_data.get('content', instance.content)

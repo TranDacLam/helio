@@ -1380,14 +1380,11 @@ class EventAPI(APIView):
 
     def put(self, request, id):
         try:
-            is_clear_image = request.data.get('is_clear_image', None)
             event = Event.objects.get(id=id)
             eventSerializer = admin_serializers.EventSerializer(
-                instance=event, data=request.data)
+                instance=event, data=request.data, context={'request': request})
             if eventSerializer.is_valid():
                 eventSerializer.save()
-                if is_clear_image:
-                    event.image = None
                 return Response(eventSerializer.data)
             return Response({"code": 400, "message": eventSerializer.errors, "fields": ""}, status=400)
 
@@ -1599,14 +1596,12 @@ class HotAPI(APIView):
 
     def put(self, request, id):
         try:
-            is_clear_image = request.data.get('is_clear_image', None)
+            print request.data
             hot = Hot.objects.get(id=id)
             hotSerializer = admin_serializers.HotSerializer(
-                instance=hot, data=request.data)
+                instance=hot, data=request.data, context={'request': request})
             if hotSerializer.is_valid():
                 hotSerializer.save()
-                if is_clear_image:
-                    hot.image = None
                 return Response(hotSerializer.data)
             return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
 
@@ -1706,14 +1701,11 @@ class PostAPI(APIView):
 
     def put(self, request, id):
         try:
-            is_clear_image = request.data.get('is_clear_image', None)
             post = Post.objects.get(id=id)
             postSerializer = admin_serializers.PostSerializer(
-                instance=post, data=request.data)
+                instance=post, data=request.data, context={'request', request})
             if postSerializer.is_valid():
                 postSerializer.save()
-                if is_clear_image:
-                    post.image = None
                 # handle update multi image
                 posts_image = request.data.get('posts_image', None)
                 if posts_image:
@@ -2178,14 +2170,12 @@ class GameAPI(APIView):
 
     def put(self, request, id):
         try:
-            is_clear_image = request.data.get('is_clear_image', None)
             game = Game.objects.get(id=id)
+            print request.data
             gameSerializer = admin_serializers.GameSerializer(
-                instance=game, data=request.data)
+                instance=game, data=request.data , context={'request': request})
             if gameSerializer.is_valid():
                 gameSerializer.save()
-                if is_clear_image:
-                    game.image = None
                 return Response(gameSerializer.data)
             return Response({"code": 400, "message": gameSerializer.errors, "fields": ""}, status=400)
 
