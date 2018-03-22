@@ -120,8 +120,6 @@ class PromotionDisplaySerializer(serializers.ModelSerializer):
 class PromotionSerializer(serializers.ModelSerializer):
     apply_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
     end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y', 'iso-8601'], allow_null = True)
-    is_clear_image = serializers.BooleanField(default=False)
-    is_clear_image_thumbnail = serializers.BooleanField(default=False)
 
     class Meta:
         model = Promotion
@@ -140,17 +138,23 @@ class PromotionSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
 
-        # If image from request is None then set image = old value
-        if not validated_data.get('is_clear_image') and not validated_data.get('image'):
-            validated_data['image'] = instance.image
+        if self.context['request']:
+            # Is this promotion change from draft to public then set user
+            if instance.is_draft and not validated_data.get('is_draft'):
+                instance.user_implementer = self.context['request'].user
+                
+            # Get flag clear image from request
+            is_clear_image = self.context['request'].data.get('is_clear_image')
+            # Get flag clear thumbnail image from request
+            is_clear_image_thumbnail = self.context['request'].data.get('is_clear_image_thumbnail')
 
-        # If image from request is None then set image = old value
-        if not validated_data.get('is_clear_image_thumbnail') and not validated_data.get('image_thumbnail'):
-            validated_data['image_thumbnail'] = instance.image_thumbnail
+            # If image from request is None then set image = old value
+            if is_clear_image == "false" and not validated_data.get('image'):
+                validated_data['image'] = instance.image
 
-        # Is this promotion change from draft to public then set user
-        if instance.is_draft and not validated_data.get('is_draft'):
-            instance.user_implementer = self.context['request'].user
+            # If image from request is None then set image = old value
+            if is_clear_image_thumbnail == "false" and not validated_data.get('image_thumbnail'):
+                validated_data['image_thumbnail'] = instance.image_thumbnail
 
         return super(PromotionSerializer, self).update(instance, validated_data)
 
