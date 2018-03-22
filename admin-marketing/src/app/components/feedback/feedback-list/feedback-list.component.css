@@ -18,6 +18,13 @@
 	text-decoration: none;
 	color: #333333;
 }
+td.title-fb a {
+	text-decoration: none;
+	color: black;
+} 
+td.title-fb a:hover {
+	color: red;
+}
 p.title {
 	font-size: 34px;
 }

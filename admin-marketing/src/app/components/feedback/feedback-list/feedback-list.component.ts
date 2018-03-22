@@ -55,20 +55,21 @@ export class FeedbackListComponent implements OnInit {
                 this.checkSelectAllCheckbox();
             },
             columnDefs: [
-                {
-                    targets: 1,
-                    visible: false
+                { 
+                    visible: false, 
+                    targets: 1 
                 },
                 { 
                     orderable: false, 
                     targets: 0 
-                },
+                }
             ]
         };
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
         
         // Call get all feedback
         this.getAllFeedbacks();
+
         this.route.queryParams
             .subscribe(params => {
                 this.feedbackService.getFeedbackFilter(params).subscribe(
@@ -89,6 +90,7 @@ export class FeedbackListComponent implements OnInit {
         @author: TrangLe
      */
 	getAllFeedbacks() {
+        this.feedbacks = null;
 		this.feedbackService.getAllFeedback().subscribe(
 			(feedbacks) => {
 				this.feedbacks = feedbacks;
