@@ -577,7 +577,7 @@ class UserLinkCardList(APIView):
         Get all user linked card
         """
         try:
-            lst_item = User.objects.exclude(barcode__isnull=True)
+            lst_item = User.objects.exclude(barcode__isnull=True).order_by('-date_mapping')
             serializer = admin_serializers.UserSerializer(lst_item, many=True)
             return Response(serializer.data)
         except Exception, e:
