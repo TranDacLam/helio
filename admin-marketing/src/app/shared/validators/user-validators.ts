@@ -4,7 +4,7 @@ import * as moment from 'moment';
 export class UserValidators {
 
 	static passwordValidators(c: FormControl): ValidationErrors {
-		let passRegx = /^(?=.*\d).{8,32}$/;
+		let passRegx = /^(?=.*\d).{8,}$/;
 		let passVal = String($('#password').val());
 		let passValues = passVal.match(passRegx);
 		if(passValues === null && passVal !== '') {

@@ -36,7 +36,7 @@
         <tbody>
             <tr class="row-data" *ngFor="let feedback of feedbacks">
                 <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
-                <td>{{feedback.id}}</td>
+                <td [ngStyle]="{'display':'none'}">{{feedback.id}}</td>
                 <td class="title-fb"><a routerLink="/feedback-detail/{{ feedback.id }}">{{ feedback.subject }}</a></td>
                 <td>{{ feedback.name }}</td>
                 <td>{{ feedback.created |date: 'dd/MM/yyyy'}}</td>
