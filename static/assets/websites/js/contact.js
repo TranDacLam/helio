@@ -69,6 +69,7 @@ $(document).ready(function() {
 		            $("textarea").val("");
 		            $("#message_success").css('display','block');
 		            $("#message_error").css('display','none');
+		            grecaptcha.reset();
 		        },
 		        error: function(data) {
 		        	var form_err = $.parseJSON(data.responseText);
