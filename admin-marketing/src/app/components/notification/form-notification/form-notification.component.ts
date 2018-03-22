@@ -9,6 +9,8 @@ import { NotificationService } from '../../../shared/services/notification.servi
 import { CategoryNotificationService } from '../../../shared/services/category-notification.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { ToastrService } from 'ngx-toastr';
+import { VariableGlobals } from './../../../shared/commons/variable_globals';
+import { User } from '../../../shared/class/user';
 import 'rxjs/add/observable/throw';
 import { env } from '../../../../environments/environment';
 
@@ -45,6 +47,7 @@ export class FormNotificationComponent implements OnInit {
     formNotification: FormGroup;
 
     categories: CategoryNotification[];
+    user_current: User;
 
     check_QR: boolean = false; // Check enable/disable input Location
 
@@ -61,6 +64,7 @@ export class FormNotificationComponent implements OnInit {
         private location: Location,
         private router: Router,
         private route: ActivatedRoute,
+        private variable_globals: VariableGlobals,
         private toastr: ToastrService
     ) { 
         this.api_domain = env.api_domain_root;
@@ -76,6 +80,9 @@ export class FormNotificationComponent implements OnInit {
 
         this.getCategory();
         this.creatForm();
+        setTimeout(()=>{
+            this.user_current = this.variable_globals.user_current;
+        },100);
     }
 
     /*
@@ -87,7 +94,7 @@ export class FormNotificationComponent implements OnInit {
             subject: [this.noti.subject, [Validators.required, Validators.maxLength(255)]],
             message: [this.noti.message, [Validators.required]],
             image: [this.noti.image],
-            sub_url: [this.noti.sub_url, [Validators.required, Validators.maxLength(255)]],
+            sub_url: [this.noti.sub_url, [Validators.maxLength(255)]],
             category: [this.noti.category ? this.noti.category : '', Validators.required],
             is_QR_code: [this.noti.is_QR_code ? this.noti.is_QR_code : true],
             location: [this.noti.location ? this.noti.location : 'Quầy MBS', [Validators.maxLength(500)]],

@@ -89,7 +89,9 @@
     </div>
 
     <hr/>
-    <button class="btn btn-primary" (click)="deleteNotificationEvent()" *ngIf="type_http == 'put'">
+    <button class="btn btn-primary" (click)="deleteNotificationEvent()" 
+        *ngIf="noti.id && (!noti.sent_date || (noti.sent_date && user_current?.role === 1))"
+    >
         XÓA
     </button>
     <button class="btn btn-primary pull-right" (click)="onSubmit()">

@@ -45,12 +45,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let noti of notifications" class="row-data {{noti.sent_date ? 'disabled_checkbox': ''}}">
-                <td *ngIf="noti.sent_date">
-                    <input type="checkbox" disabled/>
-                </td>
-                <td *ngIf="!noti.sent_date">
-                    <input type="checkbox" (change)="selectCheckbox($event);"/>
+            <tr *ngFor="let noti of notifications" 
+                class="row-data {{(noti.sent_date && user_current?.role !== 1) ? 'disabled_checkbox': ''}}">
+                <td>
+                    <input type="checkbox" (change)="selectCheckbox($event);" 
+                        [disabled]="noti.sent_date && user_current?.role !== 1"
+                    />
                 </td>
                 <td>{{ noti.id }}</td>
                 <td><a [routerLink]="['/notification/edit/', noti.id, {lang: lang}]">{{ noti.subject }}</a></td>
