@@ -103,6 +103,7 @@ import { LoginComponent } from './components/login/login.component';
 import { VariableGlobals } from './shared/commons/variable_globals';
 import { OpenTimeComponent } from './components/open-time/open-time.component';
 import { PromotionReportComponent } from './components/promotions/promotion-report/promotion-report.component';
+import { PopupEditPromotionComponent } from './components/promotions/popup-edit-promotion/popup-edit-promotion.component';
 
 
 /*
@@ -185,7 +186,8 @@ export const DefaultIntl = {
     LoginComponent,
     MapToIterablePipe,
     OpenTimeComponent,
-    PromotionReportComponent
+    PromotionReportComponent,
+    PopupEditPromotionComponent
   ],
   imports: [
     BrowserModule,

@@ -43,7 +43,7 @@
 <div class="row custom_table">
     <div class="col-md-12">
         <div class="datatable-content">
-            <table id="table_id" datatable [dtOptions]="dtOptions"  dt-instance="dtInstanceCallback" class="row-border hover"  *ngIf="promotion_list">
+            <table id="table_id" datatable [dtOptions]="dtOptions"  dt-instance="dtInstanceCallback" class="row-border hover"  *ngIf="promotion_list && user_current">
                 <thead>
                     <tr>
                         <th class="text-center"><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);" /></th>
@@ -59,17 +59,17 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let promotion of promotion_list" 
-                        class="row-data {{((!promotion.is_draft || (promotion.end_date && promotion.end_date < (today | date:'dd/MM/yyyy'))) && user_current?.role !== 1) ? 'disabled_checkbox': ''}}">
+                        class="row-data {{isCheckDisplay(promotion) ? 'disabled_checkbox': ''}}">
                         <td class="text-center">
                             <input type="checkbox" (change)="selectCheckbox($event);"
-                                [disabled]="(!promotion.is_draft || (promotion.end_date && promotion.end_date < (today | date:'dd/MM/yyyy'))) && user_current?.role !== 1"
+                                [attr.disabled]="isDisable(promotion)"
                             />
                         </td>
                         <td>{{ promotion.id }}</td>
-                        <td *ngIf="(!promotion.is_draft || (promotion.end_date && promotion.end_date < (today | date:'dd/MM/yyyy'))) && user_current?.role !== 1">
+                        <td *ngIf="isCheckDisplay(promotion)">
                             {{ promotion.name }}
                         </td>
-                        <td *ngIf="!((!promotion.is_draft || (promotion.end_date && promotion.end_date < (today | date:'dd/MM/yyyy'))) && user_current?.role !== 1)">
+                        <td *ngIf="!isCheckDisplay(promotion)">
                             <a [routerLink]="['/promotions/', promotion.id, 'change', {lang: lang}]">{{ promotion.name }}</a>
                         </td>
                         <td>{{ promotion.is_draft ? "Draft" : "Đã Triển Khai" }}</td>
@@ -80,6 +80,7 @@
                             <img src="{{api_domain}}{{promotion.QR_code}}" *ngIf="promotion.QR_code; else create_qrcode_btn" height="50px" width="50px" />
                             <ng-template #create_qrcode_btn>
                                 <button  class="btn btn-primary text-center" (click)="generator_QR_code($event, promotion.id)"
+                                    [attr.disabled]="isDisable(promotion)"
                                     data-loading-text="<i class='fa fa-spinner fa-spin'></i>Tạo QR Code">Tạo QR Code</button>
                             </ng-template>
                             

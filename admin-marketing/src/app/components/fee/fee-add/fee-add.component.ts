@@ -5,53 +5,54 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-fee-add',
-  templateUrl: './fee-add.component.html',
-  styleUrls: ['./fee-add.component.css']
+    selector: 'app-fee-add',
+    templateUrl: './fee-add.component.html',
+    styleUrls: ['./fee-add.component.css']
 })
 export class FeeAddComponent implements OnInit {
 
-  constructor(
-    private formBuilder: FormBuilder, 
-    private feeService: FeeService, 
-    private router: Router,
-    private toastr: ToastrService) {
+    constructor(
+        private formBuilder: FormBuilder,
+        private feeService: FeeService,
+        private router: Router,
+        private toastr: ToastrService) {
 
     }
 
-  feeAddForm: FormGroup;
-  messageResult: String;
-  errorMessage: String;
-  submitted: boolean= false;
-  
-  createFee(value: any, isValid: boolean){
-    this.submitted = true;
-    if (isValid){
-      this.feeService.createFee(value).subscribe(
-      result => {
-          this.messageResult = "success";
-          this.router.navigate(['/fee/list']);
-          this.toastr.success(`Thêm mới "${this.feeAddForm.value.fee} ${this.feeAddForm.value.fee_type}" thành công`);
-         },
-      (error) => {
-          if(error.code === 400){
-              this.errorMessage = error.message;
-          }else{
-              this.router.navigate(['/error', { message: error.message}]);
-          }
-      });
+    feeAddForm: FormGroup;
+    messageResult: String;
+    errorMessage: String;
+    submitted: boolean = false;
+
+    createFee(value: any, isValid: boolean) {
+        this.submitted = true;
+        if (isValid) {
+            this.feeService.createFee(value).subscribe(
+                result => {
+                    this.messageResult = "success";
+                    this.router.navigate(['/fee/list']);
+                    this.toastr.success(`Thêm mới "${this.feeAddForm.value.fee} ${this.feeAddForm.value.fee_type}" thành công`);
+                },
+                (error) => {
+                    if (error.code === 400) {
+                        this.errorMessage = error.message;
+                    } else {
+                        this.router.navigate(['/error', { message: error.message }]);
+                    }
+                }
+            );
+        }
+
     }
-  	
-  	}
 
 
-  ngOnInit() {
-  	this.feeAddForm = this.formBuilder.group({
-      fee: [null, [Validators.required, Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(2147483647)]],
-      position: [null, Validators.required],
-      fee_type: [ 'vnd', Validators.required],
-      is_apply: [false ],
-    });
-  }
+    ngOnInit() {
+        this.feeAddForm = this.formBuilder.group({
+            fee: [null, [Validators.required, Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(2147483647)]],
+            position: [null, Validators.required],
+            fee_type: ['vnd', Validators.required],
+            is_apply: [false],
+        });
+    }
 
 }

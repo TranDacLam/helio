@@ -43,6 +43,7 @@ export class ListPromotionLabelComponent implements OnInit {
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Nhãn Khuyến Mãi');
+        // custom datatable option
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
@@ -58,6 +59,7 @@ export class ListPromotionLabelComponent implements OnInit {
                 }
             ]
         };
+        // create new object from 2 object use operator spread es6
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
 
         this.getPromotionLabels();

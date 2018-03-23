@@ -47,7 +47,7 @@
         </button>
     </p>
     <p *ngIf="user_current">
-        <input type="checkbox" (change)="isUpdateNoti($event)" [disabled]="user_current.role !== 1" id="checed_systemadmin"/> 
+        <input type="checkbox" (change)="isUpdateNoti($event)" [disabled]="user_current.role !== 1"/> 
         Sửa thông báo đã gửi (Chức năng này chỉ dành cho System Admin)
     </p>
     <p *ngIf="is_update">
@@ -62,6 +62,7 @@
     [user_list_right]="user_list_right"
     (save)="update_user_noti($event)"
     [notification]="noti_detail"
+    [promotion]="promotion"
 >
 </app-user-multiselect>
 <popup-edit-notification (update_noti)='updateNoti($event)'></popup-edit-notification>

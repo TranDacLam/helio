@@ -48,6 +48,7 @@ export class ListNotificationComponent implements OnInit {
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Thông Báo');
+        // custom datatable option
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
@@ -59,9 +60,11 @@ export class ListNotificationComponent implements OnInit {
                 }
             ]
         };
+        // create new object from 2 object use operator spread es6
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
 
         this.getNotifications();
+        // get current user
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
         },100);
@@ -104,6 +107,7 @@ export class ListNotificationComponent implements OnInit {
         }
         this.getLengthSelected();
     }
+    
     /*
         Event select All Button on header table
         @author: Lam 
