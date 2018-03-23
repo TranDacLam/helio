@@ -1693,7 +1693,7 @@ class PostAPI(APIView):
     def post(self, request, format=None):
         try:
             postSerializer = admin_serializers.PostSerializer(
-                data=request.data)
+                data=request.data, context = {'request': request})
             if postSerializer.is_valid():
                 postSerializer.save()
                 return Response(postSerializer.data)
