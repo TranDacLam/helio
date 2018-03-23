@@ -142,16 +142,14 @@ export class BannerListComponent implements OnInit {
         */
         if(this.length_selected > 0 ){
             bootbox.confirm({
-                title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.length_selected + " banner đã chọn",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " Banner đã chọn",
                 buttons: {
-                    confirm: {
-                        label: 'Xóa',
-                        className: 'btn-success',
-                    },
                     cancel: {
-                        label: 'Hủy',
-                        className: 'pull-left btn-danger',
+                        label: "HỦY"
+                    },
+                    confirm: {
+                        label: "XÓA"
                     }
                 },
                 callback: (result)=> {
@@ -162,7 +160,7 @@ export class BannerListComponent implements OnInit {
                 }
             });
         } else {
-            this.toastr.warning(`Vui lòng chọn banner để xóa`);
+            this.toastr.warning(`Vui lòng chọn Banner để xóa`);
         } 
     }
     /*
@@ -179,7 +177,7 @@ export class BannerListComponent implements OnInit {
             // Call API remove list promotion selected
             this.bannerService.deleteBannerSelected(list_id_selected, this.lang).subscribe(
                 (data) => {
-                    this.toastr.success(`Xóa ${this.length_selected} banner thành công`);
+                    this.toastr.success(`Xóa ${this.length_selected} Banner thành công`);
 
                     // Remove all promotion selected on UI
                     dtInstance.rows('.selected').remove().draw();

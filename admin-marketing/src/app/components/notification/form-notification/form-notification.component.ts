@@ -230,14 +230,14 @@ export class FormNotificationComponent implements OnInit {
     deleteNotificationEvent(){
         let that = this;
         bootbox.confirm({
-            title: "Bạn có chắc chắn",
-            message: "Bạn muốn xóa thông báo này?",
+            title: "Bạn có chắc chắn ?",
+            message: "Bạn muốn xóa Thông Báo này",
             buttons: {
                 cancel: {
-                    label: "Hủy"
+                    label: "HỦY"
                 },
                 confirm: {
-                    label: "Xóa"
+                    label: "XÓA"
                 }
             },
             callback: function (result) {

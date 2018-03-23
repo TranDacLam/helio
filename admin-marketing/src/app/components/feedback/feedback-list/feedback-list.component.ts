@@ -46,6 +46,7 @@ export class FeedbackListComponent implements OnInit {
         this.feedbacks = [];
     }
 
+        
 	ngOnInit() {
         // Call dataTable
         this.dtOptions = data_config(this.record);
@@ -66,22 +67,26 @@ export class FeedbackListComponent implements OnInit {
             ]
         };
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
-        
-        // Call get all feedback
-        this.getAllFeedbacks();
 
-        this.route.queryParams
-            .subscribe(params => {
-                this.feedbackService.getFeedbackFilter(params).subscribe(
-                    (result) => {
+    // Call get all feedback
+    this.getAllFeedbacks();         
+       
+    this.route.queryParams.subscribe(
+        params => {
+            this.feedbacks = null;
+            this.feedbackService.getFeedbackFilter(params).subscribe(
+                (result) => {
+                    setTimeout(() => {
                         this.feedbacks = result;
-                    },
-                    (error) => {
-                        this.router.navigate(['/error', { message: error.json().message }])
-                    }
-                )
+                        this.length_all = this.feedbacks.length;
+                        this.dtTrigger.next();
+                    },1); //0.1s
+                },
+                (error) => {
+                    this.router.navigate(['/error', { message: error.json().message }])
+                }
+            )
         });
-        
 	}
 
 	/*
@@ -90,7 +95,6 @@ export class FeedbackListComponent implements OnInit {
         @author: TrangLe
      */
 	getAllFeedbacks() {
-        this.feedbacks = null;
 		this.feedbackService.getAllFeedback().subscribe(
 			(feedbacks) => {
 				this.feedbacks = feedbacks;
@@ -160,16 +164,14 @@ export class FeedbackListComponent implements OnInit {
         */
         if(this.length_selected > 0 ){
             bootbox.confirm({
-                title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.length_selected + " phản hồi đã chọn",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " Phản Hồi đã chọn",
                 buttons: {
-                    confirm: {
-                        label: 'Xóa',
-                        className: 'btn-success',
-                    },
                     cancel: {
-                        label: 'Hủy',
-                        className: 'pull-left btn-danger',
+                        label: "HỦY"
+                    },
+                    confirm: {
+                        label: "XÓA"
                     }
                 },
                 callback: (result)=> {
@@ -180,7 +182,7 @@ export class FeedbackListComponent implements OnInit {
                 }
             });
         } else {
-            this.toastr.warning(`Vui lòng chọn phản hồi cần xóa`);
+            this.toastr.warning(`Vui lòng chọn Phản Hồi cần xóa`);
         } 
     }
 
@@ -199,7 +201,7 @@ export class FeedbackListComponent implements OnInit {
             // Call API remove list promotion selected
             this.feedbackService.deleteAllFeedbackChecked(list_id_selected).subscribe(
                 (data) => {
-                    this.toastr.success(`Xóa ${this.length_selected} phản hồi thành công`);
+                    this.toastr.success(`Xóa ${this.length_selected} Phản Hồi thành công`);
 
                     // Remove all promotion selected on UI
                     dtInstance.rows('.selected').remove().draw();

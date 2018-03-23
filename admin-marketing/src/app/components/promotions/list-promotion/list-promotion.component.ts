@@ -149,14 +149,14 @@ export class ListPromotionComponent implements OnInit {
         let that = this;
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.length_selected + " khuyến mãi đã chọn?",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " Khuyến Mãi đã chọn",
                 buttons: {
                     cancel: {
-                        label: "Hủy"
+                        label: "HỦY"
                     },
                     confirm: {
-                        label: "Xóa"
+                        label: "XÓA"
                     }
                 },
                 callback: function (result) {
@@ -167,7 +167,7 @@ export class ListPromotionComponent implements OnInit {
             });
 
         } else  {
-            this.toastr.warning(`Vui lòng chọn khuyến mãi cần xóa`);
+            this.toastr.warning(`Vui lòng chọn Khuyến Mãi cần xóa`);
         }
         
     }
@@ -202,7 +202,7 @@ export class ListPromotionComponent implements OnInit {
             this.promotionService.deletePromotionList(list_id_selected, this.lang).subscribe(
                 (data) => {
                     if (data.status == 204) {
-                        this.toastr.success(`Xóa ${this.length_selected} khuyến mãi thành công`);
+                        this.toastr.success(`Xóa ${this.length_selected} Khuyến Mãi thành công`);
 
                         // Remove all promotion selected on UI
                         dtInstance.rows('.selected').remove().draw();

@@ -159,13 +159,13 @@ export class NotificationDetailComponent implements OnInit {
         let that = this;
         bootbox.confirm({
             title: "Bạn có chắc chắn",
-            message: "Bạn có muốn gửi thông báo này không?",
+            message: "Bạn có muốn gửi Thông Báo này không?",
             buttons: {
                 cancel: {
-                    label: "Hủy"
+                    label: "HỦY"
                 },
                 confirm: {
-                    label: "Đồng Ý"
+                    label: "ĐỒNG Ý"
                 }
             },
             callback: function (result) {

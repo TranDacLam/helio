@@ -91,7 +91,7 @@
     </div>
 
     <hr/>
-    <button class="btn btn-primary" (click)="deleteNotificationEvent()" 
+    <button class="btn btn-danger" (click)="deleteNotificationEvent()" 
         *ngIf="noti.id && type_http == 'put' && (!noti.sent_date || (noti.sent_date && user_current?.role === 1))"
     >
         XÓA

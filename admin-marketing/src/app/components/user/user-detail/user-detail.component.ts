@@ -183,16 +183,14 @@ export class UserDetailComponent implements OnInit {
     */
     confirmDeleteFeedback(user: User) {
         bootbox.confirm({
-            title: "Bạn có chắc chắn?",
-            message: "Bạn muốn xóa user này.",
+            title: "Bạn có chắc chắn ?",
+            message: "Bạn muốn xóa User này.",
             buttons: {
-                confirm: {
-                    label: 'Xóa',
-                    className: 'btn-success',
-                },
                 cancel: {
-                    label: 'Hủy',
-                    className: 'pull-left btn-danger',
+                    label: "HỦY"
+                },
+                confirm: {
+                    label: "XÓA"
                 }
             },
             callback: (result)=> {

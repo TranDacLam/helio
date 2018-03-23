@@ -137,14 +137,14 @@ export class ListEventComponent implements OnInit {
         let that = this;
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.length_selected + " sự kiện đã chọn?",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " Sự Kiện đã chọn",
                 buttons: {
                     cancel: {
-                        label: "Hủy"
+                        label: "HỦY"
                     },
                     confirm: {
-                        label: "Xóa"
+                        label: "XÓA"
                     }
                 },
                 callback: function (result) {
@@ -155,7 +155,7 @@ export class ListEventComponent implements OnInit {
             });
 
         } else  {
-            this.toastr.warning(`Vui lòng chọn sự kiện cần xóa`);
+            this.toastr.warning(`Vui lòng chọn Sự Kiện cần xóa`);
         }
         
     }
@@ -177,7 +177,7 @@ export class ListEventComponent implements OnInit {
             this.eventService.onDelEventSelect(list_id_selected, this.lang).subscribe(
                 (data) => {
                     if (data.code === 204) {
-                        this.toastr.success(`Xóa ${this.length_selected} sự kiện thành công`);
+                        this.toastr.success(`Xóa ${this.length_selected} Sự Kiện thành công`);
 
                         // Remove all promotion selected on UI
                         dtInstance.rows('.selected').remove().draw();
