@@ -63,6 +63,7 @@ class Base64ImageField(serializers.ImageField):
 class UserSerializer(serializers.ModelSerializer):
 
     birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], allow_null = True)
+   
 
     class Meta:
         model = User
@@ -150,6 +151,11 @@ class PromotionSerializer(serializers.ModelSerializer):
 
         return super(PromotionSerializer, self).update(instance, validated_data)
 
+class GiftSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False, required=False, read_only=False)
+    class Meta:
+        model = Gift
+        exclude = ('created', 'modified')
 
 class AdvertisementSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True,validators=[

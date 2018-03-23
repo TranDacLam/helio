@@ -8,6 +8,7 @@ urlpatterns = [
 	url(r'^promotion_list/$', views.PromotionList.as_view(), name="promotion-list"),
 	url(r'^promotion_detail/(?P<id>[0-9]+)/$', views.PromotionDetail.as_view(), name="promotion"),
 	url(r'^promotion_detail/$', views.PromotionDetail.as_view(), name="promotion-add"),
+	url(r'^promotion_statistic/(?P<pk>[0-9]+)/$', views.PromotionStatistic.as_view(), name="promotion-statistic"),
 
 	url(r'^user_promotion/(?P<id>[0-9]+)/$', views.PromotionUser.as_view(), name="user-promotion"),
 	

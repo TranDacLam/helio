@@ -70,3 +70,8 @@ form button:hover{
     padding-left: 15px;
     padding-right: 15px;
 }
+ul.error_valid{
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 5px;
+}

@@ -36,7 +36,7 @@ export class DenominationAddComponent implements OnInit {
 
     createForm() {
         this.denoForm = this.fb.group({
-           denomination: ['', [Validators.required, Validators.maxLength(10), DenominationValidators.denominationValidators]],
+           denomination: ['', [Validators.required, Validators.maxLength(13), DenominationValidators.denominationValidators]],
         });
     }
     /* 
