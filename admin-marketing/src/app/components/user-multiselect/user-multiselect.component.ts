@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChildren, QueryList, Input, Output, EventEmitter } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-
+import { VariableGlobals } from './../../shared/commons/variable_globals';
 import { User } from '../../shared/class/user';
+import { Notification } from './../../shared/class/notification';
 
 
 @Component({
@@ -27,17 +28,19 @@ export class UserMultiselectComponent implements OnInit {
     @Input('user_list_right') 
     user_list_right: User[] = [];
 
-    @Input('promotion_id') 
-    promotion_id: number;
+    @Input('notification') 
+    notification: Notification;
 
 
     @Output()
     save: EventEmitter<number[]> = new EventEmitter<number[]>();
 
+    current_user: User;
+
     is_button_left: boolean = false;
     is_button_rigth: boolean = false;
 
-    constructor() { }
+    constructor(private variableGlobals: VariableGlobals) { }
 
     ngOnInit() {
         this.dtOptions_left = {
@@ -129,6 +132,18 @@ export class UserMultiselectComponent implements OnInit {
         setTimeout(()=>{    //<<<---    using ()=> syntax
             $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
         },400);
+
+        setTimeout(()=>{
+            this.current_user = this.variableGlobals.user_current;
+            this.disableAllTable();
+        },100);
+    }
+
+    disableAllTable(){
+        if(this.current_user.role !==1 && this.notification && this.notification.sent_date){
+            $("table tr input:checkbox").prop('disabled', 'disabled');
+            $("button").prop('disabled', 'disabled');
+        }
     }
 
     /*

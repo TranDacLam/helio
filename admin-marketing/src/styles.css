@@ -200,9 +200,9 @@ h1.h1-title {
     author: Lam; 
 */
 .custom-title .custom-button{
-    color: black;
-    background-color: #fff;
-    border-color: black;
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
     margin-bottom: 10px;
 }
 .custom-title .icon-button {
@@ -221,11 +221,18 @@ h1.h1-title {
     padding-right: 0px;
     padding-left: 0px;
 }
+button.btn:focus {
+    outline: none;
+}
 
 /* 
     custom multi select user
     author: Lam; 
 */
+.multiselect_user{
+    padding-left: 15px;
+    padding-right: 15px;
+}
 .multiselect_user h4{
     margin-bottom: 40px;
 }
@@ -317,7 +324,7 @@ h1.h1-title {
     /* END HEADER*/
 
     .multiselect_user .datatable-content{
-        min-height: 805px;
+        min-height: 841px;
     }
 }
 

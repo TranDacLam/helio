@@ -20,7 +20,29 @@ export class DateValidators {
             if(start <= end || start === '' || end === ''){
                 return null;
             }
-            return message;;
+            return message;
+        }
+    }
+
+    /*
+        Function checkTime(): validate start date and end date
+        Author: Lam
+    */
+    static checkTime(c: FormControl): ValidationErrors {
+        if(c.dirty){
+            const message = {
+                'fomatDate': {
+                    'message': 'Vui lòng nhập thời gian kết thúc lớn hơn thời gian bắt đầu'
+                }
+            };
+            let start_date = $('#start_date').val() ? moment($('#start_date').val(), "DD/MM/YYYY").toDate() : '';
+            let end_date = $('#end_date').val() ? moment($('#end_date').val(), "DD/MM/YYYY").toDate() : '';
+            let start_time = $('#start_time').val() ? moment($('#start_time').val(), 'HH:mm').toDate() : '';
+            let end_time = $('#end_time').val() ? moment($('#end_time').val(), 'HH:mm').toDate() : '';
+            if(start_date === start_date && start_time >= end_time){
+                return message;
+            }
+            return null;
         }
     }
 
@@ -77,7 +99,7 @@ export class DateValidators {
         if(getValDate === ''){
             return {
                 'required_date': {
-                    'message': 'Trường không được bỏ trống'
+                    'message': 'Trường này không được bỏ trống'
                 }
             };
         }
@@ -93,7 +115,7 @@ export class DateValidators {
         if(getValDate === ''){
             return {
                 'required_date': {
-                    'message': 'Trường không được bỏ trống'
+                    'message': 'Trường này không được bỏ trống'
                 }
             };
         }
@@ -114,7 +136,7 @@ export class DateValidators {
         if(getValTime === ''){
             return {
                 'required_time': {
-                    'message': 'Trường không được bỏ trống'
+                    'message': 'Trường này không được bỏ trống'
                 }
             };
         }else if(timeValues === null){
@@ -141,7 +163,7 @@ export class DateValidators {
         if(getValTime === ''){
             return {
                 'required_time': {
-                    'message': 'Trường không được bỏ trống'
+                    'message': 'Trường này không được bỏ trống'
                 }
             };
         }else if(timeValues === null){

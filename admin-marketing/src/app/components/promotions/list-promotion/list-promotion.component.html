@@ -46,7 +46,7 @@
             <table id="table_id" datatable [dtOptions]="dtOptions"  dt-instance="dtInstanceCallback" class="row-border hover"  *ngIf="promotion_list">
                 <thead>
                     <tr>
-                        <th class="text-center"><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"></th>
+                        <th class="text-center"><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);" /></th>
                         <th>ID</th>
                         <th>Tên Khuyến Mãi</th>
                         <th>Tình Trạng</th>
@@ -59,14 +59,19 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let promotion of promotion_list" 
-                        class="row-data {{(!promotion.is_draft && user_current?.role !== 1) ? 'disabled_checkbox': ''}}">
+                        class="row-data {{((!promotion.is_draft || (promotion.end_date && promotion.end_date < (today | date:'dd/MM/yyyy'))) && user_current?.role !== 1) ? 'disabled_checkbox': ''}}">
                         <td class="text-center">
                             <input type="checkbox" (change)="selectCheckbox($event);"
-                                [disabled]="!promotion.is_draft && user_current?.role !== 1"
+                                [disabled]="(!promotion.is_draft || (promotion.end_date && promotion.end_date < (today | date:'dd/MM/yyyy'))) && user_current?.role !== 1"
                             />
                         </td>
                         <td>{{ promotion.id }}</td>
-                        <td><a [routerLink]="['/promotions/', promotion.id, 'change', {lang: lang}]">{{ promotion.name }}</a></td>
+                        <td *ngIf="(!promotion.is_draft || (promotion.end_date && promotion.end_date < (today | date:'dd/MM/yyyy'))) && user_current?.role !== 1">
+                            {{ promotion.name }}
+                        </td>
+                        <td *ngIf="!((!promotion.is_draft || (promotion.end_date && promotion.end_date < (today | date:'dd/MM/yyyy'))) && user_current?.role !== 1)">
+                            <a [routerLink]="['/promotions/', promotion.id, 'change', {lang: lang}]">{{ promotion.name }}</a>
+                        </td>
                         <td>{{ promotion.is_draft ? "Draft" : "Đã Triển Khai" }}</td>
                         <td>{{ promotion.created | date : 'dd/MM/yyyy'}}</td>
                         <td>{{ promotion.user_implementer?.email }}</td>

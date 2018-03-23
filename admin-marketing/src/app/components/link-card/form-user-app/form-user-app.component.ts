@@ -54,7 +54,7 @@ export class FormUserAppComponent implements OnInit {
     userAppForm(){
         this.appForm = this.fb.group({
             full_name: [this.user_app.full_name, [Validators.required]],
-            email: [this.user_app.email, [Validators.email]],
+            email: [this.user_app.email, [Validators.required, Validators.email]],
             phone: [this.user_app.phone, 
                 [Validators.required, NumberValidators.validPhone]],
             birth_date: [this.user_app.birth_date, 
