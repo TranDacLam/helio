@@ -240,9 +240,11 @@ class UserDetail(APIView):
             email = self.request.query_params.get('email', None)
             if email:
                 user = User.objects.get(email=email)
+                if user.social_auth.exists():
+                    return Response({"code": 400, "message": _("Don't allow user signup by facebook."), "fields": ""}, status=400)
                 serializer = admin_serializers.UserSerializer(user)
                 return Response(serializer.data)
-            return Response({"code": 400, "message": "Email is required", "fields": ""}, status=400)
+            return Response({"code": 400, "message": _("Email is required."), "fields": ""}, status=400)
 
         except User.DoesNotExist, e:
             error = {"code": 400, "message": _("Email Not Found."),
@@ -256,6 +258,8 @@ class UserDetail(APIView):
     def put(self, request, id):
         try:
             user = User.objects.get(id=id)
+            if user.social_auth.exists():
+                return Response({"code": 400, "message": _("Don't allow user signup by facebook."), "fields": ""}, status=400)
             serializer = admin_serializers.UserSerializer(
                 instance=user, data=request.data)
             if serializer.is_valid():
@@ -1040,7 +1044,9 @@ class RelateAPI(APIView):
 
                 # check user by email
                 user = User.objects.get(email=email)
-
+                # check user signup by facebook
+                if user.social_auth.exists():
+                    return Response({"code": 400, "message": _("Don't allow user signup by facebook."), "fields": ""}, status=400)
                 # check user is related
                 if user.barcode:
                     return Response({"code": 400, "message": _("User is related."), "fields": ""}, status=400)
