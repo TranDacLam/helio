@@ -161,6 +161,7 @@ class PromotionUser(APIView):
                 # Get list user ID by promition id
                 promotion_user_id_list = Gift.objects.filter(
                     promotion_id=id).values_list('user_id', flat=True)
+
                 # Get all list user ID not exist in promotion user list
                 user_promotion_list = User.objects.filter(
                     pk__in=promotion_user_id_list)
@@ -169,7 +170,7 @@ class PromotionUser(APIView):
 
                 # Return result both: notification_id, list promotion user,
                 # list all user, promition detail
-                result = {}
+                result = {} 
                 result['notification_id'] = notification.id if notification else ''
                 result['promotion_detail'] = admin_serializers.PromotionDisplaySerializer(
                     promotion_detail, many=False).data
@@ -177,6 +178,7 @@ class PromotionUser(APIView):
                     user_all_list, many=True).data
                 result['user_promotion'] = admin_serializers.UserSerializer(
                     user_promotion_list, many=True).data
+
                 return Response(result)
 
             return Response({"code": 400, "message": "Promotion not found", "fields": ""}, status=400)
@@ -225,7 +227,46 @@ class PromotionUser(APIView):
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 
+"""
+    Get Statistics Promotion
+    @author: TrangLe
+"""
+class PromotionStatistic(APIView):
+    def get(self, request, pk, format=None):
+        try:
+            promotion_detail = Promotion.objects.get(pk=pk)
+            if promotion_detail:
+                # Get list user ID by promition id
+                promotion_user_id_list = Gift.objects.filter(
+                    promotion_id=pk).values_list('user_id', flat=True)
 
+                user_promotion_list = User.objects.filter(
+                    pk__in=promotion_user_id_list)
+
+                gift_list = Gift.objects.filter(user_id__in=promotion_user_id_list)
+
+                result = {}
+
+                result['promotion'] = admin_serializers.PromotionSerializer(
+                    promotion_detail, many=False).data
+                result['gift-user'] = admin_serializers.GiftSerializer(gift_list, many=True).data
+
+                result['count_user_total'] = user_promotion_list.count()
+                result['count_user_device'] = promotion_user_id_list.exclude(device_id__isnull=True).count()
+                result['count_user'] = result['count_user_total'] - result['count_user_device']
+
+                return Response(result, status=200)
+            else:
+                return Response({"code": 400, "message": "Promotion not found", "fields": ""}, status=400)
+        
+        except Promotion.DoesNotExist, e:
+            error = {"code": 400, "message": "Promotion not found",
+                     "fields": ""}
+            return Response(error, status=400)
+        except Exception, e:
+            print 'PromotionStatistic ', e
+            error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+            return Response(error, status=500)
 """
     Get user
     @author :Hoangnguyen
@@ -577,7 +618,7 @@ class UserLinkCardList(APIView):
         Get all user linked card
         """
         try:
-            lst_item = User.objects.exclude(barcode__isnull=True)
+            lst_item = User.objects.exclude(barcode__isnull=True).order_by('-date_mapping')
             serializer = admin_serializers.UserSerializer(lst_item, many=True)
             return Response(serializer.data)
         except Exception, e:

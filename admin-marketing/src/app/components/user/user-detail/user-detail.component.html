@@ -117,6 +117,7 @@
 		        	<div class="col-sm-8">	
 						<input class='form-control' name="phone" 
 						formControlName="phone" id="phone"
+						(click)="removeErrorMessage()"
 						>
 						<show-error-valid [control]="formUser.get('phone')"></show-error-valid>
 						<div *ngIf="errorMessage">
@@ -131,6 +132,7 @@
 		        	<div class="col-sm-8">	
 						<input class='form-control' name="personal_id" 
 						formControlName="personal_id"
+						(click)="removeErrorMessage()"
 						>
 						<show-error-valid [control]="formUser.get('personal_id')"></show-error-valid>
 						<div *ngIf="errorMessage">
@@ -214,8 +216,6 @@
 						<input type="checkbox" (change)="ChangeReadonly($event)">  Thay đổi mật khẩu(Chức năng này chì dành cho System Admin)
 		        	</div>
 	        	</div>
-	        	<input class='form-control' name="is_staff" 
-					formControlName="is_staff" type="hidden">
 			</div>
 		</div>
 		<div class='col-md-12'>
