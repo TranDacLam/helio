@@ -3,7 +3,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Quản Lý Khuyến Mãi</li>
+            <li class="breadcrumb-item"><a routerLink="/promotions">Quản Lý Khuyến Mãi</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Tổng Hợp Triển Khai Khuyến Mãi</li>
         </ol>
     </nav>
 </div>
@@ -20,15 +21,19 @@
     <div class="col-md-12">
         <p> ID: {{promotion.id}} </p>
         <p> Tên Khuyến Mãi: {{promotion.name}} </p>
-        <p>TỔNG SỐ KHÁCH HÀNG: 2000 &ensp;&ensp; Số người đã nhận: 500 &ensp;&ensp; Số người chưa nhận: 500</p>
+        <p>TỔNG SỐ KHÁCH HÀNG: {{count_user_total}} &ensp;&ensp; 
+            Số người đã nhận: {{count_user_deviced}} &ensp;&ensp; 
+            Số người chưa nhận: {{count_user_not_deviced}}
+        </p>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
         <div class="datatable-content">
-            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" *ngIf="promotion_user">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" *ngIf="list_user">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Họ Và Tên</th>
                         <th>Ngày Sinh</th>
                         <th>Email</th>
@@ -40,15 +45,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let user of promotion_user">
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.birth_date | date : 'dd/MM/yyyy' }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.phone }}</td>
+                    <tr *ngFor="let item of list_user">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.user.full_name }}</td>
+                        <td>{{ item.user.birth_date }}</td>
+                        <td><a routerLink="/user-detail/{{ user.id }}" >{{ item.user.email }}</a></td>
+                        <td>{{ item.user.phone }}</td>
+                        <td *ngIf="item.user.barcode">
+                            <a [routerLink]="['/link-card/detail/', item.user.id, { email: item.user.email, barcode: item.user.barcode }]">
+                            Đã liên kết</a>
+                        </td>
+                        <td *ngIf="!item.user.barcode">Chưa liên kết</td>
+                        <td>{{item.is_used ? 'Đã nhận' : 'Chưa nhận' }}</td>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ item.device_id }}</td>
                     </tr>
                 </tbody>
             </table>

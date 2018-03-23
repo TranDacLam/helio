@@ -78,4 +78,6 @@ export const api = {
 
     notification_push: 'notification/push/',
 
+    promotion_statistic: 'promotion_statistic/'
+
 };

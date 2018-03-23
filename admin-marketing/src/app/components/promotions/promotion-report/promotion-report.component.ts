@@ -21,6 +21,10 @@ export class PromotionReportComponent implements OnInit {
     dtOptions: any = {};
 
     lang = 'vi';
+    count_user_total: number;
+    count_user_deviced: number;
+    count_user_not_deviced: number;
+    list_user: any;
 
   	constructor(
         private promotionService: PromotionService,
@@ -29,27 +33,43 @@ export class PromotionReportComponent implements OnInit {
     ) { }
 
   	ngOnInit() {
+        // get params url
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;
             }
         });
-        this.getPromotion();
+        this.getPromotionReport();
         this.dtOptions = datatable_config.data_config('Tổng Hợp Triển Khai Khuyến Mãi');
+        // custom datatable option
+        let dt_options_custom = {
+            columnDefs: [
+                {
+                    targets: 0,
+                    visible: false
+                }
+            ]
+        };
+        // create new object from 2 object use operator spread es6
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
   	}
 
     /*
-        Call Service get promotion by Id
-        @author: diemnguyen 
+        Call Service get promotion report by Id
+        @author: Lam 
     */
-    getPromotion() {
+    getPromotionReport(){
         const id = +this.route.snapshot.paramMap.get('id');
-        this.promotionService.getPromotionById(id, this.lang).subscribe(
+        this.promotionService.getPromotionReport(id, this.lang).subscribe(
             (data) => {
-                this.promotion = data;
+                this.promotion = data.promotion;
+                this.count_user_total = data.count_user_total;
+                this.count_user_deviced = data.count_user_device;
+                this.count_user_not_deviced = data.count_user;
+                this.list_user = data.gift_user;
             }, 
             (error) => {
-                 this.router.navigate(['/error']);
+                this.router.navigate(['/error', {message: error.message}]);
             }
         );
     }

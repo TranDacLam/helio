@@ -161,6 +161,16 @@ export class PromotionService {
         return this.http.post(generator_QR_code_url, JSON.stringify({'vo':'promotion'}), this.httpOptions).catch(this.handleError);
     }
 
+    /*  
+        Function getPromotionReport(): get promotion report
+        @author: Lam
+    */
+    getPromotionReport(id: number, lang): Observable<any>{
+        let url_getPromotionReport = `${env.api_domain_root}/${lang}/api/${api.promotion_statistic}${id}/`
+        return this.http.get(url_getPromotionReport, this.httpOptions).
+            map((res: Response) => res.json()).catch(this.handleError);
+    }
+
     private handleError(error: Response) {
         return Observable.throw(error.statusText);
     }
