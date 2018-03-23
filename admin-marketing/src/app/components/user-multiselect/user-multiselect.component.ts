@@ -3,6 +3,8 @@ import { DataTableDirective } from 'angular-datatables';
 import { VariableGlobals } from './../../shared/commons/variable_globals';
 import { User } from '../../shared/class/user';
 import { Notification } from './../../shared/class/notification';
+import { Promotion } from './../../shared/class/promotion';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -31,6 +33,9 @@ export class UserMultiselectComponent implements OnInit {
     @Input('notification') 
     notification: Notification;
 
+    @Input('promotion') 
+    promotion: Promotion;
+
 
     @Output()
     save: EventEmitter<number[]> = new EventEmitter<number[]>();
@@ -40,7 +45,10 @@ export class UserMultiselectComponent implements OnInit {
     is_button_left: boolean = false;
     is_button_rigth: boolean = false;
 
-    constructor(private variableGlobals: VariableGlobals) { }
+    constructor(
+        private variableGlobals: VariableGlobals,
+        private datePipe: DatePipe
+    ) { }
 
     ngOnInit() {
         this.dtOptions_left = {
@@ -62,6 +70,7 @@ export class UserMultiselectComponent implements OnInit {
             scrollCollapse: true,
             language: {
                 sSearch: "",
+                sInfoFiltered: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
                 lengthMenu: "Hiển thị _MENU_ dòng",
                 sZeroRecords:  "Không có user nào phù hợp để hiển thị",
@@ -105,6 +114,7 @@ export class UserMultiselectComponent implements OnInit {
             scrollCollapse: true,
             language: {
                 sSearch: "",
+                sInfoFiltered: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
                 lengthMenu: "Hiển thị _MENU_ dòng",
                 sZeroRecords:  "Không có user nào phù hợp để hiển thị",
@@ -136,13 +146,17 @@ export class UserMultiselectComponent implements OnInit {
         setTimeout(()=>{
             this.current_user = this.variableGlobals.user_current;
             this.disableAllTable();
-        },100);
+        },300);
     }
 
+
     disableAllTable(){
-        if(this.current_user.role !==1 && this.notification && this.notification.sent_date){
-            $("table tr input:checkbox").prop('disabled', 'disabled');
-            $("button").prop('disabled', 'disabled');
+        let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
+        let promotion_end_date = (this.promotion && this.promotion.end_date) ? this.promotion.end_date : '';
+        if(this.current_user.role !==1 && ((this.notification && this.notification.sent_date) ||
+            (this.promotion && (this.promotion.is_draft === false || promotion_end_date < date_now)))){
+            $(".multiselect_user table tr input:checkbox").prop('disabled', 'disabled');
+            $(".multiselect_user button").prop('disabled', 'disabled');
         }
     }
 
