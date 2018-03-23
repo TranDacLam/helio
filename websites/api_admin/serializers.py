@@ -188,15 +188,21 @@ class FeedBackSerializer(serializers.ModelSerializer):
         return data
 
 class NotificationSerializer(serializers.ModelSerializer):
+    sent_user = UserSerializer(many=False, required=False, read_only=False)
 
     class Meta:
         model = Notification
         fields= '__all__'
 
     def update(self, instance, validated_data):
-        image = validated_data.get('image', instance.image)
-        if image:
-            instance.image = image
+        if self.context:
+            is_clear_image = self.context['request'].data.get('is_clear_image')
+            if is_clear_image == 'true':
+                instance.image = None
+            else:
+                image = validated_data.get('image', instance.image)
+                if image:
+                    instance.image = image
         instance.subject = validated_data.get('subject', instance.subject)
         instance.sub_url = validated_data.get('sub_url', instance.sub_url)
         instance.category = validated_data.get('category', instance.category)
@@ -229,11 +235,17 @@ class FeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fee
         exclude = ('created', 'modified')
-
+        validators = [
+            serializers.UniqueTogetherValidator(
+                queryset=Fee.objects.all(),
+                fields=('fee', 'fee_type', 'position'),
+                message=_("Fee already is exist.")
+            )
+        ]
     def create(self, validated_data):
         fee = Fee.objects.create( **validated_data )
         return fee
-        
+    
     # def validate(self, data):
     #     data['position'] = data.pop('get_position_display')
     #     return data

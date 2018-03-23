@@ -695,7 +695,7 @@ class NotificationDetail(APIView):
         item = self.get_object(id)
         try:
             serializer = admin_serializers.NotificationSerializer(
-                item, data=request.data)
+                item, data=request.data, context = {'request': request})
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
@@ -938,7 +938,6 @@ class UserEmbedDetail(APIView):
                 result["phone"] = item[6] if item[6] else None  # Phone
                 result["customer_id"] = item[7] if item[7] else None #customer_id
                 result["cards_state"] = item[8] if item[8] == 0 else None #cards_state
-
                 return Response({"code": 200, "message": result, "fields": ""}, status=200)
 
             return Response({"code": 400, "message": _('Bacode is required'), "fields": ""}, status=400)
@@ -991,15 +990,15 @@ class UserEmbedDetail(APIView):
             if serializer.is_valid():
                 # convert string to date
                 birth_date = datetime.strptime(serializer.data['birth_date'], "%d/%m/%Y").date()
-                query_str = """UPDATE Customers SET Firstname = '{4}',Surname = '', Email = '{6}',
-                 Mobile_Phone = '{2}', DOB = '{1}', PostCode = '{3}', Address1 = '{5}'  
+                query_str = """UPDATE Customers SET Firstname = N'{4}',Surname = '', Email = '{6}',
+                 Mobile_Phone = '{2}', DOB = '{1}', PostCode = '{3}', Address1 = N'{5}'  
                 WHERE Customers.Customer_Id IN (SELECT Cust.Customer_Id  
                 FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
                 WHERE C.Card_Barcode = '{0}')"""
 
                 cursor.execute(query_str.format(barcode, birth_date, serializer.data['phone'], serializer.data[
                                'personal_id'], serializer.data['full_name'], serializer.data['address'], serializer.data['email']))
-
+                
                 return Response({"code": 200, "message": _("update userembed success"), "fields": ""}, status=200)
 
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 17:46+0700\n"
+"POT-Creation-Date: 2018-03-23 10:04+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -612,8 +612,8 @@ msgstr "TẤT CẢ"
 msgid "redemption_store.title.section.faq"
 msgstr "NHỮNG CÂU HỎI THƯỜNG GẶP"
 
-#: websites/api/serializers.py:31 websites/api_admin/serializers.py:434
-#: websites/api_admin/serializers.py:470
+#: websites/api/serializers.py:31 websites/api_admin/serializers.py:440
+#: websites/api_admin/serializers.py:476
 msgid "This email is already taken. Please, try again"
 msgstr "Địa chỉ email đã tồn tại trong hệ thống. Vui lòng chọn email khác."
 
@@ -823,28 +823,32 @@ msgstr "Quảng cáo này đã tồn tại."
 msgid "This denomination is already taken"
 msgstr "Mệnh giá nạp tiền này đã tồn tại."
 
-#: websites/api_admin/serializers.py:221 websites/api_admin/serializers.py:445
-#: websites/api_admin/serializers.py:482
+#: websites/api_admin/serializers.py:221 websites/api_admin/serializers.py:451
+#: websites/api_admin/serializers.py:488
 msgid "Birthday must less then today"
 msgstr "Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại."
 
-#: websites/api_admin/serializers.py:280
+#: websites/api_admin/serializers.py:236
+msgid "Fee already is exist."
+msgstr "Phí này đã tồn tại."
+
+#: websites/api_admin/serializers.py:286
 msgid "Start day is before than End day"
 msgstr "Ngày bắt đầu phải trước hơn ngày kết thúc."
 
-#: websites/api_admin/serializers.py:282
+#: websites/api_admin/serializers.py:288
 msgid "Start time is before than End time"
 msgstr "Giờ bắt đầu phải trước giờ kết thúc."
 
-#: websites/api_admin/serializers.py:428 websites/api_admin/serializers.py:464
+#: websites/api_admin/serializers.py:434 websites/api_admin/serializers.py:470
 msgid "This phone is already taken"
 msgstr "Số điện thoại này đã tồn tại."
 
-#: websites/api_admin/serializers.py:489
+#: websites/api_admin/serializers.py:495
 msgid "Cannot change password of customer user"
 msgstr "Không thể thay đổi mật khẩu của Customer User."
 
-#: websites/api_admin/serializers.py:560
+#: websites/api_admin/serializers.py:566
 msgid "This Hot Ads is already taken"
 msgstr "Hot Ads này đã tồn tại."
 
