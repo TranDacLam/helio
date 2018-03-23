@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PromotionService } from '../../../shared/services/promotion.service';
 import { Promotion } from '../../../shared/class/promotion';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -22,12 +22,14 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 export class EditPromotionComponent implements OnInit {
 
     promotion: Promotion;
+    type_http = "put"; // type http to form promotion component 
 
     lang = 'vi';
 
     constructor(
         private promotionService: PromotionService, 
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -48,7 +50,7 @@ export class EditPromotionComponent implements OnInit {
         this.promotionService.getPromotionById(id, this.lang).subscribe((data) => {
             this.promotion = data;
         }, (error) => {
-        
+            this.router.navigate(['/error', { message: error.message}]);
         });
     }
 }

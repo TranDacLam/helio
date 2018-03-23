@@ -72,15 +72,18 @@ export class FormNotificationComponent implements OnInit {
     }
 
     ngOnInit() {
+        // get params url
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;
             }
         });
+        // get language when create notification for promotion 
         this.lang = this.lang_promotion ? this.lang_promotion : this.lang;
 
         this.getCategory();
         this.creatForm();
+        // get current user
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
         },100);
@@ -279,7 +282,11 @@ export class FormNotificationComponent implements OnInit {
         }
     }
 
-    chanegCategory(event){
+    /*
+        Function changeCategory(): Check catrgory
+        Author: Lam
+    */
+    changeCategory(event){
         let cate_id = parseInt(event.target.value);
         if(cate_id === 1){
             this.check_QR = false;

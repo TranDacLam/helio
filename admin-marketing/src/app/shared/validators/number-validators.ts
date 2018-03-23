@@ -3,6 +3,10 @@ import { FormArray, FormControl, FormGroup, ValidationErrors } from '@angular/fo
 
 export class NumberValidators {
 
+    /*
+        Function validPhone(): validate phone
+        Author: Lam
+    */
     static validPhone(c: FormControl):ValidationErrors {
         // Allows only numerals betwen 
         let phoneRegx = /^(\d{10,11})$/;
@@ -19,8 +23,11 @@ export class NumberValidators {
         return null;    
     }
 
+    /*
+        Function validPersonID(): validate persion ID
+        Author: Lam
+    */
     static validPersonID(c: FormControl):ValidationErrors {
-
         // Allows only numerals betwen 
         let personIDRegx =  /^(\d{9})$/;
         let personID = c.value;

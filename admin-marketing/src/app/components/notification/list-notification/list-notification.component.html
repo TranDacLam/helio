@@ -32,7 +32,8 @@
     </div>
 </div>
 <div class="custom_table">
-    <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="notifications">
+    <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' 
+        *ngIf="notifications && user_current">
         <thead>
             <tr>
                 <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
@@ -53,7 +54,12 @@
                     />
                 </td>
                 <td>{{ noti.id }}</td>
-                <td><a [routerLink]="['/notification/edit/', noti.id, {lang: lang}]">{{ noti.subject }}</a></td>
+                <td *ngIf="noti.sent_date && user_current.role !== 1">
+                    {{ noti.subject }}
+                </td>
+                <td *ngIf="!(noti.sent_date && user_current.role !== 1)">
+                    <a [routerLink]="['/notification/edit/', noti.id, {lang: lang}]">{{ noti.subject }}</a>
+                </td>
                 <td *ngIf="noti.sent_date">Đã gửi</td>
                 <td *ngIf="!noti.sent_date">Chưa gửi</td>
                 <td>{{ noti.sent_date | date: 'dd/MM/yyyy'}}</td>

@@ -5,7 +5,7 @@ import { DataTableDirective } from 'angular-datatables';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-
+import { DatePipe } from '@angular/common';
 import { PromotionService } from '../../../shared/services/promotion.service';
 import { Promotion } from '../../../shared/class/promotion';
 import * as datatable_config from '../../../shared/commons/datatable_config';
@@ -46,8 +46,6 @@ export class ListPromotionComponent implements OnInit {
 
     api_domain:string = "";
     lang: string = 'vi';
-    
-    today = Date.now();
 
     /*
         Using trigger becase fetching the list of feedbacks can be quite long
@@ -59,7 +57,8 @@ export class ListPromotionComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private variable_globals: VariableGlobals,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private datePipe: DatePipe
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -250,6 +249,32 @@ export class ListPromotionComponent implements OnInit {
                 $('.custom_table').attr('style', 'height: auto');
             },100);
         }
+    }
+
+    /*
+        Function isDisable(): Check promotion not is_draft or end_date < date now to disabled button
+        Author: Lam
+    */
+    isDisable(promotion){
+        let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
+        let end_date = promotion.end_date ? promotion.end_date : '';
+        if((promotion.is_draft === false || end_date < date_now) && this.user_current.role !== 1){
+            return true;
+        }
+        return null;
+    }
+
+    /*
+        Function isDisable(): Check promotion not is_draft or end_date < date now to disabled button
+        Author: Lam
+    */
+    isCheckDisplay(promotion){
+        let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
+        let end_date = promotion.end_date ? promotion.end_date : '';
+        if((promotion.is_draft === false || end_date < date_now) && this.user_current.role !== 1){
+            return true;
+        }
+        return false;
     }
 
 }

@@ -47,6 +47,7 @@ export class NotificationDetailComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        // get params url
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;
@@ -54,6 +55,7 @@ export class NotificationDetailComponent implements OnInit {
         });
 
         this.getUserNotification();
+        // get current user
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
         },100);
