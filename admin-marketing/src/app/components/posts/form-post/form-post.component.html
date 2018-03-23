@@ -1,6 +1,6 @@
 <ng-container *ngIf="errorMessage">
     <h4 *ngFor="let error of errorMessage | mapToIterable" class="message_error">
-        {{error.val}}.
+        {{error.val}}
     </h4>
 </ng-container>
 <form [formGroup]="formPost" novalidate>

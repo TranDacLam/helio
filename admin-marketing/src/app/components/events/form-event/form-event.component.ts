@@ -73,7 +73,7 @@ export class FormEventComponent implements OnInit {
             start_time: [this.event.start_time ? moment(this.event.start_time,"HH:mm").format() : '', 
                 [DateValidators.formatStartTime]],
             end_time: [this.event.end_time ? moment(this.event.end_time,"HH:mm").format() : '',
-                [DateValidators.formatEndTime]],
+                [DateValidators.formatEndTime, DateValidators.checkTime]],
             is_draft: [this.event.is_draft === true ? true : false],
             is_clear_image: [false]
         });
@@ -114,7 +114,8 @@ export class FormEventComponent implements OnInit {
         this.formEvent.controls['end_date'].updateValueAndValidity();
         this.formEvent.controls['start_time'].setValidators([DateValidators.formatStartTime]);
         this.formEvent.controls['start_time'].updateValueAndValidity();
-        this.formEvent.controls['end_time'].setValidators([DateValidators.formatEndTime]);
+        this.formEvent.controls['end_time'].setValidators([DateValidators.formatEndTime,
+            DateValidators.checkTime]);
         this.formEvent.controls['end_time'].updateValueAndValidity();
         
         if(this.formEvent.invalid){

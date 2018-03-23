@@ -46,6 +46,8 @@ export class ListPromotionComponent implements OnInit {
 
     api_domain:string = "";
     lang: string = 'vi';
+    
+    today = Date.now();
 
     /*
         Using trigger becase fetching the list of feedbacks can be quite long

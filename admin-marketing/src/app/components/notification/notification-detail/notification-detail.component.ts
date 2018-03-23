@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../../shared/class/user';
 import { Notification } from '../../../shared/class/notification';
 import { NotificationService } from '../../../shared/services/notification.service';
+import { Promotion } from './../../../shared/class/promotion';
+import { PromotionService } from './../../../shared/services/promotion.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
@@ -15,7 +17,7 @@ declare var bootbox:any;
     selector: 'app-notification-detail',
     templateUrl: './notification-detail.component.html',
     styleUrls: ['./notification-detail.component.css'],
-    providers: [NotificationService]
+    providers: [NotificationService, PromotionService]
 })
 export class NotificationDetailComponent implements OnInit {
 
@@ -29,6 +31,7 @@ export class NotificationDetailComponent implements OnInit {
 
     is_update: boolean = false; // Check input checkbox Update Notification
     user_current: User;
+    promotion: Promotion;
 
     lang = 'vi';
 
@@ -36,6 +39,7 @@ export class NotificationDetailComponent implements OnInit {
 
     constructor(
         private notificationService: NotificationService, 
+        private promotionService: PromotionService,
         private route: ActivatedRoute,
         private router: Router,
         private variable_globals: VariableGlobals,
@@ -70,6 +74,16 @@ export class NotificationDetailComponent implements OnInit {
                 this.user_list_left = data.user_all;
                 this.user_list_right = data.user_notification;
                 this.promotion_id = data.notification_detail.promotion;
+                if(this.promotion_id){
+                    this.promotionService.getPromotionById(this.promotion_id, this.lang).subscribe(
+                        (data) => {
+                            this.promotion = data;
+                        },
+                        (error) => {
+                            this.router.navigate(['/error', { message: error.message}]);
+                        }
+                    );
+                }
             }
         );
 

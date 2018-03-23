@@ -57,7 +57,7 @@ export class FormUserEmbedComponent implements OnInit {
         this.embedForm = this.fb.group({
             barcode: [this.user_embed.barcode, [Validators.required]],
             full_name: [this.user_embed.full_name, [Validators.required]],
-            email: [this.user_embed.email, [Validators.email]],
+            email: [this.user_embed.email, [Validators.required, Validators.email]],
             phone: [this.user_embed.phone, 
                 [Validators.required, NumberValidators.validPhone]],
             birth_date: [this.user_embed.birth_date, 

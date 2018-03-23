@@ -1,6 +1,6 @@
 <ng-container *ngIf="errorMessage">
     <h4 *ngFor="let error of errorMessage | mapToIterable" class="error_msg">
-        {{error.val}}.
+        {{error.val}}
     </h4>
 </ng-container>
 <form [formGroup]="formNotification" novalidate>
@@ -55,8 +55,8 @@
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Danh Mục</label>
         </div>
-        <div class="col-sm-6" *ngIf="categories">
-            <select class="form-control" formControlName="category">\
+        <div class="col-sm-8" *ngIf="categories">
+            <select class="form-control" formControlName="category" (change)="chanegCategory($event)">
                 <option value="">--SELECT--</option>
                 <option *ngFor="let cate of categories" 
                     value="{{ cate.id }}"
@@ -72,7 +72,9 @@
             <label class="col-form-label form-check-label">Scan QR Code Để Nhận</label>
         </div>
         <div class="col-sm-8">
-            <select class="form-control" formControlName="is_QR_code" (change)="isQRCode($event.target.value)">
+            <select class="form-control" formControlName="is_QR_code" 
+                (change)="isQRCode($event.target.value)" [attr.disabled]="check_QR ? 'disabled' : null"
+            >
                 <option value="false">Không</option>
                 <option value="true">Có</option>
             </select>
@@ -84,13 +86,13 @@
             <label class="col-form-label form-check-label">Nhận Tại</label>
         </div>
         <div class="col-sm-8">
-            <input type="text" class="form-control" formControlName="location" [readonly]="check_QR"/>
+            <input type="text" class="form-control" formControlName="location" [attr.disabled]="check_Location ? 'disabled' : null"/>
         </div>
     </div>
 
     <hr/>
     <button class="btn btn-primary" (click)="deleteNotificationEvent()" 
-        *ngIf="noti.id && (!noti.sent_date || (noti.sent_date && user_current?.role === 1))"
+        *ngIf="noti.id && type_http == 'put' && (!noti.sent_date || (noti.sent_date && user_current?.role === 1))"
     >
         XÓA
     </button>
