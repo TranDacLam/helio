@@ -17,6 +17,7 @@
 	padding: 5px 0;
 	text-decoration: none;
 	color: #333333;
+	text-transform: uppercase;
 }
 td.title-fb a {
 	text-decoration: none;
@@ -24,9 +25,6 @@ td.title-fb a {
 } 
 td.title-fb a:hover {
 	color: red;
-}
-p.title {
-	font-size: 34px;
 }
 .title-feedback a:hover {
 	text-decoration: none;
