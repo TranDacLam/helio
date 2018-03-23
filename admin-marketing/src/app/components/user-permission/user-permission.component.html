@@ -1,32 +1,32 @@
 <ol class="breadcrumb">
     <li><a routerLink='/'>Trang Chủ</a></li>
     <li class="active"><a routerLink="/user-permission">Quản Lý Phân quyền User</a></li>
- </ol>
+</ol>
 <div class="row text-center">
     <h1 class="page-name">PHÂN QUYỀN USER</h1>
 </div>
 <div class="row">
-	<div *ngIf="roles" class="wrap-head">
-		<p>Các Quyền:</p>
-		<ul *ngFor="let role of roles; let i = index;"  class="list-role" >
-			<li>
-				<input class="role_checkbox" type="radio" name="role" id='role_{{role.id}}' value='{{role.id}}'  [checked]="i == 0" (change)='getUserRight( role.id )'>
-				<label for="role_{{role.id}}">{{role.name}}</label>
-			</li>
-		</ul>
-	</div>
-	<div *ngIf="!roles" class="wrap-head">
-		<p>Chưa có Quyền nào.</p>
-	</div>
+    <div *ngIf="roles" class="wrap-head">
+        <p>Các Quyền:</p>
+        <ul *ngFor="let role of roles; let i = index;"  class="list-role" >
+            <li>
+                <input class="role_checkbox" type="radio" name="role" id='role_{{role.id}}' value='{{role.id}}'  [checked]="i == 0" (change)='getUserRight( role.id )'>
+                <label for="role_{{role.id}}">{{role.name}}</label>
+            </li>
+        </ul>
+    </div>
+    <div *ngIf="!roles" class="wrap-head">
+        <p>Chưa có Quyền nào.</p>
+    </div>
 </div>
 <div class="row head-table">
     <div class="col-md-6 text-center">
-            DANH SÁCH TẤT CẢ USER
+        DANH SÁCH TẤT CẢ USER
         
     </div>
     <div class="col-md-6 text-center">
-            DANH SÁCH TẤT CẢ USER ĐƯỢC CHỌN
-    </div>     
+        DANH SÁCH TẤT CẢ USER ĐƯỢC CHỌN
+    </div>
 </div>
 <div class="row multiselect_user">
     <div class="col-md-5 datatable-content">
@@ -93,4 +93,3 @@
         </div>
     </div>
 </div>
-

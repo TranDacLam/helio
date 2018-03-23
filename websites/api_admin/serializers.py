@@ -69,15 +69,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields=('id' ,'full_name', 'email', 'phone','barcode','birth_date', 'personal_id', 'address', 'username_mapping', 'date_mapping')
 
-    def update(self, instance, validated_data):
-        instance.full_name = validated_data.get('full_name', instance.full_name)
-        instance.email = validated_data.get('email', instance.email)
-        instance.phone = validated_data.get('phone', instance.phone)
-        instance.birth_date = validated_data.get('birth_date', instance.birth_date)
-        instance.personal_id = validated_data.get('personal_id', instance.personal_id)
-        instance.address = validated_data.get('address', instance.address)
-        instance.save()
-        return instance
 
 
 	# create objects
@@ -203,24 +194,18 @@ class FeedBackSerializer(serializers.ModelSerializer):
         return data
 
 class NotificationSerializer(serializers.ModelSerializer):
+    sent_user = UserSerializer(many=False, required=False, read_only=False)
 
     class Meta:
         model = Notification
         fields= '__all__'
 
     def update(self, instance, validated_data):
-        image = validated_data.get('image', instance.image)
-        if image:
-            instance.image = image
-        instance.subject = validated_data.get('subject', instance.subject)
-        instance.sub_url = validated_data.get('sub_url', instance.sub_url)
-        instance.category = validated_data.get('category', instance.category)
-        instance.location = validated_data.get('location', instance.location)
-        instance.is_QR_code = validated_data.get('is_QR_code', instance.is_QR_code)
-        instance.message = validated_data.get('message', instance.message)
-        instance.promotion = validated_data.get('promotion', instance.promotion)
-        instance.save()
-        return instance
+        if self.context['request']:
+            is_clear_image = self.context['request'].data.get('is_clear_image')
+            if is_clear_image == "false" and not validated_data.get('image'):
+                validated_data['image'] = instance.image
+        return super(NotificationSerializer, self).update(instance, validated_data)
 
 class UserEmbedSerializer(serializers.Serializer):
     full_name = serializers.CharField(required=True)
@@ -244,11 +229,17 @@ class FeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fee
         exclude = ('created', 'modified')
-
+        validators = [
+            serializers.UniqueTogetherValidator(
+                queryset=Fee.objects.all(),
+                fields=('fee', 'fee_type', 'position'),
+                message=_("Fee already is exist.")
+            )
+        ]
     def create(self, validated_data):
         fee = Fee.objects.create( **validated_data )
         return fee
-        
+    
     # def validate(self, data):
     #     data['position'] = data.pop('get_position_display')
     #     return data
@@ -298,19 +289,11 @@ class EventSerializer(serializers.ModelSerializer):
         return data
     # override mehod update because name field is unique
     def update(self, instance, validated_data):
-        image = validated_data.get('image', instance.image)
-        if image:
-            instance.image = image
-        instance.name = validated_data.get('name', instance.name)
-        instance.short_description = validated_data.get('short_description', instance.short_description)
-        instance.content = validated_data.get('content', instance.content)
-        instance.start_date = validated_data.get('start_date', instance.start_date)
-        instance.end_date = validated_data.get('end_date', instance.end_date)
-        instance.start_time = validated_data.get('start_time', instance.start_time)
-        instance.end_time = validated_data.get('end_time', instance.end_time)
-        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
-        instance.save()
-        return instance
+        if self.context['request']:
+            is_clear_image = self.context['request'].data.get('is_clear_image')
+            if is_clear_image == "false" and not validated_data.get('image'):
+                validated_data['image'] = instance.image
+        return super(EventSerializer, self).update(instance, validated_data)
 
 class HotSerializer(serializers.ModelSerializer):
 
@@ -319,15 +302,11 @@ class HotSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'sub_url', 'image', 'is_show')
 
     def update(self, instance, validated_data):
-        
-        image = validated_data.get('image', instance.image)
-        if image:
-            instance.image = image
-        instance.name = validated_data.get('name', instance.name)
-        instance.sub_url = validated_data.get('sub_url', instance.sub_url)
-        instance.is_show = validated_data.get('is_show', instance.is_show)
-        instance.save()
-        return instance
+        if self.context['request']:
+            is_clear_image = self.context['request'].data.get('is_clear_image')
+            if is_clear_image == "false" and not validated_data.get('image'):
+                validated_data['image'] = instance.image
+        return super(HotSerializer, self).update(instance, validated_data)
 
 class PostImageSerializer(serializers.ModelSerializer):
 
@@ -376,19 +355,12 @@ class PostSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         # to do
-        image = validated_data.get('image', instance.image)
-        if image:
-            instance.image = image
-        instance.name = validated_data.get('name', instance.name)
-        instance.short_description = validated_data.get('short_description', instance.short_description)
-        instance.content = validated_data.get('content', instance.content)
-        instance.post_type = validated_data.get('post_type', instance.post_type)
-        instance.key_query = validated_data.get('key_query', instance.key_query)
-        instance.pin_to_top = validated_data.get('pin_to_top', instance.pin_to_top)
-        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
-        instance.save()
+        if self.context['request']:
+            is_clear_image = self.context['request'].data.get('is_clear_image')
+            if is_clear_image == "false" and not validated_data.get('image'):
+                validated_data['image'] = instance.image
 
-        return instance
+        return super(PostSerializer, self).update(instance, validated_data)
 
 
 
@@ -520,16 +492,11 @@ class GameSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'short_description', 'content', 'image', 'game_type', 'is_draft')
 
     def update(self, instance, validated_data):
-        image = validated_data.get('image', instance.image)
-        if image:
-            instance.image = image
-        instance.name = validated_data.get('name', instance.name)
-        instance.short_description = validated_data.get('short_description', instance.short_description)
-        instance.content = validated_data.get('content', instance.content)
-        instance.game_type = validated_data.get('game_type', instance.game_type)
-        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
-        instance.save()
-        return instance
+        if self.context['request']:
+            is_clear_image = self.context['request'].data.get('is_clear_image')
+            if is_clear_image == "false" and not validated_data.get('image'):
+                validated_data['image'] = instance.image
+        return super(GameSerializer, self).update(instance, validated_data)
 
 class TypeSerializer(serializers.ModelSerializer):
 

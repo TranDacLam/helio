@@ -57,7 +57,7 @@
                 <td *ngIf="noti.sent_date">Đã gửi</td>
                 <td *ngIf="!noti.sent_date">Chưa gửi</td>
                 <td>{{ noti.sent_date | date: 'dd/MM/yyyy'}}</td>
-                <td>{{ noti.sent_user }}</td>
+                <td>{{ noti.sent_user?.email }}</td>
                 <td><a class="btn btn-primary" [routerLink]="['/notification/detail/', noti.id, {lang: lang}]">Chọn danh sách user</a></td>
             </tr>
         </tbody>
