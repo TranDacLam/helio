@@ -32,6 +32,7 @@ export class NotificationDetailComponent implements OnInit {
     is_update: boolean = false; // Check input checkbox Update Notification
     user_current: User;
     promotion: Promotion;
+    length_user_right: number = 0;
 
     lang = 'vi';
 
@@ -76,6 +77,7 @@ export class NotificationDetailComponent implements OnInit {
                 this.user_list_left = data.user_all;
                 this.user_list_right = data.user_notification;
                 this.promotion_id = data.notification_detail.promotion;
+                this.length_user_right = data.user_notification.length;
                 if(this.promotion_id){
                     this.promotionService.getPromotionById(this.promotion_id, this.lang).subscribe(
                         (data) => {
@@ -139,6 +141,12 @@ export class NotificationDetailComponent implements OnInit {
             this.notificationService.updateUserNoti(id, event, this.lang).subscribe(
                 (data) => {
                     this.toastr.success(`Lưu thành công`);
+                    // get length user right
+                    this.notificationService.getUserNotification(id, this.lang).subscribe(
+                        (data_user) => {
+                            this.length_user_right = data_user.user_notification.length;
+                        }
+                    );
                 },
                 (error) => {
                     this.router.navigate(['/error', { message: error.message}]);
@@ -157,23 +165,27 @@ export class NotificationDetailComponent implements OnInit {
     */
     checkSendNotification(){
         let that = this;
-        bootbox.confirm({
-            title: "Bạn có chắc chắn",
-            message: "Bạn có muốn gửi Thông Báo này không?",
-            buttons: {
-                cancel: {
-                    label: "HỦY"
+        if(this.length_user_right < 1){
+            this.toastr.warning(`Vui lòng chọn khách hàng nhận thông báo`);
+        }else{
+            bootbox.confirm({
+                title: "Bạn có chắc chắn",
+                message: "Bạn có muốn gửi thông báo này không?",
+                buttons: {
+                    cancel: {
+                        label: "Hủy"
+                    },
+                    confirm: {
+                        label: "Đồng Ý"
+                    }
                 },
-                confirm: {
-                    label: "ĐỒNG Ý"
+                callback: function (result) {
+                    if(result) {
+                        that.sendNotification();
+                    }
                 }
-            },
-            callback: function (result) {
-                if(result) {
-                    that.sendNotification();
-                }
-            }
-        });
+            });
+        }
     }
 
     /*
