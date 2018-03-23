@@ -10,6 +10,9 @@
 .mt-15{
     margin-top: 15px;
 }
+.custom-title a {
+	padding: 5px 0;
+}
 .messsage{
     color: green;
 }

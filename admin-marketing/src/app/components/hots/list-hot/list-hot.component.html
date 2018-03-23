@@ -9,13 +9,15 @@
 </div>
 <!-- End breadcrumb -->
 <div class="row text-center">
-    <h1>Quản Lý Hot</h1>
+    <p class="title">Quản Lý Hot</p>
 </div>
 <div class="row mt-50 mb-15 custom-title">
     <div class="col-xs-12 col-sm-12">
-        <a class="btn custom-button pull-right" [routerLink]="['/hot/add/', {lang: lang}]">
-             <i class="fa fas fa-plus icon-button"></i>
-            THÊM HOT MỚI
+        <a class="pull-right" [routerLink]="['/hot/add/', {lang: lang}]">
+            <div class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>
+                THÊM HOT MỚI
+            </div>
         </a>
     </div>
 </div>

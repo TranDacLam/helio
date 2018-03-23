@@ -28,3 +28,6 @@
 .checkbox_all{
     width: 50px;
 }
+.custom-title a {
+    padding: 5px 0;
+}

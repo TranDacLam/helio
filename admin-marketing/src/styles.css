@@ -79,6 +79,11 @@ p {
     letter-spacing: 0.5px;*/
 }
 
+p.title {
+    font-size: 34px;
+    text-transform: uppercase;
+}
+
 h1.h1-title {
     margin-bottom: 30px;
 }

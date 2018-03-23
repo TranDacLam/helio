@@ -8,14 +8,6 @@
     </nav>
 </div>
 <!-- End breadcrumb -->
-<div class="row mt-50 mb-30 custom-title" *ngIf="promotion">
-    <div class="col-xs-12 col-sm-6">
-        <a class="btn custom-button" [routerLink]="['/users-promotions/', promotion.id]">
-            <i class="fa fas fa-arrow-left icon-button"></i>
-            TRỞ VỀ CHI TIẾT KHUYẾN MÃI
-        </a>
-    </div>
-</div>
 <div class="row" *ngIf="promotion">
     <div class="col-md-12">
         <p> ID: {{promotion.id}} </p>
