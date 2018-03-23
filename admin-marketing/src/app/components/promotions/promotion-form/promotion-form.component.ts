@@ -225,6 +225,7 @@ export class PromotionFormComponent implements OnInit {
             if(this.promotion.id) {
                 this.promotionService.updatePromotion(promotionFormData, this.promotion.id, this.lang).subscribe(
                     (data) => {
+                        // popup edit pormotion at user promotion
                         if(this.type_http === 'put_popup'){
                             this.getPromotion();
                             $('#UpdatePromotion').modal('toggle');

@@ -139,17 +139,19 @@ export class UserMultiselectComponent implements OnInit {
             }
         }
 
-        setTimeout(()=>{    //<<<---    using ()=> syntax
+        setTimeout(() => {
+            // add html in table
             $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
-        },400);
-
-        setTimeout(()=>{
+            // get current user
             this.current_user = this.variableGlobals.user_current;
             this.disableAllTable();
         },300);
     }
 
-
+    /*
+        Function disableAllTable(): Check condition, disable all button, checkbox
+        @author: Lam 
+    */
     disableAllTable(){
         let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
         let promotion_end_date = (this.promotion && this.promotion.end_date) ? this.promotion.end_date : '';

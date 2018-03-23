@@ -119,7 +119,7 @@ export class UserPromotionComponent implements OnInit {
     }
 
     /*
-        Function updateNoti(): Get promotion from component popup-edit-promotion
+        Function updatePromotion(): Get promotion from component popup-edit-promotion
         Author: Lam
     */
     updatePromotion(event){

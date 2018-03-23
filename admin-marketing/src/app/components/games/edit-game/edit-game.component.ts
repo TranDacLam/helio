@@ -22,6 +22,7 @@ export class EditGameComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        // get params url
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;

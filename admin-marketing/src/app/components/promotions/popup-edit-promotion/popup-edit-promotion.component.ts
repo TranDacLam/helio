@@ -39,9 +39,9 @@ export class PopupEditPromotionComponent implements OnInit {
     }
 
     /*
-        Function getNotification():
+        Function getPromotion():
          + Get id from url path
-         + Callback service function getNotification() by id
+         + Callback service function getPromotion() by id
         Author: Lam
     */
     getPromotion(){
@@ -57,7 +57,7 @@ export class PopupEditPromotionComponent implements OnInit {
     }
 
     /*
-        Function updateNoti(): Get notification from component form-notification
+        Function updatePromotion(): Get promotion from component form-promotion
         Author: Lam
     */
     updatePromotion(event){
