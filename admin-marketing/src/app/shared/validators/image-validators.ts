@@ -9,7 +9,7 @@ export class ImageValidators {
     */
     static validateFile(c: FormControl) {
         if(c.value){
-            let name = c.value.filename;
+            let name = c.value.filename ? c.value.filename : 'default.jpg';
             let extension = {'jpg': true, 'jpeg': true, 'png': true, 'ico': true, 'bmp': true, 'gif': true}
             let ext = name.substring(name.lastIndexOf('.') + 1);
             if (ext.toLowerCase() in extension) {
