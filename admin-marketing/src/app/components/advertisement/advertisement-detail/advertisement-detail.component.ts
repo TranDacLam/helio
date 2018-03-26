@@ -94,16 +94,14 @@ export class AdvertisementDetailComponent implements OnInit {
 
 	confirmDelete(adv: Advertisement) {
         bootbox.confirm({
-            title: "Bạn có chắc chắn?",
-            message: "Bạn muốn xóa Quảng Cáo này.",
+            title: "Bạn có chắc chắn ?",
+            message: "Bạn muốn xóa Quảng Cáo này",
             buttons: {
-                confirm: {
-                    label: 'Xóa',
-                    className: 'btn-success',
-                },
                 cancel: {
-                    label: 'Hủy',
-                    className: 'pull-left btn-danger',
+                    label: "HỦY"
+                },
+                confirm: {
+                    label: "XÓA"
                 }
             },
             callback: (result)=> {

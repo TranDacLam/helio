@@ -135,16 +135,14 @@ export class DenominationListComponent implements OnInit {
         */
         if(this.length_selected > 0 ){
             bootbox.confirm({
-                title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.length_selected + " Mệnh giá nạp tiền đã chọn?",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " Mệnh Giá Nạp Tiền đã chọn",
                 buttons: {
-                    confirm: {
-                        label: 'Xóa',
-                        className: 'btn-success',
-                    },
                     cancel: {
-                        label: 'Hủy',
-                        className: 'pull-left btn-danger',
+                        label: "HỦY"
+                    },
+                    confirm: {
+                        label: "XÓA"
                     }
                 },
                 callback: (result)=> {
@@ -155,7 +153,7 @@ export class DenominationListComponent implements OnInit {
                 }
             });
         } else {
-            this.toastr.warning(`Vui lòng chọn mệnh giá nạp tiền để xóa`);
+            this.toastr.warning(`Vui lòng chọn Mệnh Giá Nạp Tiền để xóa`);
         } 
     }
 
@@ -170,7 +168,7 @@ export class DenominationListComponent implements OnInit {
             // Call API remove list promotion selected
             this.denominationService.deleteAllDenosSelected(list_id_selected).subscribe(
                 (data) => {
-                    this.toastr.success(`Xóa ${this.length_selected} mệnh giá nạp tiền thành công`);
+                    this.toastr.success(`Xóa ${this.length_selected} Mệnh Giá Nạp Tiền thành công`);
 
                     // Remove all promotion selected on UI
                     dtInstance.rows('.selected').remove().draw();

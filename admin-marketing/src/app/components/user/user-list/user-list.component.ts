@@ -142,16 +142,14 @@ export class UserListComponent implements OnInit {
         */
         if(this.length_selected> 0 ){
             bootbox.confirm({
-                title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.length_selected + " user đã chọn",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " User đã chọn",
                 buttons: {
-                    confirm: {
-                        label: 'Xóa',
-                        className: 'btn-success',
-                    },
                     cancel: {
-                        label: 'Hủy',
-                        className: 'pull-left btn-danger',
+                        label: "HỦY"
+                    },
+                    confirm: {
+                        label: "XÓA"
                     }
                 },
                 callback: (result)=> {
@@ -162,7 +160,7 @@ export class UserListComponent implements OnInit {
                 }
             });
         } else {
-            this.toastr.warning(`Vui lòng chọn user cần xóa`);
+            this.toastr.warning(`Vui lòng chọn User cần xóa`);
         } 
     }
 
@@ -177,7 +175,7 @@ export class UserListComponent implements OnInit {
             // Call API remove list promotion selected
             this.userService.deleteUserSelected(list_id_selected).subscribe(
                 (data) => {
-                    this.toastr.success(`Xóa ${this.length_selected} user thành công`);
+                    this.toastr.success(`Xóa ${this.length_selected} User thành công`);
 
                     // Remove all promotion selected on UI
                     dtInstance.rows('.selected').remove().draw();
@@ -185,8 +183,12 @@ export class UserListComponent implements OnInit {
                     this.length_all =  dtInstance.rows().count();
                     this.length_selected = 0;
                 },
-                (error) => {
-                    this.router.navigate(['/error', { message: error.json().message }]);
+                (error) => {   
+                    if(error.json().code == 405) {
+                        this.toastr.error(`${error.json().message}`);
+                    } else {
+                        this.router.navigate(['/error', { message: error.json().message }]);
+                    }
                 });
             });
     	

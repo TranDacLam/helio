@@ -172,14 +172,14 @@ export class FormEventComponent implements OnInit {
     deleteEvent(){
         let that = this;
         bootbox.confirm({
-            title: "Bạn có chắc chắn",
-            message: "Bạn muốn xóa sự kiện này?",
+            title: "Bạn có chắc chắn ?",
+            message: "Bạn muốn xóa Sự Kiện này",
             buttons: {
                 cancel: {
-                    label: "Hủy"
+                    label: "HỦY"
                 },
                 confirm: {
-                    label: "Xóa"
+                    label: "XÓA"
                 }
             },
             callback: function (result) {

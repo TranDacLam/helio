@@ -69,14 +69,14 @@ export class LinkCardDetailComponent implements OnInit {
     deleteLinkCardEvent(){
         let that = this;
         bootbox.confirm({
-            title: "Bạn có chắc chắn",
-            message: "Bạn muốn xóa liên kết này?",
+            title: "Bạn có chắc chắn ?",
+            message: "Bạn muốn xóa Thẻ Liên Kết này",
             buttons: {
                 cancel: {
-                    label: "Hủy"
+                    label: "HỦY"
                 },
                 confirm: {
-                    label: "Xóa"
+                    label: "XÓA"
                 }
             },
             callback: function (result) {
@@ -97,7 +97,7 @@ export class LinkCardDetailComponent implements OnInit {
         const id = this.user_app.id;
         this.linkCardService.delLinkCard(id).subscribe(
             (data) => {
-                this.toastr.error(`Xóa liên kết thẻ thông báo thành công`);
+                this.toastr.error(`Xóa Thẻ Liên Kết thông báo thành công`);
                 this.router.navigate(['/link-card-list']); // redirect list link card
             },
             (error) => {

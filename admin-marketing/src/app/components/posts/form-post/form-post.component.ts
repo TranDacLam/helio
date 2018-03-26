@@ -180,14 +180,14 @@ export class FormPostComponent implements OnInit {
     deletePostEvent(){
         let that = this;
         bootbox.confirm({
-            title: "Bạn có chắc chắn",
-            message: "Bạn muốn xóa bài viết này?",
+            title: "Bạn có chắc chắn ?",
+            message: "Bạn muốn xóa Bài Viết này",
             buttons: {
                 cancel: {
-                    label: "Hủy"
+                    label: "HỦY"
                 },
                 confirm: {
-                    label: "Xóa"
+                    label: "XÓA"
                 }
             },
             callback: function (result) {

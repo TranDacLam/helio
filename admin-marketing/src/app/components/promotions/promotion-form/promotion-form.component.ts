@@ -275,14 +275,14 @@ export class PromotionFormComponent implements OnInit {
         const that = this;
         if (id) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa phần tử này",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn Khuyến Mãi tử này",
                 buttons: {
                     cancel: {
-                        label: "Hủy"
+                        label: "HỦY"
                     },
                     confirm: {
-                        label: "Xóa"
+                        label: "XÓA"
                     }
                 },
                 callback: function (result) {
@@ -301,7 +301,7 @@ export class PromotionFormComponent implements OnInit {
             });
 
         } else  {
-            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+            bootbox.alert("Vui lòng chọn Khuyến Mãi cần xóa");
         }
     }
 

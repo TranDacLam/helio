@@ -134,14 +134,14 @@ export class ListPostComponent implements OnInit {
         let that = this;
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.length_selected + " bài viết đã chọn?",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " Bài Viết đã chọn",
                 buttons: {
                     cancel: {
-                        label: "Hủy"
+                        label: "HỦY"
                     },
                     confirm: {
-                        label: "Xóa"
+                        label: "XÓA"
                     }
                 },
                 callback: function (result) {
@@ -152,7 +152,7 @@ export class ListPostComponent implements OnInit {
             });
 
         } else  {
-            this.toastr.warning(`Vui lòng chọn bài viết cần xóa`);
+            this.toastr.warning(`Vui lòng chọn Bài Viết cần xóa`);
         }
         
     }
@@ -174,7 +174,7 @@ export class ListPostComponent implements OnInit {
             this.postService.onDelPostSelect(list_id_selected, this.lang).subscribe(
                 (data) => {
                     if (data.code === 204) {
-                        this.toastr.success(`Xóa ${this.length_selected} bài viết thành công`);
+                        this.toastr.success(`Xóa ${this.length_selected} Bài Viết thành công`);
 
                         // Remove all promotion selected on UI
                         dtInstance.rows('.selected').remove().draw();

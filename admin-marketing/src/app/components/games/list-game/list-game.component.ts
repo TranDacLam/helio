@@ -138,8 +138,8 @@ export class ListGameComponent implements OnInit {
         let that = this;
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.length_selected + " trò chơi đã chọn?",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " Trò Chơi đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"
@@ -156,7 +156,7 @@ export class ListGameComponent implements OnInit {
             });
 
         } else  {
-            this.toastr.warning(`Vui lòng chọn trò chơi cần xóa`);
+            this.toastr.warning(`Vui lòng chọn Trò Chơi cần xóa`);
         }
         
     }
@@ -178,7 +178,7 @@ export class ListGameComponent implements OnInit {
             this.gameService.onDelGameSelect(list_id_selected, this.lang).subscribe(
                 (data) => {
                     if (data.code === 204) {
-                        this.toastr.success(`Xóa ${this.length_selected} trò chơi thành công`);
+                        this.toastr.success(`Xóa ${this.length_selected} Trò Chơi thành công`);
 
                         // Remove all promotion selected on UI
                         dtInstance.rows('.selected').remove().draw();
