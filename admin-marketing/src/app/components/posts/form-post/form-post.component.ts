@@ -8,6 +8,7 @@ import { PostType } from './../../../shared/class/post-type';
 import { PostTypeService } from '../../../shared/services/post-type.service';
 import { PostImage } from './../../../shared/class/post-image';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ImageValidators } from './../../../shared/validators/image-validators';
 import { ToastrService } from 'ngx-toastr';
 import { env } from '../../../../environments/environment';
 import 'rxjs/add/observable/throw';
@@ -66,7 +67,7 @@ export class FormPostComponent implements OnInit {
     creatForm(): void{
         this.formPost = this.fb.group({
             name: [this.post.name, [Validators.required, Validators.maxLength(255)]],
-            image: [this.post.image, [Validators.maxLength(1000)]],
+            image: [this.post.image, [ImageValidators.validateFile]],
             short_description: [this.post.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.post.content, Validators.required],
             post_type: [this.post.post_type ? this.post.post_type : '', Validators.required],
