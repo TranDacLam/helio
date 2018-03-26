@@ -258,7 +258,7 @@ export class ListPromotionComponent implements OnInit {
     isDisable(promotion){
         let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
         let end_date = promotion.end_date ? promotion.end_date : '';
-        if((promotion.is_draft === false || end_date < date_now) && this.user_current.role !== 1){
+        if((promotion.is_draft === false || (end_date !== '' && end_date < date_now)) && this.user_current.role !== 1){
             return true;
         }
         return null;
@@ -271,10 +271,23 @@ export class ListPromotionComponent implements OnInit {
     isCheckDisplay(promotion){
         let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
         let end_date = promotion.end_date ? promotion.end_date : '';
-        if((promotion.is_draft === false || end_date < date_now) && this.user_current.role !== 1){
+        if((promotion.is_draft === false || (end_date !== '' && end_date < date_now)) && this.user_current.role !== 1){
             return true;
         }
         return false;
+    }
+
+    /*
+        Function isDisableQRCode(): Check promotion end_date < date now to disabled button
+        Author: Lam
+    */
+    isDisableQRCode(promotion){
+        let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
+        let end_date = promotion.end_date ? promotion.end_date : '';
+        if((end_date !== '' && end_date < date_now) && this.user_current.role !== 1){
+            return true;
+        }
+        return null;
     }
 
 }
