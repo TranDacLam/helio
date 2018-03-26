@@ -59,7 +59,8 @@ export class NotificationDetailComponent implements OnInit {
         // get current user
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
-        },100);
+            this.disableAllTable();
+        },300);
         
     }
 
@@ -109,6 +110,13 @@ export class NotificationDetailComponent implements OnInit {
                 this.router.navigate(['/error', { message: error.message}]);
             }
         );
+    }
+
+    disableAllTable(){
+        if(this.promotion_id){
+            $(".multiselect_user table tr input:checkbox, .multiselect_user button").prop('disabled', 'disabled');
+            $(".multiselect_footer button").prop('disabled', 'disabled');
+        }
     }
 
     /*
