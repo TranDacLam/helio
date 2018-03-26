@@ -689,12 +689,12 @@ def play_transactions(request):
             return Response(error, status=400)
         if request.user.is_staff or request.user.barcode == card_id:
             headers = {'Authorization': settings.DMZ_API_TOKEN}
-            card_information_api_url = '{}transactions/play/'.format(
+            transactions_play_api_url = '{}transactions/play/'.format(
                 settings.BASE_URL_DMZ_API)
 
             # Call DMZ get card infomation
             response = requests.get(
-                card_information_api_url, params=request.GET, headers=headers)
+                transactions_play_api_url, params=request.GET, headers=headers)
             # Get data from dmz reponse
             result = response.json()
             # Translate error message when code is 400
@@ -725,12 +725,12 @@ def card_transactions(request):
             return Response(error, status=400)
         if request.user.is_staff or request.user.barcode == card_id:
             headers = {'Authorization': settings.DMZ_API_TOKEN}
-            card_information_api_url = '{}transactions/play/'.format(
+            transactions_card_api_url = '{}transactions/card/'.format(
                 settings.BASE_URL_DMZ_API)
 
             # Call DMZ get card infomation
             response = requests.get(
-                card_information_api_url, params=request.GET, headers=headers)
+                transactions_card_api_url, params=request.GET, headers=headers)
             # Get data from dmz reponse
             result = response.json()
             # Translate error message when code is 400
@@ -762,12 +762,12 @@ def reissue_history(request):
             return Response(error, status=400)
         if request.user.is_staff or request.user.barcode == card_id:
             headers = {'Authorization': settings.DMZ_API_TOKEN}
-            card_information_api_url = '{}transactions/play/'.format(
+            reissue_history_api_url = '{}reissue/history/'.format(
                 settings.BASE_URL_DMZ_API)
 
             # Call DMZ get card infomation
             response = requests.get(
-                card_information_api_url, params=request.GET, headers=headers)
+                reissue_history_api_url, params=request.GET, headers=headers)
             # Get data from dmz reponse
             result = response.json()
             # Translate error message when code is 400
@@ -1334,7 +1334,8 @@ def fees_apply_by_type(request):
             error = {
                 "code": 400, "message": _("Position field is required."), "fields": "position"}
             return Response(error, status=400)
-        fee = Fee.objects.filter(is_apply=True, position=position).order_by("-created")[:1].get()
+        fee = Fee.objects.filter(
+            is_apply=True, position=position).order_by("-created")[:1].get()
         serializer = FeeSerializer(fee, many=False)
         return Response(serializer.data)
     except Fee.DoesNotExist, e:
@@ -1345,18 +1346,20 @@ def fees_apply_by_type(request):
         error = {"code": 500, "message": "Internal Server Error", "fields": ""}
         return Response(error, status=500)
 
+
 @api_view(['GET'])
 def hot_advs_latest(request):
     print "GET HOT ADVS LATEST"
     try:
-        hot_advs = Hot_Advs.objects.filter(is_draft=False).order_by("-created")[:1].get()
+        hot_advs = Hot_Advs.objects.filter(
+            is_draft=False).order_by("-created")[:1].get()
         serializer = HotAdvsSerializer(hot_advs, many=False)
         return Response(serializer.data)
     except Hot_Advs.DoesNotExist, e:
-        error = {"code": 400, "message": _("Hot Advs not found."), "fields": ""}
+        error = {"code": 400, "message": _(
+            "Hot Advs not found."), "fields": ""}
         return Response(error, status=400)
     except Exception, e:
         print "hot_advs_latest ", e
         error = {"code": 500, "message": "Internal Server Error", "fields": ""}
         return Response(error, status=500)
-
