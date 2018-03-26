@@ -48,10 +48,17 @@ export class PromotionReportComponent implements OnInit {
                     targets: 0,
                     visible: false
                 }
-            ]
+            ],
+            "sDom": "<'row'<'col-md-12'f><'col-md-6'l><'col-md-6 info_search'>>rt<'row'<'col-md-12'i><'col-md-12'p>>",
         };
         // create new object from 2 object use operator spread es6
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
+
+        setTimeout(() => {
+            // add html in table
+            $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
+            $('.info_search').css('text-align', 'right');
+        },300);
   	}
 
     /*
