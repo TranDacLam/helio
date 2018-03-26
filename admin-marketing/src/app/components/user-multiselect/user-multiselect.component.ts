@@ -158,7 +158,7 @@ export class UserMultiselectComponent implements OnInit {
         if(this.current_user.role !==1 && ((this.notification && this.notification.sent_date) ||
             (this.promotion && (this.promotion.is_draft === false || 
             (promotion_end_date !== '' && promotion_end_date < date_now))))){
-            $(".multiselect_user table tr input:checkbox").prop('disabled', 'disabled');
+            $(".multiselect_user table tr input:checkbox, .multiselect_user button").prop('disabled', 'disabled');
             $(".multiselect_footer button").prop('disabled', 'disabled');
         }
     }

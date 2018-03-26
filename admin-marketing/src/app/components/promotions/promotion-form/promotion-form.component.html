@@ -81,7 +81,7 @@
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Danh Mục Khuyến Mãi</label>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-4" *ngIf="categorys">
             <select class="form-control" formControlName="promotion_category">
                 <option value="">--SELECT--</option>
                 <option *ngFor="let category of categorys" value="{{ category.id }}">{{ category.name }}</option>
@@ -94,8 +94,8 @@
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Nhãn Khuyến Mãi</label>
         </div>
-        <div class="col-sm-4">
-            <select class="form-control" formControlName="promotion_label" *ngIf="promotionLabels">
+        <div class="col-sm-4" *ngIf="promotionLabels">
+            <select class="form-control" formControlName="promotion_label">
                 <option value="">--SELECT--</option>
                 <option *ngFor="let label of promotionLabels" value="{{ label.id }}">{{ label.name }}</option>
             </select>
@@ -107,8 +107,8 @@
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Loại Khuyến Mãi</label>
         </div>
-        <div class="col-sm-4">
-            <select class="form-control" formControlName="promotion_type" *ngIf="promotionTypes">
+        <div class="col-sm-4" *ngIf="promotionTypes">
+            <select class="form-control" formControlName="promotion_type">
                 <option value="">--SELECT--</option>
                 <option *ngFor="let type of promotionTypes" [value] ="type.id">{{ type.name }}</option>
             </select>
