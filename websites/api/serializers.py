@@ -217,4 +217,4 @@ class HotAdvsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Hot_Advs
-        fields = "__all__"
+        fields = ('id', 'name', 'image', 'is_register', 'is_view_detail', 'content', 'sub_url_register', 'sub_url_view_detail')
