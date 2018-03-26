@@ -60,6 +60,7 @@ import { AuthGuard } from './shared/guards/index';
 import { UserPermissionComponent } from './components/user-permission/user-permission.component';
 import { OpenTimeComponent } from './components/open-time/open-time.component'
 import { PromotionReportComponent } from './components/promotions/promotion-report/promotion-report.component';
+import { RolePermissionComponent } from './components/role-permission/role-permission.component';
 
 
 const routes: Routes = [{
@@ -305,6 +306,10 @@ const routes: Routes = [{
     {
         path: 'promotions/report/:id',
         component: PromotionReportComponent
+    },
+    {
+        path: 'role-permission',
+        component: RolePermissionComponent
     },
     {
         path: 'error',

@@ -6,6 +6,7 @@ import { Hot } from '../../../shared/class/hot';
 import { HotService } from '../../../shared/services/hot.service';
 import { DateValidators } from './../../../shared/validators/date-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ImageValidators } from './../../../shared/validators/image-validators';
 import { env } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
@@ -67,7 +68,7 @@ export class FormHotComponent implements OnInit {
     creatForm(): void{
         this.formHot = this.fb.group({
             name: [this.hot.name, [Validators.required, Validators.maxLength(255)]],
-            image: [this.hot.image],
+            image: [this.hot.image, [ImageValidators.validateFile]],
             sub_url: [this.hot.sub_url, [Validators.required, Validators.maxLength(1000)]],
             is_show: [this.hot.is_show],
             is_clear_image: [false]

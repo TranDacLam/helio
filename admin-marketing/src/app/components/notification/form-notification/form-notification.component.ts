@@ -8,6 +8,7 @@ import { CategoryNotification } from '../../../shared/class/category-notificatio
 import { NotificationService } from '../../../shared/services/notification.service';
 import { CategoryNotificationService } from '../../../shared/services/category-notification.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ImageValidators } from './../../../shared/validators/image-validators';
 import { ToastrService } from 'ngx-toastr';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { User } from '../../../shared/class/user';
@@ -97,7 +98,7 @@ export class FormNotificationComponent implements OnInit {
         this.formNotification = this.fb.group({
             subject: [this.noti.subject, [Validators.required, Validators.maxLength(255)]],
             message: [this.noti.message, [Validators.required]],
-            image: [this.noti.image],
+            image: [this.noti.image, [ImageValidators.validateFile]],
             sub_url: [this.noti.sub_url, [Validators.maxLength(255)]],
             category: [this.noti.category ? this.noti.category : '', Validators.required],
             is_QR_code: [this.noti.is_QR_code ? this.noti.is_QR_code : false],

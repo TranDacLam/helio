@@ -34,8 +34,9 @@ export class ShowErrorValidComponent implements OnInit {
        'phoneValidate': (param) => param.message,
        'denominationValidate': (param) => param.message,
        'emailValidate': (param) => param.message,
-       'birtdateValidate': (parame) => parame.message,
-       'fomatBirtdate':(parame) => parame.message,
+       'birtdateValidate': (params) => params.message,
+       'fomatBirtdate':(params) => params.message,
+       'fomatFile': (params) => params.message,
     };
 
     @Input()

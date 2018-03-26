@@ -16,6 +16,7 @@ import { PromotionLabelService } from '../../../shared/services/promotion-label.
 import { DatePipe } from '@angular/common';
 import { DateValidators } from './../../../shared/validators/date-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ImageValidators } from './../../../shared/validators/image-validators';
 import { ToastrService } from 'ngx-toastr';
 import { User } from './../../../shared/class/user';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
@@ -106,8 +107,8 @@ export class PromotionFormComponent implements OnInit {
         this.promotionForm = this.fb.group({
             id: [this.promotion.id],
             name: [this.promotion.name, [Validators.required, Validators.maxLength(255)]],
-            image: [this.promotion.image],
-            image_thumbnail: [this.promotion.image_thumbnail],
+            image: [this.promotion.image, [ImageValidators.validateFile]],
+            image_thumbnail: [this.promotion.image_thumbnail, [ImageValidators.validateFile]],
             short_description: [this.promotion.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.promotion.content, [Validators.required]],
             promotion_category: [this.promotion.promotion_category ? this.promotion.promotion_category : ''],

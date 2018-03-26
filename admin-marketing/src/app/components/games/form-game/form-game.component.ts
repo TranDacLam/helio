@@ -7,6 +7,7 @@ import { GameService } from '../../../shared/services/game.service';
 import { Type } from '../../../shared/class/type';
 import { TypeService } from '../../../shared/services/type.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ImageValidators } from './../../../shared/validators/image-validators';
 import { env } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
@@ -67,7 +68,7 @@ export class FormGameComponent implements OnInit {
     creatForm(): void{
         this.formGame = this.fb.group({
             name: [this.game.name, [Validators.required, Validators.maxLength(255)]],
-            image: [this.game.image],
+            image: [this.game.image, [ImageValidators.validateFile]],
             short_description: [this.game.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.game.content, Validators.required],
             game_type: [this.game.game_type ? this.game.game_type : '', Validators.required],
