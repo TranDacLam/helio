@@ -156,9 +156,10 @@ export class UserMultiselectComponent implements OnInit {
         let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
         let promotion_end_date = (this.promotion && this.promotion.end_date) ? this.promotion.end_date : '';
         if(this.current_user.role !==1 && ((this.notification && this.notification.sent_date) ||
-            (this.promotion && (this.promotion.is_draft === false || promotion_end_date < date_now)))){
+            (this.promotion && (this.promotion.is_draft === false || 
+            (promotion_end_date !== '' && promotion_end_date < date_now))))){
             $(".multiselect_user table tr input:checkbox").prop('disabled', 'disabled');
-            $(".multiselect_user button").prop('disabled', 'disabled');
+            $(".multiselect_footer button").prop('disabled', 'disabled');
         }
     }
 

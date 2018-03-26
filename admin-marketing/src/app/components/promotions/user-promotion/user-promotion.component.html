@@ -41,24 +41,35 @@
     </div>
     <div class="col-sm-2 qr_code">
         <button *ngIf="!promotion.QR_code && user_current" class="btn custom-button btn-block text-right" 
-            (click)="generator_QR_code($event, promotion.id)" [attr.disabled]="isDisable()"
+            (click)="generator_QR_code($event, promotion.id)"
+            [attr.disabled]="isDisableQRCode()"
             data-loading-text="<i class='fa fa-spinner fa-spin'></i>Tạo QR Code">Tạo QR Code</button>
     </div>
     <div class="col-sm-4 pull-right" *ngIf="user_current">
-        <a *ngIf="!notification_id" class="btn custom-button btn-block" 
-            [routerLink]="['/notification/add', {promotion: promotion.id, lang: lang}]"
-            [attr.disabled]="isDisable()"
-        >
-            <i class="fa fas fa-plus icon-button"></i>
-            TẠO THÔNG BÁO CHO KHUYẾN MÃI
-        </a>
-        <a *ngIf="notification_id" class="btn custom-button btn-block" 
-            [routerLink]="['/notification/edit/', notification_id, {promotion: promotion.id, lang: lang}]"
-            [attr.disabled]="isDisable()"
-        >
-            <i class="fa fas fa-pencil-square-o icon-button"></i>
-            CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI
-        </a>
+        <span *ngIf="!isDisable()">
+            <a *ngIf="!notification_id" class="btn custom-button btn-block" 
+                [routerLink]="['/notification/add', {promotion: promotion.id, lang: lang}]"
+            >
+                <i class="fa fas fa-plus icon-button"></i>
+                TẠO THÔNG BÁO CHO KHUYẾN MÃI
+            </a>
+            <a *ngIf="notification_id" class="btn custom-button btn-block" 
+                [routerLink]="['/notification/edit/', notification_id, {promotion: promotion.id, lang: lang}]"
+            >
+                <i class="fa fas fa-pencil-square-o icon-button"></i>
+                CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI
+            </a>
+        </span>
+        <span *ngIf="isDisable()">
+            <a *ngIf="!notification_id" class="btn custom-button btn-block" disabled>
+                <i class="fa fas fa-plus icon-button"></i>
+                TẠO THÔNG BÁO CHO KHUYẾN MÃI
+            </a>
+            <a *ngIf="notification_id" class="btn custom-button btn-block" disabled>
+                <i class="fa fas fa-pencil-square-o icon-button"></i>
+                CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI
+            </a>
+        </span>
         <a class="btn custom-button btn-block" [routerLink]="['/promotions/report/', promotion.id, {lang: lang}]">
             TỔNG HỢP TRIỂN KHAI KHUYẾN MÃI
         </a>
