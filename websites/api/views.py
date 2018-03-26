@@ -197,9 +197,10 @@ def user_info(request):
                 except Exception, e:
                     return Response({'flag': False, 'message': _('Birth day invalid format (YYYY-MM-DD).')}, status=400)
             else:
-                # because request.data.get if null then cast data to string '', birth date accept none
+                # because request.data.get if null then cast data to string '',
+                # birth date accept none
                 birth_date = None
-            
+
             user.birth_date = birth_date
             user.full_name = request.data.get('full_name', '')
             user.phone = phone
@@ -212,7 +213,7 @@ def user_info(request):
         return Response({'flag': True, 'message': _('Update infomation user successfully.')})
 
     except Exception, e:
-        print 'Erro Update user_info ',e
+        print 'Erro Update user_info ', e
         error = {"code": 500, "message": _("Cannot update infomation user. Please contact administrator."),
                  "fields": "", "flag": False}
         return Response(error, status=500)
@@ -235,7 +236,7 @@ def update_unique_device_id(request):
         return Response({'flag': True, 'message': _('Update device unique successfully.')})
 
     except Exception, e:
-        print 'update_unique_device_id ',e
+        print 'update_unique_device_id ', e
         error = {"code": 500, "message": _("Cannot update infomation user. Please contact administrator."),
                  "fields": "", "flag": False}
         return Response(error, status=500)
@@ -656,8 +657,9 @@ def card_information(request, card_id):
 
         result = {}
 
-        headers =  {'Authorization': settings.DMZ_API_TOKEN}
-        card_information_api_url = '{}card/{}/information/'.format(settings.BASE_URL_DMZ_API, card_id)
+        headers = {'Authorization': settings.DMZ_API_TOKEN}
+        card_information_api_url = '{}card/{}/information/'.format(
+            settings.BASE_URL_DMZ_API, card_id)
 
         # Call DMZ get card infomation
         response = requests.get(card_information_api_url, headers=headers)
@@ -666,7 +668,7 @@ def card_information(request, card_id):
         # Translate error message when code is 400
         if response.status_code == 400:
             result["message"] = _(result["message"])
-        return Response(result)
+        return Response(result, status=response.status_code)
 
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
@@ -680,27 +682,28 @@ def card_information(request, card_id):
 @api_view(['GET'])
 def play_transactions(request):
     try:
-        if request.user.is_staff:
-            card_id = request.GET.get("card_id", "")
-            if not card_id:
-                error = {
-                    "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
-                return Response(error, status=400)
-
-
-            headers =  {'Authorization': settings.DMZ_API_TOKEN}
-            card_information_api_url = '{}transactions/play/'.format(settings.BASE_URL_DMZ_API)
+        card_id = request.GET.get("card_id", "")
+        if not card_id:
+            error = {
+                "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
+            return Response(error, status=400)
+        if request.user.is_staff or request.user.barcode == card_id:
+            headers = {'Authorization': settings.DMZ_API_TOKEN}
+            card_information_api_url = '{}transactions/play/'.format(
+                settings.BASE_URL_DMZ_API)
 
             # Call DMZ get card infomation
-            response = requests.get(card_information_api_url, params=request.GET, headers=headers)
+            response = requests.get(
+                card_information_api_url, params=request.GET, headers=headers)
             # Get data from dmz reponse
             result = response.json()
             # Translate error message when code is 400
             if response.status_code == 400:
                 result["message"] = _(result["message"])
-            return Response(result)
+            return Response(result, status=response.status_code)
         else:
-            error = {"code": 400, "message": _("You don't have permission to access."), "fields": ""}
+            error = {"code": 400, "message": _(
+                "You don't have permission to access."), "fields": ""}
             return Response(error, status=400)
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
@@ -715,26 +718,28 @@ def play_transactions(request):
 @api_view(['GET'])
 def card_transactions(request):
     try:
-        if request.user.is_staff:
-            card_id = request.GET.get("card_id", "")
-            if not card_id:
-                error = {
-                    "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
-                return Response(error, status=400)
-
-            headers =  {'Authorization': settings.DMZ_API_TOKEN}
-            card_information_api_url = '{}transactions/play/'.format(settings.BASE_URL_DMZ_API)
+        card_id = request.GET.get("card_id", "")
+        if not card_id:
+            error = {
+                "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
+            return Response(error, status=400)
+        if request.user.is_staff or request.user.barcode == card_id:
+            headers = {'Authorization': settings.DMZ_API_TOKEN}
+            card_information_api_url = '{}transactions/play/'.format(
+                settings.BASE_URL_DMZ_API)
 
             # Call DMZ get card infomation
-            response = requests.get(card_information_api_url, params=request.GET, headers=headers)
+            response = requests.get(
+                card_information_api_url, params=request.GET, headers=headers)
             # Get data from dmz reponse
             result = response.json()
             # Translate error message when code is 400
             if response.status_code == 400:
                 result["message"] = _(result["message"])
-            return Response(result)
+            return Response(result, status=response.status_code)
         else:
-            error = {"code": 400, "message": _("You don't have permission to access."), "fields": ""}
+            error = {"code": 400, "message": _(
+                "You don't have permission to access."), "fields": ""}
             return Response(error, status=400)
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
@@ -750,26 +755,28 @@ def card_transactions(request):
 @permission_classes((AllowAny,))
 def reissue_history(request):
     try:
-        if request.user.is_staff:
-            card_id = request.GET.get("card_id", "")
-            if not card_id:
-                error = {
-                    "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
-                return Response(error, status=400)
-
-            headers =  {'Authorization': settings.DMZ_API_TOKEN}
-            card_information_api_url = '{}transactions/play/'.format(settings.BASE_URL_DMZ_API)
+        card_id = request.GET.get("card_id", "")
+        if not card_id:
+            error = {
+                "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
+            return Response(error, status=400)
+        if request.user.is_staff or request.user.barcode == card_id:
+            headers = {'Authorization': settings.DMZ_API_TOKEN}
+            card_information_api_url = '{}transactions/play/'.format(
+                settings.BASE_URL_DMZ_API)
 
             # Call DMZ get card infomation
-            response = requests.get(card_information_api_url, params=request.GET, headers=headers)
+            response = requests.get(
+                card_information_api_url, params=request.GET, headers=headers)
             # Get data from dmz reponse
             result = response.json()
             # Translate error message when code is 400
             if response.status_code == 400:
                 result["message"] = _(result["message"])
-            return Response(result)
+            return Response(result, status=response.status_code)
         else:
-            error = {"code": 400, "message": _("You don't have permission to access."), "fields": ""}
+            error = {"code": 400, "message": _(
+                "You don't have permission to access."), "fields": ""}
             return Response(error, status=400)
     except Exception, e:
         error = {"code": 500, "message": "%s" % e, "fields": ""}
@@ -996,8 +1003,22 @@ def send_notification(request):
                 return Response(error, status=400)
 
             notify_obj = Notification.objects.get(pk=notification_id)
-            user_of_notification = User_Notification.objects.filter(
-                notification_id=notification_id).values_list('user_id', flat=True)
+
+            user_of_notification = []
+
+            promotion_obj = notify_obj.promotion
+
+            if promotion_obj:
+                if not promotion_obj.is_save:
+                    error = {
+                        "code": 400, "message": "Please select list user to send", "fields": "", "flag": False}
+                    return Response(error, status=400)
+
+                user_of_notification = Gift.objects.filter(
+                    promotion=promotion_obj).values_list('user_id', flat=True)
+            else:
+                user_of_notification = User_Notification.objects.filter(
+                    notification_id=notify_obj.id).values_list('user_id', flat=True)
 
             data_notify = {"title": notify_obj.subject, "body": notify_obj.message,
                            "sub_url": notify_obj.sub_url, "image": notify_obj.image.url if notify_obj.image else "",
@@ -1006,7 +1027,8 @@ def send_notification(request):
             devices_ios = APNSDevice.objects.filter(
                 user__flag_notification=True, user__id__in=user_of_notification)
             if devices_ios:
-                devices_ios.send_message(message=data_notify, extra=data_notify)
+                devices_ios.send_message(
+                    message=data_notify, extra=data_notify)
 
             fcm_devices = GCMDevice.objects.filter(
                 user__flag_notification=True, user__id__in=user_of_notification)
@@ -1020,6 +1042,10 @@ def send_notification(request):
             notify_obj.sent_user = user
             notify_obj.sent_date = datetime.datetime.now()
             notify_obj.save()
+
+            if promotion_obj and promotion_obj.is_draft:
+                promotion_obj.is_draft = False
+                promotion_obj.user_implementer = user
 
             return Response({'message': _('Push Notification Successfull')})
 
@@ -1227,3 +1253,110 @@ def gift_install_app(user, promotion_id):
         error = {"code": 500, "message": _("Your account not apply current promotion. Please contact administrator."),
                  "fields": ""}
         return Response(error, status=500)
+
+
+@api_view(['POST'])
+def ticket_transfer(request):
+    print "Ticket Transfer"
+    try:
+
+        source_card_barcode = request.data.get('source_card_barcode', 0)
+        # source_user_id = request.data.get('source_user_id', '')
+        # source_user_name = request.data.get('source_user_name', '')
+        received_card_barcode = request.data.get('received_card_barcode', 0)
+        ticket_amount = request.data.get('ticket_amount', 0)
+        # system_name = request.data.get('system_name', '')
+
+        print source_card_barcode
+
+        if not source_card_barcode or not received_card_barcode or not ticket_amount:
+            error = {
+                "status": "05", "message": _("Please check required fields : [source_card_barcode, received_card_barcode, ticket_amount]")}
+            return JsonResponse(error, status=400)
+
+        source_user = User.objects.get(barcode=source_card_barcode)
+
+        if source_user and not source_user.full_name:
+            error = {"code": 400,
+                     "message": _("Please update full name of user"), "fields": ""}
+            return Response(error, status=400)
+
+        try:
+            ticket_amount = int(ticket_amount)
+        except ValueError:
+            error = {"code": 400,
+                     "message": _("Ticket Amount must be is number"), "fields": ""}
+            return Response(error, status=400)
+
+        result = {}
+
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': settings.DMZ_API_TOKEN
+        }
+        ticket_transfer_api_url = '{}helio/ticket_transfer/'.format(
+            settings.BASE_URL_DMZ_API)
+
+        params_api = {
+            "source_card_barcode": source_card_barcode,
+            "received_card_barcode": received_card_barcode,
+            "ticket_amount": ticket_amount,
+            "system_name": "helio_app",
+            "source_user_id": source_user.username,
+            "source_user_name": source_user.full_name
+        }
+
+        # Call DMZ get card infomation
+        response = requests.post(
+            ticket_transfer_api_url, data=json.dumps(params_api), headers=headers)
+        # Get data from dmz reponse
+        result = response.json()
+        # Translate error message when code is 400
+        if response.status_code == 400:
+            result["message"] = _(result["message"])
+        return Response(result, status=response.status_code)
+
+    except User.DoesNotExist, e:
+        error = {"code": 400,
+                 "message": _("Source barcode not link to any user"), "fields": ""}
+        return Response(error, status=400)
+
+    except Exception, e:
+        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        return Response(error, status=500)
+
+
+@api_view(['GET'])
+def fees_apply_by_type(request):
+    try:
+        position = request.GET.get('position', '')
+        if not position:
+            error = {
+                "code": 400, "message": _("Position field is required."), "fields": "position"}
+            return Response(error, status=400)
+        fee = Fee.objects.filter(is_apply=True, position=position).order_by("-created")[:1].get()
+        serializer = FeeSerializer(fee, many=False)
+        return Response(serializer.data)
+    except Fee.DoesNotExist, e:
+        error = {"code": 400, "message": _("Fee not found."), "fields": ""}
+        return Response(error, status=400)
+    except Exception, e:
+        print "fees_apply_by_type ", e
+        error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+        return Response(error, status=500)
+
+@api_view(['GET'])
+def hot_advs_latest(request):
+    print "GET HOT ADVS LATEST"
+    try:
+        hot_advs = Hot_Advs.objects.filter(is_draft=False).order_by("-created")[:1].get()
+        serializer = HotAdvsSerializer(hot_advs, many=False)
+        return Response(serializer.data)
+    except Hot_Advs.DoesNotExist, e:
+        error = {"code": 400, "message": _("Hot Advs not found."), "fields": ""}
+        return Response(error, status=400)
+    except Exception, e:
+        print "hot_advs_latest ", e
+        error = {"code": 500, "message": "Internal Server Error", "fields": ""}
+        return Response(error, status=500)
+
