@@ -9,6 +9,7 @@ import { DateValidators } from './../../../shared/validators/date-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { ImageValidators } from './../../../shared/validators/image-validators';
 import * as moment from 'moment';
+import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 
@@ -59,11 +60,7 @@ export class FormEventComponent implements OnInit {
             }
         });
 
-        this.ckEditorConfig = {
-            language: 'vi',
-            filebrowserUploadUrl: env.api_domain_root+'/admin/ckeditor/upload/'
-
-        };
+        this.ckEditorConfig = ckeditor_config.config;
     }
 
     /*

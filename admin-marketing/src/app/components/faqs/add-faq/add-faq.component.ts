@@ -7,6 +7,7 @@ import { Category } from './../../../shared/class/category';
 import { CategoryService } from './../../../shared/services/category.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { ToastrService } from 'ngx-toastr';
+import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import 'rxjs/add/observable/throw';
 
 @Component({
@@ -29,6 +30,7 @@ export class AddFaqComponent implements OnInit {
     errorMessage: any; // Messages error
 
     lang = 'vi';
+    ckEditorConfig:any;
 
     constructor(
         private faqService: FaqService,
@@ -48,6 +50,7 @@ export class AddFaqComponent implements OnInit {
             }
         });
         this.getCategories();
+        this.ckEditorConfig = ckeditor_config.config;
     }
 
     /*

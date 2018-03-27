@@ -29,7 +29,7 @@
             <label class="col-form-label form-check-label">Nội Dung</label>
         </div>
         <div class="col-sm-8">
-            <ckeditor formControlName="content"></ckeditor>
+            <ckeditor formControlName="content" [config]="ckEditorConfig"></ckeditor>
             <show-error-valid [control]="formGame.get('content')"></show-error-valid>
         </div>
     </div>
