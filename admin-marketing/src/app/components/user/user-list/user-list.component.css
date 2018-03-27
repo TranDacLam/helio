@@ -20,13 +20,6 @@ a.pull-left:hover {
 p.title {
 	font-size: 34px;
 }
-td.title-email a {
-	text-decoration: none;
-	color: black;
-} 
-td.title-email a:hover {
-	color: red;
-}
 .button-user {
 	margin-left: 30px;
 }

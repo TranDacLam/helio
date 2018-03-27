@@ -375,7 +375,12 @@ class FAQSerializer(serializers.ModelSerializer):
     # follow models.py
     limit_category_Faq = [const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY,
                            const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY]
-    
+    question = serializers.CharField(required=True,validators=[
+        UniqueValidator(
+            queryset=FAQ.objects.all(),
+            message =_('This question is exist.')
+            )
+        ])
     class Meta:
         model = FAQ
         fields = ('id', 'question', 'answer', 'category')
@@ -383,7 +388,7 @@ class FAQSerializer(serializers.ModelSerializer):
     def validate_category( self, value):
         if value.id in self.limit_category_Faq:
             return value
-        raise serializers.ValidationError("This category is unvalid")
+        raise serializers.ValidationError(_("This category is unvalid"))
 
 class RolesSerializer(serializers.ModelSerializer):
 
@@ -555,3 +560,11 @@ class RoleSerializer(serializers.ModelSerializer):
         model = Roles
         fields = ('id', 'name')
 
+class OpenTimeSerializer(serializers.ModelSerializer):
+    open_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required = False)
+    start_time = serializers.DateField(format="%H:%m", input_formats=['%H:%m'], required = False)
+    end_time = serializers.DateField(format="%H:%m", input_formats=['%H:%m'], required = False)
+
+    class Meta:
+        model = OpenTime
+        fields = ('id', 'open_date', 'start_time', 'end_time')
