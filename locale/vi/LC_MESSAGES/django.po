@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-27 12:00+0700\n"
+"POT-Creation-Date: 2018-03-27 15:20+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -625,229 +625,225 @@ msgstr "Số điện thoại đã được sử dụng. Vui lòng chọn số kh
 msgid "Either message_plain or message_html should be not None"
 msgstr ""
 
-#: websites/api/views.py:101
+#: websites/api/views.py:102
 msgid "The email field is required."
 msgstr "Trường email không được bỏ trống."
 
-#: websites/api/views.py:118
+#: websites/api/views.py:119
 msgid "Send security code to email successfully."
 msgstr "Gửi mã bảo mật đến email thành công."
 
-#: websites/api/views.py:122
+#: websites/api/views.py:123
 msgid "Email matching query does not exist."
 msgstr "Email không tồn tại."
 
-#: websites/api/views.py:137
+#: websites/api/views.py:138
 msgid ""
 "Please check required fields : [email, secure_code, password1, password2]"
 msgstr ""
 "Các trường sau không được bỏ trống : [email, secure_code, password1, "
 "password2]"
 
-#: websites/api/views.py:140
+#: websites/api/views.py:141
 msgid "Password does not match."
 msgstr "Mật khẩu không hợp lệ."
 
-#: websites/api/views.py:149
+#: websites/api/views.py:150
 msgid "Reset Password Successfully."
 msgstr "Đặt lại mật khẩu thành công."
 
-#: websites/api/views.py:152
+#: websites/api/views.py:153
 msgid "The secure code matching query does not exist."
 msgstr "Mã bảo mật không đúng. Vui lòng kiểm tra lại."
 
-#: websites/api/views.py:169
+#: websites/api/views.py:170
 #, fuzzy
 #| msgid "Upload avatar error. Please contact administartor."
 msgid "Upload avatar error. Please contact administartor"
 msgstr "Tải lên hình đại diện lỗi. Vui lòng liên hệ với quản trị viên"
 
-#: websites/api/views.py:189
+#: websites/api/views.py:190
 msgid "This phone number has already. Please choice another."
 msgstr "Số điện thoại đã có người sử dụng. Vui lòng chọn số khác."
 
-#: websites/api/views.py:198
+#: websites/api/views.py:199
 msgid "Birth day invalid format (YYYY-MM-DD)."
 msgstr "Ngày sinh không đúng định dạng (YYYY-MM-DD)."
 
-#: websites/api/views.py:213
+#: websites/api/views.py:214
 msgid "Update infomation user successfully."
 msgstr "Cập nhật thông tin người dùng thành công."
 
-#: websites/api/views.py:217 websites/api/views.py:240
+#: websites/api/views.py:218 websites/api/views.py:241
 msgid "Cannot update infomation user. Please contact administrator."
 msgstr ""
 "Không thể cập nhật thông tin người dùng. Vui lòng liên hệ với quản trị viên."
 
-#: websites/api/views.py:236
+#: websites/api/views.py:237
 msgid "Update device unique successfully."
 msgstr "Cập nhật mã máy thiết bị thành công."
 
 # END FOOTER
 # START API
-#: websites/api/views.py:261 websites/api/views.py:829
+#: websites/api/views.py:262 websites/api/views.py:892
 msgid "Internal Server Error. Please contact administrator."
 msgstr "Lỗi Máy chủ Nội bộ. Xin vui lòng liên hệ với Quản trị viên."
 
-#: websites/api/views.py:281
+#: websites/api/views.py:282
 msgid "Please check required fields : [old_password, new_password]"
 msgstr "Hãy kiểm tra các trường bắt buộc: [old_password, new_password]."
 
-#: websites/api/views.py:290
+#: websites/api/views.py:291
 msgid "OldPassword does not match."
 msgstr "Mặt khẩu cũ không khớp."
 
-#: websites/api/views.py:297
+#: websites/api/views.py:298
 msgid "Update password for user successfully."
 msgstr "Cập nhật mật khẩu thành công."
 
-#: websites/api/views.py:301
+#: websites/api/views.py:302
 msgid "Cannot update password for user. Please contact administrator."
 msgstr "Không thể cập nhật mật khẩu. Vui lòng liên hệ với quản trị viên."
 
-#: websites/api/views.py:326
+#: websites/api/views.py:327
 msgid "Cannot send feedback. Please contact administrator."
 msgstr "Không thể gửi phản hồi. Vui lòng liên hệ với quản trị viên."
 
 # msgid "This field is required."
 # msgstr "Trường này là bắt buộc."
-#: websites/api/views.py:576
+#: websites/api/views.py:577
 msgid "This value must be is integer."
 msgstr "Giá trị này phải là số nguyên."
 
-#: websites/api/views.py:654 websites/api/views.py:704
-#: websites/api/views.py:740 websites/api/views.py:777
-#: websites/api/views.py:1386
+#: websites/api/views.py:655 websites/api/views.py:726
+#: websites/api/views.py:775 websites/api/views.py:826
+#: websites/api/views.py:1458
 msgid "Card id field is required."
 msgstr "Trường card_id không được bỏ trống."
 
-#: websites/api/views.py:685 websites/api/views.py:722
-#: websites/api/views.py:758 websites/api/views.py:795
-#: websites/api/views.py:1329 websites/api/views.py:1404
+#: websites/api/views.py:702 websites/api/views.py:752
+#: websites/api/views.py:801 websites/api/views.py:852
+#: websites/api/views.py:1400 websites/api/views.py:1485
 msgid "You don't have permission to access."
 msgstr "Bạn không có quyền truy cập."
 
-#: websites/api/views.py:814
+#: websites/api/views.py:877
 msgid "Date request is required."
 msgstr "Trường open_date không được bỏ trống."
 
-#: websites/api/views.py:885
+#: websites/api/views.py:948
 msgid "Notification Id is required."
 msgstr "Trường notification_id không được bỏ trống."
 
-#: websites/api/views.py:887
+#: websites/api/views.py:950
 msgid "Anonymous User Cannot Update Notification"
 msgstr "Người dùng chưa chưa đăng ký không thể cập nhật thông báo."
 
-#: websites/api/views.py:893
+#: websites/api/views.py:956
 msgid "Successfull"
 msgstr "Thành công"
 
-#: websites/api/views.py:933
+#: websites/api/views.py:996
 msgid "Turn off notification successful."
 msgstr "Tắt thông báo thành công."
 
-#: websites/api/views.py:935 websites/api/views.py:956
-#: websites/api/views.py:1069 websites/api/views.py:1126
-#: websites/api/views.py:1164 websites/api/views.py:1211
+#: websites/api/views.py:998 websites/api/views.py:1019
+#: websites/api/views.py:1132 websites/api/views.py:1189
+#: websites/api/views.py:1227 websites/api/views.py:1274
 msgid "Anonymous User Cannot Call This Action."
 msgstr "Người dùng chưa chưa đăng ký. Không thể gọi hành động này."
 
 # END FOOTER
 # START API
-#: websites/api/views.py:939 websites/api/views.py:960
-#: websites/api/views.py:1130 websites/api/views.py:1172
+#: websites/api/views.py:1002 websites/api/views.py:1023
+#: websites/api/views.py:1193 websites/api/views.py:1235
 msgid "Internal Server Error. Please Contact Administrator."
 msgstr "Lỗi Máy chủ Nội bộ. Xin vui lòng liên hệ với Quản trị viên."
 
-#: websites/api/views.py:954
+#: websites/api/views.py:1017
 msgid "Turn on notification successful."
 msgstr "Bật thông báo thành công."
 
-#: websites/api/views.py:996
+#: websites/api/views.py:1059
 msgid "Cannot add new notification. Please contact administrator."
 msgstr "Không thể thêm thông báo mới. Vui lòng liên hệ với quản trị viên."
 
-#: websites/api/views.py:1066
+#: websites/api/views.py:1129
 msgid "Push Notification Successfull"
 msgstr "Thông báo gởi thành công."
 
-#: websites/api/views.py:1077
+#: websites/api/views.py:1140
 msgid "Cannot push notification. Please contact administrator."
 msgstr "Không thể gởi thông báo. Vui lòng liên hệ với quản trị viên."
 
-#: websites/api/views.py:1098 websites/api/views.py:1149
+#: websites/api/views.py:1161 websites/api/views.py:1212
 msgid "The device_uid field is required."
 msgstr "Trường device_uid không được bỏ trống."
 
-#: websites/api/views.py:1124
+#: websites/api/views.py:1187
 msgid "Connect device successful."
 msgstr "Kết nối thiết bị thành công."
 
-#: websites/api/views.py:1162
+#: websites/api/views.py:1225
 msgid "Disconnect device successful."
 msgstr "Ngắt kết nối thiết bị thành công."
 
-#: websites/api/views.py:1167 websites/api/views.py:1169
+#: websites/api/views.py:1230 websites/api/views.py:1232
 msgid "Cannot disconnect device. DeviceID not found."
 msgstr "Không thể ngắt kết nối thiết bị. Không tìm thấy DeviceID."
 
-#: websites/api/views.py:1190
+#: websites/api/views.py:1253
 msgid "The promotion_id is required."
 msgstr "Trường promotion_id không được bỏ trống."
 
-#: websites/api/views.py:1201 websites/api/views.py:1252
-#: websites/api/views.py:1254
+#: websites/api/views.py:1264 websites/api/views.py:1315
+#: websites/api/views.py:1317
 msgid "Error. User or Deivce Have get gift from promotion."
 msgstr "Lỗi. Người dùng hoặc thiết bị đã nhận được quà tặng khuyến mãi."
 
-#: websites/api/views.py:1214
+#: websites/api/views.py:1277
 msgid "Promotion for user does not matching. Please check again."
 msgstr ""
 "Khuyến mãi này không dành cho người dùng hiện tại. Vui lòng kiểm tra lại."
 
-#: websites/api/views.py:1218 websites/api/views.py:1223
-#: websites/api/views.py:1269
+#: websites/api/views.py:1281 websites/api/views.py:1286
+#: websites/api/views.py:1332
 msgid "Your account not apply current promotion. Please contact administrator."
 msgstr ""
 "Tài khoản của bạn không áp dụng khuyến mãi hiện tại. Vui lòng liên hệ với "
 "quản trị viên."
 
-#: websites/api/views.py:1241
+#: websites/api/views.py:1304
 msgid "Error. DeivceID of user is empty. Please check again."
 msgstr "Lỗi. Người dùng hiện tại không có device_id. Vui lòng xác minh lại."
 
-#: websites/api/views.py:1286
+#: websites/api/views.py:1349
 msgid ""
 "Please check required fields : [source_card_barcode, received_card_barcode, "
-"ticket_amount]"
+"ticket_amount, fee]"
 msgstr ""
 "Các trường sau không được bỏ trống : [source_card_barcode, "
-"received_card_barcode, ticket_amount]"
+"received_card_barcode, ticket_amount, fee]"
 
-#: websites/api/views.py:1291
+#: websites/api/views.py:1354
 msgid "Please update full name of user"
 msgstr "Vui lòng cập nhật tên của tài khoản"
 
 # msgid "This field is required."
 # msgstr "Trường này là bắt buộc."
-#: websites/api/views.py:1297
-msgid "Ticket Amount must be is number"
-msgstr "Ticket Amount phải là số nguyên."
+#: websites/api/views.py:1361
+msgid "Fee & Ticket Amount must be is number"
+msgstr "Fee & Ticket Amount phải là số nguyên."
 
-#: websites/api/views.py:1334
-msgid "Source barcode not link to any user"
-msgstr "Thẻ này chưa được liên kết với bất kỳ tài khoản nào"
-
-#: websites/api/views.py:1348
+#: websites/api/views.py:1419
 msgid "Position field is required."
 msgstr "Trường position không được bỏ trống."
 
-#: websites/api/views.py:1355
+#: websites/api/views.py:1426
 msgid "Fee not found."
 msgstr "Không tìm thấy phí giao dịch"
 
-#: websites/api/views.py:1373
+#: websites/api/views.py:1444
 msgid "Hot Advs not found."
 msgstr "Không tìm thấy Hot Advs"
 
@@ -906,49 +902,50 @@ msgstr "Hot Ads này đã tồn tại."
 #: websites/api_admin/views.py:417 websites/api_admin/views.py:434
 #: websites/api_admin/views.py:457 websites/api_admin/views.py:473
 #: websites/api_admin/views.py:489 websites/api_admin/views.py:553
-#: websites/api_admin/views.py:568 websites/api_admin/views.py:602
-#: websites/api_admin/views.py:649 websites/api_admin/views.py:693
-#: websites/api_admin/views.py:721 websites/api_admin/views.py:735
-#: websites/api_admin/views.py:751 websites/api_admin/views.py:808
-#: websites/api_admin/views.py:843 websites/api_admin/views.py:923
-#: websites/api_admin/views.py:995 websites/api_admin/views.py:1055
-#: websites/api_admin/views.py:1131 websites/api_admin/views.py:1156
-#: websites/api_admin/views.py:1186 websites/api_admin/views.py:1212
-#: websites/api_admin/views.py:1226 websites/api_admin/views.py:1243
-#: websites/api_admin/views.py:1284 websites/api_admin/views.py:1304
-#: websites/api_admin/views.py:1332 websites/api_admin/views.py:1350
-#: websites/api_admin/views.py:1360 websites/api_admin/views.py:1382
-#: websites/api_admin/views.py:1406 websites/api_admin/views.py:1420
-#: websites/api_admin/views.py:1438 websites/api_admin/views.py:1451
-#: websites/api_admin/views.py:1472 websites/api_admin/views.py:1487
-#: websites/api_admin/views.py:1519 websites/api_admin/views.py:1533
-#: websites/api_admin/views.py:1548 websites/api_admin/views.py:1561
-#: websites/api_admin/views.py:1582 websites/api_admin/views.py:1599
-#: websites/api_admin/views.py:1623 websites/api_admin/views.py:1636
-#: websites/api_admin/views.py:1655 websites/api_admin/views.py:1668
-#: websites/api_admin/views.py:1687 websites/api_admin/views.py:1703
-#: websites/api_admin/views.py:1727 websites/api_admin/views.py:1741
-#: websites/api_admin/views.py:1778 websites/api_admin/views.py:1791
-#: websites/api_admin/views.py:1812 websites/api_admin/views.py:1828
-#: websites/api_admin/views.py:1849 websites/api_admin/views.py:1872
-#: websites/api_admin/views.py:1885 websites/api_admin/views.py:1902
-#: websites/api_admin/views.py:1915 websites/api_admin/views.py:1935
-#: websites/api_admin/views.py:1951 websites/api_admin/views.py:1988
-#: websites/api_admin/views.py:2029 websites/api_admin/views.py:2049
-#: websites/api_admin/views.py:2077 websites/api_admin/views.py:2110
-#: websites/api_admin/views.py:2140 websites/api_admin/views.py:2159
-#: websites/api_admin/views.py:2179 websites/api_admin/views.py:2202
-#: websites/api_admin/views.py:2216 websites/api_admin/views.py:2234
-#: websites/api_admin/views.py:2247 websites/api_admin/views.py:2267
-#: websites/api_admin/views.py:2283 websites/api_admin/views.py:2303
-#: websites/api_admin/views.py:2324 websites/api_admin/views.py:2338
-#: websites/api_admin/views.py:2358 websites/api_admin/views.py:2379
-#: websites/api_admin/views.py:2411 websites/api_admin/views.py:2453
+#: websites/api_admin/views.py:571 websites/api_admin/views.py:605
+#: websites/api_admin/views.py:618 websites/api_admin/views.py:658
+#: websites/api_admin/views.py:702 websites/api_admin/views.py:730
+#: websites/api_admin/views.py:744 websites/api_admin/views.py:760
+#: websites/api_admin/views.py:817 websites/api_admin/views.py:852
+#: websites/api_admin/views.py:932 websites/api_admin/views.py:1004
+#: websites/api_admin/views.py:1064 websites/api_admin/views.py:1140
+#: websites/api_admin/views.py:1165 websites/api_admin/views.py:1195
+#: websites/api_admin/views.py:1221 websites/api_admin/views.py:1235
+#: websites/api_admin/views.py:1252 websites/api_admin/views.py:1293
+#: websites/api_admin/views.py:1313 websites/api_admin/views.py:1341
+#: websites/api_admin/views.py:1359 websites/api_admin/views.py:1369
+#: websites/api_admin/views.py:1391 websites/api_admin/views.py:1415
+#: websites/api_admin/views.py:1429 websites/api_admin/views.py:1447
+#: websites/api_admin/views.py:1460 websites/api_admin/views.py:1481
+#: websites/api_admin/views.py:1496 websites/api_admin/views.py:1528
+#: websites/api_admin/views.py:1542 websites/api_admin/views.py:1557
+#: websites/api_admin/views.py:1570 websites/api_admin/views.py:1591
+#: websites/api_admin/views.py:1608 websites/api_admin/views.py:1632
+#: websites/api_admin/views.py:1645 websites/api_admin/views.py:1664
+#: websites/api_admin/views.py:1677 websites/api_admin/views.py:1696
+#: websites/api_admin/views.py:1712 websites/api_admin/views.py:1736
+#: websites/api_admin/views.py:1750 websites/api_admin/views.py:1787
+#: websites/api_admin/views.py:1800 websites/api_admin/views.py:1821
+#: websites/api_admin/views.py:1837 websites/api_admin/views.py:1858
+#: websites/api_admin/views.py:1881 websites/api_admin/views.py:1894
+#: websites/api_admin/views.py:1911 websites/api_admin/views.py:1924
+#: websites/api_admin/views.py:1944 websites/api_admin/views.py:1960
+#: websites/api_admin/views.py:1997 websites/api_admin/views.py:2038
+#: websites/api_admin/views.py:2058 websites/api_admin/views.py:2086
+#: websites/api_admin/views.py:2119 websites/api_admin/views.py:2149
+#: websites/api_admin/views.py:2168 websites/api_admin/views.py:2188
+#: websites/api_admin/views.py:2211 websites/api_admin/views.py:2225
+#: websites/api_admin/views.py:2243 websites/api_admin/views.py:2256
+#: websites/api_admin/views.py:2276 websites/api_admin/views.py:2292
+#: websites/api_admin/views.py:2312 websites/api_admin/views.py:2333
+#: websites/api_admin/views.py:2347 websites/api_admin/views.py:2367
+#: websites/api_admin/views.py:2388 websites/api_admin/views.py:2420
+#: websites/api_admin/views.py:2462
 msgid "Internal Server Error"
 msgstr "Lỗi hệ thống."
 
 #: websites/api_admin/views.py:285 websites/api_admin/views.py:303
-#: websites/api_admin/views.py:1086
+#: websites/api_admin/views.py:1095
 msgid "Don't allow user signup by facebook."
 msgstr "Không liên kết với tài khoản đăng kí bằng facebook."
 
@@ -956,7 +953,7 @@ msgstr "Không liên kết với tài khoản đăng kí bằng facebook."
 msgid "Email is required."
 msgstr "Bạn chưa nhập email."
 
-#: websites/api_admin/views.py:291 websites/api_admin/views.py:1126
+#: websites/api_admin/views.py:291 websites/api_admin/views.py:1135
 msgid "Email Not Found."
 msgstr "Email không tồn tại."
 
@@ -964,166 +961,166 @@ msgstr "Email không tồn tại."
 msgid "update user success"
 msgstr "Đã cập nhật thông tin tài khoản Helio App thành công."
 
-#: websites/api_admin/views.py:312 websites/api_admin/views.py:1151
+#: websites/api_admin/views.py:312 websites/api_admin/views.py:1160
 msgid "Not Found User."
 msgstr "User không tồn tại"
 
 #: websites/api_admin/views.py:367 websites/api_admin/views.py:412
-#: websites/api_admin/views.py:486 websites/api_admin/views.py:564
-#: websites/api_admin/views.py:645 websites/api_admin/views.py:685
-#: websites/api_admin/views.py:1204 websites/api_admin/views.py:1237
-#: websites/api_admin/views.py:1300 websites/api_admin/views.py:1357
-#: websites/api_admin/views.py:1445 websites/api_admin/views.py:1482
-#: websites/api_admin/views.py:1555 websites/api_admin/views.py:1593
-#: websites/api_admin/views.py:1662 websites/api_admin/views.py:1697
-#: websites/api_admin/views.py:1785 websites/api_admin/views.py:1822
-#: websites/api_admin/views.py:1909 websites/api_admin/views.py:1945
-#: websites/api_admin/views.py:2071 websites/api_admin/views.py:2154
-#: websites/api_admin/views.py:2241 websites/api_admin/views.py:2277
-#: websites/api_admin/views.py:2354 websites/api_admin/views.py:2441
-#: websites/api_admin/views.py:2445 websites/api_admin/views.py:2505
-#: websites/api_admin/views.py:2516
+#: websites/api_admin/views.py:486 websites/api_admin/views.py:566
+#: websites/api_admin/views.py:614 websites/api_admin/views.py:654
+#: websites/api_admin/views.py:694 websites/api_admin/views.py:1213
+#: websites/api_admin/views.py:1246 websites/api_admin/views.py:1309
+#: websites/api_admin/views.py:1366 websites/api_admin/views.py:1454
+#: websites/api_admin/views.py:1491 websites/api_admin/views.py:1564
+#: websites/api_admin/views.py:1602 websites/api_admin/views.py:1671
+#: websites/api_admin/views.py:1706 websites/api_admin/views.py:1794
+#: websites/api_admin/views.py:1831 websites/api_admin/views.py:1918
+#: websites/api_admin/views.py:1954 websites/api_admin/views.py:2080
+#: websites/api_admin/views.py:2163 websites/api_admin/views.py:2250
+#: websites/api_admin/views.py:2286 websites/api_admin/views.py:2363
+#: websites/api_admin/views.py:2450 websites/api_admin/views.py:2454
 msgid "success"
 msgstr "Thành công"
 
-#: websites/api_admin/views.py:947 websites/api_admin/views.py:984
-msgid "Bacode is required"
-msgstr "Bạn chưa nhập mã thẻ."
-
-#: websites/api_admin/views.py:958
-msgid "Barcode not found."
-msgstr "Mã thẻ này không tồn tại."
-
-#: websites/api_admin/views.py:961 websites/api_admin/views.py:1026
-#: websites/api_admin/views.py:1109
-msgid "Card has no user."
-msgstr "Mã thẻ này chưa có user đăng ký."
-
-#: websites/api_admin/views.py:990 websites/api_admin/views.py:1050
-msgid "Query to DB embed fail"
-msgstr "Lỗi truy vấn dữ liệu."
-
-#: websites/api_admin/views.py:1016 websites/api_admin/views.py:1099
-msgid "Barcode not found"
-msgstr "Mã thẻ này không tồn tại."
-
-#: websites/api_admin/views.py:1020 websites/api_admin/views.py:1103
-msgid "Card is used."
-msgstr "Thẻ này đã được sử dụng."
-
-#: websites/api_admin/views.py:1022 websites/api_admin/views.py:1105
-msgid "Card is locked."
-msgstr "Thẻ này đã bị khóa."
-
-#: websites/api_admin/views.py:1023 websites/api_admin/views.py:1106
-msgid "Card is invalid."
-msgstr "Thẻ không hợp lệ."
-
-#: websites/api_admin/views.py:1043
-msgid "update userembed success"
-msgstr "Đã cập nhật thông tin thẻ Helio Embed thành công."
-
-#: websites/api_admin/views.py:1089
-msgid "User is related."
-msgstr "Liên kết thành công."
-
-#: websites/api_admin/views.py:1114
-msgid "Userembed is related."
-msgstr "Mã thẻ đã được liên kết."
-
-#: websites/api_admin/views.py:1121
-msgid "relate success"
-msgstr "Liên kết thẻ thành công."
-
-#: websites/api_admin/views.py:1123
-msgid "Email and barcode is required"
-msgstr "Trường email và mã thẻ không được bỏ trống."
-
-#: websites/api_admin/views.py:1147
-msgid "cancel relate success"
-msgstr "Xóa thẻ liên kết thành công."
-
-#: websites/api_admin/views.py:1148
-msgid "User is not related"
-msgstr "User chưa được liên kết."
-
-#: websites/api_admin/views.py:1238
-msgid "Not Found Fee"
-msgstr "Phí không tồn tại."
-
-#: websites/api_admin/views.py:1239
-msgid "Not Found list_id"
-msgstr "list_id không tồn tại."
-
-#: websites/api_admin/views.py:1402 websites/api_admin/views.py:1434
-#: websites/api_admin/views.py:1448 websites/api_admin/views.py:1483
-msgid "Not Found Event."
-msgstr "Sự Kiện không tồn tại."
-
-#: websites/api_admin/views.py:1484 websites/api_admin/views.py:1595
-#: websites/api_admin/views.py:1699 websites/api_admin/views.py:1824
-#: websites/api_admin/views.py:1947 websites/api_admin/views.py:2279
-#: websites/api_admin/views.py:2447
-msgid "Not Found list_id."
-msgstr "list_id không tồn tại."
-
-#: websites/api_admin/views.py:1516 websites/api_admin/views.py:1558
-#: websites/api_admin/views.py:1594
-msgid "Not Found Promotion Label."
-msgstr "Nhãn Khuyến Mãi không tồn tại."
-
-#: websites/api_admin/views.py:1620 websites/api_admin/views.py:1651
-#: websites/api_admin/views.py:1665 websites/api_admin/views.py:1698
-msgid "Not Found Hot."
-msgstr "Hot không tồn tại."
-
-#: websites/api_admin/views.py:1723 websites/api_admin/views.py:1788
-msgid "Not Found Post."
-msgstr "Bài viết không tồn tại."
-
-#: websites/api_admin/views.py:1761
-msgid "Not Found Post Image."
-msgstr "Hình ảnh bài viết không tồn tại."
-
-#: websites/api_admin/views.py:1823
-msgid "Not Found Posts."
-msgstr "Bài viết không tồn tại."
-
-#: websites/api_admin/views.py:1869 websites/api_admin/views.py:1899
-#: websites/api_admin/views.py:1912
-msgid "Not Found FAQ."
-msgstr "FAQ không tồn tại."
-
-#: websites/api_admin/views.py:1946
-msgid "Not Found FAQs."
-msgstr "FAQs không tồn tại"
-
-#: websites/api_admin/views.py:2074 websites/api_admin/views.py:2156
+#: websites/api_admin/views.py:567 websites/api_admin/views.py:615
+#: websites/api_admin/views.py:2083 websites/api_admin/views.py:2165
 msgid "Just System Admin accept delete"
 msgstr "Chỉ có System Admin mới được quyền xóa."
 
-#: websites/api_admin/views.py:2126
+#: websites/api_admin/views.py:956 websites/api_admin/views.py:993
+msgid "Bacode is required"
+msgstr "Bạn chưa nhập mã thẻ."
+
+#: websites/api_admin/views.py:967
+msgid "Barcode not found."
+msgstr "Mã thẻ này không tồn tại."
+
+#: websites/api_admin/views.py:970 websites/api_admin/views.py:1035
+#: websites/api_admin/views.py:1118
+msgid "Card has no user."
+msgstr "Mã thẻ này chưa có user đăng ký."
+
+#: websites/api_admin/views.py:999 websites/api_admin/views.py:1059
+msgid "Query to DB embed fail"
+msgstr "Lỗi truy vấn dữ liệu."
+
+#: websites/api_admin/views.py:1025 websites/api_admin/views.py:1108
+msgid "Barcode not found"
+msgstr "Mã thẻ này không tồn tại."
+
+#: websites/api_admin/views.py:1029 websites/api_admin/views.py:1112
+msgid "Card is used."
+msgstr "Thẻ này đã được sử dụng."
+
+#: websites/api_admin/views.py:1031 websites/api_admin/views.py:1114
+msgid "Card is locked."
+msgstr "Thẻ này đã bị khóa."
+
+#: websites/api_admin/views.py:1032 websites/api_admin/views.py:1115
+msgid "Card is invalid."
+msgstr "Thẻ không hợp lệ."
+
+#: websites/api_admin/views.py:1052
+msgid "update userembed success"
+msgstr "Đã cập nhật thông tin thẻ Helio Embed thành công."
+
+#: websites/api_admin/views.py:1098
+msgid "User is related."
+msgstr "Liên kết thành công."
+
+#: websites/api_admin/views.py:1123
+msgid "Userembed is related."
+msgstr "Mã thẻ đã được liên kết."
+
+#: websites/api_admin/views.py:1130
+msgid "relate success"
+msgstr "Liên kết thẻ thành công."
+
+#: websites/api_admin/views.py:1132
+msgid "Email and barcode is required"
+msgstr "Trường email và mã thẻ không được bỏ trống."
+
+#: websites/api_admin/views.py:1156
+msgid "cancel relate success"
+msgstr "Xóa thẻ liên kết thành công."
+
+#: websites/api_admin/views.py:1157
+msgid "User is not related"
+msgstr "User chưa được liên kết."
+
+#: websites/api_admin/views.py:1247
+msgid "Not Found Fee"
+msgstr "Phí không tồn tại."
+
+#: websites/api_admin/views.py:1248
+msgid "Not Found list_id"
+msgstr "list_id không tồn tại."
+
+#: websites/api_admin/views.py:1411 websites/api_admin/views.py:1443
+#: websites/api_admin/views.py:1457 websites/api_admin/views.py:1492
+msgid "Not Found Event."
+msgstr "Sự Kiện không tồn tại."
+
+#: websites/api_admin/views.py:1493 websites/api_admin/views.py:1604
+#: websites/api_admin/views.py:1708 websites/api_admin/views.py:1833
+#: websites/api_admin/views.py:1956 websites/api_admin/views.py:2288
+#: websites/api_admin/views.py:2456
+msgid "Not Found list_id."
+msgstr "list_id không tồn tại."
+
+#: websites/api_admin/views.py:1525 websites/api_admin/views.py:1567
+#: websites/api_admin/views.py:1603
+msgid "Not Found Promotion Label."
+msgstr "Nhãn Khuyến Mãi không tồn tại."
+
+#: websites/api_admin/views.py:1629 websites/api_admin/views.py:1660
+#: websites/api_admin/views.py:1674 websites/api_admin/views.py:1707
+msgid "Not Found Hot."
+msgstr "Hot không tồn tại."
+
+#: websites/api_admin/views.py:1732 websites/api_admin/views.py:1797
+msgid "Not Found Post."
+msgstr "Bài viết không tồn tại."
+
+#: websites/api_admin/views.py:1770
+msgid "Not Found Post Image."
+msgstr "Hình ảnh bài viết không tồn tại."
+
+#: websites/api_admin/views.py:1832
+msgid "Not Found Posts."
+msgstr "Bài viết không tồn tại."
+
+#: websites/api_admin/views.py:1878 websites/api_admin/views.py:1908
+#: websites/api_admin/views.py:1921
+msgid "Not Found FAQ."
+msgstr "FAQ không tồn tại."
+
+#: websites/api_admin/views.py:1955
+msgid "Not Found FAQs."
+msgstr "FAQs không tồn tại"
+
+#: websites/api_admin/views.py:2135
 msgid "This function is only for System Admin"
 msgstr "Chức năng này chỉ dành cho System Admin."
 
-#: websites/api_admin/views.py:2131
+#: websites/api_admin/views.py:2140
 msgid "Just System Admin Change password"
 msgstr "Chỉ có System Admin mới được quyền thay đổi được mật khẩu."
 
-#: websites/api_admin/views.py:2199 websites/api_admin/views.py:2231
-#: websites/api_admin/views.py:2244
+#: websites/api_admin/views.py:2208 websites/api_admin/views.py:2240
+#: websites/api_admin/views.py:2253
 msgid "Not Found Game."
 msgstr "Trò chơi không tồn tại."
 
-#: websites/api_admin/views.py:2278
+#: websites/api_admin/views.py:2287
 msgid "Not Found Games."
 msgstr "Trò chơi không tồn tại"
 
-#: websites/api_admin/views.py:2408 websites/api_admin/views.py:2450
+#: websites/api_admin/views.py:2417 websites/api_admin/views.py:2459
 msgid "Not Found Role."
 msgstr "Role không tồn tại"
 
-#: websites/api_admin/views.py:2442
+#: websites/api_admin/views.py:2451
 msgid "Not Found users."
 msgstr "User không tồn tại"
 
@@ -1496,6 +1493,9 @@ msgstr ""
 #: websites/main/custom_jwt.py:43 websites/main/custom_jwt.py:46
 msgid "Invalid token."
 msgstr "Mã chứng thực không hợp lệ. Vui lòng kiểm tra lại."
+
+#~ msgid "Source barcode not link to any user"
+#~ msgstr "Thẻ này chưa được liên kết với bất kỳ tài khoản nào"
 
 #~ msgid "Fee not exist."
 #~ msgstr "Không tìm thấy phí giao dịch"
