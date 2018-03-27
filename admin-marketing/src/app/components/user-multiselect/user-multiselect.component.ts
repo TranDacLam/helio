@@ -73,7 +73,7 @@ export class UserMultiselectComponent implements OnInit {
                 sInfoFiltered: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
                 lengthMenu: "Hiển thị _MENU_ dòng",
-                sZeroRecords:  "Không có user nào phù hợp để hiển thị",
+                sZeroRecords:  "Không có user nào để hiển thị",
                 info: "Hiển thị _START_ đến _END_ của _TOTAL_",
                 infoEmpty: "Hiển thị 0 đến 0 của 0",
                 paginate: {
@@ -117,7 +117,7 @@ export class UserMultiselectComponent implements OnInit {
                 sInfoFiltered: "",
                 searchPlaceholder: "Nhập thông tin tìm kiếm",
                 lengthMenu: "Hiển thị _MENU_ dòng",
-                sZeroRecords:  "Không có user nào phù hợp để hiển thị",
+                sZeroRecords:  "Không có user nào để hiển thị",
                 info: "Hiển thị _START_ đến _END_ của _TOTAL_",
                 infoEmpty: "Hiển thị 0 đến 0 của 0",
                 paginate: {

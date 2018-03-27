@@ -12,9 +12,9 @@
 <div class="row text-center">
     <p class="title">Tổng Hợp Triển Khai Khuyến Mãi</p>
 </div>
-<div class="row mt-50 mb-15 custom-title">
+<div class="row mt-50 mb-15 custom-title" *ngIf="promotion">
     <div class="col-xs-6 col-sm-6">
-        <a class="btn custom-button" [routerLink]="['/users-promotions/', this.promotion.id]">
+        <a class="btn custom-button" [routerLink]="['/users-promotions/', promotion.id]">
             <i class="fa fas fa-arrow-left icon-button"></i>
             TRỞ VỀ CHI TIẾT KHUYẾN MÃI
         </a>
