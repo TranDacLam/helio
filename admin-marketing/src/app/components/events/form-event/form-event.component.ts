@@ -37,6 +37,8 @@ export class FormEventComponent implements OnInit {
     api_domain: string = '';
     lang = 'vi';
 
+    ckEditorConfig:any;
+
     constructor(
         private eventService: EventService,
         private fb: FormBuilder,
@@ -56,6 +58,12 @@ export class FormEventComponent implements OnInit {
                 this.lang = params.lang;
             }
         });
+
+        this.ckEditorConfig = {
+            language: 'vi',
+            filebrowserUploadUrl: env.api_domain_root+'/admin/ckeditor/upload/'
+
+        };
     }
 
     /*
