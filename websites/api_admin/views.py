@@ -960,7 +960,12 @@ class UserEmbedDetail(APIView):
                 first_name = item[0] if item[0] else ''  # Firstname
                 surname = item[1] if item[1] else ''  # Surname
                 result["barcode"] = barcode
-                result["full_name"] = first_name + ' '+  surname
+
+                if first_name and not surname: result["full_name"] = first_name
+                if surname and not first_name: result["full_name"] = surname
+                if surname and first_name:
+                    result["full_name"] = first_name + ' ' + surname
+
                 result["birth_date"] = item[2].strftime(
                     '%d/%m/%Y') if item[2] else None  # DOB
                 result["personal_id"] = item[
