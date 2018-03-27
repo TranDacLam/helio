@@ -1035,7 +1035,7 @@ msgstr "Mã thẻ đã được liên kết."
 
 #: websites/api_admin/views.py:1121
 msgid "relate success"
-msgstr "Thành công"
+msgstr "Liên kết thẻ thành công."
 
 #: websites/api_admin/views.py:1123
 msgid "Email and barcode is required"
@@ -1043,7 +1043,7 @@ msgstr "Trường email và mã thẻ không được bỏ trống."
 
 #: websites/api_admin/views.py:1147
 msgid "cancel relate success"
-msgstr ""
+msgstr "Xóa thẻ liên kết thành công."
 
 #: websites/api_admin/views.py:1148
 msgid "User is not related"
