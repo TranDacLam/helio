@@ -93,7 +93,7 @@ export class PromotionFormComponent implements OnInit {
         this.getPromotionLabels();
 
         this.ckEditorConfig = {
-            // filebrowserUploadUrl: 'http://127.0.0.1:8000/vi/api/upload_file/'
+            // filebrowserUploadUrl: env.api_domain_root+'ckeditor/upload/'
 
         };
         this.creatPromotionForm();
