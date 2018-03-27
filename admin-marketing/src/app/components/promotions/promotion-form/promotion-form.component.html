@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row promotion-image">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Hình Ảnh</label>
         </div>
@@ -27,10 +27,16 @@
                 <input type="checkbox" formControlName="is_clear_image"/> Xóa
             </p>
             <input type="file" class="form-control-file" id="image" accept="image/*" (change)="onFileChange($event)" />
+            <ul class="error_valid" 
+                *ngIf="promotionForm.get('image') && promotionForm.get('image')?.errors">
+                <li style="color: red" *ngIf="promotionForm.get('image').errors?.fomatFile">
+                    Vui lòng tải tệp lên với các định dạng này (jpg, jpeg, png, ico, bmp)
+                </li>
+            </ul>
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row promotion-image">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Thumbnail Cho App</label>
         </div>
@@ -42,6 +48,12 @@
                 <input type="checkbox" formControlName="is_clear_image_thumbnail"/> Xóa
             </p>
             <input type="file" class="form-control-file" accept="image/*" id="image_thumbnail" (change)="onFileChange($event)"/>
+            <ul class="error_valid" 
+                *ngIf="promotionForm.get('image_thumbnail') && promotionForm.get('image_thumbnail')?.errors">
+                <li style="color: red" *ngIf="promotionForm.get('image_thumbnail').errors?.fomatFile">
+                    Vui lòng tải tệp lên với các định dạng này (jpg, jpeg, png, ico, bmp)
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -69,7 +81,7 @@
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Danh Mục Khuyến Mãi</label>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-4" *ngIf="categorys">
             <select class="form-control" formControlName="promotion_category">
                 <option value="">--SELECT--</option>
                 <option *ngFor="let category of categorys" value="{{ category.id }}">{{ category.name }}</option>
@@ -82,8 +94,8 @@
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Nhãn Khuyến Mãi</label>
         </div>
-        <div class="col-sm-4">
-            <select class="form-control" formControlName="promotion_label" *ngIf="promotionLabels">
+        <div class="col-sm-4" *ngIf="promotionLabels">
+            <select class="form-control" formControlName="promotion_label">
                 <option value="">--SELECT--</option>
                 <option *ngFor="let label of promotionLabels" value="{{ label.id }}">{{ label.name }}</option>
             </select>
@@ -95,8 +107,8 @@
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Loại Khuyến Mãi</label>
         </div>
-        <div class="col-sm-4">
-            <select class="form-control" formControlName="promotion_type" *ngIf="promotionTypes">
+        <div class="col-sm-4" *ngIf="promotionTypes">
+            <select class="form-control" formControlName="promotion_type">
                 <option value="">--SELECT--</option>
                 <option *ngFor="let type of promotionTypes" [value] ="type.id">{{ type.name }}</option>
             </select>

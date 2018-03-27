@@ -204,3 +204,17 @@ class UserNotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User_Notification
         fields = ('user', 'notification', 'is_read',)
+
+
+class FeeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Fee
+        fields = ('fee', 'fee_type', 'position')
+
+
+class HotAdvsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Hot_Advs
+        fields = ('id', 'name', 'image', 'is_register', 'is_view_detail', 'content', 'sub_url_register', 'sub_url_view_detail')

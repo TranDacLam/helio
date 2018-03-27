@@ -28,6 +28,12 @@
             <p *ngIf="msg_clear_image" class="msg_error">{{msg_clear_image}}</p>
             <input type="file" accept="image/*"
             (change)="onFileChange($event)"/>
+            <ul class="error_valid" 
+                *ngIf="formPost.get('image') && formPost.get('image')?.errors">
+                <li style="color: red" *ngIf="formPost.get('image').errors?.fomatFile">
+                    Vui lòng tải tệp lên với các định dạng này (jpg, jpeg, png, ico, bmp)
+                </li>
+            </ul>
         </div>
     </div>
 

@@ -80,7 +80,7 @@
                             <img src="{{api_domain}}{{promotion.QR_code}}" *ngIf="promotion.QR_code; else create_qrcode_btn" height="50px" width="50px" />
                             <ng-template #create_qrcode_btn>
                                 <button  class="btn btn-primary text-center" (click)="generator_QR_code($event, promotion.id)"
-                                    [attr.disabled]="isDisable(promotion)"
+                                    [attr.disabled]="isDisableQRCode(promotion)"
                                     data-loading-text="<i class='fa fa-spinner fa-spin'></i>Tạo QR Code">Tạo QR Code</button>
                             </ng-template>
                             
