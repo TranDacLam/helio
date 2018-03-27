@@ -882,17 +882,15 @@ class SummaryAPI(APIView):
             if search_field == 'status' or get_all:
                 count_item['status'] = {
                     'answered': 0, 'moved': 0, 'no_process': 0}
-                count_status = feedback.values('status').order_by(
-                    'status').annotate(Count('status'))
+                count_status = feedback.values('status').annotate(Count('status'))
                 count_item['status_sum'] = 0
                 for item in count_status:
                     if item['status'] == '':
-                        break
+                        continue
                     count_item['status'][
                         item['status']] = item['status__count']
                     count_item['status_sum'] = count_item[
                         'status_sum'] + item['status__count']
-
             # get rate json
             if search_field == 'rate' or get_all:
                 count_item['rate'] = {
@@ -901,7 +899,7 @@ class SummaryAPI(APIView):
                 count_item['rate_sum'] = 0
                 for item in count_rate:
                     if item['rate'] == '':
-                        break
+                        continue
                     if item['rate'] == 'Bình thường':
                         count_item['rate']['nomal'] = item['rate__count']
                     if item['rate'] == 'Không có gì':
@@ -946,7 +944,7 @@ class UserEmbedDetail(APIView):
 
             if barcode:
                 if not barcode.isdigit():
-                    return Response({"code": 400, "message": _("Barcode is numberic"), "fields": ""}, status=400)
+                    return Response({"code": 400, "message":  _('Bacode is required'), "fields": ""}, status=400)
                 cursor = connections['sql_db'].cursor()
                 query_str = """SELECT Cust.Firstname, Cust.Surname, Cust.DOB, Cust.PostCode, Cust.Address1, 
                                     Cust.EMail, Cust.Mobile_Phone, Cust.Customer_Id, C.Card_State
@@ -958,13 +956,6 @@ class UserEmbedDetail(APIView):
                 # check item is exist
                 if not item:
                     return Response({"code": 400, "message": _("Barcode not found."), "fields": ""}, status=400)
-                # card_state is 0 or 1 or 2
-                if item[8] != 0:
-                    if item[8] == 2:
-                        return Response({"code": 400, "message": _("Card is used."), "fields": ""}, status=400)
-                    if item[8] == 1:
-                        return Response({"code": 400, "message": _("Card is locked."), "fields": ""}, status=400)
-                    return Response({"code": 400, "message": _("Card is invalid."), "fields": ""}, status=400)
                 # check Customer_Id is exist
                 if not item[7]:
                     return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
@@ -973,7 +964,7 @@ class UserEmbedDetail(APIView):
                 first_name = item[0] if item[0] else ''  # Firstname
                 surname = item[1] if item[1] else ''  # Surname
                 result["barcode"] = barcode
-                result["full_name"] = first_name + surname
+                result["full_name"] = first_name + ' '+  surname
                 result["birth_date"] = item[2].strftime(
                     '%d/%m/%Y') if item[2] else None  # DOB
                 result["personal_id"] = item[
@@ -982,7 +973,12 @@ class UserEmbedDetail(APIView):
                 result["email"] = item[5] if item[5] else None  # EMail
                 result["phone"] = item[6] if item[6] else None  # Phone
                 result["customer_id"] = item[7] if item[7] else None #customer_id
-                result["cards_state"] = item[8] if item[8] == 0 else None #cards_state
+                result["cards_state"] = item[8] if item[8] is not None else None#cards_state
+                # card_state is 0 or 1 or 2
+                # status 200 to front-end show data
+                if item[8] != 0:
+                    return Response({"code": 400, "message": result, "fields": ""}, status=200)
+
                 return Response({"code": 200, "message": result, "fields": ""}, status=200)
 
             return Response({"code": 400, "message": _('Bacode is required'), "fields": ""}, status=400)
@@ -2450,3 +2446,5 @@ class SetRoleAPI(APIView):
             print "UserListAPI", e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
+
+

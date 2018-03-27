@@ -382,7 +382,7 @@ class FAQSerializer(serializers.ModelSerializer):
     def validate_category( self, value):
         if value.id in self.limit_category_Faq:
             return value
-        raise serializers.ValidationError("This category is unvalid")
+        raise serializers.ValidationError(_("This category is unvalid"))
 
 class RolesSerializer(serializers.ModelSerializer):
 
@@ -554,3 +554,11 @@ class RoleSerializer(serializers.ModelSerializer):
         model = Roles
         fields = ('id', 'name')
 
+class OpenTimeSerializer(serializers.ModelSerializer):
+    open_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required = False)
+    start_time = serializers.DateField(format="%H:%m", input_formats=['%H:%m'], required = False)
+    end_time = serializers.DateField(format="%H:%m", input_formats=['%H:%m'], required = False)
+
+    class Meta:
+        model = OpenTime
+        fields = ('id', 'open_date', 'start_time', 'end_time')
