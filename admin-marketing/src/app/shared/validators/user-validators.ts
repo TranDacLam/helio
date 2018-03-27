@@ -80,6 +80,17 @@ export class UserValidators {
         }
     }
 
+    static validateSelectRole(c: FormControl): ValidationErrors {
+    	let role = c.value;
+    	if(role === 0 || role === null) {
+    		return {
+				'requiredSelectedRole': {
+					'message': 'Trường này không được bỏ trống'
+				}
+			}
+    	}
+    	return null;
+    }
 	
 }
 

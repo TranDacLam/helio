@@ -2049,6 +2049,7 @@ class UserListView(APIView):
             serializer = admin_serializers.UserCreateSerializer(
                 data=request.data)
             if serializer.is_valid():
+                print "serializer", serializer
                 serializer.save()
                 return Response(serializer.data)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)

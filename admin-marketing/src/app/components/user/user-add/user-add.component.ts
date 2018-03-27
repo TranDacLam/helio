@@ -29,7 +29,7 @@ export class UserAddComponent implements OnInit {
 
 	users: User[] = [];
     roles: Role[];
-
+    
     errorMessage: string ='';
 
     isSelected = true; // Set value default selcted 
@@ -66,7 +66,7 @@ export class UserAddComponent implements OnInit {
             password: [this.user_form.password, [Validators.required, UserValidators.passwordValidators, Validators.maxLength(32)]],
             is_active: [this.user_form.is_active],
             is_staff: [this.user_form.is_staff],
-            role: [this.user_form.role, [Validators.required]],
+            role: [this.user_form.role, [UserValidators.validateSelectRole]],
             birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date,"DD/MM/YYYY").toDate() : '', [UserValidators.birtdateValidators, UserValidators.formatBirtday]],
         });
  	}

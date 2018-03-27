@@ -432,7 +432,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = super(UserCreateSerializer, self).create(validated_data)
         user.set_password(validated_data['password'])
-        if user.role_id == 6:
+        
+        if user.role_id == None:
             user.is_staff = False
         else:
             user.is_staff = True
