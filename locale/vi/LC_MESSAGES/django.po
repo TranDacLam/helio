@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-27 10:44+0700\n"
+"POT-Creation-Date: 2018-03-27 12:00+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -878,16 +878,13 @@ msgstr "Giờ bắt đầu phải trước giờ kết thúc."
 
 # msgid "This field is required."
 # msgstr "Trường này là bắt buộc."
-
 #: websites/api_admin/serializers.py:381
 msgid "This question is exist."
 msgstr "Câu hỏi đã tồn tại."
 
 #: websites/api_admin/serializers.py:391
-#, fuzzy
-#| msgid "Card is invalid."
 msgid "This category is unvalid"
-msgstr "Thẻ không hợp lệ."
+msgstr "Danh mục này không hợp lệ."
 
 #: websites/api_admin/serializers.py:412 websites/api_admin/serializers.py:448
 msgid "This phone is already taken"
@@ -984,7 +981,8 @@ msgstr "User không tồn tại"
 #: websites/api_admin/views.py:2071 websites/api_admin/views.py:2154
 #: websites/api_admin/views.py:2241 websites/api_admin/views.py:2277
 #: websites/api_admin/views.py:2354 websites/api_admin/views.py:2441
-#: websites/api_admin/views.py:2445
+#: websites/api_admin/views.py:2445 websites/api_admin/views.py:2505
+#: websites/api_admin/views.py:2516
 msgid "success"
 msgstr "Thành công"
 
@@ -1348,6 +1346,7 @@ msgid "Email"
 msgstr "Email"
 
 #: websites/core/models.py:264 websites/core/models.py:285
+#: websites/core/models.py:373
 msgid "Subject"
 msgstr "Chủ đề"
 
@@ -1422,11 +1421,11 @@ msgstr "Mã QR"
 
 #: websites/core/models.py:393 websites/core/models.py:394
 msgid "Notification"
-msgstr "Gửi thông báo"
+msgstr "Thông báo"
 
 #: websites/core/models.py:405 websites/core/models.py:406
 msgid "Category Notification"
-msgstr "Gửi thông báo"
+msgstr "Danh mục thông báo"
 
 #: websites/core/models.py:413
 msgid "Is read"
@@ -1497,7 +1496,6 @@ msgstr ""
 #: websites/main/custom_jwt.py:43 websites/main/custom_jwt.py:46
 msgid "Invalid token."
 msgstr "Mã chứng thực không hợp lệ. Vui lòng kiểm tra lại."
-
 
 #~ msgid "Fee not exist."
 #~ msgstr "Không tìm thấy phí giao dịch"
