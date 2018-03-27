@@ -503,6 +503,8 @@ class Roles(DateTimeModel):
     def __str__(self):
         return '%s' % (self.name)   
 
+
+
 @python_2_unicode_compatible
 class Roles_Permission(DateTimeModel): 
     PERMISSION =(

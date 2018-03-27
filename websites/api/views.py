@@ -671,13 +671,14 @@ def card_information(request, card_id):
             # Translate error message when code is 400
             if response.status_code == 400:
                 result["message"] = _(result["message"])
+                return Response(result, status=response.status_code)
             if response.status_code != 200: 
                 print "DMZ reponse status code not 200", response.text
                 raise Exception('%s (HTTP status: %s)' % (response.text, response.status_code))
 
             # Get data from dmz reponse
             result = response.json()
-            return Response(result, status=response.status_code)
+            return Response(result, status=200)
 
         if request.method == 'DELETE':
             if request.user.is_staff or request.user.barcode == card_id:
@@ -690,13 +691,14 @@ def card_information(request, card_id):
                 # Translate error message when code is 400
                 if response.status_code == 400:
                     result["message"] = _(result["message"])
+                    return Response(result, status=response.status_code)
                 if response.status_code != 200: 
                     print "DMZ reponse status code not 200", response.text
                     raise Exception('%s (HTTP status: %s)' % (response.text, response.status_code))
 
                 # Get data from dmz reponse
                 result = response.json()
-                return Response(result, status=response.status_code)
+                return Response(result, status=200)
             else:
                 error = {"code": 400, "message": _(
                     "You don't have permission to access."), "fields": ""}
@@ -740,13 +742,14 @@ def play_transactions(request):
             # Translate error message when code is 400
             if response.status_code == 400:
                 result["message"] = _(result["message"])
+                return Response(result, status=response.status_code)
             if response.status_code != 200: 
                 print "DMZ reponse status code not 200", response.text
                 raise Exception('%s (HTTP status: %s)' % (response.text, response.status_code))
 
             # Get data from dmz reponse
             result = response.json()
-            return Response(result, status=response.status_code)
+            return Response(result, status=200)
         else:
             error = {"code": 400, "message": _(
                 "You don't have permission to access."), "fields": ""}
@@ -789,13 +792,14 @@ def card_transactions(request):
             # Translate error message when code is 400
             if response.status_code == 400:
                 result["message"] = _(result["message"])
+                return Response(result, status=response.status_code)
             if response.status_code != 200: 
                 print "DMZ reponse status code not 200", response.text
                 raise Exception('%s (HTTP status: %s)' % (response.text, response.status_code))
 
             # Get data from dmz reponse
             result = response.json()
-            return Response(result, status=response.status_code)
+            return Response(result, status=200)
         else:
             error = {"code": 400, "message": _(
                 "You don't have permission to access."), "fields": ""}
@@ -840,13 +844,14 @@ def reissue_history(request):
             # Translate error message when code is 400
             if response.status_code == 400:
                 result["message"] = _(result["message"])
+                return Response(result, status=response.status_code)
             if response.status_code != 200: 
                 print "DMZ reponse status code not 200", response.text
                 raise Exception('%s (HTTP status: %s)' % (response.text, response.status_code))
 
             # Get data from dmz reponse
             result = response.json()
-            return Response(result, status=response.status_code)
+            return Response(result, status=200)
         else:
             error = {"code": 400, "message": _(
                 "You don't have permission to access."), "fields": ""}
@@ -1389,12 +1394,13 @@ def ticket_transfer(request):
             # Translate error message when code is 400
             if response.status_code == 400:
                 result["message"] = _(result["message"])
+                return Response(result, status=response.status_code)
             if response.status_code != 200: 
                 print "DMZ reponse status code not 200", response.text
                 raise Exception('%s (HTTP status: %s)' % (response.text, response.status_code))
             # Get data from dmz reponse
             result = response.json()
-            return Response(result, status=response.status_code)
+            return Response(result, status=200)
         else:
             error = {"code": 400, "message": _(
                 "You don't have permission to access."), "fields": ""}
@@ -1472,14 +1478,15 @@ def ticket_transfer_transactions(request):
             # Translate error message when code is 400
             if response.status_code == 400:
                 result["message"] = _(result["message"])
+                return Response(result, status=response.status_code)
             if response.status_code != 200: 
                 print "DMZ reponse status code not 200", response.text
                 raise Exception('%s (HTTP status: %s)' % (response.text, response.status_code))
 
             # Get data from dmz reponse
             result = response.json()
-        
-            return Response(result, status=response.status_code)
+    
+            return Response(result, status=200)
         else:
             error = {"code": 400, "message": _(
                 "You don't have permission to access."), "fields": ""}
