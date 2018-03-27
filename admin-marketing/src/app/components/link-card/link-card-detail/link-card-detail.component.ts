@@ -97,7 +97,7 @@ export class LinkCardDetailComponent implements OnInit {
         const id = this.user_app.id;
         this.linkCardService.delLinkCard(id).subscribe(
             (data) => {
-                this.toastr.error(`Xóa Thẻ Liên Kết thông báo thành công`);
+                this.toastr.success(`Xóa thẻ liên kết thành công.`);
                 this.router.navigate(['/link-card-list']); // redirect list link card
             },
             (error) => {

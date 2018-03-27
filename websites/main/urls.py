@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 from core import forms
 from django.contrib.auth import views
 from django.contrib.admin.sites import AdminSite
-
+from ckeditor_uploader import views as ckeditor_views
 # Register Admin Login Form (Custom)
 AdminSite.login_form = forms.SecureAdminLoginForm
 
@@ -37,7 +37,7 @@ urlpatterns = [
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-
+    url(r'^admin/ckeditor/upload/', ckeditor_views.upload, name='ckeditor-upload'),
 ]
 
 if settings.DEBUG:
