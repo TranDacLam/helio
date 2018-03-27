@@ -809,6 +809,8 @@ msgstr ""
 msgid "Error. DeivceID of user is empty. Please check again."
 msgstr ""
 
+<<<<<<< HEAD
+=======
 #: websites/api/views.py:1274
 msgid ""
 "Please check required fields : [source_card_barcode, received_card_barcode, "
@@ -875,6 +877,7 @@ msgid "Cannot change password of customer user"
 msgstr ""
 
 #: websites/api_admin/serializers.py:529
+
 msgid "This Hot Ads is already taken"
 msgstr ""
 
@@ -916,14 +919,14 @@ msgstr ""
 #: websites/api_admin/views.py:1955 websites/api_admin/views.py:1992
 #: websites/api_admin/views.py:2033 websites/api_admin/views.py:2053
 #: websites/api_admin/views.py:2081 websites/api_admin/views.py:2114
-#: websites/api_admin/views.py:2143 websites/api_admin/views.py:2162
-#: websites/api_admin/views.py:2182 websites/api_admin/views.py:2205
-#: websites/api_admin/views.py:2219 websites/api_admin/views.py:2237
-#: websites/api_admin/views.py:2250 websites/api_admin/views.py:2270
-#: websites/api_admin/views.py:2286 websites/api_admin/views.py:2306
-#: websites/api_admin/views.py:2327 websites/api_admin/views.py:2341
-#: websites/api_admin/views.py:2361 websites/api_admin/views.py:2382
-#: websites/api_admin/views.py:2414 websites/api_admin/views.py:2456
+#: websites/api_admin/views.py:2144 websites/api_admin/views.py:2163
+#: websites/api_admin/views.py:2183 websites/api_admin/views.py:2206
+#: websites/api_admin/views.py:2220 websites/api_admin/views.py:2238
+#: websites/api_admin/views.py:2251 websites/api_admin/views.py:2271
+#: websites/api_admin/views.py:2287 websites/api_admin/views.py:2307
+#: websites/api_admin/views.py:2328 websites/api_admin/views.py:2342
+#: websites/api_admin/views.py:2362 websites/api_admin/views.py:2383
+#: websites/api_admin/views.py:2415 websites/api_admin/views.py:2457
 msgid "Internal Server Error"
 msgstr ""
 
@@ -960,10 +963,10 @@ msgstr ""
 #: websites/api_admin/views.py:1666 websites/api_admin/views.py:1701
 #: websites/api_admin/views.py:1789 websites/api_admin/views.py:1826
 #: websites/api_admin/views.py:1913 websites/api_admin/views.py:1949
-#: websites/api_admin/views.py:2075 websites/api_admin/views.py:2157
-#: websites/api_admin/views.py:2244 websites/api_admin/views.py:2280
-#: websites/api_admin/views.py:2357 websites/api_admin/views.py:2444
-#: websites/api_admin/views.py:2448
+#: websites/api_admin/views.py:2075 websites/api_admin/views.py:2158
+#: websites/api_admin/views.py:2245 websites/api_admin/views.py:2281
+#: websites/api_admin/views.py:2358 websites/api_admin/views.py:2445
+#: websites/api_admin/views.py:2449
 msgid "success"
 msgstr ""
 
@@ -1056,8 +1059,8 @@ msgstr ""
 
 #: websites/api_admin/views.py:1488 websites/api_admin/views.py:1599
 #: websites/api_admin/views.py:1703 websites/api_admin/views.py:1828
-#: websites/api_admin/views.py:1951 websites/api_admin/views.py:2282
-#: websites/api_admin/views.py:2450
+#: websites/api_admin/views.py:1951 websites/api_admin/views.py:2283
+#: websites/api_admin/views.py:2451
 msgid "Not Found list_id."
 msgstr ""
 
@@ -1092,28 +1095,32 @@ msgstr ""
 msgid "Not Found FAQs."
 msgstr ""
 
-#: websites/api_admin/views.py:2078 websites/api_admin/views.py:2159
+#: websites/api_admin/views.py:2078 websites/api_admin/views.py:2160
 msgid "Just System Admin accept delete"
 msgstr ""
 
-#: websites/api_admin/views.py:2134
+#: websites/api_admin/views.py:2130
+msgid "This function is only for System Admin"
+msgstr ""
+
+#: websites/api_admin/views.py:2135
 msgid "Just System Admin Change password"
 msgstr ""
 
-#: websites/api_admin/views.py:2202 websites/api_admin/views.py:2234
-#: websites/api_admin/views.py:2247
+#: websites/api_admin/views.py:2203 websites/api_admin/views.py:2235
+#: websites/api_admin/views.py:2248
 msgid "Not Found Game."
 msgstr ""
 
-#: websites/api_admin/views.py:2281
+#: websites/api_admin/views.py:2282
 msgid "Not Found Games."
 msgstr ""
 
-#: websites/api_admin/views.py:2411 websites/api_admin/views.py:2453
+#: websites/api_admin/views.py:2412 websites/api_admin/views.py:2454
 msgid "Not Found Role."
 msgstr ""
 
-#: websites/api_admin/views.py:2445
+#: websites/api_admin/views.py:2446
 msgid "Not Found users."
 msgstr ""
 

@@ -2123,10 +2123,11 @@ class UserDetailView(APIView):
 
         user = self.get_object(pk)
         try:
-            print('user', request.data)
             serializer = admin_serializers.UserRoleSerializer(user, data=request.data)
 
             if serializer.is_valid():
+                if (self.request.user.is_staff == True and self.request.user.role_id != 1 and user.is_staff == True):
+                    return Response({"code": 405, "message": _("This function is only for System Admin"), "fields": ""}, status=405) 
                 if(serializer.validated_data['new_password']):
                     if(self.request.user.role_id == 1):
                         user.set_password(self.request.data.get("new_password"))
