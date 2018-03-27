@@ -11,6 +11,7 @@ import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { ImageValidators } from './../../../shared/validators/image-validators';
 import { ToastrService } from 'ngx-toastr';
 import { env } from '../../../../environments/environment';
+import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -37,6 +38,8 @@ export class FormPostComponent implements OnInit {
     api_domain: string = '';
     lang = 'vi';
 
+    ckEditorConfig:any;
+
     constructor(
         private postService: PostService,
         private postTypeService: PostTypeService,
@@ -58,6 +61,8 @@ export class FormPostComponent implements OnInit {
                 this.lang = params.lang;
             }
         });
+
+        this.ckEditorConfig = ckeditor_config.config;
     }
 
     /*

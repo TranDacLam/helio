@@ -8,6 +8,7 @@ import { CategoryService } from './../../../shared/services/category.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
+import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 
 declare var bootbox:any;
 
@@ -31,6 +32,7 @@ export class EditFaqComponent implements OnInit {
     errorMessage: any; // Messages error
 
     lang = 'vi';
+    ckEditorConfig:any;
 
     constructor(
         private faqService: FaqService,
@@ -50,6 +52,7 @@ export class EditFaqComponent implements OnInit {
         });
         this.getFaq();
         this.getCategories();
+        this.ckEditorConfig = ckeditor_config.config;
     }
 
     /*

@@ -554,10 +554,13 @@ class FeedbackView(APIView):
         try:
             fed_id = request.data.get('fed_id', None)
             print "Fed_id:", fed_id
+            print self.request.user.role_id
             # Check if exist fed_id
             if fed_id:
-                queryset = FeedBack.objects.filter(pk__in=fed_id).delete()
-                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+                if self.request.user.role_id == 1:
+                    queryset = FeedBack.objects.filter(pk__in=fed_id).delete()
+                    return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+                return Response({"code": 405, "message": _("Just System Admin accept delete"), "fields": ""}, status=405)
             return Response({"code": 400, "message": "Not found ID ", "fields": "id"}, status=400)
         except Exception, e:
             print e
@@ -600,10 +603,16 @@ class FeedbackDetailView(APIView):
 
     def delete(self, request, pk, format=None):
         feedback = self.get_object(pk)
-        feedback.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
+        try:
+            role_id = self.request.user.role_id
+            if role_id == 1:
+                feedback.delete()
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+            return Response({"code": 405, "message": _("Just System Admin accept delete"), "fields": ""}, status=405)
+        except Exception, e:
+            print 'FeedbackDetailView delete', e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
 """
 GET all linked users
 DELETE all checkbox selected

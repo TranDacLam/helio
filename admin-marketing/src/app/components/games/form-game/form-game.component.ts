@@ -10,6 +10,7 @@ import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { ImageValidators } from './../../../shared/validators/image-validators';
 import { env } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -37,6 +38,7 @@ export class FormGameComponent implements OnInit {
 
     api_domain: string = '';
     lang = 'vi';
+    ckEditorConfig:any;
 
     constructor(
         private gameService: GameService,
@@ -59,6 +61,8 @@ export class FormGameComponent implements OnInit {
             }
         });
         this.getTypes();
+
+        this.ckEditorConfig = ckeditor_config.config;
     }
 
     /*

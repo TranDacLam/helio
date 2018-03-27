@@ -480,7 +480,7 @@ class UserRoleSerializer(serializers.ModelSerializer):
             instance.avatar = avatar
         instance.email = validated_data.get('email', instance.email)
         instance.full_name = validated_data.get('full_name', instance.full_name)
-        instance.birth_date = validated_data.get('birth_date', instance.birth_date)
+        instance.birth_date = validated_data.get('birth_date', None)
         instance.phone = validated_data.get('phone', instance.phone)
         instance.personal_id = validated_data.get('personal_id', instance.personal_id)
         instance.country = validated_data.get('country', instance.country)
