@@ -14,5 +14,8 @@ export class Feedback {
 	modified: Date;
 }
 
-// export const Status = ['no_process', 'answered', 'moved'];
+export const en_Status = ['no_process', 'answered', 'moved'];
 export const Status = ['Chưa xử lý', 'Đã trả lời', 'Đã chuyển đến bộ phận liên quan'];
+
+export const en_Type = ['contact', 'feedback'];
+export const vi_Type = ['Liên hệ', 'Phản hồi'];

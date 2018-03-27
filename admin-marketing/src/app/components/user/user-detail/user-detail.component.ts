@@ -56,7 +56,7 @@ export class UserDetailComponent implements OnInit {
 		this.formUser = this.fb.group({
         email: [this.user.email, [Validators.required, UserValidators.emailValidators]],
         full_name: [this.user.full_name, [Validators.required]],
-        birth_date: [this.user.birth_date ? moment(this.user.birth_date,"DD/MM/YYYY").toDate() : '', [UserValidators.birtdateValidators, UserValidators.formatBirtday]],
+        birth_date: [this.user.birth_date ? moment(this.user.birth_date,"DD/MM/YYYY").toDate() : null, [UserValidators.birtdateValidators, UserValidators.formatBirtday]],
         phone: [this.user.phone, [Validators.required,NumberValidators.validPhone]],
         personal_id: [this.user.personal_id, [NumberValidators.validPersonID]],
         country: [this.user.country],
@@ -90,11 +90,15 @@ export class UserDetailComponent implements OnInit {
     }
 
     onSubmit() {
+        this.formUser.controls['birth_date'].setValidators([
+            UserValidators.birtdateValidators, UserValidators.formatBirtday]);
+        this.formUser.controls['birth_date'].updateValueAndValidity();
         if (this.formUser.invalid) {
             ValidateSubmit.validateAllFormFields(this.formUser);
         } else {
             var self = this;
             let userFormGroup = this.convertFormGroupToFormData(this.formUser);
+            this.formUser.value.birth_date = $('#birth_date').val();
             this.userService.updateUser(userFormGroup, this.user.id).subscribe(
                 (data) => {
                     // Navigate to promotion page where success
