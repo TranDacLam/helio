@@ -92,7 +92,13 @@ export class FeedbackDetailComponent implements OnInit {
                     this.toastr.success(`Xóa ${feedback.name} thành công`);
                     this.router.navigate(['/feedback-list']);
                 },
-                error =>  this.router.navigate(['/error', { message: error.json().message }])
+                (error) =>  {
+                    if(error.json().code == 405) {
+                        this.toastr.error(`${error.json().message}`);
+                    } else {
+                        this.router.navigate(['/error', { message: error.json().message }]);
+                    }
+                }
            );
     }
     /* 

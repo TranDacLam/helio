@@ -210,7 +210,11 @@ export class FeedbackListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error.json().message }]);
+                    if(error.json().code == 405) {
+                        this.toastr.error(`${error.json().message}`);
+                    } else {
+                        this.router.navigate(['/error', { message: error.json().message }]);
+                    }
                 });
             });
     }
