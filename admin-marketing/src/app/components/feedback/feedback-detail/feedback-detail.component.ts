@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 import { Location } from '@angular/common';
+import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
 
 import { FeedbackService } from '../../../shared/services/feedback.service';
 import { Feedback, Status, en_Status, vi_Type, en_Type } from '../../../shared/class/feedback';
@@ -58,7 +60,7 @@ export class FeedbackDetailComponent implements OnInit {
 	        subject: [this.feedback.subject],
 	        message: [this.feedback.message],
 	        feedback_type: [this.feedback.feedback_type],
-	        sent_date: [this.feedback.sent_date],
+            created: [this.feedback.created],
 	        rate: [this.feedback.rate],
 	        status: [this.feedback.status],
 	        answer: [this.feedback.answer, [Validators.maxLength(1000)]],     

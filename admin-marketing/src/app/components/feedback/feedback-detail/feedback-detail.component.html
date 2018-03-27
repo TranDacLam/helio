@@ -89,10 +89,7 @@
                             <label class="center-block"> Ngày nhận</label>
                         </div>
                         <div class="col-md-8">
-                           <input type='date' class='form-control' name="sent_date" 
-                            formControlName="sent_date"
-                            [readonly]="true"
-                            > 
+                            <input type="text" formControlName='created' [readonly]="true" class='form-control' name='created' [value] ="feedback.created | date: 'dd/MM/yyyy'"/>
                         </div>
                     </div>
                     <div class="form-group row">
