@@ -7,6 +7,7 @@ import { GameService } from '../../../shared/services/game.service';
 import { Type } from '../../../shared/class/type';
 import { TypeService } from '../../../shared/services/type.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ImageValidators } from './../../../shared/validators/image-validators';
 import { env } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
@@ -51,6 +52,7 @@ export class FormGameComponent implements OnInit {
 
     ngOnInit() {
         this.creatForm();
+        // get params url
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;
@@ -66,7 +68,7 @@ export class FormGameComponent implements OnInit {
     creatForm(): void{
         this.formGame = this.fb.group({
             name: [this.game.name, [Validators.required, Validators.maxLength(255)]],
-            image: [this.game.image],
+            image: [this.game.image, [ImageValidators.validateFile]],
             short_description: [this.game.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.game.content, Validators.required],
             game_type: [this.game.game_type ? this.game.game_type : '', Validators.required],
@@ -161,14 +163,14 @@ export class FormGameComponent implements OnInit {
     deleteGameEvent(){
         let that = this;
         bootbox.confirm({
-            title: "Bạn có chắc chắn",
-            message: "Bạn muốn xóa trò chơi này?",
+            title: "Bạn có chắc chắn ?",
+            message: "Bạn muốn xóa Trò Chơi này",
             buttons: {
                 cancel: {
-                    label: "Hủy"
+                    label: "HỦY"
                 },
                 confirm: {
-                    label: "Xóa"
+                    label: "XÓA"
                 }
             },
             callback: function (result) {

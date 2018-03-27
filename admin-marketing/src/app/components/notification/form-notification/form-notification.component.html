@@ -38,6 +38,12 @@
             <p *ngIf="msg_clear_image" class="msg_error">{{msg_clear_image}}</p>
             <input type="file" accept="image/*"
             (change)="onFileChange($event)" #inputImage/>
+            <ul class="error_valid" 
+                *ngIf="formNotification.get('image') && formNotification.get('image')?.errors">
+                <li style="color: red" *ngIf="formNotification.get('image').errors?.fomatFile">
+                    Vui lòng tải tệp lên với các định dạng này (jpg, jpeg, png, ico, bmp)
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -56,7 +62,7 @@
             <label class="col-form-label form-check-label">Danh Mục</label>
         </div>
         <div class="col-sm-8" *ngIf="categories">
-            <select class="form-control" formControlName="category" (change)="chanegCategory($event)">
+            <select class="form-control" formControlName="category" (change)="changeCategory($event)">
                 <option value="">--SELECT--</option>
                 <option *ngFor="let cate of categories" 
                     value="{{ cate.id }}"
@@ -91,7 +97,7 @@
     </div>
 
     <hr/>
-    <button class="btn btn-primary" (click)="deleteNotificationEvent()" 
+    <button class="btn btn-danger" (click)="deleteNotificationEvent()" 
         *ngIf="noti.id && type_http == 'put' && (!noti.sent_date || (noti.sent_date && user_current?.role === 1))"
     >
         XÓA

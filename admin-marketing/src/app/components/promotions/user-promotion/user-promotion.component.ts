@@ -8,6 +8,7 @@ import { Promotion } from '../../../shared/class/promotion'
 import { env } from '../../../../environments/environment';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { ToastrService } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
 
 declare var bootbox:any;
 declare var $: any;
@@ -30,6 +31,7 @@ export class UserPromotionComponent implements OnInit {
     user_current: User;
 
     api_domain:string = "";
+    is_update: boolean = false; // Check input checkbox Update Promotion
 
     notification_id: number;
 
@@ -40,7 +42,8 @@ export class UserPromotionComponent implements OnInit {
         private route: ActivatedRoute, 
         private promotionService: PromotionService,
         private variable_globals: VariableGlobals,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private datePipe: DatePipe
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -103,6 +106,26 @@ export class UserPromotionComponent implements OnInit {
         );
     }
 
+    /*
+        Function isUpdateNoti(): enable/disable button Update Promotion
+        Author: Lam
+    */
+    isUpdatePromotion(event){
+        if(event.target.checked){
+            this.is_update = true;
+        }else{
+            this.is_update = false;
+        }
+    }
+
+    /*
+        Function updatePromotion(): Get promotion from component popup-edit-promotion
+        Author: Lam
+    */
+    updatePromotion(event){
+        this.promotion = event;
+    }
+
     generator_QR_code(event , id: number) {
         let element = $(event.target);
         element.button('loading');
@@ -117,6 +140,32 @@ export class UserPromotionComponent implements OnInit {
             (error) => {
                 this.router.navigate(['/error', { message: error.message}]);
             });
+    }
+
+    /*
+        Function isDisable(): Check promotion not is_draft or end_date < date now to disabled button
+        Author: Lam
+    */
+    isDisable(){
+        let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
+        let end_date = this.promotion.end_date ? this.promotion.end_date : '';
+        if((this.promotion.is_draft === false || (end_date !== '' && end_date < date_now)) && this.user_current.role !== 1){
+            return true;
+        }
+        return null;
+    }
+
+    /*
+        Function isDisableQRCode(): Check promotion end_date < date now to disabled button
+        Author: Lam
+    */
+    isDisableQRCode(promotion){
+        let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
+        let end_date = this.promotion.end_date ? this.promotion.end_date : '';
+        if((end_date !== '' && end_date < date_now) && this.user_current.role !== 1){
+            return true;
+        }
+        return null;
     }
 
 }

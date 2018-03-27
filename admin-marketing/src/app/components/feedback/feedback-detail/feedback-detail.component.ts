@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Location } from '@angular/common';
 
 import { FeedbackService } from '../../../shared/services/feedback.service';
-import { Feedback, Status  } from '../../../shared/class/feedback';
+import { Feedback, Status, en_Status, vi_Type, en_Type } from '../../../shared/class/feedback';
 
 // Using bootbox 
 declare var bootbox:any;
@@ -24,7 +24,10 @@ export class FeedbackDetailComponent implements OnInit {
 	feedback: Feedback;
 
   	feedbacks: Feedback[];
-  	tus = Status; // List rating
+  	tus = Status; // List status with vietnames
+    en_tus = en_Status; // List status with english
+    vi_type = vi_Type;
+    en_type = en_Type;
     
     errorMessage: string;
 
@@ -95,7 +98,8 @@ export class FeedbackDetailComponent implements OnInit {
         @author: TrangLe
     */
     updateFeedback() {
-    	this.feedbackService.updateFeedbackById(this.feedbackForm.value, this.feedback.id)
+        let valueForm = this.translateValueFeedbackForm(this.feedbackForm.value);
+    	this.feedbackService.updateFeedbackById(valueForm, this.feedback.id)
     	    .subscribe(
                 () => {
                     this.toastr.success(`Chỉnh sửa ${this.feedback.name} thành công`);
@@ -119,16 +123,14 @@ export class FeedbackDetailComponent implements OnInit {
     */
     confirmDeleteFeedback(feedback: Feedback) {
         bootbox.confirm({
-            title: "Bạn có chắc chắn?",
-            message: "Bạn muốn xóa phản hồi này.",
+            title: "Bạn có chắc chắn ?",
+            message: "Bạn muốn xóa Phản Hồi này",
             buttons: {
-                confirm: {
-                    label: 'Xóa',
-                    className: 'btn-success',
-                },
                 cancel: {
-                    label: 'Hủy',
-                    className: 'pull-left btn-danger',
+                    label: "HỦY"
+                },
+                confirm: {
+                    label: "XÓA"
                 }
             },
             callback: (result)=> {
@@ -138,5 +140,27 @@ export class FeedbackDetailComponent implements OnInit {
                 }
             }
         });
+    }
+
+    translateValueFeedbackForm(value) {
+        // Transalte for feedback_type before save server
+        if (value.feedback_type == this.vi_type[1]) {
+            value.feedback_type = this.en_type[1]
+        }else if (value.feedback_type == this.vi_type[0]) {
+            value.feedback_type = this.en_type[0]
+        }
+        // Translate for status before save server
+        switch (value.status) {
+            case this.tus[0]:
+                value.status = this.en_tus[0]
+                break;
+            case this.tus[1]:
+                value.status = this.en_tus[1]
+                break;
+            case this.tus[2]:
+                value.status = this.en_tus[2]
+                break;
+        } 
+        return value;
     }
 }

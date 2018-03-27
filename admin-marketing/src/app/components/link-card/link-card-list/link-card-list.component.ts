@@ -98,16 +98,14 @@ export class LinkCardListComponent implements OnInit {
         */
         if(this.length_selected > 0 ){
             bootbox.confirm({
-                title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.length_selected + " thẻ liên kết đã chọn",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " Thẻ Liên Kết đã chọn",
                 buttons: {
-                    confirm: {
-                        label: 'Xóa',
-                        className: 'btn-success',
-                    },
                     cancel: {
-                        label: 'Hủy',
-                        className: 'pull-left btn-danger',
+                        label: "HỦY"
+                    },
+                    confirm: {
+                        label: "XÓA"
                     }
                 },
                 callback: (result)=> {
@@ -118,7 +116,7 @@ export class LinkCardListComponent implements OnInit {
                 }
             });
         } else {
-            this.toastr.warning(`Vui lòng chọn thẻ liên kết để xóa`);
+            this.toastr.warning(`Vui lòng chọn Thẻ Liên Kết để xóa`);
         } 
     }
 
@@ -181,7 +179,7 @@ export class LinkCardListComponent implements OnInit {
             // Call API remove list promotion selected
             this.linkCardService.deleteAllUserLinkedSelected(list_id_selected).subscribe(
                 (data) => {
-                    this.toastr.success(`Xóa ${this.length_selected} thẻ liên kết thành công`);
+                    this.toastr.success(`Xóa ${this.length_selected} Thẻ Liên Kết thành công`);
 
                     // Remove all promotion selected on UI
                     dtInstance.rows('.selected').remove().draw();

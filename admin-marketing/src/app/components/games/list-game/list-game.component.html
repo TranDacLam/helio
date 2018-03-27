@@ -9,13 +9,15 @@
 </div>
 <!-- End breadcrumb -->
 <div class="row text-center">
-    <h1>Quản Lý Trò Chơi</h1>
+    <p class="title">Quản Lý Trò Chơi</p>
 </div>
 <div class="row mt-50 mb-15 custom-title">
     <div class="col-xs-12 col-sm-12">
-        <a class="btn custom-button pull-right" [routerLink]="['/game/add/', {lang: lang}]">
-            <i class="fa fas fa-plus icon-button"></i>
-            THÊM TRÒ CHƠI MỚI
+        <a class="pull-right" [routerLink]="['/game/add/', {lang: lang}]">
+            <div class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>
+                THÊM TRÒ CHƠI MỚI
+            </div>
         </a>
     </div>
     <div class="col-xs-12 col-sm-12 mt-15 messsage_error alert alert-danger" *ngIf="errorMessage">

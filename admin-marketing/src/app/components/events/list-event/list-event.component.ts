@@ -45,6 +45,7 @@ export class ListEventComponent implements OnInit {
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Sự Kiện');
+        // custom datatable option
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
@@ -60,6 +61,7 @@ export class ListEventComponent implements OnInit {
                 }
             ]
         };
+        // create new object from 2 object use operator spread es6
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
 
         this.getEvents();
@@ -135,14 +137,14 @@ export class ListEventComponent implements OnInit {
         let that = this;
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.length_selected + " sự kiện đã chọn?",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " Sự Kiện đã chọn",
                 buttons: {
                     cancel: {
-                        label: "Hủy"
+                        label: "HỦY"
                     },
                     confirm: {
-                        label: "Xóa"
+                        label: "XÓA"
                     }
                 },
                 callback: function (result) {
@@ -153,7 +155,7 @@ export class ListEventComponent implements OnInit {
             });
 
         } else  {
-            this.toastr.warning(`Vui lòng chọn sự kiện cần xóa`);
+            this.toastr.warning(`Vui lòng chọn Sự Kiện cần xóa`);
         }
         
     }
@@ -175,7 +177,7 @@ export class ListEventComponent implements OnInit {
             this.eventService.onDelEventSelect(list_id_selected, this.lang).subscribe(
                 (data) => {
                     if (data.code === 204) {
-                        this.toastr.success(`Xóa ${this.length_selected} sự kiện thành công`);
+                        this.toastr.success(`Xóa ${this.length_selected} Sự Kiện thành công`);
 
                         // Remove all promotion selected on UI
                         dtInstance.rows('.selected').remove().draw();

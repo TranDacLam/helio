@@ -1,9 +1,9 @@
 <ol class="breadcrumb">
     <li><a routerLink='/'>Trang Chủ</a></li>
-    <li class="active"><a routerLink="/user-permission">Quản Lý Phân quyền User</a></li>
-</ol>
+    <li class="breadcrumb-item active" aria-current="page">Quản Lý Phân quyền User</li>
+ </ol>
 <div class="row text-center">
-    <h1 class="page-name">PHÂN QUYỀN USER</h1>
+    <p class="title">PHÂN QUYỀN USER</p>
 </div>
 <div class="row">
     <div *ngIf="roles" class="wrap-head">
@@ -88,7 +88,7 @@
         </table>
         <div class="pull-right">
             <button *ngIf="!check_all_right" class="btn btn-primary " (click)="selectAllEventRight(true);" >CHỌN TẤT CẢ</button>
-            <button *ngIf="check_all_right" class="btn btn-primary" (click)="selectAllEventRight(false);" >XOÁ TẤT CẢ</button>
+            <button *ngIf="check_all_right" class="btn btn-danger" (click)="selectAllEventRight(false);" >XOÁ TẤT CẢ</button>
             <button class="btn btn-success btn-save pull-right" (click)="setRoleUser()" >LƯU</button>
         </div>
     </div>

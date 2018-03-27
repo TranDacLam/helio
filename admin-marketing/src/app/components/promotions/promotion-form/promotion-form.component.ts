@@ -16,12 +16,14 @@ import { PromotionLabelService } from '../../../shared/services/promotion-label.
 import { DatePipe } from '@angular/common';
 import { DateValidators } from './../../../shared/validators/date-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ImageValidators } from './../../../shared/validators/image-validators';
 import { ToastrService } from 'ngx-toastr';
 import { User } from './../../../shared/class/user';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { env } from '../../../../environments/environment';
 import * as moment from 'moment';
 
+declare var $ :any; // declare Jquery
 declare var bootbox:any;
 
 @Component({
@@ -38,6 +40,11 @@ export class PromotionFormComponent implements OnInit {
 
     @Input() 
     promotion: Promotion;
+
+    @Input() type_http; // Get type http from component parent
+
+    // Return 1 object to parent
+    @Output() update_promotion: EventEmitter<Promotion> = new EventEmitter<Promotion>();
 
     promotionTypes: PromotionType[];
     promotionLabels: PromotionLabel[];
@@ -100,8 +107,8 @@ export class PromotionFormComponent implements OnInit {
         this.promotionForm = this.fb.group({
             id: [this.promotion.id],
             name: [this.promotion.name, [Validators.required, Validators.maxLength(255)]],
-            image: [this.promotion.image],
-            image_thumbnail: [this.promotion.image_thumbnail],
+            image: [this.promotion.image, [ImageValidators.validateFile]],
+            image_thumbnail: [this.promotion.image_thumbnail, [ImageValidators.validateFile]],
             short_description: [this.promotion.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.promotion.content, [Validators.required]],
             promotion_category: [this.promotion.promotion_category ? this.promotion.promotion_category : ''],
@@ -162,6 +169,25 @@ export class PromotionFormComponent implements OnInit {
         );
     }
 
+    /*
+        Function getNotification():
+         + Get id from url path
+         + Callback service function getNotification() by id
+        Author: Lam
+    */
+    getPromotion(){
+        const id = +this.route.snapshot.paramMap.get('id');
+        this.promotionService.getPromotionById(id, this.lang).subscribe(
+            (data) => {
+                this.promotion = data;
+                this.update_promotion.emit(this.promotion);
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
+    }
+
 
     /*
         Change file input event. ( image field and thumbnail image field)
@@ -200,9 +226,16 @@ export class PromotionFormComponent implements OnInit {
             if(this.promotion.id) {
                 this.promotionService.updatePromotion(promotionFormData, this.promotion.id, this.lang).subscribe(
                     (data) => {
-                        // Navigate to promotion page where success
-                        this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
-                        that.router.navigate(['/promotions']);
+                        // popup edit pormotion at user promotion
+                        if(this.type_http === 'put_popup'){
+                            this.getPromotion();
+                            $('#UpdatePromotion').modal('toggle');
+                            this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
+                        }else{
+                            // Navigate to promotion page where success
+                            this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
+                            that.router.navigate(['/promotions']);
+                        }
                     }, 
                     (error) => {
                         if(error.code === 400){
@@ -243,14 +276,14 @@ export class PromotionFormComponent implements OnInit {
         const that = this;
         if (id) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa phần tử này",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn Khuyến Mãi tử này",
                 buttons: {
                     cancel: {
-                        label: "Hủy"
+                        label: "HỦY"
                     },
                     confirm: {
-                        label: "Xóa"
+                        label: "XÓA"
                     }
                 },
                 callback: function (result) {
@@ -269,7 +302,7 @@ export class PromotionFormComponent implements OnInit {
             });
 
         } else  {
-            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+            bootbox.alert("Vui lòng chọn Khuyến Mãi cần xóa");
         }
     }
 

@@ -8,6 +8,7 @@ import { PostType } from './../../../shared/class/post-type';
 import { PostTypeService } from '../../../shared/services/post-type.service';
 import { PostImage } from './../../../shared/class/post-image';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ImageValidators } from './../../../shared/validators/image-validators';
 import { ToastrService } from 'ngx-toastr';
 import { env } from '../../../../environments/environment';
 import 'rxjs/add/observable/throw';
@@ -51,6 +52,7 @@ export class FormPostComponent implements OnInit {
     ngOnInit() {
         this.getPostTypes();
         this.creatForm();
+        // get params url
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;
@@ -65,7 +67,7 @@ export class FormPostComponent implements OnInit {
     creatForm(): void{
         this.formPost = this.fb.group({
             name: [this.post.name, [Validators.required, Validators.maxLength(255)]],
-            image: [this.post.image, [Validators.maxLength(1000)]],
+            image: [this.post.image, [ImageValidators.validateFile]],
             short_description: [this.post.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.post.content, Validators.required],
             post_type: [this.post.post_type ? this.post.post_type : '', Validators.required],
@@ -179,14 +181,14 @@ export class FormPostComponent implements OnInit {
     deletePostEvent(){
         let that = this;
         bootbox.confirm({
-            title: "Bạn có chắc chắn",
-            message: "Bạn muốn xóa bài viết này?",
+            title: "Bạn có chắc chắn ?",
+            message: "Bạn muốn xóa Bài Viết này",
             buttons: {
                 cancel: {
-                    label: "Hủy"
+                    label: "HỦY"
                 },
                 confirm: {
-                    label: "Xóa"
+                    label: "XÓA"
                 }
             },
             callback: function (result) {

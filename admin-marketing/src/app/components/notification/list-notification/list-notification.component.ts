@@ -48,6 +48,7 @@ export class ListNotificationComponent implements OnInit {
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Thông Báo');
+        // custom datatable option
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
@@ -59,9 +60,11 @@ export class ListNotificationComponent implements OnInit {
                 }
             ]
         };
+        // create new object from 2 object use operator spread es6
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
 
         this.getNotifications();
+        // get current user
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
         },100);
@@ -104,6 +107,7 @@ export class ListNotificationComponent implements OnInit {
         }
         this.getLengthSelected();
     }
+    
     /*
         Event select All Button on header table
         @author: Lam 
@@ -139,14 +143,14 @@ export class ListNotificationComponent implements OnInit {
         let that = this;
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.length_selected + " thông báo đã chọn?",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " Thông Báo đã chọn",
                 buttons: {
                     cancel: {
-                        label: "Hủy"
+                        label: "HỦY"
                     },
                     confirm: {
-                        label: "Xóa"
+                        label: "XÓA"
                     }
                 },
                 callback: function (result) {
@@ -157,7 +161,7 @@ export class ListNotificationComponent implements OnInit {
             });
 
         } else  {
-            this.toastr.warning(`Vui lòng chọn thông báo cần xóa`);
+            this.toastr.warning(`Vui lòng chọn Thông Báo cần xóa`);
         }
         
     }
@@ -179,7 +183,7 @@ export class ListNotificationComponent implements OnInit {
             this.notificationService.onDelNotiSelect(list_id_selected, this.lang).subscribe(
                 (data) => {
                     if (data.code === 204) {
-                        this.toastr.success(`Xóa ${this.length_selected} thông báo thành công`);
+                        this.toastr.success(`Xóa ${this.length_selected} Thông Báo thành công`);
 
                         // Remove all promotion selected on UI
                         dtInstance.rows('.selected').remove().draw();

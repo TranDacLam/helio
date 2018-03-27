@@ -44,6 +44,7 @@ export class ListFaqComponent implements OnInit {
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Câu Hỏi Thường Gặp');
+        // custom datatable option
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
@@ -59,6 +60,7 @@ export class ListFaqComponent implements OnInit {
                 }
             ]
         };
+        // create new object from 2 object use operator spread es6
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
 
         this.getFaqs();
@@ -133,14 +135,14 @@ export class ListFaqComponent implements OnInit {
         let that = this;
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.length_selected + " câu hỏi thường gặp đã chọn?",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " Câu Hỏi Thường Gặp đã chọn",
                 buttons: {
                     cancel: {
-                        label: "Hủy"
+                        label: "XÓA"
                     },
                     confirm: {
-                        label: "Xóa"
+                        label: "HỦY"
                     }
                 },
                 callback: function (result) {
@@ -151,7 +153,7 @@ export class ListFaqComponent implements OnInit {
             });
 
         } else  {
-            this.toastr.warning(`Vui lòng chọn câu hỏi thường gặp cần xóa`);
+            this.toastr.warning(`Vui lòng chọn Câu Hỏi Thường Gặp cần xóa`);
         }
         
     }
@@ -173,7 +175,7 @@ export class ListFaqComponent implements OnInit {
             this.faqService.onDelFaqSelect(list_id_selected, this.lang).subscribe(
                 (data) => {
                     if (data.code === 204) {
-                        this.toastr.success(`Xóa ${this.length_selected} câu hỏi thường gặp thành công`);
+                        this.toastr.success(`Xóa ${this.length_selected} Câu Hỏi Thường Gặp thành công`);
 
                         // Remove all promotion selected on UI
                         dtInstance.rows('.selected').remove().draw();

@@ -153,9 +153,10 @@ class PromotionSerializer(serializers.ModelSerializer):
 
 class GiftSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, required=False, read_only=False)
+
     class Meta:
         model = Gift
-        exclude = ('created', 'modified')
+        fields = '__all__'
 
 class AdvertisementSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True,validators=[

@@ -19,7 +19,7 @@
         </div>
     </a>
 </div>
-<table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="feedbacks">
+<table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" *ngIf="feedbacks">
         <thead>
             <tr>
                 <th class="checkbox-feedback"><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>

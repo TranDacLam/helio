@@ -9,13 +9,15 @@
 </div>
 <!-- End breadcrumb -->
 <div class="row text-center">
-    <h1>Quản Lý Thông Báo</h1>
+    <p class="title">Quản Lý Thông Báo</p>
 </div>
 <div class="row mt-50 mb-15 custom-title">
     <div class="col-xs-12 col-sm-12">
-        <a class="btn custom-button pull-right" [routerLink]="['/notification/add/', {lang: lang}]">
-            <i class="fa fas fa-plus icon-button"></i>
-            THÊM THÔNG BÁO MỚI
+        <a class="pull-right" [routerLink]="['/notification/add/', {lang: lang}]">
+            <div class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>
+                THÊM THÔNG BÁO MỚI
+            </div>
         </a>
     </div>
 </div>
@@ -32,7 +34,8 @@
     </div>
 </div>
 <div class="custom_table">
-    <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="notifications">
+    <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' 
+        *ngIf="notifications && user_current">
         <thead>
             <tr>
                 <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
@@ -53,7 +56,12 @@
                     />
                 </td>
                 <td>{{ noti.id }}</td>
-                <td><a [routerLink]="['/notification/edit/', noti.id, {lang: lang}]">{{ noti.subject }}</a></td>
+                <td *ngIf="noti.sent_date && user_current.role !== 1">
+                    {{ noti.subject }}
+                </td>
+                <td *ngIf="!(noti.sent_date && user_current.role !== 1)">
+                    <a [routerLink]="['/notification/edit/', noti.id, {lang: lang}]">{{ noti.subject }}</a>
+                </td>
                 <td *ngIf="noti.sent_date">Đã gửi</td>
                 <td *ngIf="!noti.sent_date">Chưa gửi</td>
                 <td>{{ noti.sent_date | date: 'dd/MM/yyyy'}}</td>

@@ -249,7 +249,7 @@ class PromotionStatistic(APIView):
 
                 result['promotion'] = admin_serializers.PromotionSerializer(
                     promotion_detail, many=False).data
-                result['gift-user'] = admin_serializers.GiftSerializer(gift_list, many=True).data
+                result['gift_user'] = admin_serializers.GiftSerializer(gift_list, many=True).data
 
                 result['count_user_total'] = user_promotion_list.count()
                 result['count_user_device'] = promotion_user_id_list.exclude(device_id__isnull=True).count()
@@ -2057,16 +2057,21 @@ class UserListView(APIView):
     def delete(self, request, format=None):
         print "METHOD DELETE"
         try:
-            # Get list user id to delete
-            user_id = self.request.data.get('user_id', None)
-            print "User List Id", user_id
+            # Get role_id
+            role_id = self.request.user.role_id
+            # Check role_id
+            if role_id == 1:
+                # Get list user id to delete
+                user_id = self.request.data.get('user_id', None)
+                print "User List Id", user_id
 
-            # Check list user id
-            if user_id:
-                User.objects.filter(pk__in=user_id).delete()
-                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
-            return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
-
+                # Check list user id
+                if user_id:
+                    User.objects.filter(pk__in=user_id).delete()
+                    return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+                return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
+            else:
+                return Response({"code": 405, "message": _("Just System Admin accept delete"), "fields": ""}, status=405)
         except Exception, e:
             print e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
@@ -2114,10 +2119,11 @@ class UserDetailView(APIView):
 
         user = self.get_object(pk)
         try:
-            print('user', request.data)
             serializer = admin_serializers.UserRoleSerializer(user, data=request.data)
 
             if serializer.is_valid():
+                if (self.request.user.is_staff == True and self.request.user.role_id != 1 and user.is_staff == True):
+                    return Response({"code": 405, "message": _("This function is only for System Admin"), "fields": ""}, status=405) 
                 if(serializer.validated_data['new_password']):
                     if(self.request.user.role_id == 1):
                         user.set_password(self.request.data.get("new_password"))

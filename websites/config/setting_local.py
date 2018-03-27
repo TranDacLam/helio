@@ -46,3 +46,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 BASE_URL_DMZ_API = "http://127.0.0.1:8003/api/"
 DMZ_API_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTIxMDk4NDk1LCJ1c2VyX2lkIjoxLCJlbWFpbCI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsImV4cCI6MTUyMTA5ODc5NX0.UYRCf2Pvc0HXYXfhKDVE0kZelBxaRWpPOA4GRgE_vI4"
+
+
+print os.path.join(BASE_DIR, "key_apns/pem_production/push_dis.pem")

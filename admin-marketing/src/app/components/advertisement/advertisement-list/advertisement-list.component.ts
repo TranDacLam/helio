@@ -150,16 +150,14 @@ export class AdvertisementListComponent implements OnInit {
         */
         if(this.length_selected > 0 ){
             bootbox.confirm({
-                title: "Bạn có chắc chắn?",
-                message: "Bạn muốn xóa " + this.length_selected + " quảng cáo đã chọn",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " Quảng Cáo đã chọn",
                 buttons: {
-                    confirm: {
-                        label: 'Xóa',
-                        className: 'btn-success',
-                    },
                     cancel: {
-                        label: 'Hủy',
-                        className: 'pull-left btn-danger',
+                        label: "HỦY"
+                    },
+                    confirm: {
+                        label: "XÓA"
                     }
                 },
                 callback: (result)=> {
@@ -170,7 +168,7 @@ export class AdvertisementListComponent implements OnInit {
                 }
             });
         } else {
-            this.toastr.warning(`Vui lòng chọn quảng cáo cần xóa`);
+            this.toastr.warning(`Vui lòng chọn Quảng Cáo cần xóa`);
         } 
     }
 
@@ -189,7 +187,7 @@ export class AdvertisementListComponent implements OnInit {
             // Call API remove list promotion selected
             this.advertisementService.deleteAllAdvsSelected(list_id_selected, this.lang).subscribe(
                 (data) => {
-                    this.toastr.success(`Xóa ${this.length_selected} quảng cáo thành công`);
+                    this.toastr.success(`Xóa ${this.length_selected} Quảng Cáo thành công`);
 
                     // Remove all promotion selected on UI
                     dtInstance.rows('.selected').remove().draw();

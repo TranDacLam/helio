@@ -9,10 +9,10 @@
     </nav>
 </div>
 <!-- End breadcrumb -->
-<div class="row mt-30 mb-30">
+<div class="row mt-30 mb-30 text-center">
     <div class="col-xs-12 col-md-12">
-        <h3>Chỉnh Sửa Khuyến Mãi</h3>
+        <p class='title'>Chỉnh Sửa Khuyến Mãi</p>
         <hr/>
     </div>
 </div>
-<app-promotion-form *ngIf="promotion" [promotion]="promotion"></app-promotion-form>
+<app-promotion-form *ngIf="promotion" [promotion]="promotion" [type_http]="type_http"></app-promotion-form>

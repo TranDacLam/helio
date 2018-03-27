@@ -38,6 +38,7 @@ export class EditPromotionLabelComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        // get params url
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;
@@ -110,14 +111,14 @@ export class EditPromotionLabelComponent implements OnInit {
     deletePromotionLabelEvent(){
         let that = this;
         bootbox.confirm({
-            title: "Bạn có chắc chắn",
-            message: "Bạn muốn xóa Nhãn Khuyến Mãi này?",
+            title: "Bạn có chắc chắn ?",
+            message: "Bạn muốn xóa Nhãn Khuyến Mãi này",
             buttons: {
                 cancel: {
-                    label: "Hủy"
+                    label: "HỦY"
                 },
                 confirm: {
-                    label: "Xóa"
+                    label: "XÓA"
                 }
             },
             callback: function (result) {

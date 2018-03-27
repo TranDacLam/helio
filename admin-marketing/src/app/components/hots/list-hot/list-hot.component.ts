@@ -46,6 +46,7 @@ export class ListHotComponent implements OnInit {
 
     ngOnInit() {
         this.dtOptions = datatable_config.data_config('Hot');
+        // custom datatable option
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
@@ -61,6 +62,7 @@ export class ListHotComponent implements OnInit {
                 }
             ]
         };
+        // create new object from 2 object use operator spread es6
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
 
         this.getHots();
@@ -135,8 +137,8 @@ export class ListHotComponent implements OnInit {
         let that = this;
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.length_selected + " Hot đã chọn?",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " Hot đã chọn",
                 buttons: {
                     cancel: {
                         label: "Hủy"

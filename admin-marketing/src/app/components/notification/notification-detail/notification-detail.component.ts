@@ -32,6 +32,7 @@ export class NotificationDetailComponent implements OnInit {
     is_update: boolean = false; // Check input checkbox Update Notification
     user_current: User;
     promotion: Promotion;
+    length_user_right: number = 0;
 
     lang = 'vi';
 
@@ -47,6 +48,7 @@ export class NotificationDetailComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        // get params url
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;
@@ -54,9 +56,11 @@ export class NotificationDetailComponent implements OnInit {
         });
 
         this.getUserNotification();
+        // get current user
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
-        },100);
+            this.disableAllTable();
+        },300);
         
     }
 
@@ -74,6 +78,7 @@ export class NotificationDetailComponent implements OnInit {
                 this.user_list_left = data.user_all;
                 this.user_list_right = data.user_notification;
                 this.promotion_id = data.notification_detail.promotion;
+                this.length_user_right = data.user_notification.length;
                 if(this.promotion_id){
                     this.promotionService.getPromotionById(this.promotion_id, this.lang).subscribe(
                         (data) => {
@@ -107,6 +112,13 @@ export class NotificationDetailComponent implements OnInit {
         );
     }
 
+    disableAllTable(){
+        if(this.promotion_id){
+            $(".multiselect_user table tr input:checkbox, .multiselect_user button").prop('disabled', 'disabled');
+            $(".multiselect_footer button").prop('disabled', 'disabled');
+        }
+    }
+
     /*
         Function isUpdateNoti(): enable/disable button Update Notification
         Author: Lam
@@ -137,6 +149,12 @@ export class NotificationDetailComponent implements OnInit {
             this.notificationService.updateUserNoti(id, event, this.lang).subscribe(
                 (data) => {
                     this.toastr.success(`Lưu thành công`);
+                    // get length user right
+                    this.notificationService.getUserNotification(id, this.lang).subscribe(
+                        (data_user) => {
+                            this.length_user_right = data_user.user_notification.length;
+                        }
+                    );
                 },
                 (error) => {
                     this.router.navigate(['/error', { message: error.message}]);
@@ -155,23 +173,27 @@ export class NotificationDetailComponent implements OnInit {
     */
     checkSendNotification(){
         let that = this;
-        bootbox.confirm({
-            title: "Bạn có chắc chắn",
-            message: "Bạn có muốn gửi thông báo này không?",
-            buttons: {
-                cancel: {
-                    label: "Hủy"
+        if(this.length_user_right < 1){
+            this.toastr.warning(`Vui lòng chọn khách hàng nhận thông báo`);
+        }else{
+            bootbox.confirm({
+                title: "Bạn có chắc chắn",
+                message: "Bạn có muốn gửi Thông Báo này không?",
+                buttons: {
+                    cancel: {
+                        label: "HỦY"
+                    },
+                    confirm: {
+                        label: "ĐỒNG Ý"
+                    }
                 },
-                confirm: {
-                    label: "Đồng Ý"
+                callback: function (result) {
+                    if(result) {
+                        that.sendNotification();
+                    }
                 }
-            },
-            callback: function (result) {
-                if(result) {
-                    that.sendNotification();
-                }
-            }
-        });
+            });
+        }
     }
 
     /*

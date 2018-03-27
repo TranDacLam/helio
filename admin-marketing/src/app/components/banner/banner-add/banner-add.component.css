@@ -6,9 +6,6 @@ p.errors {
 	border-bottom: 2px solid black;
 	padding: 10px 0;
 }
-p.title {
-	font-size: 34px;
-}
 .title-banner a {
 	text-decoration: none;
 	list-style-type: none;

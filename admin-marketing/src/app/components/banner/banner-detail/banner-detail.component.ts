@@ -156,18 +156,16 @@ export class BannerDetailComponent implements OnInit {
 
     confirmDelete(banner: Banner) {
         bootbox.confirm({
-            title: "Bạn có chắc chắn?",
-            message: "Bạn muốn xóa Banner này.",
+            title: "Bạn có chắc chắn ?",
+            message: "Bạn muốn xóa Banner này",
             buttons: {
-                confirm: {
-                    label: 'Xóa',
-                    className: 'btn-success',
+                    cancel: {
+                        label: "HỦY"
+                    },
+                    confirm: {
+                        label: "XÓA"
+                    }
                 },
-                cancel: {
-                    label: 'Hủy',
-                    className: 'pull-left btn-danger',
-                }
-            },
             callback: (result)=> {
                 if(result) {
                     // Check result = true. call function callback

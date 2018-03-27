@@ -53,6 +53,11 @@ urlpatterns = [
     url(r'^notification/on/$', views.turn_on_notification, name="turn-on-notification"),
     url(r'^notification/(?P<notification_id>[0-9]+)/detail/$', views.notification_detail, name="get-notification-detail"),
     url(r'^notification/push/$', views.send_notification, name="push-notification"),
-    
 
+
+    url(r'^ticket/transfer/$', views.ticket_transfer, name="card-transactions"),
+
+    url(r'^fee/apply/$', views.fees_apply_by_type, name="fees-apply-by-type"),
+    url(r'^hot_advs/latest/$', views.hot_advs_latest, name="get-hot-advs-latest"),
+    url(r'^transactions/ticket/transfer/$', views.ticket_transfer_transactions, name="ticket-transfer-transactions"),
 ]

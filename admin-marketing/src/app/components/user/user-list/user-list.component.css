@@ -9,6 +9,7 @@
 	margin: 15px 0px;
 	border-bottom: 1px solid black;
 	padding: 0 0 10px 0px;
+	text-transform: uppercase;
 }
 a.pull-left {
 	color: #333333;

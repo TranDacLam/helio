@@ -93,11 +93,16 @@ export class UserAddComponent implements OnInit {
         @author: Trangle
      */
     onSubmit() {
+        // set and update valdiator, so error validate ng-datetime "owlDateTimeParse"
+        this.formUser.controls['birth_date'].setValidators([
+            UserValidators.birtdateValidators, UserValidators.formatBirtday]);
+        this.formUser.controls['birth_date'].updateValueAndValidity();
         if (this.formUser.invalid) {
             ValidateSubmit.validateAllFormFields(this.formUser);
         } else {
             var self = this;
             let userFormGroup = this.convertFormGroupToFormData(this.formUser);
+            this.formUser.value.birth_date = $('#birth_date').val();
             this.userService.createUser(userFormGroup).subscribe(
                 (data) => {
                     self.users.push(data);

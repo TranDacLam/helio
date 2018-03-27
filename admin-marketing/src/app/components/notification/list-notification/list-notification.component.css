@@ -25,3 +25,6 @@ table.dataTable tbody td{
 .messsage_error{
     color: red;
 }
+.custom-title a {
+	padding: 5px 0;
+}

@@ -87,6 +87,8 @@ class Event(DateTimeModel):
     name = models.CharField(_('name'), max_length=255, unique=True, blank=False)
     image = models.ImageField(_('Image'),
         max_length=1000, null=True, blank=True, upload_to="events")
+    image_thumbnail = models.ImageField(
+        _('Image Thumbnail'), max_length=1000, null=True, blank=True, upload_to="events")
     short_description = models.CharField(_('Short description'), max_length=350)
     content = models.TextField(_('Content'))
     start_date = models.DateField(_('Start date'), blank=False)

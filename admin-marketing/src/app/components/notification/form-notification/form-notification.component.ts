@@ -8,6 +8,7 @@ import { CategoryNotification } from '../../../shared/class/category-notificatio
 import { NotificationService } from '../../../shared/services/notification.service';
 import { CategoryNotificationService } from '../../../shared/services/category-notification.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { ImageValidators } from './../../../shared/validators/image-validators';
 import { ToastrService } from 'ngx-toastr';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { User } from '../../../shared/class/user';
@@ -72,15 +73,18 @@ export class FormNotificationComponent implements OnInit {
     }
 
     ngOnInit() {
+        // get params url
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;
             }
         });
+        // get language when create notification for promotion 
         this.lang = this.lang_promotion ? this.lang_promotion : this.lang;
 
         this.getCategory();
         this.creatForm();
+        // get current user
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
         },100);
@@ -94,7 +98,7 @@ export class FormNotificationComponent implements OnInit {
         this.formNotification = this.fb.group({
             subject: [this.noti.subject, [Validators.required, Validators.maxLength(255)]],
             message: [this.noti.message, [Validators.required]],
-            image: [this.noti.image],
+            image: [this.noti.image, [ImageValidators.validateFile]],
             sub_url: [this.noti.sub_url, [Validators.maxLength(255)]],
             category: [this.noti.category ? this.noti.category : '', Validators.required],
             is_QR_code: [this.noti.is_QR_code ? this.noti.is_QR_code : false],
@@ -227,14 +231,14 @@ export class FormNotificationComponent implements OnInit {
     deleteNotificationEvent(){
         let that = this;
         bootbox.confirm({
-            title: "Bạn có chắc chắn",
-            message: "Bạn muốn xóa thông báo này?",
+            title: "Bạn có chắc chắn ?",
+            message: "Bạn muốn xóa Thông Báo này",
             buttons: {
                 cancel: {
-                    label: "Hủy"
+                    label: "HỦY"
                 },
                 confirm: {
-                    label: "Xóa"
+                    label: "XÓA"
                 }
             },
             callback: function (result) {
@@ -279,7 +283,11 @@ export class FormNotificationComponent implements OnInit {
         }
     }
 
-    chanegCategory(event){
+    /*
+        Function changeCategory(): Check catrgory
+        Author: Lam
+    */
+    changeCategory(event){
         let cate_id = parseInt(event.target.value);
         if(cate_id === 1){
             this.check_QR = false;

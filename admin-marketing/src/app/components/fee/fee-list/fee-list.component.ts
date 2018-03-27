@@ -105,16 +105,14 @@ export class FeeListComponent implements OnInit {
         let self = this;
         if (this.length_selected > 0) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn",
-                message: "Bạn muốn xóa " + this.length_selected + " phần tử đã chọn",
+                title: "Bạn có chắc chắn ?",
+                message: "Bạn muốn xóa " + this.length_selected + " Phí Giao Dịch đã chọn",
                 buttons: {
-                    confirm: {
-                        label: 'OK',
-                        className: 'btn-primary'
-                    },
                     cancel: {
-                        label: 'Hủy',
-                        className: 'btn-default'
+                        label: "HỦY"
+                    },
+                    confirm: {
+                        label: "XÓA"
                     }
                 },
                 callback: function(result) {
@@ -125,7 +123,7 @@ export class FeeListComponent implements OnInit {
                 }
             })
         } else {
-            bootbox.alert("Vui lòng chọn phần tử cần xóa");
+            this.toastr.warning(`Vui lòng chọn Phí Giao Dịch cần xóa`);
         }
     }
     /*

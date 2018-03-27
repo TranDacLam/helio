@@ -23,6 +23,7 @@ export class EditEventComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        // Get params url
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;

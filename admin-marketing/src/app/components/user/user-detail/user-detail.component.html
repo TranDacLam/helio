@@ -63,13 +63,13 @@
 						<label class="center-block">Ngày tạo</label>
 					</div>
 					<div class="col-sm-3">	
-						{{ user.modified | date:"dd/MM/yyyy" }}
+						{{ user.date_joined | date:"dd/MM/yyyy HH:mm" }}
 					</div>
 					<div class="col-sm-3">
 						<label class="center-block">Ngày cập nhật</label>
 					</div>
 					<div class="col-sm-3">	
-						{{ user.date_joined | date:"dd/MM/yyyy" }}
+						{{ user.modified | date:"dd/MM/yyyy HH:mm" }}
 					</div>
 				</div>
 			</div>
@@ -219,8 +219,8 @@
 			</div>
 		</div>
 		<div class='col-md-12'>
-			<button (click)="confirmDeleteFeedback(user)" type="button" class="pull-left btn btn-danger">Xóa</button>
-			<button type="submit" class="pull-right btn btn-info">Lưu lại</button>
+			<button (click)="confirmDeleteFeedback(user)" type="button" class="pull-left btn btn-danger">XÓA</button>
+			<button type="submit" class="pull-right btn btn-primary">LƯU LẠI</button>
 		</div>
 	</form>
 </div>
