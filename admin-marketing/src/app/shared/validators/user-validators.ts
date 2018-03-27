@@ -4,7 +4,7 @@ import * as moment from 'moment';
 export class UserValidators {
 
 	static passwordValidators(c: FormControl): ValidationErrors {
-		let passRegx = /^(?=.*\d).{6,}$/;
+		let passRegx = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
 		let passVal = String($('#password').val());
 		let passValues = passVal.match(passRegx);
 		if(passValues === null && passVal !== '' && passVal.length < 32) {
