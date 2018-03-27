@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-27 12:00+0700\n"
+"POT-Creation-Date: 2018-03-27 14:12+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -625,199 +625,199 @@ msgstr "Số điện thoại đã được sử dụng. Vui lòng chọn số kh
 msgid "Either message_plain or message_html should be not None"
 msgstr ""
 
-#: websites/api/views.py:101
+#: websites/api/views.py:102
 msgid "The email field is required."
 msgstr "Trường email không được bỏ trống."
 
-#: websites/api/views.py:118
+#: websites/api/views.py:119
 msgid "Send security code to email successfully."
 msgstr "Gửi mã bảo mật đến email thành công."
 
-#: websites/api/views.py:122
+#: websites/api/views.py:123
 msgid "Email matching query does not exist."
 msgstr "Email không tồn tại."
 
-#: websites/api/views.py:137
+#: websites/api/views.py:138
 msgid ""
 "Please check required fields : [email, secure_code, password1, password2]"
 msgstr ""
 "Các trường sau không được bỏ trống : [email, secure_code, password1, "
 "password2]"
 
-#: websites/api/views.py:140
+#: websites/api/views.py:141
 msgid "Password does not match."
 msgstr "Mật khẩu không hợp lệ."
 
-#: websites/api/views.py:149
+#: websites/api/views.py:150
 msgid "Reset Password Successfully."
 msgstr "Đặt lại mật khẩu thành công."
 
-#: websites/api/views.py:152
+#: websites/api/views.py:153
 msgid "The secure code matching query does not exist."
 msgstr "Mã bảo mật không đúng. Vui lòng kiểm tra lại."
 
-#: websites/api/views.py:169
+#: websites/api/views.py:170
 #, fuzzy
 #| msgid "Upload avatar error. Please contact administartor."
 msgid "Upload avatar error. Please contact administartor"
 msgstr "Tải lên hình đại diện lỗi. Vui lòng liên hệ với quản trị viên"
 
-#: websites/api/views.py:189
+#: websites/api/views.py:190
 msgid "This phone number has already. Please choice another."
 msgstr "Số điện thoại đã có người sử dụng. Vui lòng chọn số khác."
 
-#: websites/api/views.py:198
+#: websites/api/views.py:199
 msgid "Birth day invalid format (YYYY-MM-DD)."
 msgstr "Ngày sinh không đúng định dạng (YYYY-MM-DD)."
 
-#: websites/api/views.py:213
+#: websites/api/views.py:214
 msgid "Update infomation user successfully."
 msgstr "Cập nhật thông tin người dùng thành công."
 
-#: websites/api/views.py:217 websites/api/views.py:240
+#: websites/api/views.py:218 websites/api/views.py:241
 msgid "Cannot update infomation user. Please contact administrator."
 msgstr ""
 "Không thể cập nhật thông tin người dùng. Vui lòng liên hệ với quản trị viên."
 
-#: websites/api/views.py:236
+#: websites/api/views.py:237
 msgid "Update device unique successfully."
 msgstr "Cập nhật mã máy thiết bị thành công."
 
 # END FOOTER
 # START API
-#: websites/api/views.py:261 websites/api/views.py:829
+#: websites/api/views.py:262 websites/api/views.py:892
 msgid "Internal Server Error. Please contact administrator."
 msgstr "Lỗi Máy chủ Nội bộ. Xin vui lòng liên hệ với Quản trị viên."
 
-#: websites/api/views.py:281
+#: websites/api/views.py:282
 msgid "Please check required fields : [old_password, new_password]"
 msgstr "Hãy kiểm tra các trường bắt buộc: [old_password, new_password]."
 
-#: websites/api/views.py:290
+#: websites/api/views.py:291
 msgid "OldPassword does not match."
 msgstr "Mặt khẩu cũ không khớp."
 
-#: websites/api/views.py:297
+#: websites/api/views.py:298
 msgid "Update password for user successfully."
 msgstr "Cập nhật mật khẩu thành công."
 
-#: websites/api/views.py:301
+#: websites/api/views.py:302
 msgid "Cannot update password for user. Please contact administrator."
 msgstr "Không thể cập nhật mật khẩu. Vui lòng liên hệ với quản trị viên."
 
-#: websites/api/views.py:326
+#: websites/api/views.py:327
 msgid "Cannot send feedback. Please contact administrator."
 msgstr "Không thể gửi phản hồi. Vui lòng liên hệ với quản trị viên."
 
 # msgid "This field is required."
 # msgstr "Trường này là bắt buộc."
-#: websites/api/views.py:576
+#: websites/api/views.py:577
 msgid "This value must be is integer."
 msgstr "Giá trị này phải là số nguyên."
 
-#: websites/api/views.py:654 websites/api/views.py:704
-#: websites/api/views.py:740 websites/api/views.py:777
-#: websites/api/views.py:1386
+#: websites/api/views.py:655 websites/api/views.py:726
+#: websites/api/views.py:775 websites/api/views.py:826
+#: websites/api/views.py:1455
 msgid "Card id field is required."
 msgstr "Trường card_id không được bỏ trống."
 
-#: websites/api/views.py:685 websites/api/views.py:722
-#: websites/api/views.py:758 websites/api/views.py:795
-#: websites/api/views.py:1329 websites/api/views.py:1404
+#: websites/api/views.py:702 websites/api/views.py:752
+#: websites/api/views.py:801 websites/api/views.py:852
+#: websites/api/views.py:1397 websites/api/views.py:1482
 msgid "You don't have permission to access."
 msgstr "Bạn không có quyền truy cập."
 
-#: websites/api/views.py:814
+#: websites/api/views.py:877
 msgid "Date request is required."
 msgstr "Trường open_date không được bỏ trống."
 
-#: websites/api/views.py:885
+#: websites/api/views.py:948
 msgid "Notification Id is required."
 msgstr "Trường notification_id không được bỏ trống."
 
-#: websites/api/views.py:887
+#: websites/api/views.py:950
 msgid "Anonymous User Cannot Update Notification"
 msgstr "Người dùng chưa chưa đăng ký không thể cập nhật thông báo."
 
-#: websites/api/views.py:893
+#: websites/api/views.py:956
 msgid "Successfull"
 msgstr "Thành công"
 
-#: websites/api/views.py:933
+#: websites/api/views.py:996
 msgid "Turn off notification successful."
 msgstr "Tắt thông báo thành công."
 
-#: websites/api/views.py:935 websites/api/views.py:956
-#: websites/api/views.py:1069 websites/api/views.py:1126
-#: websites/api/views.py:1164 websites/api/views.py:1211
+#: websites/api/views.py:998 websites/api/views.py:1019
+#: websites/api/views.py:1132 websites/api/views.py:1189
+#: websites/api/views.py:1227 websites/api/views.py:1274
 msgid "Anonymous User Cannot Call This Action."
 msgstr "Người dùng chưa chưa đăng ký. Không thể gọi hành động này."
 
 # END FOOTER
 # START API
-#: websites/api/views.py:939 websites/api/views.py:960
-#: websites/api/views.py:1130 websites/api/views.py:1172
+#: websites/api/views.py:1002 websites/api/views.py:1023
+#: websites/api/views.py:1193 websites/api/views.py:1235
 msgid "Internal Server Error. Please Contact Administrator."
 msgstr "Lỗi Máy chủ Nội bộ. Xin vui lòng liên hệ với Quản trị viên."
 
-#: websites/api/views.py:954
+#: websites/api/views.py:1017
 msgid "Turn on notification successful."
 msgstr "Bật thông báo thành công."
 
-#: websites/api/views.py:996
+#: websites/api/views.py:1059
 msgid "Cannot add new notification. Please contact administrator."
 msgstr "Không thể thêm thông báo mới. Vui lòng liên hệ với quản trị viên."
 
-#: websites/api/views.py:1066
+#: websites/api/views.py:1129
 msgid "Push Notification Successfull"
 msgstr "Thông báo gởi thành công."
 
-#: websites/api/views.py:1077
+#: websites/api/views.py:1140
 msgid "Cannot push notification. Please contact administrator."
 msgstr "Không thể gởi thông báo. Vui lòng liên hệ với quản trị viên."
 
-#: websites/api/views.py:1098 websites/api/views.py:1149
+#: websites/api/views.py:1161 websites/api/views.py:1212
 msgid "The device_uid field is required."
 msgstr "Trường device_uid không được bỏ trống."
 
-#: websites/api/views.py:1124
+#: websites/api/views.py:1187
 msgid "Connect device successful."
 msgstr "Kết nối thiết bị thành công."
 
-#: websites/api/views.py:1162
+#: websites/api/views.py:1225
 msgid "Disconnect device successful."
 msgstr "Ngắt kết nối thiết bị thành công."
 
-#: websites/api/views.py:1167 websites/api/views.py:1169
+#: websites/api/views.py:1230 websites/api/views.py:1232
 msgid "Cannot disconnect device. DeviceID not found."
 msgstr "Không thể ngắt kết nối thiết bị. Không tìm thấy DeviceID."
 
-#: websites/api/views.py:1190
+#: websites/api/views.py:1253
 msgid "The promotion_id is required."
 msgstr "Trường promotion_id không được bỏ trống."
 
-#: websites/api/views.py:1201 websites/api/views.py:1252
-#: websites/api/views.py:1254
+#: websites/api/views.py:1264 websites/api/views.py:1315
+#: websites/api/views.py:1317
 msgid "Error. User or Deivce Have get gift from promotion."
 msgstr "Lỗi. Người dùng hoặc thiết bị đã nhận được quà tặng khuyến mãi."
 
-#: websites/api/views.py:1214
+#: websites/api/views.py:1277
 msgid "Promotion for user does not matching. Please check again."
 msgstr ""
 "Khuyến mãi này không dành cho người dùng hiện tại. Vui lòng kiểm tra lại."
 
-#: websites/api/views.py:1218 websites/api/views.py:1223
-#: websites/api/views.py:1269
+#: websites/api/views.py:1281 websites/api/views.py:1286
+#: websites/api/views.py:1332
 msgid "Your account not apply current promotion. Please contact administrator."
 msgstr ""
 "Tài khoản của bạn không áp dụng khuyến mãi hiện tại. Vui lòng liên hệ với "
 "quản trị viên."
 
-#: websites/api/views.py:1241
+#: websites/api/views.py:1304
 msgid "Error. DeivceID of user is empty. Please check again."
 msgstr "Lỗi. Người dùng hiện tại không có device_id. Vui lòng xác minh lại."
 
-#: websites/api/views.py:1286
+#: websites/api/views.py:1348
 msgid ""
 "Please check required fields : [source_card_barcode, received_card_barcode, "
 "ticket_amount]"
@@ -825,29 +825,25 @@ msgstr ""
 "Các trường sau không được bỏ trống : [source_card_barcode, "
 "received_card_barcode, ticket_amount]"
 
-#: websites/api/views.py:1291
+#: websites/api/views.py:1353
 msgid "Please update full name of user"
 msgstr "Vui lòng cập nhật tên của tài khoản"
 
 # msgid "This field is required."
 # msgstr "Trường này là bắt buộc."
-#: websites/api/views.py:1297
+#: websites/api/views.py:1359
 msgid "Ticket Amount must be is number"
 msgstr "Ticket Amount phải là số nguyên."
 
-#: websites/api/views.py:1334
-msgid "Source barcode not link to any user"
-msgstr "Thẻ này chưa được liên kết với bất kỳ tài khoản nào"
-
-#: websites/api/views.py:1348
+#: websites/api/views.py:1416
 msgid "Position field is required."
 msgstr "Trường position không được bỏ trống."
 
-#: websites/api/views.py:1355
+#: websites/api/views.py:1423
 msgid "Fee not found."
 msgstr "Không tìm thấy phí giao dịch"
 
-#: websites/api/views.py:1373
+#: websites/api/views.py:1441
 msgid "Hot Advs not found."
 msgstr "Không tìm thấy Hot Advs"
 
@@ -1025,7 +1021,7 @@ msgstr "Đã cập nhật thông tin thẻ Helio Embed thành công."
 
 #: websites/api_admin/views.py:1089
 msgid "User is related."
-msgstr "Liên kết thành công."
+msgstr "Tài khoản Helio App này đã liên kết. Vui lòng kiểm tra lại."
 
 #: websites/api_admin/views.py:1114
 msgid "Userembed is related."
@@ -1135,6 +1131,42 @@ msgstr ""
 #: websites/config/setting_api.py:29 websites/config/setting_develop.py:26
 #: websites/config/setting_local.py:27
 msgid "English"
+msgstr ""
+
+#: websites/core/custom_models.py:49
+msgid "Full name"
+msgstr "Họ và Tên"
+
+#: websites/core/custom_models.py:50
+msgid "User name"
+msgstr "Tên"
+
+#: websites/core/custom_models.py:52
+msgid "Email address"
+msgstr "Địa chỉ email"
+
+#: websites/core/custom_models.py:56
+msgid "Birth date"
+msgstr "Ngày sinh"
+
+#: websites/core/custom_models.py:57 websites/core/models.py:284
+msgid "Phone"
+msgstr "Số điện thoại"
+
+#: websites/core/custom_models.py:58
+msgid "Personal id"
+msgstr "Chứng minh nhân dân"
+
+#: websites/core/custom_models.py:59
+msgid "Country"
+msgstr ""
+
+#: websites/core/custom_models.py:60
+msgid "Address"
+msgstr "Địa chỉ"
+
+#: websites/core/custom_models.py:61
+msgid "City"
 msgstr ""
 
 #: websites/core/custom_models.py:64
@@ -1375,10 +1407,6 @@ msgstr "Đã trả lời"
 msgid "Moved to related department"
 msgstr "Đã chuyển đến bộ phận liên quan"
 
-#: websites/core/models.py:284
-msgid "Phone"
-msgstr "Số điện thoại"
-
 #: websites/core/models.py:289 websites/core/models.py:383
 msgid "Sent Date"
 msgstr "Ngày gửi"
@@ -1496,6 +1524,9 @@ msgstr ""
 #: websites/main/custom_jwt.py:43 websites/main/custom_jwt.py:46
 msgid "Invalid token."
 msgstr "Mã chứng thực không hợp lệ. Vui lòng kiểm tra lại."
+
+# msgid "Source barcode not link to any user"
+# msgstr "Thẻ này chưa được liên kết với bất kỳ tài khoản nào"
 
 #~ msgid "Fee not exist."
 #~ msgstr "Không tìm thấy phí giao dịch"
