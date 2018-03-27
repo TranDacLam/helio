@@ -83,10 +83,12 @@ export class FormUserAppComponent implements OnInit {
                     address: this.user_app.address
                 });
                 this.errorMessage = '';
+                this.msg_error = null;
                 this.is_disable_checkbox = false;
             },
             (error) => { 
                 this.errorMessage = error.message; 
+                this.msg_error = null;
                 this.is_disable_checkbox = true;
                 this.appForm.setValue({
                     full_name: null,

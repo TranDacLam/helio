@@ -87,9 +87,11 @@ export class FormUserEmbedComponent implements OnInit {
                     address: this.user_embed.address
                 });
                 this.errorMessage = '';
+                this.msg_error = null;
                 this.is_disable_checkbox = false;
             },
             (error) => { 
+                this.msg_error = null;
                 this.errorMessage = error.message; 
                 this.is_disable_checkbox = true;
                 this.embedForm.setValue({
