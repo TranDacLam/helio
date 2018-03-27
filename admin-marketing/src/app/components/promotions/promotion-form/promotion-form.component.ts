@@ -21,6 +21,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from './../../../shared/class/user';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { env } from '../../../../environments/environment';
+import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import * as moment from 'moment';
 
 declare var $ :any; // declare Jquery
@@ -92,10 +93,8 @@ export class PromotionFormComponent implements OnInit {
         this.getPromotionTypes();
         this.getPromotionLabels();
 
-        this.ckEditorConfig = {
-            // filebrowserUploadUrl: env.api_domain_root+'ckeditor/upload/'
-
-        };
+        this.ckEditorConfig = ckeditor_config.config;
+        
         this.creatPromotionForm();
     }
 

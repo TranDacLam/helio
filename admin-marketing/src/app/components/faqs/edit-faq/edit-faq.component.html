@@ -36,7 +36,7 @@
             <label class="col-form-label form-check-label">Câu Trả Lời</label>
         </div>
         <div class="col-sm-8">
-            <ckeditor formControlName="answer"></ckeditor>
+            <ckeditor formControlName="answer" [config]="ckEditorConfig"></ckeditor>
             <show-error-valid [control]="formFaq.get('answer')"></show-error-valid>
         </div>
     </div>
