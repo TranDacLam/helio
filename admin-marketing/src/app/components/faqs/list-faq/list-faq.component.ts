@@ -139,10 +139,10 @@ export class ListFaqComponent implements OnInit {
                 message: "Bạn muốn xóa " + this.length_selected + " Câu Hỏi Thường Gặp đã chọn",
                 buttons: {
                     cancel: {
-                        label: "XÓA"
+                        label: "HỦY"
                     },
                     confirm: {
-                        label: "HỦY"
+                        label: "XÓA"
                     }
                 },
                 callback: function (result) {

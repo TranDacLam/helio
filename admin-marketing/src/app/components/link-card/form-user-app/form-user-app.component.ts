@@ -75,6 +75,10 @@ export class FormUserAppComponent implements OnInit {
         Author: Lam
     */
     searchEmail(value){
+        if(this.validateEmail()){
+            this.errorMessage = 'Email không đúng định dạng';
+            return;
+        }
         this.linkCardService.getEmail(value).subscribe(
             (data) => {
                 this.user_app = data;
@@ -126,6 +130,20 @@ export class FormUserAppComponent implements OnInit {
     */
     stripEmail(value){
         this.appForm.get('email').setValue(value.replace(/ /g,""));
+    }
+
+    /*
+        Function validateEmail(): validate email format is email 
+        Author: Lam
+    */
+    validateEmail(): boolean{
+        let regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let email = $("#search_email").val();
+        let is_check = regex.test(email);
+        if (!is_check) {
+            return true;
+        }
+        return false;
     }
 
     /*
