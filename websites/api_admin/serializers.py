@@ -374,7 +374,12 @@ class FAQSerializer(serializers.ModelSerializer):
     # follow models.py
     limit_category_Faq = [const.HELIO_PLAY_CATEGORY, const.HELIO_KIDS_CATEGORY, const.POWERCARD_CATEGORY,
                            const.REDEMPTION_STORE_CATEGORY, const.OTHER_PRODUCT_CATEGORY]
-    
+    question = serializers.CharField(required=True,validators=[
+        UniqueValidator(
+            queryset=FAQ.objects.all(),
+            message =_('This question is exist.')
+            )
+        ])
     class Meta:
         model = FAQ
         fields = ('id', 'question', 'answer', 'category')
