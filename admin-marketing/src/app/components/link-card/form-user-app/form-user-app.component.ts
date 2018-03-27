@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../../shared/class/user';
@@ -23,6 +23,9 @@ export class FormUserAppComponent implements OnInit {
 
     // receive value from parrent add-link-card component
     @Input() status_error;
+    // Return 1 object to parent
+    @Output() is_btn_linkcard_app: EventEmitter<any> = new EventEmitter<any>();
+    @Output() is_submit: EventEmitter<any> = new EventEmitter<any>();
 
     appForm: FormGroup;
 
@@ -33,6 +36,7 @@ export class FormUserAppComponent implements OnInit {
 
     msg_error: any;
     is_disable_checkbox: boolean = true;
+    is_disabled_btn_app: boolean = true;
 
     errorMessage = '';
 
@@ -85,11 +89,17 @@ export class FormUserAppComponent implements OnInit {
                 this.errorMessage = '';
                 this.msg_error = null;
                 this.is_disable_checkbox = false;
+                this.is_disabled_btn_app = false;
+                this.is_btn_linkcard_app.emit(this.is_disabled_btn_app);
+                this.is_submit.emit(true);
             },
             (error) => { 
                 this.errorMessage = error.message; 
                 this.msg_error = null;
                 this.is_disable_checkbox = true;
+                this.is_disabled_btn_app = true;
+                this.is_btn_linkcard_app.emit(this.is_disabled_btn_app);
+                this.is_submit.emit(true);
                 this.appForm.setValue({
                     full_name: null,
                     email: null,
@@ -132,10 +142,12 @@ export class FormUserAppComponent implements OnInit {
                     this.searchEmail(this.appForm.value.email);
                     this.toastr.success(`${data.message}`);
                     this.msg_error = null;
+                    this.is_submit.emit(true);
                 },
                 (error) => {
                     if(error.code === 400){
                         this.msg_error = error.message;
+                        this.is_submit.emit(true);
                     }else{
                         this.router.navigate(['/error', { message: error.message}]);
                     }

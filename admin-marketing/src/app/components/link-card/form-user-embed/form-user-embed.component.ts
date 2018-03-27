@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Customer } from '../../../shared/class/customer';
@@ -23,6 +23,9 @@ export class FormUserEmbedComponent implements OnInit {
 
     // receive value from parrent add-link-card component
     @Input() status_error;
+    // Return 1 object to parent
+    @Output() is_btn_linkcard_embed: EventEmitter<any> = new EventEmitter<any>();
+    @Output() is_submit: EventEmitter<any> = new EventEmitter<any>();
 
     embedForm: FormGroup;
 
@@ -35,6 +38,7 @@ export class FormUserEmbedComponent implements OnInit {
     msg_success = ''; // Message show error
     msg_error: any;
     is_disable_checkbox: boolean = true;
+    is_disabled_btn_embed: boolean = true;
 
     errorMessage = '';
 
@@ -76,24 +80,54 @@ export class FormUserEmbedComponent implements OnInit {
         let barcode = parseInt(value);
         this.linkCardService.getBarcode(barcode).subscribe(
             (data) => {
-                this.user_embed = data.message;
-                this.embedForm.setValue({
-                    barcode: this.user_embed.barcode,
-                    full_name: this.user_embed.full_name,
-                    email: this.user_embed.email,
-                    phone: this.user_embed.phone,
-                    birth_date: this.user_embed.birth_date,
-                    personal_id: this.user_embed.personal_id,
-                    address: this.user_embed.address
-                });
-                this.errorMessage = '';
+                if(typeof(data.message.cards_state) === 'number'){
+                    this.user_embed = data.message;
+                    this.embedForm.setValue({
+                        barcode: this.user_embed.barcode,
+                        full_name: this.user_embed.full_name,
+                        email: this.user_embed.email,
+                        phone: this.user_embed.phone,
+                        birth_date: this.user_embed.birth_date,
+                        personal_id: this.user_embed.personal_id,
+                        address: this.user_embed.address
+                    });
+                }
+                if(data.message.cards_state === 0){
+                    this.errorMessage = '';
+                    this.is_disable_checkbox = false;
+                    this.is_disabled_btn_embed = false;
+                    this.is_btn_linkcard_embed.emit(this.is_disabled_btn_embed);
+                }else if(data.message.cards_state === 1){
+                    this.errorMessage = 'Mã thẻ này đã bị khóa. Vui lòng liên kết với mã thẻ khác.';
+                }else if(data.message.cards_state === 2){
+                    this.errorMessage = 'Mã thẻ này đã bị thay thế. Vui lòng liên kết với mã thẻ khác.';
+                }else{
+                    this.errorMessage = 'Mã thẻ này không hợp lệ.';
+                    this.embedForm.setValue({
+                        barcode: null,
+                        full_name: null,
+                        email: null,
+                        phone: null,
+                        birth_date: null,
+                        personal_id: null,
+                        address: null
+                    });
+                }
+                if(data.message.cards_state !== 0){
+                    this.is_disable_checkbox = true;
+                    this.is_disabled_btn_embed = true;
+                    this.is_btn_linkcard_embed.emit(this.is_disabled_btn_embed);
+                }
                 this.msg_error = null;
-                this.is_disable_checkbox = false;
+                this.is_submit.emit(true);
             },
             (error) => { 
                 this.msg_error = null;
                 this.errorMessage = error.message; 
                 this.is_disable_checkbox = true;
+                this.is_disabled_btn_embed = true;
+                this.is_btn_linkcard_embed.emit(this.is_disabled_btn_embed);
+                this.is_submit.emit(true);
                 this.embedForm.setValue({
                     barcode: null,
                     full_name: null,
@@ -144,10 +178,12 @@ export class FormUserEmbedComponent implements OnInit {
                     this.searchBarcode(this.embedForm.value.barcode);
                     this.toastr.success(`${data.message}`);
                     this.msg_error = null;
+                    this.is_submit.emit(true);
                 },
                 (error) => {
                     if(error.code === 400){
                         this.msg_error = error.message;
+                        this.is_submit.emit(true);
                     }else{
                         this.router.navigate(['/error', { message: error.message}]);
                     }
