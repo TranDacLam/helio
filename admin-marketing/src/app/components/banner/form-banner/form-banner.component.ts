@@ -177,7 +177,7 @@ export class FormBannerComponent implements OnInit {
     confirmDelete(banner: Banner) {
         bootbox.confirm({
             title: "Bạn có chắc chắn ?",
-            message: "Bạn muốn xóa Banner này",
+            message: "Bạn muốn xóa Banner này ?",
             buttons: {
                     cancel: {
                         label: "HỦY"
