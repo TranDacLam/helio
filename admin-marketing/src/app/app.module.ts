@@ -51,7 +51,6 @@ import { BannerService } from './shared/services/banner.service';
 import { AuthGuard } from './shared/guards/index';
 
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
-
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserAddComponent } from './components/user/user-add/user-add.component';
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
@@ -59,10 +58,7 @@ import { LinkCardListComponent } from './components/link-card/link-card-list/lin
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeService } from './shared/services/fee.service';
 import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
-
 import { BannerListComponent } from './components/banner/banner-list/banner-list.component';
-import { BannerDetailComponent } from './components/banner/banner-detail/banner-detail.component';
-import { BannerAddComponent } from './components/banner/banner-add/banner-add.component';
 
 import { ListEventComponent } from './components/events/list-event/list-event.component';
 import { AddEventComponent } from './components/events/add-event/add-event.component';
@@ -100,6 +96,7 @@ import { PromotionReportComponent } from './components/promotions/promotion-repo
 import { PopupEditPromotionComponent } from './components/promotions/popup-edit-promotion/popup-edit-promotion.component';
 import { RolePermissionComponent } from './components/role-permission/role-permission.component';
 import { FormAdvertisementComponent } from './components/advertisement/form-advertisement/form-advertisement.component';
+import { FormBannerComponent } from './components/banner/form-banner/form-banner.component';
 
 
 /*
@@ -145,8 +142,6 @@ export const DefaultIntl = {
     FeeListComponent,
     FeeAddComponent,
     BannerListComponent,
-    BannerDetailComponent,
-    BannerAddComponent,
     ListEventComponent,
     AddEventComponent,
     EditEventComponent,
@@ -182,6 +177,7 @@ export const DefaultIntl = {
     PopupEditPromotionComponent,
     RolePermissionComponent,
     FormAdvertisementComponent,
+    FormBannerComponent,
     
   ],
   imports: [

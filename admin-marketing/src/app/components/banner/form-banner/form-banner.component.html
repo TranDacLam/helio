@@ -4,15 +4,15 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang chủ</a></li>
             <li class="breadcrumb-item"><a routerLink="/banner-list">Banner</a></li>
-             <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa Banner</li>
+             <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
 <div class='title-banner row'>
-    <p class="title text-center">Chỉnh sửa Banner</p>
+    <p class="title text-center">{{title}}</p>
 </div>
-<form [formGroup]="formBanner">
+<form [formGroup]="formBanner" *ngIf="banner">
 <div class="col-md-8 area-form-banner">
     <div *ngIf='banner'> 	
         <div class="form-group row">
@@ -52,8 +52,9 @@
             </div>
             <div class="col-md-3">
                 <select class='form-control' name="position" 
-                    formControlName="position" [(ngModel)]="banner.position">
-                    <option *ngFor="let position of positions" [value]="position" [selected]="position === banner.position">
+                    formControlName="position">
+                    <option value="" [selected]="isSelected">Chọn vị trí ở đây</option>
+                    <option *ngFor="let position of positions" [value]="position">
                         {{position}}
                     </option>
                 </select>
@@ -71,8 +72,8 @@
 </div>
 <div class='clearfix'></div>
 <div class="row footer-banner">
-    <button type="submit" class="pull-right btn btn-primary" (click)="updateBanner()">LƯU LẠI</button>
-    <button type="submit" class="pull-left btn btn-danger" (click)="confirmDelete(banner)">XÓA</button>
+    <button type="submit" (click)="onSubmit();" class="pull-right btn btn-primary">LƯU LẠI</button>
+    <button *ngIf ="banner.id" type="submit" class="pull-left btn btn-danger" (click)="confirmDelete(banner)">XÓA</button>
 </div>
 </form>
 

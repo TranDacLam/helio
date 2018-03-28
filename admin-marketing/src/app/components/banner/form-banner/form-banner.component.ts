@@ -11,72 +11,52 @@ import { env } from '../../../../environments/environment';
 declare var bootbox:any;
 
 @Component({
-  selector: 'app-banner-detail',
-  templateUrl: './banner-detail.component.html',
-  styleUrls: ['./banner-detail.component.css']
+  selector: 'app-form-banner',
+  templateUrl: './form-banner.component.html',
+  styleUrls: ['./form-banner.component.css']
 })
-export class BannerDetailComponent implements OnInit {
+export class FormBannerComponent implements OnInit {
 
 	banner: Banner;
     formBanner: FormGroup;
-    banner_form = new Banner();
-	errorMessage: String;
+
     positions = positions;
-    api_domain:string = "";
 
     lang: string = 'vi';
+    api_domain:string = "";
+    errorMessage: string = "";
+    title: string = "";
+    isSelected: boolean;
 
-  	constructor( 
+  	constructor(
   		private bannerService: BannerService,
   		private route: ActivatedRoute,
         private fb: FormBuilder,
         private router: Router,
         private toastr: ToastrService,
-  	) {
-        this.createForm();
-        this.api_domain = env.api_domain_root;
-       }
+  		) {
+  		this.api_domain = env.api_domain_root;
+  	}
 
   	ngOnInit() {
-        this.route.params.subscribe(params => {
+  		this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;
             }
         });
-  		this.getBannerById();
+
+        if (this.route.snapshot.paramMap.get('id')) {
+            // Update Init Form
+            this.title = "Chỉnh Sửa Banner";
+            this.getBannerById();
+        } else {
+            // Add new Form
+            this.title = "Thêm Banner";
+            this.banner = new Banner();
+            this.isSelected = true;
+            this.createForm();
+        }
   	}
-
-      /* 
-      Create form to add banner
-      @author: Trangle
-    */
-    createForm() {
-        this.formBanner = this.fb.group({
-            image: [this.banner_form.image],
-            sub_url: [this.banner_form.sub_url, [Validators.required]],
-            position: [this.banner_form.position, [Validators.required]],
-            is_show: [false]
-        });
-    }
-
-  	/*
-  		Get Banner By Id
-  		Call api form banner.services
-  		@author: TrangLe
-  	 */
-  	getBannerById() {
-  		const id = +this.route.snapshot.paramMap.get('id');
-    	this.bannerService.getBannerById(id, this.lang)
-    	.subscribe(
-        	(banner) => {
-                this.banner = banner;
-            },
-        	(error) =>  {
-                this.router.navigate(['/error', { message: error }]);
-            }
-        );
-  	}
-
     /*
         Upload image
         FileReader: reading file contents
@@ -90,13 +70,38 @@ export class BannerDetailComponent implements OnInit {
             this.formBanner.get(input_id).setValue({ filename: file.name, filetype: file.type, value: file });
         }
     }
-    updateBanner() {
+    
+  	getBannerById() {
+  		const id = +this.route.snapshot.paramMap.get('id');
+    	this.bannerService.getBannerById(id, this.lang)
+    	.subscribe(
+        	(banner) => {
+                this.banner = banner;
+                this.createForm();
+            },
+        	(error) =>  {
+                this.router.navigate(['/error', { message: error }]);
+            }
+        );
+  	}
+
+  	createForm() {
+        this.formBanner = this.fb.group({
+            image: [this.banner.image],
+            sub_url: [this.banner.sub_url, [Validators.required]],
+            position: [this.banner.position, [Validators.required]],
+            is_show: [this.banner.is_show === true ? true : false],
+        });
+    }
+
+    onSubmit() {
         if(this.formBanner.invalid){
             ValidateSubmit.validateAllFormFields(this.formBanner);
         } else {
             var self = this;
             let bannerFormGroup = this.convertFormGroupToFormData(this.formBanner);
-            this.bannerService.updateBanner(bannerFormGroup, this.banner.id, this.lang).subscribe(
+            if(this.banner.id) {
+            	this.bannerService.updateBanner(bannerFormGroup, this.banner.id, this.lang).subscribe(
                     (data) => {
                         // Navigate to promotion page where success
                         this.toastr.success(`Chỉnh sửa ${this.formBanner.value['sub_url']} thành công`);
@@ -110,6 +115,21 @@ export class BannerDetailComponent implements OnInit {
                     }
                 }
             );
+            } else {
+            	this.bannerService.CreateBanner(bannerFormGroup, this.lang).subscribe(
+	                (result) => {
+	                    self.toastr.success(`Thêm ${this.formBanner.value['sub_url']} thành công`);
+	                    self.router.navigate(['/banner-list'])     
+	                },
+	                (error) =>  {
+	                    if( error.code == 400 ){
+	                        self.errorMessage = error.message
+	                    } else {
+	                        self.router.navigate(['/error', {message: error}])
+	                    }
+	                }
+            	);
+            } 
         }
     }
 

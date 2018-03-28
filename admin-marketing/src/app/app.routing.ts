@@ -24,9 +24,8 @@ import { UserListComponent } from './components/user/user-list/user-list.compone
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
-import { BannerAddComponent } from './components/banner/banner-add/banner-add.component';
 import { BannerListComponent } from './components/banner/banner-list/banner-list.component';
-import { BannerDetailComponent } from './components/banner/banner-detail/banner-detail.component';
+import { FormBannerComponent } from './components/banner/form-banner/form-banner.component';
 
 import { ListEventComponent } from './components/events/list-event/list-event.component';
 import { AddEventComponent } from './components/events/add-event/add-event.component';
@@ -144,7 +143,7 @@ const routes: Routes = [{
         canActivate: [AuthGuard]
     }, {
         path: 'banner-add',
-        component: BannerAddComponent,
+        component: FormBannerComponent,
         canActivate: [AuthGuard]
     }, {
         path: 'banner-list',
@@ -152,7 +151,7 @@ const routes: Routes = [{
         canActivate: [AuthGuard]
     }, {
         path: 'banner-detail/:id',
-        component: BannerDetailComponent,
+        component: FormBannerComponent,
         canActivate: [AuthGuard]
     },
     {
