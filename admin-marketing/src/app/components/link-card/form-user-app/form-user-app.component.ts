@@ -75,7 +75,7 @@ export class FormUserAppComponent implements OnInit {
         Author: Lam
     */
     searchEmail(value){
-        if(this.validateEmail()){
+        if(this.validateEmail(value)){
             this.errorMessage = 'Email không đúng định dạng';
             return;
         }
@@ -136,9 +136,8 @@ export class FormUserAppComponent implements OnInit {
         Function validateEmail(): validate email format is email 
         Author: Lam
     */
-    validateEmail(): boolean{
-        let regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        let email = $("#search_email").val();
+    validateEmail(email): boolean{
+        let regex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
         let is_check = regex.test(email);
         if (!is_check) {
             return true;
