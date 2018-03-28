@@ -153,6 +153,7 @@ export class FormNotificationComponent implements OnInit {
     onSubmit(): void{
         if(this.formNotification.invalid){
             ValidateSubmit.validateAllFormFields(this.formNotification);
+            $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
         }else{
             this.formNotification.value.category = parseInt(this.formNotification.value.category);
             // Convert FormGroup to FormData
@@ -171,6 +172,7 @@ export class FormNotificationComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
+                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
                         }else{
                             this.router.navigate(['/error']);
                         }
@@ -200,6 +202,7 @@ export class FormNotificationComponent implements OnInit {
                         (error) => {
                             if(error.code === 400){
                             this.errorMessage = error.message;
+                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
                         }else{
                             this.router.navigate(['/error']);
                         }

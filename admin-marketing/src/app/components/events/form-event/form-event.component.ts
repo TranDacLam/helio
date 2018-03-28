@@ -127,6 +127,7 @@ export class FormEventComponent implements OnInit {
         
         if(this.formEvent.invalid){
             ValidateSubmit.validateAllFormFields(this.formEvent);
+            $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
         }else{
             this.formEvent.value.start_date = $('#start_date').val();
             this.formEvent.value.end_date = $('#end_date').val();
@@ -143,6 +144,7 @@ export class FormEventComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
+                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
@@ -161,6 +163,7 @@ export class FormEventComponent implements OnInit {
                         (error) => {
                             if(error.code === 400){
                                 this.errorMessage = error.message;
+                                $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
                             }else{
                                 this.router.navigate(['/error', { message: error.message}]);
                             }

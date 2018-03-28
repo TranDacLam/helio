@@ -89,6 +89,7 @@ export class AddFaqComponent implements OnInit {
     onSubmit(): void{
         if(this.formFaq.invalid){
             ValidateSubmit.validateAllFormFields(this.formFaq);
+            $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
         }else{
             this.formFaq.value.category = parseInt(this.formFaq.value.category);
             this.faqService.addFaq(this.formFaq.value, this.lang).subscribe(
@@ -99,6 +100,7 @@ export class AddFaqComponent implements OnInit {
                 (error) => {
                     if(error.code === 400){
                         this.errorMessage = error.message;
+                        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
                     }else{
                         this.router.navigate(['/error', { message: error.message}]);
                     }

@@ -125,6 +125,7 @@ export class FormGameComponent implements OnInit {
     onSubmit(): void{
         if(this.formGame.invalid){
             ValidateSubmit.validateAllFormFields(this.formGame);
+            $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
         }else{
             this.formGame.value.game_type = parseInt(this.formGame.value.game_type);
             let game_form_data = this.convertFormGroupToFormData(this.formGame);
@@ -136,7 +137,12 @@ export class FormGameComponent implements OnInit {
                         this.router.navigate(['/game/list']);
                     },
                     (error) => {
-                        { this.errorMessage = error.message; } 
+                        if(error.code === 400){
+                            this.errorMessage = error.message;
+                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                        }else{
+                            this.router.navigate(['/error', { message: error.message}]);
+                        }
                     }
                 );
             }else{
@@ -151,7 +157,12 @@ export class FormGameComponent implements OnInit {
                             this.router.navigate(['/game/list']);
                         },
                         (error) => {
-                            { this.errorMessage = error.message; } 
+                            if(error.code === 400){
+                                this.errorMessage = error.message;
+                                $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                            }else{
+                                this.router.navigate(['/error', { message: error.message}]);
+                            }
                         }
                     );
                 }

@@ -103,6 +103,7 @@ export class FormHotComponent implements OnInit {
     onSubmit(): void{
         if(this.formHot.invalid){
             ValidateSubmit.validateAllFormFields(this.formHot);
+            $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
         }else{
             let hot_form_data = this.convertFormGroupToFormData(this.formHot);
             let value_form = this.formHot.value;
@@ -115,6 +116,7 @@ export class FormHotComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
+                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
@@ -133,6 +135,7 @@ export class FormHotComponent implements OnInit {
                         (error) => {
                             if(error.code === 400){
                                 this.errorMessage = error.message;
+                                $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
                             }else{
                                 this.router.navigate(['/error', { message: error.message}]);
                             }

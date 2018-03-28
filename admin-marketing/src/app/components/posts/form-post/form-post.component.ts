@@ -142,6 +142,7 @@ export class FormPostComponent implements OnInit {
     onSubmit(): void{
         if(this.formPost.invalid){
             ValidateSubmit.validateAllFormFields(this.formPost);
+            $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
         }else{
             this.formPost.value.post_type = parseInt(this.formPost.value.post_type);
             let post_form_data = this.convertFormGroupToFormData(this.formPost);
@@ -155,6 +156,7 @@ export class FormPostComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
+                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
@@ -170,6 +172,7 @@ export class FormPostComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
+                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }

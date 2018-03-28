@@ -86,6 +86,7 @@ export class EditPromotionLabelComponent implements OnInit {
     onSubmit(): void{
          if(this.formPromotionLabel.invalid){
             ValidateSubmit.validateAllFormFields(this.formPromotionLabel);
+            $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
         }else{
             this.promotionLabelService.updatePromotionLabel(this.formPromotionLabel.value, this.promotion_label.id, this.lang)
                 .subscribe(
@@ -96,6 +97,7 @@ export class EditPromotionLabelComponent implements OnInit {
                 (error) => {
                     if(error.code === 400){
                         this.errorMessage = error.message;
+                        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
                     }else{
                         this.router.navigate(['/error', { message: error.message}]);
                     }
