@@ -291,16 +291,19 @@ class EventSerializer(serializers.ModelSerializer):
         return super(EventSerializer, self).update(instance, validated_data)
 
 class HotSerializer(serializers.ModelSerializer):
-
+    image = serializers.ImageField(required=False, allow_empty_file=True)
     class Meta:
         model = Hot
         fields = ('id', 'name', 'sub_url', 'image', 'is_show')
 
     def update(self, instance, validated_data):
+        print "instance.image", instance.image
         if self.context['request']:
             is_clear_image = self.context['request'].data.get('is_clear_image')
             if is_clear_image == "false" and not validated_data.get('image'):
                 validated_data['image'] = instance.image
+            elif is_clear_image == "true":
+                validated_data['image'] = None
         return super(HotSerializer, self).update(instance, validated_data)
 
 class PostImageSerializer(serializers.ModelSerializer):
