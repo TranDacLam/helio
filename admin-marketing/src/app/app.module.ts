@@ -87,12 +87,8 @@ import { EditPromotionLabelComponent } from './components/promotion-labels/edit-
 import { FormEventComponent } from './components/events/form-event/form-event.component';
 import { FormGameComponent } from './components/games/form-game/form-game.component';
 import { FormPostComponent } from './components/posts/form-post/form-post.component';
-
 import { HomeComponent } from './components/home/home.component';
-
-import { AddPromotionComponent } from './components/promotions/add-promotion/add-promotion.component';
-import { EditPromotionComponent } from './components/promotions/edit-promotion/edit-promotion.component';
-import { PromotionFormComponent } from './components/promotions/promotion-form/promotion-form.component';
+import { PromotionFormDetailComponent } from './components/promotions/promotion-form-detail/promotion-form-detail.component';
 import { ListPromotionComponent } from './components/promotions/list-promotion/list-promotion.component';
 import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
 import { FormHotComponent } from './components/hots/form-hot/form-hot.component';
@@ -108,7 +104,7 @@ import { RolePermissionComponent } from './components/role-permission/role-permi
 
 
 /*
-    Translate datetime-picker\
+    Translate datetime-picker
     author: Lam
 */
 export const DefaultIntl = {
@@ -176,9 +172,7 @@ export const DefaultIntl = {
     FormGameComponent,
     FormPostComponent,
     HomeComponent,
-    AddPromotionComponent,
-    EditPromotionComponent,
-    PromotionFormComponent,
+    PromotionFormDetailComponent,
     ListPromotionComponent,
     UserPromotionComponent,
     FormHotComponent,

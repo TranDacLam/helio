@@ -28,21 +28,20 @@ declare var $ :any; // declare Jquery
 declare var bootbox:any;
 
 @Component({
-    selector: 'app-promotion-form',
-    templateUrl: './promotion-form.component.html',
-    styleUrls: ['./promotion-form.component.css'],
+    selector: 'app-promotion-form-detail',
+    templateUrl: './promotion-form-detail.component.html',
+    styleUrls: ['./promotion-form-detail.component.css'],
     providers: [
         PromotionService,
         PromotionLabelService
     ]
 })
 
-export class PromotionFormComponent implements OnInit {
+export class PromotionFormDetailComponent implements OnInit {
 
-    @Input() 
     promotion: Promotion;
 
-    @Input() type_http; // Get type http from component parent
+    @Input() position; // Get type http from component parent
 
     // Return 1 object to parent
     @Output() update_promotion: EventEmitter<Promotion> = new EventEmitter<Promotion>();
@@ -62,6 +61,7 @@ export class PromotionFormComponent implements OnInit {
     apply_date: Date = new Date();
 
     lang = 'vi';
+    title_page = "";
 
     constructor(
         private promotionService: PromotionService,
@@ -85,6 +85,7 @@ export class PromotionFormComponent implements OnInit {
                 this.lang = params.lang;
             }
         });
+
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
         },100);
@@ -94,8 +95,17 @@ export class PromotionFormComponent implements OnInit {
         this.getPromotionLabels();
 
         this.ckEditorConfig = ckeditor_config.config;
-        
-        this.creatPromotionForm();
+
+        if (this.route.snapshot.paramMap.get('id')) {
+            // Update Init Form
+            this.title_page = "Chỉnh Sửa Khuyến Mãi";
+            this.getPromotion();
+        } else {
+            // Add new Form
+            this.title_page = "Thêm Khuyến Mãi";
+            this.promotion = new Promotion()
+            this.creatPromotionForm();
+        }
     }
 
     /*
@@ -120,6 +130,20 @@ export class PromotionFormComponent implements OnInit {
             is_draft: [this.promotion.is_draft],
             is_clear_image: [false],
             is_clear_image_thumbnail: [false],
+        });
+    }
+
+    /*
+        Call Service get promotion by Id
+        @author: diemnguyen 
+    */
+    getPromotion() {
+        const id = +this.route.snapshot.paramMap.get('id');
+        this.promotionService.getPromotionById(id, this.lang).subscribe((data) => {
+            this.promotion = data;
+            this.creatPromotionForm();
+        }, (error) => {
+            this.router.navigate(['/error', { message: error.message}]);
         });
     }
 
@@ -169,26 +193,6 @@ export class PromotionFormComponent implements OnInit {
     }
 
     /*
-        Function getNotification():
-         + Get id from url path
-         + Callback service function getNotification() by id
-        Author: Lam
-    */
-    getPromotion(){
-        const id = +this.route.snapshot.paramMap.get('id');
-        this.promotionService.getPromotionById(id, this.lang).subscribe(
-            (data) => {
-                this.promotion = data;
-                this.update_promotion.emit(this.promotion);
-            },
-            (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
-            }
-        );
-    }
-
-
-    /*
         Change file input event. ( image field and thumbnail image field)
         @author: diemnguyen
     */
@@ -226,8 +230,9 @@ export class PromotionFormComponent implements OnInit {
                 this.promotionService.updatePromotion(promotionFormData, this.promotion.id, this.lang).subscribe(
                     (data) => {
                         // popup edit pormotion at user promotion
-                        if(this.type_http === 'put_popup'){
-                            this.getPromotion();
+                        if(this.position === 'popup'){
+                            this.promotion = data;
+                            this.update_promotion.emit(this.promotion);
                             $('#UpdatePromotion').modal('toggle');
                             this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
                         }else{
