@@ -82,17 +82,54 @@ export class FormEventComponent implements OnInit {
             short_description: [this.event.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.event.content, Validators.required],
             start_date: [this.event.start_date ? moment(this.event.start_date,"DD/MM/YYYY").toDate() : '', 
-                [DateValidators.formatStartDate, DateValidators.requiredStartDate]],
+                [DateValidators.formatStartDate, DateValidators.requiredStartDate, DateValidators.validStartDate]],
             end_date: [this.event.end_date ? moment(this.event.end_date,"DD/MM/YYYY").toDate() : '', 
-                [DateValidators.checkDate, DateValidators.formatEndDate, DateValidators.requiredStartDate]],
+                [DateValidators.formatEndDate, DateValidators.requiredStartDate, DateValidators.validEndDate]],
             start_time: [this.event.start_time ? moment(this.event.start_time,"HH:mm").format() : '', 
                 [DateValidators.formatStartTime]],
             end_time: [this.event.end_time ? moment(this.event.end_time,"HH:mm").format() : '',
-                [DateValidators.formatEndTime, DateValidators.checkTime]],
+                [DateValidators.formatEndTime]],
             is_draft: [this.event.is_draft === true ? true : false],
             is_clear_image: [false]
-        });
+        }, {validator: [this.dateLessThan(), this.timeLessThan()]});
     }
+
+    /*
+        Function dateLessThan(): validate start date and end date
+        Author: Lam
+    */
+    dateLessThan() {
+        return (group: FormGroup): {[key: string]: any} => {
+            let start = $('#start_date').val() ? moment($('#start_date').val(), "DD/MM/YYYY").toDate() : '';
+            let end = $('#end_date').val() ? moment($('#end_date').val(), "DD/MM/YYYY").toDate() : '';
+            if(start <= end || start === '' || end === ''){
+
+                return {};
+            }
+            return {
+                dates: "Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu"
+            };
+        }
+    }
+
+    /*
+        Function timeLessThan(): validate start time and end time
+        Author: Lam
+    */
+    timeLessThan(){
+        return (group: FormGroup): {[key: string]: any} => {
+            let start_date = $('#start_date').val() ? $('#start_date').val() : '';
+            let end_date = $('#end_date').val() ? $('#end_date').val() : '';
+            let start_time = $('#start_time').val() ? moment($('#start_time').val(), 'HH:mm').toDate() : '';
+            let end_time = $('#end_time').val() ? moment($('#end_time').val(), 'HH:mm').toDate() : '';
+            if(start_date === end_date && start_time >= end_time){
+                return {
+                    times: "Vui lòng nhập thời gian kết thúc lớn hơn thời gian bắt đầu"
+                };
+            }
+            return {};
+        }
+    }    
 
     /*
         Function getEvent():
@@ -143,13 +180,12 @@ export class FormEventComponent implements OnInit {
         this.formEvent.controls['start_date'].setValidators([
             DateValidators.formatStartDate, DateValidators.requiredStartDate]);
         this.formEvent.controls['start_date'].updateValueAndValidity();
-        this.formEvent.controls['end_date'].setValidators([DateValidators.checkDate, 
+        this.formEvent.controls['end_date'].setValidators([
             DateValidators.formatEndDate, DateValidators.requiredStartDate]);
         this.formEvent.controls['end_date'].updateValueAndValidity();
         this.formEvent.controls['start_time'].setValidators([DateValidators.formatStartTime]);
         this.formEvent.controls['start_time'].updateValueAndValidity();
-        this.formEvent.controls['end_time'].setValidators([DateValidators.formatEndTime,
-            DateValidators.checkTime]);
+        this.formEvent.controls['end_time'].setValidators([DateValidators.formatEndTime]);
         this.formEvent.controls['end_time'].updateValueAndValidity();
         
         if(this.formEvent.invalid){
@@ -208,8 +244,8 @@ export class FormEventComponent implements OnInit {
     deleteEvent(){
         let that = this;
         bootbox.confirm({
-            title: "Bạn có chắc chắn ?",
-            message: "Bạn muốn xóa Sự Kiện này",
+            title: "Bạn có chắc chắn?",
+            message: "Bạn muốn xóa Sự Kiện này?",
             buttons: {
                 cancel: {
                     label: "HỦY"

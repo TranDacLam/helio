@@ -208,8 +208,8 @@ export class FormGameComponent implements OnInit {
     deleteGameEvent(){
         let that = this;
         bootbox.confirm({
-            title: "Bạn có chắc chắn ?",
-            message: "Bạn muốn xóa Trò Chơi này",
+            title: "Bạn có chắc chắn?",
+            message: "Bạn muốn xóa Trò Chơi này?",
             buttons: {
                 cancel: {
                     label: "HỦY"

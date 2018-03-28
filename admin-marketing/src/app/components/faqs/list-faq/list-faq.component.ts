@@ -135,8 +135,8 @@ export class ListFaqComponent implements OnInit {
         let that = this;
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn ?",
-                message: "Bạn muốn xóa " + this.length_selected + " Câu Hỏi Thường Gặp đã chọn",
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.length_selected + " Câu Hỏi Thường Gặp đã chọn?",
                 buttons: {
                     cancel: {
                         label: "HỦY"

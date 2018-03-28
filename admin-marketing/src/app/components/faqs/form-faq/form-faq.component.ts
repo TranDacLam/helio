@@ -169,8 +169,8 @@ export class FormFaqComponent implements OnInit {
     deleteFaqEvent(){
         let that = this;
         bootbox.confirm({
-            title: "Bạn có chắc chắn ?",
-            message: "Bạn muốn xóa Câu Hỏi Thường Gặp này",
+            title: "Bạn có chắc chắn?",
+            message: "Bạn muốn xóa Câu Hỏi Thường Gặp này?",
             buttons: {
                 cancel: {
                     label: "HỦY"

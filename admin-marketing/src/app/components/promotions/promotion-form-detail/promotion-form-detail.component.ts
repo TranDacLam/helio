@@ -283,8 +283,8 @@ export class PromotionFormDetailComponent implements OnInit {
         const that = this;
         if (id) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn ?",
-                message: "Bạn muốn Khuyến Mãi tử này",
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn Khuyến Mãi tử này?",
                 buttons: {
                     cancel: {
                         label: "HỦY"

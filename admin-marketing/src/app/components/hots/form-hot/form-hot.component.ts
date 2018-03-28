@@ -179,8 +179,8 @@ export class FormHotComponent implements OnInit {
     deleteHotEvent(){
         let that = this;
         bootbox.confirm({
-            title: "Bạn có chắc chắn ?",
-            message: "Bạn muốn xóa Hot này",
+            title: "Bạn có chắc chắn?",
+            message: "Bạn muốn xóa Hot này?",
             buttons: {
                 cancel: {
                     label: "Hủy"
