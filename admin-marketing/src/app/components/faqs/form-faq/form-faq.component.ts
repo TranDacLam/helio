@@ -15,12 +15,12 @@ const FAQS_CATEGORY = [1,2,3,5,6];
 declare var bootbox:any;
 
 @Component({
-    selector: 'app-edit-faq',
-    templateUrl: './edit-faq.component.html',
-    styleUrls: ['./edit-faq.component.css'],
+    selector: 'form-edit-faq',
+    templateUrl: './form-faq.component.html',
+    styleUrls: ['./form-faq.component.css'],
     providers: [FaqService, CategoryService]
 })
-export class EditFaqComponent implements OnInit {
+export class FormFaqComponent implements OnInit {
 
     /*
         author: Lam
@@ -34,6 +34,7 @@ export class EditFaqComponent implements OnInit {
     errorMessage: any; // Messages error
 
     lang = 'vi';
+    title_page = '';
     ckEditorConfig:any;
 
     constructor(
@@ -52,9 +53,19 @@ export class EditFaqComponent implements OnInit {
                 this.lang = params.lang;
             }
         });
-        this.getFaq();
         this.getCategories();
         this.ckEditorConfig = ckeditor_config.config;
+
+        if (this.route.snapshot.paramMap.get('id')) {
+            // Update Init Form
+            this.title_page = "Chỉnh Sửa Câu hỏi Thường Gặp";
+            this.getFaq();
+        } else {
+            // Add new Form
+            this.title_page = "Thêm Câu hỏi Thường Gặp";
+            this.faq = new Faq();
+            this.creatForm();
+        }
     }
 
     /*
@@ -117,20 +128,37 @@ export class EditFaqComponent implements OnInit {
             $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
         }else{
             this.formFaq.value.category = parseInt(this.formFaq.value.category);
-            this.faqService.updateFaq(this.formFaq.value, this.faq.id, this.lang).subscribe(
-                (data) => {
-                    this.toastr.success(`Chỉnh sửa "${this.formFaq.value.question}" thành công`);
-                    this.router.navigate(['/faq/list']);
-                },
-                (error) => {
-                    if(error.code === 400){
-                        this.errorMessage = error.message;
-                        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
-                    }else{
-                        this.router.navigate(['/error', { message: error.message}]);
+            if(this.faq.id){
+                this.faqService.updateFaq(this.formFaq.value, this.faq.id, this.lang).subscribe(
+                    (data) => {
+                        this.toastr.success(`Chỉnh sửa "${this.formFaq.value.question}" thành công`);
+                        this.router.navigate(['/faq/list']);
+                    },
+                    (error) => {
+                        if(error.code === 400){
+                            this.errorMessage = error.message;
+                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                        }else{
+                            this.router.navigate(['/error', { message: error.message}]);
+                        }
                     }
-                }
-            );
+                );
+            }else{
+                this.faqService.addFaq(this.formFaq.value, this.lang).subscribe(
+                    (data) => {
+                        this.toastr.success(`Thêm mới "${this.formFaq.value.question}" thành công`);
+                        this.router.navigate(['/faq/list']);
+                    },
+                    (error) => {
+                        if(error.code === 400){
+                            this.errorMessage = error.message;
+                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                        }else{
+                            this.router.navigate(['/error', { message: error.message}]);
+                        }
+                    }
+                );
+            }
         }
     }
 

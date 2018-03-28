@@ -4,14 +4,14 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
             <li class="breadcrumb-item"><a routerLink="/faq/list">Quản Lý Câu hỏi Thường Gặp</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Thêm Câu hỏi Thường Gặp</li>
+            <li class="breadcrumb-item active" aria-current="page">{{title_page}}</li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
 <div class="row mt-30 mb-30 text-center">
-    <div class="col-xs-12 col-md-12 ">
-        <p class="title">Thêm Câu hỏi Thường Gặp</p>
+    <div class="col-xs-12 col-md-12">
+        <p class="title">{{title_page}}</p>
         <hr/>
     </div>
 </div>
@@ -20,7 +20,7 @@
         {{error.val}}
     </h4>
 </ng-container>
-<form [formGroup]="formFaq" novalidate>
+<form [formGroup]="formFaq" novalidate *ngIf="faq">
     <div class="form-group row">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Câu Hỏi</label>
@@ -49,7 +49,7 @@
             <select class="form-control" formControlName="category">
                 <option value="">-- CHỌN DANH MỤC --</option>
                 <option *ngFor="let cate of categories" 
-                    value="{{ cate.id }}" 
+                    value="{{ cate.id }}"
                 >
                 {{ cate.name }}</option>
             </select>
@@ -58,6 +58,9 @@
     </div>
 
     <hr/>
+    <button class="btn btn-danger" (click)="deleteFaqEvent()" *ngIf="faq.id">
+        XÓA
+    </button>
     <button class="btn btn-primary pull-right" (click)="onSubmit()">
         LƯU LẠI
     </button>

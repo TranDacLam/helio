@@ -32,8 +32,7 @@ import { BannerDetailComponent } from './components/banner/banner-detail/banner-
 import { ListEventComponent } from './components/events/list-event/list-event.component';
 import { FormEventComponent } from './components/events/form-event/form-event.component';
 import { ListFaqComponent } from './components/faqs/list-faq/list-faq.component';
-import { AddFaqComponent } from './components/faqs/add-faq/add-faq.component';
-import { EditFaqComponent } from './components/faqs/edit-faq/edit-faq.component';
+import { FormFaqComponent } from './components/faqs/form-faq/form-faq.component';
 import { ListGameComponent } from './components/games/list-game/list-game.component';
 import { AddGameComponent } from './components/games/add-game/add-game.component';
 import { EditGameComponent } from './components/games/edit-game/edit-game.component';
@@ -221,12 +220,12 @@ const routes: Routes = [{
     },
     {
         path: 'faq/add',
-        component: AddFaqComponent,
+        component: FormFaqComponent,
         canActivate: [AuthGuard]
     },
     {
         path: 'faq/edit/:id',
-        component: EditFaqComponent,
+        component: FormFaqComponent,
         canActivate: [AuthGuard]
     },
     {
