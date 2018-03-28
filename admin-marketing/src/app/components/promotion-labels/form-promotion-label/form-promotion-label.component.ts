@@ -141,8 +141,8 @@ export class FormPromotionLabelComponent implements OnInit {
     deletePromotionLabelEvent(){
         let that = this;
         bootbox.confirm({
-            title: "Bạn có chắc chắn ?",
-            message: "Bạn muốn xóa Nhãn Khuyến Mãi này",
+            title: "Bạn có chắc chắn?",
+            message: "Bạn muốn xóa Nhãn Khuyến Mãi này?",
             buttons: {
                 cancel: {
                     label: "HỦY"

@@ -134,8 +134,8 @@ export class ListPostComponent implements OnInit {
         let that = this;
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn ?",
-                message: "Bạn muốn xóa " + this.length_selected + " Bài Viết đã chọn",
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.length_selected + " Bài Viết đã chọn?",
                 buttons: {
                     cancel: {
                         label: "HỦY"
