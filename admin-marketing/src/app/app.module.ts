@@ -181,6 +181,7 @@ export const DefaultIntl = {
     PromotionReportComponent,
     PopupEditPromotionComponent,
     RolePermissionComponent,
+    FormAdvertisementComponent,
     
   ],
   imports: [

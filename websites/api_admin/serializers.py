@@ -159,12 +159,6 @@ class GiftSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class AdvertisementSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(required=True,validators=[
-        UniqueValidator(
-            queryset=Advertisement.objects.all(),
-            message =_('This advertisement is already taken')
-            )
-        ])
     class Meta:
         model = Advertisement
         fields = ('id', 'name', 'is_show')

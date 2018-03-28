@@ -359,8 +359,8 @@ class AdvertisementView(APIView):
             adv_id = self.request.data.get('adv_id', None)
             print "Adv_id", adv_id
             if adv_id:
-                # queryset = Advertisement.objects.filter(
-                #     pk__in=adv_id).delete()
+                queryset = Advertisement.objects.filter(
+                    pk__in=adv_id).delete()
                 return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
