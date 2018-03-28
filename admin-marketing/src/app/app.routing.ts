@@ -10,8 +10,7 @@ import { AddNotificationComponent } from './components/notification/add-notifica
 import { EditNotificationComponent } from './components/notification/edit-notification/edit-notification.component';
 import { NotificationDetailComponent } from './components/notification/notification-detail/notification-detail.component';
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
-import { AdvertisementDetailComponent } from './components/advertisement/advertisement-detail/advertisement-detail.component';
-import { AdvertisementAddComponent } from './components/advertisement/advertisement-add/advertisement-add.component';
+import { FormAdvertisementComponent } from './components/advertisement/form-advertisement/form-advertisement.component';
 import { PromotionTypeListComponent } from './components/promotion-type/promotion-type-list/promotion-type-list.component';
 import { DenominationAddComponent } from './components/denomination/denomination-add/denomination-add.component';
 import { DenominationListComponent } from './components/denomination/denomination-list/denomination-list.component';
@@ -93,11 +92,11 @@ const routes: Routes = [{
         canActivate: [AuthGuard]
     }, {
         path: 'advertisement-detail/:id',
-        component: AdvertisementDetailComponent,
+        component: FormAdvertisementComponent,
         canActivate: [AuthGuard]
     }, {
         path: 'advertisement-add',
-        component: AdvertisementAddComponent,
+        component: FormAdvertisementComponent,
         canActivate: [AuthGuard]
     }, {
         path: 'promotion-type-list',

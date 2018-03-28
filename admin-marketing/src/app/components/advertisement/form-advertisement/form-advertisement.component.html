@@ -12,7 +12,14 @@
 <div class='title-adv row'>
 	<p class="title text-center">{{title}}</p>
 </div>
-<form [formGroup]="advForm" class="row form-adv-add" accept-charset="utf-8" novalidate="">
+
+<ng-container *ngIf="errorMessage">
+    <p *ngFor="let error of errorMessage | mapToIterable" class="error_msg">
+        {{ error.val }}
+    </p>
+</ng-container>
+
+<form [formGroup]="advForm" class="row form-adv-add" *ngIf="adv">
 	<div class="content-adv">
 		<div class="form-group row">
             <div class="col-sm-2">
@@ -25,9 +32,6 @@
                 (click)='removeMessage()'
                 />
                 <show-error-valid [control]="advForm.get('name')"></show-error-valid>
-                <div class="errors" *ngIf="errorMessage">
-                    {{ errorMessage }}
-                </div>
             </div>
         </div>
         <div class="form-group row">
@@ -42,7 +46,7 @@
 	<div class="form-group row">
 		<div class='col-sm-12'>
 			<button type="submit" class=' pull-right btn btn-primary' (click)="onSubmit()" >LƯU LẠI</button>
-            <button type="submit" class='pull-left btn btn-danger' (click)="confirmDelete(adv)" *ngIf="method == 'PUT'">XÓA</button>
+            <button type="submit" class='pull-left btn btn-danger' (click)="confirmDelete(adv)" *ngIf="adv.id">XÓA</button>
 		</div>
 	</div>
 </form>     	

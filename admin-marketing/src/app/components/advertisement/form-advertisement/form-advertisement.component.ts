@@ -18,14 +18,13 @@ declare var bootbox:any;
 })
 export class FormAdvertisementComponent implements OnInit {
 
-  	@Input() adv: Advertisement;
-  	@Input() method; // Get type http from component parent
-  	@Input() title;
+  	adv: Advertisement;
 
 	errorMessage: string ="";
 	advForm: FormGroup;
 
 	lang: string = 'vi';
+	title: string= "";
 
 	constructor(
 		private advertisementService: AdvertisementService,
@@ -36,7 +35,21 @@ export class FormAdvertisementComponent implements OnInit {
 		) { }
 
 	ngOnInit() {
-		this.createForm();
+		this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
+        if (this.route.snapshot.paramMap.get('id')) {
+            // Update Init Form
+            this.title = "Chỉnh Sửa Quảng Cáo";
+            this.getAdv();
+        } else {
+            // Add new Form
+            this.title = "Thêm Quảng Cáo";
+            this.adv = new Advertisement()
+            this.createForm();
+        }
 	}
 
 	createForm() {
@@ -45,6 +58,18 @@ export class FormAdvertisementComponent implements OnInit {
           is_show: [this.adv.is_show === true ? true : false],
         });
     }
+
+    getAdv() {
+		const id = +this.route.snapshot.paramMap.get('id');
+		this.advertisementService.getAdvertisement(id, this.lang).subscribe(
+			(result) => {
+        		this.adv = result;
+        		this.createForm();
+      		},
+      		(error) => this.router.navigate(['/error', { message: error }])
+        );
+	}
+
 	/*
 		PUT: Update Advertiment Detail
 		Call service advertiment
@@ -54,7 +79,7 @@ export class FormAdvertisementComponent implements OnInit {
 		if (this.advForm.invalid) {
 			ValidateSubmit.validateAllFormFields(this.advForm);
 		} else {
-			if (this.method == 'PUT') {
+			if (this.adv.id) {
 				this.advertisementService.updateAdv(this.advForm.value, this.adv.id, this.lang).subscribe(
 					() => {
 						this.toastr.success(`Chỉnh sửa ${this.advForm.value['name']} thành công`);
@@ -68,7 +93,7 @@ export class FormAdvertisementComponent implements OnInit {
 						}
 					}
 				);
-			} else if (this.method == 'POST') {
+			} else{
 				this.advertisementService.addAdvertisement( this.advForm.value, this.lang ).subscribe(
 	    			(resultAdv) => {
 	    				// this.advs.push(resultAdv);
@@ -76,9 +101,8 @@ export class FormAdvertisementComponent implements OnInit {
 	                    this.router.navigate(['/advertisement-list'])
 	    			},
 	                (error) => {
-	                	console.log(error);
 	                    if (error.status == 400 ) {
-	                        this.errorMessage = error.json().name
+	                        this.errorMessage = error.json()
 	                    } else {
 	                        this.router.navigate(['/error', { message: error.json().message }])
 	                    }

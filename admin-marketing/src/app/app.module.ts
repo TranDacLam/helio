@@ -30,8 +30,6 @@ import { AddNotificationComponent } from './components/notification/add-notifica
 import { EditNotificationComponent } from './components/notification/edit-notification/edit-notification.component';
 import { UserMultiselectComponent } from './components/user-multiselect/user-multiselect.component';
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
-import { AdvertisementAddComponent } from './components/advertisement/advertisement-add/advertisement-add.component';
-import { AdvertisementDetailComponent } from './components/advertisement/advertisement-detail/advertisement-detail.component';
 import { PromotionTypeListComponent } from './components/promotion-type/promotion-type-list/promotion-type-list.component';
 import { DenominationListComponent } from './components/denomination/denomination-list/denomination-list.component';
 import { DenominationAddComponent } from './components/denomination/denomination-add/denomination-add.component';
@@ -128,8 +126,6 @@ export const DefaultIntl = {
     EditNotificationComponent,
     UserMultiselectComponent,
     AdvertisementListComponent,
-    AdvertisementAddComponent,
-    AdvertisementDetailComponent,
     PromotionTypeListComponent,
     DenominationListComponent,
     DenominationAddComponent,
@@ -185,7 +181,7 @@ export const DefaultIntl = {
     PromotionReportComponent,
     PopupEditPromotionComponent,
     RolePermissionComponent,
-    FormAdvertisementComponent,
+    
   ],
   imports: [
     BrowserModule,

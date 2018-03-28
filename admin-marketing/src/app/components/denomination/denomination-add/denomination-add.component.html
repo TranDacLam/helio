@@ -12,6 +12,13 @@
 <div class='title-denomi row'>
     <p class="title text-center">Thêm Mệnh Giá Nạp Tiền</p>
 </div>
+
+<ng-container *ngIf="errorMessage">
+    <p *ngFor="let error of errorMessage | mapToIterable" class="error_msg">
+        {{ error.val }}
+    </p>
+</ng-container>
+
 <form [formGroup]="denoForm" class="row form-add-denomi" accept-charset="utf-8" novalidate="">
     <div class="content-denomi">
         <div class="form-group row">
@@ -27,9 +34,6 @@
                 (keyup) ="format_currency($event.target.value)"
                 > 
                 <show-error-valid [control]="denoForm.get('denomination')"></show-error-valid>
-                <div class="errors" *ngIf='errorMessage'>
-                    {{errorMessage}}
-                </div>
             </div>
             <div class="col-md-2">
                 <p class='dv-denom'>VNĐ</p>
