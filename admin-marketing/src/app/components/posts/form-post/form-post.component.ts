@@ -28,7 +28,7 @@ export class FormPostComponent implements OnInit {
         author: Lam
     */
 
-    @Input() post: Post; // Get post from component parent
+    post: Post;
 
     formPost: FormGroup;
     post_types: PostType[];
@@ -37,6 +37,7 @@ export class FormPostComponent implements OnInit {
     msg_clear_image = '';
     api_domain: string = '';
     lang = 'vi';
+    title_page = '';
 
     ckEditorConfig:any;
 
@@ -54,7 +55,6 @@ export class FormPostComponent implements OnInit {
 
     ngOnInit() {
         this.getPostTypes();
-        this.creatForm();
         // get params url
         this.route.params.subscribe(params => {
             if(params.lang){
@@ -63,6 +63,17 @@ export class FormPostComponent implements OnInit {
         });
 
         this.ckEditorConfig = ckeditor_config.config;
+
+        if (this.route.snapshot.paramMap.get('id')) {
+            // Update Init Form
+            this.title_page = "Chỉnh Sửa Bài Viết";
+            this.getPost();
+        } else {
+            // Add new Form
+            this.title_page = "Thêm Bài Viết";
+            this.post = new Post();
+            this.creatForm();
+        }
     }
 
     /*
@@ -81,6 +92,25 @@ export class FormPostComponent implements OnInit {
             is_clear_image: [false],
             posts_image: [this.post.posts_image]
         });
+    }
+
+    /*
+        Function getPost():
+         + Get id from url path
+         + Callback service function getPost() by id
+        Author: Lam
+    */
+    getPost(){
+        const id = +this.route.snapshot.paramMap.get('id');
+        this.postService.getPost(id, this.lang).subscribe(
+            (data) => {
+                this.post = data;
+                this.creatForm();
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
     }
 
     getPostTypes(){

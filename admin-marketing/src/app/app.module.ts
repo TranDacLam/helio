@@ -72,8 +72,6 @@ import { FormFaqComponent } from './components/faqs/form-faq/form-faq.component'
 import { ListGameComponent } from './components/games/list-game/list-game.component';
 import { ListHotComponent } from './components/hots/list-hot/list-hot.component';
 import { ListPostComponent } from './components/posts/list-post/list-post.component';
-import { AddPostComponent } from './components/posts/add-post/add-post.component';
-import { EditPostComponent } from './components/posts/edit-post/edit-post.component';
 import { ListPromotionLabelComponent } from './components/promotion-labels/list-promotion-label/list-promotion-label.component';
 import { AddPromotionLabelComponent } from './components/promotion-labels/add-promotion-label/add-promotion-label.component';
 import { EditPromotionLabelComponent } from './components/promotion-labels/edit-promotion-label/edit-promotion-label.component';
@@ -149,8 +147,6 @@ export const DefaultIntl = {
     ListGameComponent,
     ListHotComponent,
     ListPostComponent,
-    AddPostComponent,
-    EditPostComponent,
     ListPromotionLabelComponent,
     AddPromotionLabelComponent,
     EditPromotionLabelComponent,

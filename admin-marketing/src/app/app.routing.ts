@@ -38,8 +38,7 @@ import { FormGameComponent } from './components/games/form-game/form-game.compon
 import { ListHotComponent } from './components/hots/list-hot/list-hot.component';
 import { FormHotComponent } from './components/hots/form-hot/form-hot.component';
 import { ListPostComponent } from './components/posts/list-post/list-post.component';
-import { AddPostComponent } from './components/posts/add-post/add-post.component';
-import { EditPostComponent } from './components/posts/edit-post/edit-post.component';
+import { FormPostComponent } from './components/posts/form-post/form-post.component';
 import { ListPromotionLabelComponent } from './components/promotion-labels/list-promotion-label/list-promotion-label.component';
 import { AddPromotionLabelComponent } from './components/promotion-labels/add-promotion-label/add-promotion-label.component';
 import { EditPromotionLabelComponent } from './components/promotion-labels/edit-promotion-label/edit-promotion-label.component';
@@ -263,12 +262,12 @@ const routes: Routes = [{
     },
     {
         path: 'post/add',
-        component: AddPostComponent,
+        component: FormPostComponent,
         canActivate: [AuthGuard]
     },
     {
         path: 'post/edit/:id',
-        component: EditPostComponent,
+        component: FormPostComponent,
         canActivate: [AuthGuard]
     },
     {
