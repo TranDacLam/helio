@@ -1,0 +1,51 @@
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="/advertisement-list">Quảng Cáo</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class='title-adv row'>
+	<p class="title text-center">{{title}}</p>
+</div>
+<form [formGroup]="advForm" class="row form-adv-add" accept-charset="utf-8" novalidate="">
+	<div class="content-adv">
+		<div class="form-group row">
+            <div class="col-sm-2">
+                <label class="center-block">Tên</label>
+            </div>
+            <div class="col-sm-8">
+                <input class='form-control' name="name" 
+                placeholder="Tên" 
+                formControlName="name" 
+                (click)='removeMessage()'
+                />
+                <show-error-valid [control]="advForm.get('name')"></show-error-valid>
+                <div class="errors" *ngIf="errorMessage">
+                    {{ errorMessage }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class='col-sm-2'></div>
+            <div class='col-sm-8'>
+                <input type="checkbox" name="is_show"
+                formControlName = "is_show">
+                <label>Hiển thị</label>
+            </div>
+        </div> 
+	</div>
+	<div class="form-group row">
+		<div class='col-sm-12'>
+			<button type="submit" class=' pull-right btn btn-primary' (click)="onSubmit()" >LƯU LẠI</button>
+            <button type="submit" class='pull-left btn btn-danger' (click)="confirmDelete(adv)" *ngIf="method == 'PUT'">XÓA</button>
+		</div>
+	</div>
+</form>     	
+
+
+

@@ -105,6 +105,7 @@ import { OpenTimeComponent } from './components/open-time/open-time.component';
 import { PromotionReportComponent } from './components/promotions/promotion-report/promotion-report.component';
 import { PopupEditPromotionComponent } from './components/promotions/popup-edit-promotion/popup-edit-promotion.component';
 import { RolePermissionComponent } from './components/role-permission/role-permission.component';
+import { FormAdvertisementComponent } from './components/advertisement/form-advertisement/form-advertisement.component';
 
 
 /*
@@ -189,7 +190,8 @@ export const DefaultIntl = {
     OpenTimeComponent,
     PromotionReportComponent,
     PopupEditPromotionComponent,
-    RolePermissionComponent
+    RolePermissionComponent,
+    FormAdvertisementComponent,
   ],
   imports: [
     BrowserModule,
