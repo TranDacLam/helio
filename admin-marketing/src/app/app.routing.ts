@@ -40,8 +40,7 @@ import { FormHotComponent } from './components/hots/form-hot/form-hot.component'
 import { ListPostComponent } from './components/posts/list-post/list-post.component';
 import { FormPostComponent } from './components/posts/form-post/form-post.component';
 import { ListPromotionLabelComponent } from './components/promotion-labels/list-promotion-label/list-promotion-label.component';
-import { AddPromotionLabelComponent } from './components/promotion-labels/add-promotion-label/add-promotion-label.component';
-import { EditPromotionLabelComponent } from './components/promotion-labels/edit-promotion-label/edit-promotion-label.component';
+import { FormPromotionLabelComponent } from './components/promotion-labels/form-promotion-label/form-promotion-label.component';
 
 import { HomeComponent } from './components/home/home.component';
 import { PromotionFormDetailComponent } from './components/promotions/promotion-form-detail/promotion-form-detail.component';
@@ -277,12 +276,12 @@ const routes: Routes = [{
     },
     {
         path: 'promotion-label/add',
-        component: AddPromotionLabelComponent,
+        component: FormPromotionLabelComponent,
         canActivate: [AuthGuard]
     },
     {
         path: 'promotion-label/edit/:id',
-        component: EditPromotionLabelComponent,
+        component: FormPromotionLabelComponent,
         canActivate: [AuthGuard]
     },
     {

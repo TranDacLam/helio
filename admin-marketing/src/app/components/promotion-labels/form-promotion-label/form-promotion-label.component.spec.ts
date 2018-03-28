@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditPromotionLabelComponent } from './edit-promotion-label.component';
+import { FormPromotionLabelComponent } from './edit-promotion-label.component';
 
-describe('EditPromotionLabelComponent', () => {
-  let component: EditPromotionLabelComponent;
-  let fixture: ComponentFixture<EditPromotionLabelComponent>;
+describe('FormPromotionLabelComponent', () => {
+  let component: FormPromotionLabelComponent;
+  let fixture: ComponentFixture<FormPromotionLabelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditPromotionLabelComponent ]
+      declarations: [ FormPromotionLabelComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditPromotionLabelComponent);
+    fixture = TestBed.createComponent(FormPromotionLabelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

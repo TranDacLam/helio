@@ -10,12 +10,12 @@ import 'rxjs/add/observable/throw';
 declare var bootbox:any;
 
 @Component({
-    selector: 'app-edit-promotion-label',
-    templateUrl: './edit-promotion-label.component.html',
-    styleUrls: ['./edit-promotion-label.component.css'],
+    selector: 'form-promotion-label',
+    templateUrl: './form-promotion-label.component.html',
+    styleUrls: ['./form-promotion-label.component.css'],
     providers: [PromotionLabelService]
 })
-export class EditPromotionLabelComponent implements OnInit {
+export class FormPromotionLabelComponent implements OnInit {
 
     /*
         author: Lam
@@ -28,6 +28,7 @@ export class EditPromotionLabelComponent implements OnInit {
     errorMessage :any; // Messages error
 
     lang = 'vi';
+    title_page = '';
 
     constructor(
         private promotionLabelService: PromotionLabelService,
@@ -44,7 +45,17 @@ export class EditPromotionLabelComponent implements OnInit {
                 this.lang = params.lang;
             }
         });
-        this.getPromotionLabel();
+
+        if (this.route.snapshot.paramMap.get('id')) {
+            // Update Init Form
+            this.title_page = "Chỉnh Sửa Nhãn Khuyến Mãi";
+            this.getPromotionLabel();
+        } else {
+            // Add new Form
+            this.title_page = "Thêm Nhãn Khuyến Mãi";
+            this.promotion_label = new PromotionLabel();
+            this.creatForm();
+        }
     }
 
     /*
@@ -88,21 +99,38 @@ export class EditPromotionLabelComponent implements OnInit {
             ValidateSubmit.validateAllFormFields(this.formPromotionLabel);
             $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
         }else{
-            this.promotionLabelService.updatePromotionLabel(this.formPromotionLabel.value, this.promotion_label.id, this.lang)
+            if(this.promotion_label.id){
+                this.promotionLabelService.updatePromotionLabel(this.formPromotionLabel.value, this.promotion_label.id, this.lang)
                 .subscribe(
-                (data) => {
-                    this.toastr.success(`Chỉnh sửa "${this.formPromotionLabel.value.name}" thành công`);
-                    this.router.navigate(['/promotion-label/list']);
-                },
-                (error) => {
-                    if(error.code === 400){
-                        this.errorMessage = error.message;
-                        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
-                    }else{
-                        this.router.navigate(['/error', { message: error.message}]);
+                    (data) => {
+                        this.toastr.success(`Chỉnh sửa "${this.formPromotionLabel.value.name}" thành công`);
+                        this.router.navigate(['/promotion-label/list']);
+                    },
+                    (error) => {
+                        if(error.code === 400){
+                            this.errorMessage = error.message;
+                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                        }else{
+                            this.router.navigate(['/error', { message: error.message}]);
+                        }
                     }
-                }
-            );
+                );
+            }else{
+                this.promotionLabelService.addPromotionLabel(this.formPromotionLabel.value, this.lang).subscribe(
+                    (data) => {
+                        this.toastr.success(`Thêm mới "${this.formPromotionLabel.value.name}" thành công`);
+                        this.router.navigate(['/promotion-label/list']);
+                    },
+                    (error) => {
+                        if(error.code === 400){
+                            this.errorMessage = error.message;
+                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                        }else{
+                            this.router.navigate(['/error', { message: error.message}]);
+                        }
+                    }
+                );
+            }
         }            
     }
 
