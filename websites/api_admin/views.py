@@ -239,11 +239,12 @@ class PromotionStatistic(APIView):
                 # Get list user ID by promition id
                 promotion_user_id_list = Gift.objects.filter(
                     promotion_id=pk).values_list('user_id', flat=True)
+                print promotion_user_id_list
 
                 user_promotion_list = User.objects.filter(
                     pk__in=promotion_user_id_list)
 
-                gift_list = Gift.objects.filter(user_id__in=promotion_user_id_list)
+                gift_list = Gift.objects.filter(user_id__in=promotion_user_id_list).filter(promotion_id=promotion_detail)
 
                 result = {}
 
@@ -2047,6 +2048,7 @@ class UserListView(APIView):
             serializer = admin_serializers.UserCreateSerializer(
                 data=request.data)
             if serializer.is_valid():
+                print "serializer", serializer
                 serializer.save()
                 return Response(serializer.data)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
