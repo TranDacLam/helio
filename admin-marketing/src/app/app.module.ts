@@ -67,8 +67,6 @@ import { BannerDetailComponent } from './components/banner/banner-detail/banner-
 import { BannerAddComponent } from './components/banner/banner-add/banner-add.component';
 
 import { ListEventComponent } from './components/events/list-event/list-event.component';
-import { AddEventComponent } from './components/events/add-event/add-event.component';
-import { EditEventComponent } from './components/events/edit-event/edit-event.component';
 import { ListFaqComponent } from './components/faqs/list-faq/list-faq.component';
 import { AddFaqComponent } from './components/faqs/add-faq/add-faq.component';
 import { EditFaqComponent } from './components/faqs/edit-faq/edit-faq.component';
@@ -151,8 +149,6 @@ export const DefaultIntl = {
     BannerDetailComponent,
     BannerAddComponent,
     ListEventComponent,
-    AddEventComponent,
-    EditEventComponent,
     ListFaqComponent,
     AddFaqComponent,
     EditFaqComponent,

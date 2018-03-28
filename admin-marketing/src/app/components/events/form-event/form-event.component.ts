@@ -26,10 +26,7 @@ export class FormEventComponent implements OnInit {
     /*
         author: Lam
     */
-
-    @Input() event: Event; // Get event from component parent
-    @Input() type_http; // Get type http from component parent
-
+    event: Event;
     formEvent: FormGroup;
 
     errorMessage: any; // Messages error
@@ -37,6 +34,7 @@ export class FormEventComponent implements OnInit {
 
     api_domain: string = '';
     lang = 'vi';
+    title_page = '';
 
     ckEditorConfig:any;
 
@@ -52,7 +50,6 @@ export class FormEventComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.creatForm();
         // get params url
         this.route.params.subscribe(params => {
             if(params.lang){
@@ -61,6 +58,17 @@ export class FormEventComponent implements OnInit {
         });
 
         this.ckEditorConfig = ckeditor_config.config;
+
+        if (this.route.snapshot.paramMap.get('id')) {
+            // Update Init Form
+            this.title_page = "Chỉnh Sửa Sự Kiện";
+            this.getEvent();
+        } else {
+            // Add new Form
+            this.title_page = "Thêm Sự Kiện";
+            this.event = new Event();
+            this.creatForm();
+        }
     }
 
     /*
@@ -87,6 +95,25 @@ export class FormEventComponent implements OnInit {
     }
 
     /*
+        Function getEvent():
+         + Get id from url path
+         + Callback service function getEvent() by id
+        Author: Lam
+    */
+    getEvent(){
+        const id = +this.route.snapshot.paramMap.get('id');
+        this.eventService.getEvent(id, this.lang).subscribe(
+            (data) => {
+                this.event = data;
+                this.creatForm();
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
+    }
+
+    /*
         Function onFileChange(): Input file image to get base 64
         author: Lam
     */ 
@@ -103,11 +130,11 @@ export class FormEventComponent implements OnInit {
 
     /*
         Function onSubmit():
-         + Step 1: Check type_http add event (post), edit event (put)
+         + Step 1: Check event add event (post), edit event (put)
          + Step 2:  
-            * TH1:  + Type_http = post, call service function addEvent() to add event, 
+            * TH1:  + event id empty, call service function addEvent() to add event, 
                     + Later, redirect list event with message
-            * TH2:  + Type_http = put call service function updateEvent() to update Event
+            * TH2:  + event id exist call service function updateEvent() to update Event
                     + Later, redirect list event with message
         author: Lam
     */ 
@@ -135,7 +162,7 @@ export class FormEventComponent implements OnInit {
             this.formEvent.value.end_time = $('#end_time').val();
             let event_form_data = this.convertFormGroupToFormData(this.formEvent);
             let value_form = this.formEvent.value;
-            if(this.type_http == 'post'){
+            if(!this.event.id){
                 this.eventService.addEvent(event_form_data, this.lang).subscribe(
                     (data) => {
                         this.toastr.success(`Thêm mới "${value_form.name}" thành công`);
@@ -150,7 +177,7 @@ export class FormEventComponent implements OnInit {
                         }
                     }
                 );
-            }else if(this.type_http == 'put'){
+            }else if(this.event.id){
                 if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
                     this.formEvent.get('is_clear_image').setValue(false);
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
