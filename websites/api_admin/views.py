@@ -1755,25 +1755,6 @@ class PostAPI(APIView):
                 instance=post, data=request.data, context={'request', request})
             if postSerializer.is_valid():
                 postSerializer.save()
-                # handle update multi image
-                posts_image = request.data.get('posts_image', None)
-                if posts_image:
-                    for item in posts_image:
-                        item_id = item.get('id', None)
-                        # id is exist then update or delete image
-                        if item_id:
-                            is_clear_image_item = item.get( 'is_clear_image', None)
-                            post_image = Post_Image.objects.filter( id = item_id )
-                            if not post_image:
-                                return Response({"code": 400, "message": _("Not Found Post Image."), "fields": ""}, status=400)
-                            if is_clear_image_item:
-                                post_image.delete()
-                                break
-                            post_image.update( **item )
-                        else:
-                            # id is not,create image
-                            Post_Image.objects.create( post = post, **item )
-                
                 return Response(postSerializer.data)
             return Response({"code": 400, "message": postSerializer.errors, "fields": ""}, status=400)
 

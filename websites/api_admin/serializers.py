@@ -326,7 +326,7 @@ class PostImageSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
 
-    posts_image = PostImageSerializer( many = True )
+    posts_image = PostImageSerializer( many = True, read_only = True )
 
     class Meta:
         model = Post
@@ -348,19 +348,27 @@ class PostSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        posts_image = validated_data.pop('posts_image')
         post = Post.objects.create( **validated_data )
-        for item in posts_image:
-            Post_Image.objects.create( post = post, **item )
+        if self.context['request']:
+            posts_image = self.context['request'].data.getlist('posts_image', None)
+        if posts_image:
+            for item in posts_image:
+                Post_Image.objects.create( post = post, image = item )
         return post
 
     def update(self, instance, validated_data):
-        # to do
         if self.context['request']:
+            posts_image = self.context['request'].data.getlist('posts_image', None)
+            list_clear_image = self.context['request'].data.getlist('list_clear_image', None)
             is_clear_image = self.context['request'].data.get('is_clear_image')
-            if is_clear_image == "false" and not validated_data.get('image'):
-                validated_data['image'] = instance.image
 
+        if list_clear_image:
+            Post_Image.objects.filter(list_clear_image).delete()
+        if posts_image:
+            for item in posts_image:
+                Post_Image.objects.create( post = instance, image = item )
+        if is_clear_image == "false" and not validated_data.get('image'):
+            validated_data['image'] = instance.image
         return super(PostSerializer, self).update(instance, validated_data)
 
 
