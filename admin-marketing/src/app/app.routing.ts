@@ -50,7 +50,6 @@ import { EditPromotionLabelComponent } from './components/promotion-labels/edit-
 
 import { HomeComponent } from './components/home/home.component';
 import { PromotionFormDetailComponent } from './components/promotions/promotion-form-detail/promotion-form-detail.component';
-// import { EditPromotionComponent } from './components/promotions/edit-promotion/edit-promotion.component';
 import { ListPromotionComponent } from './components/promotions/list-promotion/list-promotion.component';
 import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
 import { LoginComponent } from './components/login/login.component';
