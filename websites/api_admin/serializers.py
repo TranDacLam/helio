@@ -432,7 +432,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = super(UserCreateSerializer, self).create(validated_data)
         user.set_password(validated_data['password'])
-        if user.role_id == 6:
+        
+        if user.role_id == None:
             user.is_staff = False
         else:
             user.is_staff = True
@@ -480,7 +481,7 @@ class UserRoleSerializer(serializers.ModelSerializer):
             instance.avatar = avatar
         instance.email = validated_data.get('email', instance.email)
         instance.full_name = validated_data.get('full_name', instance.full_name)
-        instance.birth_date = validated_data.get('birth_date', instance.birth_date)
+        instance.birth_date = validated_data.get('birth_date', None)
         instance.phone = validated_data.get('phone', instance.phone)
         instance.personal_id = validated_data.get('personal_id', instance.personal_id)
         instance.country = validated_data.get('country', instance.country)

@@ -370,7 +370,7 @@ class OpenTime(DateTimeModel):
 
 @python_2_unicode_compatible
 class Notification(DateTimeModel):
-    subject = models.CharField(max_length=255, unique=True)
+    subject = models.CharField(_('Subject'), max_length=255, unique=True)
     message = models.TextField(_('Message'))
     image = models.ImageField(_('Image'), max_length=1000, null=True, blank=True)
     sub_url = models.CharField(_('Sub url'),max_length=255, null=True, blank=True)
@@ -502,6 +502,8 @@ class Roles(DateTimeModel):
 
     def __str__(self):
         return '%s' % (self.name)   
+
+
 
 @python_2_unicode_compatible
 class Roles_Permission(DateTimeModel): 

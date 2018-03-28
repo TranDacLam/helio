@@ -4,7 +4,7 @@ import * as moment from 'moment';
 export class UserValidators {
 
 	static passwordValidators(c: FormControl): ValidationErrors {
-		let passRegx = /^(?=.*\d).{6,}$/;
+		let passRegx = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
 		let passVal = String($('#password').val());
 		let passValues = passVal.match(passRegx);
 		if(passValues === null && passVal !== '' && passVal.length < 32) {
@@ -80,6 +80,17 @@ export class UserValidators {
         }
     }
 
+    static validateSelectRole(c: FormControl): ValidationErrors {
+    	let role = c.value;
+    	if(role === 0 || role === null) {
+    		return {
+				'requiredSelectedRole': {
+					'message': 'Trường này không được bỏ trống'
+				}
+			}
+    	}
+    	return null;
+    }
 	
 }
 

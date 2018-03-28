@@ -19,7 +19,8 @@ export class PopupEditPromotionComponent implements OnInit {
     @Output() update_promotion: EventEmitter<Promotion> = new EventEmitter<Promotion>();
 
     promotion: Promotion;
-    type_http = "put_popup"; // type http to form promotion component 
+
+    position = "popup"; // type http to form promotion component 
 
     lang = 'vi';
 

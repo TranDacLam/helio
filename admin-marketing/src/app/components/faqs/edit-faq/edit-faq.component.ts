@@ -10,6 +10,8 @@ import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 
+const FAQS_CATEGORY = [1,2,3,5,6];
+
 declare var bootbox:any;
 
 @Component({
@@ -95,6 +97,7 @@ export class EditFaqComponent implements OnInit {
         this.categoryService.getAllCategory().subscribe(
             (data) => {
                 this.categories = data;
+                this.categories = this.categories.filter(({id}) => FAQS_CATEGORY.includes(id));
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.message}]);

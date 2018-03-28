@@ -6,9 +6,7 @@
                 <h4 class="modal-title">Chỉnh Sửa Khuyến Mãi</h4>
             </div>
             <div class="modal-body">
-                <app-promotion-form *ngIf="promotion" [promotion]="promotion" [type_http]="type_http"
-                    (update_promotion)='updatePromotion($event)'
-                ></app-promotion-form>
+                <app-promotion-form-detail [position]="position" (update_promotion)='updatePromotion($event)'></app-promotion-form-detail>
             </div>
         </div>
     </div>

@@ -17,4 +17,7 @@ a.pull-left:hover {
 .button-deno {
 	margin-left: 30px;
 }
+.select-deno {
+	padding: 6px 10px; 
+}
 /*End content-denomination*/

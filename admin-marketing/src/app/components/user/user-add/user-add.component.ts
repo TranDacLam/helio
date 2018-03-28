@@ -29,7 +29,7 @@ export class UserAddComponent implements OnInit {
 
 	users: User[] = [];
     roles: Role[];
-
+    
     errorMessage: string ='';
 
     isSelected = true; // Set value default selcted 
@@ -66,8 +66,8 @@ export class UserAddComponent implements OnInit {
             password: [this.user_form.password, [Validators.required, UserValidators.passwordValidators, Validators.maxLength(32)]],
             is_active: [this.user_form.is_active],
             is_staff: [this.user_form.is_staff],
-            role: [this.user_form.role, [Validators.required]],
-            birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date,"DD/MM/YYYY").toDate() : null, [UserValidators.birtdateValidators, UserValidators.formatBirtday]],
+            role: [this.user_form.role, [UserValidators.validateSelectRole]],
+            birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date,"DD/MM/YYYY").toDate() : '', [UserValidators.birtdateValidators, UserValidators.formatBirtday]],
         });
  	}
 
@@ -101,8 +101,8 @@ export class UserAddComponent implements OnInit {
             ValidateSubmit.validateAllFormFields(this.formUser);
         } else {
             var self = this;
-            let userFormGroup = this.convertFormGroupToFormData(this.formUser);
             this.formUser.value.birth_date = $('#birth_date').val();
+            let userFormGroup = this.convertFormGroupToFormData(this.formUser);
             this.userService.createUser(userFormGroup).subscribe(
                 (data) => {
                     self.users.push(data);
@@ -169,8 +169,6 @@ export class UserAddComponent implements OnInit {
                     userFormData.append(k, '');
                 } else if (k === 'avatar') {
                     userFormData.append(k, userValues[k].value, userValues[k].name);
-                } else if(k === 'birth_date') {
-                    userFormData.append(k, this.transformDate(userValues[k]))
                 } else {
                     userFormData.append(k, userValues[k]);
                 }
@@ -178,11 +176,6 @@ export class UserAddComponent implements OnInit {
         }
         return userFormData;
     }
-    
-    transformDate(date) {
-        return this.datePipe.transform(date, 'dd/MM/yyyy');
-    }
-
     removeErrorMessage() {
         this.errorMessage = '';
     }
