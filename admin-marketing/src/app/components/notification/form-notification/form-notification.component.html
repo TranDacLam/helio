@@ -1,9 +1,34 @@
+<!-- Start breadcrumb -->
+<div class="row" *ngIf="position !== 'popup'">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="/notification/list">Quản Lý Thông Báo</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{title_page}}</li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class="row mt-50 mb-15 custom-title" *ngIf="promotion_id">
+    <div class="col-xs-6 col-sm-6">
+        <a class="btn custom-button" [routerLink]="['/users-promotions/', promotion_id]">
+            <i class="fa fas fa-arrow-left icon-button"></i>
+            TRỞ VỀ CHI TIẾT KHUYẾN MÃI
+        </a>
+    </div>
+</div>
+<div class="row mt-30 mb-30 text-center" *ngIf="position !== 'popup'">
+    <div class="col-xs-12 col-md-12">
+        <p class="title">{{title_page}}</p>
+        <hr/>
+    </div>
+</div>
 <ng-container *ngIf="errorMessage">
     <h4 *ngFor="let error of errorMessage | mapToIterable" class="error_msg">
         {{error.val}}
     </h4>
 </ng-container>
-<form [formGroup]="formNotification" novalidate>
+<form [formGroup]="formNotification" novalidate *ngIf="noti">
     <div class="form-group row">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Chủ Đề</label>
@@ -98,7 +123,7 @@
 
     <hr/>
     <button class="btn btn-danger" (click)="deleteNotificationEvent()" 
-        *ngIf="noti.id && type_http == 'put' && (!noti.sent_date || (noti.sent_date && user_current?.role === 1))"
+        *ngIf="noti.id && position !== 'popup' && (!noti.sent_date || (noti.sent_date && user_current?.role === 1))"
     >
         XÓA
     </button>

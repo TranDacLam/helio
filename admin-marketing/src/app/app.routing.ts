@@ -6,8 +6,7 @@ import { AddLinkCardComponent } from './components/link-card/add-link-card/add-l
 import { LinkCardDetailComponent } from './components/link-card/link-card-detail/link-card-detail.component';
 import { LinkCardListComponent } from './components/link-card/link-card-list/link-card-list.component';
 import { ListNotificationComponent } from './components/notification/list-notification/list-notification.component';
-import { AddNotificationComponent } from './components/notification/add-notification/add-notification.component';
-import { EditNotificationComponent } from './components/notification/edit-notification/edit-notification.component';
+import { FormNotificationComponent } from './components/notification/form-notification/form-notification.component';
 import { NotificationDetailComponent } from './components/notification/notification-detail/notification-detail.component';
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
 import { AdvertisementDetailComponent } from './components/advertisement/advertisement-detail/advertisement-detail.component';
@@ -171,12 +170,12 @@ const routes: Routes = [{
     },
     {
         path: 'notification/add',
-        component: AddNotificationComponent,
+        component: FormNotificationComponent,
         canActivate: [AuthGuard]
     },
     {
         path: 'notification/edit/:id',
-        component: EditNotificationComponent,
+        component: FormNotificationComponent,
         canActivate: [AuthGuard]
     },
     {

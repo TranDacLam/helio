@@ -1,5 +1,5 @@
 <!-- Start breadcrumb -->
-<div class="row">
+<div class="row" *ngIf="position !== 'popup'">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
@@ -9,7 +9,7 @@
     </nav>
 </div>
 <!-- End breadcrumb -->
-<div class="row mt-30 mb-30 text-center">
+<div class="row mt-30 mb-30 text-center" *ngIf="position !== 'popup'">
     <div class="col-xs-12 col-md-12">
         <p class='title'>{{title_page}}</p>
         <hr/>

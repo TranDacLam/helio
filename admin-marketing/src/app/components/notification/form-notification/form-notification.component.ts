@@ -37,13 +37,12 @@ export class FormNotificationComponent implements OnInit {
     @ViewChild('inputImage')
     inputImage: any;
 
-    @Input() noti: Notification; // Get notification from component parent
-    @Input() type_http; // Get type http from component parent
-    @Input() promotion_id; // Get type http from component parent
-    @Input() lang_promotion; // Get lang from component parent
+    @Input() position; // Get type http from component parent
     
     // Return 1 object to parent
     @Output() update_noti: EventEmitter<Notification> = new EventEmitter<Notification>();
+
+    noti: Notification;
 
     formNotification: FormGroup;
 
@@ -58,6 +57,8 @@ export class FormNotificationComponent implements OnInit {
 
     api_domain: string = '';
     lang = 'vi';
+    promotion_id: number;
+    title_page = '';
 
     constructor(
         private notificationService: NotificationService,
@@ -75,19 +76,30 @@ export class FormNotificationComponent implements OnInit {
     ngOnInit() {
         // get params url
         this.route.params.subscribe(params => {
+            if(params.promotion){
+                this.promotion_id = +params.promotion;
+            }
             if(params.lang){
                 this.lang = params.lang;
             }
         });
-        // get language when create notification for promotion 
-        this.lang = this.lang_promotion ? this.lang_promotion : this.lang;
 
         this.getCategory();
-        this.creatForm();
         // get current user
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
         },100);
+
+        if (this.route.snapshot.paramMap.get('id')) {
+            // Update Init Form
+            this.title_page = "Chỉnh Sửa Thông Báo";
+            this.getNotification();
+        } else {
+            // Add new Form
+            this.title_page = "Thêm Thông Báo";
+            this.noti = new Notification();
+            this.creatForm();
+        }
     }
 
     /*
@@ -105,6 +117,20 @@ export class FormNotificationComponent implements OnInit {
             location: [this.noti.location ? this.noti.location : '', [Validators.maxLength(500)]],
             is_clear_image: [false],
             promotion: [this.promotion_id ? this.promotion_id : null]
+        });
+    }
+
+    /*
+        Function getNotification():
+         + Get id from url path
+         + Callback service function getNotification() by id
+        Author: Lam
+    */
+    getNotification(){
+        const id = +this.route.snapshot.paramMap.get('id');
+        this.notificationService.getNotification(id, this.lang).subscribe(data => {
+            this.noti = data;
+            this.creatForm();
         });
     }
 
@@ -141,13 +167,13 @@ export class FormNotificationComponent implements OnInit {
 
     /*
         Function onSubmit():
-         + Step 1: Check type_http add notification (post), edit notification (put), edit use modal (put_popup)
+         + Step 1: Check notification id add notification (post), edit notification (put), edit use modal (popup)
          + Step 2:  
-            * TH1:  + Type_http = post, callback service function addNoti() to add Notification, 
+            * TH1:  + notification id empy, callback service function addNoti() to add Notification, 
                     + Later, redirect list notification with message
-            * TH2:  + Type_http = put or put_popup, callback service function updateNoti() to update Notification
-                    + Type_http = put then check clear imgae, success then redirect list notification with message, fail show error
-                    + Type_http = put_popup then update Notification show and hidden modal  
+            * TH2:  + notification id exist put or popup, callback service function updateNoti() to update Notification
+                    + position = put then check clear imgae, success then redirect list notification with message, fail show error
+                    + position = popup then update Notification show and hidden modal  
         author: Lam
     */ 
     onSubmit(): void{
@@ -159,7 +185,7 @@ export class FormNotificationComponent implements OnInit {
             // Convert FormGroup to FormData
             let noti_form_data = this.convertFormGroupToFormData(this.formNotification);
             let value_form = this.formNotification.value;
-            if(this.type_http == 'post'){
+            if(!this.noti.id){
                 this.notificationService.addNoti(noti_form_data, this.lang).subscribe(
                     (data) => {
                         this.toastr.success(`Thêm mới "${value_form.subject}" thành công`);
@@ -178,7 +204,7 @@ export class FormNotificationComponent implements OnInit {
                         }
                     }
                 );
-            }else if(this.type_http == 'put' || this.type_http == 'put_popup'){
+            }else if(this.noti.id){
                 if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
                     this.formNotification.get('is_clear_image').setValue(false);
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
@@ -186,17 +212,17 @@ export class FormNotificationComponent implements OnInit {
                     this.notificationService.updateNoti(noti_form_data, this.noti.id, this.lang).subscribe(
                         (data) => {
                             this.noti = data;
-                            if(this.type_http == "put"){
+                            if(this.position === "popup"){
+                                this.update_noti.emit(this.noti);
+                                $('#UpdateNoti').modal('toggle');
+                                this.toastr.success(`Chỉnh sửa "${value_form.subject}" thành công`);
+                            }else {
                                 this.toastr.success(`Chỉnh sửa "${value_form.subject}" thành công`);
                                 if(this.promotion_id){
                                     this.router.navigate(['/notification/detail/', data.id, {lang: this.lang}]);
                                 }else{
                                     this.router.navigate(['/notification/list']);
                                 }
-                            }else if(this.type_http == 'put_popup'){
-                                this.getNotification();
-                                $('#UpdateNoti').modal('toggle');
-                                this.toastr.success(`Chỉnh sửa "${value_form.subject}" thành công`);
                             }
                         },
                         (error) => {
@@ -211,20 +237,6 @@ export class FormNotificationComponent implements OnInit {
                 }
             }
         }
-    }
-
-    /*
-        Function getNotification():
-         + Get id from url path
-         + Callback service function getNotification() by id
-        Author: Lam
-    */
-    getNotification(){
-        const id = +this.route.snapshot.paramMap.get('id');
-        this.notificationService.getNotification(id, this.lang).subscribe(data => {
-            this.noti = data;
-            this.update_noti.emit(this.noti);
-        });
     }
 
     /*

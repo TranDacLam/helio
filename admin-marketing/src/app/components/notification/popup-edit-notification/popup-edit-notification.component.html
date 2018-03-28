@@ -6,8 +6,7 @@
                 <h4 class="modal-title">Chỉnh Sửa Thông Báo</h4>
             </div>
             <div class="modal-body">
-                <form-notification *ngIf="noti" [noti]="noti" [type_http]="type_http"
-                    (update_noti)='updateNoti($event)'
+                <form-notification  [position]="position" (update_noti)='updateNoti($event)'
                 ></form-notification>
             </div>
         </div>
