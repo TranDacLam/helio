@@ -36,8 +36,7 @@ import { FormFaqComponent } from './components/faqs/form-faq/form-faq.component'
 import { ListGameComponent } from './components/games/list-game/list-game.component';
 import { FormGameComponent } from './components/games/form-game/form-game.component';
 import { ListHotComponent } from './components/hots/list-hot/list-hot.component';
-import { AddHotComponent } from './components/hots/add-hot/add-hot.component';
-import { EditHotComponent } from './components/hots/edit-hot/edit-hot.component';
+import { FormHotComponent } from './components/hots/form-hot/form-hot.component';
 import { ListPostComponent } from './components/posts/list-post/list-post.component';
 import { AddPostComponent } from './components/posts/add-post/add-post.component';
 import { EditPostComponent } from './components/posts/edit-post/edit-post.component';
@@ -249,12 +248,12 @@ const routes: Routes = [{
     },
     {
         path: 'hot/add',
-        component: AddHotComponent,
+        component: FormHotComponent,
         canActivate: [AuthGuard]
     },
     {
         path: 'hot/edit/:id',
-        component: EditHotComponent,
+        component: FormHotComponent,
         canActivate: [AuthGuard]
     },
     {

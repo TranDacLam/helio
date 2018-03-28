@@ -29,7 +29,7 @@ export class FormHotComponent implements OnInit {
     @ViewChild('inputImage')
     inputImage: any;
 
-    @Input() hot: Hot; // Get hot from component parent
+    hot: Hot;
 
     formHot: FormGroup;
 
@@ -39,6 +39,7 @@ export class FormHotComponent implements OnInit {
 
     api_domain: string = '';
     lang = 'vi';
+    title_page = '';
 
     constructor(
         private hotService: HotService,
@@ -52,13 +53,23 @@ export class FormHotComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.creatForm();
         // get params url
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;
             }
         });
+
+         if (this.route.snapshot.paramMap.get('id')) {
+            // Update Init Form
+            this.title_page = "Chỉnh Sửa Hot";
+            this.getHot();
+        } else {
+            // Add new Form
+            this.title_page = "Thêm Hot";
+            this.hot = new Hot();
+            this.creatForm();
+        }
     }
 
     /*
@@ -72,6 +83,20 @@ export class FormHotComponent implements OnInit {
             sub_url: [this.hot.sub_url, [Validators.required, Validators.maxLength(1000)]],
             is_show: [this.hot.is_show],
             is_clear_image: [false]
+        });
+    }
+
+     /*
+        Function getHot():
+         + Get id from url path
+         + Callback service function getHot() by id
+        Author: Lam
+    */
+    getHot(){
+        const id = +this.route.snapshot.paramMap.get('id');
+        this.hotService.getHot(id, this.lang).subscribe(data => {
+            this.hot = data;
+            this.creatForm();
         });
     }
 

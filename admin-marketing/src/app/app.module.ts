@@ -71,8 +71,6 @@ import { ListFaqComponent } from './components/faqs/list-faq/list-faq.component'
 import { FormFaqComponent } from './components/faqs/form-faq/form-faq.component';
 import { ListGameComponent } from './components/games/list-game/list-game.component';
 import { ListHotComponent } from './components/hots/list-hot/list-hot.component';
-import { AddHotComponent } from './components/hots/add-hot/add-hot.component';
-import { EditHotComponent } from './components/hots/edit-hot/edit-hot.component';
 import { ListPostComponent } from './components/posts/list-post/list-post.component';
 import { AddPostComponent } from './components/posts/add-post/add-post.component';
 import { EditPostComponent } from './components/posts/edit-post/edit-post.component';
@@ -150,8 +148,6 @@ export const DefaultIntl = {
     FormFaqComponent,
     ListGameComponent,
     ListHotComponent,
-    AddHotComponent,
-    EditHotComponent,
     ListPostComponent,
     AddPostComponent,
     EditPostComponent,
