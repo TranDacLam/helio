@@ -31,6 +31,10 @@ export class AddLinkCardComponent implements OnInit {
     // Check input fields 2 form
     status_error = {full_name: false, email: false, phone: false, birth_date: false, personal_id: false, address: false};
 
+    is_btn_embed: boolean = true;
+    is_btn_app: boolean = true;
+    is_btn_linkcard: boolean = true;
+
     constructor(
         private linkCardService: LinkCardService, 
         private location: Location,
@@ -39,6 +43,38 @@ export class AddLinkCardComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+    }
+
+    btnEmbed(event){
+        this.is_btn_embed = event;
+        if(this.is_btn_embed === false && this.is_btn_app === false){
+            this.is_btn_linkcard = false;
+        }else{
+            this.is_btn_linkcard = true;
+        }
+    }
+
+    btnApp(event){
+        this.is_btn_app = event;
+        if(this.is_btn_embed === false && this.is_btn_app === false){
+            this.is_btn_linkcard = false;
+        }else{
+            this.is_btn_linkcard = true;
+        }
+    }
+
+    checkSubmitApp(event){
+        if(event === true){
+            this.status_error = {full_name: false, email: false, phone: false, birth_date: false, 
+                personal_id: false, address: false};
+        }
+    }
+
+    checkSubmitEmbed(event){
+        if(event === true){
+            this.status_error = {full_name: false, email: false, phone: false, birth_date: false, 
+                personal_id: false, address: false};
+        }
     }
 
     /*

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { User } from './shared/class/user';
 import { UserService } from './shared/services/user.service';
 import { VariableGlobals } from './shared/commons/variable_globals';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -18,7 +19,8 @@ export class AppComponent {
     constructor(
         private router: Router,
         private userService: UserService,
-        public variable_globals: VariableGlobals
+        public variable_globals: VariableGlobals,
+        private toastr: ToastrService
     ) { 
         this.token = localStorage.getItem('auth_token');
         if(this.token){
@@ -33,7 +35,8 @@ export class AppComponent {
     logout(){
         localStorage.removeItem('auth_token');
         this.variable_globals.user_current = null;
-        this.router.navigate(['/login', { message: 'success'}]);
+        this.toastr.success(`Đăng xuất thành công`);
+        this.router.navigate(['/login']);
     }
 
     /*
@@ -43,7 +46,12 @@ export class AppComponent {
     getUserByToken(value){
         this.userService.getUserByToken(value).subscribe(
             (data) => {
-                this.variable_globals.user_current = data;
+                if(data.is_staff === false){
+                    this.toastr.error("Tài khoản của bạn không có quyền đăng nhập vào Site Quản Trị Hệ Thống.");
+                    this.router.navigate(['/login']);
+                }else{
+                    this.variable_globals.user_current = data;
+                }
             },
             (error) => {
                 localStorage.removeItem('auth_token');                    
