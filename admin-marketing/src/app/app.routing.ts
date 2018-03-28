@@ -34,8 +34,7 @@ import { FormEventComponent } from './components/events/form-event/form-event.co
 import { ListFaqComponent } from './components/faqs/list-faq/list-faq.component';
 import { FormFaqComponent } from './components/faqs/form-faq/form-faq.component';
 import { ListGameComponent } from './components/games/list-game/list-game.component';
-import { AddGameComponent } from './components/games/add-game/add-game.component';
-import { EditGameComponent } from './components/games/edit-game/edit-game.component';
+import { FormGameComponent } from './components/games/form-game/form-game.component';
 import { ListHotComponent } from './components/hots/list-hot/list-hot.component';
 import { AddHotComponent } from './components/hots/add-hot/add-hot.component';
 import { EditHotComponent } from './components/hots/edit-hot/edit-hot.component';
@@ -235,12 +234,12 @@ const routes: Routes = [{
     },
     {
         path: 'game/add',
-        component: AddGameComponent,
+        component: FormGameComponent,
         canActivate: [AuthGuard]
     },
     {
         path: 'game/edit/:id',
-        component: EditGameComponent,
+        component: FormGameComponent,
         canActivate: [AuthGuard]
     },
     {

@@ -27,7 +27,7 @@ export class FormGameComponent implements OnInit {
         author: Lam
     */
 
-    @Input() game: Game; // Get game from component parent
+    game: Game;
 
     types: Type[];
 
@@ -38,6 +38,7 @@ export class FormGameComponent implements OnInit {
 
     api_domain: string = '';
     lang = 'vi';
+    title_page = '';
     ckEditorConfig:any;
 
     constructor(
@@ -53,7 +54,6 @@ export class FormGameComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.creatForm();
         // get params url
         this.route.params.subscribe(params => {
             if(params.lang){
@@ -63,6 +63,17 @@ export class FormGameComponent implements OnInit {
         this.getTypes();
 
         this.ckEditorConfig = ckeditor_config.config;
+
+        if (this.route.snapshot.paramMap.get('id')) {
+            // Update Init Form
+            this.title_page = "Chỉnh Sửa Trò Chơi";
+            this.getGame();
+        } else {
+            // Add new Form
+            this.title_page = "Thêm Trò Chơi";
+            this.game = new Game();
+            this.creatForm();
+        }
     }
 
     /*
@@ -79,6 +90,25 @@ export class FormGameComponent implements OnInit {
             is_draft: [this.game.is_draft],
             is_clear_image: [false]
         });
+    }
+
+    /*
+        Function getGame():
+         + Get id from url path
+         + Callback service function getGame() by id
+        Author: Lam
+    */
+    getGame(){
+        const id = +this.route.snapshot.paramMap.get('id');
+        this.gameService.getGame(id, this.lang).subscribe(
+            (data) => {
+                this.game = data;
+                this.creatForm();
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
     }
 
     /*
