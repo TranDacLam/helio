@@ -662,8 +662,14 @@ def card_information(request, card_id):
             settings.BASE_URL_DMZ_API, card_id)
 
         if request.method == 'GET':
+            # Only staff or card link get full infomation
+            is_full_info = request.user.is_staff or request.user.barcode == card_id
+            params = {
+                "is_full_info": is_full_info
+            }
+
             # Call DMZ get card infomation
-            response = requests.get(card_information_api_url, headers=headers)
+            response = requests.get(card_information_api_url, params=params, headers=headers)
 
             if response.status_code == 401: 
                 print "DMZ reponse status code 401", response.text
