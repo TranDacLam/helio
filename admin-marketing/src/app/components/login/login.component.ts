@@ -8,6 +8,7 @@ import 'rxjs/add/observable/throw';
 import { VariableGlobals } from './../../shared/commons/variable_globals';
 import { UserService } from './../../shared/services/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { ValidateSubmit } from './../../shared/validators/validate-submit';
 
 
 @Component({
@@ -83,19 +84,23 @@ export class LoginComponent implements OnInit {
     */ 
     onSubmit(event){
         if(event){
-            this.token_recaptcha = event;
-            this.authService.auth(this.formLogin.value).subscribe(
-                (data) => {
-                    localStorage.setItem('auth_token', data.token);
-                    if(data.token){
-                        this.getUserByToken(data.token);
+            if(this.formLogin.invalid){
+                ValidateSubmit.validateAllFormFields(this.formLogin);
+            }else{
+                this.token_recaptcha = event;
+                this.authService.auth(this.formLogin.value).subscribe(
+                    (data) => {
+                        localStorage.setItem('auth_token', data.token);
+                        if(data.token){
+                            this.getUserByToken(data.token);
+                        }
+                        this.router.navigateByUrl('/');
+                    },
+                    (error) => {
+                        this.msg_error = error.non_field_errors[0] ? error.non_field_errors[0] : "Lỗi";
                     }
-                    this.router.navigateByUrl('/');
-                },
-                (error) => {
-                    this.msg_error = error.non_field_errors[0] ? error.non_field_errors[0] : "Lỗi";
-                }
-            );
+                );
+            }
         }
     }
 

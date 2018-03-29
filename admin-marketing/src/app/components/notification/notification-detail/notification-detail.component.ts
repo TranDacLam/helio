@@ -177,7 +177,7 @@ export class NotificationDetailComponent implements OnInit {
             this.toastr.warning(`Vui lòng chọn khách hàng nhận thông báo`);
         }else{
             bootbox.confirm({
-                title: "Bạn có chắc chắn",
+                title: "Bạn có chắc chắn?",
                 message: "Bạn có muốn gửi Thông Báo này không?",
                 buttons: {
                     cancel: {
