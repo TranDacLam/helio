@@ -1,6 +1,5 @@
 /*Begin Content Denomination Add*/
 .title-denomi {
-	border-bottom: 2px solid #333;
 	margin: 10px 0 20px 0;
 	padding: 10px 0;
 
@@ -15,7 +14,6 @@ a.pull-left:hover {
 	padding: 0 15px;
 }
 .content-denomi {
-	border-bottom: 2px solid #333;
 	margin-bottom: 10px;
 }
 p.dv-denom {

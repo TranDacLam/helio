@@ -30,8 +30,6 @@ import { AddNotificationComponent } from './components/notification/add-notifica
 import { EditNotificationComponent } from './components/notification/edit-notification/edit-notification.component';
 import { UserMultiselectComponent } from './components/user-multiselect/user-multiselect.component';
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
-import { AdvertisementAddComponent } from './components/advertisement/advertisement-add/advertisement-add.component';
-import { AdvertisementDetailComponent } from './components/advertisement/advertisement-detail/advertisement-detail.component';
 import { PromotionTypeListComponent } from './components/promotion-type/promotion-type-list/promotion-type-list.component';
 import { DenominationListComponent } from './components/denomination/denomination-list/denomination-list.component';
 import { DenominationAddComponent } from './components/denomination/denomination-add/denomination-add.component';
@@ -53,7 +51,6 @@ import { BannerService } from './shared/services/banner.service';
 import { AuthGuard } from './shared/guards/index';
 
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
-
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserAddComponent } from './components/user/user-add/user-add.component';
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
@@ -61,10 +58,7 @@ import { LinkCardListComponent } from './components/link-card/link-card-list/lin
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeService } from './shared/services/fee.service';
 import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
-
 import { BannerListComponent } from './components/banner/banner-list/banner-list.component';
-import { BannerDetailComponent } from './components/banner/banner-detail/banner-detail.component';
-import { BannerAddComponent } from './components/banner/banner-add/banner-add.component';
 
 import { ListEventComponent } from './components/events/list-event/list-event.component';
 import { AddEventComponent } from './components/events/add-event/add-event.component';
@@ -101,6 +95,8 @@ import { OpenTimeComponent } from './components/open-time/open-time.component';
 import { PromotionReportComponent } from './components/promotions/promotion-report/promotion-report.component';
 import { PopupEditPromotionComponent } from './components/promotions/popup-edit-promotion/popup-edit-promotion.component';
 import { RolePermissionComponent } from './components/role-permission/role-permission.component';
+import { FormAdvertisementComponent } from './components/advertisement/form-advertisement/form-advertisement.component';
+import { FormBannerComponent } from './components/banner/form-banner/form-banner.component';
 
 
 /*
@@ -127,8 +123,6 @@ export const DefaultIntl = {
     EditNotificationComponent,
     UserMultiselectComponent,
     AdvertisementListComponent,
-    AdvertisementAddComponent,
-    AdvertisementDetailComponent,
     PromotionTypeListComponent,
     DenominationListComponent,
     DenominationAddComponent,
@@ -148,8 +142,6 @@ export const DefaultIntl = {
     FeeListComponent,
     FeeAddComponent,
     BannerListComponent,
-    BannerDetailComponent,
-    BannerAddComponent,
     ListEventComponent,
     AddEventComponent,
     EditEventComponent,
@@ -183,7 +175,10 @@ export const DefaultIntl = {
     OpenTimeComponent,
     PromotionReportComponent,
     PopupEditPromotionComponent,
-    RolePermissionComponent
+    RolePermissionComponent,
+    FormAdvertisementComponent,
+    FormBannerComponent,
+    
   ],
   imports: [
     BrowserModule,

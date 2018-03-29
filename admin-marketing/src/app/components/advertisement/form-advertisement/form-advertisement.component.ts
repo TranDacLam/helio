@@ -12,17 +12,19 @@ import { AdvertisementService } from '../../../shared/services/advertisement.ser
 declare var bootbox:any;
 
 @Component({
-  selector: 'app-advertisement-detail',
-  templateUrl: './advertisement-detail.component.html',
-  styleUrls: ['./advertisement-detail.component.css']
+  selector: 'app-form-advertisement',
+  templateUrl: './form-advertisement.component.html',
+  styleUrls: ['./form-advertisement.component.css']
 })
-export class AdvertisementDetailComponent implements OnInit {
+export class FormAdvertisementComponent implements OnInit {
 
-	@Input() adv: Advertisement;
+  	adv: Advertisement;
+
 	errorMessage: string ="";
 	advForm: FormGroup;
 
 	lang: string = 'vi';
+	title: string= "";
 
 	constructor(
 		private advertisementService: AdvertisementService,
@@ -33,21 +35,31 @@ export class AdvertisementDetailComponent implements OnInit {
 		) { }
 
 	ngOnInit() {
-		this.getAdv();
+		this.route.params.subscribe(params => {
+            if(params.lang){
+                this.lang = params.lang;
+            }
+        });
+        if (this.route.snapshot.paramMap.get('id')) {
+            // Update Init Form
+            this.title = "Chỉnh Sửa Quảng Cáo";
+            this.getAdv();
+        } else {
+            // Add new Form
+            this.title = "Thêm Quảng Cáo";
+            this.adv = new Advertisement()
+            this.createForm();
+        }
 	}
 
 	createForm() {
         this.advForm = this.fb.group({
           name: [this.adv.name, [Validators.required, Validators.maxLength(255)]],
-          is_show: [this.adv.is_show]
+          is_show: [this.adv.is_show === true ? true : false],
         });
     }
-	/*
-		GET: Get Advertiment By Id
-		Call service advertiment
-		@author: TrangLe
-	 */
-	getAdv() {
+
+    getAdv() {
 		const id = +this.route.snapshot.paramMap.get('id');
 		this.advertisementService.getAdvertisement(id, this.lang).subscribe(
 			(result) => {
@@ -57,28 +69,47 @@ export class AdvertisementDetailComponent implements OnInit {
       		(error) => this.router.navigate(['/error', { message: error }])
         );
 	}
+
 	/*
 		PUT: Update Advertiment Detail
 		Call service advertiment
 		@author: TrangLe
 	 */
-	EditAdv() {
+	onSubmit() {
 		if (this.advForm.invalid) {
 			ValidateSubmit.validateAllFormFields(this.advForm);
 		} else {
-			this.advertisementService.updateAdv(this.advForm.value, this.adv.id, this.lang).subscribe(
-				() => {
-					this.toastr.success(`Chỉnh sửa ${this.advForm.value['name']} thành công`);
-					this.router.navigate(['/advertisement-list']);
-				},
-				(error) => {
-					if(error.status == 400) {
-						this.errorMessage = error.json().name
-					} else {
-						this.router.navigate(['/error', { message: error.json().message }])
+			if (this.adv.id) {
+				this.advertisementService.updateAdv(this.advForm.value, this.adv.id, this.lang).subscribe(
+					() => {
+						this.toastr.success(`Chỉnh sửa ${this.advForm.value['name']} thành công`);
+						this.router.navigate(['/advertisement-list']);
+					},
+					(error) => {
+						if(error.status == 400) {
+							this.errorMessage = error.json().name
+						} else {
+							this.router.navigate(['/error', { message: error.json().message }])
+						}
 					}
-				}
-			);
+				);
+			} else{
+				this.advertisementService.addAdvertisement( this.advForm.value, this.lang ).subscribe(
+	    			(resultAdv) => {
+	    				// this.advs.push(resultAdv);
+	                    this.toastr.success(`Thêm ${this.advForm.value['name']} thành công`);
+	                    this.router.navigate(['/advertisement-list'])
+	    			},
+	                (error) => {
+	                    if (error.status == 400 ) {
+	                        this.errorMessage = error.json()
+	                    } else {
+	                        this.router.navigate(['/error', { message: error.json().message }])
+	                    }
+	                }
+	            );
+			}
+			
 		}
 	}
 	deleteAdv(adv: Advertisement) {
@@ -95,7 +126,7 @@ export class AdvertisementDetailComponent implements OnInit {
 	confirmDelete(adv: Advertisement) {
         bootbox.confirm({
             title: "Bạn có chắc chắn ?",
-            message: "Bạn muốn xóa Quảng Cáo này",
+            message: "Bạn muốn xóa Quảng Cáo này ?",
             buttons: {
                 cancel: {
                     label: "HỦY"
@@ -115,4 +146,5 @@ export class AdvertisementDetailComponent implements OnInit {
     removeMessage() {
     	this.errorMessage = '';
     }
+
 }

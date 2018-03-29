@@ -159,12 +159,6 @@ class GiftSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class AdvertisementSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(required=True,validators=[
-        UniqueValidator(
-            queryset=Advertisement.objects.all(),
-            message =_('This advertisement is already taken')
-            )
-        ])
     class Meta:
         model = Advertisement
         fields = ('id', 'name', 'is_show')
@@ -297,16 +291,19 @@ class EventSerializer(serializers.ModelSerializer):
         return super(EventSerializer, self).update(instance, validated_data)
 
 class HotSerializer(serializers.ModelSerializer):
-
+    image = serializers.ImageField(required=False, allow_empty_file=True)
     class Meta:
         model = Hot
         fields = ('id', 'name', 'sub_url', 'image', 'is_show')
 
     def update(self, instance, validated_data):
+        print "instance.image", instance.image
         if self.context['request']:
             is_clear_image = self.context['request'].data.get('is_clear_image')
             if is_clear_image == "false" and not validated_data.get('image'):
                 validated_data['image'] = instance.image
+            elif is_clear_image == "true":
+                validated_data['image'] = None
         return super(HotSerializer, self).update(instance, validated_data)
 
 class PostImageSerializer(serializers.ModelSerializer):
@@ -529,12 +526,12 @@ class HotAdvsSerializer(serializers.ModelSerializer):
     sub_url_register = serializers.CharField(required=False,allow_null=True, allow_blank=True)
     sub_url_view_detail = serializers.CharField(required=False, allow_null=True, allow_blank=True)
     
-    name = serializers.CharField(required=True, max_length=255,validators=[
-        UniqueValidator(
-            queryset=Hot_Advs.objects.all(),
-            message =_('This Hot Ads is already taken')
-            )
-        ])
+    # name = serializers.CharField(required=True, max_length=255,validators=[
+    #     UniqueValidator(
+    #         queryset=Hot_Advs.objects.all(),
+    #         message =_('This Hot Ads is already taken')
+    #         )
+    #     ])
 
     class Meta:
         model = Hot_Advs
