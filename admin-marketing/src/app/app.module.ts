@@ -20,7 +20,6 @@ import { ToastrModule } from 'ngx-toastr'; // https://github.com/scttcper/ngx-to
 
 
 import { AppComponent } from './app.component';
-import { UsersComponent } from './components/users/users.component';
 import { AddLinkCardComponent } from './components/link-card/add-link-card/add-link-card.component';
 import { FormUserAppComponent } from './components/link-card/form-user-app/form-user-app.component';
 import { FormUserEmbedComponent } from './components/link-card/form-user-embed/form-user-embed.component';
@@ -101,7 +100,6 @@ export const DefaultIntl = {
 @NgModule({
   declarations: [
     AppComponent,
-    UsersComponent,
     AddLinkCardComponent,
     FormUserAppComponent,
     FormUserEmbedComponent,

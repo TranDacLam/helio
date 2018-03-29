@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { UsersComponent } from './components/users/users.component';
 import { AddLinkCardComponent } from './components/link-card/add-link-card/add-link-card.component';
 import { LinkCardDetailComponent } from './components/link-card/link-card-detail/link-card-detail.component';
 import { LinkCardListComponent } from './components/link-card/link-card-list/link-card-list.component';
@@ -56,10 +54,6 @@ import { RolePermissionComponent } from './components/role-permission/role-permi
 const routes: Routes = [{
         path: '',
         component: HomeComponent,
-        canActivate: [AuthGuard]
-    }, {
-        path: 'users',
-        component: UsersComponent,
         canActivate: [AuthGuard]
     }, {
         path: 'promotions',
