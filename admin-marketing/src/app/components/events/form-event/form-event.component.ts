@@ -82,13 +82,13 @@ export class FormEventComponent implements OnInit {
             short_description: [this.event.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.event.content, Validators.required],
             start_date: [this.event.start_date ? moment(this.event.start_date,"DD/MM/YYYY").toDate() : '', 
-                [DateValidators.formatStartDate, DateValidators.requiredStartDate, DateValidators.validStartDate]],
+                [DateValidators.validStartDate, DateValidators.formatStartDate, DateValidators.requiredStartDate]],
             end_date: [this.event.end_date ? moment(this.event.end_date,"DD/MM/YYYY").toDate() : '', 
-                [DateValidators.formatEndDate, DateValidators.requiredStartDate, DateValidators.validEndDate]],
+                [DateValidators.validEndDate, DateValidators.formatEndDate, DateValidators.requiredStartDate]],
             start_time: [this.event.start_time ? moment(this.event.start_time,"HH:mm").format() : '', 
-                [DateValidators.formatStartTime]],
+                [DateValidators.validStartTime, DateValidators.formatStartTime]],
             end_time: [this.event.end_time ? moment(this.event.end_time,"HH:mm").format() : '',
-                [DateValidators.formatEndTime]],
+                [DateValidators.validEndTime, DateValidators.formatEndTime]],
             is_draft: [this.event.is_draft === true ? true : false],
             is_clear_image: [false]
         }, {validator: [this.dateLessThan(), this.timeLessThan()]});
@@ -177,15 +177,17 @@ export class FormEventComponent implements OnInit {
     */ 
     onSubmit(): void{
         // set and update valdiator, so error validate ng-datetime "owlDateTimeParse"
-        this.formEvent.controls['start_date'].setValidators([
+        this.formEvent.controls['start_date'].setValidators([DateValidators.validStartDate,
             DateValidators.formatStartDate, DateValidators.requiredStartDate]);
         this.formEvent.controls['start_date'].updateValueAndValidity();
-        this.formEvent.controls['end_date'].setValidators([
+        this.formEvent.controls['end_date'].setValidators([DateValidators.validEndDate,
             DateValidators.formatEndDate, DateValidators.requiredStartDate]);
         this.formEvent.controls['end_date'].updateValueAndValidity();
-        this.formEvent.controls['start_time'].setValidators([DateValidators.formatStartTime]);
+        this.formEvent.controls['start_time'].setValidators([DateValidators.validStartTime,
+            DateValidators.formatStartTime]);
         this.formEvent.controls['start_time'].updateValueAndValidity();
-        this.formEvent.controls['end_time'].setValidators([DateValidators.formatEndTime]);
+        this.formEvent.controls['end_time'].setValidators([DateValidators.validEndTime,
+            DateValidators.formatEndTime]);
         this.formEvent.controls['end_time'].updateValueAndValidity();
         
         if(this.formEvent.invalid){
