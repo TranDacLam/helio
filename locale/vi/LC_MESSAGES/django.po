@@ -892,7 +892,7 @@ msgstr "Không thể thay đổi mật khẩu của Customer User."
 
 #: websites/api_admin/serializers.py:534
 msgid "This Hot Ads is already taken"
-msgstr "Hot Ads này đã tồn tại."
+msgstr "Hot Ads có Tên đã tồn tại."
 
 #: websites/api_admin/views.py:50 websites/api_admin/views.py:73
 #: websites/api_admin/views.py:100 websites/api_admin/views.py:116

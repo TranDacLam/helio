@@ -56,7 +56,8 @@ export class LinkCardListComponent implements OnInit {
             columnDefs: [
                 {
                     targets: 1,
-                    visible: false
+                    visible: false,
+                    orderable: false,
                 },
                 {
                     order: [7, 'desc'],
@@ -97,8 +98,8 @@ export class LinkCardListComponent implements OnInit {
         */
         if(this.length_selected > 0 ){
             bootbox.confirm({
-                title: "Bạn có chắc chắn ?",
-                message: "Bạn muốn xóa " + this.length_selected + " Thẻ Liên Kết đã chọn ?",
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.length_selected + " Thẻ Liên Kết đã chọn?",
                 buttons: {
                     cancel: {
                         label: "HỦY"

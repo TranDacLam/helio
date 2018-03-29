@@ -135,8 +135,8 @@ export class DenominationListComponent implements OnInit {
         */
         if(this.length_selected > 0 ){
             bootbox.confirm({
-                title: "Bạn có chắc chắn ?",
-                message: "Bạn muốn xóa " + this.length_selected + " Mệnh Giá Nạp Tiền đã chọn ?",
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.length_selected + " Mệnh Giá Nạp Tiền đã chọn?",
                 buttons: {
                     cancel: {
                         label: "HỦY"
