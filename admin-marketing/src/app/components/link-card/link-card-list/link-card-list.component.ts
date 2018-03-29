@@ -58,10 +58,9 @@ export class LinkCardListComponent implements OnInit {
                     targets: 1,
                     visible: false
                 },
-                { 
-                    orderable: false, 
-                    targets: 0 
-                }
+                {
+                    order: [7, 'desc'],
+                },
             ]
         };
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
@@ -99,7 +98,7 @@ export class LinkCardListComponent implements OnInit {
         if(this.length_selected > 0 ){
             bootbox.confirm({
                 title: "Bạn có chắc chắn ?",
-                message: "Bạn muốn xóa " + this.length_selected + " Thẻ Liên Kết đã chọn",
+                message: "Bạn muốn xóa " + this.length_selected + " Thẻ Liên Kết đã chọn ?",
                 buttons: {
                     cancel: {
                         label: "HỦY"

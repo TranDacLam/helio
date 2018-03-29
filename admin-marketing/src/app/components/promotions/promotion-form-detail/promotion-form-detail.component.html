@@ -26,7 +26,7 @@
 <form [formGroup]="promotionForm" novalidate *ngIf="promotion">
     <div class="form-group row">
         <div class="col-sm-2">
-            <label class="col-form-label form-check-label">Tên Khuyến Mãi (*)</label>
+            <label class="col-form-label form-check-label">Tên Khuyến Mãi </label>
         </div>
         <div class="col-sm-10">
             <input type="text" class="form-control" formControlName="name"/>
@@ -78,7 +78,7 @@
 
     <div class="form-group row">
         <div class="col-sm-2">
-            <label class="col-form-label form-check-label">Mô Tả (*)</label>
+            <label class="col-form-label form-check-label">Mô Tả </label>
         </div>
         <div class="col-sm-10">
             <input type="text" class="form-control" formControlName="short_description"/>
@@ -88,7 +88,7 @@
 
     <div class="form-group row">
         <div class="col-sm-2">
-            <label class="col-form-label form-check-label">Nội Dung (*)</label>
+            <label class="col-form-label form-check-label">Nội Dung </label>
         </div>
         <div class="col-sm-10">
         	<ckeditor formControlName="content" [config]="ckEditorConfig"> </ckeditor>
@@ -167,10 +167,10 @@
         </div>
         <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="promotionForm.get('end_date')"></show-error-valid>
-            <ul *ngIf="promotionForm.errors && !promotionForm.get('end_date').errors?.fomatDate && 
+            <ul *ngIf="!promotionForm.get('end_date').errors?.fomatDate && 
                 !promotionForm.get('apply_date').errors?.fomatDate">
                 <li style="color: red">
-                    {{ promotionForm.errors?.dates ? 'Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu': '' }}
+                    {{ promotionForm.errors?.dates ? 'Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu' : '' }}
                 </li>
             </ul>
         </div>

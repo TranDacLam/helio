@@ -5,6 +5,7 @@ import { HotAdvs } from '../../../shared/class/hot-advs';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { HotAdvsService } from '../../../shared/services/hot-advs.service';
 import { ToastrService } from 'ngx-toastr';
+import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 
 import { Router } from "@angular/router";
 
@@ -17,12 +18,12 @@ import { Router } from "@angular/router";
 export class HotAdvsAddComponent implements OnInit {
 
 	formHotAds: FormGroup;
-	hot_advs_form = new HotAdvs();
-	hot_advs : HotAdvs[] = [];
+	hot_ads : HotAdvs;
 
     errorMessage:string = '';
 
     ckEditorConfig:any;
+    title: string ="";
 
   	constructor(
   		private fb: FormBuilder,
@@ -32,24 +33,23 @@ export class HotAdvsAddComponent implements OnInit {
   		) {}
 
   	ngOnInit() {
+        this.title = "Thêm Hot Ads";
+        this.hot_ads = new HotAdvs()
   		this.creatForm();
-        this.ckEditorConfig = {
-            // filebrowserUploadUrl: 'http://127.0.0.1:8000/vi/api/upload_file/'
-
-        };
+        this.ckEditorConfig = ckeditor_config.config;
   	}
 
   	// Create form to add Hot advs
   	creatForm(): void{
         this.formHotAds = this.fb.group({
-            name: [this.hot_advs_form.name, [Validators.required, Validators.maxLength(255)]],
-            content: [this.hot_advs_form.content, [Validators.required]],
-            image: [this.hot_advs_form.image],
-            is_register: [false],
-            is_view_detail: [false],
-            sub_url_register: [this.hot_advs_form.sub_url_register],
-            sub_url_view_detail: [this.hot_advs_form.sub_url_view_detail],
-            is_draft: [false],
+            name: [this.hot_ads.name, [Validators.required, Validators.maxLength(255)]],
+            content: [this.hot_ads.content, [Validators.required]],
+            image: [this.hot_ads.image],
+            is_register: [this.hot_ads.is_register === true ? true : false],
+            is_view_detail: [this.hot_ads.is_register === true ? true : false],
+            sub_url_register: [this.hot_ads.sub_url_register],
+            sub_url_view_detail: [this.hot_ads.sub_url_view_detail],
+            is_draft: [this.hot_ads.is_draft === true ? true : false],
         });
     }
 
@@ -67,20 +67,21 @@ export class HotAdvsAddComponent implements OnInit {
         }
     }
 
-    createHotAdvs() {
+    onSubmit() {
         var self = this;
         let hotAdvsFormGroup = this.convertFormGroupToFormData(this.formHotAds);
         if( this.formHotAds.invalid) {
+            $(window).scrollTop(0);
             ValidateSubmit.validateAllFormFields(this.formHotAds);
         } else {
             this.hotAdvsService.CreateHotAdvs(hotAdvsFormGroup).subscribe(
                 (result) => {
-                    self.hot_advs.push(result);
                     this.toastr.success(`Thêm ${this.formHotAds.value['name']} banner thành công`);
                     self.router.navigate(['/hot-advs-list'])
                 },
                 (error) => {
                     if(error.code == 400) {
+                        $(window).scrollTop(0);
                         self.errorMessage = error.message
                     } else {
                         this.router.navigate(['/error', { message: error.message }]);

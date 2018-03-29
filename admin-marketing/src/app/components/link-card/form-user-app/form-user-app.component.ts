@@ -75,7 +75,9 @@ export class FormUserAppComponent implements OnInit {
         Author: Lam
     */
     searchEmail(value){
-        if(this.validateEmail(value)){
+        if(!value){
+            this.errorMessage = 'Bạn chưa nhập email';
+        }else if(this.validateEmail(value)){
             this.errorMessage = 'Email không đúng định dạng';
             return;
         }

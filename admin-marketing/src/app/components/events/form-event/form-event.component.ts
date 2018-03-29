@@ -103,7 +103,6 @@ export class FormEventComponent implements OnInit {
             let start = $('#start_date').val() ? moment($('#start_date').val(), "DD/MM/YYYY").toDate() : '';
             let end = $('#end_date').val() ? moment($('#end_date').val(), "DD/MM/YYYY").toDate() : '';
             if(start <= end || start === '' || end === ''){
-
                 return {};
             }
             return {

@@ -15,16 +15,13 @@ p.errors {
 	color: red;
 }
 p.title-user-edit {
-	border-bottom: 2px solid black;
 	padding: 10px 0;
 	font-size: 34px;
 }
 p.info-users {
-	padding: 15px 0;
-	border-bottom: 2px solid black;
-	border-top: 2px solid black;
+	/*padding: 15px 0;*/
+	font-size: 16px;
 }
 .info-user-content {
-	border-bottom: 2px solid black;
 	margin: 10px 0;
 }

@@ -191,8 +191,6 @@ export class StatisticsFeedbackComponent implements OnInit {
         let end = $('#' + endD).val() ? String($('#' + endD).val()) : '';
         let is_start = start ? this.trimDate(start) : true;
         let is_end = end ? this.trimDate(end) : true;
-        console.log("is_start", is_start)
-        console.log("is_end", is_end)
         if(is_start === false || is_end === false){
             return false;
         }
@@ -209,7 +207,6 @@ export class StatisticsFeedbackComponent implements OnInit {
         let d = parseInt(string.substring(0, index_first));
         let m = parseInt(string.substring(index_first+1, string.indexOf("/", index_first+1)));
         let y = parseInt(string.substring(index_last+1));
-        console.log("d,m,y", d,m,y)
         return this.isValid(d,m,y);
     }
 

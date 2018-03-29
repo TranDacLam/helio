@@ -1,5 +1,4 @@
 .title-hot-advs {
-	border-bottom: 2px solid black;
 	margin: 10px 0 20px 0;
 	padding: 10px 0;
 }
@@ -10,14 +9,11 @@ a.pull-left {
 	text-decoration: none;
 	color: black;
 }
-.area-button {
-	border-top: 2px solid black;
-}
 .bt-hot-advs {
 	margin-top: 15px;
 }
-p.errors {
-	color: red;
+.error_msg {
+	padding-left: 15px;
 }
 .form-check {
 	margin-top: 5px;

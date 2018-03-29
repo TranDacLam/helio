@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { UsersComponent } from './components/users/users.component';
 import { AddLinkCardComponent } from './components/link-card/add-link-card/add-link-card.component';
 import { LinkCardDetailComponent } from './components/link-card/link-card-detail/link-card-detail.component';
 import { LinkCardListComponent } from './components/link-card/link-card-list/link-card-list.component';
@@ -9,8 +7,7 @@ import { ListNotificationComponent } from './components/notification/list-notifi
 import { FormNotificationComponent } from './components/notification/form-notification/form-notification.component';
 import { NotificationDetailComponent } from './components/notification/notification-detail/notification-detail.component';
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
-import { AdvertisementDetailComponent } from './components/advertisement/advertisement-detail/advertisement-detail.component';
-import { AdvertisementAddComponent } from './components/advertisement/advertisement-add/advertisement-add.component';
+import { FormAdvertisementComponent } from './components/advertisement/form-advertisement/form-advertisement.component';
 import { PromotionTypeListComponent } from './components/promotion-type/promotion-type-list/promotion-type-list.component';
 import { DenominationAddComponent } from './components/denomination/denomination-add/denomination-add.component';
 import { DenominationListComponent } from './components/denomination/denomination-list/denomination-list.component';
@@ -24,9 +21,8 @@ import { UserListComponent } from './components/user/user-list/user-list.compone
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
-import { BannerAddComponent } from './components/banner/banner-add/banner-add.component';
 import { BannerListComponent } from './components/banner/banner-list/banner-list.component';
-import { BannerDetailComponent } from './components/banner/banner-detail/banner-detail.component';
+import { FormBannerComponent } from './components/banner/form-banner/form-banner.component';
 
 import { ListEventComponent } from './components/events/list-event/list-event.component';
 import { FormEventComponent } from './components/events/form-event/form-event.component';
@@ -60,10 +56,6 @@ const routes: Routes = [{
         component: HomeComponent,
         canActivate: [AuthGuard]
     }, {
-        path: 'users',
-        component: UsersComponent,
-        canActivate: [AuthGuard]
-    }, {
         path: 'promotions',
         component: ListPromotionComponent,
         canActivate: [AuthGuard]
@@ -85,11 +77,11 @@ const routes: Routes = [{
         canActivate: [AuthGuard]
     }, {
         path: 'advertisement-detail/:id',
-        component: AdvertisementDetailComponent,
+        component: FormAdvertisementComponent,
         canActivate: [AuthGuard]
     }, {
         path: 'advertisement-add',
-        component: AdvertisementAddComponent,
+        component: FormAdvertisementComponent,
         canActivate: [AuthGuard]
     }, {
         path: 'promotion-type-list',
@@ -137,7 +129,7 @@ const routes: Routes = [{
         canActivate: [AuthGuard]
     }, {
         path: 'banner-add',
-        component: BannerAddComponent,
+        component: FormBannerComponent,
         canActivate: [AuthGuard]
     }, {
         path: 'banner-list',
@@ -145,7 +137,7 @@ const routes: Routes = [{
         canActivate: [AuthGuard]
     }, {
         path: 'banner-detail/:id',
-        component: BannerDetailComponent,
+        component: FormBannerComponent,
         canActivate: [AuthGuard]
     },
     {

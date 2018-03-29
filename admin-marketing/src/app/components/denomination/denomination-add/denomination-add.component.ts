@@ -62,7 +62,7 @@ export class DenominationAddComponent implements OnInit {
                 },
                 (error) =>  {
                     if(error.status == 400) {
-                        this.errorMessage = error.json().denomination[0];
+                        this.errorMessage = error.json();
                     } else {
                         this.router.navigate(['/error', { message: error.json().message }]);
                     }

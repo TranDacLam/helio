@@ -106,7 +106,7 @@
         </div>
         <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="formEvent.get('end_date')"></show-error-valid>
-            <ul *ngIf="formEvent.errors && !formEvent.get('end_date').errors?.required_date && 
+            <ul *ngIf="!formEvent.get('end_date').errors?.required_date && 
                 !formEvent.get('start_date').errors?.required_date &&
                 !formEvent.get('end_date').errors?.fomatDate && !formEvent.get('start_date').errors?.fomatDate">
                 <li style="color: red">

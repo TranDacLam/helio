@@ -12,6 +12,7 @@
 <div class="row edit-feedback text-center">
     <p class="title">Chỉnh sửa phản hồi</p>
 </div>
+<hr>
 <div class=' row area-form-feedback' >
     <div *ngIf='feedback'>
         <form [formGroup]="feedbackForm" novalidate>
@@ -133,6 +134,7 @@
                     </div>
                 </div>
             </div>
+            <hr>
             <div class="row button-feedback">
                 <div class="col-md-12">
                     <button type="submit" class=' pull-right btn btn-primary' (click)="updateFeedback()">LƯU LẠI</button>

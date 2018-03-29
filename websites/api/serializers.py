@@ -24,7 +24,7 @@ class UserSerializer(SetCustomErrorMessagesMixin, serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'full_name', 'phone', 'device_unique', 'birth_date', 'phone',
+        fields = ('id', 'email', 'password', 'full_name', 'phone', 'device_unique', 'birth_date', 'phone',
                   'personal_id', 'country', 'address', 'city', 'avatar', 'is_staff', 'role')
         custom_error_messages_for_validators = {
             'email': {

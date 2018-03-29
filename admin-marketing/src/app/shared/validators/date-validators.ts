@@ -53,18 +53,20 @@ export class DateValidators {
         Author: Lam
     */
     static validStartDate(c: FormControl): ValidationErrors{
-        let date_validatetors = new DateValidators();
-        const message = {
-            'fomatDate': {
-                'message': 'Vui lòng nhập ngày bắt đầu hợp lệ'
+        if(c.dirty){
+            let date_validatetors = new DateValidators();
+            const message = {
+                'fomatDate': {
+                    'message': 'Vui lòng nhập ngày bắt đầu hợp lệ'
+                }
+            };
+            let start_date = $('#start_date').val() ? String($('#start_date').val()) : '';
+            let is_valid = start_date ? date_validatetors.trimDate(start_date) : true;
+            if(is_valid === true){
+                return null;
             }
-        };
-        let start_date = $('#start_date').val() ? String($('#start_date').val()) : '';
-        let is_valid = start_date ? date_validatetors.trimDate(start_date) : true;
-        if(is_valid === true || start_date === ''){
-            return null;
+            return message;
         }
-        return message;
     }
 
     /*
@@ -72,18 +74,20 @@ export class DateValidators {
         Author: Lam
     */
     static validEndDate(c: FormControl): ValidationErrors{
-        let date_validatetors = new DateValidators();
-        const message = {
-            'fomatDate': {
-                'message': 'Vui lòng nhập ngày kết thúc hợp lệ'
+        if(c.dirty){
+            let date_validatetors = new DateValidators();
+            const message = {
+                'fomatDate': {
+                    'message': 'Vui lòng nhập ngày kết thúc hợp lệ'
+                }
+            };
+            let end_date = $('#end_date').val() ? String($('#end_date').val()) : '';
+            let is_valid = end_date ? date_validatetors.trimDate(end_date) : true;
+            if(is_valid === true){
+                return null;
             }
-        };
-        let end_date = $('#end_date').val() ? String($('#end_date').val()) : '';
-        let is_valid = end_date ? date_validatetors.trimDate(end_date) : true;
-        if(is_valid === true){
-            return null;
+            return message;
         }
-        return message;
     }
 
     /*
