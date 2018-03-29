@@ -13,6 +13,7 @@
 	<form [formGroup]="formUser" novalidate (ngSubmit)="onSubmit()">
 		<div class="row content-user">
 			<p class="title-user-edit text-center">Sửa thông tin User</p>
+			<hr>
 			<div class="col-md-8">
 				<div class="form-group row">
 					<div class="col-sm-3">
@@ -74,8 +75,10 @@
 				</div>
 			</div>
 		</div>
+		<hr>
 		<div class="row info-user-content ">
 			<p class="info-users">Thông tin cá nhân</p>
+			<hr>
 			<div class="col-md-8">
 				<div class="form-group row">
 					<div class="col-sm-3">
@@ -218,6 +221,7 @@
 	        	</div>
 			</div>
 		</div>
+		<hr>
 		<div class='col-md-12'>
 			<button (click)="confirmDeleteFeedback(user)" type="button" class="pull-left btn btn-danger">XÓA</button>
 			<button type="submit" class="pull-right btn btn-primary">LƯU LẠI</button>

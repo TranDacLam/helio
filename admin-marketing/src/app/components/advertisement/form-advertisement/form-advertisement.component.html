@@ -12,7 +12,7 @@
 <div class='title-adv row'>
 	<p class="title text-center">{{title}}</p>
 </div>
-
+<hr>
 <ng-container *ngIf="errorMessage">
     <p *ngFor="let error of errorMessage | mapToIterable" class="error_msg">
         {{ error.val }}
@@ -43,6 +43,7 @@
             </div>
         </div> 
 	</div>
+    <hr>
 	<div class="form-group row">
 		<div class='col-sm-12'>
 			<button type="submit" class=' pull-right btn btn-primary' (click)="onSubmit()" >LƯU LẠI</button>

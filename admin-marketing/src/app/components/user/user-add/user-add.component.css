@@ -4,14 +4,12 @@ button.clear-file.btn.btn-danger {
 }
 .title-user {
 	margin: 10px 0;
-	border-bottom: 2px solid black;
 	padding: 10px 0;
 }
 p.title {
 	font-size: 34px;
 }
 .content-form-add-user {
-	border-bottom: 2px solid black;
 	margin: 10px 0 15px 0;
 }
 p.errors {

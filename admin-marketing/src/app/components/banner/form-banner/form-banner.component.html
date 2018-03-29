@@ -12,68 +12,70 @@
 <div class='title-banner row'>
     <p class="title text-center">{{title}}</p>
 </div>
+<hr>
 <form [formGroup]="formBanner" *ngIf="banner">
-<div class="col-md-8 area-form-banner">
-    <div *ngIf='banner'> 	
-        <div class="form-group row">
-            <div class="col-sm-3">
-                <label class="center-block">Hình Ảnh</label>
-            </div>
-            <div class="col-sm-8">
-                <p *ngIf="banner.image">
-                    <span>Currently: <a href="{{api_domain}}{{banner.image}}" target="_blank">{{banner.image}}</a></span>
-                </p>
-            	<input type="file" id="image" accept="image/*"
-                (change)="onFileChange($event)"/>
-                <div *ngIf="errorMessage">
-                    <p class='errors'> {{ errorMessage.image }} </p>
+    <div class="col-md-8 area-form-banner">
+        <div *ngIf='banner'> 	
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label class="center-block">Hình Ảnh</label>
                 </div>
-            	<show-error-valid [control]="formBanner.get('image')"></show-error-valid>
+                <div class="col-sm-8">
+                    <p *ngIf="banner.image">
+                        <span>Currently: <a href="{{api_domain}}{{banner.image}}" target="_blank">{{banner.image}}</a></span>
+                    </p>
+                	<input type="file" id="image" accept="image/*"
+                    (change)="onFileChange($event)"/>
+                    <div *ngIf="errorMessage">
+                        <p class='errors'> {{ errorMessage.image }} </p>
+                    </div>
+                	<show-error-valid [control]="formBanner.get('image')"></show-error-valid>
+            	</div>
         	</div>
-    	</div>
-        <div class="form-group row">
-    		<div class="col-sm-3">
-    			<label class="center-block"> Sub_url</label>
-    		</div>
-        	<div class="col-sm-8">	
-    			<input class='form-control' name="sub_url" 
-    			formControlName="sub_url"
-                [(ngModel)]="banner.sub_url"
-    			>
-                <div *ngIf="errorMessage">
-                    <p class='errors'> {{ errorMessage.sub_url }} </p>
-                </div>	
-    			<show-error-valid [control]="formBanner.get('sub_url')"></show-error-valid>
-        	</div>
-        </div>
-        <div class="form-group row">
-            <div class="col-md-3">
-                <label class="center-block"> Vị trí</label>
+            <div class="form-group row">
+        		<div class="col-sm-3">
+        			<label class="center-block"> Sub_url</label>
+        		</div>
+            	<div class="col-sm-8">	
+        			<input class='form-control' name="sub_url" 
+        			formControlName="sub_url"
+                    [(ngModel)]="banner.sub_url"
+        			>
+                    <div *ngIf="errorMessage">
+                        <p class='errors'> {{ errorMessage.sub_url }} </p>
+                    </div>	
+        			<show-error-valid [control]="formBanner.get('sub_url')"></show-error-valid>
+            	</div>
             </div>
-            <div class="col-md-3">
-                <select class='form-control' name="position" 
-                    formControlName="position">
-                    <option value="" [selected]="isSelected">Chọn vị trí ở đây</option>
-                    <option *ngFor="let position of positions" [value]="position">
-                        {{position}}
-                    </option>
-                </select>
-                <show-error-valid [control]="formBanner.get('position')"></show-error-valid>
-            </div>
-        </div> 
-        <div ckass="form-group row">
-            <div class="col-md-3"></div>
-            <div class="col-md-3">
-                <input type="checkbox" name="is_show" [(ngModel)]="banner.is_show"
-                 formControlName = "is_show"> Hiển Thị
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="center-block"> Vị trí</label>
+                </div>
+                <div class="col-md-3">
+                    <select class='form-control' name="position" 
+                        formControlName="position">
+                        <option value="" [selected]="isSelected">Chọn vị trí ở đây</option>
+                        <option *ngFor="let position of positions" [value]="position">
+                            {{position}}
+                        </option>
+                    </select>
+                    <show-error-valid [control]="formBanner.get('position')"></show-error-valid>
+                </div>
+            </div> 
+            <div ckass="form-group row">
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <input type="checkbox" name="is_show" [(ngModel)]="banner.is_show"
+                     formControlName = "is_show"> Hiển Thị
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class='clearfix'></div>
-<div class="row footer-banner">
-    <button type="submit" (click)="onSubmit();" class="pull-right btn btn-primary">LƯU LẠI</button>
-    <button *ngIf ="banner.id" type="submit" class="pull-left btn btn-danger" (click)="confirmDelete(banner)">XÓA</button>
-</div>
+    <div class='clearfix'></div>
+    <hr>
+    <div class="row footer-banner">
+        <button type="submit" (click)="onSubmit();" class="pull-right btn btn-primary">LƯU LẠI</button>
+        <button *ngIf ="banner.id" type="submit" class="pull-left btn btn-danger" (click)="confirmDelete(banner)">XÓA</button>
+    </div>
 </form>
 

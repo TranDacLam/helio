@@ -20,6 +20,11 @@
 .mt-15{
     margin-top: 15px;
 }
+.custom-title {
+    margin: 20px 5px;
+    border-bottom: 2px solid #111;
+    padding: 10px 0px;
+}
 table.dataTable thead .sorting_asc{
 	width: 70px;
     padding-left: 10px;
