@@ -1,0 +1,15 @@
+p.errors {
+	color: red;
+}
+.title-banner a {
+	text-decoration: none;
+	list-style-type: none;
+	color: black;
+}
+.area-form-banner {
+	margin: 20px 0;
+}
+.footer-banner {
+	margin-top: 10px;
+	padding: 20px 0;
+}

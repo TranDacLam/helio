@@ -69,8 +69,8 @@ export class LinkCardDetailComponent implements OnInit {
     deleteLinkCardEvent(){
         let that = this;
         bootbox.confirm({
-            title: "Bạn có chắc chắn ?",
-            message: "Bạn muốn xóa Thẻ Liên Kết này",
+            title: "Bạn có chắc chắn?",
+            message: "Bạn muốn xóa Thẻ Liên Kết này?",
             buttons: {
                 cancel: {
                     label: "HỦY"

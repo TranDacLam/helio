@@ -10,9 +10,14 @@
 </div>
 <!-- End breadcrumb -->
 <div class='title-hot-advs row'>
-	<p class="title text-center">Thêm Hot Ads</p>
-    <p></p>
+	<p class="title text-center">{{title}}</p>
 </div>
+<hr>
+<ng-container *ngIf="errorMessage">
+    <p class="error_msg">
+        {{ errorMessage.name }}
+    </p>
+</ng-container>
 <form [formGroup]="formHotAds" enctype="multipart/form-data">
 	<div class="col-md-12">
 		<div class="form-group row">
@@ -24,9 +29,6 @@
 				formControlName="name"
 				(click)="removeErrorMessage()"
 				>
-				<div *ngIf="errorMessage">
-					<p class='errors'> {{ errorMessage.name }} </p>
-				</div>
 				<show-error-valid [control]="formHotAds.get('name')"></show-error-valid>	
         	</div>
         </div>
@@ -119,9 +121,10 @@
         </div>
 	</div>
 	<div class="clearfix"></div>
+	<hr>
 	<div class="area-button row">
 		<div class="col-md-12">
-    		<button (click)="createHotAdvs();" class="bt-hot-advs pull-right btn btn-primary">LƯU LẠI</button>
+    		<button (click)="onSubmit();" class="bt-hot-advs pull-right btn btn-primary">LƯU LẠI</button>
     	</div>
     </div>
 </form>

@@ -239,11 +239,12 @@ class PromotionStatistic(APIView):
                 # Get list user ID by promition id
                 promotion_user_id_list = Gift.objects.filter(
                     promotion_id=pk).values_list('user_id', flat=True)
+                print promotion_user_id_list
 
                 user_promotion_list = User.objects.filter(
                     pk__in=promotion_user_id_list)
 
-                gift_list = Gift.objects.filter(user_id__in=promotion_user_id_list)
+                gift_list = Gift.objects.filter(user_id__in=promotion_user_id_list).filter(promotion_id=promotion_detail)
 
                 result = {}
 
@@ -358,8 +359,8 @@ class AdvertisementView(APIView):
             adv_id = self.request.data.get('adv_id', None)
             print "Adv_id", adv_id
             if adv_id:
-                # queryset = Advertisement.objects.filter(
-                #     pk__in=adv_id).delete()
+                queryset = Advertisement.objects.filter(
+                    pk__in=adv_id).delete()
                 return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
@@ -2028,6 +2029,7 @@ class UserListView(APIView):
             serializer = admin_serializers.UserCreateSerializer(
                 data=request.data)
             if serializer.is_valid():
+                print "serializer", serializer
                 serializer.save()
                 return Response(serializer.data)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)

@@ -1,13 +1,10 @@
-import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Notification } from '../../../shared/class/notification';
-import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
     selector: 'popup-edit-notification',
     templateUrl: './popup-edit-notification.component.html',
-    styleUrls: ['./popup-edit-notification.component.css'],
-    providers: [NotificationService]
+    styleUrls: ['./popup-edit-notification.component.css']
 })
 export class PopupEditNotificationComponent implements OnInit {
 
@@ -18,44 +15,12 @@ export class PopupEditNotificationComponent implements OnInit {
     // Return 1 object to parent
     @Output() update_noti: EventEmitter<Notification> = new EventEmitter<Notification>();
 
-    noti: Notification;
-    type_http = "put_popup"; // type http to form notification component 
+    position = "popup"; // type http to form notification component 
 
-    lang = 'vi';
 
-    constructor(
-        private notificationService: NotificationService,
-        private route: ActivatedRoute,
-        private router: Router
-    ) { }
+    constructor() { }
 
-    ngOnInit() {
-        // get params url
-        this.route.params.subscribe(params => {
-            if(params.lang){
-                this.lang = params.lang;
-            }
-        });
-        this.getNotification();
-    }
-
-    /*
-        Function getNotification():
-         + Get id from url path
-         + Callback service function getNotification() by id
-        Author: Lam
-    */
-    getNotification(){
-        const id = +this.route.snapshot.paramMap.get('id');
-        this.notificationService.getNotification(id, this.lang).subscribe(
-            (data) => {
-                this.noti = data;
-            },
-            (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
-            }
-        );
-    }
+    ngOnInit() { }
 
     /*
         Function updateNoti(): Get notification from component form-notification

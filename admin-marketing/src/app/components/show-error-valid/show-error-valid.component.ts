@@ -37,6 +37,7 @@ export class ShowErrorValidComponent implements OnInit {
        'birtdateValidate': (params) => params.message,
        'fomatBirtdate':(params) => params.message,
        'fomatFile': (params) => params.message,
+       'requiredSelectedRole': (params) => params.message,
     };
 
     @Input()

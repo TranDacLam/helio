@@ -138,8 +138,8 @@ export class ListGameComponent implements OnInit {
         let that = this;
         if ( this.length_selected > 0 ) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn ?",
-                message: "Bạn muốn xóa " + this.length_selected + " Trò Chơi đã chọn",
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.length_selected + " Trò Chơi đã chọn?",
                 buttons: {
                     cancel: {
                         label: "Hủy"

@@ -4,7 +4,7 @@
         <div class="col-xs-6 col-sm-6">
             <ng-container *ngIf="msg_error">
                 <p *ngFor="let error of msg_error | mapToIterable" class="msg_error">
-                    {{error.val}}.
+                    {{error.val}}
                 </p>
             </ng-container>
             <form [formGroup]="appForm" novalidate>
@@ -101,7 +101,7 @@
                     </div>
                 </div>
           
-                <button class="btn btn-primary" (click)="onSubmitApp()">LƯU</button>
+                <button class="btn btn-primary" (click)="onSubmitApp()" [disabled]="is_disabled_btn_app">LƯU</button>
             </form>
         </div>
         <div class="col-xs-6 col-sm-6">
@@ -113,7 +113,7 @@
                     <div id="imaginary_container"> 
                         <div class="input-group stylish-input-group">
                             <input type="text" class="form-control" placeholder="Nhập email cần tìm" 
-                                #search_email />
+                                #search_email id="search_email"/>
                             <span class="input-group-addon">
                                 <button (click)="searchEmail(search_email.value)">
                                     <span class="glyphicon glyphicon-search"></span>

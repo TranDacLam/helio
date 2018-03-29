@@ -40,7 +40,7 @@ export class PromotionReportComponent implements OnInit {
             }
         });
         this.getPromotionReport();
-        this.dtOptions = datatable_config.data_config('Tổng Hợp Triển Khai Khuyến Mãi');
+        this.dtOptions = datatable_config.data_config('Khách Hàng');
         // custom datatable option
         let dt_options_custom = {
             columnDefs: [
@@ -53,12 +53,6 @@ export class PromotionReportComponent implements OnInit {
         };
         // create new object from 2 object use operator spread es6
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
-
-        setTimeout(() => {
-            // add html in table
-            $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
-            $('.info_search').css('text-align', 'right');
-        },300);
   	}
 
     /*
@@ -74,6 +68,8 @@ export class PromotionReportComponent implements OnInit {
                 this.count_user_deviced = data.count_user_device;
                 this.count_user_not_deviced = data.count_user;
                 this.list_user = data.gift_user;
+                $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
+                $('.info_search').css('text-align', 'right');
             }, 
             (error) => {
                 this.router.navigate(['/error', {message: error.message}]);

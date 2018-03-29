@@ -12,7 +12,7 @@
 <div class='title-user row'>
     <p class="title text-center"> Thêm User</p>
 </div>
-
+<hr>
 <form [formGroup]="formUser" (ngSubmit)="onSubmit()">
 	<div class='content-form-add-user row'>
 		<div class="col-md-8">
@@ -176,10 +176,11 @@
 				<div class="col-sm-8" *ngIf="roles">
 	                <select class='form-control' name="role" 
 	                formControlName="role">
-	                	<option value="" [selected]="isSelected">Chọn loại User </option>
+	                	<option value="0" [selected]="isSelected">Chọn loại User </option>
 	                    <option *ngFor="let role of roles" value="{{ role.id }}">
 	                        {{ role.name }}
 	                    </option>
+	                    <option value="">Customer</option>
 	                </select>
 	                <show-error-valid [control]="formUser.get('role')"></show-error-valid>
 	            </div>
@@ -187,7 +188,8 @@
 		</div>
 	</div>
 	<div class='clearfix'></div>
-	<div class="col-md-8">
+	<hr>
+	<div class="col-md-12">
 		<div class="form-group row">
 		    <button type="submit" class="pull-right btn btn-primary">LƯU LẠI</button>
 		</div>
