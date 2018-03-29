@@ -55,6 +55,7 @@ export class FeedbackListComponent implements OnInit {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
             },
+            processing: true,
             columnDefs: [
                 { 
                     visible: false, 
@@ -66,14 +67,10 @@ export class FeedbackListComponent implements OnInit {
                 }
             ]
         };
-        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
-
-    // Call get all feedback
-    this.getAllFeedbacks();         
+        this.dtOptions = {...this.dtOptions, ...dt_options_custom };       
        
     this.route.queryParams.subscribe(
         params => {
-            this.feedbacks = null;
             this.feedbackService.getFeedbackFilter(params).subscribe(
                 (result) => {
                     setTimeout(() => {
@@ -88,24 +85,6 @@ export class FeedbackListComponent implements OnInit {
             )
         });
 	}
-
-	/*
-        GET: Get all Feedback To Show
-        Call api from service feedback
-        @author: TrangLe
-     */
-	getAllFeedbacks() {
-		this.feedbackService.getAllFeedback().subscribe(
-			(feedbacks) => {
-				this.feedbacks = feedbacks;
-                this.length_all = this.feedbacks.length;
-				// Caling the DT trigger to manually render the table
-				this.dtTrigger.next();
-			},
-            (error) =>  this.router.navigate(['/error', { message: error.json().message }])
-        );
-	}
-
       /*
         Event select checbox on row
             Case1: all row are checked then checkbox all on header is checked

@@ -53,14 +53,12 @@ export class LinkCardListComponent implements OnInit {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
             },
+            order: [7, 'desc'],
             columnDefs: [
                 {
                     targets: 1,
                     visible: false,
                     orderable: false,
-                },
-                {
-                    order: [7, 'desc'],
                 },
             ]
         };

@@ -28,15 +28,6 @@ export class FeedbackService {
             })
 		};
 	}
-
-	/*
-		GET: Get All Feedback Server
-		@author: Trangle
-	 */
-	getAllFeedback(): Observable<Feedback[]> {
-    	let urlFeedback = `${api.feedback}`;
-		return this.http.get(urlFeedback, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-	}
 	/*
 		GET: Get Feedback By ID From Server
 		@author: Trangle
