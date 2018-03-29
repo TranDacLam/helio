@@ -61,5 +61,5 @@ urlpatterns = [
     url(r'^hot_advs/latest/$', views.hot_advs_latest, name="get-hot-advs-latest"),
     url(r'^transactions/ticket/transfer/$', views.ticket_transfer_transactions, name="ticket-transfer-transactions"),
 
-    # url(r'^card/reload/$', views.card_reload, name="card-reload"),
+    url(r'^card/reload/$', views.helio_card_reload, name="card-reload"),
 ]
