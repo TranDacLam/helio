@@ -1,9 +1,26 @@
+<!-- Start breadcrumb -->
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
+            <li class="breadcrumb-item"><a routerLink="/post/list">Quản Lý Bài Viết</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{title_page}}</li>
+        </ol>
+    </nav>
+</div>
+<!-- End breadcrumb -->
+<div class="row mt-30 mb-30 text-center">
+    <div class="col-xs-12 col-md-12">
+        <p class="title">{{title_page}}</p>
+        <hr/>
+    </div>
+</div>
 <ng-container *ngIf="errorMessage">
     <h4 *ngFor="let error of errorMessage | mapToIterable" class="message_error">
         {{error.val}}
     </h4>
 </ng-container>
-<form [formGroup]="formPost" novalidate>
+<form [formGroup]="formPost" novalidate *ngIf="post">
     <div class="form-group row">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Tên</label>
@@ -63,7 +80,7 @@
         </div>
         <div class="col-sm-6" *ngIf="post_types">
             <select class="form-control" formControlName="post_type">
-                <option value="">-- CHỌN LOẠI --</option>
+                <option value="">-- CHỌN LOẠI BÀI VIẾT --</option>
                 <option *ngFor="let type of post_types" 
                     value="{{ type.id }}" [selected]="type.id === post.post_type"
                 >
@@ -103,7 +120,7 @@
     </div>
 
     <hr/>
-    <button class="btn btn-danger" (click)="deletePostEvent()" *ngIf="this.post.id">
+    <button class="btn btn-danger" (click)="deletePostEvent()" *ngIf="post.id">
         XÓA
     </button>
     <button class="btn btn-primary pull-right" (click)="onSubmit()">
