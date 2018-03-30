@@ -62,13 +62,12 @@ class Base64ImageField(serializers.ImageField):
 
 class UserSerializer(serializers.ModelSerializer):
 
-    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], allow_null = True)
+    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], allow_null = True, error_messages = {'invalid': _('Birth date is invalid.')})
    
 
     class Meta:
         model = User
         fields=('id' ,'full_name', 'email', 'phone','barcode','birth_date', 'personal_id', 'address', 'username_mapping', 'date_mapping')
-
 
 
 	# create objects
@@ -274,7 +273,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ('id', 'name', 'image', 'short_description', 'content', 'start_date', 'end_date', 'start_time', 'end_time', 'is_draft')
+        fields = ('id', 'name','image_thumbnail', 'image', 'short_description', 'content', 'start_date', 'end_date', 'start_time', 'end_time', 'is_draft')
 
     def validate(self, data):
         if data['start_date'] > data['end_date']:
@@ -323,7 +322,7 @@ class PostImageSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
 
-    posts_image = PostImageSerializer( many = True )
+    posts_image = PostImageSerializer( many = True, read_only = True )
 
     class Meta:
         model = Post
@@ -345,19 +344,27 @@ class PostSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        posts_image = validated_data.pop('posts_image')
         post = Post.objects.create( **validated_data )
-        for item in posts_image:
-            Post_Image.objects.create( post = post, **item )
+        if self.context['request']:
+            posts_image = self.context['request'].data.getlist('posts_image', None)
+        if posts_image:
+            for item in posts_image:
+                Post_Image.objects.create( post = post, image = item )
         return post
 
     def update(self, instance, validated_data):
-        # to do
         if self.context['request']:
+            posts_image = self.context['request'].data.getlist('posts_image', None)
+            list_clear_image = self.context['request'].data.getlist('list_clear_image', None)
             is_clear_image = self.context['request'].data.get('is_clear_image')
-            if is_clear_image == "false" and not validated_data.get('image'):
-                validated_data['image'] = instance.image
 
+        if list_clear_image:
+            Post_Image.objects.filter(list_clear_image).delete()
+        if posts_image:
+            for item in posts_image:
+                Post_Image.objects.create( post = instance, image = item )
+        if is_clear_image == "false" and not validated_data.get('image'):
+            validated_data['image'] = instance.image
         return super(PostSerializer, self).update(instance, validated_data)
 
 

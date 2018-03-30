@@ -44,6 +44,8 @@ export class FeeListComponent implements OnInit {
 
     // when get data, set value for fees, trigger data table
     getFees() {
+            
+
         return this.feeService.getFees().subscribe(
             success => {
                 this.errorMessage = null;
