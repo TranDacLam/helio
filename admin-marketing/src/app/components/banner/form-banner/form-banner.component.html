@@ -51,10 +51,10 @@
                 <div class="col-md-3">
                     <label class="center-block"> Vị trí</label>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <select class='form-control' name="position" 
                         formControlName="position">
-                        <option value="" [selected]="isSelected">Chọn vị trí ở đây</option>
+                        <option value="" [selected]="isSelected">--CHỌN VỊ TRÍ--</option>
                         <option *ngFor="let position of positions" [value]="position">
                             {{position}}
                         </option>
