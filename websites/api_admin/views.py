@@ -2109,7 +2109,7 @@ class UserDetailView(APIView):
 
         user = self.get_object(pk)
         try:
-            serializer = admin_serializers.UserRoleSerializer(user, data=request.data)
+            serializer = admin_serializers.UserRoleSerializer(user, data=request.data, context={'request': request})
 
             if serializer.is_valid():
                 if (self.request.user.is_staff == True and self.request.user.role_id != 1 and user.is_staff == True):

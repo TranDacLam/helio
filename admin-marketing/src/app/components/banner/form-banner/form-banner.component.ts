@@ -88,7 +88,7 @@ export class FormBannerComponent implements OnInit {
   	createForm() {
         this.formBanner = this.fb.group({
             image: [this.banner.image],
-            sub_url: [this.banner.sub_url, [Validators.required]],
+            sub_url: [this.banner.sub_url, [Validators.required, Validators.maxLength(1000)]],
             position: [this.banner.position, [Validators.required]],
             is_show: [this.banner.is_show === true ? true : false],
         });

@@ -176,7 +176,7 @@
 				<div class="col-sm-8" *ngIf="roles">
 	                <select class='form-control' name="role" 
 	                formControlName="role">
-	                	<option value="0" [selected]="isSelected">Chọn loại User </option>
+	                	<option value="0" [selected]="isSelected">-- CHỌN LOẠI USER --</option>
 	                    <option *ngFor="let role of roles" value="{{ role.id }}">
 	                        {{ role.name }}
 	                    </option>

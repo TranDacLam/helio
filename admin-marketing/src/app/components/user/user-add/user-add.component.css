@@ -15,6 +15,9 @@ p.title {
 p.errors {
 	color: red;
 }
+label.center-block {
+	text-transform: capitalize;
+}
 /* == css for input password == */
 .input-password {
 	padding: 5px 50px 5px 10px;
