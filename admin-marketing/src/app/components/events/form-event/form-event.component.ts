@@ -31,6 +31,7 @@ export class FormEventComponent implements OnInit {
 
     errorMessage: any; // Messages error
     msg_clear_image = '';
+    msg_clear_thumbnail = '';
 
     api_domain: string = '';
     lang = 'vi';
@@ -79,20 +80,58 @@ export class FormEventComponent implements OnInit {
         this.formEvent = this.fb.group({
             name: [this.event.name, [Validators.required, Validators.maxLength(255)]],
             image: [this.event.image, [ImageValidators.validateFile]],
+            thumbnail: [this.event.thumbnail, [ImageValidators.validateFile]],
             short_description: [this.event.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.event.content, Validators.required],
             start_date: [this.event.start_date ? moment(this.event.start_date,"DD/MM/YYYY").toDate() : '', 
-                [DateValidators.formatStartDate, DateValidators.requiredStartDate]],
+                [DateValidators.validStartDate, DateValidators.formatStartDate, DateValidators.requiredStartDate]],
             end_date: [this.event.end_date ? moment(this.event.end_date,"DD/MM/YYYY").toDate() : '', 
-                [DateValidators.checkDate, DateValidators.formatEndDate, DateValidators.requiredStartDate]],
+                [DateValidators.validEndDate, DateValidators.formatEndDate, DateValidators.requiredStartDate]],
             start_time: [this.event.start_time ? moment(this.event.start_time,"HH:mm").format() : '', 
-                [DateValidators.formatStartTime]],
+                [DateValidators.validStartTime, DateValidators.formatStartTime]],
             end_time: [this.event.end_time ? moment(this.event.end_time,"HH:mm").format() : '',
-                [DateValidators.formatEndTime, DateValidators.checkTime]],
+                [DateValidators.validEndTime, DateValidators.formatEndTime]],
             is_draft: [this.event.is_draft === true ? true : false],
-            is_clear_image: [false]
-        });
+            is_clear_image: [false],
+            is_clear_thumbnail: [false]
+        }, {validator: [this.dateLessThan(), this.timeLessThan()]});
     }
+
+    /*
+        Function dateLessThan(): validate start date and end date
+        Author: Lam
+    */
+    dateLessThan() {
+        return (group: FormGroup): {[key: string]: any} => {
+            let start = $('#start_date').val() ? moment($('#start_date').val(), "DD/MM/YYYY").toDate() : '';
+            let end = $('#end_date').val() ? moment($('#end_date').val(), "DD/MM/YYYY").toDate() : '';
+            if(start <= end || start === '' || end === ''){
+                return {};
+            }
+            return {
+                dates: "Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu"
+            };
+        }
+    }
+
+    /*
+        Function timeLessThan(): validate start time and end time
+        Author: Lam
+    */
+    timeLessThan(){
+        return (group: FormGroup): {[key: string]: any} => {
+            let start_date = $('#start_date').val() ? $('#start_date').val() : '';
+            let end_date = $('#end_date').val() ? $('#end_date').val() : '';
+            let start_time = $('#start_time').val() ? moment($('#start_time').val(), 'HH:mm').toDate() : '';
+            let end_time = $('#end_time').val() ? moment($('#end_time').val(), 'HH:mm').toDate() : '';
+            if(start_date === end_date && start_time >= end_time){
+                return {
+                    times: "Vui lòng nhập thời gian kết thúc lớn hơn thời gian bắt đầu"
+                };
+            }
+            return {};
+        }
+    }    
 
     /*
         Function getEvent():
@@ -129,6 +168,23 @@ export class FormEventComponent implements OnInit {
     }
 
     /*
+        Function onFileChange(): Input file image to get base 64
+        author: Lam
+    */ 
+    onFileChangeThumbnail(event): void{
+        if(event.target.files && event.target.files.length > 0) {
+            let file = event.target.files[0];
+            this.formEvent.get('thumbnail').setValue({
+                filename: file.name,
+                filetype: file.type,
+                value: file,
+            });
+        }
+    }
+
+
+
+    /*
         Function onSubmit():
          + Step 1: Check event add event (post), edit event (put)
          + Step 2:  
@@ -140,21 +196,22 @@ export class FormEventComponent implements OnInit {
     */ 
     onSubmit(): void{
         // set and update valdiator, so error validate ng-datetime "owlDateTimeParse"
-        this.formEvent.controls['start_date'].setValidators([
+        this.formEvent.controls['start_date'].setValidators([DateValidators.validStartDate,
             DateValidators.formatStartDate, DateValidators.requiredStartDate]);
         this.formEvent.controls['start_date'].updateValueAndValidity();
-        this.formEvent.controls['end_date'].setValidators([DateValidators.checkDate, 
+        this.formEvent.controls['end_date'].setValidators([DateValidators.validEndDate,
             DateValidators.formatEndDate, DateValidators.requiredStartDate]);
         this.formEvent.controls['end_date'].updateValueAndValidity();
-        this.formEvent.controls['start_time'].setValidators([DateValidators.formatStartTime]);
+        this.formEvent.controls['start_time'].setValidators([DateValidators.validStartTime,
+            DateValidators.formatStartTime]);
         this.formEvent.controls['start_time'].updateValueAndValidity();
-        this.formEvent.controls['end_time'].setValidators([DateValidators.formatEndTime,
-            DateValidators.checkTime]);
+        this.formEvent.controls['end_time'].setValidators([DateValidators.validEndTime,
+            DateValidators.formatEndTime]);
         this.formEvent.controls['end_time'].updateValueAndValidity();
         
         if(this.formEvent.invalid){
             ValidateSubmit.validateAllFormFields(this.formEvent);
-            $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
+            this.scrollTop();
         }else{
             this.formEvent.value.start_date = $('#start_date').val();
             this.formEvent.value.end_date = $('#end_date').val();
@@ -171,16 +228,24 @@ export class FormEventComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                            this.scrollTop();
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
                     }
                 );
-            }else if(this.event.id){
-                if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
-                    this.formEvent.get('is_clear_image').setValue(false);
-                    this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+            }else{
+                if((value_form.is_clear_image === true && typeof(value_form.image) != 'string') ||
+                    (value_form.is_clear_thumbnail === true && typeof(value_form.thumbnail) != 'string')){
+                    if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
+                        this.formEvent.get('is_clear_image').setValue(false);
+                        this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                    }
+                    if(value_form.is_clear_thumbnail === true && typeof(value_form.thumbnail) != 'string'){
+                        this.formEvent.get('is_clear_thumbnail').setValue(false);
+                        this.msg_clear_thumbnail = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                    }
+                    this.scrollTop();
                 }else{
                     this.eventService.updateEvent(event_form_data, this.event.id, this.lang).subscribe(
                         (data) => {
@@ -190,7 +255,7 @@ export class FormEventComponent implements OnInit {
                         (error) => {
                             if(error.code === 400){
                                 this.errorMessage = error.message;
-                                $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                                this.scrollTop();
                             }else{
                                 this.router.navigate(['/error', { message: error.message}]);
                             }
@@ -199,6 +264,14 @@ export class FormEventComponent implements OnInit {
                 }
             }
         }
+    }
+
+    /*
+        Function scrollTop(): creoll top when have validate
+        @author: Lam
+    */
+    scrollTop(){
+        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
     }
 
     /*
@@ -263,7 +336,7 @@ export class FormEventComponent implements OnInit {
             Object.keys(promotionValues).forEach(k => { 
                 if(promotionValues[k] == null) {
                     promotionFormData.append(k, '');
-                } else if (k === 'image') {
+                } else if (k === 'image' || k === 'thumbnail') {
                     promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
                 } else {
                     promotionFormData.append(k, promotionValues[k]);

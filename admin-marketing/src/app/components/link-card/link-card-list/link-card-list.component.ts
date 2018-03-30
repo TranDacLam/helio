@@ -53,13 +53,12 @@ export class LinkCardListComponent implements OnInit {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
             },
+            order: [7, 'desc'],
             columnDefs: [
                 {
                     targets: 1,
-                    visible: false
-                },
-                {
-                    order: [7, 'desc'],
+                    visible: false,
+                    orderable: false,
                 },
             ]
         };
@@ -97,8 +96,8 @@ export class LinkCardListComponent implements OnInit {
         */
         if(this.length_selected > 0 ){
             bootbox.confirm({
-                title: "Bạn có chắc chắn ?",
-                message: "Bạn muốn xóa " + this.length_selected + " Thẻ Liên Kết đã chọn ?",
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.length_selected + " Thẻ Liên Kết đã chọn?",
                 buttons: {
                     cancel: {
                         label: "HỦY"

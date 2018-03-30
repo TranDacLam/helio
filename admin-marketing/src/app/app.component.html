@@ -15,7 +15,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right" *ngIf="variable_globals.user_current">
                     <li class="active">
-                        <a href="#">
+                        <a routerLink="/user-detail/{{ variable_globals.user_current.id }}">
                             <ng-container *ngIf="variable_globals.user_current.full_name">
                                 {{variable_globals.user_current.full_name}}
                             </ng-container>

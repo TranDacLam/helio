@@ -1,4 +1,7 @@
 /*Begin content feedback*/
+table.dataTable thead .sorting {
+	text-transform: capitalize;
+}
 
 /*=== Customize table feedback ==*/
 .checkbox-feedback {

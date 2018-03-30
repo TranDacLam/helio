@@ -107,8 +107,8 @@ export class FeeListComponent implements OnInit {
         let self = this;
         if (this.length_selected > 0) {
             bootbox.confirm({
-                title: "Bạn có chắc chắn ?",
-                message: "Bạn muốn xóa " + this.length_selected + " Phí Giao Dịch đã chọn",
+                title: "Bạn có chắc chắn?",
+                message: "Bạn muốn xóa " + this.length_selected + " Phí Giao Dịch đã chọn?",
                 buttons: {
                     cancel: {
                         label: "HỦY"

@@ -69,12 +69,26 @@ export class UserValidators {
             let dateValues = getValDate.match(validatePattern);
             if(getValDate === ''){
                 return null;
-            }else if(dateValues === null){
-                return {
-                    'fomatBirtdate': {
+            } else if (!getValDate.match(validatePattern)) {
+            	return {
+            		'fomatBirtdate': {
                         'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/mm/yyyy'
                     }
-                };
+            	}
+            } else {
+            	let splitArr = getValDate.split("/");
+            	var dd=Number(splitArr[0]);
+				var mm=Number(splitArr[1]);
+				var yyyy=Number(splitArr[2]);
+				var date = new Date(yyyy, mm-1, dd);
+				if (((date.getDate()!=dd) || date.getMonth()+1!=mm)||(date.getFullYear()!=yyyy)) 
+				{
+					return {
+						'invalidDate': {
+							'message': 'Vui lòng nhập vào ngày hợp lệ'
+						}
+					}
+				}
             }
             return null;
         }

@@ -16,5 +16,10 @@ a.pull-left {
 	padding-left: 15px;
 }
 .form-check {
-	margin-top: 5px;
+	margin-top: 7px;
+}
+label.checkbox-label input[type=checkbox]{
+    position: relative;
+    vertical-align: middle;
+    bottom: 4px;
 }

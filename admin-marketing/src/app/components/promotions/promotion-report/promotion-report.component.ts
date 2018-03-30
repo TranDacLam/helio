@@ -68,8 +68,10 @@ export class PromotionReportComponent implements OnInit {
                 this.count_user_deviced = data.count_user_device;
                 this.count_user_not_deviced = data.count_user;
                 this.list_user = data.gift_user;
-                $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
-                $('.info_search').css('text-align', 'right');
+                setTimeout(()=>{
+                    $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
+                    $('.info_search').css('text-align', 'right');
+                },300);
             }, 
             (error) => {
                 this.router.navigate(['/error', {message: error.message}]);

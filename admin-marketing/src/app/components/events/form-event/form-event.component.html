@@ -3,7 +3,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item"><a routerLink="/event/list">Quản Lý Sự Kiện</a></li>
+            <li class="breadcrumb-item"><a routerLink="/event/list">Sự Kiện</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{title_page}}</li>
         </ol>
     </nav>
@@ -48,6 +48,29 @@
             <ul class="error_valid" 
                 *ngIf="formEvent.get('image') && formEvent.get('image')?.errors">
                 <li style="color: red" *ngIf="formEvent.get('image').errors?.fomatFile">
+                    Vui lòng tải tệp lên với các định dạng này (jpg, jpeg, png, ico, bmp)
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="form-group row event-image">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Thumbnail</label>
+        </div>
+        <div class="col-sm-8">
+            <p *ngIf="event.thumbnail">
+                <span>Hiện tại: <a href="{{api_domain}}{{event.thumbnail}}" target="_blank">{{event.thumbnail}}</a></span>
+            </p>
+            <p *ngIf="event.thumbnail" class="clear_image">
+                <input type="checkbox" formControlName="is_clear_thumbnail"/> Xóa
+            </p>
+            <p *ngIf="msg_clear_thumbnail" class="error_msg">{{msg_clear_thumbnail}}</p>
+            <input type="file" accept="image/*"
+            (change)="onFileChangeThumbnail($event)" />
+            <ul class="error_valid" 
+                *ngIf="formEvent.get('thumbnail') && formEvent.get('thumbnail')?.errors">
+                <li style="color: red" *ngIf="formEvent.get('thumbnail').errors?.fomatFile">
                     Vui lòng tải tệp lên với các định dạng này (jpg, jpeg, png, ico, bmp)
                 </li>
             </ul>
@@ -106,6 +129,13 @@
         </div>
         <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="formEvent.get('end_date')"></show-error-valid>
+            <ul *ngIf="!formEvent.get('end_date').errors?.required_date && 
+                !formEvent.get('start_date').errors?.required_date &&
+                !formEvent.get('end_date').errors?.fomatDate && !formEvent.get('start_date').errors?.fomatDate">
+                <li style="color: red">
+                    {{ formEvent.errors?.dates ? 'Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu': '' }}
+                </li>
+            </ul>
         </div>
     </div>
     <div class="form-group row">
@@ -140,6 +170,13 @@
         </div>
         <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="formEvent.get('end_time')"></show-error-valid>
+            <ul *ngIf="formEvent.errors && !formEvent.get('end_time').errors?.fomatDate && 
+                !formEvent.get('start_time').errors?.fomatDate && !formEvent.get('end_time').errors?.required_time && 
+                !formEvent.get('start_time').errors?.required_time">
+                <li style="color: red">
+                    {{ formEvent.errors?.times ? 'Vui lòng nhập thời gian kết thúc lớn hơn thời gian bắt đầu': '' }}
+                </li>
+            </ul>
         </div>
     </div>
     <div class="form-group row noti-image">

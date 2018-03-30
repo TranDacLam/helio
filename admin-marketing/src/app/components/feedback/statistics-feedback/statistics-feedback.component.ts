@@ -74,11 +74,6 @@ export class StatisticsFeedbackComponent implements OnInit {
         this.start_date = start;
         this.end_date = end;
 
-        if(start === '' && end === ''){
-            this.toastr.warning(`Vui lòng chọn ngày.`);
-            return;
-        }
-
         this.feedbackService.searchStatisticFeedback('status', start, end).subscribe(
             (data) => {
                 this.fb_status = data.message.status;
@@ -108,10 +103,6 @@ export class StatisticsFeedbackComponent implements OnInit {
 
         start = $('#startD_rate').val() ? String($('#startD_rate').val()) : '';
         end = $('#endD_rate').val() ? String($('#endD_rate').val()) : '';
-        if(start === '' && end === ''){
-            this.toastr.warning(`Vui lòng chọn ngày.`);
-            return;
-        }
 
         this.feedbackService.searchStatisticFeedback('rate', start, end).subscribe(
             (data) => {
@@ -163,9 +154,11 @@ export class StatisticsFeedbackComponent implements OnInit {
     checkValid(event, startD, endD){
         let msg_formatD = '* Định dạng ngày sai. Vui lòng chọn lại ngày dd/mm/yyy';
         let msg_checkD = '* Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu';
+        let msg_validD = '* Vui lòng nhập ngày bắt đầu/kết thúc hợp lệ ';
 
         let isCheckDate: boolean = true;
         let isFormatDate: boolean = true;
+        let isvalidDate: boolean = true;
 
         isFormatDate = this.formatDate(startD);
 
@@ -174,17 +167,70 @@ export class StatisticsFeedbackComponent implements OnInit {
         }
 
         isCheckDate = this.checkDate(startD, endD);
+        isvalidDate = this.validDate(startD, endD)
 
         if(isFormatDate === false){
             this.toastr.warning(`${msg_formatD}`);
             return false;
-        }else{
-            if(isCheckDate === false){
-                this.toastr.warning(`${msg_checkD}`);
-                return false;
-            }
+        }else if(isvalidDate === false){
+            this.toastr.warning(`${msg_validD}`);
+            return false;
+        }else if(isCheckDate === false){
+            this.toastr.warning(`${msg_checkD}`);
+            return false;
         }
         return true;
+    }
+
+    /*
+        Function trimDate(): valid date
+        Author: Lam
+    */
+    validDate(startD, endD){
+        let start = $('#' + startD).val() ? String($('#' + startD).val()) : '';
+        let end = $('#' + endD).val() ? String($('#' + endD).val()) : '';
+        let is_start = start ? this.trimDate(start) : true;
+        let is_end = end ? this.trimDate(end) : true;
+        if(is_start === false || is_end === false){
+            return false;
+        }
+        return true;
+    }
+
+    /*
+        Function trimDate(): get day, month, year
+        Author: Lam
+    */
+    trimDate(string){
+        let index_first = string.indexOf("/");
+        let index_last = string.lastIndexOf("/");
+        let d = parseInt(string.substring(0, index_first));
+        let m = parseInt(string.substring(index_first+1, string.indexOf("/", index_first+1)));
+        let y = parseInt(string.substring(index_last+1));
+        return this.isValid(d,m,y);
+    }
+
+    /*
+        Function daysInMonth(): get day in month
+        Author: Lam
+    */
+    daysInMonth(m, y) {
+        switch (m) {
+            case 2 :
+                return (y % 4 == 0 && y % 100) || y % 400 == 0 ? 29 : 28;
+            case 9 : case 4 : case 6 : case 11 :
+                return 30;
+            default :
+                return 31
+        }
+    }
+
+    /*
+        Function isValid(): check valid
+        Author: Lam
+    */
+    isValid(d, m, y) {
+        return m >= 1 && m <= 12 && d > 0 && d <= this.daysInMonth(m, y);
     }
 
 
