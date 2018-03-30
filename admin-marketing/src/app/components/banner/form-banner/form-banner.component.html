@@ -62,11 +62,13 @@
                     <show-error-valid [control]="formBanner.get('position')"></show-error-valid>
                 </div>
             </div> 
-            <div ckass="form-group row">
+            <div class="form-group row">
                 <div class="col-md-3"></div>
                 <div class="col-md-3">
-                    <input type="checkbox" name="is_show" [(ngModel)]="banner.is_show"
-                     formControlName = "is_show"> Hiển Thị
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="is_show"
+                        formControlName = "is_show"> Hiển Thị
+                    </label>
                 </div>
             </div>
         </div>

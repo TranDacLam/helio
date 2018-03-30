@@ -5,6 +5,9 @@
 .form-feedback {
 	margin-left: 15px;
 }
+li.username-feed {
+	text-transform: capitalize;
+}
 p.title {
 	font-size: 34px;
 }

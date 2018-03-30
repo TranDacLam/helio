@@ -526,12 +526,12 @@ class HotAdvsSerializer(serializers.ModelSerializer):
     sub_url_register = serializers.CharField(required=False,allow_null=True, allow_blank=True)
     sub_url_view_detail = serializers.CharField(required=False, allow_null=True, allow_blank=True)
     
-    # name = serializers.CharField(required=True, max_length=255,validators=[
-    #     UniqueValidator(
-    #         queryset=Hot_Advs.objects.all(),
-    #         message =_('This Hot Ads is already taken')
-    #         )
-    #     ])
+    name = serializers.CharField(required=True, max_length=255,validators=[
+        UniqueValidator(
+            queryset=Hot_Advs.objects.all(),
+            message =_('This Hot Ads is already taken')
+            )
+        ])
 
     class Meta:
         model = Hot_Advs

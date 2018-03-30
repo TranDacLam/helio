@@ -131,8 +131,8 @@ export class FeedbackDetailComponent implements OnInit {
     */
     confirmDeleteFeedback(feedback: Feedback) {
         bootbox.confirm({
-            title: "Bạn có chắc chắn ?",
-            message: "Bạn muốn xóa Phản Hồi này ?",
+            title: "Bạn có chắc chắn?",
+            message: "Bạn muốn xóa Phản Hồi này?",
             buttons: {
                 cancel: {
                     label: "HỦY"
