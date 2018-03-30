@@ -24,17 +24,17 @@
         </a>
     </p>
     <p>ID: {{noti_detail.id}}</p>
-    <p>Tên thông báo: {{noti_detail.subject}}</p>
+    <p>Tên Thông Báo: {{noti_detail.subject}}</p>
     <span *ngIf="!promotion">
-        <p *ngIf="noti_detail.sent_date">Trạng thái: Đã gửi</p>
-        <p *ngIf="!noti_detail.sent_date">Trạng thái: Chưa gửi</p>
-        <p>Ngày gửi: {{noti_detail.sent_date | date: 'dd/MM/yyyy'}}</p>
-        <p>Người gửi: {{noti_detail.sent_user?.email}}</p>
-        <p>Ngày cập nhật: {{noti_detail.modified | date: 'dd/MM/yyyy'}}</p>
+        <p *ngIf="noti_detail.sent_date">Trạng Thái: Đã gửi</p>
+        <p *ngIf="!noti_detail.sent_date">Trạng Thái: Chưa gửi</p>
+        <p>Ngày Gửi: {{noti_detail.sent_date | date: 'dd/MM/yyyy'}}</p>
+        <p>Người Gửi: {{noti_detail.sent_user?.email}}</p>
+        <p>Ngày Cập Nhật: {{noti_detail.modified | date: 'dd/MM/yyyy'}}</p>
     </span>
     <span *ngIf="promotion">
-        <p>ID khuyến mãi: {{promotion.id}}</p>
-        <p>Tên khuyến mãi: {{promotion.name}}</p>
+        <p>ID Khuyến Mãi: {{promotion.id}}</p>
+        <p>Tên Khuyến Mãi: {{promotion.name}}</p>
     </span>
     <p *ngIf="user_current"><button class="btn custom-button" (click)="checkSendNotification()" 
             [disabled]="user_current.role !== 1 && noti_detail.sent_date"
