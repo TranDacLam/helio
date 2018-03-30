@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-30 08:47+0700\n"
+"POT-Creation-Date: 2018-03-30 10:35+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -865,7 +865,7 @@ msgstr ""
 msgid "Amount must be is number"
 msgstr "Fee & Ticket Amount phải là số nguyên."
 
-#: websites/api_admin/serializers.py:65
+#: websites/api_admin/serializers.py:65 websites/api_admin/serializers.py:206
 msgid "Birth date is invalid."
 msgstr "Vui lòng nhập vào ngày hợp lệ."
 
@@ -908,7 +908,7 @@ msgstr "Số điện thoại này đã tồn tại."
 msgid "Cannot change password of customer user"
 msgstr "Không thể thay đổi mật khẩu của Customer User."
 
-#: websites/api_admin/serializers.py:534
+#: websites/api_admin/serializers.py:539
 msgid "This Hot Ads is already taken"
 msgstr "Hot Ads có Tên đã tồn tại."
 
@@ -1538,9 +1538,6 @@ msgstr "Mã chứng thực không hợp lệ. Vui lòng kiểm tra lại."
 
 #~ msgid "This advertisement is already taken"
 #~ msgstr "Quảng cáo này đã tồn tại."
-
-#~ msgid "This Hot Ads is already taken"
-#~ msgstr "Hot Ads này đã tồn tại."
 
 #~ msgid "Not Found Post Image."
 #~ msgstr "Hình ảnh bài viết không tồn tại."
