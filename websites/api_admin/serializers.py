@@ -480,21 +480,13 @@ class UserRoleSerializer(serializers.ModelSerializer):
             
     def update(self, instance, validated_data):
 
-        avatar = validated_data.get('avatar', instance.avatar)
-        if avatar:
-            instance.avatar = avatar
-        instance.email = validated_data.get('email', instance.email)
-        instance.full_name = validated_data.get('full_name', instance.full_name)
-        instance.birth_date = validated_data.get('birth_date', None)
-        instance.phone = validated_data.get('phone', instance.phone)
-        instance.personal_id = validated_data.get('personal_id', instance.personal_id)
-        instance.country = validated_data.get('country', instance.country)
-        instance.city = validated_data.get('city', instance.city)
-        instance.address = validated_data.get('address', instance.address)
-        instance.role = validated_data.get('role', instance.role)
-        instance.is_active = validated_data.get('is_active', instance.is_active)
-        instance.save()
-        return instance
+        print "instance.avatar", instance.avatar
+
+        if self.context['request']:
+            is_clear_image = self.context['request'].data.get('is_clear_image')
+            if is_clear_image == "false" and not validated_data.get('avatar'):
+                validated_data['avatar'] = instance.image
+        return super(UserRoleSerializer, self).update(instance, validated_data)
 
 class GameSerializer(serializers.ModelSerializer):
 
@@ -536,7 +528,7 @@ class HotAdvsSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True, max_length=255,validators=[
         UniqueValidator(
             queryset=Hot_Advs.objects.all(),
-            message =_('This Hot Ads is already taken')
+            message =_('Hot Ads has name already exist')
             )
         ])
 

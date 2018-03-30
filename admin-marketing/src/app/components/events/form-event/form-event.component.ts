@@ -80,7 +80,7 @@ export class FormEventComponent implements OnInit {
         this.formEvent = this.fb.group({
             name: [this.event.name, [Validators.required, Validators.maxLength(255)]],
             image: [this.event.image, [ImageValidators.validateFile]],
-            thumbnail: [this.event.thumbnail, [ImageValidators.validateFile]],
+            image_thumbnail: [this.event.image_thumbnail, [ImageValidators.validateFile]],
             short_description: [this.event.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.event.content, Validators.required],
             start_date: [this.event.start_date ? moment(this.event.start_date,"DD/MM/YYYY").toDate() : '', 
@@ -93,7 +93,7 @@ export class FormEventComponent implements OnInit {
                 [DateValidators.validEndTime, DateValidators.formatEndTime]],
             is_draft: [this.event.is_draft === true ? true : false],
             is_clear_image: [false],
-            is_clear_thumbnail: [false]
+            is_clear_image_thumbnail: [false]
         }, {validator: [this.dateLessThan(), this.timeLessThan()]});
     }
 
@@ -174,7 +174,7 @@ export class FormEventComponent implements OnInit {
     onFileChangeThumbnail(event): void{
         if(event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
-            this.formEvent.get('thumbnail').setValue({
+            this.formEvent.get('image_thumbnail').setValue({
                 filename: file.name,
                 filetype: file.type,
                 value: file,
@@ -236,13 +236,13 @@ export class FormEventComponent implements OnInit {
                 );
             }else{
                 if((value_form.is_clear_image === true && typeof(value_form.image) != 'string') ||
-                    (value_form.is_clear_thumbnail === true && typeof(value_form.thumbnail) != 'string')){
+                    (value_form.is_clear_image_thumbnail === true && typeof(value_form.image_thumbnail) != 'string')){
                     if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
                         this.formEvent.get('is_clear_image').setValue(false);
                         this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                     }
-                    if(value_form.is_clear_thumbnail === true && typeof(value_form.thumbnail) != 'string'){
-                        this.formEvent.get('is_clear_thumbnail').setValue(false);
+                    if(value_form.is_clear_image_thumbnail === true && typeof(value_form.image_thumbnail) != 'string'){
+                        this.formEvent.get('is_clear_image_thumbnail').setValue(false);
                         this.msg_clear_thumbnail = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                     }
                     this.scrollTop();
@@ -336,7 +336,7 @@ export class FormEventComponent implements OnInit {
             Object.keys(promotionValues).forEach(k => { 
                 if(promotionValues[k] == null) {
                     promotionFormData.append(k, '');
-                } else if (k === 'image' || k === 'thumbnail') {
+                } else if (k === 'image' || k === 'image_thumbnail') {
                     promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
                 } else {
                     promotionFormData.append(k, promotionValues[k]);

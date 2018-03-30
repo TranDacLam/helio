@@ -8,6 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
+
 "POT-Creation-Date: 2018-03-30 10:35+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
@@ -909,7 +910,7 @@ msgid "Cannot change password of customer user"
 msgstr "Không thể thay đổi mật khẩu của Customer User."
 
 #: websites/api_admin/serializers.py:539
-msgid "This Hot Ads is already taken"
+msgid "Hot Ads has name already exist"
 msgstr "Hot Ads có Tên đã tồn tại."
 
 #: websites/api_admin/views.py:50 websites/api_admin/views.py:73
@@ -992,7 +993,6 @@ msgstr "User không tồn tại"
 #: websites/api_admin/views.py:2144 websites/api_admin/views.py:2231
 #: websites/api_admin/views.py:2267 websites/api_admin/views.py:2344
 #: websites/api_admin/views.py:2431 websites/api_admin/views.py:2435
-#: websites/api_admin/views.py:2501
 msgid "success"
 msgstr "Thành công"
 
