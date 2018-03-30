@@ -24,3 +24,6 @@ p.info-users {
 label.center-block {
 	text-transform: capitalize;
 }
+.msg_error{
+    color: red;
+}

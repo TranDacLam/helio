@@ -191,8 +191,12 @@
 			        </div>
 			        <div class="col-sm-8">
 			        	<p *ngIf="user.avatar">
-			                <span>Currently <a href="{{api_domain}}{{user.avatar}}" target="_blank">{{user.avatar}}</a></span>
+			                <span>Hiện tại: <a href="{{api_domain}}{{user.avatar}}" target="_blank">{{user.avatar}}</a></span>
 			            </p>
+			            <p *ngIf="user.avatar" class="clear_image">
+                			<input type="checkbox" formControlName="is_clear_image"/> Xóa
+            			</p>
+           				<p *ngIf="msg_clear_image" class="msg_error">{{msg_clear_image}}</p>
 		            	<input type="file" id="avatar" accept="image/*"
 		            	(change)="onFileChange($event)"/>
 		            	<show-error-valid [control]="formUser.get('avatar')"></show-error-valid>

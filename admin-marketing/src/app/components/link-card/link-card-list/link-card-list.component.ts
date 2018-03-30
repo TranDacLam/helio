@@ -58,8 +58,12 @@ export class LinkCardListComponent implements OnInit {
                 {
                     targets: 1,
                     visible: false,
-                    orderable: false,
                 },
+                { 
+                    orderable: false, 
+                    targets: 0 
+                }
+
             ]
         };
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
