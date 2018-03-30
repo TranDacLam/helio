@@ -485,7 +485,7 @@ class UserRoleSerializer(serializers.ModelSerializer):
         if self.context['request']:
             is_clear_image = self.context['request'].data.get('is_clear_image')
             if is_clear_image == "false" and not validated_data.get('avatar'):
-                validated_data['avatar'] = instance.image
+                validated_data['avatar'] = instance.avatar
         return super(UserRoleSerializer, self).update(instance, validated_data)
 
 class GameSerializer(serializers.ModelSerializer):

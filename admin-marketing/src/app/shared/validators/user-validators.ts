@@ -88,6 +88,12 @@ export class UserValidators {
 							'message': 'Vui lòng nhập vào ngày hợp lệ'
 						}
 					}
+				} else if (yyyy < 1900) {
+					return {
+						'errorBefore1900': {
+							'message': 'Vui lòng chọn năm sinh lớn hơn 1900'
+						}
+					}
 				}
             }
             return null;
