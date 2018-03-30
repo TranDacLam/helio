@@ -31,6 +31,7 @@ export class FormEventComponent implements OnInit {
 
     errorMessage: any; // Messages error
     msg_clear_image = '';
+    msg_clear_thumbnail = '';
 
     api_domain: string = '';
     lang = 'vi';
@@ -79,6 +80,7 @@ export class FormEventComponent implements OnInit {
         this.formEvent = this.fb.group({
             name: [this.event.name, [Validators.required, Validators.maxLength(255)]],
             image: [this.event.image, [ImageValidators.validateFile]],
+            thumbnail: [this.event.thumbnail, [ImageValidators.validateFile]],
             short_description: [this.event.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.event.content, Validators.required],
             start_date: [this.event.start_date ? moment(this.event.start_date,"DD/MM/YYYY").toDate() : '', 
@@ -90,7 +92,8 @@ export class FormEventComponent implements OnInit {
             end_time: [this.event.end_time ? moment(this.event.end_time,"HH:mm").format() : '',
                 [DateValidators.validEndTime, DateValidators.formatEndTime]],
             is_draft: [this.event.is_draft === true ? true : false],
-            is_clear_image: [false]
+            is_clear_image: [false],
+            is_clear_thumbnail: [false]
         }, {validator: [this.dateLessThan(), this.timeLessThan()]});
     }
 
@@ -165,6 +168,23 @@ export class FormEventComponent implements OnInit {
     }
 
     /*
+        Function onFileChange(): Input file image to get base 64
+        author: Lam
+    */ 
+    onFileChangeThumbnail(event): void{
+        if(event.target.files && event.target.files.length > 0) {
+            let file = event.target.files[0];
+            this.formEvent.get('thumbnail').setValue({
+                filename: file.name,
+                filetype: file.type,
+                value: file,
+            });
+        }
+    }
+
+
+
+    /*
         Function onSubmit():
          + Step 1: Check event add event (post), edit event (put)
          + Step 2:  
@@ -191,7 +211,7 @@ export class FormEventComponent implements OnInit {
         
         if(this.formEvent.invalid){
             ValidateSubmit.validateAllFormFields(this.formEvent);
-            $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
+            this.scrollTop();
         }else{
             this.formEvent.value.start_date = $('#start_date').val();
             this.formEvent.value.end_date = $('#end_date').val();
@@ -208,16 +228,24 @@ export class FormEventComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                            this.scrollTop();
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
                     }
                 );
-            }else if(this.event.id){
-                if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
-                    this.formEvent.get('is_clear_image').setValue(false);
-                    this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+            }else{
+                if((value_form.is_clear_image === true && typeof(value_form.image) != 'string') ||
+                    (value_form.is_clear_thumbnail === true && typeof(value_form.thumbnail) != 'string')){
+                    if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
+                        this.formEvent.get('is_clear_image').setValue(false);
+                        this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                    }
+                    if(value_form.is_clear_thumbnail === true && typeof(value_form.thumbnail) != 'string'){
+                        this.formEvent.get('is_clear_thumbnail').setValue(false);
+                        this.msg_clear_thumbnail = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                    }
+                    this.scrollTop();
                 }else{
                     this.eventService.updateEvent(event_form_data, this.event.id, this.lang).subscribe(
                         (data) => {
@@ -227,7 +255,7 @@ export class FormEventComponent implements OnInit {
                         (error) => {
                             if(error.code === 400){
                                 this.errorMessage = error.message;
-                                $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                                this.scrollTop();
                             }else{
                                 this.router.navigate(['/error', { message: error.message}]);
                             }
@@ -236,6 +264,14 @@ export class FormEventComponent implements OnInit {
                 }
             }
         }
+    }
+
+    /*
+        Function scrollTop(): creoll top when have validate
+        @author: Lam
+    */
+    scrollTop(){
+        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
     }
 
     /*
@@ -300,7 +336,7 @@ export class FormEventComponent implements OnInit {
             Object.keys(promotionValues).forEach(k => { 
                 if(promotionValues[k] == null) {
                     promotionFormData.append(k, '');
-                } else if (k === 'image') {
+                } else if (k === 'image' || k === 'thumbnail') {
                     promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
                 } else {
                     promotionFormData.append(k, promotionValues[k]);

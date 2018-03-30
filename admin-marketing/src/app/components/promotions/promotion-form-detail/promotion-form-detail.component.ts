@@ -237,7 +237,7 @@ export class PromotionFormDetailComponent implements OnInit {
         this.promotionForm.controls['end_date'].updateValueAndValidity();
         if(this.promotionForm.invalid){
             ValidateSubmit.validateAllFormFields(this.promotionForm);
-            $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
+            this.scrollTop();
         }else{
             this.errors = '';
             const that = this;
@@ -265,7 +265,7 @@ export class PromotionFormDetailComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             that.errors = error.message;
-                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                            this.scrollTop();
                         }else{
                             that.router.navigate(['/error']);
                         }
@@ -281,7 +281,7 @@ export class PromotionFormDetailComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             that.errors = error.message;
-                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                            this.scrollTop();
                         }else{
                             that.router.navigate(['/error']);
                         }
@@ -289,6 +289,14 @@ export class PromotionFormDetailComponent implements OnInit {
                 );
             }
         }
+    }
+
+    /*
+        Function scrollTop(): creoll top when have validate
+        @author: Lam
+    */
+    scrollTop(){
+        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
     }
 
     /*

@@ -179,7 +179,7 @@ export class FormNotificationComponent implements OnInit {
     onSubmit(): void{
         if(this.formNotification.invalid){
             ValidateSubmit.validateAllFormFields(this.formNotification);
-            $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
+            this.scrollTop();
         }else{
             this.formNotification.value.category = parseInt(this.formNotification.value.category);
             // Convert FormGroup to FormData
@@ -198,7 +198,7 @@ export class FormNotificationComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                            this.scrollTop();
                         }else{
                             this.router.navigate(['/error']);
                         }
@@ -208,6 +208,7 @@ export class FormNotificationComponent implements OnInit {
                 if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
                     this.formNotification.get('is_clear_image').setValue(false);
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                    this.scrollTop();
                 }else{
                     this.notificationService.updateNoti(noti_form_data, this.noti.id, this.lang).subscribe(
                         (data) => {
@@ -227,16 +228,24 @@ export class FormNotificationComponent implements OnInit {
                         },
                         (error) => {
                             if(error.code === 400){
-                            this.errorMessage = error.message;
-                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
-                        }else{
-                            this.router.navigate(['/error']);
-                        }
+                                this.errorMessage = error.message;
+                                this.scrollTop();
+                            }else{
+                                this.router.navigate(['/error']);
+                            }
                         }
                     );
                 }
             }
         }
+    }
+
+    /*
+        Function scrollTop(): creoll top when have validate
+        @author: Lam
+    */
+    scrollTop(){
+        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
     }
 
     /*

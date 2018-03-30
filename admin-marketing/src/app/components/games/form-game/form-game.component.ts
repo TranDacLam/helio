@@ -155,7 +155,7 @@ export class FormGameComponent implements OnInit {
     onSubmit(): void{
         if(this.formGame.invalid){
             ValidateSubmit.validateAllFormFields(this.formGame);
-            $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
+            this.scrollTop();
         }else{
             this.formGame.value.game_type = parseInt(this.formGame.value.game_type);
             let game_form_data = this.convertFormGroupToFormData(this.formGame);
@@ -169,7 +169,7 @@ export class FormGameComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                            this.scrollTop();
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
@@ -179,6 +179,7 @@ export class FormGameComponent implements OnInit {
                 if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
                     this.formGame.get('is_clear_image').setValue(false);
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                    this.scrollTop();
                 }else{
                     this.gameService.updateGame(game_form_data, this.game.id, this.lang).subscribe(
                         (data) => {
@@ -189,7 +190,7 @@ export class FormGameComponent implements OnInit {
                         (error) => {
                             if(error.code === 400){
                                 this.errorMessage = error.message;
-                                $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                                this.scrollTop();
                             }else{
                                 this.router.navigate(['/error', { message: error.message}]);
                             }
@@ -199,6 +200,14 @@ export class FormGameComponent implements OnInit {
             }
         }
         
+    }
+
+    /*
+        Function scrollTop(): creoll top when have validate
+        @author: Lam
+    */
+    scrollTop(){
+        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
     }
 
     /*
