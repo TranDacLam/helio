@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-30 10:07+0700\n"
+"POT-Creation-Date: 2018-03-30 15:01+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -612,6 +612,34 @@ msgstr "TẤT CẢ"
 msgid "redemption_store.title.section.faq"
 msgstr "NHỮNG CÂU HỎI THƯỜNG GẶP"
 
+#: websites/api/dmz_message.py:1
+msgid "Source Card not exist."
+msgstr "Thẻ chuyển không tồn tại."
+
+#: websites/api/dmz_message.py:2
+msgid "Source Card is suspended."
+msgstr "Thẻ chuyển tạm ngưng."
+
+#: websites/api/dmz_message.py:3
+msgid "Source Card is replaced."
+msgstr "Thẻ chuyển đã thay thế."
+
+#: websites/api/dmz_message.py:4
+msgid "Source Card is not enough ticket."
+msgstr "Thẻ chuyển không đủ ticket"
+
+#: websites/api/dmz_message.py:5
+msgid "Received Card is replaced."
+msgstr "Thẻ nhận đã thay thế."
+
+#: websites/api/dmz_message.py:6
+msgid "Received Card is suspended."
+msgstr "Thẻ nhận tạm ngưng."
+
+#: websites/api/dmz_message.py:7
+msgid "Source barcode not link to any user"
+msgstr "Thẻ này chưa được liên kết với bất kỳ tài khoản nào"
+
 #: websites/api/serializers.py:31 websites/api_admin/serializers.py:422
 #: websites/api_admin/serializers.py:459
 msgid "This email is already taken. Please, try again"
@@ -847,21 +875,17 @@ msgstr "Không tìm thấy phí giao dịch"
 msgid "Hot Advs not found."
 msgstr "Không tìm thấy Hot Advs"
 
-#: websites/api/views.py:1527
-#, fuzzy
-#| msgid ""
-#| "Please check required fields : [source_card_barcode, "
-#| "received_card_barcode, ticket_amount, fee]"
+#: websites/api/views.py:1528
 msgid ""
 "Please check required fields : [card_barcode, email, full_name, phone, "
 "reload_amount]"
 msgstr ""
-"Các trường sau không được bỏ trống : [source_card_barcode, "
-"received_card_barcode, ticket_amount, fee]"
+"Các trường sau không được bỏ trống : [card_barcode, email, full_name, phone, "
+"'reload_amount']"
 
 # msgid "This field is required."
 # msgstr "Trường này là bắt buộc."
-#: websites/api/views.py:1534
+#: websites/api/views.py:1535
 msgid "Amount must be is number"
 msgstr "Fee & Ticket Amount phải là số nguyên."
 
@@ -908,7 +932,7 @@ msgstr "Số điện thoại này đã tồn tại."
 msgid "Cannot change password of customer user"
 msgstr "Không thể thay đổi mật khẩu của Customer User."
 
-#: websites/api_admin/serializers.py:539
+#: websites/api_admin/serializers.py:531
 msgid "Hot Ads has name already exist"
 msgstr "Hot Ads có Tên đã tồn tại."
 
@@ -1534,80 +1558,3 @@ msgstr ""
 #: websites/main/custom_jwt.py:43 websites/main/custom_jwt.py:46
 msgid "Invalid token."
 msgstr "Mã chứng thực không hợp lệ. Vui lòng kiểm tra lại."
-
-#~ msgid "This advertisement is already taken"
-#~ msgstr "Quảng cáo này đã tồn tại."
-
-#~ msgid "Not Found Post Image."
-#~ msgstr "Hình ảnh bài viết không tồn tại."
-
-#~ msgid "Don't allow user signup by facebook."
-#~ msgstr "Không liên kết với tài khoản đăng kí bằng facebook."
-
-#~ msgid "Source barcode not link to any user"
-#~ msgstr "Thẻ này chưa được liên kết với bất kỳ tài khoản nào"
-
-#~ msgid "Fee not exist."
-#~ msgstr "Không tìm thấy phí giao dịch"
-
-#~| msgid "This denomination is already taken"
-#~ msgid "This email is already taken"
-#~ msgstr "Địa chỉ email này đã tồn tại."
-
-#~ msgid "Incorrect, please try again."
-#~ msgstr "Không hợp lệ. Vui Lòng Thử Lại."
-
-#~ msgid "Update Avatar Successfully."
-#~ msgstr "Cập nhật Avatar thành công."
-
-#~ msgid "This field must be unique."
-#~ msgstr "Trường này là duy nhất. Vui lòng thử lại."
-
-#~ msgid "Add Notification Successfull."
-#~ msgstr "Thêm thông báo thành công."
-
-#~ msgid "This field may not be blank."
-#~ msgstr "Trường không được bỏ trống."
-
-#~ msgid "This field name may not be blank."
-#~ msgstr "Tên không được bỏ trống."
-
-#~ msgid "User matching query does not exist."
-#~ msgstr "User không tồn tại."
-
-#~ msgid "Unable to login with provided credentials."
-#~ msgstr "Email hoặc mật khẩu không chính xác."
-
-#~ msgid "Unable to log in with provided credentials."
-#~ msgstr "Email hoặc mật khẩu không chính xác."
-
-#~ msgid "This phone number is empty. Please check again."
-#~ msgstr "Số điện thoại không được bỏ trống."
-
-#~ msgid "Helio account security code"
-#~ msgstr "Mã Bảo Mật Tài Khoản Helio"
-
-# START EMAIL TEMPLATE
-#~ msgid "Popular"
-#~ msgstr "Khuyến mãi đại trà"
-
-#~ msgid "Users"
-#~ msgstr "Khuyến mãi theo danh sách user"
-
-#~ msgid "Source Card not exist."
-#~ msgstr "Thẻ chuyển không tồn tại."
-
-#~ msgid "Source Card is suspended."
-#~ msgstr "Thẻ chuyển tạm ngưng."
-
-#~ msgid "Source Card is replaced."
-#~ msgstr "Thẻ chuyển đã thay thế."
-
-#~ msgid "Source Card is not enough ticket."
-#~ msgstr "Thẻ chuyển không đủ ticket"
-
-#~ msgid "Received Card is suspended."
-#~ msgstr "Thẻ nhận tạm ngưng."
-
-#~ msgid "Received Card is replaced."
-#~ msgstr "Thẻ nhận đã thay thế."
