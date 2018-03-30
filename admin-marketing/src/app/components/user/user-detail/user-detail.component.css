@@ -14,14 +14,13 @@
 p.errors {
 	color: red;
 }
-p.title-user-edit {
-	padding: 10px 0;
-	font-size: 34px;
-}
 p.info-users {
 	/*padding: 15px 0;*/
 	font-size: 16px;
 }
 .info-user-content {
 	margin: 10px 0;
+}
+label.center-block {
+	text-transform: capitalize;
 }
