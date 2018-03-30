@@ -62,7 +62,7 @@ export class FormUserAppComponent implements OnInit {
             phone: [this.user_app.phone, 
                 [Validators.required, NumberValidators.validPhone]],
             birth_date: [this.user_app.birth_date, 
-                [Validators.required, DateValidators.formatDate]],
+                [Validators.required, DateValidators.validBirthDay, DateValidators.formatDate]],
             personal_id: [this.user_app.personal_id, 
                 [Validators.required, NumberValidators.validPersonID]],
             address: [this.user_app.address, Validators.required],
