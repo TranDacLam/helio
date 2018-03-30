@@ -34,6 +34,7 @@ export class UserDetailComponent implements OnInit {
     errorMessage: string ='';
     errors: string='';
     api_domain:string = "";
+    msg_clear_image: string = '';
     
 	constructor( 
         private fb: FormBuilder,
@@ -66,7 +67,8 @@ export class UserDetailComponent implements OnInit {
         new_password: ['', [UserValidators.passwordValidators, Validators.maxLength(32)]],
         role: [this.user.role ? this.user.role['id'] : ''],
         is_active: [this.user.is_active],
-        is_staff:[this.user.is_staff]
+        is_staff:[this.user.is_staff],
+        is_clear_image: [false]
     })
 	}
 
@@ -96,29 +98,34 @@ export class UserDetailComponent implements OnInit {
         if (this.formUser.invalid) {
             ValidateSubmit.validateAllFormFields(this.formUser);
         } else {
-            var self = this;
-            this.formUser.value.birth_date = $('#birth_date').val();
-            let userFormGroup = this.convertFormGroupToFormData(this.formUser);
-            this.userService.updateUser(userFormGroup, this.user.id).subscribe(
-                (data) => {
-                    // Navigate to promotion page where success
-                    self.toastr.success(`Chỉnh sửa "${this.formUser.value.email}" thành công`);
-                    self.router.navigate(['/user-list']);
-                }, 
-                (error) => {
-                    if(error.code == 400) {
-                        if (error.message.non_field_errors) {
-                            self.toastr.error(`${error.message.non_field_errors}`);
+            if(this.formUser.value.is_clear_image === true && typeof(this.formUser.value.avatar) != 'string'){
+                    this.formUser.get('is_clear_image').setValue(false);
+                    this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+            } else {
+                var self = this;
+                this.formUser.value.birth_date = $('#birth_date').val();
+                let userFormGroup = this.convertFormGroupToFormData(this.formUser);
+                this.userService.updateUser(userFormGroup, this.user.id).subscribe(
+                    (data) => {
+                        // Navigate to promotion page where success
+                        self.toastr.success(`Chỉnh sửa "${this.formUser.value.email}" thành công`);
+                        self.router.navigate(['/user-list']);
+                    }, 
+                    (error) => {
+                        if(error.code == 400) {
+                            if (error.message.non_field_errors) {
+                                self.toastr.error(`${error.message.non_field_errors}`);
+                            } else {
+                                this.errorMessage = error.message
+                            }
+                        } else if(error.code == 405) {
+                            self.toastr.error(`${error.message}`);
                         } else {
-                            this.errorMessage = error.message
+                           self.router.navigate(['/error', { message: error.message }]);
                         }
-                    } else if(error.code == 405) {
-                        self.toastr.error(`${error.message}`);
-                    } else {
-                       self.router.navigate(['/error', { message: error.message }]);
                     }
-                }
-            );
+                );
+            }
         }
     }
 
