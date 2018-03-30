@@ -536,7 +536,7 @@ class HotAdvsSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True, max_length=255,validators=[
         UniqueValidator(
             queryset=Hot_Advs.objects.all(),
-            message =_('This Hot Ads is already taken')
+            message =_('Hot Ads has name already exist')
             )
         ])
 
