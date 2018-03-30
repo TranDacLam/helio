@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-30 10:07+0700\n"
+"POT-Creation-Date: 2018-03-30 15:01+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -608,6 +608,38 @@ msgstr "ALL"
 msgid "redemption_store.title.section.faq"
 msgstr "FREQUENTLY ASKED QUESTION"
 
+#: websites/api/dmz_message.py:1
+msgid "Source Card not exist."
+msgstr ""
+
+#: websites/api/dmz_message.py:2
+#, fuzzy
+#| msgid "This field is required."
+msgid "Source Card is suspended."
+msgstr "This field is required."
+
+#: websites/api/dmz_message.py:3
+msgid "Source Card is replaced."
+msgstr ""
+
+#: websites/api/dmz_message.py:4
+msgid "Source Card is not enough ticket."
+msgstr ""
+
+#: websites/api/dmz_message.py:5
+msgid "Received Card is replaced."
+msgstr ""
+
+#: websites/api/dmz_message.py:6
+#, fuzzy
+#| msgid "This field is required."
+msgid "Received Card is suspended."
+msgstr "This field is required."
+
+#: websites/api/dmz_message.py:7
+msgid "Source barcode not link to any user"
+msgstr ""
+
 #: websites/api/serializers.py:31 websites/api_admin/serializers.py:422
 #: websites/api_admin/serializers.py:459
 msgid "This email is already taken. Please, try again"
@@ -839,13 +871,13 @@ msgstr ""
 msgid "Hot Advs not found."
 msgstr ""
 
-#: websites/api/views.py:1527
+#: websites/api/views.py:1528
 msgid ""
 "Please check required fields : [card_barcode, email, full_name, phone, "
 "reload_amount]"
 msgstr ""
 
-#: websites/api/views.py:1534
+#: websites/api/views.py:1535
 msgid "Amount must be is number"
 msgstr ""
 
@@ -890,7 +922,7 @@ msgstr ""
 msgid "Cannot change password of customer user"
 msgstr ""
 
-#: websites/api_admin/serializers.py:539
+#: websites/api_admin/serializers.py:531
 msgid "Hot Ads has name already exist"
 msgstr ""
 
