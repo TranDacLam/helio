@@ -44,7 +44,7 @@
             <label class="col-form-label form-check-label">Tin nhắn</label>
         </div>
         <div class="col-sm-8">
-            <textarea rows="5" class="form-control" formControlName="message"></textarea>
+            <ckeditor formControlName="message" [config]="ckEditorConfig"></ckeditor>
             <show-error-valid [control]="formNotification.get('message')"></show-error-valid>
         </div>
     </div>

@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-sm-8">
                     <p *ngIf="banner.image">
-                        <span>Currently: <a href="{{api_domain}}{{banner.image}}" target="_blank">{{banner.image}}</a></span>
+                        <span>Hiện tại: <a href="{{api_domain}}{{banner.image}}" target="_blank">{{banner.image}}</a></span>
                     </p>
                 	<input type="file" id="image" accept="image/*"
                     (change)="onFileChange($event)"/>
