@@ -125,7 +125,7 @@ export class FormFaqComponent implements OnInit {
     onSubmit(): void{
         if(this.formFaq.invalid){
             ValidateSubmit.validateAllFormFields(this.formFaq);
-            $('html,body').animate({ scrollTop: $('.ng-invalid').offset().top }, 'slow');
+            this.scrollTop();
         }else{
             this.formFaq.value.category = parseInt(this.formFaq.value.category);
             if(this.faq.id){
@@ -137,7 +137,7 @@ export class FormFaqComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                            this.scrollTop();
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
@@ -152,7 +152,7 @@ export class FormFaqComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+                            this.scrollTop();
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
@@ -160,6 +160,14 @@ export class FormFaqComponent implements OnInit {
                 );
             }
         }
+    }
+
+    /*
+        Function scrollTop(): creoll top when have validate
+        @author: Lam
+    */
+    scrollTop(){
+        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
     }
 
     /*
