@@ -92,11 +92,6 @@ export class AddLinkCardComponent implements OnInit {
         let field_compare = {'full_name': '', 'email': '', 'phone': '', 'birth_date': '', 
             'personal_id': '', 'address': ''};
 
-        if(user_app.barcode){
-            this.toastr.error(`Tài khoản và mã thẻ này đã được liên kết. Vui lòng kiểm tra lại.`);
-            return;
-        }
-
         Object.entries(user_app).forEach(([key, val]) => {
             if(key in field_compare){
                 if(user_app[key] !== user_embed[key]){

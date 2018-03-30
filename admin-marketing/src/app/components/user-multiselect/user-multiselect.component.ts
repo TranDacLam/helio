@@ -271,6 +271,7 @@ export class UserMultiselectComponent implements OnInit {
              dtInstance.rows.add(selected_temp).draw();
         });
         $("#table_id_2 tr input:checkbox").prop('checked', false);
+        this.cancelSelectAllEventRight('');
         this.is_button_left = false;
         this.is_button_rigth = false;
 
@@ -290,6 +291,7 @@ export class UserMultiselectComponent implements OnInit {
              dtInstance.rows.add(selected_temp).draw();
         });
         $("#table_id_1 tr input:checkbox").prop('checked', false);
+        this.cancelSelectAllEventLeft('');
         this.is_button_left = false;
         this.is_button_rigth = false;
     }

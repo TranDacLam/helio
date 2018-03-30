@@ -124,13 +124,31 @@ export class PromotionFormDetailComponent implements OnInit {
             promotion_label: [this.promotion.promotion_label ? this.promotion.promotion_label : ''],
             promotion_type: [this.promotion.promotion_type ? this.promotion.promotion_type.id : ''],
             apply_date: [this.promotion.apply_date ? moment(this.promotion.apply_date,"DD/MM/YYYY").toDate() : '',
-                [DateValidators.formatStartDate]],
+                [DateValidators.validStartDate, DateValidators.formatStartDate]],
             end_date: [this.promotion.end_date ? moment(this.promotion.end_date,"DD/MM/YYYY").toDate() : '',
-                [DateValidators.checkDate, DateValidators.formatEndDate]],
+                [DateValidators.validEndDate, DateValidators.formatEndDate]],
             is_draft: [this.promotion.is_draft],
             is_clear_image: [false],
             is_clear_image_thumbnail: [false],
-        });
+        }, {validator: this.dateLessThan()});
+    }
+
+    /*
+        Function dateLessThan(): validate apply date and end date
+        Author: Lam
+    */
+    dateLessThan() {
+        return (group: FormGroup): {[key: string]: any} => {
+            let start = $('#start_date').val() ? moment($('#start_date').val(), "DD/MM/YYYY").toDate() : '';
+            let end = $('#end_date').val() ? moment($('#end_date').val(), "DD/MM/YYYY").toDate() : '';
+            if(start <= end || start === '' || end === ''){
+
+                return {};
+            }
+            return {
+                dates: "Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu"
+            };
+        }
     }
 
     /*
@@ -211,9 +229,11 @@ export class PromotionFormDetailComponent implements OnInit {
         @author: diemnguyen
     */
     saveEvent(): void {
-        this.promotionForm.controls['apply_date'].setValidators([DateValidators.formatEndDate]);
+        this.promotionForm.controls['apply_date'].setValidators([DateValidators.validStartDate,
+            DateValidators.formatEndDate]);
         this.promotionForm.controls['apply_date'].updateValueAndValidity();
-        this.promotionForm.controls['end_date'].setValidators([DateValidators.checkDate, DateValidators.formatEndDate]);
+        this.promotionForm.controls['end_date'].setValidators([DateValidators.validEndDate,
+            DateValidators.formatEndDate]);
         this.promotionForm.controls['end_date'].updateValueAndValidity();
         if(this.promotionForm.invalid){
             ValidateSubmit.validateAllFormFields(this.promotionForm);
