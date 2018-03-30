@@ -1513,6 +1513,7 @@ def ticket_transfer_transactions(request):
         return Response(error, status=500)
 
 @api_view(['POST'])
+@permission_classes((AllowAny,))
 def helio_card_reload(request):
     print "Helio Card Reload"
     try:
@@ -1569,9 +1570,9 @@ def helio_card_reload(request):
         if response.status_code == 400:
             result["message"] = _(result["message"])
             return Response(result, status=response.status_code)
+
         return Response(result, status=200)
        
-
     except requests.Timeout:
         print "Request DMZ time out "
         return HttpResponse('API connection timeout')
