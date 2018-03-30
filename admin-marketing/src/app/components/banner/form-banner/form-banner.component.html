@@ -24,6 +24,10 @@
                     <p *ngIf="banner.image">
                         <span>Hiện tại: <a href="{{api_domain}}{{banner.image}}" target="_blank">{{banner.image}}</a></span>
                     </p>
+                    <p *ngIf="banner.image" class="clear_image">
+                        <input type="checkbox" formControlName="is_clear_image"/> Xóa
+                    </p>
+                    <p *ngIf="msg_clear_image" class="error_msg">{{msg_clear_image}}</p>
                 	<input type="file" id="image" accept="image/*"
                     (change)="onFileChange($event)"/>
                     <div *ngIf="errorMessage">

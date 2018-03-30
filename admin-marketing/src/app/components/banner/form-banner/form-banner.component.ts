@@ -26,6 +26,8 @@ export class FormBannerComponent implements OnInit {
     api_domain:string = "";
     errorMessage: string = "";
     title: string = "";
+    msg_clear_image: string = '';
+
     isSelected: boolean;
 
   	constructor(
@@ -91,6 +93,7 @@ export class FormBannerComponent implements OnInit {
             sub_url: [this.banner.sub_url, [Validators.required, Validators.maxLength(1000)]],
             position: [this.banner.position, [Validators.required]],
             is_show: [this.banner.is_show === true ? true : false],
+            is_clear_image: [false]
         });
     }
 
@@ -101,20 +104,25 @@ export class FormBannerComponent implements OnInit {
             var self = this;
             let bannerFormGroup = this.convertFormGroupToFormData(this.formBanner);
             if(this.banner.id) {
-            	this.bannerService.updateBanner(bannerFormGroup, this.banner.id, this.lang).subscribe(
-                    (data) => {
-                        // Navigate to promotion page where success
-                        this.toastr.success(`Chỉnh sửa ${this.formBanner.value['sub_url']} thành công`);
-                        this.router.navigate(['/banner-list']);
-                    }, 
-                    (error) => {
-                        if(error.code == 400) {
-                            this.errorMessage = error.message
-                        } else {
-                           self.router.navigate(['/error', { message: error.message }]);
-                    }
+                if(this.formBanner.value.is_clear_image === true && typeof(this.formBanner.value.image) != 'string'){
+                    this.formBanner.get('is_clear_image').setValue(false);
+                    this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                } else {
+                	this.bannerService.updateBanner(bannerFormGroup, this.banner.id, this.lang).subscribe(
+                        (data) => {
+                            // Navigate to promotion page where success
+                            this.toastr.success(`Chỉnh sửa ${this.formBanner.value['sub_url']} thành công`);
+                            this.router.navigate(['/banner-list']);
+                        }, 
+                        (error) => {
+                            if(error.code == 400) {
+                                this.errorMessage = error.message
+                            } else {
+                               self.router.navigate(['/error', { message: error.message }]);
+                            }
+                        }
+                    );
                 }
-            );
             } else {
             	this.bannerService.CreateBanner(bannerFormGroup, this.lang).subscribe(
 	                (result) => {

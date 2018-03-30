@@ -248,14 +248,14 @@ class BannerSerializer(serializers.ModelSerializer):
         fields = ('id', 'image', 'sub_url', 'position', 'is_show')
 
     def update(self, instance, validated_data):
-        image = validated_data.get('image', instance.image)
-        if image:
-            instance.image = image
-        instance.sub_url = validated_data.get('sub_url', instance.sub_url)
-        instance.position = validated_data.get('position', instance.position)
-        instance.is_show = validated_data.get('is_show', instance.is_show)
-        instance.save()
-        return instance
+        print "instance.image", instance.image
+        if self.context['request']:
+            is_clear_image = self.context['request'].data.get('is_clear_image')
+            if is_clear_image == "false" and not validated_data.get('image'):
+                validated_data['image'] = instance.image
+            elif is_clear_image == "true":
+                validated_data['image'] = None
+        return super(BannerSerializer, self).update(instance, validated_data)
 
 
 
