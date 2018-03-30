@@ -56,21 +56,21 @@
 
     <div class="form-group row event-image">
         <div class="col-sm-2">
-            <label class="col-form-label form-check-label">Thumbnail</label>
+            <label class="col-form-label form-check-label">Thumbnail Cho App</label>
         </div>
         <div class="col-sm-8">
-            <p *ngIf="event.thumbnail">
-                <span>Hiện tại: <a href="{{api_domain}}{{event.thumbnail}}" target="_blank">{{event.thumbnail}}</a></span>
+            <p *ngIf="event.image_thumbnail">
+                <span>Hiện tại: <a href="{{api_domain}}{{event.image_thumbnail}}" target="_blank">{{event.image_thumbnail}}</a></span>
             </p>
-            <p *ngIf="event.thumbnail" class="clear_image">
-                <input type="checkbox" formControlName="is_clear_thumbnail"/> Xóa
+            <p *ngIf="event.image_thumbnail" class="clear_image">
+                <input type="checkbox" formControlName="is_clear_image_thumbnail"/> Xóa
             </p>
             <p *ngIf="msg_clear_thumbnail" class="error_msg">{{msg_clear_thumbnail}}</p>
             <input type="file" accept="image/*"
             (change)="onFileChangeThumbnail($event)" />
             <ul class="error_valid" 
-                *ngIf="formEvent.get('thumbnail') && formEvent.get('thumbnail')?.errors">
-                <li style="color: red" *ngIf="formEvent.get('thumbnail').errors?.fomatFile">
+                *ngIf="formEvent.get('image_thumbnail') && formEvent.get('image_thumbnail')?.errors">
+                <li style="color: red" *ngIf="formEvent.get('image_thumbnail').errors?.fomatFile">
                     Vui lòng tải tệp lên với các định dạng này (jpg, jpeg, png, ico, bmp)
                 </li>
             </ul>
