@@ -6,7 +6,8 @@ import { UserPermissionService } from '../../shared/services/user-permission.ser
 import { Location } from '@angular/common';
 import 'rxjs/add/observable/throw';
 import { Subject } from 'rxjs/Subject';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -16,7 +17,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class UserPermissionComponent implements OnInit {
 
-    constructor(private userPermissionService: UserPermissionService, private router: Router) { }
+    constructor(
+        private userPermissionService: UserPermissionService,
+        private toastr: ToastrService,
+        private router: Router) { }
 
     user_list_left: User[];
     user_list_right: User[];
@@ -31,8 +35,6 @@ export class UserPermissionComponent implements OnInit {
         this.user_list_left = null;
         this.userPermissionService.getUserListByRole(id).subscribe(
             data => {
-                // console.log(data);
-                // reload datatable
                 this.user_list_right = data.users_selected;
                 this.user_list_left = data.users_all;
             },
@@ -49,8 +51,8 @@ export class UserPermissionComponent implements OnInit {
     getRoles() {
         this.userPermissionService.getRoles().subscribe(
             data => {
-                this.roles = data;
                 if (data.length > 0) {
+                    this.roles = data;
                     this.getUserListByRole(data[0].id);
                 }
             },
@@ -59,7 +61,24 @@ export class UserPermissionComponent implements OnInit {
             }
         )
     }
-    
+
+    setRoleForUser(list_id) {
+        let role_id = $('.role_checkbox:checked').val();
+        this.userPermissionService.setRoleForUser(list_id, role_id).subscribe(
+            data => {
+                this.toastr.success(`Lưu thành công.`);
+            },
+            error => {
+                if (error.status == 400) {
+                    this.toastr.error(`${error.json().message}`);
+                } else {
+                    this.router.navigate(['/error', { message: error.json().message }]);
+                }
+
+            }
+        )
+    }
+
     ngOnInit() {
         this.getRoles();
     }

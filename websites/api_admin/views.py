@@ -2424,20 +2424,17 @@ class SetRoleAPI(APIView):
     def put(self, request, role_id):
         try:
             role = Roles.objects.get(id=role_id)
-            if 'list_id' in request.data:
-                list_id = request.data.get('list_id', None )
-                if list_id:
-                    # set role for users
-                    users = User.objects.filter(id__in=list_id)
-                    if users:
-                        role.user_role_rel.set(users)
-                        return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
-                    return Response({"code": 400, "message": _("Not Found users."), "fields": ""}, status=400)
-                #list_id is empty then clear all user of role
-                role.user_role_rel.clear()
-                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
-
-            return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
+            list_id = request.data.get('list_id', None )
+            if list_id:
+                # set role for users
+                users = User.objects.filter(id__in=list_id)
+                if users:
+                    role.user_role_rel.set(users)
+                    return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+                return Response({"code": 400, "message": _("Not Found users."), "fields": ""}, status=400)
+            #list_id is empty then clear all user of role
+            role.user_role_rel.clear()
+            return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
 
         except Roles.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Role."), "fields": ""}, status=400)
