@@ -2384,15 +2384,18 @@ class UserRoleListAPI(APIView):
     def get(self, request):
         try:
             role_id = self.request.query_params.get('role_id', None)
-            if role_id:
-                # get user by role_id
-                role = Roles.objects.get(id=role_id)
-                users = role.user_role_rel.all().order_by('-date_joined')
-            else:
-                # get user is staff, no role
-                users = User.objects.filter(is_staff=True, role__isnull=True).order_by('-date_joined')
-            userSerializer = admin_serializers.UserSerializer(users, many=True)
-            return Response(userSerializer.data)
+            if not role_id:
+                return Response({"code": 400}, status=400)
+
+            result = {}
+            
+            users_selected = User.objects.filter(role_id=role_id).order_by('-date_joined')
+            users_all = User.objects.filter(is_staff=True, role__isnull=True).order_by('-date_joined')
+
+            result['users_selected'] = admin_serializers.UserSerializer(users_selected, many=True).data
+            result['users_all'] = admin_serializers.UserSerializer(users_all, many=True).data
+
+            return Response(result)
 
         except Roles.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Role."), "fields": ""}, status=400)
