@@ -6,14 +6,17 @@
 "06"=_("Received Card is suspended.")
 "07"=_("Source barcode not link to any user")
 
-_('Bacode is required')
-_("Barcode not found.")
-_("Card has no user.")
-_("Query to DB embed fail")
-_("Internal Server Error")
+"08"=_('Bacode is required')
+"09"=_("Barcode not found.")
+"10"=_("Card has no user.")
+"11"=_("Query to DB embed fail")
+"12"=_("Internal Server Error")
+"13"=_("Card id field is required.")
+"14"=_("Card is used.")
+"15"=_("Card is locked.")
 
+"16"=_("Card is invalid.")
 
-
-
+"17"=_("update userembed success")
 
 

@@ -18,6 +18,7 @@ django-push-notifications
 django-cors-headers
 qrcode
 requests==2.18.4
+python-dateutil
 
 #-e git+git://github.com/mvpdev/django-eav.git#egg=django-eav
 #django-allauth

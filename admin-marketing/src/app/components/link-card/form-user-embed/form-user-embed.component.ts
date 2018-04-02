@@ -80,8 +80,8 @@ export class FormUserEmbedComponent implements OnInit {
         let barcode = parseInt(value);
         this.linkCardService.getBarcode(barcode).subscribe(
             (data) => {
-                if(typeof(data.message.cards_state) === 'number'){
-                    this.user_embed = data.message;
+                if(typeof(data.cards_state) === 'number'){
+                    this.user_embed = data;
                     this.embedForm.setValue({
                         barcode: this.user_embed.barcode,
                         full_name: this.user_embed.full_name,
@@ -92,14 +92,14 @@ export class FormUserEmbedComponent implements OnInit {
                         address: this.user_embed.address
                     });
                 }
-                if(data.message.cards_state === 0){
+                if(data.cards_state === 0){
                     this.errorMessage = '';
                     this.is_disable_checkbox = false;
                     this.is_disabled_btn_embed = false;
                     this.is_btn_linkcard_embed.emit(this.is_disabled_btn_embed);
-                }else if(data.message.cards_state === 1){
+                }else if(data.cards_state === 1){
                     this.errorMessage = 'Mã thẻ này đã bị khóa. Vui lòng liên kết với mã thẻ khác.';
-                }else if(data.message.cards_state === 2){
+                }else if(data.cards_state === 2){
                     this.errorMessage = 'Mã thẻ này đã bị thay thế. Vui lòng liên kết với mã thẻ khác.';
                 }else{
                     this.errorMessage = 'Mã thẻ này không hợp lệ.';
@@ -113,7 +113,7 @@ export class FormUserEmbedComponent implements OnInit {
                         address: null
                     });
                 }
-                if(data.message.cards_state !== 0){
+                if(data.cards_state !== 0){
                     this.is_disable_checkbox = true;
                     this.is_disabled_btn_embed = true;
                     this.is_btn_linkcard_embed.emit(this.is_disabled_btn_embed);
