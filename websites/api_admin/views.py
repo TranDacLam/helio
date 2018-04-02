@@ -30,6 +30,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
 from django.utils.translation import ugettext_lazy as _
+import requests
+import traceback
 
 """
     Get Promotion
@@ -1016,53 +1018,82 @@ class UserEmbedDetail(APIView):
 
         """
         try:
-            cursor = connections['sql_db'].cursor()
 
-            query_barcode = """SELECT C.Card_State, Cust.Customer_Id
-                                FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
-                                WHERE C.Card_Barcode = {0}"""
-            cursor.execute(query_barcode.format(barcode))
-            item = cursor.fetchone()
-            if not item:
-                return Response({"code": 400, "message": _("Barcode not found"), "fields": ""}, status=400)
-            # card_state is 0 or 1 or 2
-            if item[0] != 0:
-                if item[0] == 2:
-                    return Response({"code": 400, "message": _("Card is used."), "fields": ""}, status=400)
-                if item[0] == 1:
-                    return Response({"code": 400, "message": _("Card is locked."), "fields": ""}, status=400)
-                return Response({"code": 400, "message": _("Card is invalid."), "fields": ""}, status=400)
-            # check Customer_Id is exist
-            if not item[1]:
-                return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
-            
             serializer = admin_serializers.UserEmbedSerializer(
                 data=request.data)
 
-            if serializer.is_valid():
-                # convert string to date
-                birth_date = datetime.strptime(serializer.data['birth_date'], "%d/%m/%Y").date()
-                query_str = """UPDATE Customers SET Firstname = N'{4}',Surname = '', Email = '{6}',
-                 Mobile_Phone = '{2}', DOB = '{1}', PostCode = '{3}', Address1 = N'{5}'  
-                WHERE Customers.Customer_Id IN (SELECT Cust.Customer_Id  
-                FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
-                WHERE C.Card_Barcode = '{0}')"""
+            if not serializer.is_valid():
+                return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
 
-                cursor.execute(query_str.format(barcode, birth_date, serializer.data['phone'], serializer.data[
-                               'personal_id'], serializer.data['full_name'], serializer.data['address'], serializer.data['email']))
+
+            # cursor = connections['sql_db'].cursor()
+
+            # query_barcode = """SELECT C.Card_State, Cust.Customer_Id
+            #                     FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
+            #                     WHERE C.Card_Barcode = {0}"""
+            # cursor.execute(query_barcode.format(barcode))
+            # item = cursor.fetchone()
+            # if not item:
+            #     return Response({"code": 400, "message": _("Barcode not found"), "fields": ""}, status=400)
+            # # card_state is 0 or 1 or 2
+            # if item[0] != 0:
+            #     if item[0] == 2:
+            #         return Response({"code": 400, "message": _("Card is used."), "fields": ""}, status=400)
+            #     if item[0] == 1:
+            #         return Response({"code": 400, "message": _("Card is locked."), "fields": ""}, status=400)
+            #     return Response({"code": 400, "message": _("Card is invalid."), "fields": ""}, status=400)
+            # # check Customer_Id is exist
+            # if not item[1]:
+            #     return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
+            
+            # serializer = admin_serializers.UserEmbedSerializer(
+            #     data=request.data)
+
+            # if serializer.is_valid():
+            #     # convert string to date
+            #     birth_date = datetime.strptime(serializer.data['birth_date'], "%d/%m/%Y").date()
+            #     query_str = """UPDATE Customers SET Firstname = N'{4}',Surname = '', Email = '{6}',
+            #      Mobile_Phone = '{2}', DOB = '{1}', PostCode = '{3}', Address1 = N'{5}'  
+            #     WHERE Customers.Customer_Id IN (SELECT Cust.Customer_Id  
+            #     FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
+            #     WHERE C.Card_Barcode = '{0}')"""
+
+            #     cursor.execute(query_str.format(barcode, birth_date, serializer.data['phone'], serializer.data[
+            #                    'personal_id'], serializer.data['full_name'], serializer.data['address'], serializer.data['email']))
                 
-                return Response({"code": 200, "message": _("update userembed success"), "fields": ""}, status=200)
+            #     return Response({"code": 200, "message": _("update userembed success"), "fields": ""}, status=200)
 
-            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
-        # catching db embed error
-        except DatabaseError, e:
-            print "UserEmbedDetail ", e
-            error = {"code": 500,
-                     "message": _("Query to DB embed fail"), "fields": ""}
-            return Response(error, status=500)
+            # return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+
+
+            headers = {
+                'Content-Type': 'application/json',
+                'Authorization': settings.DMZ_API_TOKEN
+            }
+            card_information_api_url = '{}card/{}/information/'.format(
+                settings.BASE_URL_DMZ_API, barcode)
+
+            # Call DMZ get card infomation
+            response = requests.put(card_information_api_url, data=json.dumps(request.data), headers=headers)
+
+            if response.status_code == 401: 
+                print "DMZ reponse status code 401", response.text
+                raise Exception('Unauthorized: %s (HTTP status: %s)' % (response.text, response.status_code)) 
+            if response.status_code != 200 and response.status_code != 400: 
+                print "DMZ reponse status code not 200", response.text
+                raise Exception('%s (HTTP status: %s)' % (response.text, response.status_code))
+
+            # Get data from dmz reponse
+            result = response.json()
+            # Translate error message when code is 400
+            if response.status_code == 400:
+                result["message"] = _(result["message"])
+                return Response(result, status=response.status_code)
+            return Response(result, status=200)
 
         except Exception, e:
-            print "UserEmbedDetail ", e
+            print "Errors UserEmbedDetail PUT  : ", traceback.format_exc()
+            # print "UserEmbedDetail ", e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
