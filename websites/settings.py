@@ -310,7 +310,7 @@ PUSH_NOTIFICATIONS_SETTINGS = {
 }
 
 try:
-    if 'UAT' in os.environ and os.environ['UAT']:
+    if 'HELIO_WEB_UAT' in os.environ and os.environ['HELIO_WEB_UAT']:
         from config.setting_uat import *
 
     elif 'API_HELIO' in os.environ and os.environ['API_HELIO']:
