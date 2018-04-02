@@ -175,6 +175,48 @@
             </ul>
         </div>
     </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Thời Gian Áp Dụng</label>
+        </div>
+        <div class="col-sm-4 input-group">
+            <span class="input-group-addon" [owlDateTimeTrigger]="dtApplyTime">
+                <i class="fa fa-clock-o"></i>
+            </span>
+            <input type="text" class="form-control event-date" formControlName="apply_time"
+                [owlDateTime]="dtApplyTime" id="start_time"
+            />         
+            <owl-date-time [pickerType]="'timer'" #dtApplyTime></owl-date-time>
+        </div>
+        <div class="col-md-offset-2 custom-date">
+            <show-error-valid [control]="promotionForm.get('apply_time')"></show-error-valid>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label class="col-form-label form-check-label">Thời Gian Kết Thúc</label>
+        </div>
+        <div class="col-sm-4 input-group">
+            <span class="input-group-addon" [owlDateTimeTrigger]="dtEndTime">
+                <i class="fa fa-clock-o"></i>
+            </span>
+            <input type="text" class="form-control event-date" formControlName="end_time"
+                [owlDateTime]="dtEndTime" id="end_time"
+            />         
+            <owl-date-time [pickerType]="'timer'" #dtEndTime></owl-date-time>
+        </div>
+        <div class="col-md-offset-2 custom-date">
+            <show-error-valid [control]="promotionForm.get('end_time')"></show-error-valid>
+            <ul *ngIf="promotionForm.errors && !promotionForm.get('end_time').errors?.fomatDate && 
+                !promotionForm.get('apply_time').errors?.fomatDate">
+                <li style="color: red">
+                    {{ promotionForm.errors?.datempty ? 'Vui lòng nhập ngày áp dụng': '' }}
+                    {{ promotionForm.errors?.slectedtime ? 'Vui lòng nhập thời gian áp dụng/kết thúc': '' }}
+                    {{ promotionForm.errors?.times ? 'Vui lòng nhập thời gian áp dụng lớn hơn thời gian bắt đầu': '' }}
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="form-group row noti-image">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Is Draft</label>
