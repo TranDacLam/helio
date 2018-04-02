@@ -102,7 +102,7 @@
         </div>
         <div class="col-sm-4" *ngIf="categorys">
             <select class="form-control" formControlName="promotion_category">
-                <option value="">-- CHỌN DANH MỤC --</option>
+                <option value="">-- CHỌN DANH MỤC KHUYẾN MÃI --</option>
                 <option *ngFor="let category of categorys" value="{{ category.id }}">{{ category.name }}</option>
             </select>
             <show-error-valid [control]="promotionForm.get('promotion_category')"></show-error-valid>
@@ -115,7 +115,7 @@
         </div>
         <div class="col-sm-4" *ngIf="promotionLabels">
             <select class="form-control" formControlName="promotion_label">
-                <option value="">-- CHỌN NHÃN --</option>
+                <option value="">-- CHỌN NHÃN KHUYẾN MÃI --</option>
                 <option *ngFor="let label of promotionLabels" value="{{ label.id }}">{{ label.name }}</option>
             </select>
             <show-error-valid [control]="promotionForm.get('promotion_label')"></show-error-valid>
@@ -128,7 +128,7 @@
         </div>
         <div class="col-sm-4" *ngIf="promotionTypes">
             <select class="form-control" formControlName="promotion_type">
-                <option value="">-- CHỌN LOẠI --</option>
+                <option value="">-- CHỌN LOẠI KHUYẾN MÃI --</option>
                 <option *ngFor="let type of promotionTypes" [value] ="type.id">{{ type.name }}</option>
             </select>
             <show-error-valid [control]="promotionForm.get('promotion_type')"></show-error-valid>
