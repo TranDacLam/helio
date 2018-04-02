@@ -196,31 +196,15 @@ export class ListGameComponent implements OnInit {
         });
     }
 
-     /*
-        Function changeLangVI(): Change language and callback service getEvents()
-        Author: Lam
-    */
-    changeLangVI(){
-        if(this.lang === 'en'){
-            $('.custom_table').attr('style', 'height: 640px');
-            this.games = null;
-            this.lang = 'vi';
-            this.getGames();
-            setTimeout(()=>{
-                $('.custom_table').attr('style', 'height: auto');
-            },100);
-        }
-    }
-
     /*
-        Function changeLangEN(): Change language and callback service getEvents()
+        Function changeLang(): Change language and callback service getEvents()
         Author: Lam
     */
-    changeLangEN(){
-        if(this.lang === 'vi'){
+    changeLang(value){
+        if(this.lang !== value){
             $('.custom_table').attr('style', 'height: 640px');
             this.games = null;
-            this.lang = 'en';
+            this.lang = value;
             this.getGames();
             setTimeout(()=>{
                 $('.custom_table').attr('style', 'height: auto');

@@ -27,30 +27,30 @@ export class BannerService {
             })
         }
     }
-
-  	/*
+    /*
       GET: Get All Banner From Service
       @author: TrangLe  
     */
-  	getAllBanner(lang): Observable<Banner[]> {
-  		let url_banner = `${env.api_domain_root}/${lang}/api/${api.banner}`;
-  		return this.http.get(url_banner, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-  	}
+    getAllBanner(lang): Observable<Banner[]> {
+        let url_banner = `${env.api_domain_root}/${lang}/api/${api.banner}`;
+        return this.http.get(url_banner, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    }
 
     /*
       GET: Get Banner By Id
       @author: TrangLe
-     */
+    */
     getBannerById(id: number, lang): Observable<Banner> {
-      // const url = `${api.banner}${id}/`;
-      let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`
-      return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        // const url = `${api.banner}${id}/`;
+        let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`
+        return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
     /*
         PUT: Update Banner By Id
         @author: Trangle
-     */
-     updateBanner(bannerFormData:FormData, id: number, lang): Observable<any> { 
+    */
+    
+    updateBanner(bannerFormData:FormData, id: number, lang): Observable<any> { 
         // let url = `${api.banner}${id}/`;
         let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`
         return Observable.create(observer => {
@@ -75,7 +75,7 @@ export class BannerService {
       POST: Create a New Banner
       @author: TrangLe
     */
-     CreateBanner(bannerFormData:FormData, lang): Observable<any> {
+    CreateBanner(bannerFormData:FormData, lang): Observable<any> {
         let url = `${env.api_domain_root}/${lang}/api/${api.banner}`;
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
@@ -100,23 +100,21 @@ export class BannerService {
     }
 
     deleteBannerSelected(banner_id, lang): Observable<any> {
-      let url = `${env.api_domain_root}/${lang}/api/${api.banner}`;
-      let param = {
-          banner_id: banner_id
+        let url = `${env.api_domain_root}/${lang}/api/${api.banner}`;
+        let param = {
+            banner_id: banner_id
         }
-      let _options = new RequestOptions({
-        headers: this.httpOptions.headers,
-        body: JSON.stringify(param)
-      });
+        let _options = new RequestOptions({
+            headers: this.httpOptions.headers,
+            body: JSON.stringify(param)
+        });
 
-      return this.http.delete(url,_options ).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url,_options ).map((res: Response) => res.json()).catch(this.handleError);
     }
-
-  	/* 
+    /* 
       Handle error
     */
-  	handleError(error: Response) {
-  		return Observable.throw(error);
-  	}
-
+    handleError(error: Response) {
+        return Observable.throw(error);
+    }
 }

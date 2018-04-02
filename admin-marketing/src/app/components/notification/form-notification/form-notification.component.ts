@@ -14,6 +14,8 @@ import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { User } from '../../../shared/class/user';
 import 'rxjs/add/observable/throw';
 import { env } from '../../../../environments/environment';
+import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
+
 
 declare var $ :any; // declare Jquery
 declare var bootbox:any;
@@ -59,6 +61,7 @@ export class FormNotificationComponent implements OnInit {
     lang = 'vi';
     promotion_id: number;
     title_page = '';
+    ckEditorConfig:any;
 
     constructor(
         private notificationService: NotificationService,
@@ -83,6 +86,8 @@ export class FormNotificationComponent implements OnInit {
                 this.lang = params.lang;
             }
         });
+
+        this.ckEditorConfig = ckeditor_config.config;
 
         this.getCategory();
         // get current user
