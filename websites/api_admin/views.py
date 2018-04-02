@@ -1743,7 +1743,7 @@ class PostAPI(APIView):
         try:
             post = Post.objects.get(id=id)
             postSerializer = admin_serializers.PostSerializer(
-                instance=post, data=request.data, context={'request', request})
+                instance=post, data=request.data, context={'request': request})
             if postSerializer.is_valid():
                 postSerializer.save()
                 return Response(postSerializer.data)

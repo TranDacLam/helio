@@ -37,8 +37,8 @@
 				
 				<td *ngIf="fee.is_apply">
 					<div (mouseover)="hoverIn(fee);" (mouseleave)="hoverOut(fee);" class="btn btn-success text-center" (click)="fee.isHover? cancel_apply_fee(fee.id): apply_fee(fee.id)" >
-						<span *ngIf="fee.isHover">Hủy Áp dụng phí</span>
-						<span *ngIf="!fee.isHover" >Đang Áp dụng phí</span>
+						<span *ngIf="fee.isHover">Hủy áp dụng phí</span>
+						<span *ngIf="!fee.isHover" >Đang áp dụng phí</span>
 					</div>
 				</td>
 				<td *ngIf="!fee.is_apply"><div class="btn btn-primary text-center" (click)="apply_fee(fee.id)">Áp dụng phí</div></td>
@@ -55,6 +55,6 @@
 	</div>
 	<div class="col-md-3" *ngIf="fees" >
 		{{length_selected}} của {{length_all}} được chọn
-		<button type="button" class="btn btn-danger" (click)="confirm_delete();">Thực hiện</button>
+		<button type="button" class="btn btn-danger btn-delete-fee" (click)="confirm_delete();">Thực hiện</button>
 	</div>
 </div>
