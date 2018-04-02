@@ -54,7 +54,7 @@ PROCESS_ID = {
 OUTPUT_ANGULAR = {
     'development': '/home/adminvn/sites/build_angular',
     'api': None,
-    'uat': None,
+    'uat': '/home/api/projects/build_angular',
     'production': None,
 }
 

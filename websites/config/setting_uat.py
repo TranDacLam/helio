@@ -4,12 +4,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 DATABASES = {
     'default': {
-        'NAME': 'helio_web',
+        'NAME': 'helio_web_uat',
         'ENGINE': 'django.db.backends.mysql',
         'HOST': 'localhost',
         'PORT': 3306,
-        'USER': 'helio',
-        'PASSWORD': 'admin@helio.vn'
+        'USER': 'helio_uat',
+        'PASSWORD': 'hel1o@uat'
     },
     'sql_db': {
         'NAME': 'ECS7',
@@ -37,5 +37,5 @@ PUSH_NOTIFICATIONS_SETTINGS = {
     "APNS_TOPIC": "vn.vooc.helio.mobile",
 }
 
-BASE_URL_DMZ_API = ""
-DMZ_API_TOKEN = ""
+BASE_URL_DMZ_API = "http://172.16.12.10:9000/api/"
+DMZ_API_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluQHZvb2Mudm4iLCJvcmlnX2lhdCI6MTUyMTYwNjc2NSwidXNlcl9pZCI6MSwiZW1haWwiOiJhZG1pbkB2b29jLnZuIiwiZXhwIjoxNTIxNjA3MDY1fQ.9hE6nQzUboTHYdG3kexLoJiTDAVYM-jIheXBFFr0gmM"
