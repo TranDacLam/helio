@@ -203,7 +203,7 @@ class NotificationSerializer(serializers.ModelSerializer):
 
 class UserEmbedSerializer(serializers.Serializer):
     full_name = serializers.CharField(required=True)
-    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required=True)
+    birth_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required=True, error_messages = {'invalid': _('Birth date is invalid.')})
     personal_id = serializers.CharField(required=True)
     email = serializers.CharField(required=True)
     address = serializers.CharField(required=True)

@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
     <li><a routerLink='/'>Trang Chủ</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Quản Lý Phân quyền User</li>
+    <li class="breadcrumb-item active" aria-current="page">Phân quyền User</li>
  </ol>
 <div class="row text-center">
     <p class="title">PHÂN QUYỀN USER</p>
@@ -20,11 +20,9 @@
     </div>
 </div>
 
-
 <app-user-multiselect 
     [user_list_left]="user_list_left" 
     [user_list_right]="user_list_right" 
-    (save)="updateUserPromotion($event)"
-    [promotion]="promotion"
+    (save)="setRoleForUser($event)"
     >
 </app-user-multiselect>
