@@ -196,30 +196,14 @@ export class ListEventComponent implements OnInit {
 
 
     /*
-        Function changeLangVI(): Change language and callback service getEvents()
+        Function changeLang(): Change language and callback service getEvents()
         Author: Lam
     */
-    changeLangVI(){
-        if(this.lang === 'en'){
+    changeLang(value){
+        if(this.lang !== value){
             $('.custom_table').attr('style', 'height: 640px');
             this.events = null;
-            this.lang = 'vi';
-            this.getEvents();
-            setTimeout(()=>{
-                $('.custom_table').attr('style', 'height: auto');
-            },100);
-        }
-    }
-
-    /*
-        Function changeLangEN(): Change language and callback service getEvents()
-        Author: Lam
-    */
-    changeLangEN(){
-        if(this.lang === 'vi'){
-            $('.custom_table').attr('style', 'height: 640px');
-            this.events = null;
-            this.lang = 'en';
+            this.lang = value;
             this.getEvents();
             setTimeout(()=>{
                 $('.custom_table').attr('style', 'height: auto');

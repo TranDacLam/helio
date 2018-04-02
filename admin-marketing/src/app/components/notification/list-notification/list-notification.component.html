@@ -25,10 +25,10 @@
     <div class="col-xs-12 col-sm-12">
         <div class="btn-group pull-right">
             <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
-                (click)="changeLangVI()"
+                (click)="changeLang('vi')"
             >VI</button>
             <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
-                (click)="changeLangEN()"
+                (click)="changeLang('en')"
             >EN</button>
         </div> 
     </div>
@@ -40,10 +40,10 @@
             <tr>
                 <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
                 <th>ID</th>
-                <th>Tên thông báo</th>
-                <th>Tình trạng</th>
-                <th>Ngày gửi</th>
-                <th>Người gửi</th>
+                <th>Tên Thông Báo</th>
+                <th>Tình Trạng</th>
+                <th>Ngày Gửi</th>
+                <th>Người Gửi</th>
                 <th></th>
             </tr>
         </thead>

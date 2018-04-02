@@ -95,9 +95,9 @@ export class OpenTimeComponent implements OnInit {
     creatForm(): void{
         this.formOpenTime = this.fb.group({
             start_date: ['', 
-                [DateValidators.checkDate, DateValidators.formatStartDate, DateValidators.requiredStartDate]],
+                [DateValidators.formatStartDate, DateValidators.requiredStartDate]],
             end_date: ['', 
-                [DateValidators.checkDate, DateValidators.formatEndDate, DateValidators.requiredStartDate]],
+                [DateValidators.formatEndDate, DateValidators.requiredStartDate]],
             start_time: ['', 
                 [DateValidators.formatStartTime]],
             end_time: ['',
