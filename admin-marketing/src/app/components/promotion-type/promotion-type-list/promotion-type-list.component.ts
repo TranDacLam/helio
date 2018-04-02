@@ -12,36 +12,34 @@ import { PromotionTypeService } from '../../../shared/services/promotion-type.se
 })
 export class PromotionTypeListComponent implements OnInit {
 
-	proTypes: PromotionType[];
+    proTypes: PromotionType[];
 
-  	constructor(
-  		private promotionTypeService: PromotionTypeService,
+    constructor(
+        private promotionTypeService: PromotionTypeService,
         private router: Router,
-  		) 
-  	{ }
+    ) { }
 
-  	ngOnInit() {
+    ngOnInit() {
         /* 
             Call function Get all PromotionType
             @author: Trangle
         */   
-  		this.getAllPromotionType();
-  	}
+        this.getAllPromotionType();
+    }
 
     /*
         Get All Promotion Type
         Call servive promotion_type
         @author: TrangLe
-     */
-  	getAllPromotionType() {
-  		this.promotionTypeService.getAllPromotionsType().subscribe(
-  			(result) => {
+    */
+    getAllPromotionType() {
+        this.promotionTypeService.getAllPromotionsType().subscribe(
+            (result) => {
                 this.proTypes = result;
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.json().message }])
             }
-		)
-  	}
-
+        )
+    }
 }

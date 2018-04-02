@@ -13,7 +13,7 @@ export class HotAdvsService {
     httpOptions: any;
     token: any ='';
 
-  	constructor(private http: Http) { 
+    constructor(private http: Http) { 
         this.token = localStorage.getItem('auth_token');
 
         this.httpOptions = {
@@ -24,21 +24,21 @@ export class HotAdvsService {
         };
     }
 
-
-  	/*
+    /*
       GET: Get All Banner Hot_Advs Service
       @author: TrangLe  
     */
-  	getAllHotAdvs(): Observable<HotAdvs[]> {
-  		let url = `${api.hot_advs}`
-  		return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-  	}
+    getAllHotAdvs(): Observable<HotAdvs[]> {
+        let url = `${api.hot_advs}`
+        return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    }
 
-  	/*
+    /*
       POST: Create a New Hot_Advs
       @author: TrangLe
     */
-     CreateHotAdvs(hotAdvsFormData:FormData): Observable<any> {
+    
+    CreateHotAdvs(hotAdvsFormData:FormData): Observable<any> {
 
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
@@ -72,10 +72,11 @@ export class HotAdvsService {
         return this.http.delete(url,_options ).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-  	/* 
+    /* 
       Handle error
     */
-  	handleError(error: Response) {
-  		return Observable.throw(error);
-  	}
+    handleError(error: Response) {
+        return Observable.throw(error);
+    } 
+
 }

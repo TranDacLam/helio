@@ -39,6 +39,7 @@ export class ShowErrorValidComponent implements OnInit {
        'invalidDate':(params) => params.message,
        'fomatFile': (params) => params.message,
        'requiredSelectedRole': (params) => params.message,
+       'errorBefore1900':(params) => params.message,
     };
 
     @Input()
