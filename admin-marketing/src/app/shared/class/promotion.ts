@@ -13,6 +13,8 @@ export class Promotion {
     promotion_type?: PromotionType;
     apply_date: Date;
     end_date: Date;
+    apply_time: string;
+    end_time: string;
     QR_code: string;
     user_implementer: User;
     is_draft: boolean;
