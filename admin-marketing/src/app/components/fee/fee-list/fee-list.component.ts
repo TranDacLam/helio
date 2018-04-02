@@ -17,7 +17,10 @@ declare var bootbox: any;
 })
 export class FeeListComponent implements OnInit {
 
-    constructor(private feeService: FeeService, private router: Router, private toastr: ToastrService) {
+    constructor(
+        private feeService: FeeService, 
+        private router: Router, 
+        private toastr: ToastrService) {
 
     }
 
@@ -148,7 +151,8 @@ export class FeeListComponent implements OnInit {
                 },
                 (error) => {
                     this.router.navigate(['/error', { message: error.message }]);
-                });
+                }
+            );
         });
 
     }
