@@ -180,6 +180,8 @@ class Promotion(DateTimeModel):
     user_implementer = models.ForeignKey('User', related_name='user_implementer_rel',
                                          null=True, blank=True)
     is_save = models.BooleanField(_('Is save'), default=False)
+    apply_time = models.TimeField(_('Apply time'), blank=True, null=True)
+    end_time = models.TimeField(_('End time'), blank=True, null=True)
 
     def __str__(self):
         return '%s' % (self.name)

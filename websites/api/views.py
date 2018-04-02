@@ -1357,10 +1357,10 @@ def ticket_transfer(request):
         source_card_barcode = request.data.get('source_card_barcode', '')
         received_card_barcode = request.data.get('received_card_barcode', 0)
         ticket_amount = request.data.get('ticket_amount', 0)
-        fee = request.data.get('fee', 0)
+        fee = request.data.get('fee', '')
 
         if request.user.barcode == source_card_barcode:
-            if not source_card_barcode or not received_card_barcode or not ticket_amount or not fee:
+            if not source_card_barcode or not received_card_barcode or not ticket_amount or ( not fee and fee != 0):
                 error = {
                     "status": "05", "message": _("Please check required fields : [source_card_barcode, received_card_barcode, ticket_amount, fee]")}
                 return JsonResponse(error, status=400)
