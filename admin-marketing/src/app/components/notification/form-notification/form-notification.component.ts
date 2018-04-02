@@ -135,6 +135,12 @@ export class FormNotificationComponent implements OnInit {
         const id = +this.route.snapshot.paramMap.get('id');
         this.notificationService.getNotification(id, this.lang).subscribe(data => {
             this.noti = data;
+            if(this.noti.category === 1){
+                this.check_QR = false;
+                if(this.noti.is_QR_code === true){
+                    this.check_Location = false;
+                }
+            }
             this.creatForm();
         });
     }
