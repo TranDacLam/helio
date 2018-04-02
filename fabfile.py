@@ -60,7 +60,7 @@ OUTPUT_ANGULAR = {
 
 ANGULAR_ENV = {
     'development': 'development',
-    'production': 'production'
+    'production': 'production',
     'uat': 'production'
 }
 
