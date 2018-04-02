@@ -170,7 +170,7 @@
             <ul *ngIf="!promotionForm.get('end_date').errors?.fomatDate && 
                 !promotionForm.get('apply_date').errors?.fomatDate">
                 <li style="color: red">
-                    {{ promotionForm.errors?.dates ? 'Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu' : '' }}
+                    {{ promotionForm.errors?.dates ? 'Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày áp dụng' : '' }}
                 </li>
             </ul>
         </div>
@@ -212,7 +212,7 @@
                 <li style="color: red">
                     {{ promotionForm.errors?.datempty ? 'Vui lòng nhập ngày áp dụng': '' }}
                     {{ promotionForm.errors?.slectedtime ? 'Vui lòng nhập thời gian áp dụng/kết thúc': '' }}
-                    {{ promotionForm.errors?.times ? 'Vui lòng nhập thời gian áp dụng lớn hơn thời gian bắt đầu': '' }}
+                    {{ promotionForm.errors?.times ? 'Vui lòng nhập thời gian kết thúc lớn hơn thời gian áp dụng': '' }}
                 </li>
             </ul>
         </div>
