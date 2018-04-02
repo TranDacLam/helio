@@ -39,3 +39,6 @@ table.dataTable thead .sorting_desc{
 #th-checkall{
 	padding: 10px;
 }
+.btn-delete-fee{
+	margin-left: 25px;
+}
