@@ -40,6 +40,7 @@ export class FormPostComponent implements OnInit {
     title_page = '';
 
     ckEditorConfig:any;
+    list_multi_image_id = [];
 
     constructor(
         private postService: PostService,
@@ -90,7 +91,7 @@ export class FormPostComponent implements OnInit {
             pin_to_top: [this.post.pin_to_top ? this.post.pin_to_top : false],
             key_query: [this.post.key_query, [Validators.required, Validators.maxLength(255)]],
             is_clear_image: [false],
-            posts_image: [this.post.posts_image]
+            posts_image: [[], [ImageValidators.validateMultiFile]]
         });
     }
 
@@ -147,17 +148,28 @@ export class FormPostComponent implements OnInit {
             for(let i = 0; i < event.target.files.length; i++){
                 let file = event.target.files[i];
                 obj_image = {
-                    image: {
-                        filename: file.name,
-                        filetype: file.type,
-                        value: file,
-                    }
+                    filename: file.name,
+                    filetype: file.type,
+                    value: file,
                 }
                 multi_imgae.push(obj_image);
             }
-            this.formPost.value.posts_image = multi_imgae;
+            this.formPost.get('posts_image').setValue(multi_imgae);
         }
     }
+
+    /*
+        Function delsMutilImage(): get list id del image
+        author: Lam
+    */ 
+    delsMutilImage(event, post_image){
+        if(event.target.checked){
+            this.list_multi_image_id.push(post_image.id);
+        }else{
+            this.list_multi_image_id = this.list_multi_image_id.filter(k => k !== post_image.id);
+        }
+    }
+
 
     /*
         Function onSubmit():
@@ -174,6 +186,7 @@ export class FormPostComponent implements OnInit {
             ValidateSubmit.validateAllFormFields(this.formPost);
             this.scrollTop();
         }else{
+            this.formPost.value.list_clear_image = this.list_multi_image_id;
             this.formPost.value.post_type = parseInt(this.formPost.value.post_type);
             let post_form_data = this.convertFormGroupToFormData(this.formPost);
             let value_form = this.formPost.value;
@@ -286,7 +299,7 @@ export class FormPostComponent implements OnInit {
                     promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
                 } else if(k === 'posts_image'){
                     Object.keys(promotionValues[k]).forEach(l => { 
-                        promotionFormData.append('posts_image', promotionValues[k][l].image.value);
+                        promotionFormData.append('posts_image', promotionValues[k][l].value);
                     });
                 } else {
                     promotionFormData.append(k, promotionValues[k]);

@@ -18,3 +18,6 @@ label.checkbox-label input[type=checkbox]{
     vertical-align: middle;
     bottom: 4px;
 }
+.error_msg {
+	color: red;
+}

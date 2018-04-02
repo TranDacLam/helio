@@ -1378,7 +1378,7 @@ class BannerViewDetail(APIView):
             print('banner', banner)
 
             serializer = admin_serializers.BannerSerializer(
-                banner, data=request.data)
+                banner, data=request.data, context={'request': request})
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)

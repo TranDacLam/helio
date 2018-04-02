@@ -195,32 +195,15 @@ export class BannerListComponent implements OnInit {
         Function changeLangVI(): Change language and callback service getEvents()
         Author: Lam
     */
-    changeLangVI(){
-        if(this.lang === 'en'){
+    changeLang(value){
+        if(this.lang !== value){
             $('.custom_table').attr('style', 'height: 640px');
-            this.lang = 'vi';
             this.banners = null;
+            this.lang = value;
             this.getAllBanners();
             setTimeout(()=>{
                 $('.custom_table').attr('style', 'height: auto');
             },100);
         }
     }
-
-    /*
-        Function changeLangEN(): Change language and callback service getEvents()
-        Author: Lam
-    */
-    changeLangEN(){
-        if(this.lang === 'vi'){
-            $('.custom_table').attr('style', 'height: 640px');
-            this.lang = 'en';
-            this.banners=null;
-            this.getAllBanners();
-            setTimeout(()=>{
-                $('.custom_table').attr('style', 'height: auto');
-            },100);
-        }
-    }
-  
 }

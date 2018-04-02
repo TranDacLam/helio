@@ -75,7 +75,7 @@ export class HotAdvsListComponent implements OnInit {
             (error) =>  {
                 this.router.navigate(['/error', { message: error.json().message }])
             }
-          )
+        )
   	}
   	/*
         Event select checbox on row

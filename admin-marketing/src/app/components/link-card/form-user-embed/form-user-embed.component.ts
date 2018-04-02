@@ -65,7 +65,7 @@ export class FormUserEmbedComponent implements OnInit {
             phone: [this.user_embed.phone, 
                 [Validators.required, NumberValidators.validPhone]],
             birth_date: [this.user_embed.birth_date, 
-                [Validators.required, DateValidators.formatDate]],
+                [Validators.required, DateValidators.validBirthDay, DateValidators.formatDate]],
             personal_id: [this.user_embed.personal_id, 
                 [Validators.required, NumberValidators.validPersonID]],
             address: [this.user_embed.address, Validators.required],

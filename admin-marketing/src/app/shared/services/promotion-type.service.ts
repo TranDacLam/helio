@@ -14,7 +14,7 @@ import { PromotionType } from '../../shared/class/promotion-type';
 @Injectable()
 export class PromotionTypeService {
 
-  	httpOptions: any;
+    httpOptions: any;
     token: any = '';
 
     constructor(private http: Http) {
@@ -28,21 +28,19 @@ export class PromotionTypeService {
         };
     }
 
+    /*
+        GET: Get All Promorion Type From Server
+        @author: TrangLe
+    */
+    getAllPromotionsType(): Observable<any[]>{
+        let urlPromotionType = `${api.promotion_type}`;
+        return this.http.get(urlPromotionType, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    }
 
-  	/*
-  		GET: Get All Promorion Type From Server
-  		@author: TrangLe
-  	 */
-	getAllPromotionsType(): Observable<any[]>{
-		let urlPromotionType = `${api.promotion_type}`;
-		return this.http.get(urlPromotionType, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-	}
-
-	/*
-		Handle error
-	*/
-	handleError(error: Response) {
-	    return Observable.throw(error);
-	}
-
+    /*
+        Handle error
+    */
+    handleError(error: Response) {
+        return Observable.throw(error);
+    }
 }
