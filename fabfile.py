@@ -5,55 +5,55 @@ ENV = 'development' # Choices ['uat','production','development']
 #ENV = 'production'
 SERVERS = {
     'development': '172.16.12.10',
-    # 'uat': '49.156.53.49',
+    'uat': '172.16.12.19',
     'production' : '49.156.53.49',
-    'api' : '49.156.53.49'
+    # 'api' : '49.156.53.49'
 }
 BRANCH = {
     'development': 'develop',
-    # 'uat': 'uat',
+    'uat': 'uat',
     'production': 'production',
-    'api': 'production',
+    # 'api': 'production',
 }
 
 USERS = {
     'development': 'adminvn',
-    # 'uat': 'thangv',
+    'uat': 'api',
     'production': 'thangv',
-    'api': 'thangv'
+    # 'api': 'thangv'
 }
 
 PASSWORDS = {
     'development': 'Abc@123',
-    # 'uat': 'ThangV@@123',
+    'uat': 'Ahe2017$%',
     'production': 'develop@vooc.vn',
-    'api': 'develop@vooc.vn'
+    # 'api': 'develop@vooc.vn'
 }
 
 VIRTUAL_ENVS = {
     'development': 'source /home/adminvn/envs_root/helio_web_env/bin/activate',
-    # 'uat': 'source /home/thangv/envs/helio_web_env/bin/activate',
+    'uat': 'source /home/api/projects/envs_root/helio_web_env/bin/activate',
     'production': 'source /home/thangv/envs/helio_web_env/bin/activate',
-    'api': 'source /home/thangv/envs/api_helio_web_env/bin/activate'
+    # 'api': 'source /home/thangv/envs/api_helio_web_env/bin/activate'
 }
 
 PATHS = {
     'development': '/home/adminvn/sites/helio_web',
-    # 'uat': '/home/thangv/projects/helio_web/',
+    'uat': '/home/api/projects/helio_web',
     'production': '/home/thangv/projects/helio_web/',
-    'api' : '/home/thangv/projects/api_source/helio_web'
+    # 'api' : '/home/thangv/projects/api_source/helio_web'
 }
 
 PROCESS_ID = {
     'development': '/tmp/helio_web.pid',
-    # 'uat': '/home/thangv/projects/helio_web/',
+    'uat': '/tmp/helio_web_uat.pid',
     'production': '/tmp/helio_web.pid',
-    'api' : '/tmp/helio_api_web.pid'
+    # 'api' : '/tmp/helio_api_web.pid'
 }
 
 OUTPUT_ANGULAR = {
     'development': '/home/adminvn/sites/build_angular',
-    'api': None,
+    # 'api': None,
     'uat': '/home/api/projects/build_angular',
     'production': None,
 }
@@ -61,6 +61,7 @@ OUTPUT_ANGULAR = {
 ANGULAR_ENV = {
     'development': 'development',
     'production': 'production'
+    'uat': 'production'
 }
 
 env.hosts = [SERVERS[ENV]]

@@ -172,6 +172,7 @@ class FeedBackSerializer(serializers.Serializer):
         max_length=500, required=False, allow_null=True, allow_blank=True)
 
     def create(self, validated_data):
+        validated_data['feedback_type'] = 'feedback'
         fb = FeedBack.objects.create(**validated_data)
         return fb
 
