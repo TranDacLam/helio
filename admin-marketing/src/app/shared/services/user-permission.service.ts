@@ -33,7 +33,7 @@ export class UserPermissionService {
         return this.http.get(this.role_list, this.httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    getUserListByRole( id: number ): Observable<User[]>{
+    getUserListByRole( id: number ): Observable<any>{
         let users_role_id = this.users_role + `?role_id=${id}`
         return this.http.get( users_role_id, this.httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
     }
