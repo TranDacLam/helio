@@ -155,11 +155,22 @@ export class UserMultiselectComponent implements OnInit {
     disableAllTable(){
         let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
         let promotion_end_date = (this.promotion && this.promotion.end_date) ? this.promotion.end_date : '';
-        if(this.current_user.role !==1 && ((this.notification && this.notification.sent_date) ||
+        if((this.promotion && this.promotion.id) || (this.current_user.role !==1 && ((this.notification && this.notification.sent_date) ||
             (this.promotion && (this.promotion.is_draft === false || 
-            (promotion_end_date !== '' && promotion_end_date < date_now))))){
-            $(".multiselect_user table tr input:checkbox, .multiselect_user button").prop('disabled', 'disabled');
-            $(".multiselect_footer button").prop('disabled', 'disabled');
+            (promotion_end_date !== '' && promotion_end_date < date_now)))))){
+            this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
+                dtInstance.rows().every( function () {
+                    let row = this.node();
+                    $(row).find('input:checkbox').prop('disabled', 'disabled');
+                });
+            });
+            this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
+                dtInstance.rows().every( function () {
+                    let row = this.node();
+                    $(row).find('input:checkbox').prop('disabled', 'disabled');
+                });
+            });
+            $(".multiselect_user button, .multiselect_footer button, #select-all-left, #select-all-right").prop('disabled', 'disabled');
         }
     }
 
