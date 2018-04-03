@@ -1,6 +1,6 @@
 from fabric.api import *
 
-ENV = 'development' # Choices ['uat','production','development']
+ENV = 'uat' # Choices ['uat','production','development']
 
 #ENV = 'production'
 SERVERS = {
@@ -60,7 +60,7 @@ OUTPUT_ANGULAR = {
 
 ANGULAR_ENV = {
     'development': 'development',
-    'production': 'production'
+    'production': 'production',
     'uat': 'production'
 }
 
@@ -92,6 +92,9 @@ def restart_web_server():
 def restart_admin_marketing():
     with cd(PROJECT_PATH):
         with cd('admin-marketing'):
+            # clean when error
+            # rm -r node_modules
+            # npm cache clean
             run('npm install')
             run("ng build --prod --environment=%s --base-href=/marketing/ --output-path=%s"%(ANGULAR_ENV[ENV], OUTPUT_ANGULAR[ENV]))
             run("rsync -av %s/* build/helio_admin/"%(OUTPUT_ANGULAR[ENV]))
