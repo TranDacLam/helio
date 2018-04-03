@@ -28,7 +28,7 @@
             <p><label>QR code : </label> <img src="{{api_domain}}{{promotion.QR_code}}" *ngIf="promotion.QR_code" height="50px" width="50px" /></p>
             <p *ngIf="user_current">
         <input type="checkbox" (change)="isUpdatePromotion($event)" [disabled]="user_current.role !== 1"/> 
-            Sửa khuyến mãi đã gửi (Chức năng này chỉ dành cho System Admin)
+            Sửa khuyến mãi đã lưu (Chức năng này chỉ dành cho System Admin)
         </p>
         <p *ngIf="is_update">
             <button type="button" class="btn custom-button" data-toggle="modal" data-target="#UpdatePromotion">

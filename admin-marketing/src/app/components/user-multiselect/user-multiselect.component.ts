@@ -83,7 +83,7 @@ export class UserMultiselectComponent implements OnInit {
                     'previous': "Trước"
                 }
             },
-            "sDom": "<'row'<'col-md-12'f><'col-md-12 info_search'><'col-md-12'l>>rt<'row'<'col-md-12'i><'col-md-12'p>>",
+            "sDom": "<'row'<'col-md-12'f><'col-md-12 info_search'><'col-md-12'l>>rt<'row'<'col-md-12'i>p>",
             rowCallback: (row: Node, data: any[] | Object, index: number) => {
                 $('td', row).find('input:checkbox').off().bind('change', event => {
                     this.selectCheckboxLeft(event);
@@ -127,7 +127,7 @@ export class UserMultiselectComponent implements OnInit {
                     'previous': "Trước"
                 }
             },
-            "sDom": "<'row'<'col-md-12'f><'col-md-12 info_search'><'col-md-12'l>>rt<'row'<'col-md-12'i><'col-md-12'p>>",
+            "sDom": "<'row'<'col-md-12'f><'col-md-12 info_search'><'col-md-12'l>>rt<'row'<'col-md-12'i>p>",
             rowCallback: (row: Node, data: any[] | Object, index: number) => {
                 $('td', row).find('input:checkbox').off().bind('change', () => {
                     this.selectCheckboxRight(event);

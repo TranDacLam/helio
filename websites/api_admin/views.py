@@ -984,7 +984,7 @@ class UserEmbedDetail(APIView):
                     return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
 
                 birth_date = parse(dmz_result['birthday'])
-                result['full_name'] = dmz_result['first_name'] + ' ' + dmz_result['surname']
+                result['full_name'] = (dmz_result['first_name'] + ' ' + dmz_result['surname']).strip()
                 result['birth_date'] = datetime.strftime(birth_date, '%d/%m/%Y')
                 result['address'] = dmz_result['address']
                 result['email'] = dmz_result['email']
