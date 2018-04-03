@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 import { data_config } from '../../../shared/commons/datatable_config';
 
 declare var bootbox:any;
+declare var $ :any;
 
 @Component({
   selector: 'app-link-card-list',
@@ -62,8 +63,7 @@ export class LinkCardListComponent implements OnInit {
                 { 
                     orderable: false, 
                     targets: 0 
-                }
-
+                },
             ]
         };
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
@@ -195,5 +195,10 @@ export class LinkCardListComponent implements OnInit {
             }
         );
     }
-
+    convertToDate(date) {
+        if (date !== null ){
+            let day = date.split('/');
+            return String(day[2]) + String(day[1]) + String(day[0]);
+        }
+    }
 }
