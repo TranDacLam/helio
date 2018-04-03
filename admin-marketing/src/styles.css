@@ -188,9 +188,6 @@ h1.h1-title {
 .dataTables_wrapper{
     margin-bottom: 20px;
 }
-.dataTable thead tr>th:first-child{
-    background-image: none;
-}
 .custom_table thead tr>th:first-child{
     width: 60px;
 }

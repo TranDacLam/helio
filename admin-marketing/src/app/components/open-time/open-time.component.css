@@ -1,5 +1,5 @@
 .label-title{
-    width: 70px;
+    margin-top: 5px;
 }
 .label-empty{
     margin: 0 10px;
@@ -9,4 +9,18 @@
 }
 .table-open-time th, .table-open-time td{
     text-align: center;
+}
+.title{
+    margin-bottom: 30px;
+}
+.pd-r-0{
+    padding-right: 0;
+}
+.pd-l-0{
+    padding-left: 0;
+}
+form ul{
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 5px;
 }
