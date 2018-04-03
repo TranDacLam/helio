@@ -8,7 +8,7 @@
 <div [hidden]="!roles" class="wrapper-permission">
     <div class="row permission-content">
         <div class="wrap-head">
-            <h4>Các quyền:</h4>
+            <h4>Các quyền</h4>
             <ul *ngFor="let role of roles; let i = index;"  class="list-role" >
                 <li>
                     <input class="role_checkbox" type="radio" name="role" id='role_{{role.id}}' value='{{role.id}}'  [checked]="i == 0" (change)='getUserListByRole( role.id )'>
