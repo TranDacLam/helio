@@ -356,7 +356,7 @@ export class PromotionFormDetailComponent implements OnInit {
         if (id) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
-                message: "Bạn muốn Khuyến Mãi tử này?",
+                message: "Bạn muốn xóa Khuyến Mãi này?",
                 buttons: {
                     cancel: {
                         label: "HỦY"
