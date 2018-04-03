@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { User } from '../../shared/class/user';
 import { Role } from '../../shared/class/role';
@@ -8,6 +8,8 @@ import 'rxjs/add/observable/throw';
 import { Subject } from 'rxjs/Subject';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { UserMultiselectComponent } from '../user-multiselect/user-multiselect.component';
+
 
 
 @Component({
@@ -25,9 +27,11 @@ export class UserPermissionComponent implements OnInit {
     user_list_left: User[];
     user_list_right: User[];
     roles: Role[];
+    @ViewChild(UserMultiselectComponent)
+    userMultiselect: UserMultiselectComponent
 
     /*
-        Event get User in table right
+        Event get User in datatable
         @author: hoangnguyen 
     */
     getUserListByRole(id: number) {
@@ -51,6 +55,7 @@ export class UserPermissionComponent implements OnInit {
     getRoles() {
         this.userPermissionService.getRoles().subscribe(
             data => {
+                this.setOptionDatatable();
                 if (data.length > 0) {
                     this.roles = data;
                     this.getUserListByRole(data[0].id);
@@ -61,12 +66,15 @@ export class UserPermissionComponent implements OnInit {
             }
         )
     }
-
+    /*
+        set role for user in table right
+        @author: hoangnguyen 
+    */
     setRoleForUser(list_id) {
         let role_id = $('.role_checkbox:checked').val();
         this.userPermissionService.setRoleForUser(list_id, role_id).subscribe(
             data => {
-                this.toastr.success(`Lưu thành công.`);
+                this.toastr.success(`Thay đổi danh sách thành công.`);
             },
             error => {
                 if (error.status == 400) {
@@ -77,6 +85,30 @@ export class UserPermissionComponent implements OnInit {
 
             }
         )
+    }
+    /*
+        set option for datatable in user permission
+        @author: hoangnguyen 
+    */
+    setOptionDatatable(){
+        let column_0= {
+            orderable: false,
+            width: 20,
+            className: "dt-center",
+            targets: 0
+        };
+        let column_2= {
+            orderable: true,
+            width: 120,
+            targets: 2
+        };
+        let column_3 = { targets: 3,visible: false};
+        let column_5 = { targets: 5,visible: false};
+        let column_6 = { targets: 6,visible: false};
+        this.userMultiselect.dtOptions_right.columnDefs.push(column_0, column_2, column_3, column_5, column_6);
+        this.userMultiselect.dtOptions_left.columnDefs.push(column_0, column_2,column_3, column_5, column_6);
+        this.userMultiselect.dtOptions_right.scrollX = false;
+        this.userMultiselect.dtOptions_left.scrollX = false;
     }
 
     ngOnInit() {

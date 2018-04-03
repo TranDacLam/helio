@@ -268,8 +268,13 @@ button.btn:focus {
     border-bottom: 1px solid;
     padding-bottom: 5px;
 }
-
-
+/* 
+    custom multi select user in user permission
+    author: Hoangnguyen; 
+*/
+.wrapper-permission .multiselect_user .dataTables_scrollBody{
+    min-height: 380px;
+} 
 /*
     Button change language
     author: Lam;
@@ -307,6 +312,7 @@ button.btn:focus {
     Show list error form from server
     author: Lam;
 */
+/
 .error_msg{
     color: red;
     font-size: 16px;
@@ -325,6 +331,13 @@ button.btn:focus {
 
     .multiselect_user .datatable-content{
         min-height: 841px;
+    }
+    /* 
+        custom multi select user in user permission
+        author: Hoangnguyen; 
+    */
+    .wrapper-permission .multiselect_user .datatable-content{
+        min-height: 720px;
     }
 }
 
