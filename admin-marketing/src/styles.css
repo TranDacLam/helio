@@ -194,6 +194,9 @@ h1.h1-title {
 .custom_table thead tr>th:first-child{
     width: 60px;
 }
+.dataTables_paginate{
+    margin-right: 15px;
+}
 
 /* 
     Custom button add

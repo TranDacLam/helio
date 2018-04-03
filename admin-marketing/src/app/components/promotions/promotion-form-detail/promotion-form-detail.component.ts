@@ -127,10 +127,14 @@ export class PromotionFormDetailComponent implements OnInit {
                 [DateValidators.validStartDate, DateValidators.formatStartDate]],
             end_date: [this.promotion.end_date ? moment(this.promotion.end_date,"DD/MM/YYYY").toDate() : '',
                 [DateValidators.validEndDate, DateValidators.formatEndDate]],
+            apply_time: [this.promotion.apply_time ? moment(this.promotion.apply_time,"HH:mm").format() : '', 
+                [DateValidators.validStartTime, DateValidators.formatStartTime]],
+            end_time: [this.promotion.end_time ? moment(this.promotion.end_time,"HH:mm").format() : '',
+                [DateValidators.validEndTime, DateValidators.formatEndTime]],
             is_draft: [this.promotion.is_draft],
             is_clear_image: [false],
             is_clear_image_thumbnail: [false],
-        }, {validator: this.dateLessThan()});
+        }, {validator: [this.dateLessThan(), this.timeLessThan()]});
     }
 
     /*
@@ -146,10 +150,41 @@ export class PromotionFormDetailComponent implements OnInit {
                 return {};
             }
             return {
-                dates: "Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu"
+                dates: "Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày áp dụng"
             };
         }
     }
+
+    /*
+        Function timeLessThan(): validate start time and end time
+        Author: Lam
+    */
+    timeLessThan(){
+        return (group: FormGroup): {[key: string]: any} => {
+            let start_date = $('#start_date').val() ? $('#start_date').val() : '';
+            let end_date = $('#end_date').val() ? $('#end_date').val() : '';
+            let start_time = $('#start_time').val() ? moment($('#start_time').val(), 'HH:mm').toDate() : '';
+            let end_time = $('#end_time').val() ? moment($('#end_time').val(), 'HH:mm').toDate() : '';
+            if(start_time !== '' || end_time !== ''){
+                if(start_date === ''){
+                    return {
+                        datempty: "Vui lòng nhập ngày áp dụng"
+                    };
+                }else if(start_time === '' || end_time === ''){
+                    return {
+                        slectedtime: "Vui lòng nhập thời gian áp dụng/kết thúc"
+                    };
+                }else{
+                    if(start_date === end_date && start_time >= end_time){
+                        return {
+                            times: "Vui lòng nhập thời gian kết thúc lớn hơn thời gian áp dụng"
+                        };
+                    }
+                }
+            }
+            return {};
+        }
+    }    
 
     /*
         Call Service get promotion by Id
@@ -235,10 +270,19 @@ export class PromotionFormDetailComponent implements OnInit {
         this.promotionForm.controls['end_date'].setValidators([DateValidators.validEndDate,
             DateValidators.formatEndDate]);
         this.promotionForm.controls['end_date'].updateValueAndValidity();
+        this.promotionForm.controls['apply_time'].setValidators([DateValidators.validStartTime,
+            DateValidators.formatStartTime]);
+        this.promotionForm.controls['apply_time'].updateValueAndValidity();
+        this.promotionForm.controls['end_time'].setValidators([DateValidators.validEndTime,
+            DateValidators.formatEndTime]);
+        this.promotionForm.controls['end_time'].updateValueAndValidity();
+
         if(this.promotionForm.invalid){
             ValidateSubmit.validateAllFormFields(this.promotionForm);
             this.scrollTop();
         }else{
+            this.promotionForm.value.apply_time = $('#start_time').val();
+            this.promotionForm.value.end_time = $('#end_time').val();
             this.errors = '';
             const that = this;
             // Convert FormGroup to FormData
@@ -312,7 +356,7 @@ export class PromotionFormDetailComponent implements OnInit {
         if (id) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
-                message: "Bạn muốn Khuyến Mãi tử này?",
+                message: "Bạn muốn xóa Khuyến Mãi này?",
                 buttons: {
                     cancel: {
                         label: "HỦY"

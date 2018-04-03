@@ -179,16 +179,44 @@ export class DateValidators {
             getValTime = getValTime.substr(0,getValTime.indexOf(','));
         }
         let timeValues = getValTime.match(validatePattern);
+        if(timeValues !== null || getValTime === ''){
+            return null;
+        }
+        return {
+            'fomatDate': {
+                'message': 'Định dạng thời gian sai. Vui lòng chọn lại thời gian HH:mm'
+            }
+        };
+        
+    }
+
+    /*
+        Function requiredStartTime(): required time
+        Author: Lam
+    */
+    static requiredStartTime(c: FormControl): ValidationErrors {
+        let dateValidators = new DateValidators();
+        return dateValidators.requiredTime('start_time');
+    }
+
+    /*
+        Function requiredEndTime(): required time
+        Author: Lam
+    */
+    static requiredEndTime(c: FormControl): ValidationErrors {
+        let dateValidators = new DateValidators();
+        return dateValidators.requiredTime('end_time');
+    }
+
+    requiredTime(str_time){
+        let getValTime = String($('#'+str_time).val());
+        if(getValTime.indexOf(',') !== -1){
+            getValTime = getValTime.substr(0,getValTime.indexOf(','));
+        }
         if(getValTime === ''){
             return {
                 'required_time': {
                     'message': 'Trường này không được bỏ trống'
-                }
-            };
-        }else if(timeValues === null){
-            return {
-                'fomatDate': {
-                    'message': 'Định dạng thời gian sai. Vui lòng chọn lại thời gian HH:mm'
                 }
             };
         }

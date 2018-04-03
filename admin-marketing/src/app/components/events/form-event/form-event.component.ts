@@ -86,11 +86,11 @@ export class FormEventComponent implements OnInit {
             start_date: [this.event.start_date ? moment(this.event.start_date,"DD/MM/YYYY").toDate() : '', 
                 [DateValidators.validStartDate, DateValidators.formatStartDate, DateValidators.requiredStartDate]],
             end_date: [this.event.end_date ? moment(this.event.end_date,"DD/MM/YYYY").toDate() : '', 
-                [DateValidators.validEndDate, DateValidators.formatEndDate, DateValidators.requiredStartDate]],
+                [DateValidators.validEndDate, DateValidators.formatEndDate, DateValidators.requiredEndDate]],
             start_time: [this.event.start_time ? moment(this.event.start_time,"HH:mm").format() : '', 
-                [DateValidators.validStartTime, DateValidators.formatStartTime]],
+                [DateValidators.validStartTime, DateValidators.requiredStartTime, DateValidators.formatStartTime]],
             end_time: [this.event.end_time ? moment(this.event.end_time,"HH:mm").format() : '',
-                [DateValidators.validEndTime, DateValidators.formatEndTime]],
+                [DateValidators.validEndTime, DateValidators.requiredEndTime, DateValidators.formatEndTime]],
             is_draft: [this.event.is_draft === true ? true : false],
             is_clear_image: [false],
             is_clear_image_thumbnail: [false]
@@ -124,7 +124,7 @@ export class FormEventComponent implements OnInit {
             let end_date = $('#end_date').val() ? $('#end_date').val() : '';
             let start_time = $('#start_time').val() ? moment($('#start_time').val(), 'HH:mm').toDate() : '';
             let end_time = $('#end_time').val() ? moment($('#end_time').val(), 'HH:mm').toDate() : '';
-            if(start_date === end_date && start_time >= end_time){
+            if(start_date === end_date && start_time >= end_time && start_date !== '' && end_date !== ''){
                 return {
                     times: "Vui lòng nhập thời gian kết thúc lớn hơn thời gian bắt đầu"
                 };
@@ -203,10 +203,10 @@ export class FormEventComponent implements OnInit {
             DateValidators.formatEndDate, DateValidators.requiredStartDate]);
         this.formEvent.controls['end_date'].updateValueAndValidity();
         this.formEvent.controls['start_time'].setValidators([DateValidators.validStartTime,
-            DateValidators.formatStartTime]);
+            DateValidators.requiredStartTime, DateValidators.formatStartTime]);
         this.formEvent.controls['start_time'].updateValueAndValidity();
         this.formEvent.controls['end_time'].setValidators([DateValidators.validEndTime,
-            DateValidators.formatEndTime]);
+            DateValidators.requiredEndTime, DateValidators.formatEndTime]);
         this.formEvent.controls['end_time'].updateValueAndValidity();
         
         if(this.formEvent.invalid){

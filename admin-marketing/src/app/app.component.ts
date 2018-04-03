@@ -54,8 +54,9 @@ export class AppComponent {
                 }
             },
             (error) => {
-                localStorage.removeItem('auth_token');                    
-                this.router.navigate(['/login', { message_error: error.message}]);
+                localStorage.removeItem('auth_token');    
+                this.toastr.error(error.message);                
+                this.router.navigate(['/login']);
             }
         );
     }
