@@ -73,7 +73,7 @@
                             <a [routerLink]="['/promotions/', promotion.id, 'change', {lang: lang}]">{{ promotion.name }}</a>
                         </td>
                         <td>{{ promotion.is_draft ? "Draft" : "Đã Triển Khai" }}</td>
-                        <td>{{ promotion.created | date : 'dd/MM/yyyy'}}</td>
+                        <td><span class="hidden">{{ promotion.created | date:'yyyyMMdd' }}</span>{{ promotion.created | date : 'dd/MM/yyyy'}}</td>
                         <td>{{ promotion.user_implementer?.email }}</td>
                         <td>{{ promotion.promotion_type?.name }}</td>
                         <td class="text-center">
