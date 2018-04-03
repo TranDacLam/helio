@@ -54,7 +54,7 @@ export class LinkCardDetailComponent implements OnInit {
         );
         this.linkCardService.getBarcode(barcode).subscribe(
             (data_embed) => {
-                this.user_embed = data_embed.message;
+                this.user_embed = data_embed;
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.message }]);

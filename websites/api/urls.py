@@ -62,4 +62,5 @@ urlpatterns = [
     url(r'^transactions/ticket/transfer/$', views.ticket_transfer_transactions, name="ticket-transfer-transactions"),
 
     url(r'^card/reload/$', views.helio_card_reload, name="card-reload"),
+    url(r'^transactions/other/$', views.other_transactions, name="other-transactions"),
 ]

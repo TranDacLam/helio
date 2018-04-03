@@ -1357,10 +1357,10 @@ def ticket_transfer(request):
         source_card_barcode = request.data.get('source_card_barcode', '')
         received_card_barcode = request.data.get('received_card_barcode', 0)
         ticket_amount = request.data.get('ticket_amount', 0)
-        fee = request.data.get('fee', 0)
+        fee = request.data.get('fee', '')
 
         if request.user.barcode == source_card_barcode:
-            if not source_card_barcode or not received_card_barcode or not ticket_amount or not fee:
+            if not source_card_barcode or not received_card_barcode or not ticket_amount or ( not fee and fee != 0):
                 error = {
                     "status": "05", "message": _("Please check required fields : [source_card_barcode, received_card_barcode, ticket_amount, fee]")}
                 return JsonResponse(error, status=400)
@@ -1579,5 +1579,56 @@ def helio_card_reload(request):
 
     except Exception, e:
         print('ticket_transfer: %s', traceback.format_exc())
+        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        return Response(error, status=500)
+
+"""
+    Other Transaction
+"""
+
+
+@api_view(['GET'])
+def other_transactions(request):
+    try:
+        card_id = request.GET.get("card_id", "")
+        if not card_id:
+            error = {
+                "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
+            return Response(error, status=400)
+        if request.user.is_staff or request.user.barcode == card_id:
+            headers = {'Authorization': settings.DMZ_API_TOKEN}
+            other_transactions_api_url = '{}transactions/other/'.format(
+                settings.BASE_URL_DMZ_API)
+
+            # Call DMZ get card infomation
+            response = requests.get(
+                other_transactions_api_url, params=request.GET, headers=headers)
+
+            if response.status_code == 401: 
+                print "DMZ reponse status code 401", response.text
+                raise Exception('Unauthorized: %s (HTTP status: %s)' % (response.text, response.status_code)) 
+            
+            if response.status_code != 200 and response.status_code != 400: 
+                print "DMZ reponse status code not 200", response.text
+                raise Exception('%s (HTTP status: %s)' % (response.text, response.status_code))
+
+            # Get data from dmz reponse
+            result = response.json()
+            # Translate error message when code is 400
+            if response.status_code == 400:
+                result["message"] = _(result["message"])
+                return Response(result, status=response.status_code)
+            return Response(result, status=200)
+        else:
+            error = {"code": 400, "message": _(
+                "You don't have permission to access."), "fields": ""}
+            return Response(error, status=400)
+
+    except requests.Timeout:
+        print "Request DMZ time out "
+        return HttpResponse('API connection timeout')
+
+    except Exception, e:
+        print('card_transactions: %s', traceback.format_exc())
         error = {"code": 500, "message": "%s" % e, "fields": ""}
         return Response(error, status=500)
