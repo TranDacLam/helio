@@ -55,7 +55,6 @@ export class FeedbackListComponent implements OnInit {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
             },
-            processing: true,
             columnDefs: [
                 { 
                     visible: false, 

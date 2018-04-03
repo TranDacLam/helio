@@ -10,13 +10,16 @@
 .sf-content .panel-body{
     padding-bottom: 50px;
 }
-.sf-content input{
+/*.sf-content input{
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 .sf-content .input-group{
     float: left;
-}
+}*/
 .sf-content>h5{
     color: red;
+}
+h5, h4 {
+	text-transform: capitalize;
 }
