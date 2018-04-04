@@ -49,8 +49,8 @@ export class BannerService {
         PUT: Update Banner By Id
         @author: Trangle
     */
-    
-    updateBanner(bannerFormData:FormData, id: number, lang): Observable<any> { 
+
+    updateBanner(bannerFormData: FormData, id: number, lang): Observable<any> {
         // let url = `${api.banner}${id}/`;
         let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`
         return Observable.create(observer => {
@@ -75,12 +75,12 @@ export class BannerService {
       POST: Create a New Banner
       @author: TrangLe
     */
-    CreateBanner(bannerFormData:FormData, lang): Observable<any> {
+    CreateBanner(bannerFormData: FormData, lang): Observable<any> {
         let url = `${env.api_domain_root}/${lang}/api/${api.banner}`;
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
             xhr.open('POST', url);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`); 
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
             xhr.send(bannerFormData);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
@@ -96,7 +96,7 @@ export class BannerService {
     }
     deleteUserById(id: number, lang): Observable<any> {
         let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`
-        return this.http.delete(url,this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     deleteBannerSelected(banner_id, lang): Observable<any> {
@@ -109,7 +109,7 @@ export class BannerService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(url,_options ).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
     /* 
       Handle error
