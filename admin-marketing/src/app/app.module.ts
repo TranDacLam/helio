@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from "@angular/http";
+import { HttpModule, RequestOptions } from "@angular/http";
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app.routing';
@@ -45,7 +45,7 @@ import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
 import { CategoryService } from './shared/services/category.service';
 import { BannerService } from './shared/services/banner.service';
-import { AuthGuard } from './shared/guards/index';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
@@ -85,6 +85,8 @@ import { RolePermissionComponent } from './components/role-permission/role-permi
 import { FormAdvertisementComponent } from './components/advertisement/form-advertisement/form-advertisement.component';
 import { FormBannerComponent } from './components/banner/form-banner/form-banner.component';
 
+
+import { AuthRequestOptions } from './shared/guards/auth-request';
 
 /*
     Translate datetime-picker
@@ -189,7 +191,11 @@ export const DefaultIntl = {
     DatePipe,
     {provide: RECAPTCHA_LANGUAGE, useValue: 'vi'},
     UserPermissionService,
-    VariableGlobals
+    VariableGlobals,
+    {
+        provide: RequestOptions, 
+        useClass: AuthRequestOptions
+    }
   ],
   bootstrap: [AppComponent]
 })
