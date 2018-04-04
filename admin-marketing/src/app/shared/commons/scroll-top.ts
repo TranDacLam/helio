@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ScrollTop {
     /*
-        Function scrollTopFom(): creoll top when have validate
+        Function scrollTopFom(): scroll top when have validate
         @author: Lam
     */
     scrollTopFom(){

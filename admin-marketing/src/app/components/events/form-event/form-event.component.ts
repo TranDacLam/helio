@@ -194,7 +194,7 @@ export class FormEventComponent implements OnInit {
                         this.router.navigate(['/event/list']);
                     },
                     (error) => {
-                        // code 400, erro validate
+                        // code 400, error validate
                         if(error.code === 400){
                             this.errorMessage = error.message;
                             this.scrollTop.scrollTopFom();
@@ -225,7 +225,7 @@ export class FormEventComponent implements OnInit {
                             this.router.navigate(['/event/list']);
                         },
                         (error) => {
-                            // code 400, erro validate
+                            // code 400, error validate
                             if(error.code === 400){
                                 this.errorMessage = error.message;
                                 this.scrollTop.scrollTopFom();

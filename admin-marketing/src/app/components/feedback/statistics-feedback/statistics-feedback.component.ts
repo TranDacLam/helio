@@ -175,14 +175,14 @@ export class StatisticsFeedbackComponent implements OnInit {
 
         isCheckDate = this.checkDate(startD, endD);
         isvalidDate = this.validDate(startD, endD)
-
+        // check format dd/mm/yyyy
         if(isFormatDate === false){
             this.toastr.warning(`${msg_formatD}`);
             return false;
-        }else if(isvalidDate === false){
+        }else if(isvalidDate === false){ //require start < end date
             this.toastr.warning(`${msg_validD}`);
             return false;
-        }else if(isCheckDate === false){
+        }else if(isCheckDate === false){ // day in month( 2th only have 28/29 day), month < 13
             this.toastr.warning(`${msg_checkD}`);
             return false;
         }

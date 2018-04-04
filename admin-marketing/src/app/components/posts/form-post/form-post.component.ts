@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
 import { Post } from '../../../shared/class/post';
 import { PostService } from '../../../shared/services/post.service';
 import { PostType } from './../../../shared/class/post-type';
@@ -47,7 +46,6 @@ export class FormPostComponent implements OnInit {
         private postService: PostService,
         private postTypeService: PostTypeService,
         private fb: FormBuilder,
-        private location: Location,
         private router: Router,
         private route: ActivatedRoute,
         private toastr: ToastrService,
@@ -116,6 +114,12 @@ export class FormPostComponent implements OnInit {
         );
     }
 
+    /*
+        Function getPostTypes():
+         + Get list post types
+         + Callback service function getPostTypes()
+        Author: Lam
+    */
     getPostTypes(){
         this.postTypeService.getPostTypes(this.lang).subscribe(
             (data) => {
@@ -184,14 +188,19 @@ export class FormPostComponent implements OnInit {
         author: Lam
     */
     onSubmit(): void{
+        // case form invalid, show error fields, scroll top
         if(this.formPost.invalid){
             ValidateSubmit.validateAllFormFields(this.formPost);
             this.scrollTop.scrollTopFom();
         }else{
+            // push list_clearimage into form post value
             this.formPost.value.list_clear_image = this.list_multi_image_id;
+            // parse post_type id string to int
             this.formPost.value.post_type = parseInt(this.formPost.value.post_type);
+            // convert Form Group to formData
             let post_form_data = this.convertFormGroupToFormData(this.formPost);
             let value_form = this.formPost.value;
+            // case create new
             if(!this.post.id){
                 this.postService.addPost(post_form_data, this.lang).subscribe(
                     (data) => {
@@ -199,6 +208,7 @@ export class FormPostComponent implements OnInit {
                         this.router.navigate(['/post/list']);
                     },
                     (error) => {
+                        // code 400, error validate
                         if(error.code === 400){
                             this.errorMessage = error.message;
                             this.scrollTop.scrollTopFom();
@@ -215,6 +225,7 @@ export class FormPostComponent implements OnInit {
                         this.router.navigate(['/post/list']);
                     },
                     (error) => {
+                        // code 400, error validate
                         if(error.code === 400){
                             this.errorMessage = error.message;
                             this.scrollTop.scrollTopFom();

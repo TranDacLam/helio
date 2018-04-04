@@ -95,9 +95,11 @@ export class FormPromotionLabelComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(): void{
+        // case form invalid, show error fields, scroll top
          if(this.formPromotionLabel.invalid){
             ValidateSubmit.validateAllFormFields(this.formPromotionLabel);
         }else{
+            // case update
             if(this.promotion_label.id){
                 this.promotionLabelService.updatePromotionLabel(this.formPromotionLabel.value, this.promotion_label.id, this.lang)
                 .subscribe(
@@ -106,6 +108,7 @@ export class FormPromotionLabelComponent implements OnInit {
                         this.router.navigate(['/promotion-label/list']);
                     },
                     (error) => {
+                        // code 400, error validate
                         if(error.code === 400){
                             this.errorMessage = error.message;
                         }else{
@@ -120,6 +123,7 @@ export class FormPromotionLabelComponent implements OnInit {
                         this.router.navigate(['/promotion-label/list']);
                     },
                     (error) => {
+                        // code 400, error validate
                         if(error.code === 400){
                             this.errorMessage = error.message;
                         }else{

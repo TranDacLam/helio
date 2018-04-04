@@ -2,6 +2,10 @@ import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 
 export class ValidateSubmit {
 
+    /*
+        Function validateAllFormFields(): show error fields when submit form
+        Author: Lam
+    */
     static validateAllFormFields(formGroup: FormGroup) {
         Object.keys(formGroup.controls).forEach(field => {
             const control = formGroup.get(field);
