@@ -42,4 +42,24 @@ export class NumberValidators {
         }
         return null;    
     }
+
+    /*
+        Validate fee bumber
+        @author: Trangle 
+    */
+    static validateFee(c: FormControl):ValidationErrors {
+        // Allows only numerals betwen 
+        let feeRegx =  /^[0-9,]+$/;
+        let fee = c.value;
+        let feeValues = fee ? fee.match(feeRegx) : '';
+
+        if(feeValues === null && fee !== '') {
+            return {
+                'feeValidate': {
+                    'message': ' Phí giao dịch không hợp lệ'
+                }
+            };
+        }
+        return null;    
+    }
 }
