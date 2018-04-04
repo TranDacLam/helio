@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
-import { Location } from '@angular/common';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Event } from '../../../shared/class/event';
 import { EventService } from '../../../shared/services/event.service';
 import { env } from '../../../../environments/environment';
@@ -11,6 +10,7 @@ import { ImageValidators } from './../../../shared/validators/image-validators';
 import * as moment from 'moment';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import { ToastrService } from 'ngx-toastr';
+import { ScrollTop } from './../../../shared/commons/scroll-top';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -42,10 +42,10 @@ export class FormEventComponent implements OnInit {
     constructor(
         private eventService: EventService,
         private fb: FormBuilder,
-        private location: Location,
         private router: Router,
         private route: ActivatedRoute,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private scrollTop: ScrollTop
     ) {
         this.api_domain = env.api_domain_root;
     }
@@ -94,7 +94,7 @@ export class FormEventComponent implements OnInit {
             is_draft: [this.event.is_draft === true ? true : false],
             is_clear_image: [false],
             is_clear_image_thumbnail: [false]
-        }, {validator: [DateValidators.dateLessThan(), DateValidators.timeLessThan()]});
+        }, {validator: DateValidators.dateTimeLessThan()});
     }
 
     /*
@@ -173,16 +173,20 @@ export class FormEventComponent implements OnInit {
             DateValidators.requiredEndTime, DateValidators.formatEndTime]);
         this.formEvent.controls['end_time'].updateValueAndValidity();
         
+        // case form invalid, show error fields, scroll top
         if(this.formEvent.invalid){
             ValidateSubmit.validateAllFormFields(this.formEvent);
-            this.scrollTop();
+            this.scrollTop.scrollTopFom();
         }else{
+            // get value date, time by #id 
             this.formEvent.value.start_date = $('#start_date').val();
             this.formEvent.value.end_date = $('#end_date').val();
             this.formEvent.value.start_time = $('#start_time').val();
             this.formEvent.value.end_time = $('#end_time').val();
+            // convert Form Group to formData
             let event_form_data = this.convertFormGroupToFormData(this.formEvent);
             let value_form = this.formEvent.value;
+            // case create new
             if(!this.event.id){
                 this.eventService.addEvent(event_form_data, this.lang).subscribe(
                     (data) => {
@@ -190,26 +194,30 @@ export class FormEventComponent implements OnInit {
                         this.router.navigate(['/event/list']);
                     },
                     (error) => {
+                        // code 400, error validate
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            this.scrollTop();
+                            this.scrollTop.scrollTopFom();
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
                     }
                 );
-            }else{
+            }else{ // case update
+                // check remove image when select checkbox clear image and choose image
                 if((value_form.is_clear_image === true && typeof(value_form.image) != 'string') ||
                     (value_form.is_clear_image_thumbnail === true && typeof(value_form.image_thumbnail) != 'string')){
+                    // case field is image
                     if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
                         this.formEvent.get('is_clear_image').setValue(false);
                         this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                     }
+                    // case field is image thumbnail
                     if(value_form.is_clear_image_thumbnail === true && typeof(value_form.image_thumbnail) != 'string'){
                         this.formEvent.get('is_clear_image_thumbnail').setValue(false);
                         this.msg_clear_thumbnail = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                     }
-                    this.scrollTop();
+                    this.scrollTop.scrollTopFom();
                 }else{
                     this.eventService.updateEvent(event_form_data, this.event.id, this.lang).subscribe(
                         (data) => {
@@ -217,9 +225,10 @@ export class FormEventComponent implements OnInit {
                             this.router.navigate(['/event/list']);
                         },
                         (error) => {
+                            // code 400, error validate
                             if(error.code === 400){
                                 this.errorMessage = error.message;
-                                this.scrollTop();
+                                this.scrollTop.scrollTopFom();
                             }else{
                                 this.router.navigate(['/error', { message: error.message}]);
                             }
@@ -229,15 +238,7 @@ export class FormEventComponent implements OnInit {
             }
         }
     }
-
-    /*
-        Function scrollTop(): creoll top when have validate
-        @author: Lam
-    */
-    scrollTop(){
-        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
-    }
-
+    
     /*
         Function deleteEvent(): confirm delete
         @author: Lam

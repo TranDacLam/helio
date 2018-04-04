@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Notification } from '../../../shared/class/notification';
 import { NotificationService } from '../../../shared/services/notification.service';
-import { message } from '../../../shared/utils/message';
 import { ToastrService } from 'ngx-toastr';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { User } from '../../../shared/class/user';
@@ -40,7 +39,6 @@ export class ListNotificationComponent implements OnInit {
 
     constructor(
         private notificationService: NotificationService, 
-        private route: ActivatedRoute, 
         private router: Router,
         private variable_globals: VariableGlobals,
         private toastr: ToastrService

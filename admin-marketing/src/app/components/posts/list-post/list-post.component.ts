@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Post } from '../../../shared/class/post';
 import { PostService } from '../../../shared/services/post.service';
 import { ToastrService } from 'ngx-toastr';
@@ -36,7 +36,6 @@ export class ListPostComponent implements OnInit {
 
     constructor(
         private postService: PostService, 
-        private route: ActivatedRoute, 
         private router: Router,
         private toastr: ToastrService
     ) { }

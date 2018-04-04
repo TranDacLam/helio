@@ -1,4 +1,4 @@
-import { Component,ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { HotAdvs } from '../../../shared/class/hot-advs';
@@ -10,37 +10,37 @@ import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-hot-advs-add',
-  templateUrl: './hot-advs-add.component.html',
-  styleUrls: ['./hot-advs-add.component.css'],
-  providers: [HotAdvsService]
+    selector: 'app-hot-advs-add',
+    templateUrl: './hot-advs-add.component.html',
+    styleUrls: ['./hot-advs-add.component.css'],
+    providers: [HotAdvsService]
 })
 export class HotAdvsAddComponent implements OnInit {
 
-	formHotAds: FormGroup;
-	hot_ads : HotAdvs;
+    formHotAds: FormGroup; // formHotAdvs is tyoe of FormGroup
+    hot_ads: HotAdvs;
 
-    errorMessage:string = '';
+    errorMessage: string = '';
 
-    ckEditorConfig:any;
-    title: string ="";
+    ckEditorConfig: any;
+    title: string = "";
 
-  	constructor(
-  		private fb: FormBuilder,
+    constructor(
+        private fb: FormBuilder,
         private hotAdvsService: HotAdvsService,
         private router: Router,
         private toastr: ToastrService,
-  		) {}
+    ) { }
 
-  	ngOnInit() {
+    ngOnInit() {
         this.title = "Thêm Hot Ads";
         this.hot_ads = new HotAdvs()
-  		this.creatForm();
+        this.creatForm();
         this.ckEditorConfig = ckeditor_config.config;
-  	}
+    }
 
-  	// Create form to add Hot advs
-  	creatForm(): void{
+    // Create form to add Hot advs
+    creatForm(): void {
         this.formHotAds = this.fb.group({
             name: [this.hot_ads.name, [Validators.required, Validators.maxLength(255)]],
             content: [this.hot_ads.content, [Validators.required]],
@@ -61,17 +61,27 @@ export class HotAdvsAddComponent implements OnInit {
     onFileChange(event) {
         let reader = new FileReader();
         let input_id = $(event.target).attr('id');
-        if(event.target.files && event.target.files.length > 0) {
+        if (event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
             this.formHotAds.get(input_id).setValue({ filename: file.name, filetype: file.type, value: file });
         }
     }
 
+    /*
+        Function create hot ads
+        Convert formHotAds to Form Data
+        Check formHotAdvs invalid true => Call ValidateSumit show error
+        formHotAds valid call CreateHotAdvs from hot_advs.service
+        Success: nagivate hot-advs-list and show success message
+        Fail: return error
+        @author: Trangle
+     */
     onSubmit() {
         var self = this;
         let hotAdvsFormGroup = this.convertFormGroupToFormData(this.formHotAds);
-        if( this.formHotAds.invalid) {
-            $(window).scrollTop(0);
+        if (this.formHotAds.invalid) {
+            $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
+            // Call ValidateSubmit form ../shared/validators/validate-submit
             ValidateSubmit.validateAllFormFields(this.formHotAds);
         } else {
             this.hotAdvsService.CreateHotAdvs(hotAdvsFormGroup).subscribe(
@@ -80,34 +90,34 @@ export class HotAdvsAddComponent implements OnInit {
                     self.router.navigate(['/hot-advs-list'])
                 },
                 (error) => {
-                    if(error.code == 400) {
-                        $(window).scrollTop(0);
+                    if (error.code == 400) {
+                        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
                         self.errorMessage = error.message
                     } else {
                         this.router.navigate(['/error', { message: error.message }]);
                     }
-                    
+
                 }
             )
         }
     }
     /*
         Convert form group to form data to submit form
-        @author: diemnguyen
+        @author: Trangle
     */
     private convertFormGroupToFormData(hotAdvsForm: FormGroup) {
         // Convert FormGroup to FormData
         let hotAdvsValues = hotAdvsForm.value;
-        let hotAdvsFormData:FormData = new FormData(); 
-        if (hotAdvsValues){
+        let hotAdvsFormData: FormData = new FormData();
+        if (hotAdvsValues) {
             /* 
                 Loop to set value to formData
                 Case1: if value is null then set ""
                 Case2: If key is image field then set value have both file and name
                 Else: Set value default
             */
-            Object.keys(hotAdvsValues).forEach(k => { 
-                if(hotAdvsValues[k] == null) {
+            Object.keys(hotAdvsValues).forEach(k => {
+                if (hotAdvsValues[k] == null) {
                     hotAdvsFormData.append(k, '');
                 } else if (k === 'image') {
                     hotAdvsFormData.append(k, hotAdvsValues[k].value, hotAdvsValues[k].name);
@@ -118,7 +128,11 @@ export class HotAdvsAddComponent implements OnInit {
         }
         return hotAdvsFormData;
     }
-    
+
+    /*
+        Remove error message when click input tag
+        @author: Trangle
+     */
     removeErrorMessage() {
         this.errorMessage = '';
     }

@@ -4,13 +4,13 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs/Subject';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Denomination }  from '../../../shared/class/denomination';
+import { Denomination } from '../../../shared/class/denomination';
 import { ToastrService } from 'ngx-toastr';
 
 import { DenominationService } from '../../../shared/services/denomination.service';
 import { data_config } from '../../../shared/commons/datatable_config';
 
-declare var bootbox:any;
+declare var bootbox: any;
 
 @Component({
     selector: 'app-denomination-list',
@@ -40,7 +40,7 @@ export class DenominationListComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastrService,
-        ) {
+    ) {
         this.denominations = [];
     }
 
@@ -53,63 +53,67 @@ export class DenominationListComponent implements OnInit {
             },
             columnDefs: [
                 {
+                    // Hidden the second column
                     targets: 1,
                     visible: false
                 },
-                { 
-                    orderable: false, 
-                    targets: 0 
+                {
+                    // Disable ordering on the first column
+                    orderable: false,
+                    targets: 0
                 }
             ]
         };
-        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
+        this.dtOptions = { ...this.dtOptions, ...dt_options_custom };
 
         this.getAllDenomination();
     }
 	/* 
         Get All Denomination
-        Call service Denomination
+        Call getAllDenomination from denomination.service
+        Success: Return objects denominations
+        Fail: nagivate component error show error message
         @author: Trangle
     */
-	getAllDenomination() {
-		this.denominationService.getAllDenomination().subscribe(
-			(result) => {
-				this.denominations = result;
-                this.length_all = this.denominations.length;
-				this.dtTrigger.next();
-			},
+    getAllDenomination() {
+        this.denominationService.getAllDenomination().subscribe(
+            (result) => {
+                this.denominations = result;
+                this.length_all = this.denominations.length; // Set length_all
+                this.dtTrigger.next();
+            },
             (error) => {
                 this.router.navigate(['/error', { message: error }]);
             }
         );
-	}
+    }
 	/*
         Event select checbox on row
             Case1: all row are checked then checkbox all on header is checked
             Case1: any row is not checked then checkbox all on header is not checked
-        @author: Lam 
+        @author: Trangle 
     */
-    selectCheckbox(event) {   
-        $(event.target).closest( "tr" ).toggleClass( "selected" );
+    selectCheckbox(event) {
+        $(event.target).closest("tr").toggleClass("selected");
         this.getLengthSelected();
         this.checkSelectAllCheckbox();
     }
 
     // input checkall checked/unchecked
     checkSelectAllCheckbox() {
-        if($('#table_id tbody tr').hasClass('selected')){
+        if ($('#table_id tbody tr').hasClass('selected')) {
             $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
-        }else{
+        } else {
             $('#select-all').prop('checked', false);
         }
         this.getLengthSelected();
     }
     /*
         Event select All Button on header table
-        @author: Lam 
+        @author: Trangle 
     */
     selectAllEvent(event) {
-        if( event.target.checked ) {
+        if (event.target.checked) {
             $("#table_id tr").addClass('selected');
         } else {
             $("#table_id tr").removeClass('selected');
@@ -120,20 +124,25 @@ export class DenominationListComponent implements OnInit {
 
     /*
         Function getLengthSelected(): draw length selected
-        @author: Lam
+        @author: Trangle
     */
-    getLengthSelected(){
+    getLengthSelected() {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             this.length_selected = dtInstance.rows('.selected').count();
         })
     }
-    
+
+    /*
+        Show message confirm before delete
+        Using library bootbox to show 
+        @author: Trangle
+     */
     confirmDelete() {
         /* Check deno_selected not null and length >0
             True: Show confirm and call function deleteFeedbackCheckbox 
             False: show alert
         */
-        if(this.length_selected > 0 ){
+        if (this.length_selected > 0) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
                 message: "Bạn muốn xóa " + this.length_selected + " Mệnh Giá Nạp Tiền đã chọn?",
@@ -145,8 +154,8 @@ export class DenominationListComponent implements OnInit {
                         label: "XÓA"
                     }
                 },
-                callback: (result)=> {
-                    if(result) {
+                callback: (result) => {
+                    if (result) {
                         // Check result = true. call function
                         this.deleteDenominationCheckbox()
                     }
@@ -154,31 +163,41 @@ export class DenominationListComponent implements OnInit {
             });
         } else {
             this.toastr.warning(`Vui lòng chọn Mệnh Giá Nạp Tiền để xóa`);
-        } 
+        }
     }
 
-	// Delete All select checkbox
-	deleteDenominationCheckbox() {
+	/* 
+        Delete All select checkbox
+        Get list id selected=> convert to number
+        Call deleteAllDenosSelected from denomintion.service
+        Success: 
+            + Show success message
+            + Remove all denomination which selected
+            + Reset length_all and length_selected
+        Fail: nagivate component error show error message
+        @author: Trangle
+    */
+    deleteDenominationCheckbox() {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-            // Get list promotion id selected
+            // Get list denomination id selected
             let get_list_id = dtInstance.cells('.selected', 1).data().toArray();
             // array string to array number
             let list_id_selected = get_list_id.map(Number);
 
-            // Call API remove list promotion selected
+            // Call API remove list denomination selected
             this.denominationService.deleteAllDenosSelected(list_id_selected).subscribe(
                 (data) => {
                     this.toastr.success(`Xóa ${this.length_selected} Mệnh Giá Nạp Tiền thành công`);
 
-                    // Remove all promotion selected on UI
+                    // Remove all denomination selected on UI
                     dtInstance.rows('.selected').remove().draw();
-                    // Reset count promotion
-                    this.length_all =  dtInstance.rows().count();
+                    // Reset count denomination
+                    this.length_all = dtInstance.rows().count();
                     this.length_selected = 0;
                 },
                 (error) => {
                     this.router.navigate(['/error', { message: error.json().message }]);
                 });
-            });
+        });
     }
 }

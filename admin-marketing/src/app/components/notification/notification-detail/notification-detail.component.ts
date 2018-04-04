@@ -4,7 +4,6 @@ import { Notification } from '../../../shared/class/notification';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { Promotion } from './../../../shared/class/promotion';
 import { PromotionService } from './../../../shared/services/promotion.service';
-import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { ToastrService } from 'ngx-toastr';

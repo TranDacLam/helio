@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Event } from '../../../shared/class/event';
 import { EventService } from '../../../shared/services/event.service';
-import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
 import * as datatable_config from '../../../shared/commons/datatable_config';
@@ -37,8 +36,7 @@ export class ListEventComponent implements OnInit {
     lang: string = 'vi';
 
     constructor(
-        private eventService: EventService, 
-        private route: ActivatedRoute, 
+        private eventService: EventService,  
         private router: Router,
         private toastr: ToastrService
     ) { }

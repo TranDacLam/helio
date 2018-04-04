@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Hot } from '../../../shared/class/hot';
 import { HotService } from '../../../shared/services/hot.service';
-import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
 import * as datatable_config from '../../../shared/commons/datatable_config';
@@ -38,8 +37,7 @@ export class ListHotComponent implements OnInit {
     lang: string = 'vi';
 
     constructor(
-        private hotService: HotService, 
-        private route: ActivatedRoute, 
+        private hotService: HotService,  
         private router: Router,
         private toastr: ToastrService
     ) { }

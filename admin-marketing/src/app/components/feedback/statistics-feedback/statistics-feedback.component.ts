@@ -66,10 +66,10 @@ export class StatisticsFeedbackComponent implements OnInit {
         let start;
         let end;
         let isCheckValid: boolean = true;
-
+        // check valid status
         isCheckValid = this.checkValid('status', 'startD_status', 'endD_status');
         if(isCheckValid === false) return;
-
+        // get start and end by #id
         start = $('#startD_status').val() ? String($('#startD_status').val()) : '';
         end = $('#endD_status').val() ? String($('#endD_status').val()) : '';
 
@@ -100,10 +100,10 @@ export class StatisticsFeedbackComponent implements OnInit {
         let start;
         let end;
         let isCheckValid: boolean = true;
-
+        // check valid rate
         isCheckValid = this.checkValid('rate', 'startD_rate', 'endD_rate');
         if(isCheckValid === false) return;
-
+        // get start and end by #id
         start = $('#startD_rate').val() ? String($('#startD_rate').val()) : '';
         end = $('#endD_rate').val() ? String($('#endD_rate').val()) : '';
 
@@ -123,6 +123,7 @@ export class StatisticsFeedbackComponent implements OnInit {
         Author: Lam
     */
     checkDate(startD, endD) {
+        // get start and end date by #id
         let start = $('#' + startD).val() ? moment($('#' + startD).val(), "DD/MM/YYYY").toDate() : '';
         let end = $('#' + endD).val() ? moment($('#' + endD).val(), "DD/MM/YYYY").toDate() : '';
         if(start <= end || start === '' || end === ''){
@@ -132,13 +133,16 @@ export class StatisticsFeedbackComponent implements OnInit {
     }
 
     /*
-        Function formatDate(): validate format start date
+        Function formatDate(): validate format date, dd/mm/yyyy
         Author: Lam
     */
     formatDate(date) {
+        // format date is dd/mm/yyyy
         let validatePattern = /^(\d{1,2})(\/|)(\d{1,2})(\/|)(\d{4})$/;
+        // get date by #id
         let getValDate = String($('#'+ date).val());
         let dateValues = getValDate.match(validatePattern);
+        // check value date mactch, null return false
         if(getValDate === ''){
             return true;
         }else if(dateValues === null){
@@ -159,9 +163,9 @@ export class StatisticsFeedbackComponent implements OnInit {
         let msg_checkD = '* Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu';
         let msg_validD = '* Vui lòng nhập ngày bắt đầu/kết thúc hợp lệ ';
 
-        let isCheckDate: boolean = true;
-        let isFormatDate: boolean = true;
-        let isvalidDate: boolean = true;
+        let isCheckDate: boolean = true; // require start < end date
+        let isFormatDate: boolean = true; // format dd/mm/yyyy
+        let isvalidDate: boolean = true; // day in month( 2th only have 28/29 day), month < 13
 
         isFormatDate = this.formatDate(startD);
 
@@ -171,14 +175,14 @@ export class StatisticsFeedbackComponent implements OnInit {
 
         isCheckDate = this.checkDate(startD, endD);
         isvalidDate = this.validDate(startD, endD)
-
+        // check format dd/mm/yyyy
         if(isFormatDate === false){
             this.toastr.warning(`${msg_formatD}`);
             return false;
-        }else if(isvalidDate === false){
+        }else if(isvalidDate === false){ //require start < end date
             this.toastr.warning(`${msg_validD}`);
             return false;
-        }else if(isCheckDate === false){
+        }else if(isCheckDate === false){ // day in month( 2th only have 28/29 day), month < 13
             this.toastr.warning(`${msg_checkD}`);
             return false;
         }
@@ -186,12 +190,14 @@ export class StatisticsFeedbackComponent implements OnInit {
     }
 
     /*
-        Function trimDate(): valid date
+        Function trimDate(): valid date, day in month( 2th only have 28/29 day), month < 13
         Author: Lam
     */
     validDate(startD, endD){
+        // get start and end date by #id
         let start = $('#' + startD).val() ? String($('#' + startD).val()) : '';
         let end = $('#' + endD).val() ? String($('#' + endD).val()) : '';
+        // check valid start and end date
         let is_start = start ? this.checkDateValid.trimDate(start) : true;
         let is_end = end ? this.checkDateValid.trimDate(end) : true;
         if(is_start === false || is_end === false){
