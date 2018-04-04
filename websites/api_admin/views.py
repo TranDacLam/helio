@@ -981,6 +981,8 @@ class UserEmbedDetail(APIView):
                 # check Customer_Id is exist
                 if not dmz_result['customer_id']:
                     return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
+                # check user embed is related
+                user_app = User.objects.filter(barcode = barcode)
 
                 first_name = dmz_result['first_name'] if dmz_result['first_name'] else ''
                 surname = dmz_result['surname'] if dmz_result['surname'] else ''
@@ -994,6 +996,7 @@ class UserEmbedDetail(APIView):
                 result['address'] = dmz_result['address']
                 result['barcode'] = barcode
                 result['personal_id'] = dmz_result['peronal_id']
+                result['is_related'] = True if user_app else False
                 return Response(result, status=200)
 
 
