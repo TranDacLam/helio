@@ -24,13 +24,13 @@
             <tr>
                 <th class="checkbox-feedback"><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
                 <th>ID</th>
-                <th>Phản hồi </th>
-                <th>Người gửi</th>
-                <th>Ngày nhận</th>
+                <th>Phản Hồi </th>
+                <th>Người Gửi</th>
+                <th>Ngày Nhận</th>
                 <th>Rating</th>
-                <th>Trạng thái xử lý</th>
-                <th>Loại phản hồi</th>
-                <th>Ngày xử lý </th>
+                <th>Trạng Thái Xử Lý</th>
+                <th>Loại Phản Hồi</th>
+                <th>Ngày Xử Lý </th>
             </tr>
         </thead>
         <tbody>
@@ -39,11 +39,11 @@
                 <td [ngStyle]="{'display':'none'}">{{feedback.id}}</td>
                 <td><a routerLink="/feedback-detail/{{ feedback.id }}">{{ feedback.subject }}</a></td>
                 <td>{{ feedback.name }}</td>
-                <td>{{ feedback.created |date: 'dd/MM/yyyy'}}</td>
+                <td><span class="hidden">{{ feedback.created |date: 'yyyyMMdd'}}</span>{{ feedback.created |date: 'dd/MM/yyyy'}}</td>
                 <td>{{ feedback.rate }}</td>
                 <td>{{ feedback.status }}</td>
                 <td>{{ feedback.feedback_type }}</td>
-                <td>{{ feedback.modified|date: 'dd/MM/yyyy' }}</td>
+                <td><span class="hidden">{{ feedback.modified|date: 'yyyyMMdd' }}</span>{{ feedback.modified|date: 'dd/MM/yyyy' }}</td>
             </tr>
         </tbody>
     </table>

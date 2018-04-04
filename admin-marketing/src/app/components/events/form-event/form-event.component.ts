@@ -94,44 +94,8 @@ export class FormEventComponent implements OnInit {
             is_draft: [this.event.is_draft === true ? true : false],
             is_clear_image: [false],
             is_clear_image_thumbnail: [false]
-        }, {validator: [this.dateLessThan(), this.timeLessThan()]});
+        }, {validator: [DateValidators.dateLessThan(), DateValidators.timeLessThan()]});
     }
-
-    /*
-        Function dateLessThan(): validate start date and end date
-        Author: Lam
-    */
-    dateLessThan() {
-        return (group: FormGroup): {[key: string]: any} => {
-            let start = $('#start_date').val() ? moment($('#start_date').val(), "DD/MM/YYYY").toDate() : '';
-            let end = $('#end_date').val() ? moment($('#end_date').val(), "DD/MM/YYYY").toDate() : '';
-            if(start <= end || start === '' || end === ''){
-                return {};
-            }
-            return {
-                dates: "Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu"
-            };
-        }
-    }
-
-    /*
-        Function timeLessThan(): validate start time and end time
-        Author: Lam
-    */
-    timeLessThan(){
-        return (group: FormGroup): {[key: string]: any} => {
-            let start_date = $('#start_date').val() ? $('#start_date').val() : '';
-            let end_date = $('#end_date').val() ? $('#end_date').val() : '';
-            let start_time = $('#start_time').val() ? moment($('#start_time').val(), 'HH:mm').toDate() : '';
-            let end_time = $('#end_time').val() ? moment($('#end_time').val(), 'HH:mm').toDate() : '';
-            if(start_date === end_date && start_time >= end_time && start_date !== '' && end_date !== ''){
-                return {
-                    times: "Vui lòng nhập thời gian kết thúc lớn hơn thời gian bắt đầu"
-                };
-            }
-            return {};
-        }
-    }    
 
     /*
         Function getEvent():

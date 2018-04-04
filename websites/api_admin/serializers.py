@@ -168,7 +168,7 @@ class DenominationSerializer(serializers.ModelSerializer):
             queryset=Denomination.objects.all(),
             message =_('This denomination is already taken')
             )
-        ])
+        ], max_value=2147483647, error_messages = {'max_value': _('Denomination exceed the permitted value.')})
     class Meta:
         model = Denomination
         fields = ('id', 'denomination')

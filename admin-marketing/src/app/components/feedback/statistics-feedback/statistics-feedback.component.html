@@ -19,33 +19,36 @@
     <div class="panel panel-success">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-xs-4 col-sm-4 text-center">
+                <div class="col-sm-4 text-center">
                     <h5>Trạng thái xử lý của phản hồi</h5>
                 </div>
-                <div class="col-xs-2 col-sm-1">
+                <div class="col-sm-1">
                     <h5>Thời gian</h5>
                 </div>
-                <div class="col-xs-3 col-sm-2 input-group">
-                    <input type="text" class="form-control event-date" [(ngModel)]="date_status_start"
-                        [owlDateTime]="dt1" placeholder="Ngày bắt đầu" id="startD_status"
-                    />
-                    <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
-                        <i class="fa fa-calendar"></i>
-                    </span>
-                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                <div class="col-sm-2">
+                    <div class="input-group">
+                        <input type="text" class="form-control event-date" [(ngModel)]="date_status_start"
+                            [owlDateTime]="dt1" placeholder="Ngày bắt đầu" id="startD_status"
+                        />
+                        <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                        <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                    </div>
                 </div>
 
-                <div class="col-xs-3 col-sm-2 input-group">
-                    <input type="text" class="form-control event-date" [(ngModel)]="date_status_end"
-                        [owlDateTime]="dt2" placeholder="Ngày kết thúc" id="endD_status"
-                    />
-                    <span class="input-group-addon" [owlDateTimeTrigger]="dt2">
-                        <i class="fa fa-calendar"></i>
-                    </span>
-                    <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
-                    
+                <div class="col-sm-2">
+                    <div class='input-group'>
+                        <input type="text" class="form-control event-date" [(ngModel)]="date_status_end"
+                            [owlDateTime]="dt2" placeholder="Ngày kết thúc" id="endD_status"
+                        />
+                        <span class="input-group-addon" [owlDateTimeTrigger]="dt2">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                        <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                    </div>
                 </div>
-                <div class="col-xs-2 col-sm-3">
+                <div class="col-sm-3">
                     <button class="btn btn-primary" (click)="onSubmitStatus()">Hiển Thị</button>
                 </div>
             </div>
@@ -86,32 +89,35 @@
     <div class="panel panel-success">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-xs-4 col-sm-4 text-center">
+                <div class="col-sm-4 text-center">
                     <h5>Trạng thái Rating của phản hồi</h5>
                 </div>
-                <div class="col-xs-2 col-sm-1">
+                <div class="col-sm-1">
                     <h5>Thời gian</h5>
                 </div>
-                <div class="col-xs-3 col-sm-2 input-group">
-                    <input type="text" class="form-control event-date" [(ngModel)]="date_rate_start"
-                        [owlDateTime]="dt3" placeholder="Ngày bắt đầu" id="startD_rate"
-                    />
-                    <span class="input-group-addon" [owlDateTimeTrigger]="dt3">
-                        <i class="fa fa-calendar"></i>
-                    </span>
-                    <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                <div class="col-sm-2">
+                    <div class="input-group">
+                        <input type="text" class="form-control event-date" [(ngModel)]="date_rate_start"
+                            [owlDateTime]="dt3" placeholder="Ngày bắt đầu" id="startD_rate"
+                        />
+                        <span class="input-group-addon" [owlDateTimeTrigger]="dt3">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                        <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                    </div>
                 </div>
-                <div class="col-xs-3 col-sm-2 input-group">
-                    <input type="text" class="form-control event-date" [(ngModel)]="date_rate_end"
-                        [owlDateTime]="dt4" placeholder="Ngày kết thúc" id="endD_rate"
-                    />
-                    <span class="input-group-addon" [owlDateTimeTrigger]="dt4">
-                        <i class="fa fa-calendar"></i>
-                    </span>
-                    <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
-                    
+                <div class="col-sm-2">
+                    <div class='input-group'>
+                        <input type="text" class="form-control event-date" [(ngModel)]="date_rate_end"
+                            [owlDateTime]="dt4" placeholder="Ngày kết thúc" id="endD_rate"
+                        />
+                        <span class="input-group-addon" [owlDateTimeTrigger]="dt4">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                        <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
+                    </div>
                 </div>
-                <div class="col-xs-2 col-sm-3">
+                <div class="col-sm-3">
                     <button class="btn btn-primary" (click)="onSubmitRate()">Hiển Thị</button>
                 </div>
             </div>

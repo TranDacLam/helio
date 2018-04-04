@@ -12,90 +12,127 @@
     <p class="title">Giờ Mở Cửa</p>
 </div>
 <div class="row mt-50 mb-30">
-    <form class="form-inline" [formGroup]="formOpenTime" novalidate>
-        <div class="col-sm-6">
-            <div class="row mb-15">
-                <label class="label-title">Giờ * </label>
-                <div class="input-group">
-                    <span class="input-group-addon" [owlDateTimeTrigger]="startTime">
-                        <i class="fa fa-clock-o"></i>
-                    </span>
-                    <input type="text" class="form-control event-date" formControlName="start_time"
-                        [owlDateTime]="startTime" id="start_time"
-                    />
-                    
-                    <owl-date-time [pickerType]="'timer'" #startTime></owl-date-time>
+    <div class="col-xs-12 col-sm-12">
+        <form class="form-inline" [formGroup]="formOpenTime" novalidate>
+            <div class="col-sm-6 pd-r-0 pd-l-0">
+                <div class="col-sm-12 pd-r-0 pd-l-0">
+                    <div class="col-sm-1 mb-15 pd-r-0 pd-l-0">
+                        <label class="label-title">Giờ * </label>
+                    </div>
+                    <div class="col-sm-5 mb-15 pd-r-0">
+                        <div class="input-group">
+                            <span class="input-group-addon" [owlDateTimeTrigger]="startTime">
+                                <i class="fa fa-clock-o"></i>
+                            </span>
+                            <input type="text" class="form-control event-date" formControlName="start_time"
+                                [owlDateTime]="startTime" id="start_time"
+                            />
+                            <owl-date-time [pickerType]="'timer'" #startTime></owl-date-time>
+                        </div>
+                        <show-error-valid [control]="formOpenTime.get('start_time')"></show-error-valid>
+                    </div>
+                    <div class="col-sm-1 mb-15 text-center">
+                        <label class="label-title"> - </label>
+                    </div>
+                    <div class="col-sm-5 mb-15 pd-l-0">
+                        <div class="input-group">
+                            <span class="input-group-addon" [owlDateTimeTrigger]="endTime">
+                                <i class="fa fa-clock-o"></i>
+                            </span>
+                            <input type="text" class="form-control event-date" formControlName="end_time"
+                                [owlDateTime]="endTime" id="end_time"
+                            />         
+                            <owl-date-time [pickerType]="'timer'" #endTime></owl-date-time>
+                        </div>
+                        <show-error-valid [control]="formOpenTime.get('end_time')"></show-error-valid>
+                        <ul *ngIf="formOpenTime.errors && !formOpenTime.get('end_time').errors?.fomatDate && 
+                            !formOpenTime.get('start_time').errors?.fomatDate && !formOpenTime.get('end_time').errors?.required_time && 
+                            !formOpenTime.get('start_time').errors?.required_time">
+                            <li style="color: red">
+                                {{ formOpenTime.errors?.times ? 'Vui lòng nhập thời gian kết thúc lớn hơn thời gian bắt đầu': '' }}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <label class="label-empty"> - </label>
-                <div class="input-group">
-                    <span class="input-group-addon" [owlDateTimeTrigger]="endTime">
-                        <i class="fa fa-clock-o"></i>
-                    </span>
-                    <input type="text" class="form-control event-date" formControlName="end_time"
-                        [owlDateTime]="endTime" id="end_time"
-                    />         
-                    <owl-date-time [pickerType]="'timer'" #endTime></owl-date-time>
+                <div class="col-sm-12 pd-r-0 pd-l-0">
+                    <div class="col-sm-1 mb-15 pd-r-0 pd-l-0">
+                        <label class="label-title">Ngày * </label>
+                    </div>
+                    <div class="col-sm-5 mb-15 pd-r-0">
+                        <div class="input-group">
+                            <span class="input-group-addon" [owlDateTimeTrigger]="startDate">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                            <input type="text" class="form-control event-date" formControlName="start_date"
+                                [owlDateTime]="startDate" id="start_date"
+                            />         
+                            <owl-date-time [pickerType]="'calendar'" #startDate></owl-date-time>
+                        </div>
+                        <show-error-valid [control]="formOpenTime.get('start_date')"></show-error-valid>
+                    </div>
+                    <div class="col-sm-1 mb-15 text-center">
+                        <label class="label-title"> - </label>
+                    </div>
+                    <div class="col-sm-5 mb-15 pd-l-0">
+                        <div class="input-group">
+                            <span class="input-group-addon" [owlDateTimeTrigger]="endDate">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                            <input type="text" class="form-control event-date" formControlName="end_date"
+                                [owlDateTime]="endDate" id="end_date"
+                            />         
+                            <owl-date-time [pickerType]="'calendar'" #endDate></owl-date-time>
+                        </div>
+                        <show-error-valid [control]="formOpenTime.get('end_date')"></show-error-valid>
+                        <ul *ngIf="!formOpenTime.get('end_date').errors?.required_date && 
+                            !formOpenTime.get('start_date').errors?.required_date &&
+                            !formOpenTime.get('end_date').errors?.fomatDate && !formOpenTime.get('start_date').errors?.fomatDate">
+                            <li style="color: red">
+                                {{ formOpenTime.errors?.dates ? 'Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu': '' }}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-            <div class="row">
-                <label class="label-title">Ngày * </label>
-                <div class="input-group">
-                    <span class="input-group-addon" [owlDateTimeTrigger]="startDate">
-                        <i class="fa fa-calendar"></i>
-                    </span>
-                    <input type="text" class="form-control event-date" formControlName="start_date"
-                        [owlDateTime]="startDate" id="start_date"
-                    />         
-                    <owl-date-time [pickerType]="'calendar'" #startDate></owl-date-time>
-                </div>
-                <label class="label-empty"> - </label>
-                <div class="input-group">
-                    <span class="input-group-addon" [owlDateTimeTrigger]="endDate">
-                        <i class="fa fa-calendar"></i>
-                    </span>
-                    <input type="text" class="form-control event-date" formControlName="end_date"
-                        [owlDateTime]="endDate" id="end_date"
-                    />         
-                    <owl-date-time [pickerType]="'calendar'" #endDate></owl-date-time>
-                </div>
+            <div class="col-sm-6 pd-r-0">
+                <table class="table table-bordered table-open-time">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Thứ 2</th>
+                            <th>Thứ 3</th>
+                            <th>Thứ 4</th>
+                            <th>Thứ 5</th>
+                            <th>Thứ 6</th>
+                            <th>Thứ 7</th>
+                            <th>Chủ Nhật</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><input type="checkbox" (change)="ckbDayAll($event)" [checked]="select_all"/></td>
+                        <td><input type="checkbox" value="1" (change)="ckbDay($event)"/></td>
+                        <td><input type="checkbox" value="2" (change)="ckbDay($event)"/></td>
+                        <td><input type="checkbox" value="3" (change)="ckbDay($event)"/></td>
+                        <td><input type="checkbox" value="4" (change)="ckbDay($event)"/></td>
+                        <td><input type="checkbox" value="5" (change)="ckbDay($event)"/></td>
+                        <td><input type="checkbox" value="6" (change)="ckbDay($event)"/></td>
+                        <td><input type="checkbox" value="7" (change)="ckbDay($event)"/></td>
+                      </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
 
-        <div class="col-sm-6">
-            <table class="table table-bordered table-open-time">
-                <thead>
-                  <tr>
-                    <th>Thứ 2</th>
-                    <th>Thứ 3</th>
-                    <th>Thứ 4</th>
-                    <th>Thứ 5</th>
-                    <th>Thứ 6</th>
-                    <th>Thứ 7</th>
-                    <th>Chủ Nhật</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="checkbox" /></td>
-                    <td><input type="checkbox" /></td>
-                    <td><input type="checkbox" /></td>
-                    <td><input type="checkbox" /></td>
-                    <td><input type="checkbox" /></td>
-                    <td><input type="checkbox" /></td>
-                    <td><input type="checkbox" /></td>
-                  </tr>
-                </tbody>
-            </table>
-            <p class="pull-right"><input type="checkbox" /></p>
-        </div>
-
-        <button class="btn btn-primary pull-right" (click)="onSubmit()" [disabled]="formOpenTime.invalid">
-            LƯU LẠI
-        </button>
-    </form>
+            <button class="btn btn-primary pull-right" (click)="onSubmit()">
+                LƯU LẠI
+            </button>
+        </form>
+    </div>
 </div>
 <hr/>
 <div class="row mt-50 mb-30 text-center">
-    <angular2-fullcalendar [options]="calendarOptions"></angular2-fullcalendar>
+    <div class="col-xs-12 col-sm-12">
+        <angular2-fullcalendar [options]="calendarOptions"></angular2-fullcalendar>
+    </div>
 </div>
