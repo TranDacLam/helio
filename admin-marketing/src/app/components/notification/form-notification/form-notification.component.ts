@@ -1,8 +1,6 @@
 import { Component, OnInit, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
 import { Notification } from '../../../shared/class/notification';
 import { CategoryNotification } from '../../../shared/class/category-notification';
 import { NotificationService } from '../../../shared/services/notification.service';
@@ -15,6 +13,7 @@ import { User } from '../../../shared/class/user';
 import 'rxjs/add/observable/throw';
 import { env } from '../../../../environments/environment';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
+import { ScrollTop } from './../../../shared/commons/scroll-top';
 
 
 declare var $ :any; // declare Jquery
@@ -67,11 +66,11 @@ export class FormNotificationComponent implements OnInit {
         private notificationService: NotificationService,
         private categoryNotificationService: CategoryNotificationService,
         private fb: FormBuilder,
-        private location: Location,
         private router: Router,
         private route: ActivatedRoute,
         private variable_globals: VariableGlobals,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private scrollTop: ScrollTop
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -188,18 +187,22 @@ export class FormNotificationComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(): void{
+        // case form invalid, show error fields, scroll top
         if(this.formNotification.invalid){
             ValidateSubmit.validateAllFormFields(this.formNotification);
-            this.scrollTop();
+            this.scrollTop.scrollTopFom();
         }else{
+            // parse category id strin to int
             this.formNotification.value.category = parseInt(this.formNotification.value.category);
             // Convert FormGroup to FormData
             let noti_form_data = this.convertFormGroupToFormData(this.formNotification);
             let value_form = this.formNotification.value;
+            // case create new
             if(!this.noti.id){
                 this.notificationService.addNoti(noti_form_data, this.lang).subscribe(
                     (data) => {
                         this.toastr.success(`Thêm mới "${value_form.subject}" thành công`);
+                        // promotion_id exist redirect notification detail
                         if(this.promotion_id){
                             this.router.navigate(['/notification/detail/', data.id, {lang: this.lang}]);
                         }else{
@@ -207,29 +210,33 @@ export class FormNotificationComponent implements OnInit {
                         }
                     },
                     (error) => {
+                        // code 400, error validate
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            this.scrollTop();
+                            this.scrollTop.scrollTopFom();
                         }else{
                             this.router.navigate(['/error']);
                         }
                     }
                 );
             }else if(this.noti.id){
+                // check remove image when select checkbox clear image and choose image
                 if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
                     this.formNotification.get('is_clear_image').setValue(false);
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
-                    this.scrollTop();
+                    this.scrollTop.scrollTopFom();
                 }else{
                     this.notificationService.updateNoti(noti_form_data, this.noti.id, this.lang).subscribe(
                         (data) => {
                             this.noti = data;
+                            // position is popup, toggle popup, emit noti to parent
                             if(this.position === "popup"){
                                 this.update_noti.emit(this.noti);
                                 $('#UpdateNoti').modal('toggle');
                                 this.toastr.success(`Chỉnh sửa "${value_form.subject}" thành công`);
                             }else {
                                 this.toastr.success(`Chỉnh sửa "${value_form.subject}" thành công`);
+                                // promotion_id exist redirect notification detail
                                 if(this.promotion_id){
                                     this.router.navigate(['/notification/detail/', data.id, {lang: this.lang}]);
                                 }else{
@@ -238,9 +245,10 @@ export class FormNotificationComponent implements OnInit {
                             }
                         },
                         (error) => {
+                            // code 400, error validate
                             if(error.code === 400){
                                 this.errorMessage = error.message;
-                                this.scrollTop();
+                                this.scrollTop.scrollTopFom();
                             }else{
                                 this.router.navigate(['/error']);
                             }
@@ -249,14 +257,6 @@ export class FormNotificationComponent implements OnInit {
                 }
             }
         }
-    }
-
-    /*
-        Function scrollTop(): creoll top when have validate
-        @author: Lam
-    */
-    scrollTop(){
-        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
     }
 
     /*
@@ -324,16 +324,21 @@ export class FormNotificationComponent implements OnInit {
     */
     changeCategory(event){
         let cate_id = parseInt(event.target.value);
+        // check cate_id = 1 is "Khuyen Mai"
         if(cate_id === 1){
+            // undisable input QR, location
             this.check_QR = false;
             this.check_Location = false;
             this.formNotification.get('is_QR_code').setValue(true);
+            // noti id exist let set locaion = location old
             if(this.noti.id){
                 this.formNotification.get('location').setValue(this.noti.location);
             }else{
+                // set default location 'Quầy MBS'
                 this.formNotification.get('location').setValue('Quầy MBS');
             }
         }else{
+            // disabled input QR, location if not "Khuyen Mai"
             this.check_QR = true;
             this.check_Location = true;
             this.formNotification.get('is_QR_code').setValue(false);

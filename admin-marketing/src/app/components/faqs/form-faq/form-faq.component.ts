@@ -9,6 +9,7 @@ import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
+import { ScrollTop } from './../../../shared/commons/scroll-top';
 
 const FAQS_CATEGORY = [1,2,3,5,6];
 
@@ -43,7 +44,8 @@ export class FormFaqComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private categoryService: CategoryService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private scrollTop: ScrollTop
     ) { }
 
     ngOnInit() {
@@ -123,11 +125,14 @@ export class FormFaqComponent implements OnInit {
         author: Lam
     */ 
     onSubmit(): void{
+        // case form invalid, show error fields, scroll top
         if(this.formFaq.invalid){
             ValidateSubmit.validateAllFormFields(this.formFaq);
-            this.scrollTop();
+            this.scrollTop.scrollTopFom();
         }else{
+            // parse category string to int
             this.formFaq.value.category = parseInt(this.formFaq.value.category);
+            // case update
             if(this.faq.id){
                 this.faqService.updateFaq(this.formFaq.value, this.faq.id, this.lang).subscribe(
                     (data) => {
@@ -135,24 +140,27 @@ export class FormFaqComponent implements OnInit {
                         this.router.navigate(['/faq/list']);
                     },
                     (error) => {
+                        // code 400, error validate
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            this.scrollTop();
+                            this.scrollTop.scrollTopFom();
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
                     }
                 );
             }else{
+                // case create new
                 this.faqService.addFaq(this.formFaq.value, this.lang).subscribe(
                     (data) => {
                         this.toastr.success(`Thêm mới "${this.formFaq.value.question}" thành công`);
                         this.router.navigate(['/faq/list']);
                     },
                     (error) => {
+                        // code 400, error validate
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            this.scrollTop();
+                            this.scrollTop.scrollTopFom();
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
@@ -160,14 +168,6 @@ export class FormFaqComponent implements OnInit {
                 );
             }
         }
-    }
-
-    /*
-        Function scrollTop(): creoll top when have validate
-        @author: Lam
-    */
-    scrollTop(){
-        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
     }
 
     /*
