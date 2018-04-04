@@ -1,6 +1,9 @@
 <div class="row multiselect_user">
     <div class="col-md-5 datatable-content" *ngIf="user_list_left">
-        <h4 class="text-center">DANH SÁCH KHÁCH HÀNG</h4>
+        <h4 *ngIf="notification || promotion; else user_permission" class="text-center">DANH SÁCH KHÁCH HÀNG</h4>
+        <ng-template #user_permission>
+            <h4 class="text-center">DANH SÁCH TẤT CẢ USER</h4>
+        </ng-template>
         <table id="table_id_1" datatable [dtOptions]="dtOptions_left" class="row-border hover">
             <thead>
                 <tr>
@@ -35,7 +38,10 @@
         </button>
     </div>
     <div class="col-md-5 datatable-content" *ngIf="user_list_right">
-        <h4 class="text-center">DANH SÁCH KHÁCH HÀNG ĐƯỢC NHẬN THÔNG BÁO</h4>
+        <h4 *ngIf="notification || promotion; else user_permission" class="text-center">DANH SÁCH KHÁCH HÀNG ĐƯỢC NHẬN THÔNG BÁO</h4>
+        <ng-template #user_permission>
+            <h4 class="text-center">DANH SÁCH USER ĐƯỢC CHỌN</h4>
+        </ng-template>
         <table id="table_id_2" datatable [dtOptions]="dtOptions_right" class="row-border hover">
             <thead>
                 <tr>

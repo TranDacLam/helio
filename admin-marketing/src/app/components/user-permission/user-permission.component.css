@@ -15,3 +15,10 @@
 .btn-save{
 	margin-left: 20px;
 }
+.permission-error{
+	height:300px;
+	text-align: center;
+}
+.permission-content{
+	margin-bottom: 15px;
+}

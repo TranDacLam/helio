@@ -55,7 +55,6 @@ export class FeedbackListComponent implements OnInit {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
             },
-            processing: true,
             columnDefs: [
                 { 
                     visible: false, 
@@ -73,11 +72,9 @@ export class FeedbackListComponent implements OnInit {
         params => {
             this.feedbackService.getFeedbackFilter(params).subscribe(
                 (result) => {
-                    setTimeout(() => {
-                        this.feedbacks = result;
-                        this.length_all = this.feedbacks.length;
-                        this.dtTrigger.next();
-                    },1); //0.1s
+                    this.feedbacks = result;
+                    this.length_all = this.feedbacks.length;
+                    this.dtTrigger.next();
                 },
                 (error) => {
                     this.router.navigate(['/error', { message: error.json().message }])

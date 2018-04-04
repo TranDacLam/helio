@@ -16,6 +16,9 @@ export class OpenTimeComponent implements OnInit {
 
     formOpenTime: FormGroup;
 
+    list_day = [];
+    select_all: boolean = false;
+
     calendarOptions:Object = {
         defaultDate: '2018-03-12',
         locale: 'vi',
@@ -95,15 +98,38 @@ export class OpenTimeComponent implements OnInit {
     creatForm(): void{
         this.formOpenTime = this.fb.group({
             start_date: ['', 
-                [DateValidators.formatStartDate, DateValidators.requiredStartDate]],
+                [DateValidators.validStartDate, DateValidators.formatStartDate, DateValidators.requiredStartDate]],
             end_date: ['', 
-                [DateValidators.formatEndDate, DateValidators.requiredStartDate]],
+                [DateValidators.validEndDate, DateValidators.formatEndDate, DateValidators.requiredEndDate]],
             start_time: ['', 
-                [DateValidators.formatStartTime]],
+                [DateValidators.validStartTime, DateValidators.requiredStartTime, DateValidators.formatStartTime]],
             end_time: ['',
-                [DateValidators.formatEndTime]],
+                [DateValidators.validEndTime, DateValidators.requiredEndTime, DateValidators.formatEndTime]],
             is_draft: [false],
-        });
+        }, {validator: [DateValidators.dateLessThan(), DateValidators.timeLessThan()]});
+    }
+
+    ckbDayAll(event){
+        this.list_day = [];
+        if(event.target.checked){
+            this.list_day = [1,2,3,4,5,6,7];
+            $('.table-open-time tbody input').prop('checked', true);
+        }else{
+            $('.table-open-time tbody input').prop('checked', false);
+        }
+    }
+
+    ckbDay(event){
+        let number_day = parseInt(event.target.value);
+        if(event.target.checked){
+            this.list_day.push(number_day);
+            if(this.list_day.length === 7){
+                this.select_all = true;
+            }
+        }else{
+            this.select_all = false;
+            this.list_day = this.list_day.filter(k => k !== number_day);
+        }
     }
 
     onSubmit(){
