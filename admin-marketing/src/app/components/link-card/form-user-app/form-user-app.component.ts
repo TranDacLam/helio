@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { User } from '../../../shared/class/user';
 import { LinkCardService } from '../../../shared/services/link-card.service';
 import { DateValidators } from './../../../shared/validators/date-validators';
@@ -75,15 +75,18 @@ export class FormUserAppComponent implements OnInit {
         Author: Lam
     */
     searchEmail(value){
+        // reqired email
         if(!value){
             this.errorMessage = 'Bạn chưa nhập email';
-        }else if(this.validateEmail(value)){
+            return;
+        }else if(this.validateEmail(value)){ // fomat emmail
             this.errorMessage = 'Email không đúng định dạng';
             return;
         }
         this.linkCardService.getEmail(value).subscribe(
             (data) => {
                 this.user_app = data;
+                this.msg_error = null;
                 this.appForm.setValue({
                     full_name: this.user_app.full_name,
                     email: this.user_app.email,
@@ -92,19 +95,23 @@ export class FormUserAppComponent implements OnInit {
                     personal_id: this.user_app.personal_id,
                     address: this.user_app.address
                 });
-                this.errorMessage = '';
-                this.msg_error = null;
-                this.is_disable_checkbox = false;
-                this.is_disabled_btn_app = false;
-                this.is_btn_linkcard_app.emit(this.is_disabled_btn_app);
-                this.is_submit.emit(true);
+                // case account exist barcode
+                if(data.barcode){
+                    this.errorMessage = 'Tài khoản app đã liên kết.';
+                    this.disabledEmbed(true);
+                    this.is_submit.emit(true);
+                }else{ // case account not linked
+                    this.errorMessage = '';
+                    this.disabledEmbed(false);
+                    // emit to parent set object status error
+                    this.is_submit.emit(true);
+                }
             },
             (error) => { 
                 this.errorMessage = error.message; 
                 this.msg_error = null;
-                this.is_disable_checkbox = true;
-                this.is_disabled_btn_app = true;
-                this.is_btn_linkcard_app.emit(this.is_disabled_btn_app);
+                this.disabledEmbed(true);
+                // emit to parent set object status error
                 this.is_submit.emit(true);
                 this.appForm.setValue({
                     full_name: null,
@@ -116,6 +123,24 @@ export class FormUserAppComponent implements OnInit {
                 });
             } 
         );
+    }
+
+    /*
+        Function disabledEmbed(): disabled checkbox, button, emit to parent
+        Author: Lam
+    */
+    disabledEmbed(event){
+        if(event === true){
+            this.is_disable_checkbox = true;
+            this.is_disabled_btn_app = true;
+            // emit to parent, disable/undisable button link card
+            this.is_btn_linkcard_app.emit(this.is_disabled_btn_app);
+        }else{
+            this.is_disable_checkbox = false;
+            this.is_disabled_btn_app = false;
+            // emit to parent, disable/undisable button link card
+            this.is_btn_linkcard_app.emit(this.is_disabled_btn_app);
+        }
     }
 
     /*
@@ -152,6 +177,7 @@ export class FormUserAppComponent implements OnInit {
         Author: Lam
     */
     onSubmitApp(){
+        // case form invalid, show error fields, scroll top
         if(this.appForm.invalid){
             ValidateSubmit.validateAllFormFields(this.appForm);
         }else{
@@ -161,11 +187,14 @@ export class FormUserAppComponent implements OnInit {
                     this.searchEmail(this.appForm.value.email);
                     this.toastr.success(`${data.message}`);
                     this.msg_error = null;
+                    // emit to parent set object status error
                     this.is_submit.emit(true);
                 },
                 (error) => {
+                    // code 400, error validate
                     if(error.code === 400){
                         this.msg_error = error.message;
+                        // emit to parent set object status error
                         this.is_submit.emit(true);
                     }else{
                         this.router.navigate(['/error', { message: error.message}]);

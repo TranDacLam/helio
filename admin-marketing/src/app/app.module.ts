@@ -45,7 +45,8 @@ import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
 import { CategoryService } from './shared/services/category.service';
 import { BannerService } from './shared/services/banner.service';
-import { AuthGuard } from './shared/guards/auth.guard';
+import { ScrollTop } from './shared/commons/scroll-top';
+import { AuthGuard } from './shared/auth/auth.guard';
 
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
@@ -86,7 +87,7 @@ import { FormAdvertisementComponent } from './components/advertisement/form-adve
 import { FormBannerComponent } from './components/banner/form-banner/form-banner.component';
 
 
-import { AuthRequestOptions } from './shared/guards/auth-request';
+import { AuthRequestOptions } from './shared/auth/auth-request';
 
 /*
     Translate datetime-picker
@@ -192,6 +193,7 @@ export const DefaultIntl = {
     {provide: RECAPTCHA_LANGUAGE, useValue: 'vi'},
     UserPermissionService,
     VariableGlobals,
+    ScrollTop,
     {
         provide: RequestOptions, 
         useClass: AuthRequestOptions
