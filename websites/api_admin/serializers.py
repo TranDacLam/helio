@@ -216,7 +216,7 @@ class UserEmbedSerializer(serializers.Serializer):
         return value
 
 class FeeSerializer(serializers.ModelSerializer):
-    fee = serializers.IntegerField(required=True, max_value = 2147483647)
+    fee = serializers.IntegerField(required=True, max_value = 2147483647, error_messages= {'max_value': _('Fee exceed the permitted value.')})
     fee_type = serializers.CharField(required=True)
     # position = serializers.CharField(source='get_position_display')
 
