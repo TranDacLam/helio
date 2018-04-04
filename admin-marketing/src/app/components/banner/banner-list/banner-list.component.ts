@@ -3,14 +3,13 @@ import { DataTableDirective } from 'angular-datatables';
 import { Http, Response } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Subject } from 'rxjs/Subject';
 import { ToastrService } from 'ngx-toastr';
 
 import { Banner } from '../../../shared/class/banner';
 import { BannerService } from '../../../shared/services/banner.service';
 import { data_config } from '../../../shared/commons/datatable_config';
 
-declare var bootbox:any;
+declare var bootbox: any;
 
 @Component({
     selector: 'app-banner-list',
@@ -33,21 +32,16 @@ export class BannerListComponent implements OnInit {
     errorMessage: string; // Show error from server
     lang: string = 'vi';
 
-    record: string ="Banner";
+    record: string = "Banner";
 
-
-     // Using trigger becase fetching the list of banners can be quite long
-	// thus we ensure the data is fetched before rensering
-	// dtTrigger: Subject<any> = new Subject();
-
-     constructor(
+    constructor(
         private route: ActivatedRoute,
         private bannerService: BannerService,
         private router: Router,
         private toastr: ToastrService,
-        ) { 
+    ) {
         this.banners = [];
-     }
+    }
 
     ngOnInit() {
         // Call dataTable
@@ -58,16 +52,18 @@ export class BannerListComponent implements OnInit {
             },
             columnDefs: [
                 {
+                    // Hiden the second column
                     targets: 1,
                     visible: false
                 },
-                { 
-                    orderable: false, 
-                    targets: 0 
+                {
+                    // Disable thi first column
+                    orderable: false,
+                    targets: 0
                 }
             ]
         };
-        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
+        this.dtOptions = { ...this.dtOptions, ...dt_options_custom };
         // Call function getAllBanners()
         this.getAllBanners();
     }
@@ -77,17 +73,17 @@ export class BannerListComponent implements OnInit {
             Case1: any row is not checked then checkbox all on header is not checked
         @author: TrangLe 
     */
-    selectCheckbox(event) {   
-        $(event.target).closest( "tr" ).toggleClass( "selected" );
+    selectCheckbox(event) {
+        $(event.target).closest("tr").toggleClass("selected");
         this.getLengthSelected();
         this.checkSelectAllCheckbox();
     }
 
     // input checkall checked/unchecked
     checkSelectAllCheckbox() {
-        if($('#table_id tbody tr').hasClass('selected')){
+        if ($('#table_id tbody tr').hasClass('selected')) {
             $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
-        }else{
+        } else {
             $('#select-all').prop('checked', false);
         }
         this.getLengthSelected();
@@ -97,7 +93,7 @@ export class BannerListComponent implements OnInit {
         @author: TrangLe 
     */
     selectAllEvent(event) {
-        if( event.target.checked ) {
+        if (event.target.checked) {
             $("#table_id tr").addClass('selected');
         } else {
             $("#table_id tr").removeClass('selected');
@@ -110,7 +106,7 @@ export class BannerListComponent implements OnInit {
         Function getLengthSelected(): draw length selected
         @author: TrangLe
     */
-    getLengthSelected(){
+    getLengthSelected() {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             this.length_selected = dtInstance.rows('.selected').count();
         })
@@ -118,6 +114,8 @@ export class BannerListComponent implements OnInit {
     /*
         GET: Get All Banner
         Call service banner
+        Sucess: Return objects banners
+        Fail: nagivate component error
         @author: TrangLe
      */
     getAllBanners() {
@@ -125,8 +123,7 @@ export class BannerListComponent implements OnInit {
         this.bannerService.getAllBanner(this.lang).subscribe(
             (result) => {
                 this.banners = result;
-                // this.dtTrigger.next();
-                this.length_all = this.banners.length;
+                this.length_all = this.banners.length; // Set length_all
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.json().message }])
@@ -134,13 +131,17 @@ export class BannerListComponent implements OnInit {
         )
     };
 
-
+    /* 
+        Confirm Delete select checkbox
+        Using libary bootbox 
+        @author: Trangle
+    */
     confirmDelete() {
         /* Check banner_del not null and length >0
             True: Show confirm and call function deleteFeedbackCheckbox 
             False: show alert
         */
-        if(this.length_selected > 0 ){
+        if (this.length_selected > 0) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
                 message: "Bạn muốn xóa " + this.length_selected + " Banner đã chọn?",
@@ -152,8 +153,8 @@ export class BannerListComponent implements OnInit {
                         label: "XÓA"
                     }
                 },
-                callback: (result)=> {
-                    if(result) {
+                callback: (result) => {
+                    if (result) {
                         // Check result = true. call function
                         this.deleteBannersCheckbox()
                     }
@@ -161,15 +162,20 @@ export class BannerListComponent implements OnInit {
             });
         } else {
             this.toastr.warning(`Vui lòng chọn Banner để xóa`);
-        } 
+        }
     }
     /*
         Function: Delete All Banner Selected
+        Success: 
+            + display success message
+            + Remove all banner selected on UI
+            + Reset length_all, length_selected
+        Fail: nagivate componet error to show error message
         @author: TrangLe
      */
-     deleteBannersCheckbox() {
+    deleteBannersCheckbox() {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-            // Get list promotion id selected
+            // Get list banner id selected
             let get_list_id = dtInstance.cells('.selected', 1).data().toArray();
             // array string to array number
             let list_id_selected = get_list_id.map(Number);
@@ -179,31 +185,33 @@ export class BannerListComponent implements OnInit {
                 (data) => {
                     this.toastr.success(`Xóa ${this.length_selected} Banner thành công`);
 
-                    // Remove all promotion selected on UI
+                    // Remove all banner selected on UI
                     dtInstance.rows('.selected').remove().draw();
-                    // Reset count promotion
-                    this.length_all =  dtInstance.rows().count();
+                    // Reset count banner
+                    this.length_all = dtInstance.rows().count();
                     this.length_selected = 0;
                 },
                 (error) => {
                     this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
                 });
-            }); 
+        });
     }
 
-     /*
+    /*
         Function changeLangVI(): Change language and callback service getEvents()
-        Author: Lam
+        Check language (!lang) ->  add style class custom_table
+        Set objects banners = null -> call getAllBanners() to show
+        Author: Trangle
     */
-    changeLang(value){
-        if(this.lang !== value){
+    changeLang(value) {
+        if (this.lang !== value) {
             $('.custom_table').attr('style', 'height: 640px');
             this.banners = null;
             this.lang = value;
             this.getAllBanners();
-            setTimeout(()=>{
+            setTimeout(() => {
                 $('.custom_table').attr('style', 'height: auto');
-            },100);
+            }, 100);
         }
     }
 }

@@ -9,54 +9,44 @@ import "rxjs/add/operator/catch";
 @Injectable()
 export class PostService {
 
-    httpOptions: any;
     token: any = '';
 
     constructor(private http: Http) {
         this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({ 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
     }
 
     /* 
         function getPosts(): Get all post
         author: Lam
     */
-    getPosts(lang): Observable<any>{
+    getPosts(lang): Observable<any> {
         const url_getPosts = `${env.api_domain_root}/${lang}/api/${api.post_list}`;
-        return this.http.get(url_getPosts, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getPosts).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    getPost(id: number, lang): Observable<any>{
+    getPost(id: number, lang): Observable<any> {
         const url_getPost = `${env.api_domain_root}/${lang}/api/${api.post}${id}/`;
-        return this.http.get(url_getPost, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getPost).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
         function onDelHotSelect(): Delete all hot selected
         author: Lam
     */
-    onDelPostSelect(arr, lang): Observable<any>{
+    onDelPostSelect(arr, lang): Observable<any> {
         const url_onDelPostSelect = `${env.api_domain_root}/${lang}/api/${api.post_list}`;
 
         let param = {
             list_id: arr
         }
-
         let _options = new RequestOptions({
-            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
 
         return this.http.delete(url_onDelPostSelect, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
-    addPost(value: FormData, lang): Observable<any>{
+    addPost(value: FormData, lang): Observable<any> {
         const url_addPost = `${env.api_domain_root}/${lang}/api/${api.post}`;
 
         return Observable.create(observer => {
@@ -78,7 +68,7 @@ export class PostService {
         });
     }
 
-    updatePost(value: FormData, id: number, lang): Observable<any>{
+    updatePost(value: FormData, id: number, lang): Observable<any> {
         const url_updatePost = `${env.api_domain_root}/${lang}/api/${api.post}${id}/`;
 
         return Observable.create(observer => {
@@ -100,9 +90,9 @@ export class PostService {
         });
     }
 
-    onDelPost(id: number, lang): Observable<any>{
+    onDelPost(id: number, lang): Observable<any> {
         const url_onDelPost = `${env.api_domain_root}/${lang}/api/${api.post}${id}/`;
-        return this.http.delete(url_onDelPost, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_onDelPost).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     // exception

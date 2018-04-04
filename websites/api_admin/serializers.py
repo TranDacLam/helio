@@ -483,7 +483,7 @@ class UserRoleSerializer(serializers.ModelSerializer):
         is_staff = data['is_staff']
         if (is_staff == False and new_password):
             raise serializers.ValidationError(_("Cannot change password of customer user"))
-        return data;
+        return data
             
     def update(self, instance, validated_data):
 
