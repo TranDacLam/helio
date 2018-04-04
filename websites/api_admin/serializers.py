@@ -168,7 +168,7 @@ class DenominationSerializer(serializers.ModelSerializer):
             queryset=Denomination.objects.all(),
             message =_('This denomination is already taken')
             )
-        ])
+        ], max_value=2147483647, error_messages = {'max_value': _('Denomination exceed the permitted value.')})
     class Meta:
         model = Denomination
         fields = ('id', 'denomination')
@@ -351,15 +351,22 @@ class PostSerializer(serializers.ModelSerializer):
             for item in posts_image:
                 Post_Image.objects.create( post = post, image = item )
         return post
-
+    '''
+        Event update multi image
+            - Delete Post_Image which has id in list_clear_image
+            - Create Post_Image in posts_image
+            - Clear image of post id is_clear_image = true
+    '''
     def update(self, instance, validated_data):
         if self.context['request']:
             posts_image = self.context['request'].data.getlist('posts_image', None)
             list_clear_image = self.context['request'].data.getlist('list_clear_image', None)
             is_clear_image = self.context['request'].data.get('is_clear_image')
-
-        if list_clear_image:
-            Post_Image.objects.filter(list_clear_image).delete()
+        
+        if list_clear_image and list_clear_image[0] != '':
+            convert_list = list_clear_image[0].split(',')
+            Post_Image.objects.filter(id__in = convert_list).delete()
+        
         if posts_image:
             for item in posts_image:
                 Post_Image.objects.create( post = instance, image = item )

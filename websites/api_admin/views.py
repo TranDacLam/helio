@@ -976,16 +976,18 @@ class UserEmbedDetail(APIView):
                     result["message"] = _(dmz_result["message"])
                     return Response(result, status=response.status_code)
 
-
                 if not dmz_result:
                     return Response({"code": 400, "message": _("Barcode not found."), "fields": ""}, status=400)
                 # check Customer_Id is exist
                 if not dmz_result['customer_id']:
                     return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
+                # check user embed is related
+                user_app = User.objects.filter(barcode = barcode)
 
-                birth_date = parse(dmz_result['birthday'])
-                result['full_name'] = dmz_result['first_name'] + ' ' + dmz_result['surname']
-                result['birth_date'] = datetime.strftime(birth_date, '%d/%m/%Y')
+                first_name = dmz_result['first_name'] if dmz_result['first_name'] else ''
+                surname = dmz_result['surname'] if dmz_result['surname'] else ''
+                result['full_name'] = (first_name + ' ' + surname).strip()
+                result['birth_date'] = datetime.strftime(parse(dmz_result['birthday']), '%d/%m/%Y') if dmz_result['birthday'] else ''
                 result['address'] = dmz_result['address']
                 result['email'] = dmz_result['email']
                 result['phone'] = dmz_result['phone']
@@ -994,13 +996,14 @@ class UserEmbedDetail(APIView):
                 result['address'] = dmz_result['address']
                 result['barcode'] = barcode
                 result['personal_id'] = dmz_result['peronal_id']
+                result['is_related'] = True if user_app else False
                 return Response(result, status=200)
 
 
             return Response({"code": 400, "message": _('Bacode is required'), "fields": ""}, status=400)
 
         except Exception, e:
-            print "UserEmbedDetail ", e
+            print "Errors UserEmbedDetail GET  : ", traceback.format_exc()
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
@@ -1743,7 +1746,7 @@ class PostAPI(APIView):
         try:
             post = Post.objects.get(id=id)
             postSerializer = admin_serializers.PostSerializer(
-                instance=post, data=request.data, context={'request', request})
+                instance=post, data=request.data, context={'request': request})
             if postSerializer.is_valid():
                 postSerializer.save()
                 return Response(postSerializer.data)
