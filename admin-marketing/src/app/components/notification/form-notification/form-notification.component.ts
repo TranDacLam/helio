@@ -15,6 +15,7 @@ import { User } from '../../../shared/class/user';
 import 'rxjs/add/observable/throw';
 import { env } from '../../../../environments/environment';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
+import { ScrollTop } from './../../../shared/commons/scroll-top';
 
 
 declare var $ :any; // declare Jquery
@@ -71,7 +72,8 @@ export class FormNotificationComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private variable_globals: VariableGlobals,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private scrollTop: ScrollTop
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -190,7 +192,7 @@ export class FormNotificationComponent implements OnInit {
     onSubmit(): void{
         if(this.formNotification.invalid){
             ValidateSubmit.validateAllFormFields(this.formNotification);
-            this.scrollTop();
+            this.scrollTop.scrollTopFom();
         }else{
             this.formNotification.value.category = parseInt(this.formNotification.value.category);
             // Convert FormGroup to FormData
@@ -209,7 +211,7 @@ export class FormNotificationComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            this.scrollTop();
+                            this.scrollTop.scrollTopFom();
                         }else{
                             this.router.navigate(['/error']);
                         }
@@ -219,7 +221,7 @@ export class FormNotificationComponent implements OnInit {
                 if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
                     this.formNotification.get('is_clear_image').setValue(false);
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
-                    this.scrollTop();
+                    this.scrollTop.scrollTopFom();
                 }else{
                     this.notificationService.updateNoti(noti_form_data, this.noti.id, this.lang).subscribe(
                         (data) => {
@@ -240,7 +242,7 @@ export class FormNotificationComponent implements OnInit {
                         (error) => {
                             if(error.code === 400){
                                 this.errorMessage = error.message;
-                                this.scrollTop();
+                                this.scrollTop.scrollTopFom();
                             }else{
                                 this.router.navigate(['/error']);
                             }
@@ -249,14 +251,6 @@ export class FormNotificationComponent implements OnInit {
                 }
             }
         }
-    }
-
-    /*
-        Function scrollTop(): creoll top when have validate
-        @author: Lam
-    */
-    scrollTop(){
-        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
     }
 
     /*

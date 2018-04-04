@@ -46,6 +46,7 @@ import { FeedbackService } from './shared/services/feedback.service';
 import { CategoryService } from './shared/services/category.service';
 import { BannerService } from './shared/services/banner.service';
 import { AuthGuard } from './shared/guards/index';
+import { ScrollTop } from './shared/commons/scroll-top';
 
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
@@ -189,7 +190,8 @@ export const DefaultIntl = {
     DatePipe,
     {provide: RECAPTCHA_LANGUAGE, useValue: 'vi'},
     UserPermissionService,
-    VariableGlobals
+    VariableGlobals,
+    ScrollTop
   ],
   bootstrap: [AppComponent]
 })

@@ -97,7 +97,6 @@ export class FormPromotionLabelComponent implements OnInit {
     onSubmit(): void{
          if(this.formPromotionLabel.invalid){
             ValidateSubmit.validateAllFormFields(this.formPromotionLabel);
-            this.scrollTop();
         }else{
             if(this.promotion_label.id){
                 this.promotionLabelService.updatePromotionLabel(this.formPromotionLabel.value, this.promotion_label.id, this.lang)
@@ -109,7 +108,6 @@ export class FormPromotionLabelComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            this.scrollTop();
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
@@ -124,7 +122,6 @@ export class FormPromotionLabelComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            this.scrollTop();
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
@@ -132,14 +129,6 @@ export class FormPromotionLabelComponent implements OnInit {
                 );
             }
         }            
-    }
-
-    /*
-        Function scrollTop(): creoll top when have validate
-        @author: Lam
-    */
-    scrollTop(){
-        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
     }
 
     /*

@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Game } from '../../../shared/class/game';
 import { GameService } from '../../../shared/services/game.service';
-import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
 import * as datatable_config from '../../../shared/commons/datatable_config';
@@ -40,7 +39,6 @@ export class ListGameComponent implements OnInit {
 
     constructor(
         private gameService: GameService, 
-        private route: ActivatedRoute, 
         private router: Router,
         private toastr: ToastrService
     ) { }

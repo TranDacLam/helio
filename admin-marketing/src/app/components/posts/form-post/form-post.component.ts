@@ -12,6 +12,7 @@ import { ImageValidators } from './../../../shared/validators/image-validators';
 import { ToastrService } from 'ngx-toastr';
 import { env } from '../../../../environments/environment';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
+import { ScrollTop } from './../../../shared/commons/scroll-top';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -49,7 +50,8 @@ export class FormPostComponent implements OnInit {
         private location: Location,
         private router: Router,
         private route: ActivatedRoute,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private scrollTop: ScrollTop
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -184,7 +186,7 @@ export class FormPostComponent implements OnInit {
     onSubmit(): void{
         if(this.formPost.invalid){
             ValidateSubmit.validateAllFormFields(this.formPost);
-            this.scrollTop();
+            this.scrollTop.scrollTopFom();
         }else{
             this.formPost.value.list_clear_image = this.list_multi_image_id;
             this.formPost.value.post_type = parseInt(this.formPost.value.post_type);
@@ -199,7 +201,7 @@ export class FormPostComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            this.scrollTop();
+                            this.scrollTop.scrollTopFom();
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
@@ -215,7 +217,7 @@ export class FormPostComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            this.scrollTop();
+                            this.scrollTop.scrollTopFom();
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
@@ -223,14 +225,6 @@ export class FormPostComponent implements OnInit {
                 );
             }
         }
-    }
-
-    /*
-        Function scrollTop(): creoll top when have validate
-        @author: Lam
-    */
-    scrollTop(){
-        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
     }
 
     /*
