@@ -9,91 +9,100 @@ import { HotAdvsService } from '../../../shared/services/hot-advs.service';
 
 import { data_config } from '../../../shared/commons/datatable_config';
 
-declare var bootbox:any;
+declare var bootbox: any;
 
 @Component({
-  selector: 'app-hot-advs-list',
-  templateUrl: './hot-advs-list.component.html',
-  styleUrls: ['./hot-advs-list.component.css'],
-  providers: [HotAdvsService],
+    selector: 'app-hot-advs-list',
+    templateUrl: './hot-advs-list.component.html',
+    styleUrls: ['./hot-advs-list.component.css'],
+    providers: [HotAdvsService],
 })
 export class HotAdvsListComponent implements OnInit {
 
-	dtOptions: any = {};
+    dtOptions: any = {};
 
-	hot_advs : HotAdvs [];
+    hot_advs: HotAdvs[];
 
     length_all: Number = 0;
     length_selected: Number = 0;
 
     record: String = "Hot Ads";
-    
-  	// Inject the DataTableDirective into the dtElement property
-  	@ViewChild(DataTableDirective)
-  	dtElement: DataTableDirective;
 
-	// Using trigger becase fetching the list of feedbacks can be quite long
-  	// thus we ensure the data is fetched before rensering
-	dtTrigger: Subject<any> = new Subject();
+    // Inject the DataTableDirective into the dtElement property
+    @ViewChild(DataTableDirective)
+    dtElement: DataTableDirective;
 
-  	constructor(
-  		private route: ActivatedRoute,
+    // Using trigger becase fetching the list of feedbacks can be quite long
+    // thus we ensure the data is fetched before rensering
+    dtTrigger: Subject<any> = new Subject();
+
+    constructor(
+        private route: ActivatedRoute,
         private hotAdvsSerice: HotAdvsService,
         private router: Router,
         private toastr: ToastrService,
-  		) {
-  			this.hot_advs = [];
-  		}
+    ) {
+        this.hot_advs = [];
+    }
 
-  	ngOnInit() {
-  		this.dtOptions = data_config(this.record);
-         let dt_options_custom = {
+    ngOnInit() {
+        this.dtOptions = data_config(this.record);
+        let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
             },
             columnDefs: [
                 {
+                    // Hide the second colum
                     targets: 1,
                     visible: false
                 },
-                { 
-                    orderable: false, 
-                    targets: 0 
+                {
+                    // Disable ordering the first colum
+                    orderable: false,
+                    targets: 0
                 }
             ]
         };
-        this.dtOptions = {...this.dtOptions, ...dt_options_custom };
+        this.dtOptions = { ...this.dtOptions, ...dt_options_custom };
         this.getHotAdvs();
-  	}
-  	getHotAdvs() {
+    }
+    /*
+        Get Hot Ads
+        Call getAllHotAdvs from hot_advs.service
+        success: Return objects hot_advs
+        Fail: nagivate componet error show error message
+        @author: Trangle
+     */
+    getHotAdvs() {
         this.hotAdvsSerice.getAllHotAdvs().subscribe(
             (result) => {
                 this.hot_advs = result;
-                this.length_all = this.hot_advs.length;
-                this.dtTrigger.next(); 
+                this.length_all = this.hot_advs.length; // Set length_all
+                this.dtTrigger.next();
             },
-            (error) =>  {
+            (error) => {
                 this.router.navigate(['/error', { message: error.json().message }])
             }
         )
-  	}
-  	/*
+    }
+    /*
         Event select checbox on row
             Case1: all row are checked then checkbox all on header is checked
             Case1: any row is not checked then checkbox all on header is not checked
         @author: TrangLe 
     */
-    selectCheckbox(event) {   
-        $(event.target).closest( "tr" ).toggleClass( "selected" );
+    selectCheckbox(event) {
+        $(event.target).closest("tr").toggleClass("selected");
         this.getLengthSelected();
         this.checkSelectAllCheckbox();
     }
 
     // input checkall checked/unchecked
     checkSelectAllCheckbox() {
-        if($('#table_id tbody tr').hasClass('selected')){
+        if ($('#table_id tbody tr').hasClass('selected')) {
             $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
-        }else{
+        } else {
             $('#select-all').prop('checked', false);
         }
         this.getLengthSelected();
@@ -103,7 +112,7 @@ export class HotAdvsListComponent implements OnInit {
         @author: TrangLe 
     */
     selectAllEvent(event) {
-        if( event.target.checked ) {
+        if (event.target.checked) {
             $("#table_id tr").addClass('selected');
         } else {
             $("#table_id tr").removeClass('selected');
@@ -116,7 +125,7 @@ export class HotAdvsListComponent implements OnInit {
         Function getLengthSelected(): draw length selected
         @author: TrangLe
     */
-    getLengthSelected(){
+    getLengthSelected() {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             this.length_selected = dtInstance.rows('.selected').count();
         })
@@ -127,7 +136,7 @@ export class HotAdvsListComponent implements OnInit {
             True: Show confirm and call function deleteFeedbackCheckbox 
             False: show alert
         */
-        if(this.length_selected > 0 ){
+        if (this.length_selected > 0) {
             bootbox.confirm({
                 title: "Bạn có chắc chắn?",
                 message: "Bạn muốn xóa " + this.length_selected + " Hot Ads đã chọn?",
@@ -139,8 +148,8 @@ export class HotAdvsListComponent implements OnInit {
                         label: "XÓA"
                     }
                 },
-                callback: (result)=> {
-                    if(result) {
+                callback: (result) => {
+                    if (result) {
                         // Check result = true. call function
                         this.deleteHotAdvsCheckbox()
                     }
@@ -148,29 +157,40 @@ export class HotAdvsListComponent implements OnInit {
             });
         } else {
             this.toastr.warning(`Vui lòng chọn Hot Ads để xóa`);
-        } 
+        }
     }
+    /*
+        Delete hot ads selected
+        List array hot ads selected then convert number
+        Call deleteHotAdvsSelected from hot_advs.service 
+        Success: 
+            + Remove hot advs selected UI
+            + Reset length_all, length_selected
+            + Show message success 
+        Fail: nagivate component error show error message
+        
+     */
     deleteHotAdvsCheckbox() {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-            // Get list promotion id selected
+            // Get list hot ads id selected
             let get_list_id = dtInstance.cells('.selected', 1).data().toArray();
-                // array string to array number
+            // array string to array number
             let list_id_selected = get_list_id.map(Number);
 
-                // Call API remove list promotion selected
+            // Call API remove list hot ads selected
             this.hotAdvsSerice.deleteHotAdvsSelected(list_id_selected).subscribe(
                 (data) => {
                     this.toastr.success(`Xóa ${this.length_selected} Hot Ads thành công`);
 
-                    // Remove all promotion selected on UI
+                    // Remove all hot ads selected on UI
                     dtInstance.rows('.selected').remove().draw();
-                    // Reset count promotion
-                    this.length_all =  dtInstance.rows().count();
+                    // Reset count hot ads
+                    this.length_all = dtInstance.rows().count();
                     this.length_selected = 0;
                 },
                 (error) => {
                     this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
-            });
+                });
         });
     }
 
