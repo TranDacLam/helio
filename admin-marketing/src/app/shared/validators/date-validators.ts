@@ -1,4 +1,4 @@
-import { FormArray, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import * as moment from 'moment';
 import { CheckDateValid } from './check-date-valid';
 

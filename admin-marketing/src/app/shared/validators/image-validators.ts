@@ -1,4 +1,4 @@
-import { FormArray, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 
 export class ImageValidators {
