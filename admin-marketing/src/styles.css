@@ -315,7 +315,6 @@ button.btn:focus {
     Show list error form from server
     author: Lam;
 */
-/
 .error_msg{
     color: red;
     font-size: 16px;
