@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, AfterViewChecked } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -37,7 +37,7 @@ declare var bootbox:any;
     ]
 })
 
-export class PromotionFormDetailComponent implements OnInit {
+export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
 
     promotion: Promotion;
 
@@ -88,7 +88,7 @@ export class PromotionFormDetailComponent implements OnInit {
 
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
-        },100);
+        },300)
 
         this.getAllCategory();
         this.getPromotionTypes();
@@ -105,6 +105,13 @@ export class PromotionFormDetailComponent implements OnInit {
             this.title_page = "Thêm Khuyến Mãi";
             this.promotion = new Promotion()
             this.creatPromotionForm();
+        }
+    }
+
+    ngAfterViewChecked(){
+        if(this.isDisable()){
+            // disabled button, input, select, only view
+            $('button, input, select').attr('disabled', true);
         }
     }
 
@@ -275,7 +282,9 @@ export class PromotionFormDetailComponent implements OnInit {
             ValidateSubmit.validateAllFormFields(this.promotionForm);
             this.scrollTop.scrollTopFom();
         }else{
-            // get value time by #id 
+            // get value date, time by #id 
+            this.promotionForm.value.apply_date = $('#start_date').val();
+            this.promotionForm.value.end_date = $('#end_date').val();
             this.promotionForm.value.apply_time = $('#start_time').val();
             this.promotionForm.value.end_time = $('#end_time').val();
             this.errors = '';
@@ -373,6 +382,21 @@ export class PromotionFormDetailComponent implements OnInit {
     }
 
     /*
+        Function isDisable(): Check promotion not is_draft or end_date < date now and current user is not system admin
+        Author: Lam
+    */
+    isDisable(){
+        if(this.user_current && this.promotion && this.promotion.id){
+            let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
+            let end_date = this.promotion.end_date ? this.promotion.end_date : '';
+            if((this.promotion.is_draft === false || (end_date !== '' && end_date < date_now)) && this.user_current.role !== 1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
         Convert form group to form data to submit form
         @author: diemnguyen
     */
@@ -392,17 +416,11 @@ export class PromotionFormDetailComponent implements OnInit {
                     promotionFormData.append(k, '');
                 } else if (k === 'image' || k === 'image_thumbnail') {
                     promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
-                } else if (k === 'apply_date' || k === 'end_date') {
-                    promotionFormData.append(k, this.transformDate(promotionValues[k]));
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
                 }
             });
         }
         return promotionFormData;
-    }
-
-    transformDate(date) {
-        return date ? this.datePipe.transform(date, 'dd/MM/yyyy') : '';
     }
 }

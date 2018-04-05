@@ -168,4 +168,20 @@ export class UserPromotionComponent implements OnInit {
         return null;
     }
 
+    /*
+        Function isDisable(): Check promotion not is_draft or end_date < date now to disabled button
+        Author: Lam
+    */
+    isDisableCreateNotificaiton(){
+        let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
+        let end_date = this.promotion.end_date ? this.promotion.end_date : '';
+        if(this.user_current.role === 1){
+            return false;
+        }
+        if(end_date !== '' && end_date < date_now){
+            return true;
+        }
+        return false;
+    }
+
 }
