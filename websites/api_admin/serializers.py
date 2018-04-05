@@ -564,11 +564,18 @@ class RoleSerializer(serializers.ModelSerializer):
         model = Roles
         fields = ('id', 'name')
 
-class OpenTimeSerializer(serializers.ModelSerializer):
-    open_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required = False)
-    start_time = serializers.DateField(format="%H:%m", input_formats=['%H:%m'], required = False)
-    end_time = serializers.DateField(format="%H:%m", input_formats=['%H:%m'], required = False)
+class OpenTimeSerializer(serializers.Serializer):
+    start_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required = True, error_messages = {'invalid': _('Date is invalid.')})
+    end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required = True, error_messages = {'invalid': _('Date is invalid.')})
+    start_time = serializers.TimeField(format="%H:%M", input_formats=['%H:%M'], required = True, error_messages = {'invalid': _('Time is invalid.')})
+    end_time = serializers.TimeField(format="%H:%M", input_formats=['%H:%M'], required = True, error_messages = {'invalid': _('Time is invalid.')})
+    day_of_week = serializers.ListField(child=serializers.IntegerField(min_value=1, max_value=7), required = False)
 
-    class Meta:
-        model = OpenTime
-        fields = ('id', 'open_date', 'start_time', 'end_time')
+    def validate(self, data):
+        if data['start_date'] > data['end_date']:
+            raise serializers.ValidationError(_("Start day is before than End day"))
+        if data['start_date'] == data['end_date'] and data['start_time'] >= data['end_time']:
+            raise serializers.ValidationError(_("Start time is before than End time"))
+        return data
+
+    
