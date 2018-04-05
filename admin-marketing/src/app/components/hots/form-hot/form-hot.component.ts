@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
 import { Hot } from '../../../shared/class/hot';
 import { HotService } from '../../../shared/services/hot.service';
 import { DateValidators } from './../../../shared/validators/date-validators';
@@ -9,6 +8,7 @@ import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { ImageValidators } from './../../../shared/validators/image-validators';
 import { env } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { ScrollTop } from './../../../shared/commons/scroll-top';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -44,10 +44,10 @@ export class FormHotComponent implements OnInit {
     constructor(
         private hotService: HotService,
         private fb: FormBuilder,
-        private location: Location,
         private router: Router,
         private route: ActivatedRoute,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private scrollTop: ScrollTop
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -126,12 +126,15 @@ export class FormHotComponent implements OnInit {
         author: Lam
     */
     onSubmit(): void{
+        // case form invalid, show error fields, scroll top
         if(this.formHot.invalid){
             ValidateSubmit.validateAllFormFields(this.formHot);
-            this.scrollTop();
+            this.scrollTop.scrollTopFom();
         }else{
+            // convert Form Group to formData
             let hot_form_data = this.convertFormGroupToFormData(this.formHot);
             let value_form = this.formHot.value;
+            // case create new
             if(!this.hot.id){
                 this.hotService.addHot(hot_form_data, this.lang).subscribe(
                     (data) => {
@@ -139,19 +142,21 @@ export class FormHotComponent implements OnInit {
                         this.router.navigate(['/hot/list']);
                     },
                     (error) => {
+                        // code 400, erro validate
                         if(error.code === 400){
                             this.errorMessage = error.message;
-                            this.scrollTop();
+                            this.scrollTop.scrollTopFom();
                         }else{
                             this.router.navigate(['/error', { message: error.message}]);
                         }
                     }
                 );
             }else{
+                // check remove image when select checkbox clear image and choose image
                 if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
                     this.formHot.get('is_clear_image').setValue(false);
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
-                    this.scrollTop();
+                    this.scrollTop.scrollTopFom();
                 }else{
                     this.hotService.updateHot(hot_form_data, this.hot.id, this.lang).subscribe(
                         (data) => {
@@ -159,9 +164,10 @@ export class FormHotComponent implements OnInit {
                             this.router.navigate(['/hot/list']);
                         },
                         (error) => {
+                            // code 400, erro validate
                             if(error.code === 400){
                                 this.errorMessage = error.message;
-                                this.scrollTop();
+                                this.scrollTop.scrollTopFom();
                             }else{
                                 this.router.navigate(['/error', { message: error.message}]);
                             }
@@ -171,14 +177,6 @@ export class FormHotComponent implements OnInit {
             }
         }
         
-    }
-
-    /*
-        Function scrollTop(): creoll top when have validate
-        @author: Lam
-    */
-    scrollTop(){
-        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
     }
 
     /*

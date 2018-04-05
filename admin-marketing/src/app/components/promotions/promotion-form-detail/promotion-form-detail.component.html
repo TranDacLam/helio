@@ -23,7 +23,7 @@
     </p>
 </ng-container>
 
-<form [formGroup]="promotionForm" novalidate *ngIf="promotion">
+<form [formGroup]="promotionForm" novalidate *ngIf="promotion && user_current">
     <div class="form-group row">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Tên Khuyến Mãi </label>
@@ -45,6 +45,7 @@
             <p *ngIf="promotion.image" class="clear_image">
                 <input type="checkbox" formControlName="is_clear_image"/> Xóa
             </p>
+            <p *ngIf="msg_clear_image" class="error_msg">{{msg_clear_image}}</p>
             <input type="file" class="form-control-file" id="image" accept="image/*" (change)="onFileChange($event)" />
             <ul class="error_valid" 
                 *ngIf="promotionForm.get('image') && promotionForm.get('image')?.errors">
@@ -66,6 +67,7 @@
             <p *ngIf="promotion.image_thumbnail" class="clear_image">
                 <input type="checkbox" formControlName="is_clear_image_thumbnail"/> Xóa
             </p>
+            <p *ngIf="msg_clear_thumbnail" class="error_msg">{{msg_clear_thumbnail}}</p>
             <input type="file" class="form-control-file" accept="image/*" id="image_thumbnail" (change)="onFileChange($event)"/>
             <ul class="error_valid" 
                 *ngIf="promotionForm.get('image_thumbnail') && promotionForm.get('image_thumbnail')?.errors">
@@ -91,7 +93,12 @@
             <label class="col-form-label form-check-label">Nội Dung </label>
         </div>
         <div class="col-sm-10">
-        	<ckeditor formControlName="content" [config]="ckEditorConfig"> </ckeditor>
+        	<span *ngIf="isDisable()">
+                <ckeditor formControlName="content" readonly="{{true}}"> </ckeditor>
+            </span>
+            <span *ngIf="!isDisable()">
+                <ckeditor formControlName="content" [config]="ckEditorConfig"> </ckeditor>
+            </span>
             <show-error-valid [control]="promotionForm.get('content')"></show-error-valid>
         </div>
     </div>
@@ -146,7 +153,7 @@
             <input type="text" class="form-control event-date" formControlName="apply_date" 
                 [owlDateTime]="dtApplyDate" id="start_date"
             />         
-            <owl-date-time [pickerType]="'calendar'"  #dtApplyDate></owl-date-time>
+            <owl-date-time [pickerType]="'calendar'" [disabled]="isDisable()"  #dtApplyDate></owl-date-time>
         </div>
         <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="promotionForm.get('apply_date')"></show-error-valid>
@@ -163,7 +170,7 @@
             <input type="text" class="form-control event-date" formControlName="end_date" 
                 [owlDateTime]="dtEndDate" id="end_date"
             />         
-            <owl-date-time [pickerType]="'calendar'" #dtEndDate></owl-date-time>
+            <owl-date-time [pickerType]="'calendar'" [disabled]="isDisable()" #dtEndDate></owl-date-time>
         </div>
         <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="promotionForm.get('end_date')"></show-error-valid>
@@ -186,7 +193,7 @@
             <input type="text" class="form-control event-date" formControlName="apply_time"
                 [owlDateTime]="dtApplyTime" id="start_time"
             />         
-            <owl-date-time [pickerType]="'timer'" #dtApplyTime></owl-date-time>
+            <owl-date-time [pickerType]="'timer'" [disabled]="isDisable()" #dtApplyTime></owl-date-time>
         </div>
         <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="promotionForm.get('apply_time')"></show-error-valid>
@@ -203,11 +210,11 @@
             <input type="text" class="form-control event-date" formControlName="end_time"
                 [owlDateTime]="dtEndTime" id="end_time"
             />         
-            <owl-date-time [pickerType]="'timer'" #dtEndTime></owl-date-time>
+            <owl-date-time [pickerType]="'timer'" [disabled]="isDisable()" #dtEndTime></owl-date-time>
         </div>
         <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="promotionForm.get('end_time')"></show-error-valid>
-            <ul *ngIf="promotionForm.errors && !promotionForm.get('end_time').errors?.fomatDate && 
+            <ul *ngIf="!promotionForm.get('end_time').errors?.fomatDate && 
                 !promotionForm.get('apply_time').errors?.fomatDate">
                 <li style="color: red">
                     {{ promotionForm.errors?.datempty ? 'Vui lòng nhập ngày áp dụng': '' }}
@@ -222,7 +229,7 @@
             <label class="col-form-label form-check-label">Is Draft</label>
         </div>
         <div class="col-sm-6">
-            <input type="checkbox" formControlName="is_draft" [(ngModel)]="promotion.is_draft"/>
+            <input type="checkbox" formControlName="is_draft"/>
         </div>
     </div>
     <div class="form-group row">

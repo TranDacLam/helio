@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, FormBuilder, Validators  } from '@angular/forms';
 import { User } from '../../../shared/class/user';
 import { LinkCardService } from '../../../shared/services/link-card.service';
-import { Location } from '@angular/common';
 import { FormUserAppComponent } from '../form-user-app/form-user-app.component';
 import { FormUserEmbedComponent } from '../form-user-embed/form-user-embed.component';
 import { ToastrService } from 'ngx-toastr';
@@ -37,7 +35,6 @@ export class AddLinkCardComponent implements OnInit {
 
     constructor(
         private linkCardService: LinkCardService, 
-        private location: Location,
         private router: Router,
         private toastr: ToastrService
     ) { }
@@ -45,6 +42,10 @@ export class AddLinkCardComponent implements OnInit {
     ngOnInit() {
     }
 
+    /*
+        Function btnEmbed(): get data from form user embed, set disbale/undisable button link card
+        Author: Lam
+    */
     btnEmbed(event){
         this.is_btn_embed = event;
         if(this.is_btn_embed === false && this.is_btn_app === false){
@@ -54,6 +55,10 @@ export class AddLinkCardComponent implements OnInit {
         }
     }
 
+    /*
+        Function btnApp(): get data from form user app, set disbale/undisable button link card
+        Author: Lam
+    */
     btnApp(event){
         this.is_btn_app = event;
         if(this.is_btn_embed === false && this.is_btn_app === false){
@@ -63,6 +68,10 @@ export class AddLinkCardComponent implements OnInit {
         }
     }
 
+    /*
+        Function checkSubmitApp(): get data from form user app, set object status_error 
+        Author: Lam
+    */
     checkSubmitApp(event){
         if(event === true){
             this.status_error = {full_name: false, email: false, phone: false, birth_date: false, 
@@ -70,6 +79,10 @@ export class AddLinkCardComponent implements OnInit {
         }
     }
 
+    /*
+        Function checkSubmitEmbed(): get data from form user embed, set object status_error 
+        Author: Lam
+    */
     checkSubmitEmbed(event){
         if(event === true){
             this.status_error = {full_name: false, email: false, phone: false, birth_date: false, 
@@ -86,12 +99,16 @@ export class AddLinkCardComponent implements OnInit {
         Author: Lam
     */
     onCardLink(): void{
+        // get user app from user app component
         let user_app = this.userappComponent.user_app;
+        // get user app from user embed component
         let user_embed = this.userembedComponent.user_embed;
         let isValid = false;
+        // fields compare between user app and user embed
         let field_compare = {'full_name': '', 'email': '', 'phone': '', 'birth_date': '', 
             'personal_id': '', 'address': ''};
 
+        // compare fields 
         Object.entries(user_app).forEach(([key, val]) => {
             if(key in field_compare){
                 if(user_app[key] !== user_embed[key]){
@@ -103,6 +120,7 @@ export class AddLinkCardComponent implements OnInit {
             }
         });
         
+        // check isValid show error
         if(isValid){
             this.toastr.error(`Lỗi, yêu cầu các trường thông tin tài khoản và thẻ phải trùng nhau`);
         }else{
@@ -112,6 +130,7 @@ export class AddLinkCardComponent implements OnInit {
                     this.router.navigate(['/link-card/detail/', user_app.id,{ email: user_app.email, barcode: user_embed.barcode}]);
                 },
                 (error) => {
+                    // code 400, error validate
                     if(error.code === 400){
                         this.toastr.error(`${error.message}`);
                     }else{

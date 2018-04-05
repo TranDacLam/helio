@@ -37,6 +37,7 @@
     "jquery": "^3.2.1",
     "moment": "^2.21.0",
     "ng-pick-datetime": "^5.1.4",
+    "ng-pick-datetime-moment": "^1.0.5",
     "ng-recaptcha": "^3.0.3",
     "ng2-ckeditor": "^1.1.14",
     "ngx-toastr": "^8.3.0",

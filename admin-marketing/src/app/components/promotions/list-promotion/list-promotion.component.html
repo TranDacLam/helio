@@ -66,14 +66,11 @@
                             />
                         </td>
                         <td>{{ promotion.id }}</td>
-                        <td *ngIf="isCheckDisplay(promotion)">
-                            {{ promotion.name }}
-                        </td>
-                        <td *ngIf="!isCheckDisplay(promotion)">
+                        <td>
                             <a [routerLink]="['/promotions/', promotion.id, 'change', {lang: lang}]">{{ promotion.name }}</a>
                         </td>
                         <td>{{ promotion.is_draft ? "Draft" : "Đã Triển Khai" }}</td>
-                        <td>{{ promotion.created | date : 'dd/MM/yyyy'}}</td>
+                        <td><span class="hidden">{{ promotion.created | date:'yyyyMMdd' }}</span>{{ promotion.created | date : 'dd/MM/yyyy'}}</td>
                         <td>{{ promotion.user_implementer?.email }}</td>
                         <td>{{ promotion.promotion_type?.name }}</td>
                         <td class="text-center">
@@ -86,7 +83,7 @@
                             
                         </td>
                         <td class="text-center">
-                            <a class = "btn btn-primary" [routerLink]="['/users-promotions/', promotion.id, {lang: lang}]">Danh sách user</a>
+                            <a class = "btn btn-primary" [routerLink]="['/users-promotions/', promotion.id, {lang: lang}]">Chọn danh sách user</a>
                         </td>
                     </tr>
                 </tbody>

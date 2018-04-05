@@ -10,13 +10,13 @@ import { User } from '../../shared/class/user';
 export class UserService {
 
     httpOptions: any;
-    token:any = '';
+    token: any = '';
 
     constructor(private http: Http) {
         this.token = localStorage.getItem('auth_token');
 
         this.httpOptions = {
-            headers: new Headers({ 
+            headers: new Headers({
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.token}`
             })
@@ -36,7 +36,7 @@ export class UserService {
         DELETE: Delete User By Id
         @author: Trangle
      */
-    getUserById(id:number):Observable<User> {
+    getUserById(id: number): Observable<User> {
         const url = `${api.users}${id}/`;
         return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
@@ -48,14 +48,14 @@ export class UserService {
     deleteUserById(user: User): Observable<User> {
         const id = user.id;
         const url = `${api.users}${id}/`;
-        return this.http.delete(url,this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /*
         POST: Create User
         @author: TrangLe
     */
-    createUser(userFormData:FormData): Observable<any> {
+    createUser(userFormData: FormData): Observable<any> {
 
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
@@ -80,29 +80,29 @@ export class UserService {
         PUT: Update User
         @author: Trangle
     */
-   
-       updateUser(userForm: FormData, id:number): Observable<any> {
-           const url = `${api.users}${id}/`;
 
-           return Observable.create(observer => {
-               let xhr = new XMLHttpRequest();
-               xhr.open('PUT', url);
+    updateUser(userForm: FormData, id: number): Observable<any> {
+        const url = `${api.users}${id}/`;
+
+        return Observable.create(observer => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('PUT', url);
             xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
-               xhr.send(userForm);
+            xhr.send(userForm);
 
-               xhr.onreadystatechange = function() {
-                   if(xhr.readyState === 4) {
-                       if(xhr.status === 200) {
-                           observer.next(JSON.parse(xhr.response));
-                           observer.complete();
-                       } else {
-                           observer.error(JSON.parse(xhr.response));
-                       }
-                   }
-               }
-           });
-       }
-   
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(JSON.parse(xhr.response));
+                    }
+                }
+            }
+        });
+    }
+
     /*
         DELETE: Delete User Selected
         @author: Trangle
@@ -124,9 +124,9 @@ export class UserService {
         getUserByToken: get User By Token
         @author: Trangle
      */
-    getUserByToken(value):Observable<any> {
+    getUserByToken(value): Observable<any> {
         let _option = {
-            headers: new Headers({ 
+            headers: new Headers({
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${value}`
             })

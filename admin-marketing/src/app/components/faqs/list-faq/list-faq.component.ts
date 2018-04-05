@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Faq } from '../../../shared/class/faq';
 import { FaqService } from '../../../shared/services/faq.service';
-import { message } from '../../../shared/utils/message';
 import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
 import * as datatable_config from '../../../shared/commons/datatable_config';
@@ -37,7 +36,6 @@ export class ListFaqComponent implements OnInit {
 
     constructor(
         private faqService: FaqService, 
-        private route: ActivatedRoute, 
         private router: Router,
         private toastr: ToastrService
     ) { }
@@ -193,7 +191,7 @@ export class ListFaqComponent implements OnInit {
     }
 
     /*
-        Function changeLang(): Change language and callback service getEvents()
+        Function changeLang(): Change language and callback service getFaqs()
         Author: Lam
     */
     changeLang(value){

@@ -43,7 +43,7 @@ import { ListPromotionComponent } from './components/promotions/list-promotion/l
 import { UserPromotionComponent } from './components/promotions/user-promotion/user-promotion.component';
 import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
-import { AuthGuard } from './shared/guards/index';
+import { AuthGuard } from './shared/auth/auth.guard';
 
 import { UserPermissionComponent } from './components/user-permission/user-permission.component';
 import { OpenTimeComponent } from './components/open-time/open-time.component'

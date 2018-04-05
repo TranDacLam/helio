@@ -188,9 +188,6 @@ h1.h1-title {
 .dataTables_wrapper{
     margin-bottom: 20px;
 }
-.dataTable thead tr>th:first-child{
-    background-image: none;
-}
 .custom_table thead tr>th:first-child{
     width: 60px;
 }
@@ -271,8 +268,13 @@ button.btn:focus {
     border-bottom: 1px solid;
     padding-bottom: 5px;
 }
-
-
+/* 
+    custom multi select user in user permission
+    author: Hoangnguyen; 
+*/
+.wrapper-permission .multiselect_user .dataTables_scrollBody{
+    min-height: 380px;
+} 
 /*
     Button change language
     author: Lam;
@@ -314,7 +316,14 @@ button.btn:focus {
     color: red;
     font-size: 16px;
 }
-
+/* Start Fix bugs confict z-index of datepicker + modal popup */
+.modal {
+    z-index: 900;
+}
+.modal-backdrop {
+    z-index: 850;
+}
+/* End Fix bugs confict z-index of datepicker + modal popup */
 @media (min-width: 768px) {
     /* START HEADER*/
     #header-wrapper .navbar-default .navbar-nav>li>a {
@@ -328,6 +337,13 @@ button.btn:focus {
 
     .multiselect_user .datatable-content{
         min-height: 841px;
+    }
+    /* 
+        custom multi select user in user permission
+        author: Hoangnguyen; 
+    */
+    .wrapper-permission .multiselect_user .datatable-content{
+        min-height: 720px;
     }
 }
 

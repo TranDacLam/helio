@@ -15,35 +15,23 @@
 	{{error.val}}
 	</h4>
 	</ng-container>
-	<form [formGroup]="feeAddForm" (ngSubmit)="createFee(feeAddForm.value, feeAddForm.valid)">
+	<form [formGroup]="feeAddForm" (ngSubmit)="createFee(feeAddForm.value)">
 		<div class="form-group row">
 			<div class="col-sm-1">
 				<label>Phí</label>
 			</div>
 			<div class="col-sm-2">
-				<input type="number" class="form-control no-arrow" formControlName="fee"
-				#fee  step="1" onkeydown="javascript: return event.keyCode == 69 ? false : true">
+				<input type="text" class="form-control no-arrow" formControlName="fee"
+				>
 			</div>
 			<select formControlName="fee_type" id="fee_type" class="form-control">
 				<option value="%" selected >%</option>
 				<option value="vnd">VNĐ</option>
 			</select>
-			<div *ngIf="(feeAddForm.controls.fee.pristine && submitted)" class="col-sm-offset-1 feeAddForm_error" >
-					Trường này không được bỏ trống.
-				</div>
-				<div *ngIf="feeAddForm.controls.fee.invalid && (feeAddForm.controls.fee.dirty)" class="col-sm-offset-1 feeAddForm_error">
-					<div *ngIf="feeAddForm.controls.fee.errors.max">
-						Gía trị quá lớn.
-					</div>
-					<div *ngIf="feeAddForm.controls.fee.errors.min">
-						Số ký tự cho phép tối đa là 10.
-					</div>
-					<div *ngIf="feeAddForm.controls.fee.errors.required">
-						Trường này không được bỏ trống.
-					</div>
-				</div>
+			<div class="col-sm-offset-1 feeAddForm_error">
+				<show-error-valid [control]="feeAddForm.get('fee')"></show-error-valid>
+			</div>
 		</div>
-		
 		<div class="form-group row">
 			<div class="col-sm-1">
 				<label>Vị Trí</label>
@@ -53,9 +41,7 @@
 				<label for="tickets">Phí Chuyển Ticket</label>
 				<input type="radio" value="deposit" formControlName="position" id="deposit">
 				<label for="deposit"> Phí Nạp Tiền</label>
-				<div [hidden]="feeAddForm.controls.position.valid || (feeAddForm.controls.position.pristine && !submitted)" class="position_error">
-					Trường này không được bỏ trống.
-				</div>
+				<show-error-valid [control]="feeAddForm.get('position')"></show-error-valid>
 			</div>
 		</div>
 		<div class="form-group row">

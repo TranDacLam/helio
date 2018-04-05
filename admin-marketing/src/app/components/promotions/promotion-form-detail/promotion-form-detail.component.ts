@@ -1,8 +1,7 @@
-import { Component, OnInit, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, AfterViewChecked } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
 import 'rxjs/add/observable/throw';
 
 import { Promotion } from '../../../shared/class/promotion';
@@ -23,6 +22,7 @@ import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { env } from '../../../../environments/environment';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import * as moment from 'moment';
+import { ScrollTop } from './../../../shared/commons/scroll-top';
 
 declare var $ :any; // declare Jquery
 declare var bootbox:any;
@@ -37,7 +37,7 @@ declare var bootbox:any;
     ]
 })
 
-export class PromotionFormDetailComponent implements OnInit {
+export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
 
     promotion: Promotion;
 
@@ -56,6 +56,8 @@ export class PromotionFormDetailComponent implements OnInit {
     selected = true;
 
     api_domain:string = "";
+    msg_clear_image = '';
+    msg_clear_thumbnail = '';
 
     errors: any = "";
     apply_date: Date = new Date();
@@ -69,12 +71,12 @@ export class PromotionFormDetailComponent implements OnInit {
         private promotionTypeService: PromotionTypeService,
         private promotionLabelService: PromotionLabelService,
         private fb: FormBuilder,
-        private location: Location,
         private router: Router,
         private route: ActivatedRoute,
         private datePipe: DatePipe,
         private toastr: ToastrService,
         private variable_globals: VariableGlobals,
+        private scrollTop: ScrollTop
     ) {
         this.api_domain = env.api_domain_root;
     }
@@ -88,7 +90,7 @@ export class PromotionFormDetailComponent implements OnInit {
 
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
-        },100);
+        },300)
 
         this.getAllCategory();
         this.getPromotionTypes();
@@ -105,6 +107,13 @@ export class PromotionFormDetailComponent implements OnInit {
             this.title_page = "Thêm Khuyến Mãi";
             this.promotion = new Promotion()
             this.creatPromotionForm();
+        }
+    }
+
+    ngAfterViewChecked(){
+        if(this.isDisable()){
+            // disabled button, input, select, only view
+            $('button, input, select').attr('disabled', true);
         }
     }
 
@@ -134,48 +143,40 @@ export class PromotionFormDetailComponent implements OnInit {
             is_draft: [this.promotion.is_draft],
             is_clear_image: [false],
             is_clear_image_thumbnail: [false],
-        }, {validator: [this.dateLessThan(), this.timeLessThan()]});
+        }, {validator: this.dateTimeLessThan()});
     }
 
     /*
-        Function dateLessThan(): validate apply date and end date
+        Function dateTimeLessThan(): validate date, time
         Author: Lam
     */
-    dateLessThan() {
+    dateTimeLessThan(){
         return (group: FormGroup): {[key: string]: any} => {
-            let start = $('#start_date').val() ? moment($('#start_date').val(), "DD/MM/YYYY").toDate() : '';
-            let end = $('#end_date').val() ? moment($('#end_date').val(), "DD/MM/YYYY").toDate() : '';
-            if(start <= end || start === '' || end === ''){
-
-                return {};
-            }
-            return {
-                dates: "Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày áp dụng"
-            };
-        }
-    }
-
-    /*
-        Function timeLessThan(): validate start time and end time
-        Author: Lam
-    */
-    timeLessThan(){
-        return (group: FormGroup): {[key: string]: any} => {
+            // get date, time by #id
             let start_date = $('#start_date').val() ? $('#start_date').val() : '';
             let end_date = $('#end_date').val() ? $('#end_date').val() : '';
             let start_time = $('#start_time').val() ? moment($('#start_time').val(), 'HH:mm').toDate() : '';
             let end_time = $('#end_time').val() ? moment($('#end_time').val(), 'HH:mm').toDate() : '';
+            // case start date > end date
+            if(moment(start_date, "DD/MM/YYYY").toDate() > moment(end_date, "DD/MM/YYYY").toDate()){
+                return {
+                    dates: "Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày áp dụng"
+                };
+            }
+            // check time exist
             if(start_time !== '' || end_time !== ''){
+                // case select time but not select start date
                 if(start_date === ''){
                     return {
                         datempty: "Vui lòng nhập ngày áp dụng"
                     };
-                }else if(start_time === '' || end_time === ''){
+                }else if(start_time === '' || end_time === ''){ // case only start or end time, require select start and end time
                     return {
                         slectedtime: "Vui lòng nhập thời gian áp dụng/kết thúc"
                     };
                 }else{
-                    if(start_date === end_date && start_time >= end_time){
+                    // case start = end date, require start time >= end time
+                    if(start_date === end_date && start_time >= end_time){ 
                         return {
                             times: "Vui lòng nhập thời gian kết thúc lớn hơn thời gian áp dụng"
                         };
@@ -264,6 +265,7 @@ export class PromotionFormDetailComponent implements OnInit {
         @author: diemnguyen
     */
     saveEvent(): void {
+        // set and update valdiator, so error validate ng-datetime "owlDateTimeParse"
         this.promotionForm.controls['apply_date'].setValidators([DateValidators.validStartDate,
             DateValidators.formatEndDate]);
         this.promotionForm.controls['apply_date'].updateValueAndValidity();
@@ -277,44 +279,64 @@ export class PromotionFormDetailComponent implements OnInit {
             DateValidators.formatEndTime]);
         this.promotionForm.controls['end_time'].updateValueAndValidity();
 
+        // case form invalid, show error fields, scroll top
         if(this.promotionForm.invalid){
             ValidateSubmit.validateAllFormFields(this.promotionForm);
-            this.scrollTop();
+            this.scrollTop.scrollTopFom();
         }else{
+            // get value date, time by #id 
+            this.promotionForm.value.apply_date = $('#start_date').val();
+            this.promotionForm.value.end_date = $('#end_date').val();
             this.promotionForm.value.apply_time = $('#start_time').val();
             this.promotionForm.value.end_time = $('#end_time').val();
             this.errors = '';
             const that = this;
             // Convert FormGroup to FormData
             let promotionFormData = this.convertFormGroupToFormData(this.promotionForm);
+            let value_form = this.promotionForm.value;
             /*
                 Case 1: Promotion id is not null then call update service
                 Case 1: Promotion id is null then call save service
             */
             if(this.promotion.id) {
-                this.promotionService.updatePromotion(promotionFormData, this.promotion.id, this.lang).subscribe(
-                    (data) => {
-                        // popup edit pormotion at user promotion
-                        if(this.position === 'popup'){
-                            this.promotion = data;
-                            this.update_promotion.emit(this.promotion);
-                            $('#UpdatePromotion').modal('toggle');
-                            this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
-                        }else{
-                            // Navigate to promotion page where success
-                            this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
-                            that.router.navigate(['/promotions']);
-                        }
-                    }, 
-                    (error) => {
-                        if(error.code === 400){
-                            that.errors = error.message;
-                            this.scrollTop();
-                        }else{
-                            that.router.navigate(['/error']);
-                        }
+                if((value_form.is_clear_image === true && typeof(value_form.image) != 'string') ||
+                    (value_form.is_clear_image_thumbnail === true && typeof(value_form.image_thumbnail) != 'string')){
+                    // case field is image
+                    if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
+                        this.promotionForm.get('is_clear_image').setValue(false);
+                        this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                     }
-                );
+                    // case field is image thumbnail
+                    if(value_form.is_clear_image_thumbnail === true && typeof(value_form.image_thumbnail) != 'string'){
+                        this.promotionForm.get('is_clear_image_thumbnail').setValue(false);
+                        this.msg_clear_thumbnail = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                    }
+                    this.scrollTop.scrollTopFom();
+                }else{
+                    this.promotionService.updatePromotion(promotionFormData, this.promotion.id, this.lang).subscribe(
+                        (data) => {
+                            // popup edit pormotion at user promotion
+                            if(this.position === 'popup'){
+                                this.promotion = data;
+                                this.update_promotion.emit(this.promotion);
+                                $('#UpdatePromotion').modal('toggle');
+                                this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
+                            }else{
+                                // Navigate to promotion page where success
+                                this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
+                                that.router.navigate(['/promotions']);
+                            }
+                        }, 
+                        (error) => {
+                            if(error.code === 400){
+                                that.errors = error.message;
+                                this.scrollTop.scrollTopFom();
+                            }else{
+                                that.router.navigate(['/error']);
+                            }
+                        }
+                    );
+                }
             } else {
                 this.promotionService.savePromotion(promotionFormData, this.lang).subscribe(
                     (data) => {
@@ -325,7 +347,7 @@ export class PromotionFormDetailComponent implements OnInit {
                     (error) => {
                         if(error.code === 400){
                             that.errors = error.message;
-                            this.scrollTop();
+                            this.scrollTop.scrollTopFom();
                         }else{
                             that.router.navigate(['/error']);
                         }
@@ -333,14 +355,6 @@ export class PromotionFormDetailComponent implements OnInit {
                 );
             }
         }
-    }
-
-    /*
-        Function scrollTop(): creoll top when have validate
-        @author: Lam
-    */
-    scrollTop(){
-        $('html,body').animate({ scrollTop: $('.title').offset().top }, 'slow');
     }
 
     /*
@@ -386,6 +400,21 @@ export class PromotionFormDetailComponent implements OnInit {
     }
 
     /*
+        Function isDisable(): Check promotion not is_draft or end_date < date now and current user is not system admin
+        Author: Lam
+    */
+    isDisable(){
+        if(this.user_current && this.promotion && this.promotion.id){
+            let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
+            let end_date = this.promotion.end_date ? this.promotion.end_date : '';
+            if((this.promotion.is_draft === false || (end_date !== '' && end_date < date_now)) && this.user_current.role !== 1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
         Convert form group to form data to submit form
         @author: diemnguyen
     */
@@ -405,17 +434,11 @@ export class PromotionFormDetailComponent implements OnInit {
                     promotionFormData.append(k, '');
                 } else if (k === 'image' || k === 'image_thumbnail') {
                     promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
-                } else if (k === 'apply_date' || k === 'end_date') {
-                    promotionFormData.append(k, this.transformDate(promotionValues[k]));
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
                 }
             });
         }
         return promotionFormData;
-    }
-
-    transformDate(date) {
-        return date ? this.datePipe.transform(date, 'dd/MM/yyyy') : '';
     }
 }

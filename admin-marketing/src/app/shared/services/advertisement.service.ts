@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Http, Headers, Response, RequestOptions } from "@angular/http";
 
-import { Observable } from 'rxjs/Observable'; 
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 
@@ -17,21 +17,21 @@ export class AdvertisementService {
 	httpOptions: any;
 	token: any = '';
 
-	constructor(private http: Http){
+	constructor(private http: Http) {
 		this.token = localStorage.getItem('auth_token');
 
 		this.httpOptions = {
-            headers: new Headers({ 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
+			headers: new Headers({
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${this.token}`
+			})
+		};
 	}
 	/*
 		GET: Get All Advertiment From Service
 		@author: TrangLe
 	 */
-	getAllAdvertisement(lang): Observable<any>{
+	getAllAdvertisement(lang): Observable<any> {
 		let urlAdv = `${env.api_domain_root}/${lang}/api/${api.advertisement}`;
 		return this.http.get(urlAdv, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
@@ -39,11 +39,11 @@ export class AdvertisementService {
 	/*
 		POST: Add Advertiment
 		@author: TrangLe
-	 */ 
+	 */
 	addAdvertisement(adv: Advertisement, lang): Observable<Advertisement> {
 		let urlAdv = `${env.api_domain_root}/${lang}/api/${api.advertisement}`;
 		return this.http.post(urlAdv, adv, this.httpOptions)
-		.map((res: Response) => res.json()).catch(this.handleError);		
+			.map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	/*
@@ -55,20 +55,20 @@ export class AdvertisementService {
 		return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
-	deleteAdvById(id:number, lang): Observable<Advertisement> {
+	deleteAdvById(id: number, lang): Observable<Advertisement> {
 		const url = `${env.api_domain_root}/${lang}/api/${api.advertisement}${id}/`;
-		return this.http.delete(url,this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.delete(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
-	
+
 	/*
 		POST: Update detail Advertiment
 		@author: TrangLe
 	 */
-	updateAdv(adv, id:number, lang): Observable<Advertisement> {
+	updateAdv(adv, id: number, lang): Observable<Advertisement> {
 		// const id = adv.id;
 		var body = JSON.stringify(adv);
 		const url = `${env.api_domain_root}/${lang}/api/${api.advertisement}${id}/`;
-		return this.http.put(url,body, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.put(url, body, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 	/*
 		DELETE: Delete All Advertiment which checked box
@@ -77,14 +77,14 @@ export class AdvertisementService {
 	deleteAllAdvsSelected(adv_id, lang): Observable<any> {
 		let url = `${env.api_domain_root}/${lang}/api/${api.advertisement}`;
 		let param = {
-            adv_id: adv_id
-        }
-        let _options = new RequestOptions({
-            headers: this.httpOptions.headers,
-            body: JSON.stringify(param)
-        });
+			adv_id: adv_id
+		}
+		let _options = new RequestOptions({
+			headers: this.httpOptions.headers,
+			body: JSON.stringify(param)
+		});
 		return this.http.delete(url, _options)
-		.map((res: Response) => res.json()).catch(this.handleError);
+			.map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	// Handle error

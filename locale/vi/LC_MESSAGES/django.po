@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-30 15:01+0700\n"
+"POT-Creation-Date: 2018-04-04 15:39+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -641,16 +641,16 @@ msgid "Source barcode not link to any user"
 msgstr "Thẻ này chưa được liên kết với bất kỳ tài khoản nào"
 
 #: websites/api/dmz_message.py:9 websites/api_admin/views.py:954
-#: websites/api_admin/views.py:1000
+#: websites/api_admin/views.py:1003
 msgid "Bacode is required"
 msgstr "Bạn chưa nhập mã thẻ."
 
-#: websites/api/dmz_message.py:10 websites/api_admin/views.py:981
+#: websites/api/dmz_message.py:10 websites/api_admin/views.py:980
 msgid "Barcode not found."
 msgstr "Mã thẻ này không tồn tại."
 
-#: websites/api/dmz_message.py:11 websites/api_admin/views.py:984
-#: websites/api_admin/views.py:1109
+#: websites/api/dmz_message.py:11 websites/api_admin/views.py:983
+#: websites/api_admin/views.py:1110
 msgid "Card has no user."
 msgstr "Mã thẻ này chưa có user đăng ký."
 
@@ -672,57 +672,58 @@ msgstr "Lỗi truy vấn dữ liệu."
 #: websites/api_admin/views.py:730 websites/api_admin/views.py:744
 #: websites/api_admin/views.py:760 websites/api_admin/views.py:817
 #: websites/api_admin/views.py:852 websites/api_admin/views.py:932
-#: websites/api_admin/views.py:1004 websites/api_admin/views.py:1058
-#: websites/api_admin/views.py:1131 websites/api_admin/views.py:1156
-#: websites/api_admin/views.py:1186 websites/api_admin/views.py:1212
-#: websites/api_admin/views.py:1226 websites/api_admin/views.py:1243
-#: websites/api_admin/views.py:1284 websites/api_admin/views.py:1304
-#: websites/api_admin/views.py:1332 websites/api_admin/views.py:1350
-#: websites/api_admin/views.py:1360 websites/api_admin/views.py:1382
-#: websites/api_admin/views.py:1406 websites/api_admin/views.py:1420
-#: websites/api_admin/views.py:1438 websites/api_admin/views.py:1451
-#: websites/api_admin/views.py:1472 websites/api_admin/views.py:1487
-#: websites/api_admin/views.py:1519 websites/api_admin/views.py:1533
-#: websites/api_admin/views.py:1548 websites/api_admin/views.py:1561
-#: websites/api_admin/views.py:1582 websites/api_admin/views.py:1599
-#: websites/api_admin/views.py:1623 websites/api_admin/views.py:1636
-#: websites/api_admin/views.py:1655 websites/api_admin/views.py:1668
-#: websites/api_admin/views.py:1687 websites/api_admin/views.py:1703
-#: websites/api_admin/views.py:1727 websites/api_admin/views.py:1741
-#: websites/api_admin/views.py:1759 websites/api_admin/views.py:1772
-#: websites/api_admin/views.py:1793 websites/api_admin/views.py:1809
-#: websites/api_admin/views.py:1830 websites/api_admin/views.py:1853
-#: websites/api_admin/views.py:1866 websites/api_admin/views.py:1883
-#: websites/api_admin/views.py:1896 websites/api_admin/views.py:1916
-#: websites/api_admin/views.py:1932 websites/api_admin/views.py:1969
-#: websites/api_admin/views.py:2010 websites/api_admin/views.py:2031
-#: websites/api_admin/views.py:2059 websites/api_admin/views.py:2092
-#: websites/api_admin/views.py:2122 websites/api_admin/views.py:2141
-#: websites/api_admin/views.py:2161 websites/api_admin/views.py:2184
-#: websites/api_admin/views.py:2198 websites/api_admin/views.py:2216
-#: websites/api_admin/views.py:2229 websites/api_admin/views.py:2249
-#: websites/api_admin/views.py:2265 websites/api_admin/views.py:2285
-#: websites/api_admin/views.py:2306 websites/api_admin/views.py:2320
-#: websites/api_admin/views.py:2340 websites/api_admin/views.py:2361
-#: websites/api_admin/views.py:2396 websites/api_admin/views.py:2438
+#: websites/api_admin/views.py:1007 websites/api_admin/views.py:1059
+#: websites/api_admin/views.py:1132 websites/api_admin/views.py:1157
+#: websites/api_admin/views.py:1187 websites/api_admin/views.py:1213
+#: websites/api_admin/views.py:1227 websites/api_admin/views.py:1244
+#: websites/api_admin/views.py:1285 websites/api_admin/views.py:1305
+#: websites/api_admin/views.py:1333 websites/api_admin/views.py:1351
+#: websites/api_admin/views.py:1361 websites/api_admin/views.py:1383
+#: websites/api_admin/views.py:1407 websites/api_admin/views.py:1421
+#: websites/api_admin/views.py:1439 websites/api_admin/views.py:1452
+#: websites/api_admin/views.py:1473 websites/api_admin/views.py:1488
+#: websites/api_admin/views.py:1520 websites/api_admin/views.py:1534
+#: websites/api_admin/views.py:1549 websites/api_admin/views.py:1562
+#: websites/api_admin/views.py:1583 websites/api_admin/views.py:1600
+#: websites/api_admin/views.py:1624 websites/api_admin/views.py:1637
+#: websites/api_admin/views.py:1656 websites/api_admin/views.py:1669
+#: websites/api_admin/views.py:1688 websites/api_admin/views.py:1704
+#: websites/api_admin/views.py:1728 websites/api_admin/views.py:1742
+#: websites/api_admin/views.py:1760 websites/api_admin/views.py:1773
+#: websites/api_admin/views.py:1794 websites/api_admin/views.py:1810
+#: websites/api_admin/views.py:1831 websites/api_admin/views.py:1854
+#: websites/api_admin/views.py:1867 websites/api_admin/views.py:1884
+#: websites/api_admin/views.py:1897 websites/api_admin/views.py:1917
+#: websites/api_admin/views.py:1933 websites/api_admin/views.py:1970
+#: websites/api_admin/views.py:2011 websites/api_admin/views.py:2032
+#: websites/api_admin/views.py:2060 websites/api_admin/views.py:2093
+#: websites/api_admin/views.py:2123 websites/api_admin/views.py:2142
+#: websites/api_admin/views.py:2162 websites/api_admin/views.py:2185
+#: websites/api_admin/views.py:2199 websites/api_admin/views.py:2217
+#: websites/api_admin/views.py:2230 websites/api_admin/views.py:2250
+#: websites/api_admin/views.py:2266 websites/api_admin/views.py:2286
+#: websites/api_admin/views.py:2307 websites/api_admin/views.py:2321
+#: websites/api_admin/views.py:2341 websites/api_admin/views.py:2362
+#: websites/api_admin/views.py:2397 websites/api_admin/views.py:2436
 msgid "Internal Server Error"
 msgstr "Lỗi hệ thống."
 
 #: websites/api/dmz_message.py:14 websites/api/views.py:655
 #: websites/api/views.py:734 websites/api/views.py:787
 #: websites/api/views.py:840 websites/api/views.py:1477
+#: websites/api/views.py:1596
 msgid "Card id field is required."
 msgstr "Trường card_id không được bỏ trống."
 
-#: websites/api/dmz_message.py:15 websites/api_admin/views.py:1103
+#: websites/api/dmz_message.py:15 websites/api_admin/views.py:1104
 msgid "Card is used."
 msgstr "Thẻ này đã được sử dụng."
 
-#: websites/api/dmz_message.py:16 websites/api_admin/views.py:1105
+#: websites/api/dmz_message.py:16 websites/api_admin/views.py:1106
 msgid "Card is locked."
 msgstr "Thẻ này đã bị khóa."
 
-#: websites/api/dmz_message.py:18 websites/api_admin/views.py:1106
+#: websites/api/dmz_message.py:18 websites/api_admin/views.py:1107
 msgid "Card is invalid."
 msgstr "Thẻ không hợp lệ."
 
@@ -730,8 +731,8 @@ msgstr "Thẻ không hợp lệ."
 msgid "update userembed success"
 msgstr "Đã cập nhật thông tin thẻ Helio Embed thành công."
 
-#: websites/api/serializers.py:31 websites/api_admin/serializers.py:422
-#: websites/api_admin/serializers.py:459
+#: websites/api/serializers.py:31 websites/api_admin/serializers.py:429
+#: websites/api_admin/serializers.py:466
 msgid "This email is already taken. Please, try again"
 msgstr "Địa chỉ email đã tồn tại trong hệ thống. Vui lòng chọn email khác."
 
@@ -836,6 +837,7 @@ msgstr "Giá trị này phải là số nguyên."
 #: websites/api/views.py:710 websites/api/views.py:764
 #: websites/api/views.py:815 websites/api/views.py:868
 #: websites/api/views.py:1419 websites/api/views.py:1505
+#: websites/api/views.py:1624
 msgid "You don't have permission to access."
 msgstr "Bạn không có quyền truy cập."
 
@@ -981,10 +983,19 @@ msgstr "Vui lòng nhập vào ngày hợp lệ."
 msgid "This denomination is already taken"
 msgstr "Mệnh giá nạp tiền này đã tồn tại."
 
-#: websites/api_admin/serializers.py:215 websites/api_admin/serializers.py:433
-#: websites/api_admin/serializers.py:471
+#: websites/api_admin/serializers.py:171
+msgid "Denomination exceed the permitted value."
+msgstr "Mệnh giá nạp tiền vượt quá giá trị cho phép."
+
+#: websites/api_admin/serializers.py:215 websites/api_admin/serializers.py:440
+#: websites/api_admin/serializers.py:478
 msgid "Birthday must less then today"
 msgstr "Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại."
+
+#: websites/api_admin/serializers.py:219
+#| msgid "Denomination exceed the permitted value."
+msgid "Fee exceed the permitted value."
+msgstr "Phí giao dịch vượt quá giá trị cho phép."
 
 #: websites/api_admin/serializers.py:230
 msgid "Fee already is exist."
@@ -1000,23 +1011,23 @@ msgstr "Vui lòng nhập thời gian kết thúc lớn hơn thời gian bắt đ
 
 # msgid "This field is required."
 # msgstr "Trường này là bắt buộc."
-#: websites/api_admin/serializers.py:385
+#: websites/api_admin/serializers.py:392
 msgid "This question is exist."
 msgstr "Câu hỏi đã tồn tại."
 
-#: websites/api_admin/serializers.py:395
+#: websites/api_admin/serializers.py:402
 msgid "This category is unvalid"
 msgstr "Danh mục này không hợp lệ."
 
-#: websites/api_admin/serializers.py:416 websites/api_admin/serializers.py:453
+#: websites/api_admin/serializers.py:423 websites/api_admin/serializers.py:460
 msgid "This phone is already taken"
 msgstr "Số điện thoại này đã tồn tại."
 
-#: websites/api_admin/serializers.py:478
+#: websites/api_admin/serializers.py:485
 msgid "Cannot change password of customer user"
 msgstr "Không thể thay đổi mật khẩu của Customer User."
 
-#: websites/api_admin/serializers.py:531
+#: websites/api_admin/serializers.py:538
 msgid "Hot Ads has name already exist"
 msgstr "Hot Ads có Tên đã tồn tại."
 
@@ -1024,7 +1035,7 @@ msgstr "Hot Ads có Tên đã tồn tại."
 msgid "Email is required."
 msgstr "Bạn chưa nhập email."
 
-#: websites/api_admin/views.py:293 websites/api_admin/views.py:1126
+#: websites/api_admin/views.py:293 websites/api_admin/views.py:1127
 msgid "Email Not Found."
 msgstr "Email không tồn tại."
 
@@ -1032,125 +1043,124 @@ msgstr "Email không tồn tại."
 msgid "update user success"
 msgstr "Đã cập nhật thông tin tài khoản Helio App thành công."
 
-#: websites/api_admin/views.py:312 websites/api_admin/views.py:1151
+#: websites/api_admin/views.py:312 websites/api_admin/views.py:1152
 msgid "Not Found User."
 msgstr "User không tồn tại"
 
 #: websites/api_admin/views.py:367 websites/api_admin/views.py:412
 #: websites/api_admin/views.py:486 websites/api_admin/views.py:566
 #: websites/api_admin/views.py:614 websites/api_admin/views.py:654
-#: websites/api_admin/views.py:694 websites/api_admin/views.py:1204
-#: websites/api_admin/views.py:1237 websites/api_admin/views.py:1300
-#: websites/api_admin/views.py:1357 websites/api_admin/views.py:1445
-#: websites/api_admin/views.py:1482 websites/api_admin/views.py:1555
-#: websites/api_admin/views.py:1593 websites/api_admin/views.py:1662
-#: websites/api_admin/views.py:1697 websites/api_admin/views.py:1766
-#: websites/api_admin/views.py:1803 websites/api_admin/views.py:1890
-#: websites/api_admin/views.py:1926 websites/api_admin/views.py:2053
-#: websites/api_admin/views.py:2136 websites/api_admin/views.py:2223
-#: websites/api_admin/views.py:2259 websites/api_admin/views.py:2336
+#: websites/api_admin/views.py:694 websites/api_admin/views.py:1205
+#: websites/api_admin/views.py:1238 websites/api_admin/views.py:1301
+#: websites/api_admin/views.py:1358 websites/api_admin/views.py:1446
+#: websites/api_admin/views.py:1483 websites/api_admin/views.py:1556
+#: websites/api_admin/views.py:1594 websites/api_admin/views.py:1663
+#: websites/api_admin/views.py:1698 websites/api_admin/views.py:1767
+#: websites/api_admin/views.py:1804 websites/api_admin/views.py:1891
+#: websites/api_admin/views.py:1927 websites/api_admin/views.py:2054
+#: websites/api_admin/views.py:2137 websites/api_admin/views.py:2224
+#: websites/api_admin/views.py:2260 websites/api_admin/views.py:2337
 #: websites/api_admin/views.py:2426 websites/api_admin/views.py:2430
 msgid "success"
 msgstr "Thành công"
 
 #: websites/api_admin/views.py:567 websites/api_admin/views.py:615
-#: websites/api_admin/views.py:2056 websites/api_admin/views.py:2138
+#: websites/api_admin/views.py:2057 websites/api_admin/views.py:2139
 msgid "Just System Admin accept delete"
 msgstr "Chỉ có System Admin mới được quyền xóa."
 
-#: websites/api_admin/views.py:1089
+#: websites/api_admin/views.py:1090
 msgid "User is related."
 msgstr "Tài khoản Helio App này đã liên kết. Vui lòng kiểm tra lại."
 
-#: websites/api_admin/views.py:1099
+#: websites/api_admin/views.py:1100
 msgid "Barcode not found"
 msgstr "Mã thẻ này không tồn tại."
 
-#: websites/api_admin/views.py:1114
+#: websites/api_admin/views.py:1115
 msgid "Userembed is related."
 msgstr "Mã thẻ đã được liên kết."
 
-#: websites/api_admin/views.py:1121
+#: websites/api_admin/views.py:1122
 msgid "relate success"
 msgstr "Liên kết thẻ thành công."
 
-#: websites/api_admin/views.py:1123
+#: websites/api_admin/views.py:1124
 msgid "Email and barcode is required"
 msgstr "Trường email và mã thẻ không được bỏ trống."
 
-#: websites/api_admin/views.py:1147
+#: websites/api_admin/views.py:1148
 msgid "cancel relate success"
 msgstr "Xóa thẻ liên kết thành công."
 
-#: websites/api_admin/views.py:1148
+#: websites/api_admin/views.py:1149
 msgid "User is not related"
 msgstr "User chưa được liên kết."
 
-#: websites/api_admin/views.py:1238
+#: websites/api_admin/views.py:1239
 msgid "Not Found Fee"
 msgstr "Phí không tồn tại."
 
-#: websites/api_admin/views.py:1239
+#: websites/api_admin/views.py:1240
 msgid "Not Found list_id"
 msgstr "list_id không tồn tại."
 
-#: websites/api_admin/views.py:1402 websites/api_admin/views.py:1434
-#: websites/api_admin/views.py:1448 websites/api_admin/views.py:1483
+#: websites/api_admin/views.py:1403 websites/api_admin/views.py:1435
+#: websites/api_admin/views.py:1449 websites/api_admin/views.py:1484
 msgid "Not Found Event."
 msgstr "Sự Kiện không tồn tại."
 
-#: websites/api_admin/views.py:1484 websites/api_admin/views.py:1595
-#: websites/api_admin/views.py:1699 websites/api_admin/views.py:1805
-#: websites/api_admin/views.py:1928 websites/api_admin/views.py:2261
-#: websites/api_admin/views.py:2432
+#: websites/api_admin/views.py:1485 websites/api_admin/views.py:1596
+#: websites/api_admin/views.py:1700 websites/api_admin/views.py:1806
+#: websites/api_admin/views.py:1929 websites/api_admin/views.py:2262
 msgid "Not Found list_id."
 msgstr "list_id không tồn tại."
 
-#: websites/api_admin/views.py:1516 websites/api_admin/views.py:1558
-#: websites/api_admin/views.py:1594
+#: websites/api_admin/views.py:1517 websites/api_admin/views.py:1559
+#: websites/api_admin/views.py:1595
 msgid "Not Found Promotion Label."
 msgstr "Nhãn Khuyến Mãi không tồn tại."
 
-#: websites/api_admin/views.py:1620 websites/api_admin/views.py:1651
-#: websites/api_admin/views.py:1665 websites/api_admin/views.py:1698
+#: websites/api_admin/views.py:1621 websites/api_admin/views.py:1652
+#: websites/api_admin/views.py:1666 websites/api_admin/views.py:1699
 msgid "Not Found Hot."
 msgstr "Hot không tồn tại."
 
-#: websites/api_admin/views.py:1723 websites/api_admin/views.py:1769
+#: websites/api_admin/views.py:1724 websites/api_admin/views.py:1770
 msgid "Not Found Post."
 msgstr "Bài viết không tồn tại."
 
-#: websites/api_admin/views.py:1804
+#: websites/api_admin/views.py:1805
 msgid "Not Found Posts."
 msgstr "Bài viết không tồn tại."
 
-#: websites/api_admin/views.py:1850 websites/api_admin/views.py:1880
-#: websites/api_admin/views.py:1893
+#: websites/api_admin/views.py:1851 websites/api_admin/views.py:1881
+#: websites/api_admin/views.py:1894
 msgid "Not Found FAQ."
 msgstr "FAQ không tồn tại."
 
-#: websites/api_admin/views.py:1927
+#: websites/api_admin/views.py:1928
 msgid "Not Found FAQs."
 msgstr "FAQs không tồn tại"
 
-#: websites/api_admin/views.py:2108
+#: websites/api_admin/views.py:2109
 msgid "This function is only for System Admin"
 msgstr "Chức năng này chỉ dành cho System Admin."
 
-#: websites/api_admin/views.py:2113
+#: websites/api_admin/views.py:2114
 msgid "Just System Admin Change password"
 msgstr "Chỉ có System Admin mới được quyền thay đổi được mật khẩu."
 
-#: websites/api_admin/views.py:2181 websites/api_admin/views.py:2213
-#: websites/api_admin/views.py:2226
+#: websites/api_admin/views.py:2182 websites/api_admin/views.py:2214
+#: websites/api_admin/views.py:2227
 msgid "Not Found Game."
 msgstr "Trò chơi không tồn tại."
 
-#: websites/api_admin/views.py:2260
+#: websites/api_admin/views.py:2261
 msgid "Not Found Games."
 msgstr "Trò chơi không tồn tại"
 
-#: websites/api_admin/views.py:2393 websites/api_admin/views.py:2435
+#: websites/api_admin/views.py:2394 websites/api_admin/views.py:2433
 msgid "Not Found Role."
 msgstr "Role không tồn tại"
 
@@ -1184,7 +1194,7 @@ msgstr "Địa chỉ email"
 msgid "Birth date"
 msgstr "Ngày sinh"
 
-#: websites/core/custom_models.py:57 websites/core/models.py:284
+#: websites/core/custom_models.py:57 websites/core/models.py:286
 msgid "Phone"
 msgstr "Số điện thoại"
 
@@ -1249,20 +1259,20 @@ msgstr "Ngày tạo"
 #: websites/core/models.py:34 websites/core/models.py:60
 #: websites/core/models.py:110 websites/core/models.py:129
 #: websites/core/models.py:148 websites/core/models.py:161
-#: websites/core/models.py:232 websites/core/models.py:262
-#: websites/core/models.py:282 websites/core/models.py:307
-#: websites/core/models.py:334 websites/core/models.py:347
-#: websites/core/models.py:399 websites/core/models.py:467
-#: websites/core/models.py:481 websites/core/models.py:501
-#: websites/core/models.py:515
+#: websites/core/models.py:234 websites/core/models.py:264
+#: websites/core/models.py:284 websites/core/models.py:309
+#: websites/core/models.py:336 websites/core/models.py:349
+#: websites/core/models.py:401 websites/core/models.py:469
+#: websites/core/models.py:483 websites/core/models.py:503
+#: websites/core/models.py:517
 msgid "Name"
 msgstr "Tên"
 
 #: websites/core/models.py:35 websites/core/models.py:72
 #: websites/core/models.py:88 websites/core/models.py:113
 #: websites/core/models.py:133 websites/core/models.py:163
-#: websites/core/models.py:234 websites/core/models.py:247
-#: websites/core/models.py:375 websites/core/models.py:482
+#: websites/core/models.py:236 websites/core/models.py:249
+#: websites/core/models.py:377 websites/core/models.py:484
 msgid "Image"
 msgstr "hình ảnh"
 
@@ -1275,7 +1285,7 @@ msgstr ""
 
 #: websites/core/models.py:38 websites/core/models.py:93
 #: websites/core/models.py:112 websites/core/models.py:167
-#: websites/core/models.py:486
+#: websites/core/models.py:488
 msgid "Content"
 msgstr "Liên hệ"
 
@@ -1324,12 +1334,12 @@ msgstr "Mgày kết thúc"
 msgid "Start time"
 msgstr "Giờ bắt đầu"
 
-#: websites/core/models.py:97
+#: websites/core/models.py:97 websites/core/models.py:184
 msgid "End time"
 msgstr "Miờ kết thúc"
 
 #: websites/core/models.py:98 websites/core/models.py:117
-#: websites/core/models.py:179 websites/core/models.py:485
+#: websites/core/models.py:179 websites/core/models.py:487
 msgid "Is draft"
 msgstr "Bản nháp"
 
@@ -1341,8 +1351,8 @@ msgstr "Sự Kiện"
 msgid "Game"
 msgstr "Trò Chơi"
 
-#: websites/core/models.py:135 websites/core/models.py:233
-#: websites/core/models.py:248 websites/core/models.py:376
+#: websites/core/models.py:135 websites/core/models.py:235
+#: websites/core/models.py:250 websites/core/models.py:378
 msgid "Sub url"
 msgstr "Sub url"
 
@@ -1374,176 +1384,182 @@ msgstr "Mã QR"
 msgid "Is save"
 msgstr "Lưu"
 
-#: websites/core/models.py:188 websites/core/models.py:189
+#: websites/core/models.py:183
+#, fuzzy
+#| msgid "Apply Date"
+msgid "Apply time"
+msgstr "Ngày áp dụng"
+
+#: websites/core/models.py:190 websites/core/models.py:191
 msgid "Promotion"
 msgstr "Khuyến Mãi"
 
-#: websites/core/models.py:217
+#: websites/core/models.py:219
 msgid "Question"
 msgstr "Câu hỏi"
 
-#: websites/core/models.py:218 websites/core/models.py:294
+#: websites/core/models.py:220 websites/core/models.py:296
 msgid "Answer"
 msgstr "Đã trả lời"
 
-#: websites/core/models.py:226 websites/core/models.py:227
+#: websites/core/models.py:228 websites/core/models.py:229
 msgid "FAQ"
 msgstr "Câu hỏi thường gặp"
 
-#: websites/core/models.py:235 websites/core/models.py:249
-#: websites/core/models.py:335
+#: websites/core/models.py:237 websites/core/models.py:251
+#: websites/core/models.py:337
 msgid "Is show"
 msgstr "Hiển thị"
 
-#: websites/core/models.py:241 websites/core/models.py:242
+#: websites/core/models.py:243 websites/core/models.py:244
 msgid "Hot"
 msgstr "Hot"
 
-#: websites/core/models.py:250 websites/core/models.py:438
+#: websites/core/models.py:252 websites/core/models.py:440
 msgid "Position"
 msgstr "Vị trí"
 
-#: websites/core/models.py:256 websites/core/models.py:257
+#: websites/core/models.py:258 websites/core/models.py:259
 msgid "Banner"
 msgstr "Banner"
 
-#: websites/core/models.py:263 websites/core/models.py:283
-#: websites/core/models.py:287
+#: websites/core/models.py:265 websites/core/models.py:285
+#: websites/core/models.py:289
 msgid "Email"
 msgstr "Email"
 
-#: websites/core/models.py:264 websites/core/models.py:285
-#: websites/core/models.py:373
+#: websites/core/models.py:266 websites/core/models.py:287
+#: websites/core/models.py:375
 msgid "Subject"
 msgstr "Chủ đề"
 
-#: websites/core/models.py:265 websites/core/models.py:286
-#: websites/core/models.py:374
+#: websites/core/models.py:267 websites/core/models.py:288
+#: websites/core/models.py:376
 msgid "Message"
 msgstr "Tin nhắn"
 
-#: websites/core/models.py:274
+#: websites/core/models.py:276
 msgid "Feedback"
 msgstr "Phản hồi"
 
-#: websites/core/models.py:275
+#: websites/core/models.py:277
 msgid "Contact"
 msgstr "Liên hệ"
 
-#: websites/core/models.py:278
+#: websites/core/models.py:280
 msgid "No Process"
 msgstr "Chưa xử lý"
 
-#: websites/core/models.py:279
+#: websites/core/models.py:281
 msgid "Answered"
 msgstr "Đã trả lời"
 
-#: websites/core/models.py:280
+#: websites/core/models.py:282
 msgid "Moved to related department"
 msgstr "Đã chuyển đến bộ phận liên quan"
 
-#: websites/core/models.py:289 websites/core/models.py:383
+#: websites/core/models.py:291 websites/core/models.py:385
 msgid "Sent Date"
 msgstr "Ngày gửi"
 
-#: websites/core/models.py:290
+#: websites/core/models.py:292
 msgid "Feedback type"
 msgstr "Phản hồi"
 
-#: websites/core/models.py:292
+#: websites/core/models.py:294
 msgid "Status"
 msgstr "Trạng thái"
 
-#: websites/core/models.py:301 websites/core/models.py:302
+#: websites/core/models.py:303 websites/core/models.py:304
 msgid "FeedBack"
 msgstr "Phản hồi"
 
-#: websites/core/models.py:313 websites/core/models.py:314
+#: websites/core/models.py:315 websites/core/models.py:316
 msgid "Transaction Type"
 msgstr ""
 
-#: websites/core/models.py:328 websites/core/models.py:329
+#: websites/core/models.py:330 websites/core/models.py:331
 msgid "Gift"
 msgstr "Quà tặng"
 
-#: websites/core/models.py:341 websites/core/models.py:342
+#: websites/core/models.py:343 websites/core/models.py:344
 msgid "Advertisement"
 msgstr "Quảng cáo"
 
-#: websites/core/models.py:353 websites/core/models.py:354
+#: websites/core/models.py:355 websites/core/models.py:356
 msgid "Promotion Label"
 msgstr "Nhãn Khuyến Mãi"
 
-#: websites/core/models.py:367 websites/core/models.py:368
+#: websites/core/models.py:369 websites/core/models.py:370
 msgid "Open Time"
 msgstr "Giờ mở cửa"
 
-#: websites/core/models.py:379
+#: websites/core/models.py:381
 msgid "Is QR code"
 msgstr "Mã QR"
 
-#: websites/core/models.py:393 websites/core/models.py:394
+#: websites/core/models.py:395 websites/core/models.py:396
 msgid "Notification"
 msgstr "Thông báo"
 
-#: websites/core/models.py:405 websites/core/models.py:406
+#: websites/core/models.py:407 websites/core/models.py:408
 msgid "Category Notification"
 msgstr "Danh mục thông báo"
 
-#: websites/core/models.py:413
+#: websites/core/models.py:415
 msgid "Is read"
 msgstr "Đọc"
 
-#: websites/core/models.py:419 websites/core/models.py:420
+#: websites/core/models.py:421 websites/core/models.py:422
 msgid "User Notification"
 msgstr "Gửi thông báo"
 
-#: websites/core/models.py:433
+#: websites/core/models.py:435
 msgid "Ticket transfer fee"
 msgstr "Phí Chuyển Ticket"
 
-#: websites/core/models.py:434
+#: websites/core/models.py:436
 msgid "Deposit fee"
 msgstr "Phí Nạp Tiền"
 
-#: websites/core/models.py:436 websites/core/models.py:444
-#: websites/core/models.py:445
+#: websites/core/models.py:438 websites/core/models.py:446
+#: websites/core/models.py:447
 msgid "Fee"
 msgstr "Phí giao dịch"
 
-#: websites/core/models.py:437
+#: websites/core/models.py:439
 msgid "Fee type"
 msgstr "Loại phí giao dịch"
 
-#: websites/core/models.py:440
+#: websites/core/models.py:442
 msgid "Is apply"
 msgstr "Áp dụng"
 
-#: websites/core/models.py:461 websites/core/models.py:462
+#: websites/core/models.py:463 websites/core/models.py:464
 msgid "Denomination"
 msgstr "Mệnh gía"
 
-#: websites/core/models.py:476 websites/core/models.py:477
+#: websites/core/models.py:478 websites/core/models.py:479
 msgid "Promotion Type"
 msgstr "Loại Khuyến Mãi"
 
-#: websites/core/models.py:484
+#: websites/core/models.py:486
 msgid "Is view detail"
 msgstr "Xem chi tiết"
 
-#: websites/core/models.py:487
+#: websites/core/models.py:489
 msgid "Sub url register"
 msgstr ""
 
-#: websites/core/models.py:488
+#: websites/core/models.py:490
 msgid "Sub url view detail"
 msgstr "Xem chi tiết"
 
-#: websites/core/models.py:495 websites/core/models.py:496
+#: websites/core/models.py:497 websites/core/models.py:498
 msgid "Hot Advs"
 msgstr ""
 
-#: websites/core/models.py:517
+#: websites/core/models.py:519
 msgid "Permission"
 msgstr "Quyền"
 

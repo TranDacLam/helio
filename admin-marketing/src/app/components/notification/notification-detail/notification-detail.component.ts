@@ -4,7 +4,6 @@ import { Notification } from '../../../shared/class/notification';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { Promotion } from './../../../shared/class/promotion';
 import { PromotionService } from './../../../shared/services/promotion.service';
-import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { ToastrService } from 'ngx-toastr';
@@ -59,7 +58,6 @@ export class NotificationDetailComponent implements OnInit {
         // get current user
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
-            this.disableAllTable();
         },300);
         
     }
@@ -110,13 +108,6 @@ export class NotificationDetailComponent implements OnInit {
                 this.router.navigate(['/error', { message: error.message}]);
             }
         );
-    }
-
-    disableAllTable(){
-        if(this.promotion_id){
-            $(".multiselect_user table tr input:checkbox, .multiselect_user button").prop('disabled', 'disabled');
-            $(".multiselect_footer button").prop('disabled', 'disabled');
-        }
     }
 
     /*

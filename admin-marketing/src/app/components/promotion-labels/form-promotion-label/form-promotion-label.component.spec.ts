@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormPromotionLabelComponent } from './edit-promotion-label.component';
+import { FormPromotionLabelComponent } from './form-promotion-label.component';
 
 describe('FormPromotionLabelComponent', () => {
   let component: FormPromotionLabelComponent;

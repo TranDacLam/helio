@@ -1,4 +1,4 @@
-import { FormArray, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { FormControl, ValidationErrors } from '@angular/forms';
 
 
 export class NumberValidators {
@@ -37,6 +37,26 @@ export class NumberValidators {
             return {
                 'phoneValidate': {
                     'message': 'Chứng minh nhân dân không hợp lệ'
+                }
+            };
+        }
+        return null;    
+    }
+
+    /*
+        Validate fee bumber
+        @author: Trangle 
+    */
+    static validateFee(c: FormControl):ValidationErrors {
+        // Allows only numerals betwen 
+        let feeRegx =  /^[0-9,]+$/;
+        let fee = c.value;
+        let feeValues = fee ? fee.match(feeRegx) : '';
+
+        if(feeValues === null && fee !== '') {
+            return {
+                'feeValidate': {
+                    'message': ' Phí giao dịch không hợp lệ'
                 }
             };
         }
