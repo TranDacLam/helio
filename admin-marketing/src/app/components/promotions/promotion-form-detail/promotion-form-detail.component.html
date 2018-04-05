@@ -45,6 +45,7 @@
             <p *ngIf="promotion.image" class="clear_image">
                 <input type="checkbox" formControlName="is_clear_image"/> Xóa
             </p>
+            <p *ngIf="msg_clear_image" class="error_msg">{{msg_clear_image}}</p>
             <input type="file" class="form-control-file" id="image" accept="image/*" (change)="onFileChange($event)" />
             <ul class="error_valid" 
                 *ngIf="promotionForm.get('image') && promotionForm.get('image')?.errors">
@@ -66,6 +67,7 @@
             <p *ngIf="promotion.image_thumbnail" class="clear_image">
                 <input type="checkbox" formControlName="is_clear_image_thumbnail"/> Xóa
             </p>
+            <p *ngIf="msg_clear_thumbnail" class="error_msg">{{msg_clear_thumbnail}}</p>
             <input type="file" class="form-control-file" accept="image/*" id="image_thumbnail" (change)="onFileChange($event)"/>
             <ul class="error_valid" 
                 *ngIf="promotionForm.get('image_thumbnail') && promotionForm.get('image_thumbnail')?.errors">
@@ -212,7 +214,7 @@
         </div>
         <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="promotionForm.get('end_time')"></show-error-valid>
-            <ul *ngIf="promotionForm.errors && !promotionForm.get('end_time').errors?.fomatDate && 
+            <ul *ngIf="!promotionForm.get('end_time').errors?.fomatDate && 
                 !promotionForm.get('apply_time').errors?.fomatDate">
                 <li style="color: red">
                     {{ promotionForm.errors?.datempty ? 'Vui lòng nhập ngày áp dụng': '' }}

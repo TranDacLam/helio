@@ -56,6 +56,8 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
     selected = true;
 
     api_domain:string = "";
+    msg_clear_image = '';
+    msg_clear_thumbnail = '';
 
     errors: any = "";
     apply_date: Date = new Date();
@@ -291,34 +293,50 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
             const that = this;
             // Convert FormGroup to FormData
             let promotionFormData = this.convertFormGroupToFormData(this.promotionForm);
+            let value_form = this.promotionForm.value;
             /*
                 Case 1: Promotion id is not null then call update service
                 Case 1: Promotion id is null then call save service
             */
             if(this.promotion.id) {
-                this.promotionService.updatePromotion(promotionFormData, this.promotion.id, this.lang).subscribe(
-                    (data) => {
-                        // popup edit pormotion at user promotion
-                        if(this.position === 'popup'){
-                            this.promotion = data;
-                            this.update_promotion.emit(this.promotion);
-                            $('#UpdatePromotion').modal('toggle');
-                            this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
-                        }else{
-                            // Navigate to promotion page where success
-                            this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
-                            that.router.navigate(['/promotions']);
-                        }
-                    }, 
-                    (error) => {
-                        if(error.code === 400){
-                            that.errors = error.message;
-                            this.scrollTop.scrollTopFom();
-                        }else{
-                            that.router.navigate(['/error']);
-                        }
+                if((value_form.is_clear_image === true && typeof(value_form.image) != 'string') ||
+                    (value_form.is_clear_image_thumbnail === true && typeof(value_form.image_thumbnail) != 'string')){
+                    // case field is image
+                    if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
+                        this.promotionForm.get('is_clear_image').setValue(false);
+                        this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                     }
-                );
+                    // case field is image thumbnail
+                    if(value_form.is_clear_image_thumbnail === true && typeof(value_form.image_thumbnail) != 'string'){
+                        this.promotionForm.get('is_clear_image_thumbnail').setValue(false);
+                        this.msg_clear_thumbnail = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                    }
+                    this.scrollTop.scrollTopFom();
+                }else{
+                    this.promotionService.updatePromotion(promotionFormData, this.promotion.id, this.lang).subscribe(
+                        (data) => {
+                            // popup edit pormotion at user promotion
+                            if(this.position === 'popup'){
+                                this.promotion = data;
+                                this.update_promotion.emit(this.promotion);
+                                $('#UpdatePromotion').modal('toggle');
+                                this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
+                            }else{
+                                // Navigate to promotion page where success
+                                this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
+                                that.router.navigate(['/promotions']);
+                            }
+                        }, 
+                        (error) => {
+                            if(error.code === 400){
+                                that.errors = error.message;
+                                this.scrollTop.scrollTopFom();
+                            }else{
+                                that.router.navigate(['/error']);
+                            }
+                        }
+                    );
+                }
             } else {
                 this.promotionService.savePromotion(promotionFormData, this.lang).subscribe(
                     (data) => {

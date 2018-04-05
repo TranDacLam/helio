@@ -84,9 +84,9 @@ export class DateValidators {
         };
         // get time by #id
         let time = $('#'+str_time).val() ? String($('#'+str_time).val()) : '';
-        // handle case get time is 08:21, 2018
-        if(time.indexOf(',') !== -1){
-            time = time.substr(0,time.indexOf(','));
+        // handle case get time is 3/42018 10:20
+        if(time.indexOf('/') !== -1){
+            time = time.substr((time.indexOf(' ') + 1) , time.length);
         }
         // time exist
         if(time){
@@ -211,9 +211,9 @@ export class DateValidators {
         let validatePattern = /^(\d{1,2})(:)(\d{2})$/;
         // get time by #id
         let getValTime = String($('#'+str_time).val());
-        // handle case get time is 08:21, 2018
-        if(getValTime.indexOf(',') !== -1){
-            getValTime = getValTime.substr(0,getValTime.indexOf(','));
+        // handle case get time is 3/42018 10:20
+        if(getValTime.indexOf('/') !== -1){
+            getValTime = getValTime.substr((getValTime.indexOf(' ') + 1) , getValTime.length);
         }
         // match to check time have correct format
         let timeValues = getValTime.match(validatePattern);
@@ -254,9 +254,9 @@ export class DateValidators {
     requiredTime(str_time){
         // get time by #id
         let getValTime = String($('#'+str_time).val());
-        // handle case get time is 08:21, 2018
-        if(getValTime.indexOf(',') !== -1){
-            getValTime = getValTime.substr(0,getValTime.indexOf(','));
+        // handle case get time is 3/42018 10:20
+        if(getValTime.indexOf('/') !== -1){
+            getValTime = getValTime.substr((getValTime.indexOf(' ') + 1) , getValTime.length);
         }
         // check time val === ''
         if(getValTime === ''){
