@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Customer } from '../../../shared/class/customer';
 import { LinkCardService } from '../../../shared/services/link-card.service';
 import { DateValidators } from './../../../shared/validators/date-validators';
@@ -80,6 +80,7 @@ export class FormUserEmbedComponent implements OnInit {
         let barcode = parseInt(value);
         this.linkCardService.getBarcode(barcode).subscribe(
             (data) => {
+                // case cards_state is a number
                 if(typeof(data.cards_state) === 'number'){
                     this.user_embed = data;
                     this.embedForm.setValue({
@@ -92,16 +93,20 @@ export class FormUserEmbedComponent implements OnInit {
                         address: this.user_embed.address
                     });
                 }
+                // case cards_state = 0, id card exist
                 if(data.cards_state === 0){
-                    this.errorMessage = '';
-                    this.is_disable_checkbox = false;
-                    this.is_disabled_btn_embed = false;
-                    this.is_btn_linkcard_embed.emit(this.is_disabled_btn_embed);
-                }else if(data.cards_state === 1){
+                    if(data.is_related === true){
+                        this.errorMessage = 'Mã thẻ này đã liên kết.';
+                        this.disabledEmbed(true);
+                    }else{
+                        this.errorMessage = '';
+                        this.disabledEmbed(false);
+                    }
+                }else if(data.cards_state === 1){ // case cards_state = 1, id card lock
                     this.errorMessage = 'Mã thẻ này đã bị khóa. Vui lòng liên kết với mã thẻ khác.';
-                }else if(data.cards_state === 2){
+                }else if(data.cards_state === 2){ // case cards_state = 1, id card replaced
                     this.errorMessage = 'Mã thẻ này đã bị thay thế. Vui lòng liên kết với mã thẻ khác.';
-                }else{
+                }else{ // case cards_state = 1, id card invalid
                     this.errorMessage = 'Mã thẻ này không hợp lệ.';
                     this.embedForm.setValue({
                         barcode: null,
@@ -113,20 +118,19 @@ export class FormUserEmbedComponent implements OnInit {
                         address: null
                     });
                 }
+                // disabled checkbox, button when id card lock, replaced, invalid
                 if(data.cards_state !== 0){
-                    this.is_disable_checkbox = true;
-                    this.is_disabled_btn_embed = true;
-                    this.is_btn_linkcard_embed.emit(this.is_disabled_btn_embed);
+                    this.disabledEmbed(true);
                 }
                 this.msg_error = null;
+                // emit to parent set object status error 
                 this.is_submit.emit(true);
             },
             (error) => { 
                 this.msg_error = null;
                 this.errorMessage = error.message; 
-                this.is_disable_checkbox = true;
-                this.is_disabled_btn_embed = true;
-                this.is_btn_linkcard_embed.emit(this.is_disabled_btn_embed);
+                this.disabledEmbed(true);
+                // emit to parent set object status error 
                 this.is_submit.emit(true);
                 this.embedForm.setValue({
                     barcode: null,
@@ -139,6 +143,24 @@ export class FormUserEmbedComponent implements OnInit {
                 });
             } 
         );
+    }
+
+    /*
+        Function disabledEmbed(): disabled checkbox, button, emit to parent
+        Author: Lam
+    */
+    disabledEmbed(event){
+        if(event === true){
+            this.is_disable_checkbox = true;
+            this.is_disabled_btn_embed = true;
+            // emit to parent, disable/undisable button link card
+            this.is_btn_linkcard_embed.emit(this.is_disabled_btn_embed);
+        }else{
+            this.is_disable_checkbox = false;
+            this.is_disabled_btn_embed = false;
+            // emit to parent, disable/undisable button link card
+            this.is_btn_linkcard_embed.emit(this.is_disabled_btn_embed);
+        }
     }
 
     /*
@@ -170,6 +192,7 @@ export class FormUserEmbedComponent implements OnInit {
         Author: Lam
     */
     onSubmitEmbed(){
+        // case form invalid, show error fields, scroll top
         if(this.embedForm.invalid){
             ValidateSubmit.validateAllFormFields(this.embedForm);
         }else{
@@ -178,11 +201,14 @@ export class FormUserEmbedComponent implements OnInit {
                     this.searchBarcode(this.embedForm.value.barcode);
                     this.toastr.success(`${data.message}`);
                     this.msg_error = null;
+                    // emit to parent set object status error
                     this.is_submit.emit(true);
                 },
                 (error) => {
+                    // code 400, error validate
                     if(error.code === 400){
                         this.msg_error = error.message;
+                        // emit to parent set object status error  
                         this.is_submit.emit(true);
                     }else{
                         this.router.navigate(['/error', { message: error.message}]);

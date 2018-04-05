@@ -40,6 +40,7 @@ export class ShowErrorValidComponent implements OnInit {
        'fomatFile': (params) => params.message,
        'requiredSelectedRole': (params) => params.message,
        'errorBefore1900':(params) => params.message,
+       'feeValidate': (params) => params.message,
     };
 
     @Input()

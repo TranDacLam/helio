@@ -66,10 +66,7 @@
                             />
                         </td>
                         <td>{{ promotion.id }}</td>
-                        <td *ngIf="isCheckDisplay(promotion)">
-                            {{ promotion.name }}
-                        </td>
-                        <td *ngIf="!isCheckDisplay(promotion)">
+                        <td>
                             <a [routerLink]="['/promotions/', promotion.id, 'change', {lang: lang}]">{{ promotion.name }}</a>
                         </td>
                         <td>{{ promotion.is_draft ? "Draft" : "Đã Triển Khai" }}</td>

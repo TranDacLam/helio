@@ -4,12 +4,12 @@ import { NgModule } from '@angular/core';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from "@angular/http";
+import { HttpModule, RequestOptions } from "@angular/http";
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app.routing';
-import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl } from 'ng-pick-datetime'; // date and time
-import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+import { OwlDateTimeModule, OwlDateTimeIntl, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime'; // date and time
+import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { RECAPTCHA_LANGUAGE } from 'ng-recaptcha';
@@ -45,7 +45,8 @@ import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
 import { CategoryService } from './shared/services/category.service';
 import { BannerService } from './shared/services/banner.service';
-import { AuthGuard } from './shared/guards/index';
+import { ScrollTop } from './shared/commons/scroll-top';
+import { AuthGuard } from './shared/auth/auth.guard';
 
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
@@ -86,6 +87,8 @@ import { FormAdvertisementComponent } from './components/advertisement/form-adve
 import { FormBannerComponent } from './components/banner/form-banner/form-banner.component';
 
 
+import { AuthRequestOptions } from './shared/auth/auth-request';
+
 /*
     Translate datetime-picker
     author: Lam
@@ -96,6 +99,16 @@ export const DefaultIntl = {
     /** A label for the set button */
     setBtnLabel: 'Chọn',
 }
+
+export const MY_MOMENT_FORMATS = {
+    parseInput: 'DD/MM/YYYY LT',
+    fullPickerInput: 'DD/MM/YYYY LT',
+    datePickerInput: 'DD/MM/YYYY',
+    timePickerInput: 'LT',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+};
 
 @NgModule({
   declarations: [
@@ -165,7 +178,7 @@ export const DefaultIntl = {
     DataTablesModule,
     AppRoutingModule,
     OwlDateTimeModule, 
-    OwlNativeDateTimeModule,
+    OwlMomentDateTimeModule,
     RecaptchaModule.forRoot(), // Keep in mind the "forRoot"-magic nuances!
     RecaptchaFormsModule,
     CalendarModule,
@@ -185,11 +198,20 @@ export const DefaultIntl = {
     CategoryService,
     AuthGuard,
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'vi'},
+    {
+        provide: OWL_DATE_TIME_FORMATS,
+        useValue: MY_MOMENT_FORMATS
+    },
     {provide: OwlDateTimeIntl, useValue: DefaultIntl},
     DatePipe,
     {provide: RECAPTCHA_LANGUAGE, useValue: 'vi'},
     UserPermissionService,
-    VariableGlobals
+    VariableGlobals,
+    ScrollTop,
+    {
+        provide: RequestOptions, 
+        useClass: AuthRequestOptions
+    }
   ],
   bootstrap: [AppComponent]
 })

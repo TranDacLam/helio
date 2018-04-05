@@ -216,7 +216,7 @@ class UserEmbedSerializer(serializers.Serializer):
         return value
 
 class FeeSerializer(serializers.ModelSerializer):
-    fee = serializers.IntegerField(required=True, max_value = 2147483647)
+    fee = serializers.IntegerField(required=True, max_value = 2147483647, error_messages= {'max_value': _('Fee exceed the permitted value.')})
     fee_type = serializers.CharField(required=True)
     # position = serializers.CharField(source='get_position_display')
 
@@ -483,7 +483,7 @@ class UserRoleSerializer(serializers.ModelSerializer):
         is_staff = data['is_staff']
         if (is_staff == False and new_password):
             raise serializers.ValidationError(_("Cannot change password of customer user"))
-        return data;
+        return data
             
     def update(self, instance, validated_data):
 

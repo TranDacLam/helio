@@ -993,6 +993,11 @@ msgstr "Mệnh giá nạp tiền vượt quá giá trị cho phép."
 msgid "Birthday must less then today"
 msgstr "Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại."
 
+#: websites/api_admin/serializers.py:219
+#| msgid "Denomination exceed the permitted value."
+msgid "Fee exceed the permitted value."
+msgstr "Phí giao dịch vượt quá giá trị cho phép."
+
 #: websites/api_admin/serializers.py:230
 msgid "Fee already is exist."
 msgstr "Phí này đã tồn tại."

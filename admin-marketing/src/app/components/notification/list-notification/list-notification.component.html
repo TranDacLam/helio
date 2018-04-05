@@ -56,10 +56,7 @@
                     />
                 </td>
                 <td>{{ noti.id }}</td>
-                <td *ngIf="noti.sent_date && user_current.role !== 1">
-                    {{ noti.subject }}
-                </td>
-                <td *ngIf="!(noti.sent_date && user_current.role !== 1)">
+                <td>
                     <a [routerLink]="['/notification/edit/', noti.id, {lang: lang}]">{{ noti.subject }}</a>
                 </td>
                 <td *ngIf="noti.sent_date">Đã gửi</td>

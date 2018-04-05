@@ -11,13 +11,13 @@ import { api } from '../utils/api';
 export class HotAdvsService {
 
     httpOptions: any;
-    token: any ='';
+    token: any = '';
 
-    constructor(private http: Http) { 
+    constructor(private http: Http) {
         this.token = localStorage.getItem('auth_token');
 
         this.httpOptions = {
-            headers: new Headers({ 
+            headers: new Headers({
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.token}`
             })
@@ -37,8 +37,8 @@ export class HotAdvsService {
       POST: Create a New Hot_Advs
       @author: TrangLe
     */
-    
-    CreateHotAdvs(hotAdvsFormData:FormData): Observable<any> {
+
+    CreateHotAdvs(hotAdvsFormData: FormData): Observable<any> {
 
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
@@ -69,7 +69,7 @@ export class HotAdvsService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(url,_options ).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url, _options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     /* 
@@ -77,6 +77,6 @@ export class HotAdvsService {
     */
     handleError(error: Response) {
         return Observable.throw(error);
-    } 
+    }
 
 }

@@ -19,9 +19,13 @@ export class OpenTimeComponent implements OnInit {
     list_day = [];
     select_all: boolean = false;
 
+    // config options full calendar
     calendarOptions:Object = {
         defaultDate: '2018-03-12',
         locale: 'vi',
+        buttonText: {
+          today: 'Hiện tại'
+        },
         eventLimit: true, // allow "more" link when too many events
         events: [
             {
@@ -106,11 +110,16 @@ export class OpenTimeComponent implements OnInit {
             end_time: ['',
                 [DateValidators.validEndTime, DateValidators.requiredEndTime, DateValidators.formatEndTime]],
             is_draft: [false],
-        }, {validator: [DateValidators.dateLessThan(), DateValidators.timeLessThan()]});
+        }, {validator: DateValidators.dateTimeLessThan()});
     }
 
+    /*
+        function ckbDayAll(): select checkbox all dates of the week
+        author: Lam
+    */ 
     ckbDayAll(event){
         this.list_day = [];
+        // target checked is true let checked all checkbox, is false let unchecked
         if(event.target.checked){
             this.list_day = [1,2,3,4,5,6,7];
             $('.table-open-time tbody input').prop('checked', true);
@@ -119,15 +128,23 @@ export class OpenTimeComponent implements OnInit {
         }
     }
 
+    /*
+        function ckbDay(): select checkbox dates of the week
+        author: Lam
+    */ 
     ckbDay(event){
+        // get value input 
         let number_day = parseInt(event.target.value);
+        // target checked is true let push number day to list_day
         if(event.target.checked){
             this.list_day.push(number_day);
+            // check length list_day = 7(7 day in week) let input checkbox all will checked
             if(this.list_day.length === 7){
                 this.select_all = true;
             }
-        }else{
+        }else{ 
             this.select_all = false;
+            // Remove number day in array list_day
             this.list_day = this.list_day.filter(k => k !== number_day);
         }
     }

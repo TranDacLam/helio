@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { PromotionLabel } from '../../../shared/class/promotion-label';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
 import { ToastrService } from 'ngx-toastr';
@@ -35,8 +35,7 @@ export class ListPromotionLabelComponent implements OnInit {
     lang: string = 'vi';
 
     constructor(
-        private promotionLabelService: PromotionLabelService, 
-        private route: ActivatedRoute, 
+        private promotionLabelService: PromotionLabelService,  
         private router: Router,
         private toastr: ToastrService
     ) { }

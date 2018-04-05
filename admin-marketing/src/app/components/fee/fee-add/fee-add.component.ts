@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FeeService } from '../../../shared/services/fee.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NumberValidators } from './../../../shared/validators/number-validators';
+import { ValidateSubmit } from './../../../shared/validators/validate-submit'
 
 @Component({
     selector: 'app-fee-add',
@@ -22,33 +24,32 @@ export class FeeAddComponent implements OnInit {
     feeAddForm: FormGroup;
     messageResult: String;
     errorMessage: String;
-    submitted: boolean = false;
 
-    createFee(value: any, isValid: boolean) {
-        this.submitted = true;
-        if (isValid) {
+    createFee(value: any) {
+        if (this.feeAddForm.invalid) {
+            ValidateSubmit.validateAllFormFields(this.feeAddForm);
+        } else {
             this.feeService.createFee(value).subscribe(
-                result => {
-                    this.messageResult = "success";
-                    this.router.navigate(['/fee/list']);
-                    this.toastr.success(`Thêm mới "${this.feeAddForm.value.fee} ${this.feeAddForm.value.fee_type}" thành công`);
-                },
-                (error) => {
-                    if (error.code === 400) {
-                        this.errorMessage = error.message;
-                    } else {
-                        this.router.navigate(['/error', { message: error.message }]);
-                    }
+            result => {
+                this.messageResult = "success";
+                this.router.navigate(['/fee/list']);
+                this.toastr.success(`Thêm mới "${this.feeAddForm.value.fee} ${this.feeAddForm.value.fee_type}" thành công`);
+            },
+            (error) => {
+                if (error.code === 400) {
+                    this.errorMessage = error.message;
+                } else {
+                    this.router.navigate(['/error', { message: error.message }]);
                 }
-            );
+            }
+        );
         }
-
     }
 
 
     ngOnInit() {
         this.feeAddForm = this.formBuilder.group({
-            fee: [null, [Validators.required, Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(2147483647)]],
+            fee: [null, [Validators.required, Validators.maxLength(10), NumberValidators.validateFee]],
             position: [null, Validators.required],
             fee_type: ['vnd', Validators.required],
             is_apply: [false],

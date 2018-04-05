@@ -1,4 +1,4 @@
-import { Component,ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from "@angular/router";
 
@@ -17,47 +17,47 @@ import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-user-add',
-  templateUrl: './user-add.component.html',
-  styleUrls: ['./user-add.component.css'],
-  providers: [RoleService, UserService]
+    selector: 'app-user-add',
+    templateUrl: './user-add.component.html',
+    styleUrls: ['./user-add.component.css'],
+    providers: [RoleService, UserService]
 })
 export class UserAddComponent implements OnInit {
 
-	formUser: FormGroup;
-	user_form = new User();
+    formUser: FormGroup; //formUser is type of FormGroup
+    user_form = new User();
 
-	users: User[] = [];
+    users: User[] = [];
     roles: Role[];
-    
-    errorMessage: string ='';
+
+    errorMessage: string = '';
 
     isSelected = true; // Set value default selcted 
 
-	constructor(
-		private fb: FormBuilder,
+    constructor(
+        private fb: FormBuilder,
         private userService: UserService,
         private roleService: RoleService,
         private router: Router,
         private datePipe: DatePipe,
         private toastr: ToastrService,
-		) {
-	}
+    ) {
+    }
 
- 	ngOnInit() {
+    ngOnInit() {
         this.getAllRoles();
- 	 	this.createForm();
- 	}
+        this.createForm();
+    }
 
     /*
         Create Form User
         @author: Trangle
      */
- 	createForm() {
- 		this.formUser = this.fb.group({
+    createForm() {
+        this.formUser = this.fb.group({
             email: [this.user_form.email, [Validators.required, UserValidators.emailValidators]],
             full_name: [this.user_form.full_name, [Validators.required]],
-            phone: [this.user_form.phone, [Validators.required,NumberValidators.validPhone]],
+            phone: [this.user_form.phone, [Validators.required, NumberValidators.validPhone]],
             personal_id: [this.user_form.personal_id, [NumberValidators.validPersonID]],
             country: [this.user_form.country],
             address: [this.user_form.address],
@@ -67,13 +67,15 @@ export class UserAddComponent implements OnInit {
             is_active: [this.user_form.is_active],
             is_staff: [this.user_form.is_staff],
             role: [this.user_form.role, [UserValidators.validateSelectRole]],
-            birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date,"DD/MM/YYYY").toDate() : '', [UserValidators.birtdateValidators, UserValidators.formatBirtday]],
+            birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date, "DD/MM/YYYY").toDate() : '', [UserValidators.birtdateValidators, UserValidators.formatBirtday]],
         });
- 	}
+    }
 
     /*
         GET: get all role
-        Call service Role
+        Call getAllRoles from role.service
+        sucess: Return objects roles
+        fail: nagivate component error show error message
         @author: Trangle
      */
     getAllRoles() {
@@ -89,7 +91,13 @@ export class UserAddComponent implements OnInit {
 
     /*
         POST: Create User
-        Call service user.service 
+        Check formUser invalid is True => Call ValidateSubmit show error
+        formUser is valid :
+            + convert formGroup to Form Data
+            + Get value birth_date
+            + Call createUser from user.service
+        Success: Push data, nagivate component user_list and show success message
+        Fail: Return error
         @author: Trangle
      */
     onSubmit() {
@@ -110,9 +118,11 @@ export class UserAddComponent implements OnInit {
                     self.router.navigate(['/user-list']);
                 },
                 (error) => {
-                    if(error.code == 400) {
+                    if (error.code == 400) {
+                        // Show message in form
                         self.errorMessage = error.message;
                     } else {
+                        // Nagivate component error and show error message
                         this.router.navigate(['/error', { message: error.message }]);
                     }
                 }
@@ -128,19 +138,18 @@ export class UserAddComponent implements OnInit {
     onFileChange(event) {
         let reader = new FileReader();
         let input_id = $(event.target).attr('id');
-        if(event.target.files && event.target.files.length > 0) {
+        if (event.target.files && event.target.files.length > 0) {
             let file = event.target.files[0];
             this.formUser.get(input_id).setValue({ filename: file.name, filetype: file.type, value: file });
         }
     }
-
- 	/* 
-        Show and hide password
+    /*
+       Show and hide password
         if type='passwod' is hide
         else type='text' is show
         @author: Trangle
-    */   
- 	showPassword(input: any): any {
+    */
+    showPassword(input: any): any {
         if (input.type = input.type === "password") {
             input.type = "text";
             $('span#toggleShowHide').addClass('fa-eye-slash').removeClass('fa-eye');
@@ -148,7 +157,7 @@ export class UserAddComponent implements OnInit {
             input.type = "password";
             $('span#toggleShowHide').addClass('fa-eye').removeClass('fa-eye-slash');
         }
- 	}
+    }
     /*
         Convert form group to form data to submit form
         @author: trangle
@@ -156,16 +165,16 @@ export class UserAddComponent implements OnInit {
     private convertFormGroupToFormData(userForm: FormGroup) {
         // Convert FormGroup to FormData
         let userValues = userForm.value;
-        let userFormData:FormData = new FormData(); 
-        if (userValues){
+        let userFormData: FormData = new FormData();
+        if (userValues) {
             /* 
                 Loop to set value to formData
                 Case1: if value is null then set ""
                 Case2: If key is image field then set value have both file and name
                 Else: Set value default
             */
-            Object.keys(userValues).forEach(k => { 
-                if(userValues[k] == null) {
+            Object.keys(userValues).forEach(k => {
+                if (userValues[k] == null) {
                     userFormData.append(k, '');
                 } else if (k === 'avatar') {
                     userFormData.append(k, userValues[k].value, userValues[k].name);
@@ -176,6 +185,10 @@ export class UserAddComponent implements OnInit {
         }
         return userFormData;
     }
+    /*
+        remove error message when clik input tag
+        @author: Trangle 
+     */
     removeErrorMessage() {
         this.errorMessage = '';
     }

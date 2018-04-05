@@ -16,7 +16,7 @@ export class DenominationService {
 	httpOptions: any;
 	token: any = '';
 
-	constructor(private http: Http) { 
+	constructor(private http: Http) {
 		this.token = localStorage.getItem('auth_token')
 
 		this.httpOptions = {
@@ -32,7 +32,7 @@ export class DenominationService {
 		@author: TrangLe
 	 */
 	getAllDenomination(): Observable<Denomination[]> {
-    	let urlDeno = `${api.denomination}`;
+		let urlDeno = `${api.denomination}`;
 		return this.http.get(urlDeno, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
@@ -40,31 +40,31 @@ export class DenominationService {
 		POST: Create a new denomination
 		Author: TrangLe
 	*/
-	createDenomination(deno:any): Observable<Denomination> {
-    	let urlDeno = `${api.denomination}`; 
-		return this.http.post(urlDeno, deno,this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+	createDenomination(deno: any): Observable<Denomination> {
+		let urlDeno = `${api.denomination}`;
+		return this.http.post(urlDeno, deno, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	/*
 		DELETE: Delete All Denomination Which Checked box
 	 */
-  	deleteAllDenosSelected(deno_id): Observable<any> {
-    	const url = `${api.denomination}`;
-    	let param = {
-            deno_id: deno_id
-        }
-        let _options = new RequestOptions({
-            headers: this.httpOptions.headers,
-            body: JSON.stringify(param)
-        });
+	deleteAllDenosSelected(deno_id): Observable<any> {
+		const url = `${api.denomination}`;
+		let param = {
+			deno_id: deno_id
+		}
+		let _options = new RequestOptions({
+			headers: this.httpOptions.headers,
+			body: JSON.stringify(param)
+		});
 
-        return this.http.delete(url, _options).map((res: Response) => res.json()).catch(this.handleError);
-  	}
+		return this.http.delete(url, _options).map((res: Response) => res.json()).catch(this.handleError);
+	}
 
 	/* 
 		Handle error
 	*/
-	handleError(error:Response) {
+	handleError(error: Response) {
 		return Observable.throw(error);
 	}
 }

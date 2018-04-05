@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../../shared/class/user';
 import { Customer } from '../../../shared/class/customer';
 import { LinkCardService } from '../../../shared/services/link-card.service';
-import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
