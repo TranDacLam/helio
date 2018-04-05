@@ -170,7 +170,7 @@
         </div>
         <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="formEvent.get('end_time')"></show-error-valid>
-            <ul *ngIf="formEvent.errors && !formEvent.get('end_time').errors?.fomatDate && 
+            <ul *ngIf="!formEvent.get('end_time').errors?.fomatDate && 
                 !formEvent.get('start_time').errors?.fomatDate && !formEvent.get('end_time').errors?.required_time && 
                 !formEvent.get('start_time').errors?.required_time">
                 <li style="color: red">

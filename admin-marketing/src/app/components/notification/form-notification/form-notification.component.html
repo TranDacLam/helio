@@ -44,7 +44,12 @@
             <label class="col-form-label form-check-label">Tin Nhắn</label>
         </div>
         <div class="col-sm-8">
-            <ckeditor formControlName="message" [config]="ckEditorConfig"></ckeditor>
+            <span *ngIf="isDisable()">
+                <ckeditor formControlName="message" readonly="{{true}}"> </ckeditor>
+            </span>
+            <span *ngIf="!isDisable()">
+                <ckeditor formControlName="message" [config]="ckEditorConfig"> </ckeditor>
+            </span>
             <show-error-valid [control]="formNotification.get('message')"></show-error-valid>
         </div>
     </div>

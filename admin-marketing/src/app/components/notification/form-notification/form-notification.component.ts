@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, ViewChild, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Notification } from '../../../shared/class/notification';
@@ -28,7 +28,7 @@ declare var bootbox:any;
         CategoryNotificationService
     ]
 })
-export class FormNotificationComponent implements OnInit {
+export class FormNotificationComponent implements OnInit, AfterViewChecked {
 
     /*
         author: Lam
@@ -92,7 +92,7 @@ export class FormNotificationComponent implements OnInit {
         // get current user
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
-        },100);
+        },300);
 
         if (this.route.snapshot.paramMap.get('id')) {
             // Update Init Form
@@ -103,6 +103,13 @@ export class FormNotificationComponent implements OnInit {
             this.title_page = "Thêm Thông Báo";
             this.noti = new Notification();
             this.creatForm();
+        }
+    }
+
+    ngAfterViewChecked(){
+        if(this.isDisable()){
+            // disabled button, input, select, only view
+            $('button, input, select').attr('disabled', true);
         }
     }
 
@@ -344,6 +351,19 @@ export class FormNotificationComponent implements OnInit {
             this.formNotification.get('is_QR_code').setValue(false);
             this.formNotification.get('location').setValue(null);
         }
+    }
+
+    /*
+        Function isDisable(): Check notification sent and current user is not system admin
+        Author: Lam
+    */
+    isDisable(){
+        if(this.user_current && this.noti && this.noti.id){
+            if(this.noti.sent_date && this.user_current.role !== 1){
+                return true;
+            }
+        }
+        return false;
     }
 
     /*

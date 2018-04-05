@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, AfterViewChecked } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -37,7 +37,7 @@ declare var bootbox:any;
     ]
 })
 
-export class PromotionFormDetailComponent implements OnInit {
+export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
 
     promotion: Promotion;
 
@@ -56,6 +56,8 @@ export class PromotionFormDetailComponent implements OnInit {
     selected = true;
 
     api_domain:string = "";
+    msg_clear_image = '';
+    msg_clear_thumbnail = '';
 
     errors: any = "";
     apply_date: Date = new Date();
@@ -88,7 +90,7 @@ export class PromotionFormDetailComponent implements OnInit {
 
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
-        },100);
+        },300)
 
         this.getAllCategory();
         this.getPromotionTypes();
@@ -105,6 +107,13 @@ export class PromotionFormDetailComponent implements OnInit {
             this.title_page = "Thêm Khuyến Mãi";
             this.promotion = new Promotion()
             this.creatPromotionForm();
+        }
+    }
+
+    ngAfterViewChecked(){
+        if(this.isDisable()){
+            // disabled button, input, select, only view
+            $('button, input, select').attr('disabled', true);
         }
     }
 
@@ -275,41 +284,59 @@ export class PromotionFormDetailComponent implements OnInit {
             ValidateSubmit.validateAllFormFields(this.promotionForm);
             this.scrollTop.scrollTopFom();
         }else{
-            // get value time by #id 
+            // get value date, time by #id 
+            this.promotionForm.value.apply_date = $('#start_date').val();
+            this.promotionForm.value.end_date = $('#end_date').val();
             this.promotionForm.value.apply_time = $('#start_time').val();
             this.promotionForm.value.end_time = $('#end_time').val();
             this.errors = '';
             const that = this;
             // Convert FormGroup to FormData
             let promotionFormData = this.convertFormGroupToFormData(this.promotionForm);
+            let value_form = this.promotionForm.value;
             /*
                 Case 1: Promotion id is not null then call update service
                 Case 1: Promotion id is null then call save service
             */
             if(this.promotion.id) {
-                this.promotionService.updatePromotion(promotionFormData, this.promotion.id, this.lang).subscribe(
-                    (data) => {
-                        // popup edit pormotion at user promotion
-                        if(this.position === 'popup'){
-                            this.promotion = data;
-                            this.update_promotion.emit(this.promotion);
-                            $('#UpdatePromotion').modal('toggle');
-                            this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
-                        }else{
-                            // Navigate to promotion page where success
-                            this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
-                            that.router.navigate(['/promotions']);
-                        }
-                    }, 
-                    (error) => {
-                        if(error.code === 400){
-                            that.errors = error.message;
-                            this.scrollTop.scrollTopFom();
-                        }else{
-                            that.router.navigate(['/error']);
-                        }
+                if((value_form.is_clear_image === true && typeof(value_form.image) != 'string') ||
+                    (value_form.is_clear_image_thumbnail === true && typeof(value_form.image_thumbnail) != 'string')){
+                    // case field is image
+                    if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
+                        this.promotionForm.get('is_clear_image').setValue(false);
+                        this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                     }
-                );
+                    // case field is image thumbnail
+                    if(value_form.is_clear_image_thumbnail === true && typeof(value_form.image_thumbnail) != 'string'){
+                        this.promotionForm.get('is_clear_image_thumbnail').setValue(false);
+                        this.msg_clear_thumbnail = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                    }
+                    this.scrollTop.scrollTopFom();
+                }else{
+                    this.promotionService.updatePromotion(promotionFormData, this.promotion.id, this.lang).subscribe(
+                        (data) => {
+                            // popup edit pormotion at user promotion
+                            if(this.position === 'popup'){
+                                this.promotion = data;
+                                this.update_promotion.emit(this.promotion);
+                                $('#UpdatePromotion').modal('toggle');
+                                this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
+                            }else{
+                                // Navigate to promotion page where success
+                                this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
+                                that.router.navigate(['/promotions']);
+                            }
+                        }, 
+                        (error) => {
+                            if(error.code === 400){
+                                that.errors = error.message;
+                                this.scrollTop.scrollTopFom();
+                            }else{
+                                that.router.navigate(['/error']);
+                            }
+                        }
+                    );
+                }
             } else {
                 this.promotionService.savePromotion(promotionFormData, this.lang).subscribe(
                     (data) => {
@@ -373,6 +400,21 @@ export class PromotionFormDetailComponent implements OnInit {
     }
 
     /*
+        Function isDisable(): Check promotion not is_draft or end_date < date now and current user is not system admin
+        Author: Lam
+    */
+    isDisable(){
+        if(this.user_current && this.promotion && this.promotion.id){
+            let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
+            let end_date = this.promotion.end_date ? this.promotion.end_date : '';
+            if((this.promotion.is_draft === false || (end_date !== '' && end_date < date_now)) && this.user_current.role !== 1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
         Convert form group to form data to submit form
         @author: diemnguyen
     */
@@ -392,17 +434,11 @@ export class PromotionFormDetailComponent implements OnInit {
                     promotionFormData.append(k, '');
                 } else if (k === 'image' || k === 'image_thumbnail') {
                     promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
-                } else if (k === 'apply_date' || k === 'end_date') {
-                    promotionFormData.append(k, this.transformDate(promotionValues[k]));
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
                 }
             });
         }
         return promotionFormData;
-    }
-
-    transformDate(date) {
-        return date ? this.datePipe.transform(date, 'dd/MM/yyyy') : '';
     }
 }
