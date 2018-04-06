@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { User } from '../../../shared/class/user';
 import { env } from '../../../../environments/environment';
+import * as moment from 'moment';
 
 declare var bootbox:any;
 declare var $: any;
@@ -46,6 +47,7 @@ export class ListPromotionComponent implements OnInit {
 
     api_domain:string = "";
     lang: string = 'vi';
+    date_now: any;
 
     /*
         Using trigger becase fetching the list of feedbacks can be quite long
@@ -81,6 +83,7 @@ export class ListPromotionComponent implements OnInit {
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
         },100);
+        this.date_now = moment(this.datePipe.transform(Date.now(), 'dd/MM/yyy'), "DD/MM/YYYY").toDate();
     }
 
     /*
@@ -240,9 +243,8 @@ export class ListPromotionComponent implements OnInit {
         Author: Lam
     */
     isDisable(promotion){
-        let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
-        let end_date = promotion.end_date ? promotion.end_date : '';
-        if((promotion.is_draft === false || (end_date !== '' && end_date < date_now)) && this.user_current.role !== 1){
+        let end_date = promotion.end_date ? moment(promotion.end_date, "DD/MM/YYYY").toDate() : '';
+        if((promotion.is_draft === false || (end_date !== '' && end_date < this.date_now)) && this.user_current.role !== 1){
             return true;
         }
         return null;
@@ -253,9 +255,8 @@ export class ListPromotionComponent implements OnInit {
         Author: Lam
     */
     isCheckDisplay(promotion){
-        let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
-        let end_date = promotion.end_date ? promotion.end_date : '';
-        if((promotion.is_draft === false || (end_date !== '' && end_date < date_now)) && this.user_current.role !== 1){
+        let end_date = promotion.end_date ? moment(promotion.end_date, "DD/MM/YYYY").toDate() : '';
+        if((promotion.is_draft === false || (end_date !== '' && end_date < this.date_now)) && this.user_current.role !== 1){
             return true;
         }
         return false;
@@ -266,9 +267,8 @@ export class ListPromotionComponent implements OnInit {
         Author: Lam
     */
     isDisableQRCode(promotion){
-        let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
-        let end_date = promotion.end_date ? promotion.end_date : '';
-        if((end_date !== '' && end_date < date_now) && this.user_current.role !== 1){
+        let end_date = promotion.end_date ? moment(promotion.end_date, "DD/MM/YYYY").toDate() : '';
+        if((end_date !== '' && end_date < this.date_now) && this.user_current.role !== 1){
             return true;
         }
         return null;
