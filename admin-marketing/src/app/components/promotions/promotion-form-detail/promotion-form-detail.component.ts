@@ -113,7 +113,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
     ngAfterViewChecked(){
         if(this.isDisable()){
             // disabled button, input, select, only view
-            $('button, input, select').attr('disabled', true);
+            $('form button,form input,form select').attr('disabled', true);
         }
     }
 
