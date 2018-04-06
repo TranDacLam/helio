@@ -24,7 +24,10 @@ export class FeeAddComponent implements OnInit {
     feeAddForm: FormGroup;
     messageResult: String;
     errorMessage: String;
-
+    /*
+      Event create fee
+      @author: hoangnguyen 
+    */
     createFee(value: any) {
         if (this.feeAddForm.invalid) {
             ValidateSubmit.validateAllFormFields(this.feeAddForm);
