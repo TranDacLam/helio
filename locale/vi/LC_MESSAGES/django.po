@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-04 15:39+0700\n"
+"POT-Creation-Date: 2018-04-05 16:36+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -705,6 +705,7 @@ msgstr "Lỗi truy vấn dữ liệu."
 #: websites/api_admin/views.py:2307 websites/api_admin/views.py:2321
 #: websites/api_admin/views.py:2341 websites/api_admin/views.py:2362
 #: websites/api_admin/views.py:2397 websites/api_admin/views.py:2436
+#: websites/api_admin/views.py:2536
 msgid "Internal Server Error"
 msgstr "Lỗi hệ thống."
 
@@ -1001,11 +1002,11 @@ msgstr "Phí giao dịch vượt quá giá trị cho phép."
 msgid "Fee already is exist."
 msgstr "Phí này đã tồn tại."
 
-#: websites/api_admin/serializers.py:280
+#: websites/api_admin/serializers.py:280 websites/api_admin/serializers.py:576
 msgid "Start day is before than End day"
 msgstr "Ngày bắt đầu phải trước hơn ngày kết thúc."
 
-#: websites/api_admin/serializers.py:282
+#: websites/api_admin/serializers.py:282 websites/api_admin/serializers.py:578
 msgid "Start time is before than End time"
 msgstr "Vui lòng nhập thời gian kết thúc lớn hơn thời gian bắt đầu."
 
@@ -1030,6 +1031,14 @@ msgstr "Không thể thay đổi mật khẩu của Customer User."
 #: websites/api_admin/serializers.py:538
 msgid "Hot Ads has name already exist"
 msgstr "Hot Ads có Tên đã tồn tại."
+
+#: websites/api_admin/serializers.py:568 websites/api_admin/serializers.py:569
+msgid "Date is invalid."
+msgstr "Vui lòng nhập vào ngày hợp lệ."
+
+#: websites/api_admin/serializers.py:570 websites/api_admin/serializers.py:571
+msgid "Time is invalid."
+msgstr "Vui lòng nhập vào giờ hợp lệ."
 
 #: websites/api_admin/views.py:290
 msgid "Email is required."
@@ -1061,6 +1070,7 @@ msgstr "User không tồn tại"
 #: websites/api_admin/views.py:2137 websites/api_admin/views.py:2224
 #: websites/api_admin/views.py:2260 websites/api_admin/views.py:2337
 #: websites/api_admin/views.py:2426 websites/api_admin/views.py:2430
+#: websites/api_admin/views.py:2492
 msgid "success"
 msgstr "Thành công"
 
@@ -1167,6 +1177,12 @@ msgstr "Role không tồn tại"
 #: websites/api_admin/views.py:2427
 msgid "Not Found users."
 msgstr "User không tồn tại"
+
+#: websites/api_admin/views.py:2533
+#, fuzzy
+#| msgid "Not Found Promotion Label."
+msgid "Not found month and year."
+msgstr "Nhãn Khuyến Mãi không tồn tại."
 
 #: websites/config/setting_api.py:28 websites/config/setting_develop.py:25
 #: websites/config/setting_local.py:26 websites/config/setting_production.py:28
