@@ -2436,3 +2436,108 @@ class SetRoleAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+
+"""
+    OpenTimeAPI
+    @author :Hoangnguyen
+"""
+
+@permission_classes((AllowAny,))
+class OpenTimeAPI(APIView):
+    '''
+        if first_record > start_date, create date
+        if last_record < end_date, create date
+        from first_record to last_record
+            if date in record, update else create date
+
+    '''
+    # list for create date
+    create_objs = list()
+
+    def post( self, request, format = None):
+        try:
+            serializer = admin_serializers.OpenTimeSerializer(data = request.data)
+            if not serializer.is_valid():
+                return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+
+            day_of_week = serializer.data['day_of_week'] if 'day_of_week' in serializer.data else None
+            start_time = serializer.data['start_time']
+            end_time = serializer.data['end_time']
+            start_date = datetime.strptime(request.data['start_date'], "%d/%m/%Y").date()
+            end_date = datetime.strptime(request.data['end_date'], "%d/%m/%Y").date()
+
+            kwargs = {}
+            if day_of_week:
+                kwargs['open_date__week_day__in'] = day_of_week
+            kwargs['open_date__gte'] = start_date
+            kwargs['open_date__lt'] = end_date + timedelta(days=1)
+
+            record = OpenTime.objects.filter( **kwargs).order_by('open_date')
+            # check date is exist
+            if record:
+                first_record = record.first().open_date
+                last_record = record.last().open_date
+                # create date
+                if first_record > start_date:
+                    self.createUpdateDate(start_date, first_record - timedelta(days=1), day_of_week, start_time, end_time)
+                if last_record < end_date:
+                    self.createUpdateDate(last_record + timedelta(days=1), end_date, day_of_week, start_time, end_time)
+                # update date
+                self.createUpdateDate(first_record, last_record, day_of_week, start_time, end_time, record)
+            else:
+                # create date
+                self.createUpdateDate( start_date, end_date, day_of_week, start_time, end_time)
+            # create in db
+            OpenTime.objects.bulk_create(OpenTimeAPI.create_objs)
+            OpenTimeAPI.create_objs = []
+            return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+        except Exception, e:
+            print "OpenTimeAPI", e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
+    '''
+        Loop from start_date to end_date to create or update date
+        step 1: if day_of_week then check date is in_day_of_week and create or update date
+        step 2: if record then create or update date
+                else create date
+    '''
+    def createUpdateDate(self, start_date, end_date, day_of_week, start_time, end_time, record = None):
+        # list for update date
+        update_objs = list()
+        for i in range( int((end_date - start_date).days + 1)):
+            in_day_of_week = False
+            if day_of_week:
+                # day_of_week from 1 (Sunday) to 7 (Saturday).
+                # weekday() from 0 (Monday) to 6 (Sunday)
+                number = (start_date +timedelta(days = i)).weekday()+2
+                if number == 8: number = 1
+                if number in day_of_week:
+                    in_day_of_week = True
+            if not day_of_week or in_day_of_week:
+                if record:
+                    # check each date is in record to creat or update
+                    date_is_exist = record.filter(open_date = start_date +timedelta(days = i))
+                    if date_is_exist:
+                        update_objs.append(start_date +timedelta(days = i))
+                    else:
+                        OpenTimeAPI.create_objs.append((OpenTime(open_date=start_date +timedelta(days = i), start_time=start_time, end_time=end_time)) )
+                else:
+                    OpenTimeAPI.create_objs.append((OpenTime(open_date=start_date +timedelta(days = i), start_time=start_time, end_time=end_time)) )
+        # update date in db
+        OpenTime.objects.filter( open_date__in = update_objs ).update(start_time=start_time, end_time=end_time)
+
+
+    def get(self, request):
+        try:
+            month = request.query_params.get('month', None)
+            year = request.query_params.get('year', None)
+            if month and year:
+                open_time = OpenTime.objects.filter(Q(open_date__year= year) & Q(open_date__month = month))
+                openTimeSerializer = admin_serializers.OpenTimeSerializer(open_time, many = True)
+                return Response(openTimeSerializer.data)
+            return Response({"code": 400, "message": _("Not found month and year."), "fields": ""}, status=400)
+        except Exception, e:
+            print "OpenTimeAPI", e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
+
