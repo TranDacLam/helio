@@ -503,8 +503,11 @@ class Roles(DateTimeModel):
     name = models.CharField(_('Name'), max_length=255, unique=True)   
 
     def __str__(self):
-        return '%s' % (self.name)   
+        return '%s' % (self.name) 
 
+    class Meta:
+        verbose_name = _('Roles')
+        verbose_name_plural = _('Roles')   
 
 
 @python_2_unicode_compatible
