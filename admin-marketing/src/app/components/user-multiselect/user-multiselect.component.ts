@@ -6,7 +6,6 @@ import { Notification } from './../../shared/class/notification';
 import { Promotion } from './../../shared/class/promotion';
 import { DatePipe } from '@angular/common';
 
-
 @Component({
     selector: 'app-user-multiselect',
     templateUrl: './user-multiselect.component.html',
@@ -50,7 +49,7 @@ export class UserMultiselectComponent implements OnInit {
 
     constructor(
         private variableGlobals: VariableGlobals,
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
     ) { }
 
     ngOnInit() {
@@ -95,6 +94,7 @@ export class UserMultiselectComponent implements OnInit {
             },
             drawCallback: (setting) => {
                 this.checkSelectAllCheckboxLeft();
+                this.dataTableSorting();
             }
         }
         
@@ -139,6 +139,7 @@ export class UserMultiselectComponent implements OnInit {
             },
             drawCallback: (setting) => {
                 this.checkSelectAllCheckboxRight();
+                this.dataTableSorting();
             }
         }
 
@@ -360,6 +361,18 @@ export class UserMultiselectComponent implements OnInit {
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
             this.save.emit(dtInstance.column(1).data().toArray());
         });
+    }
+
+    /*
+        dataTable customize sort ion
+        @author: Trangle
+    */
+    dataTableSorting() {
+        var spanSorting = '<span class="arrow-hack">&nbsp;&nbsp;&nbsp;</span>';
+        $(".dataTables_scrollHead thead th").not(':first').each(function(i, th) {
+            $(th).find('.arrow-hack').remove();
+            $(th).append(spanSorting); 
+        });     
     }
 
 }

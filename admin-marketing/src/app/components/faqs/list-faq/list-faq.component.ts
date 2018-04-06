@@ -6,6 +6,7 @@ import { FaqService } from '../../../shared/services/faq.service';
 import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
 import * as datatable_config from '../../../shared/commons/datatable_config';
+import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
 
 declare var bootbox:any;
 
@@ -37,7 +38,8 @@ export class ListFaqComponent implements OnInit {
     constructor(
         private faqService: FaqService, 
         private router: Router,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private customizeDatatable: CustomizeDataTable,
     ) { }
 
     ngOnInit() {
@@ -46,6 +48,7 @@ export class ListFaqComponent implements OnInit {
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
+                this.customizeDatatable.dataTableSorting();
             },
             columnDefs: [
                 {
