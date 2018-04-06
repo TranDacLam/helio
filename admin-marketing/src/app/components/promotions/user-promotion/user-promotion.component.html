@@ -42,11 +42,11 @@
     <div class="col-sm-2 qr_code">
         <button *ngIf="!promotion.QR_code && user_current" class="btn custom-button btn-block text-right" 
             (click)="generator_QR_code($event, promotion.id)"
-            [attr.disabled]="isDisableQRCode()"
+            [attr.disabled]="isDisableQRCode(promotion)"
             data-loading-text="<i class='fa fa-spinner fa-spin'></i>Tạo QR Code">Tạo QR Code</button>
     </div>
     <div class="col-sm-4 pull-right" *ngIf="user_current">
-        <span *ngIf="!isDisableCreateNotificaiton()">
+        <span *ngIf="!isDisableCreateNotificaiton(promotion)">
              <a *ngIf="!notification_id" class="btn custom-button btn-block" 
                 [routerLink]="['/notification/add', {promotion: promotion.id, lang: lang}]"
             >
@@ -54,13 +54,13 @@
                 TẠO THÔNG BÁO CHO KHUYẾN MÃI
             </a>
         </span>
-        <span *ngIf="isDisableCreateNotificaiton()">
+        <span *ngIf="isDisableCreateNotificaiton(promotion)">
             <a *ngIf="!notification_id" class="btn custom-button btn-block" disabled>
                 <i class="fa fas fa-plus icon-button"></i>
                 TẠO THÔNG BÁO CHO KHUYẾN MÃI
             </a>
         </span>
-        <span *ngIf="!isDisable()">
+        <span *ngIf="!isDisable(promotion)">
             <a *ngIf="notification_id" class="btn custom-button btn-block" 
                 [routerLink]="['/notification/edit/', notification_id, {promotion: promotion.id, lang: lang}]"
             >
@@ -68,7 +68,7 @@
                 CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI
             </a>
         </span>
-        <span *ngIf="isDisable()">
+        <span *ngIf="isDisable(promotion)">
             <a *ngIf="notification_id" class="btn custom-button btn-block" disabled>
                 <i class="fa fas fa-pencil-square-o icon-button"></i>
                 CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI

@@ -9,6 +9,7 @@ import { env } from '../../../../environments/environment';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
 
 declare var bootbox:any;
 declare var $: any;
@@ -36,6 +37,7 @@ export class UserPromotionComponent implements OnInit {
     notification_id: number;
 
     lang = 'vi';
+    date_now: any;
 
     constructor(
         private router: Router,
@@ -59,6 +61,7 @@ export class UserPromotionComponent implements OnInit {
         setTimeout(()=>{
             this.user_current = this.variable_globals.user_current;
         },100);
+        this.date_now = moment(this.datePipe.transform(Date.now(), 'dd/MM/yyy'), "DD/MM/YYYY").toDate();
     }
 
     getUsersPromotion(){
@@ -143,42 +146,39 @@ export class UserPromotionComponent implements OnInit {
     }
 
     /*
-        Function isDisable(): Check promotion not is_draft or end_date < date now to disabled button
+        Function isDisable(): Check promotion not is_draft or promotion_end_date < date now to disabled button
         Author: Lam
     */
-    isDisable(){
-        let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
-        let end_date = this.promotion.end_date ? this.promotion.end_date : '';
-        if((this.promotion.is_draft === false || (end_date !== '' && end_date < date_now)) && this.user_current.role !== 1){
+    isDisable(promotion){
+        let promotion_end_date = promotion.end_date ? moment(promotion.end_date, "DD/MM/YYYY").toDate() : '';
+        if((this.promotion.is_draft === false || (promotion_end_date !== '' && promotion_end_date < this.date_now)) && this.user_current.role !== 1){
             return true;
         }
         return null;
     }
 
     /*
-        Function isDisableQRCode(): Check promotion end_date < date now to disabled button
+        Function isDisableQRCode(): Check promotion promotion_end_date < date now to disabled button
         Author: Lam
     */
     isDisableQRCode(promotion){
-        let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
-        let end_date = this.promotion.end_date ? this.promotion.end_date : '';
-        if((end_date !== '' && end_date < date_now) && this.user_current.role !== 1){
+        let end_date = promotion.end_date ? moment(promotion.end_date, "DD/MM/YYYY").toDate() : '';
+        if((end_date !== '' && end_date < this.date_now) && this.user_current.role !== 1){
             return true;
         }
         return null;
     }
 
     /*
-        Function isDisable(): Check promotion not is_draft or end_date < date now to disabled button
+        Function isDisable(): Check promotion not is_draft or promotion_end_date < date now to disabled button
         Author: Lam
     */
-    isDisableCreateNotificaiton(){
-        let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
-        let end_date = this.promotion.end_date ? this.promotion.end_date : '';
+    isDisableCreateNotificaiton(promotion){
+        let promotion_end_date = promotion.end_date ? moment(promotion.end_date, "DD/MM/YYYY").toDate() : '';
         if(this.user_current.role === 1){
             return false;
         }
-        if(end_date !== '' && end_date < date_now){
+        if(promotion_end_date !== '' && promotion_end_date < this.date_now){
             return true;
         }
         return false;
