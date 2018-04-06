@@ -330,3 +330,17 @@ admin.site.register(Notification, NotificationAdmin)
 class CategoryNotificationAdmin(TranslationAdmin):
      pass
 admin.site.register(Category_Notification, CategoryNotificationAdmin)
+
+
+class RolesAdmin(admin.ModelAdmin):
+     pass
+admin.site.register(Roles, RolesAdmin)
+
+class HotAdvsAdmin(admin.ModelAdmin):
+     pass
+admin.site.register(Hot_Advs, HotAdvsAdmin)
+
+class PromotionTypeAdmin(admin.ModelAdmin):
+     pass
+admin.site.register(Promotion_Type, PromotionTypeAdmin)
+
