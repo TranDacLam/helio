@@ -74,22 +74,25 @@ body {
 
 p {
     font-family: "Cabin";
-   /* font-size: 18px;
+    /*font-size: 18px;*/
     line-height: 24px;
-    letter-spacing: 0.5px;*/
+    letter-spacing: 0.5px;
 }
 
 p.title {
     font-size: 34px;
     text-transform: uppercase;
+    color: #337ab7;
 }
 
 h1.h1-title {
     margin-bottom: 30px;
+    color: #337ab7;
 }
 /* START HEADER*/
 #header-wrapper {
     background-color: #15062b;
+    padding: 15px 0;
 }
 #header-wrapper .logo {
     padding: 0px;
@@ -159,6 +162,27 @@ h1.h1-title {
 .helio-footer-info p, 
 .contact-text p {
     font-size: 14px;
+}
+.textwidget .fa {
+    margin-right: 10px;
+}
+.custom-icon {
+    margin: 0px 20px;
+    font-size: 30px;
+    color: #fff;
+}
+.icon-youtube-play {
+    color: #e336b6;
+}
+.helio-footer-info p, .contact-text p {
+    font-size: 14px;
+}
+.footer-text-color {
+    color: #e336b6;
+    display: inline;
+}
+.footer-text {
+    display: inline;
 }
 /* END FOOTER*/
 /* START BREADCRUMB */
