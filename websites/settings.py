@@ -229,7 +229,7 @@ LOCALE_PATHS = (
 gettext = lambda s: s
 LANGUAGES = (
     ('vi', gettext('Vietnamese')),
-    # ('en', gettext('English')),
+    ('en', gettext('English')),
 )
 
 # MODELTRANSLATION_DEFAULT_LANGUAGE = 'vi'
