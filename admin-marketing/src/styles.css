@@ -365,7 +365,14 @@ button.btn:focus {
     color: red;
     font-size: 16px;
 }
-
+/* Start Fix bugs confict z-index of datepicker + modal popup */
+.modal {
+    z-index: 900;
+}
+.modal-backdrop {
+    z-index: 850;
+}
+/* End Fix bugs confict z-index of datepicker + modal popup */
 @media (min-width: 768px) {
     /* START HEADER*/
     #header-wrapper .navbar-default .navbar-nav>li>a {

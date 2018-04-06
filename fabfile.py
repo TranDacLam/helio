@@ -61,7 +61,7 @@ OUTPUT_ANGULAR = {
 ANGULAR_ENV = {
     'development': 'development',
     'production': 'production',
-    'uat': 'production'
+    'uat': 'uat'
 }
 
 env.hosts = [SERVERS[ENV]]

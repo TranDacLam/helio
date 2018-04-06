@@ -33,8 +33,6 @@ export class FeeListComponent implements OnInit {
     dtOptions: DataTables.Settings = {};
     // data for datatable render
     fees: Fee[];
-    // text error
-    errorMessage: string;
     record: string = "Phí Giao Dịch";
     length_selected: number;
     length_all: number;
@@ -51,7 +49,6 @@ export class FeeListComponent implements OnInit {
     getFees() {
         return this.feeService.getFees().subscribe(
             success => {
-                this.errorMessage = null;
                 this.fees = success;
                 this.length_all = success.length;
             },
@@ -75,7 +72,11 @@ export class FeeListComponent implements OnInit {
       @author: hoangnguyen 
     */
     checkSelectAllCheckbox() {
-        $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        if($('#table_id tbody tr').hasClass('selected')){
+            $('#select-all').prop('checked', $("#table_id tr.row-data:not(.selected)").length == 0);
+        }else{
+            $('#select-all').prop('checked', false);
+        }
         this.getLengthSelected();
     }
     /*
@@ -147,10 +148,13 @@ export class FeeListComponent implements OnInit {
                     this.length_all = dtInstance.rows().count();
                     this.toastr.success(`Xóa ${this.length_selected} Phí Giao Dịch thành công`);
                     this.length_selected = 0;
-                    this.errorMessage = '';
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error.message }]);
+                    if (error.code == 400) {
+                        this.toastr.error(`${error.message}`);
+                    } else {
+                        this.router.navigate(['/error', { message: error.message }]);
+                    }
                 }
             );
         });
@@ -169,7 +173,6 @@ export class FeeListComponent implements OnInit {
     apply_fee(id: number) {
         this.feeService.applyFee(id).subscribe(
             success => {
-                this.errorMessage = null;
                 var fee = this.fees.find(fee => fee.id == id);
                 this.fees.filter(item => {
                     if (item.is_apply == true && item.position == fee.position)
@@ -178,8 +181,11 @@ export class FeeListComponent implements OnInit {
                 fee.is_apply = true;
             },
             error => {
-                // this.errorText = error.json().message
-                this.router.navigate(['/error']);
+                if (error.code == 400) {
+                    this.toastr.error(`${error.message}`);
+                } else {
+                    this.router.navigate(['/error', { message: error.message }]);
+                }
             }
         );
     }
@@ -192,15 +198,17 @@ export class FeeListComponent implements OnInit {
     cancel_apply_fee(id: number) {
         this.feeService.applyFee(id).subscribe(
             success => {
-                this.errorMessage = null;
                 var fee = this.fees.find(fee => fee.id == id);
                 if (fee.is_apply) {
                     fee.is_apply = false;
                 }
             },
             error => {
-                // this.errorText = error.json().message
-                this.router.navigate(['/error']);
+                if (error.code == 400) {
+                    this.toastr.error(`${error.message}`);
+                } else {
+                    this.router.navigate(['/error', { message: error.message }]);
+                }
             }
         );
     }

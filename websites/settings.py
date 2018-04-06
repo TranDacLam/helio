@@ -226,11 +226,11 @@ LOCALE_PATHS = (
 )
 
 # # config model translation
-# gettext = lambda s: s
-# LANGUAGES = (
-#     ('vi', gettext('Vietnamese')),
-#     ('en', gettext('English')),
-# )
+gettext = lambda s: s
+LANGUAGES = (
+    ('vi', gettext('Vietnamese')),
+    ('en', gettext('English')),
+)
 
 # MODELTRANSLATION_DEFAULT_LANGUAGE = 'vi'
 
