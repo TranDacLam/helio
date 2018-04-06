@@ -74,22 +74,25 @@ body {
 
 p {
     font-family: "Cabin";
-   /* font-size: 18px;
+    /*font-size: 18px;*/
     line-height: 24px;
-    letter-spacing: 0.5px;*/
+    letter-spacing: 0.5px;
 }
 
 p.title {
     font-size: 34px;
     text-transform: uppercase;
+    color: #337ab7;
 }
 
 h1.h1-title {
     margin-bottom: 30px;
+    color: #337ab7;
 }
 /* START HEADER*/
 #header-wrapper {
     background-color: #15062b;
+    padding: 15px 0;
 }
 #header-wrapper .logo {
     padding: 0px;
@@ -160,6 +163,27 @@ h1.h1-title {
 .contact-text p {
     font-size: 14px;
 }
+.textwidget .fa {
+    margin-right: 10px;
+}
+.custom-icon {
+    margin: 0px 20px;
+    font-size: 30px;
+    color: #fff;
+}
+.icon-youtube-play {
+    color: #e336b6;
+}
+.helio-footer-info p, .contact-text p {
+    font-size: 14px;
+}
+.footer-text-color {
+    color: #e336b6;
+    display: inline;
+}
+.footer-text {
+    display: inline;
+}
 /* END FOOTER*/
 /* START BREADCRUMB */
 .breadcrumb {
@@ -194,7 +218,32 @@ h1.h1-title {
 .dataTables_paginate{
     margin-right: 15px;
 }
-
+/* === Begin Customize icon sort dataTable ==*/
+/*Hiden background image icon sort default dataTable*/
+table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting {
+    background: none;
+}
+span.arrow-hack {
+    margin-left: 10px;
+}
+/*Append icon sort image*/
+table.dataTable thead .sorting_asc > span.arrow-hack  {
+    background: url("assets/images/sort_asc.png");
+    background-repeat: repeat-y, no-repeat;
+    background-position: center top, -550px 50px;
+}
+table.dataTable thead .sorting_desc > span.arrow-hack{
+    background: url("assets/images/sort_desc.png");
+    background-repeat: no-repeat;
+    background-position: center top, -550px 50px;
+}
+table.dataTable thead .sorting > span.arrow-hack{
+    background: url("assets/images/sort_both.png");
+    background-repeat: repeat-y, no-repeat;
+    background-position: center top, -550px 50px;
+}
+/* === End Customize icon sort dataTable === */
 /* 
     Custom button add
     author: Lam; 

@@ -6,6 +6,7 @@ import { HotService } from '../../../shared/services/hot.service';
 import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
 import * as datatable_config from '../../../shared/commons/datatable_config';
+import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
 
 declare var bootbox:any;
 
@@ -39,7 +40,8 @@ export class ListHotComponent implements OnInit {
     constructor(
         private hotService: HotService,  
         private router: Router,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private customizeDatatable: CustomizeDataTable,
     ) { }
 
     ngOnInit() {
@@ -48,6 +50,7 @@ export class ListHotComponent implements OnInit {
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
+                this.customizeDatatable.dataTableSorting();
             },
             columnDefs: [
                 {

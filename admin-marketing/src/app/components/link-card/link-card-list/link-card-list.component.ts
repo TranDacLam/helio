@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import { data_config } from '../../../shared/commons/datatable_config';
+import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
 
 declare var bootbox: any;
 declare var $: any;
@@ -43,6 +44,7 @@ export class LinkCardListComponent implements OnInit {
         private linkCardService: LinkCardService,
         private router: Router,
         private toastr: ToastrService,
+        private customizeDatatable: CustomizeDataTable,
     ) {
         this.link_cards = [];
     }
@@ -53,6 +55,7 @@ export class LinkCardListComponent implements OnInit {
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
+                this.customizeDatatable.dataTableSorting();
             },
             order: [7, 'desc'],
             columnDefs: [
