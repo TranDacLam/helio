@@ -25,8 +25,6 @@ export class LoginComponent implements OnInit {
     msg_error: string = '';
     key_recaptcha: string = '';
 
-    token_recaptcha = '';
-
     constructor(
         private authService: AuthService,
         private fb: FormBuilder,
@@ -74,7 +72,8 @@ export class LoginComponent implements OnInit {
     creatForm(): void{
         this.formLogin = this.fb.group({
             email: [this.user.email, Validators.required],
-            password: [this.user.password, Validators.required]
+            password: [this.user.password, Validators.required],
+            captcha: ['', Validators.required]
         });
     }
 
@@ -82,25 +81,22 @@ export class LoginComponent implements OnInit {
         function onSubmit(): Call service function auth
         author: Lam
     */ 
-    onSubmit(event){
-        if(event){
-            if(this.formLogin.invalid){
-                ValidateSubmit.validateAllFormFields(this.formLogin);
-            }else{
-                this.token_recaptcha = event;
-                this.authService.auth(this.formLogin.value).subscribe(
-                    (data) => {
-                        localStorage.setItem('auth_token', data.token);
-                        if(data.token){
-                            this.getUserByToken(data.token);
-                        }
-                        this.router.navigateByUrl('/');
-                    },
-                    (error) => {
-                        this.msg_error = error.non_field_errors[0] ? "Email hoặc mật khẩu không chính xác." : "Lỗi";
+    onSubmit(){
+        if(this.formLogin.invalid){
+            ValidateSubmit.validateAllFormFields(this.formLogin);
+        }else{
+            this.authService.auth(this.formLogin.value).subscribe(
+                (data) => {
+                    localStorage.setItem('auth_token', data.token);
+                    if(data.token){
+                        this.getUserByToken(data.token);
                     }
-                );
-            }
+                    this.router.navigateByUrl('/');
+                },
+                (error) => {
+                    this.msg_error = error.non_field_errors[0] ? "Email hoặc mật khẩu không chính xác." : "Lỗi";
+                }
+            );
         }
     }
 
