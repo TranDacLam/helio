@@ -174,7 +174,8 @@ class PromotionUser(APIView):
                 # Return result both: notification_id, list promotion user,
                 # list all user, promition detail
                 result = {} 
-                result['notification_id'] = notification.id if notification else ''
+                result['notification'] = admin_serializers.NotificationSerializer(
+                    notification, many=False).data if notification else ''
                 result['promotion_detail'] = admin_serializers.PromotionDisplaySerializer(
                     promotion_detail, many=False).data
                 result['user_all'] = admin_serializers.UserSerializer(
