@@ -53,8 +53,6 @@ export class FeeAddComponent implements OnInit {
         );
         }
     }
-
-
     ngOnInit() {
         this.feeAddForm = this.formBuilder.group({
             fee: [null, [Validators.required, Validators.maxLength(10), NumberValidators.validateFee]],
@@ -69,12 +67,8 @@ export class FeeAddComponent implements OnInit {
         @author: Trangle
     */
     format_currency(nStr) {
-        if (this.feeAddForm.controls['fee_type'].value === 'vnd') {
-            // Convert number to format currency
-            this.data = nStr.replace(/,/g, "").toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-        } else {
-            return this.data;
-        }  
+        // Convert number to format currency
+        this.data = nStr.replace(/,/g, "").toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     }
 
     /*
