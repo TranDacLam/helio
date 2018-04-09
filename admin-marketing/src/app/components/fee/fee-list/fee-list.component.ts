@@ -225,11 +225,13 @@ export class FeeListComponent implements OnInit {
             columnDefs: [
                 {
                     targets: 1,
-                    visible: false
+                    visible: false,
+                    searchable: false
                 },
-                {
+                {   
+                    targets: 0,
                     orderable: false,
-                    targets: 0
+                    searchable: false
                 }
             ]
         };
