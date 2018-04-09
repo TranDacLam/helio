@@ -74,8 +74,21 @@ export class LoginComponent implements OnInit {
             email: [this.user.email, Validators.required],
             password: [this.user.password, Validators.required],
             captcha: ['', Validators.required]
-        });
+        }, {validator: this.setMessageError()});
     }
+
+    /*
+        Function dateTimeLessThan(): validate date, time
+        Author: Lam
+    */
+    setMessageError(){
+        return (group: FormGroup): {[key: string]: any} => {
+            if( this.formLogin && (this.formLogin.value.email === '' || this.formLogin.value.password === '')){
+                this.msg_error = '';
+            }
+            return {};
+        }
+    }    
 
     /*
         function onSubmit(): Call service function auth
