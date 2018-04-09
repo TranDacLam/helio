@@ -24,11 +24,16 @@ export class FeeAddComponent implements OnInit {
     feeAddForm: FormGroup;
     messageResult: String;
     errorMessage: String;
+    data: String;
     /*
       Event create fee
       @author: hoangnguyen 
     */
     createFee(value: any) {
+        var feeArr = [];
+        let feeValue = this.convert_format_currency(this.data);
+        value.fee = feeValue;
+        feeArr.push(value);
         if (this.feeAddForm.invalid) {
             ValidateSubmit.validateAllFormFields(this.feeAddForm);
         } else {
@@ -36,7 +41,7 @@ export class FeeAddComponent implements OnInit {
             result => {
                 this.messageResult = "success";
                 this.router.navigate(['/fee/list']);
-                this.toastr.success(`Thêm mới "${this.feeAddForm.value.fee} ${this.feeAddForm.value.fee_type}" thành công`);
+                this.toastr.success(`Thêm mới "${this.data} ${this.feeAddForm.value.fee_type}" thành công`);
             },
             (error) => {
                 if (error.code === 400) {
@@ -59,4 +64,26 @@ export class FeeAddComponent implements OnInit {
         });
     }
 
+    /*
+        format fee
+        @author: Trangle
+    */
+    format_currency(nStr) {
+        if (this.feeAddForm.controls['fee_type'].value === 'vnd') {
+            // Convert number to format currency
+            this.data = nStr.replace(/,/g, "").toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+        } else {
+            return this.data;
+        }  
+    }
+
+    /*
+        Convert format denominatio before send server
+        @author: Trangle
+     */
+    convert_format_currency(number) {
+        // Conver format currency from form to number. Save databse
+        var value = number.replace(/,/g, '');
+        return value;
+    }
 }
