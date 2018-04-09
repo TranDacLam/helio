@@ -22,6 +22,8 @@
 			</div>
 			<div class="col-sm-2">
 				<input type="text" class="form-control no-arrow" formControlName="fee"
+				[(ngModel)]="data"
+				(keyup) ="format_currency($event.target.value)"
 				>
 			</div>
 			<select formControlName="fee_type" id="fee_type" class="form-control">

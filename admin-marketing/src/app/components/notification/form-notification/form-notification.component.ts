@@ -90,9 +90,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
 
         this.getCategory();
         // get current user
-        setTimeout(()=>{
-            this.user_current = this.variable_globals.user_current;
-        },300);
+        this.user_current = this.variable_globals.user_current;
 
         if (this.route.snapshot.paramMap.get('id')) {
             // Update Init Form

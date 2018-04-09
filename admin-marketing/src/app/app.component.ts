@@ -23,8 +23,11 @@ export class AppComponent {
         private toastr: ToastrService
     ) { 
         this.token = localStorage.getItem('auth_token');
-        if(this.token){
-            this.getUserByToken(this.token);
+        this.variable_globals.user_current = JSON.parse(localStorage.getItem('current_user'));
+        if(!localStorage.getItem('current_user') || !localStorage.getItem('auth_token')){
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('current_user');
+            this.router.navigate(['/login']);
         }
     }
 
@@ -34,31 +37,10 @@ export class AppComponent {
     */
     logout(){
         localStorage.removeItem('auth_token');
+        localStorage.removeItem('current_user');
         this.variable_globals.user_current = null;
         this.toastr.success(`Đăng xuất thành công`);
         this.router.navigate(['/login']);
-    }
-
-    /*
-        Function: getUserByToken(): call service function getUserByToken() get user by token
-        Author: Lam
-    */
-    getUserByToken(value){
-        this.userService.getUserByToken(value).subscribe(
-            (data) => {
-                if(data.is_staff === false){
-                    this.toastr.error("Tài khoản của bạn không có quyền đăng nhập vào Site Quản Trị Hệ Thống.");
-                    this.router.navigate(['/login']);
-                }else{
-                    this.variable_globals.user_current = data;
-                }
-            },
-            (error) => {
-                localStorage.removeItem('auth_token');    
-                this.toastr.error(error.message);                
-                this.router.navigate(['/login']);
-            }
-        );
     }
 
 }

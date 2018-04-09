@@ -105,7 +105,7 @@
 						<label class="center-block">Ngày sinh</label>
 					</div>
 		        	<div class="col-sm-8">	
-						<div class="input-group">
+						<div class="input-group" *ngIf=' user_current?.role'>
 			                <input type="text" class="form-control event-date" formControlName="birth_date" id="birth_date" name="birth_date"
 			                [disabled]="disableInputDate()"
 			                [owlDateTime]="dtBirtday"
@@ -245,8 +245,8 @@
 		</div>
 		<hr>
 		<div class='col-md-12'>
-			<button (click)="confirmDeleteFeedback(user)" type="button" class="pull-left btn btn-danger">XÓA</button>
-			<button type="submit" class="pull-right btn btn-primary">LƯU LẠI</button>
+			<button [disabled]="user.is_staff == 0 || user_current?.role !== 1" (click)="confirmDeleteFeedback(user)" type="button" class="pull-left btn btn-danger">XÓA</button>
+			<button [disabled]="user.is_staff == 0 || user_current?.role !== 1" type="submit" class="pull-right btn btn-primary">LƯU LẠI</button>
 		</div>
 	</form>
 </div>
