@@ -1141,6 +1141,7 @@ def send_notification(request):
             if promotion_obj and promotion_obj.is_draft:
                 promotion_obj.is_draft = False
                 promotion_obj.user_implementer = user
+                promotion_obj.save()
 
             return Response({'message': _('Push Notification Successfull')})
 
