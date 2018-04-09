@@ -58,9 +58,9 @@ export class UserPromotionComponent implements OnInit {
         });
 
     	this.getUsersPromotion();
-        setTimeout(()=>{
-            this.user_current = this.variable_globals.user_current;
-        },100);
+        // ger current user
+        this.user_current = this.variable_globals.user_current;
+        // get current date
         this.date_now = moment(this.datePipe.transform(Date.now(), 'dd/MM/yyy'), "DD/MM/YYYY").toDate();
     }
 

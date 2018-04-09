@@ -57,6 +57,8 @@ export class LoginComponent implements OnInit {
                     this.router.navigate(['/login']);
                 }else{
                     this.variable_globals.user_current = data;
+                    let data_user = {id: data.id, full_name: data.full_name, email: data.email, role: data.role };
+                    localStorage.setItem('current_user', JSON.stringify(data_user));
                 }
             },
             (error) => {
@@ -74,20 +76,15 @@ export class LoginComponent implements OnInit {
             email: [this.user.email, Validators.required],
             password: [this.user.password, Validators.required],
             captcha: ['', Validators.required]
-        }, {validator: this.setMessageError()});
+        });
     }
 
     /*
-        Function dateTimeLessThan(): validate date, time
+        Function setMessageError(): set message error when key down emai or password
         Author: Lam
     */
     setMessageError(){
-        return (group: FormGroup): {[key: string]: any} => {
-            if( this.formLogin && (this.formLogin.value.email === '' || this.formLogin.value.password === '')){
-                this.msg_error = '';
-            }
-            return {};
-        }
+        this.msg_error = '';
     }    
 
     /*

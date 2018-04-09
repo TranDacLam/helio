@@ -83,9 +83,9 @@ export class ListPromotionComponent implements OnInit {
             ]
         };
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
-        setTimeout(()=>{
-            this.user_current = this.variable_globals.user_current;
-        },100);
+        // get current user
+        this.user_current = this.variable_globals.user_current;
+        // get current date
         this.date_now = moment(this.datePipe.transform(Date.now(), 'dd/MM/yyy'), "DD/MM/YYYY").toDate();
     }
 

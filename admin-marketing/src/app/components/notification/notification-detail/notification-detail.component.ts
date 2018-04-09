@@ -56,10 +56,7 @@ export class NotificationDetailComponent implements OnInit {
 
         this.getUserNotification();
         // get current user
-        setTimeout(()=>{
-            this.user_current = this.variable_globals.user_current;
-        },300);
-        
+        this.user_current = this.variable_globals.user_current;
     }
 
     /*
