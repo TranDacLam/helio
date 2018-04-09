@@ -64,10 +64,18 @@
                         (change)="dis_input_app.birth_date = !dis_input_app.birth_date" />&emsp;
                         <label class="col-form-label form-check-label">Ngày Sinh</label>
                     </div>
-                    <div class="col-sm-7">
-                        <input type="text" class="form-control" formControlName="birth_date"
-                        [attr.disabled]="dis_input_app.birth_date ? 'disabled' : null" 
-                        [class.error_user]="status_error.birth_date"/>
+                    <div class="col-sm-7 input-group custom-date">
+                        <input type="text" class="form-control event-date" formControlName="birth_date"
+                            [disabled]="isDisableBirthday()" 
+                            [class.error_user]="status_error.birth_date"
+                            [owlDateTime]="birth_date_app" id="birth_date_app"
+                        />   
+                        <span class="input-group-addon" [owlDateTimeTrigger]="birth_date_app">
+                            <i class="fa fa-calendar"></i>
+                        </span>      
+                        <owl-date-time [pickerType]="'calendar'" [disabled]="dis_input_app.birth_date" #birth_date_app></owl-date-time>
+                    </div>
+                    <div class="col-md-offset-5 custom-date">
                         <show-error-valid [control]="appForm.get('birth_date')"></show-error-valid>
                     </div>
                 </div>
