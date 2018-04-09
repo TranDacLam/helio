@@ -52,7 +52,7 @@ export class UserValidators {
 	static birtdateValidators(fc: FormControl): ValidationErrors {
 		let birtdate = $('#birth_date').val() ? moment($('#birth_date').val(), "DD/MM/YYYY").toDate() : '';
 		var today = new Date();
-		if (birtdate > today) {
+		if (birtdate >= today) {
 			return {
 				'birtdateValidate': {
 					'message': 'Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại.'
