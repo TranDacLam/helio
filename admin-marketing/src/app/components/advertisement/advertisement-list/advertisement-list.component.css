@@ -1,6 +1,6 @@
 /* Begin Content advertiment*/
-.checkbox-adv {
-	padding: 10px;
+.row-border tr td:first-child input{
+    margin-left: 6px;
 }
 .title-adv {
 	margin: 15px 0px;

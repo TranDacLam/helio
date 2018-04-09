@@ -113,14 +113,7 @@ export class FormUserAppComponent implements OnInit {
                 this.disabledEmbed(true);
                 // emit to parent set object status error
                 this.is_submit.emit(true);
-                this.appForm.setValue({
-                    full_name: null,
-                    email: null,
-                    phone: null,
-                    birth_date: null,
-                    personal_id: null,
-                    address: null
-                });
+                this.appForm.reset();
             } 
         );
     }
@@ -133,6 +126,10 @@ export class FormUserAppComponent implements OnInit {
         if(event === true){
             this.is_disable_checkbox = true;
             this.is_disabled_btn_app = true;
+            // input checkbox in form unchekced
+            $('.form-user-app input:checkbox').prop('checked', false);
+            // disable fields in form
+            this.dis_input_app = {full_name: true, email: true, phone: true, birth_date: true, personal_id: true, address: true};
             // emit to parent, disable/undisable button link card
             this.is_btn_linkcard_app.emit(this.is_disabled_btn_app);
         }else{

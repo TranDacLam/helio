@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from '../../../shared/class/user';
 import { UserService } from '../../../shared/services/user.service';
 import { data_config } from '../../../shared/commons/datatable_config';
+import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
 
 declare var bootbox: any;
 
@@ -41,6 +42,7 @@ export class UserListComponent implements OnInit {
         private userService: UserService,
         private router: Router,
         private toastr: ToastrService,
+        private customizeDatatable: CustomizeDataTable,
     ) {
         this.users = [];
     }
@@ -51,12 +53,14 @@ export class UserListComponent implements OnInit {
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
+                this.customizeDatatable.dataTableSorting();
             },
             columnDefs: [
                 {
                     // Hidden the second columns
                     targets: 1,
-                    visible: false
+                    visible: false,
+                    searchable: false,
                 },
                 {
                     // Disable ordering the first column
@@ -134,7 +138,7 @@ export class UserListComponent implements OnInit {
             this.length_selected = dtInstance.rows('.selected').count();
         })
     }
-
+    
     /*
         Confirm Delete Checkbox Selected
         Using bootbox plugin

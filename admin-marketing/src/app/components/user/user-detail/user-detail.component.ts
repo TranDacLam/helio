@@ -9,6 +9,7 @@ import { UserService } from '../../../shared/services/user.service';
 import { UserValidators } from './../../../shared/validators/user-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { NumberValidators } from './../../../shared/validators/number-validators';
+import { VariableGlobals } from './../../../shared/commons/variable_globals';
 
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
@@ -26,7 +27,7 @@ declare var bootbox: any;
 })
 export class UserDetailComponent implements OnInit {
 
-    user: User;
+    user; user_current: User;
     formUser: FormGroup; // formUser is type of FormGroup
     user_form = new User();
     readonly_value = true;
@@ -43,12 +44,15 @@ export class UserDetailComponent implements OnInit {
         private router: Router,
         private datePipe: DatePipe,
         private toastr: ToastrService,
+        private variable_globals: VariableGlobals,
     ) {
         this.api_domain = env.api_domain_root;
     }
 
     ngOnInit() {
         this.getUserById();
+
+        this.user_current = this.variable_globals.user_current;
 
     }
 
@@ -265,10 +269,22 @@ export class UserDetailComponent implements OnInit {
     }
 
     /*
-        Reomove message error when click input tags
+        Remove message error when click input tags
         @author: Trangle
      */
     removeErrorMessage() {
         this.errorMessage = '';
+    }
+
+    /*
+        Disable birth_date with owlDateTime
+        @author:
+     */
+    disableInputDate() {
+        if(this.user.is_staff == 1 && this.user_current.role !== 1) {
+            $('#birth_date').prop('disabled', true);
+        } else {
+            $('#birth_date').prop('disabled', false);
+        }   
     }
 }

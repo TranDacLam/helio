@@ -27,3 +27,10 @@ label.center-block {
 .msg_error{
     color: red;
 }
+.disabled-calender {
+	opacity: 1;
+}
+.file-icon[disabled] {
+	background-color: #eee;
+	opacity: 1;
+}

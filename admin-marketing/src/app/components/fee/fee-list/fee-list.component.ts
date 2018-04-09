@@ -6,7 +6,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
 import * as datatable_config from '../../../shared/commons/datatable_config';
 import { ToastrService } from 'ngx-toastr';
-
+import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
 
 declare var bootbox: any;
 
@@ -18,9 +18,11 @@ declare var bootbox: any;
 export class FeeListComponent implements OnInit {
 
     constructor(
-        private feeService: FeeService,
-        private router: Router,
-        private toastr: ToastrService) {
+        private feeService: FeeService, 
+        private router: Router, 
+        private toastr: ToastrService,
+        private customizeDatatable: CustomizeDataTable,
+        ) {
 
     }
 
@@ -218,15 +220,18 @@ export class FeeListComponent implements OnInit {
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
+                this.customizeDatatable.dataTableSorting();
             },
             columnDefs: [
                 {
                     targets: 1,
-                    visible: false
+                    visible: false,
+                    searchable: false
                 },
-                {
+                {   
+                    targets: 0,
                     orderable: false,
-                    targets: 0
+                    searchable: false
                 }
             ]
         };

@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { DenominationService } from '../../../shared/services/denomination.service';
 import { data_config } from '../../../shared/commons/datatable_config';
+import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
 
 declare var bootbox: any;
 
@@ -40,6 +41,7 @@ export class DenominationListComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastrService,
+        private customizeDatatable: CustomizeDataTable,
     ) {
         this.denominations = [];
     }
@@ -50,18 +52,20 @@ export class DenominationListComponent implements OnInit {
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
+                this.customizeDatatable.dataTableSorting();
             },
             columnDefs: [
                 {
                     // Hidden the second column
                     targets: 1,
-                    visible: false
+                    visible: false,
+                    searchable: false,
                 },
                 {
                     // Disable ordering on the first column
                     orderable: false,
                     targets: 0
-                }
+                },
             ]
         };
         this.dtOptions = { ...this.dtOptions, ...dt_options_custom };
