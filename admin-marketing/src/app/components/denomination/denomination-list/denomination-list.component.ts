@@ -58,13 +58,14 @@ export class DenominationListComponent implements OnInit {
                 {
                     // Hidden the second column
                     targets: 1,
-                    visible: false
+                    visible: false,
+                    searchable: false,
                 },
                 {
                     // Disable ordering on the first column
                     orderable: false,
                     targets: 0
-                }
+                },
             ]
         };
         this.dtOptions = { ...this.dtOptions, ...dt_options_custom };

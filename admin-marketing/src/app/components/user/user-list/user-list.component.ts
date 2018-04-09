@@ -59,7 +59,8 @@ export class UserListComponent implements OnInit {
                 {
                     // Hidden the second columns
                     targets: 1,
-                    visible: false
+                    visible: false,
+                    searchable: false,
                 },
                 {
                     // Disable ordering the first column

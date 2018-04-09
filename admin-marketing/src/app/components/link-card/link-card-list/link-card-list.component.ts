@@ -63,6 +63,7 @@ export class LinkCardListComponent implements OnInit {
                     // Hidden the second column
                     targets: 1,
                     visible: false,
+                    searchable: false,
                 },
                 {
                     // Disable ordering the first column

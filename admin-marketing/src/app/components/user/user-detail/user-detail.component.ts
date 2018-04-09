@@ -52,9 +52,7 @@ export class UserDetailComponent implements OnInit {
     ngOnInit() {
         this.getUserById();
 
-        setTimeout(()=>{
-            this.user_current = this.variable_globals.user_current;
-        },100);
+        this.user_current = this.variable_globals.user_current;
 
     }
 
