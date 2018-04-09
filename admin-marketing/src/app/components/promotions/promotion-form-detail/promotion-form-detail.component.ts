@@ -153,8 +153,8 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
     dateTimeLessThan(){
         return (group: FormGroup): {[key: string]: any} => {
             // get date, time by #id
-            let start_date = $('#start_date').val() ? $('#start_date').val() : '';
-            let end_date = $('#end_date').val() ? $('#end_date').val() : '';
+            let start_date = $('#start_date').val() ? moment($('#start_date').val(), "DD/MM/YYYY").toDate() : '';
+            let end_date = $('#end_date').val() ? moment($('#end_date').val(), "DD/MM/YYYY").toDate() : '';
             let start_time = $('#start_time').val() ? moment($('#start_time').val(), 'HH:mm').toDate() : '';
             let end_time = $('#end_time').val() ? moment($('#end_time').val(), 'HH:mm').toDate() : '';
             // case start date > end date
@@ -175,8 +175,8 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                         slectedtime: "Vui lòng nhập thời gian áp dụng/kết thúc"
                     };
                 }else{
-                    // case start = end date, require start time >= end time
-                    if(start_date === end_date && start_time >= end_time){ 
+                    // case start = end date(check date == not working), require start time >= end time
+                    if(start_date >= end_date && start_date <= end_date && start_time >= end_time){ 
                         return {
                             times: "Vui lòng nhập thời gian kết thúc lớn hơn thời gian áp dụng"
                         };

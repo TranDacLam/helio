@@ -320,23 +320,26 @@ export class DateValidators {
     */
     static dateTimeLessThan(){
         return (group: FormGroup): {[key: string]: any} => {
-            let start_date = $('#start_date').val() ? $('#start_date').val() : '';
-            let end_date = $('#end_date').val() ? $('#end_date').val() : '';
+            // get val date, time by #id
+            let start_date = $('#start_date').val() ? moment($('#start_date').val(), "DD/MM/YYYY").toDate() : '';
+            let end_date = $('#end_date').val() ? moment($('#end_date').val(), "DD/MM/YYYY").toDate() : '';
             let start_time = $('#start_time').val() ? moment($('#start_time').val(), 'HH:mm').toDate() : '';
             let end_time = $('#end_time').val() ? moment($('#end_time').val(), 'HH:mm').toDate() : '';
+            // check start and end date not empty
             if(start_date !== '' && end_date !== ''){
-                if(moment(start_date, "DD/MM/YYYY").toDate() > moment(end_date, "DD/MM/YYYY").toDate()){
+                // check start date > end date let return error
+                if(start_date > end_date){
                     return {
                         dates: "Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu"
                     };
                 }
-                if(start_date === end_date && start_time >= end_time){
+                // check start date = end date (check date == not working) and start >= end time let return error
+                if(start_date >= end_date && start_date <= end_date && start_time >= end_time){
                     return {
                         times: "Vui lòng nhập thời gian kết thúc lớn hơn thời gian bắt đầu"
                     };
                 }
             }
-            
             return {};
         }
     }    

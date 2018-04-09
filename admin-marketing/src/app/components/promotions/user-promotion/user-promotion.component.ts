@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-
 import { PromotionService } from '../../../shared/services/promotion.service';
 import { User } from '../../../shared/class/user';
 import { Promotion } from '../../../shared/class/promotion'
+import { Notification } from './../../../shared/class/notification';
 import { env } from '../../../../environments/environment';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { ToastrService } from 'ngx-toastr';
@@ -34,7 +34,7 @@ export class UserPromotionComponent implements OnInit {
     api_domain:string = "";
     is_update: boolean = false; // Check input checkbox Update Promotion
 
-    notification_id: number;
+    notification: Notification;
 
     lang = 'vi';
     date_now: any;
@@ -69,7 +69,7 @@ export class UserPromotionComponent implements OnInit {
 
         this.promotionService.getUsersPromotion(promotion_id, this.lang).subscribe(
             (data)=> {
-                this.notification_id = data.notification_id;
+                this.notification = data.notification;
                 this.promotion = data.promotion_detail;
                 this.user_list_left = data.user_all;
                 this.user_list_right = data.user_promotion;
@@ -182,6 +182,18 @@ export class UserPromotionComponent implements OnInit {
             return true;
         }
         return false;
+    }
+
+    /*
+        Function isDisableUpdateNotificaiton(): disable when Expires or notification sent
+        Author: Lam
+    */
+    isDisableUpdateNotificaiton(pro, noti){
+        let promotion_end_date = pro.end_date ? moment(pro.end_date, "DD/MM/YYYY").toDate() : '';
+        if((noti.sent_date || (promotion_end_date !== '' && promotion_end_date < this.date_now)) && this.user_current.role !== 1){
+            return true;
+        }
+        return null;
     }
 
 }
