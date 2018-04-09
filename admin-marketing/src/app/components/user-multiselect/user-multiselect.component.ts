@@ -36,8 +36,11 @@ export class UserMultiselectComponent implements OnInit {
     @Input('promotion') 
     promotion: Promotion;
 
-    @Input('promotion_id') 
-    promotion_id: number;
+    @Input('is_disable_notification') 
+    is_disable_notification: boolean;
+
+    @Input('is_disable_promotion') 
+    is_disable_promotion: boolean;
 
 
     @Output()
@@ -158,14 +161,8 @@ export class UserMultiselectComponent implements OnInit {
         @author: Lam 
     */
     disableAllTable(){
-        // get date now
-        let date_now = moment(this.datePipe.transform(Date.now(), 'dd/MM/yyy'), "DD/MM/YYYY").toDate();
-        // get end date promotion
-        let promotion_end_date = (this.promotion && this.promotion.end_date) ? moment(this.promotion.end_date, "DD/MM/YYYY").toDate() : '';
-        //  check promotion d exsit or current user is not system admin and (exist sent date notifcation or end date promotion < date current)
-        if(this.promotion_id || (this.current_user.role !==1 && ((this.notification && this.notification.sent_date) ||
-            (this.promotion && (this.promotion.is_draft === false || 
-            (promotion_end_date !== '' && promotion_end_date < date_now)))))){
+        //  check is disable notification or promotion from ref component parent
+        if(this.is_disable_notification || this.is_disable_promotion){
             // disable all input table user left
             this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
                 dtInstance.rows().every( function () {

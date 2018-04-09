@@ -18,7 +18,7 @@
             <i class="fa fas fa-arrow-left icon-button"></i>
             TRỞ VỀ TRANG QUẢN LÝ THÔNG BÁO
         </a>
-        <a *ngIf="promotion_id" class="btn custom-button pull-right" [routerLink]="['/users-promotions/', promotion_id]">
+        <a *ngIf="noti_detail.promotion" class="btn custom-button pull-right" [routerLink]="['/users-promotions/', noti_detail.promotion]">
             ĐI TỚI CHI TIẾT KHUYẾN MÃI
             <i class="fa fas fa-arrow-right icon-button-right"></i>
         </a>
@@ -62,8 +62,8 @@
     [user_list_right]="user_list_right"
     (save)="update_user_noti($event)"
     [notification]="noti_detail"
-    [promotion]="promotion"
-    [promotion_id]="promotion_id"
+    [is_disable_notification]="is_disable_notification"
+    *ngIf="noti_detail"
 >
 </app-user-multiselect>
 <popup-edit-notification (update_noti)='updateNoti($event)'></popup-edit-notification>
