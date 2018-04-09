@@ -130,9 +130,21 @@ export class UserDetailComponent implements OnInit {
                 let userFormGroup = this.convertFormGroupToFormData(this.formUser);
                 this.userService.updateUser(userFormGroup, this.user.id).subscribe(
                     (data) => {
-                        // Navigate to promotion page where success
                         self.toastr.success(`Chỉnh sửa "${this.formUser.value.email}" thành công`);
-                        self.router.navigate(['/user-list']);
+                        if(this.user_current.email == this.user.email){
+                            if (data.new_password !== '' || this.user_current.email !== data.email){
+                                localStorage.removeItem('auth_token');
+                                localStorage.removeItem('current_user');
+                                this.variable_globals.user_current = null;
+                                self.router.navigate(['/login']);
+                            } else {
+                                // Navigate to promotion page where success
+                                self.router.navigate(['/user-list']);
+                            }
+                        } else {
+                            // Navigate to promotion page where success
+                            self.router.navigate(['/user-list']);
+                        }
                     },
                     (error) => {
                         if (error.code == 400) {
