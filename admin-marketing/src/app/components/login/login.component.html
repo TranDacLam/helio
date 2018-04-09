@@ -22,7 +22,7 @@
                                             <i class="glyphicon glyphicon-user"></i>
                                         </span> 
                                         <input class="form-control" placeholder="Email" type="text" 
-                                            formControlName="email" 
+                                            formControlName="email" (keydown)="setMessageError()"
                                         />
                                     </div>
                                     <show-error-valid [control]="formLogin.get('email')"></show-error-valid>
@@ -33,7 +33,7 @@
                                             <i class="glyphicon glyphicon-lock"></i>
                                         </span>
                                         <input class="form-control" placeholder="Mật khẩu" type="password" 
-                                            formControlName="password" 
+                                            formControlName="password" (keydown)="setMessageError()"
                                         />
                                     </div>
                                     <show-error-valid [control]="formLogin.get('password')"></show-error-valid>

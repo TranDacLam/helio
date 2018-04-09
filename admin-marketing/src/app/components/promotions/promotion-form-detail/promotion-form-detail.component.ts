@@ -87,10 +87,8 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                 this.lang = params.lang;
             }
         });
-
-        setTimeout(()=>{
-            this.user_current = this.variable_globals.user_current;
-        },300)
+        // get current user
+        this.user_current = this.variable_globals.user_current;
 
         this.getAllCategory();
         this.getPromotionTypes();
