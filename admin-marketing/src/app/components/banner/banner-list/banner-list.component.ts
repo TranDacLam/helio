@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Banner } from '../../../shared/class/banner';
 import { BannerService } from '../../../shared/services/banner.service';
 import { data_config } from '../../../shared/commons/datatable_config';
+import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
 
 declare var bootbox: any;
 
@@ -39,6 +40,7 @@ export class BannerListComponent implements OnInit {
         private bannerService: BannerService,
         private router: Router,
         private toastr: ToastrService,
+        private customizeDatatable: CustomizeDataTable,
     ) {
         this.banners = [];
     }
@@ -49,6 +51,7 @@ export class BannerListComponent implements OnInit {
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
+                this.customizeDatatable.dataTableSorting();
             },
             columnDefs: [
                 {

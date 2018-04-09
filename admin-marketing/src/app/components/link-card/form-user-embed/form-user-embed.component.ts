@@ -108,15 +108,7 @@ export class FormUserEmbedComponent implements OnInit {
                     this.errorMessage = 'Mã thẻ này đã bị thay thế. Vui lòng liên kết với mã thẻ khác.';
                 }else{ // case cards_state = 1, id card invalid
                     this.errorMessage = 'Mã thẻ này không hợp lệ.';
-                    this.embedForm.setValue({
-                        barcode: null,
-                        full_name: null,
-                        email: null,
-                        phone: null,
-                        birth_date: null,
-                        personal_id: null,
-                        address: null
-                    });
+                    this.embedForm.reset();
                 }
                 // disabled checkbox, button when id card lock, replaced, invalid
                 if(data.cards_state !== 0){
@@ -132,15 +124,7 @@ export class FormUserEmbedComponent implements OnInit {
                 this.disabledEmbed(true);
                 // emit to parent set object status error 
                 this.is_submit.emit(true);
-                this.embedForm.setValue({
-                    barcode: null,
-                    full_name: null,
-                    email: null,
-                    phone: null,
-                    birth_date: null,
-                    personal_id: null,
-                    address: null
-                });
+                this.embedForm.reset();
             } 
         );
     }
@@ -153,6 +137,12 @@ export class FormUserEmbedComponent implements OnInit {
         if(event === true){
             this.is_disable_checkbox = true;
             this.is_disabled_btn_embed = true;
+            // input checkbox in form unchekced
+            $('.form-user-embed input:checkbox').prop('checked', false);
+            // disable fields in form
+            this.dis_input_embed = {barcode: true, full_name: true, email: true, phone: true, 
+                        birth_date: true, personal_id: true, address: true};
+
             // emit to parent, disable/undisable button link card
             this.is_btn_linkcard_embed.emit(this.is_disabled_btn_embed);
         }else{

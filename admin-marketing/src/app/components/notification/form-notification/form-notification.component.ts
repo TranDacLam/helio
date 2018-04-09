@@ -109,7 +109,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
     ngAfterViewChecked(){
         if(this.isDisable()){
             // disabled button, input, select, only view
-            $('button, input, select').attr('disabled', true);
+            $('.form-notification button, .form-notification input, .form-notification select').attr('disabled', true);
         }
     }
 

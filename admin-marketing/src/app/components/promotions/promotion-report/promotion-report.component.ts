@@ -6,7 +6,6 @@ import { User } from './../../../shared/class/user';
 import { Subject } from 'rxjs/Subject';
 import * as datatable_config from '../../../shared/commons/datatable_config';
 
-
 @Component({
     selector: 'app-promotion-report',
     templateUrl: './promotion-report.component.html',
@@ -29,7 +28,7 @@ export class PromotionReportComponent implements OnInit {
   	constructor(
         private promotionService: PromotionService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
     ) { }
 
   	ngOnInit() {
@@ -43,6 +42,9 @@ export class PromotionReportComponent implements OnInit {
         this.dtOptions = datatable_config.data_config('Khách Hàng');
         // custom datatable option
         let dt_options_custom = {
+            drawCallback: (setting) => {
+                this.dataTableSorting();
+            },
             columnDefs: [
                 {
                     targets: 0,
@@ -77,6 +79,18 @@ export class PromotionReportComponent implements OnInit {
                 this.router.navigate(['/error', {message: error.message}]);
             }
         );
+    }
+
+    /* 
+        Customize dataTable iconsort
+        @author: Trangle
+    */
+    dataTableSorting() {
+        var spanSorting = '<span class="arrow-hack">&nbsp;&nbsp;&nbsp;</span>';
+        $("#table_id thead th").each(function(i, th) {
+            $(th).find('.arrow-hack').remove();
+            $(th).append(spanSorting); 
+        });     
     }
 
 }

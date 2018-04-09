@@ -28,12 +28,12 @@
             <p><label>QR code : </label> <img src="{{api_domain}}{{promotion.QR_code}}" *ngIf="promotion.QR_code" height="50px" width="50px" /></p>
             <p *ngIf="user_current">
         <input type="checkbox" (change)="isUpdatePromotion($event)" [disabled]="user_current.role !== 1"/> 
-            Sửa khuyến mãi đã lưu (Chức năng này chỉ dành cho System Admin)
+            Sửa khuyến mãi đã triển khai (Chức năng này chỉ dành cho System Admin)
         </p>
         <p *ngIf="is_update">
             <button type="button" class="btn custom-button" data-toggle="modal" data-target="#UpdatePromotion">
                 <i class="fa fas fa-pencil-square-o icon-button"></i>
-                {{promotion.is_draft ? 'SỬA NỘI DUNG KHUYẾN MÃI' : 'SỬA KHUYẾN MÃI ĐÃ TRIỂN KHAI'}}
+                {{promotion.is_draft ? 'SỬA NỘI DUNG KHUYẾN MÃI' : 'SỬA NỘI DUNG KHUYẾN MÃI ĐÃ TRIỂN KHAI'}}
             </button>
         </p>
         </div>
@@ -42,34 +42,34 @@
     <div class="col-sm-2 qr_code">
         <button *ngIf="!promotion.QR_code && user_current" class="btn custom-button btn-block text-right" 
             (click)="generator_QR_code($event, promotion.id)"
-            [attr.disabled]="isDisableQRCode()"
+            [attr.disabled]="isDisableQRCode(promotion)"
             data-loading-text="<i class='fa fa-spinner fa-spin'></i>Tạo QR Code">Tạo QR Code</button>
     </div>
     <div class="col-sm-4 pull-right" *ngIf="user_current">
-        <span *ngIf="!isDisableCreateNotificaiton()">
-             <a *ngIf="!notification_id" class="btn custom-button btn-block" 
+        <span *ngIf="!isDisableCreateNotificaiton(promotion)">
+             <a *ngIf="!notification.id" class="btn custom-button btn-block" 
                 [routerLink]="['/notification/add', {promotion: promotion.id, lang: lang}]"
             >
                 <i class="fa fas fa-plus icon-button"></i>
                 TẠO THÔNG BÁO CHO KHUYẾN MÃI
             </a>
         </span>
-        <span *ngIf="isDisableCreateNotificaiton()">
-            <a *ngIf="!notification_id" class="btn custom-button btn-block" disabled>
+        <span *ngIf="isDisableCreateNotificaiton(promotion)">
+            <a *ngIf="!notification.id" class="btn custom-button btn-block" disabled>
                 <i class="fa fas fa-plus icon-button"></i>
                 TẠO THÔNG BÁO CHO KHUYẾN MÃI
             </a>
         </span>
-        <span *ngIf="!isDisable()">
-            <a *ngIf="notification_id" class="btn custom-button btn-block" 
-                [routerLink]="['/notification/edit/', notification_id, {promotion: promotion.id, lang: lang}]"
+        <span *ngIf="!isDisableUpdateNotificaiton(promotion, notification)">
+            <a *ngIf="notification.id" class="btn custom-button btn-block" 
+                [routerLink]="['/notification/edit/', notification.id, {promotion: promotion.id, lang: lang}]"
             >
                 <i class="fa fas fa-pencil-square-o icon-button"></i>
                 CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI
             </a>
         </span>
-        <span *ngIf="isDisable()">
-            <a *ngIf="notification_id" class="btn custom-button btn-block" disabled>
+        <span *ngIf="isDisableUpdateNotificaiton(promotion, notification)">
+            <a *ngIf="notification.id" class="btn custom-button btn-block" disabled>
                 <i class="fa fas fa-pencil-square-o icon-button"></i>
                 CẬP NHẬT THÔNG BÁO CHO KHUYẾN MÃI
             </a>
@@ -77,7 +77,7 @@
         <a class="btn custom-button btn-block" [routerLink]="['/promotions/report/', promotion.id, {lang: lang}]">
             TỔNG HỢP TRIỂN KHAI KHUYẾN MÃI
         </a>
-        <a class="btn custom-button btn-block" *ngIf="notification_id" [routerLink]="['/notification/detail/', notification_id, {lang: lang}]">
+        <a class="btn custom-button btn-block" *ngIf="notification.id" [routerLink]="['/notification/detail/', notification.id, {lang: lang}]">
             ĐI TỚI CHI TIẾT THÔNG BÁO <i class="fa fas fa-arrow-right icon-button-right"></i>
         </a>
     </div>

@@ -5,7 +5,7 @@ import { User } from '../../shared/class/user';
 import { Notification } from './../../shared/class/notification';
 import { Promotion } from './../../shared/class/promotion';
 import { DatePipe } from '@angular/common';
-
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-user-multiselect',
@@ -50,7 +50,7 @@ export class UserMultiselectComponent implements OnInit {
 
     constructor(
         private variableGlobals: VariableGlobals,
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
     ) { }
 
     ngOnInit() {
@@ -95,6 +95,7 @@ export class UserMultiselectComponent implements OnInit {
             },
             drawCallback: (setting) => {
                 this.checkSelectAllCheckboxLeft();
+                this.dataTableSorting();
             }
         }
         
@@ -139,6 +140,7 @@ export class UserMultiselectComponent implements OnInit {
             },
             drawCallback: (setting) => {
                 this.checkSelectAllCheckboxRight();
+                this.dataTableSorting();
             }
         }
 
@@ -156,23 +158,29 @@ export class UserMultiselectComponent implements OnInit {
         @author: Lam 
     */
     disableAllTable(){
-        let date_now = this.datePipe.transform(Date.now(), 'dd/MM/yyy');
-        let promotion_end_date = (this.promotion && this.promotion.end_date) ? this.promotion.end_date : '';
+        // get date now
+        let date_now = moment(this.datePipe.transform(Date.now(), 'dd/MM/yyy'), "DD/MM/YYYY").toDate();
+        // get end date promotion
+        let promotion_end_date = (this.promotion && this.promotion.end_date) ? moment(this.promotion.end_date, "DD/MM/YYYY").toDate() : '';
+        //  check promotion d exsit or current user is not system admin and (exist sent date notifcation or end date promotion < date current)
         if(this.promotion_id || (this.current_user.role !==1 && ((this.notification && this.notification.sent_date) ||
             (this.promotion && (this.promotion.is_draft === false || 
             (promotion_end_date !== '' && promotion_end_date < date_now)))))){
+            // disable all input table user left
             this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
                 dtInstance.rows().every( function () {
                     let row = this.node();
                     $(row).find('input:checkbox').prop('disabled', 'disabled');
                 });
             });
+            // disable all input table user right
             this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
                 dtInstance.rows().every( function () {
                     let row = this.node();
                     $(row).find('input:checkbox').prop('disabled', 'disabled');
                 });
             });
+            // disable button
             $(".multiselect_user button, .multiselect_footer button, #select-all-left, #select-all-right").prop('disabled', 'disabled');
         }
     }
@@ -360,6 +368,18 @@ export class UserMultiselectComponent implements OnInit {
         this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
             this.save.emit(dtInstance.column(1).data().toArray());
         });
+    }
+
+    /*
+        dataTable customize sort ion
+        @author: Trangle
+    */
+    dataTableSorting() {
+        var spanSorting = '<span class="arrow-hack">&nbsp;&nbsp;&nbsp;</span>';
+        $(".dataTables_scrollHead thead th").not(':first').each(function(i, th) {
+            $(th).find('.arrow-hack').remove();
+            $(th).append(spanSorting); 
+        });     
     }
 
 }

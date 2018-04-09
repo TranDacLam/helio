@@ -4,8 +4,8 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const env = {
-  	production: false, 
-  	api_domain: 'http://127.0.0.1:8000/vi/api/',
-  	api_domain_root: 'http://127.0.0.1:8000',
-    key_recaptcha: '6LcHzEoUAAAAAG1ux2034oAvIlJ7hFDIaCwrRzRG'
+    production: true, 
+    api_domain: 'http://172.16.12.19:8000/vi/api/',
+    api_domain_root: 'http://172.16.12.19:8000',
+    key_recaptcha: '6Lc5ZVEUAAAAAPo-jrtER_8DIZvJaBO6cWqPXJRh'
 };
