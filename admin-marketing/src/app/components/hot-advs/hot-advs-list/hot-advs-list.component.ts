@@ -64,6 +64,9 @@ export class HotAdvsListComponent implements OnInit {
                     // Disable ordering the first colum
                     orderable: false,
                     targets: 0
+                }, {
+                    searchable: false, 
+                    targets: 1 
                 }
             ]
         };

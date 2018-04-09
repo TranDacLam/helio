@@ -70,7 +70,10 @@ export class AdvertisementListComponent implements OnInit {
                     // Disable ordering on the first column
                     orderable: false,
                     targets: 0
-                },
+                },{
+                    searchable: false, 
+                    targets: 1 
+                }
             ]
         };
         this.dtOptions = { ...this.dtOptions, ...dt_options_custom };

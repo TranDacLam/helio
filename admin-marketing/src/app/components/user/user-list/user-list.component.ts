@@ -65,7 +65,10 @@ export class UserListComponent implements OnInit {
                     // Disable ordering the first column
                     orderable: false,
                     targets: 0
-                },
+                },{
+                    searchable: false, 
+                    targets: 1 
+                }
             ]
         };
         this.dtOptions = { ...this.dtOptions, ...dt_options_custom };

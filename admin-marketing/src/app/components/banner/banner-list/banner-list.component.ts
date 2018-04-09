@@ -63,6 +63,9 @@ export class BannerListComponent implements OnInit {
                     // Disable thi first column
                     orderable: false,
                     targets: 0
+                }, {
+                    searchable: false, 
+                    targets: 1 
                 }
             ]
         };
