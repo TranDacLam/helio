@@ -145,8 +145,10 @@ export class UserMultiselectComponent implements OnInit {
         }
 
         setTimeout(() => {
-            // add html in table
-            $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
+            // add html in table except user-permission page
+            if(!$(".wrapper-permission").length){
+                $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
+            }
             // get current user
             this.current_user = this.variableGlobals.user_current;
             this.disableAllTable();
