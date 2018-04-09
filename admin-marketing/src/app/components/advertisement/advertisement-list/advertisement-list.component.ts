@@ -62,18 +62,16 @@ export class AdvertisementListComponent implements OnInit {
             },
             columnDefs: [
                 {
-                    // Hiden column the second
+                    // Hiden column the second and search false
                     targets: 1,
-                    visible: false
+                    visible: false,
+                    searchable: false,
                 },
                 {
                     // Disable ordering on the first column
                     orderable: false,
                     targets: 0
-                },{
-                    searchable: false, 
-                    targets: 1 
-                }
+                },
             ]
         };
         this.dtOptions = { ...this.dtOptions, ...dt_options_custom };

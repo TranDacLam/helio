@@ -63,15 +63,13 @@ export class LinkCardListComponent implements OnInit {
                     // Hidden the second column
                     targets: 1,
                     visible: false,
+                    searchable: false,
                 },
                 {
                     // Disable ordering the first column
                     orderable: false,
                     targets: 0
-                },{
-                    searchable: false, 
-                    targets: 1 
-                }
+                },
             ]
         };
         this.dtOptions = { ...this.dtOptions, ...dt_options_custom };

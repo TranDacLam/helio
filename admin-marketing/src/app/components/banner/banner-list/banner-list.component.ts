@@ -57,16 +57,14 @@ export class BannerListComponent implements OnInit {
                 {
                     // Hiden the second column
                     targets: 1,
-                    visible: false
+                    visible: false,
+                    searchable: false,
                 },
                 {
                     // Disable thi first column
                     orderable: false,
                     targets: 0
-                }, {
-                    searchable: false, 
-                    targets: 1 
-                }
+                },
             ]
         };
         this.dtOptions = { ...this.dtOptions, ...dt_options_custom };

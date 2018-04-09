@@ -58,16 +58,14 @@ export class HotAdvsListComponent implements OnInit {
                 {
                     // Hide the second colum
                     targets: 1,
-                    visible: false
+                    visible: false,
+                    searchable: false,
                 },
                 {
                     // Disable ordering the first colum
                     orderable: false,
                     targets: 0
-                }, {
-                    searchable: false, 
-                    targets: 1 
-                }
+                },
             ]
         };
         this.dtOptions = { ...this.dtOptions, ...dt_options_custom };
