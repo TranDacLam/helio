@@ -28,14 +28,13 @@ export class NotificationDetailComponent implements OnInit {
     user_list_left: User[]; // List user not selected
     user_list_right: User[]; // List user selected
 
+    is_disable_notification: boolean;
     is_update: boolean = false; // Check input checkbox Update Notification
     user_current: User;
     promotion: Promotion;
     length_user_right: number = 0;
 
     lang = 'vi';
-
-    promotion_id: number;
 
     constructor(
         private notificationService: NotificationService, 
@@ -72,10 +71,9 @@ export class NotificationDetailComponent implements OnInit {
                 this.noti_detail = data.notification_detail;
                 this.user_list_left = data.user_all;
                 this.user_list_right = data.user_notification;
-                this.promotion_id = data.notification_detail.promotion;
                 this.length_user_right = data.user_notification.length;
-                if(this.promotion_id){
-                    this.promotionService.getPromotionById(this.promotion_id, this.lang).subscribe(
+                if(this.noti_detail.promotion){
+                    this.promotionService.getPromotionById(this.noti_detail.promotion, this.lang).subscribe(
                         (data) => {
                             this.promotion = data;
                         },
@@ -83,6 +81,12 @@ export class NotificationDetailComponent implements OnInit {
                             this.router.navigate(['/error', { message: error.message}]);
                         }
                     );
+                }
+                // check promotion id exsit or current user is not system admin and exist sent date notifcation
+                if(this.noti_detail.promotion || (this.user_current.role !==1 && this.noti_detail.sent_date)){
+                    this.is_disable_notification = true;
+                }else{
+                    this.is_disable_notification = false;
                 }
             }
         );
