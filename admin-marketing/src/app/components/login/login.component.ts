@@ -57,6 +57,8 @@ export class LoginComponent implements OnInit {
                     this.router.navigate(['/login']);
                 }else{
                     this.variable_globals.user_current = data;
+                    let data_user = {id: data.id, full_name: data.full_name, email: data.email, role: data.role };
+                    localStorage.setItem('current_user', JSON.stringify(data_user));
                 }
             },
             (error) => {
@@ -76,6 +78,14 @@ export class LoginComponent implements OnInit {
             captcha: ['', Validators.required]
         });
     }
+
+    /*
+        Function setMessageError(): set message error when key down emai or password
+        Author: Lam
+    */
+    setMessageError(){
+        this.msg_error = '';
+    }    
 
     /*
         function onSubmit(): Call service function auth

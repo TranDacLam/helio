@@ -33,6 +33,7 @@ export class UserPromotionComponent implements OnInit {
 
     api_domain:string = "";
     is_update: boolean = false; // Check input checkbox Update Promotion
+    is_disable_promotion: boolean;
 
     notification: Notification;
 
@@ -58,9 +59,9 @@ export class UserPromotionComponent implements OnInit {
         });
 
     	this.getUsersPromotion();
-        setTimeout(()=>{
-            this.user_current = this.variable_globals.user_current;
-        },100);
+        // ger current user
+        this.user_current = this.variable_globals.user_current;
+        // get current date
         this.date_now = moment(this.datePipe.transform(Date.now(), 'dd/MM/yyy'), "DD/MM/YYYY").toDate();
     }
 
@@ -73,6 +74,14 @@ export class UserPromotionComponent implements OnInit {
                 this.promotion = data.promotion_detail;
                 this.user_list_left = data.user_all;
                 this.user_list_right = data.user_promotion;
+                let promotion_end_date = this.promotion.end_date ? moment(this.promotion.end_date, "DD/MM/YYYY").toDate() : '';
+                //  current user is not system admin and (check promotion is draft or expires of pormotion)
+                if(this.user_current.role !==1 && 
+                    (this.promotion.is_draft === false || (promotion_end_date !== '' && promotion_end_date < this.date_now))){
+                    this.is_disable_promotion = true;
+                }else{
+                    this.is_disable_promotion = false;
+                }
             }, 
             (error) => {
                 this.router.navigate(['/error', { message: error.message}]);

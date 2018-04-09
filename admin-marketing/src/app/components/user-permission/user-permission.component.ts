@@ -95,18 +95,18 @@ export class UserPermissionComponent implements OnInit {
             orderable: false,
             width: 20,
             className: "dt-center",
-            targets: 0
+            targets: 0,
+            searchable: false
         };
         let column_2= {
             orderable: true,
             width: 120,
-            targets: 2
+            targets: 2,
+            searchable: false
         };
-        let column_3 = { targets: 3,visible: false};
-        let column_5 = { targets: 5,visible: false};
-        let column_6 = { targets: 6,visible: false};
-        this.userMultiselect.dtOptions_right.columnDefs.push(column_0, column_2, column_3, column_5, column_6);
-        this.userMultiselect.dtOptions_left.columnDefs.push(column_0, column_2,column_3, column_5, column_6);
+        let column_356 = { targets: [3 ,5 ,6 ],visible: false, searchable: false };
+        this.userMultiselect.dtOptions_right.columnDefs.push(column_0, column_2, column_356);
+        this.userMultiselect.dtOptions_left.columnDefs.push(column_0, column_2,column_356);
         this.userMultiselect.dtOptions_right.scrollX = false;
         this.userMultiselect.dtOptions_left.scrollX = false;
     }

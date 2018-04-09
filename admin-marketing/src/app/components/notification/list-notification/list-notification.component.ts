@@ -66,9 +66,7 @@ export class ListNotificationComponent implements OnInit {
 
         this.getNotifications();
         // get current user
-        setTimeout(()=>{
-            this.user_current = this.variable_globals.user_current;
-        },100);
+        this.user_current = this.variable_globals.user_current;
     }
 
     /*
