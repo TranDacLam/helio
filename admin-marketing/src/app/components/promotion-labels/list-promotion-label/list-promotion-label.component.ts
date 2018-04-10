@@ -53,7 +53,8 @@ export class ListPromotionLabelComponent implements OnInit {
             columnDefs: [
                 {
                     targets: 1,
-                    visible: false
+                    visible: false,
+                    searchable: false,
                 },
                 { 
                     orderable: false, 

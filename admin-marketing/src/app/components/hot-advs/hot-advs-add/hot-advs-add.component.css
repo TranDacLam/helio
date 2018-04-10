@@ -5,6 +5,9 @@
 p.title {
 	font-size: 34px;
 }
+p.errors {
+	color: red;
+}
 a.pull-left {
 	text-decoration: none;
 	color: black;

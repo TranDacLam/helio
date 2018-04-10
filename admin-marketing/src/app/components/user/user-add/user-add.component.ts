@@ -193,4 +193,12 @@ export class UserAddComponent implements OnInit {
         this.errorMessage = '';
     }
 
+    /*
+        validOnlyNumber for phone and personal_id
+        @author: Trangle
+     */
+    validOnlyNumber(value, field) {
+        this.formUser.get(field).setValue(value.replace(/[^0-9]/g, ''));
+    }
+
 }

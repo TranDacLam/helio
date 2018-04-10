@@ -55,7 +55,7 @@ export class FeeAddComponent implements OnInit {
     }
     ngOnInit() {
         this.feeAddForm = this.formBuilder.group({
-            fee: [null, [Validators.required, Validators.maxLength(10), NumberValidators.validateFee]],
+            fee: [null, [Validators.required, Validators.maxLength(13), NumberValidators.validateFee]],
             position: [null, Validators.required],
             fee_type: ['vnd', Validators.required],
             is_apply: [false],
