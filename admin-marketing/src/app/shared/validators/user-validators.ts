@@ -18,7 +18,6 @@ export class UserValidators {
 	}
 
 	static phoneValidators(fc: FormControl):ValidationErrors {
-
 		// Allows only numerals betwen 
 		let phoneRegx = /^[0-9].{9,10}$/;
 		let phone = String($('#phone').val());
@@ -52,7 +51,7 @@ export class UserValidators {
 	static birtdateValidators(fc: FormControl): ValidationErrors {
 		let birtdate = $('#birth_date').val() ? moment($('#birth_date').val(), "DD/MM/YYYY").toDate() : '';
 		var today = new Date();
-		if (birtdate > today) {
+		if (birtdate >= today) {
 			return {
 				'birtdateValidate': {
 					'message': 'Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại.'

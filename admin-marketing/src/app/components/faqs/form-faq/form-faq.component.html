@@ -3,7 +3,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item"><a routerLink="/faq/list">Câu hỏi Thường Gặp</a></li>
+            <li class="breadcrumb-item"><a routerLink="/faq/list">Câu Hỏi Thường Gặp</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{title_page}}</li>
         </ol>
     </nav>
@@ -36,7 +36,7 @@
             <label class="col-form-label form-check-label">Câu Trả Lời</label>
         </div>
         <div class="col-sm-8">
-            <ckeditor formControlName="answer" [config]="ckEditorConfig"></ckeditor>
+            <textarea class="form-control" rows="5" formControlName="answer"></textarea>
             <show-error-valid [control]="formFaq.get('answer')"></show-error-valid>
         </div>
     </div>

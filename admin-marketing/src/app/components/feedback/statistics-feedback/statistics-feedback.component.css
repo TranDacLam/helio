@@ -10,6 +10,9 @@
 .sf-content .panel-body{
     padding-bottom: 50px;
 }
+.sf-content {
+	padding: 0 30px;
+}
 /*.sf-content input{
     border: 1px solid #ccc;
     border-radius: 4px;

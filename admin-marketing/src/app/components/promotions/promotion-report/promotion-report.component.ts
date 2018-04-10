@@ -93,4 +93,15 @@ export class PromotionReportComponent implements OnInit {
         });     
     }
 
+    /*
+        Convert date tye dd/MM/yyyy to string yyyyMMdd
+        @author: Trangle
+     */
+    convertToDate(date) {
+        if (date !== null) {
+            let day = date.split('/');
+            return String(day[2]) + String(day[1]) + String(day[0]);
+        }
+    }
+
 }

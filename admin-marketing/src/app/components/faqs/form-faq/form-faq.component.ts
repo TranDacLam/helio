@@ -8,7 +8,6 @@ import { CategoryService } from './../../../shared/services/category.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
-import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
 
 const FAQS_CATEGORY = [1,2,3,5,6];
@@ -36,7 +35,6 @@ export class FormFaqComponent implements OnInit {
 
     lang = 'vi';
     title_page = '';
-    ckEditorConfig:any;
 
     constructor(
         private faqService: FaqService,
@@ -56,15 +54,14 @@ export class FormFaqComponent implements OnInit {
             }
         });
         this.getCategories();
-        this.ckEditorConfig = ckeditor_config.config;
 
         if (this.route.snapshot.paramMap.get('id')) {
             // Update Init Form
-            this.title_page = "Chỉnh Sửa Câu hỏi Thường Gặp";
+            this.title_page = "Chỉnh Sửa Câu Hỏi Thường Gặp";
             this.getFaq();
         } else {
             // Add new Form
-            this.title_page = "Thêm Câu hỏi Thường Gặp";
+            this.title_page = "Thêm Câu Hỏi Thường Gặp";
             this.faq = new Faq();
             this.creatForm();
         }
