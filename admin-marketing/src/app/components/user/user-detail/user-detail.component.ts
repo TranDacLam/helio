@@ -36,6 +36,8 @@ export class UserDetailComponent implements OnInit {
     errors: string = '';
     api_domain: string = "";
     msg_clear_image: string = '';
+    textValue: string = '';
+    token: string = '';
 
     constructor(
         private fb: FormBuilder,
@@ -298,5 +300,13 @@ export class UserDetailComponent implements OnInit {
         } else {
             $('#birth_date').prop('disabled', false);
         }   
+    }
+
+    /*
+        validOnlyNumber for phone and personal_id
+        @author: Trangle
+     */
+    validOnlyNumber(value, field) {
+        this.formUser.get(field).setValue(value.replace(/[^0-9]/g, ''));
     }
 }

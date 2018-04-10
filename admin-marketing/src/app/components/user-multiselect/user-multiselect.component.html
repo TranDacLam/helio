@@ -21,7 +21,7 @@
                     <td><input type="checkbox"/></td>
                     <td>{{ user.id }}</td>
                     <td>{{ user.full_name }}</td>
-                    <td>{{ user.birth_date}}</td>
+                    <td><span class="hidden">{{ convertToDate(user.birth_date)}}</span>{{ user.birth_date}}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.phone }}</td>
                     <td>{{ user.barcode ? 'Đã Liên Kết' : 'Chưa Liên Kết' }}</td>
@@ -59,7 +59,7 @@
                     <td><input type="checkbox"/></td>
                     <td>{{ user.id }}</td>
                     <td> {{ user.full_name }}</td>
-                    <td>{{ user.birth_date }}</td>
+                    <td><span class="hidden">{{ convertToDate(user.birth_date)}}</span>{{ user.birth_date }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.phone }}</td>
                     <td>{{ user.barcode ? 'Đã Liên Kết' : 'Chưa Liên Kết' }}</td>

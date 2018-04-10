@@ -92,6 +92,7 @@
 					<input class='form-control' name="phone" 
 					formControlName="phone" id="phone"
 					(click)="removeErrorMessage()"
+					(input)="validOnlyNumber(phone.value, 'phone')" #phone
 					>
 					<div *ngIf="errorMessage">
 						<p class='errors'> {{ errorMessage.phone }} </p>
@@ -107,6 +108,7 @@
 					<input class='form-control' name="personal_id" 
 					formControlName="personal_id"
 					(click)="removeErrorMessage()"
+					(input)="validOnlyNumber(personal_id.value, 'personal_id')" #personal_id
 					>
 					<div *ngIf="errorMessage">
 						<p class='errors'> {{ errorMessage.personal_id }} </p>

@@ -118,6 +118,14 @@ h1.h1-title {
     background: none;
     color: #fff;
 }
+.title-marketing {
+    position: absolute;
+    top: 20px;
+    right: 36%;
+    text-transform: uppercase;
+    color: white;
+    font-size: 40px;
+}
 
 /* END HEADER*/
 /* START FOOTER*/
@@ -406,5 +414,8 @@ button.btn:focus {
         margin-top: 20px;
         margin-bottom: 20px;
         text-align: center;
+    }
+    .title-marketing {
+        display: none;
     }
 }
