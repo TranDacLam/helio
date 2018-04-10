@@ -87,9 +87,10 @@ export class FormPostComponent implements OnInit {
             image: [this.post.image, [ImageValidators.validateFile]],
             short_description: [this.post.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.post.content, Validators.required],
-            post_type: [this.post.post_type ? this.post.post_type : '', Validators.required],
+            post_type: [this.post.post_type ? this.post.post_type : ''],
             pin_to_top: [this.post.pin_to_top ? this.post.pin_to_top : false],
             key_query: [this.post.key_query, [Validators.required, Validators.maxLength(255)]],
+            is_draft: [this.post.is_draft],
             is_clear_image: [false],
             posts_image: [[], [ImageValidators.validateMultiFile]]
         });

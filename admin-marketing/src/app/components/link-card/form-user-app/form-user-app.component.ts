@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, AfterViewChecked } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../../../shared/class/user';
@@ -17,7 +17,7 @@ import * as moment from 'moment';
   styleUrls: ['./form-user-app.component.css'],
   providers: [LinkCardService]
 })
-export class FormUserAppComponent implements OnInit {
+export class FormUserAppComponent implements OnInit, AfterViewChecked {
 
     /*
         Author: Lam
@@ -51,6 +51,11 @@ export class FormUserAppComponent implements OnInit {
 
     ngOnInit() {;
         this.userAppForm();
+        this.isDisableBirthday();
+    }
+
+    ngAfterViewChecked(){
+        this.isDisableBirthday();
     }
 
     /*
@@ -64,8 +69,8 @@ export class FormUserAppComponent implements OnInit {
             phone: [this.user_app.phone, 
                 [Validators.required, NumberValidators.validPhone]],
             birth_date: [this.user_app.birth_date ? moment(this.user_app.birth_date,"DD/MM/YYYY").toDate() : '', 
-                [DateValidators.requiredBirthDayApp, DateValidators.formatBirthDayApp,
-                DateValidators.validBirthDayLessCurrentDayApp, DateValidators.validBirthDayApp]],
+                [DateValidators.requiredBirthDayApp, DateValidators.validBirthDayLessCurrentDayApp, 
+                DateValidators.validBirthDayApp, DateValidators.formatBirthDayApp]],
             personal_id: [this.user_app.personal_id, 
                 [Validators.required, NumberValidators.validPersonID]],
             address: [this.user_app.address, Validators.required],

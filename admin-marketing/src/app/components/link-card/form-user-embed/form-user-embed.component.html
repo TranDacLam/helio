@@ -78,8 +78,7 @@
                         <label class="col-form-label form-check-label">Ngày Sinh</label>
                     </div>
                     <div class="col-sm-7 input-group custom-date">
-                        <input type="text" class="form-control event-date" formControlName="birth_date"
-                            [disabled]="isDisableBirthday()" 
+                        <input type="text" class="form-control event-date" formControlName="birth_date" 
                             [class.error_user]="status_error.birth_date"
                             [owlDateTime]="birth_date_embed" id="birth_date_embed"
                         />   

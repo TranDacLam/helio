@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, AfterViewChecked } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Customer } from '../../../shared/class/customer';
@@ -15,7 +15,7 @@ import 'rxjs/add/observable/throw';
   styleUrls: ['./form-user-embed.component.css'],
   providers: [LinkCardService]
 })
-export class FormUserEmbedComponent implements OnInit {
+export class FormUserEmbedComponent implements OnInit, AfterViewChecked {
 
     /*
         Author: Lam
@@ -51,6 +51,11 @@ export class FormUserEmbedComponent implements OnInit {
 
     ngOnInit() {
         this.userEmbedForm();
+        this.isDisableBirthday();
+    }
+
+    ngAfterViewChecked(){
+        this.isDisableBirthday();
     }
 
     /*
@@ -65,8 +70,8 @@ export class FormUserEmbedComponent implements OnInit {
             phone: [this.user_embed.phone, 
                 [Validators.required, NumberValidators.validPhone]],
             birth_date: [this.user_embed.birth_date, 
-                [DateValidators.requiredBirthDayEmbed, DateValidators.formatBirthDayEmbed, 
-                DateValidators.validBirthDayLessCurrentDayEmbed, DateValidators.validBirthDayEmbed]],
+                [DateValidators.requiredBirthDayEmbed, DateValidators.validBirthDayLessCurrentDayEmbed, 
+                DateValidators.validBirthDayEmbed, DateValidators.formatBirthDayEmbed]],
             personal_id: [this.user_embed.personal_id, 
                 [Validators.required, NumberValidators.validPersonID]],
             address: [this.user_embed.address, Validators.required],
