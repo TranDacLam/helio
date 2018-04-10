@@ -265,7 +265,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
     saveEvent(): void {
         // set and update valdiator, so error validate ng-datetime "owlDateTimeParse"
         this.promotionForm.controls['apply_date'].setValidators([DateValidators.validStartDate,
-            DateValidators.formatEndDate]);
+            DateValidators.formatStartDate]);
         this.promotionForm.controls['apply_date'].updateValueAndValidity();
         this.promotionForm.controls['end_date'].setValidators([DateValidators.validEndDate,
             DateValidators.formatEndDate]);

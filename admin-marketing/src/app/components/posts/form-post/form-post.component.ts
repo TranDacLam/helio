@@ -90,6 +90,7 @@ export class FormPostComponent implements OnInit {
             post_type: [this.post.post_type ? this.post.post_type : null],
             pin_to_top: [this.post.pin_to_top ? this.post.pin_to_top : false],
             key_query: [this.post.key_query, [Validators.required, Validators.maxLength(255)]],
+            is_draft: [this.post.is_draft],
             is_clear_image: [false],
             posts_image: [[], [ImageValidators.validateMultiFile]]
         });

@@ -269,50 +269,116 @@ export class DateValidators {
         return null;
     }
 
-    /*
-        Function formatStartDate(): validate format start date
-        Author: Lam
-    */
-    static formatDate(c: FormControl): ValidationErrors {
-        // format date is dd/mm/yyyy
-        let validatePattern = /^(\d{1,2})(\/)(\d{1,2})(\/)(\d{4})$/;
-        // get value use control
-        let getValDate = c.value;
-        // match to check date have correct format
-        let dateValues = getValDate ? getValDate.match(validatePattern) : '';
-        // Check date value is '' let skip
-        if(getValDate === ''){
-            return null;
-        }else if(dateValues === null){ // case date is null
-            return {
-                'fomatDate': {
-                    'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/mm/yyyy'
-                }
-            };
-        }
-        return null;
-    }
+
+    /*  *** LINK CARD ***  */
 
     /*
-        Function validBirthDay(): validate day of month, month of year
+        Function validDate(): validate day of month, month of year
         Author: Lam
     */
-    static validBirthDay(c: FormControl): ValidationErrors {
-        let checkDateValid = new CheckDateValid();
+    validBirthDayLessCurrentDay(message_error, str_date){
         const message = {
             'fomatDate': {
-                'message': 'Vui lòng nhập ngày hợp lệ'
+                'message': message_error
             }
         };
-        // get value use control
-        let date = c.value;
-        // check date valid
-        let is_valid = date ? checkDateValid.trimDate(date) : true;
-        if(is_valid === true){
+        // get date
+        let date = new Date();
+        // get day, month, year
+        let format_date = date.getDate()+'/'+(date.getMonth()+1)+'/'+date.getFullYear();
+        let date_now = moment(format_date, "DD/MM/YYYY").toDate();
+        // Get date by #id
+        let getValdate = $('#'+str_date).val() ? moment($('#'+str_date).val(),"DD/MM/YYYY").toDate() : '';
+        if(getValdate < date_now){
             return null;
         }
         return message;
     }
+
+    /*
+        Function requiredBirthDayApp(): validate required  BirthDay form user app in link card
+        Author: Lam
+    */
+    static validBirthDayLessCurrentDayApp(): ValidationErrors {
+        let message = "Vui lòng nhập ngày sinh nhỏ hơn ngày hiện tại";
+        let dateValidators = new DateValidators();
+        return dateValidators.validBirthDayLessCurrentDay(message, 'birth_date_app');
+    }
+
+    /*
+        Function requiredBirthDayApp(): validate required  BirthDay form user app in link card
+        Author: Lam
+    */
+    static validBirthDayLessCurrentDayEmbed(): ValidationErrors {
+        let message = "Vui lòng nhập ngày sinh nhỏ hơn ngày hiện tại";
+        let dateValidators = new DateValidators();
+        return dateValidators.validBirthDayLessCurrentDay(message, 'birth_date_embed');
+    }
+
+
+    /*
+        Function requiredBirthDayApp(): validate required  BirthDay form user app in link card
+        Author: Lam
+    */
+    static requiredBirthDayApp(): ValidationErrors {
+        let dateValidators = new DateValidators();
+        return dateValidators.requiredDate('birth_date_app');
+    }
+
+    /*
+        Function requiredStartDate(): validate required BirthDay form user embed in link card
+        Author: Lam
+    */
+    static requiredBirthDayEmbed(): ValidationErrors {
+        let dateValidators = new DateValidators();
+        return dateValidators.requiredDate('birth_date_embed');
+    }
+    /*
+        Function formatBirthDayApp(): validate format BirthDay form user app in link card
+        Author: Lam
+    */
+    static formatBirthDayApp(): ValidationErrors {
+        let dateValidators = new DateValidators();
+        return dateValidators.formatInputDate('birth_date_app');
+    }
+
+    /*
+        Function formatBirthDayEmbed(): validate format BirthDay form user embed in link card
+        Author: Lam
+    */
+    static formatBirthDayEmbed(): ValidationErrors {
+        let dateValidators = new DateValidators();
+        return dateValidators.formatInputDate('birth_date_embed');
+    }
+
+    /*
+        Function validBirthDayApp(): validate day of month, month of year form user app in link card
+        Author: Lam
+    */
+    static validBirthDayApp(c: FormControl): ValidationErrors {
+        if(c.dirty){
+            let dateValidators = new DateValidators();
+            let message = 'Vui lòng nhập ngày hợp lệ';
+            return dateValidators.validDate(message, 'birth_date_app');
+        }
+    }
+
+    /*
+        Function validBirthDay(): validate day of month, month of year form user embed in link card
+        Author: Lam
+    */
+    static validBirthDayEmbed(c: FormControl): ValidationErrors {
+        if(c.dirty){
+            let dateValidators = new DateValidators();
+            let message = 'Vui lòng nhập ngày hợp lệ';
+            return dateValidators.validDate(message, 'birth_date_embed');
+        }
+    }
+
+    /*  *** END LINK CARD ***  */
+
+
+    /*  *** EVENT, OPEN TIME ***  */
 
     /*
         Function dateTimeLessThan(): validate date, time
@@ -343,4 +409,6 @@ export class DateValidators {
             return {};
         }
     }    
+
+    /*  *** END EVENT, OPEN TIME ***  */
 }
