@@ -61,13 +61,14 @@ export class FeedbackListComponent implements OnInit {
                 {
                     // Hiden the second column
                     visible: false,
-                    targets: 1
+                    targets: 1,
+                    searchable: false, 
                 },
                 {
                     // Disable ordering the first colum
                     orderable: false,
                     targets: 0
-                }
+                },
             ]
         };
         this.dtOptions = { ...this.dtOptions, ...dt_options_custom };

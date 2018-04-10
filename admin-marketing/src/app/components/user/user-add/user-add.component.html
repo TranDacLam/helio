@@ -70,7 +70,9 @@
 				</div>
 	        	<div class="col-sm-8">
 	        		<div class="input-group">
-		                <input type="text" class="form-control event-date" formControlName="birth_date" id="birth_date" name="birth_date" [owlDateTime]="dtBirtday"/>       
+		                <input type="text" class="form-control event-date" formControlName="birth_date" id="birth_date" name="birth_date" [owlDateTime]="dtBirtday"
+		                (click)='removeErrorMessage()'
+		                />       
 		                <owl-date-time [pickerType]="'calendar'"  #dtBirtday></owl-date-time>
 		                <span class="input-group-addon" [owlDateTimeTrigger]="dtBirtday">
 		                    <i class="fa fa-calendar"></i>
@@ -90,6 +92,7 @@
 					<input class='form-control' name="phone" 
 					formControlName="phone" id="phone"
 					(click)="removeErrorMessage()"
+					(input)="validOnlyNumber(phone.value, 'phone')" #phone
 					>
 					<div *ngIf="errorMessage">
 						<p class='errors'> {{ errorMessage.phone }} </p>
@@ -105,6 +108,7 @@
 					<input class='form-control' name="personal_id" 
 					formControlName="personal_id"
 					(click)="removeErrorMessage()"
+					(input)="validOnlyNumber(personal_id.value, 'personal_id')" #personal_id
 					>
 					<div *ngIf="errorMessage">
 						<p class='errors'> {{ errorMessage.personal_id }} </p>

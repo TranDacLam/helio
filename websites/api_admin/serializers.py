@@ -69,7 +69,11 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields=('id' ,'full_name', 'email', 'phone','barcode','birth_date', 'personal_id', 'address', 'username_mapping', 'date_mapping')
 
-
+    def validate_birth_date(self, value):
+        if value >= datetime.now().date():
+            raise serializers.ValidationError(_("Birthday must less then today"))
+        return value
+        
 	# create objects
 	# def create(self, validated_data):
 	# 	user = User.objects.create( **validated_data )
@@ -574,7 +578,7 @@ class OpenTimeSerializer(serializers.Serializer):
     def validate(self, data):
         if data['start_date'] > data['end_date']:
             raise serializers.ValidationError(_("Start day is before than End day"))
-        if data['start_date'] == data['end_date'] and data['start_time'] >= data['end_time']:
+        if data['start_time'] >= data['end_time']:
             raise serializers.ValidationError(_("Start time is before than End time"))
         return data
 

@@ -36,6 +36,8 @@ export class UserDetailComponent implements OnInit {
     errors: string = '';
     api_domain: string = "";
     msg_clear_image: string = '';
+    textValue: string = '';
+    token: string = '';
 
     constructor(
         private fb: FormBuilder,
@@ -52,9 +54,7 @@ export class UserDetailComponent implements OnInit {
     ngOnInit() {
         this.getUserById();
 
-        setTimeout(()=>{
-            this.user_current = this.variable_globals.user_current;
-        },100);
+        this.user_current = this.variable_globals.user_current;
 
     }
 
@@ -132,9 +132,21 @@ export class UserDetailComponent implements OnInit {
                 let userFormGroup = this.convertFormGroupToFormData(this.formUser);
                 this.userService.updateUser(userFormGroup, this.user.id).subscribe(
                     (data) => {
-                        // Navigate to promotion page where success
                         self.toastr.success(`Chỉnh sửa "${this.formUser.value.email}" thành công`);
-                        self.router.navigate(['/user-list']);
+                        if(this.user_current.email == this.user.email){
+                            if (data.new_password !== '' || this.user_current.email !== data.email){
+                                localStorage.removeItem('auth_token');
+                                localStorage.removeItem('current_user');
+                                this.variable_globals.user_current = null;
+                                self.router.navigate(['/login']);
+                            } else {
+                                // Navigate to promotion page where success
+                                self.router.navigate(['/user-list']);
+                            }
+                        } else {
+                            // Navigate to promotion page where success
+                            self.router.navigate(['/user-list']);
+                        }
                     },
                     (error) => {
                         if (error.code == 400) {
@@ -288,5 +300,13 @@ export class UserDetailComponent implements OnInit {
         } else {
             $('#birth_date').prop('disabled', false);
         }   
+    }
+
+    /*
+        validOnlyNumber for phone and personal_id
+        @author: Trangle
+     */
+    validOnlyNumber(value, field) {
+        this.formUser.get(field).setValue(value.replace(/[^0-9]/g, ''));
     }
 }
