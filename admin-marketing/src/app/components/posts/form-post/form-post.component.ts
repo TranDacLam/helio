@@ -87,7 +87,7 @@ export class FormPostComponent implements OnInit {
             image: [this.post.image, [ImageValidators.validateFile]],
             short_description: [this.post.short_description, [Validators.required, Validators.maxLength(350)]],
             content: [this.post.content, Validators.required],
-            post_type: [this.post.post_type ? this.post.post_type : '', Validators.required],
+            post_type: [this.post.post_type ? this.post.post_type : null],
             pin_to_top: [this.post.pin_to_top ? this.post.pin_to_top : false],
             key_query: [this.post.key_query, [Validators.required, Validators.maxLength(255)]],
             is_clear_image: [false],
@@ -196,7 +196,12 @@ export class FormPostComponent implements OnInit {
             // push list_clearimage into form post value
             this.formPost.value.list_clear_image = this.list_multi_image_id;
             // parse post_type id string to int
-            this.formPost.value.post_type = parseInt(this.formPost.value.post_type);
+            if(this.formPost.value.post_type){
+                this.formPost.value.post_type = parseInt(this.formPost.value.post_type);
+            }else{
+                this.formPost.value.post_type = null;
+            }
+
             // convert Form Group to formData
             let post_form_data = this.convertFormGroupToFormData(this.formPost);
             let value_form = this.formPost.value;
