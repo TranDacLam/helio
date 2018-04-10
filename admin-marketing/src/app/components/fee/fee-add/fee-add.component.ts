@@ -30,13 +30,12 @@ export class FeeAddComponent implements OnInit {
       @author: hoangnguyen 
     */
     createFee(value: any) {
-        var feeArr = [];
-        let feeValue = this.convert_format_currency(this.data);
-        value.fee = feeValue;
-        feeArr.push(value);
+        
         if (this.feeAddForm.invalid) {
             ValidateSubmit.validateAllFormFields(this.feeAddForm);
         } else {
+            let feeValue = this.convert_format_currency(this.data);
+            value.fee = feeValue;
             this.feeService.createFee(value).subscribe(
             result => {
                 this.messageResult = "success";
