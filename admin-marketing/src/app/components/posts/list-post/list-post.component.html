@@ -33,6 +33,14 @@
         </div> 
     </div>
 </div>
+<div *ngIf="postTypes" class="col-sm-2 pull-right">
+    <select class="form-control filter-type-post" (change)="reloadDatatable()" [(ngModel)]="post_type_id" >
+        <option [ngValue]="null" >Bộ lọc</option>
+        <option [ngValue]="null" >Tất cả</option>
+        <option *ngFor="let type of postTypes" [ngValue]="type.id" >{{type.name}}</option>
+    </select>
+</div>
+
 <div class="custom_table">
     <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="posts">
         <thead>
@@ -40,6 +48,7 @@
                 <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
                 <th>ID</th>
                 <th>Bài Viết</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -47,6 +56,7 @@
                 <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
                 <td>{{ post.id }}</td>
                 <td><a [routerLink]="['/post/edit/', post.id, {lang: lang}]">{{ post.name }}</a></td>
+                <td>{{ post.post_type }}</td>
             </tr>
         </tbody>
     </table>
