@@ -41,7 +41,7 @@ export class FormPostComponent implements OnInit {
 
     ckEditorConfig:any;
     list_multi_image_id = [];
-
+    is_post_career:boolean = false;
     constructor(
         private postService: PostService,
         private postTypeService: PostTypeService,
@@ -77,6 +77,11 @@ export class FormPostComponent implements OnInit {
         }
     }
 
+    check_post_career(post_type){
+        this.is_post_career = post_type == 2 ? true: false;
+    }
+
+
     /*
         function creatForm(): Create Reactive Form
         author: Lam
@@ -108,6 +113,7 @@ export class FormPostComponent implements OnInit {
             (data) => {
                 this.post = data;
                 this.creatForm();
+                this.check_post_career(data.post_type);
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.message}]);
