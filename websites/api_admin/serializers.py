@@ -593,5 +593,17 @@ class OpenTimeSerializer(serializers.Serializer):
             raise serializers.ValidationError(_("Start time is before than End time"))
         return data
 
+class ModelNameSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Model_Name
+        fields = ('key', 'name')
+
+class RolesPermissionSerializer(serializers.ModelSerializer):
+    model_name = ModelNameSerializer( many = True, read_only = False )
+    role = RoleSerializer( many = True, read_only = False )
+
+    class Meta:
+        model = Roles_Permission
+        fields = ('model_name', 'role', 'permission')
     
