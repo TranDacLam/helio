@@ -42,9 +42,13 @@ export class FormPostComponent implements OnInit {
     ckEditorConfig:any;
     list_multi_image_id = [];
     input_multi_image = [{index: 0, image: null}, {index: 1, image: null}];
+    select_input_multi_image = [];
     index_multi_image: number = 1;
-    msg_multi_image: string = '';
-    is_valid_multi_image: boolean = true;
+    get_all_image = [];
+
+    input_edit_multi_image = [];
+    id_edit_multi_image = [];
+    msg_clear_multi_image: string = '';
 
     constructor(
         private postService: PostService,
@@ -96,7 +100,7 @@ export class FormPostComponent implements OnInit {
             key_query: [this.post.key_query, [Validators.required, Validators.maxLength(255)]],
             is_draft: [this.post.is_draft],
             is_clear_image: [false],
-            posts_image: [[]]
+            posts_image: [[], [ImageValidators.validateMultiFile]]
         });
     }
 
@@ -111,6 +115,9 @@ export class FormPostComponent implements OnInit {
         this.postService.getPost(id, this.lang).subscribe(
             (data) => {
                 this.post = data;
+                for(let i=0; i<this.post.posts_image.length; i++){
+                    this.input_edit_multi_image.push({id: this.post.posts_image[i].id, image: null});
+                }
                 this.creatForm();
             },
             (error) => {
@@ -131,6 +138,33 @@ export class FormPostComponent implements OnInit {
                 this.post_types = data;
             } 
         );
+    }
+
+    /*
+        Function editFileImage(): Input file image when edit image current
+        author: Lam
+    */ 
+    editFileImage(event, post_image){
+        let obj_image: any;
+        // get object file from input, set obj_image
+        if(event.target.files && event.target.files.length > 0) {
+            let file = event.target.files[0];
+            obj_image = {
+                filename: file.name,
+                filetype: file.type,
+                value: file,
+            }
+        } 
+        // check id for search possition array, add obj_image into input edit multi image
+        for(let i=0; i<this.input_edit_multi_image.length; i++){
+            if(this.input_edit_multi_image[i].id === post_image.id){
+                this.input_edit_multi_image[i].image = obj_image;
+            }
+        }
+        // create new array include select input multi and input multi image
+        this.get_all_image = [...this.get_all_image, ...this.input_edit_multi_image];
+        // set all image slected into posts_image form for validate
+        this.formPost.get('posts_image').setValue(this.get_all_image);
     }
 
     /*
@@ -155,19 +189,36 @@ export class FormPostComponent implements OnInit {
     onFileMultipleChange(event, number): void{
         let obj_image: any;
         if(event.target.files && event.target.files.length > 0) {
-            let file = event.target.files[0];
-            obj_image = {
-                filename: file.name,
-                filetype: file.type,
-                value: file,
-            }
-            // find location array have index = number, set image of array have location = obj_image
-            for(let i=0; i< this.input_multi_image.length; i++){
-                if(this.input_multi_image[i].index === number){
-                    this.input_multi_image[i].image = obj_image;
+            if(number === -1){ // multil upload image
+                this.select_input_multi_image = [];
+                // get object file from input, set obj_image
+                for(let i = 0; i < event.target.files.length; i++){
+                    let file = event.target.files[i];
+                    obj_image = {
+                        filename: file.name,
+                        filetype: file.type,
+                        value: file,
+                    }
+                    this.select_input_multi_image.push({index: null, image: obj_image});
+                }
+            }else{ // upload image single
+                let file = event.target.files[0];
+                obj_image = {
+                    filename: file.name,
+                    filetype: file.type,
+                    value: file,
+                }
+                // find location array have index = number, set image of array have location = obj_image
+                for(let i=0; i< this.input_multi_image.length; i++){
+                    if(this.input_multi_image[i].index === number){
+                        this.input_multi_image[i].image = obj_image;
+                    }
                 }
             }
-            this.validateMultiFile(this.input_multi_image);
+            // create new array include select input multi and input multi image
+            this.get_all_image = [...this.select_input_multi_image, ...this.input_multi_image];
+            // set all image slected into posts_image form for validate
+            this.formPost.get('posts_image').setValue(this.get_all_image);
         }
     }
 
@@ -193,7 +244,7 @@ export class FormPostComponent implements OnInit {
     }
 
     /*
-        Function addImagePost(): remove input image 
+        Function subImagePost(): remove input image 
         author: Lam
     */
     subImagePost(number){
@@ -201,37 +252,12 @@ export class FormPostComponent implements OnInit {
     }
 
     /*
-        Function validateMultiFile(): validate iamge accept jpg, jpeg, png, ico, bmp
-        Author: Lam
+        Function areArrsMatch(): compare element arr1 have in arr2 not
+        author: Lam
     */
-    validateMultiFile(multi_image) {
-        let is_valid = true; 
-        // check image of list mutil image 
-        multi_image.forEach(function(element){
-            if(element.image){
-                // get name image, set "default.jpg" in case update
-                // Case Update: data is a string 'media/abc/xyz.jpg', when choose image is a object {filename, value,...}
-                let name = element.image.filename ? element.image.filename : 'default.jpg';
-                let extension = {'jpg': true, 'jpeg': true, 'png': true, 'ico': true, 'bmp': true, 'gif': true};
-                // get imgae format
-                let ext = name.substring(name.lastIndexOf('.') + 1);
-                // check image format
-                if (!(ext.toLowerCase() in extension)) {
-                    is_valid = false;
-                }
-            }
-        })
-        if(is_valid === true){
-            // set is_valid_multi_image when submit form
-            this.is_valid_multi_image = true;
-            this.msg_multi_image = '';
-        }else{
-            // set is_valid_multi_image when submit form
-            this.is_valid_multi_image = false;
-            this.msg_multi_image = 'Vui lòng tải tệp lên với các định dạng này (jpg, jpeg, png, ico, bmp)';
-        }
+    areArrsMatch(arr1, arr2){
+        return arr1.some(a => arr2.some(m => a === m));
     }
-
 
     /*
         Function onSubmit():
@@ -249,17 +275,17 @@ export class FormPostComponent implements OnInit {
             ValidateSubmit.validateAllFormFields(this.formPost);
             this.scrollTop.scrollTopFom();
         }else{
-            // check is_valid_multi_image when submit form, valide multi image
-            if(this.is_valid_multi_image === false){
-                return;
-            }
+
+            /* upload image */
             let multi_image = []; // create multi image empty
             // push image exist into multi image
-            this.input_multi_image.forEach(function(element){
+            this.get_all_image.forEach(function(element){
                 if(element.image){
                     multi_image.push(element.image);
                 }
             });
+            /* End upload image */
+
             // set mutil image for posts image of form
             this.formPost.value.posts_image = multi_image;
 
@@ -273,11 +299,11 @@ export class FormPostComponent implements OnInit {
                 this.formPost.value.post_type = null;
             }
 
-            // convert Form Group to formData
-            let post_form_data = this.convertFormGroupToFormData(this.formPost);
-            let value_form = this.formPost.value;
             // case create new
             if(!this.post.id){
+                // convert Form Group to formData
+                let post_form_data = this.convertFormGroupToFormData(this.formPost);
+                let value_form = this.formPost.value;
                 this.postService.addPost(post_form_data, this.lang).subscribe(
                     (data) => {
                         this.toastr.success(`Thêm mới "${value_form.name}" thành công`);
@@ -294,22 +320,61 @@ export class FormPostComponent implements OnInit {
                     }
                 );
             }else {
-                this.postService.updatePost(post_form_data, this.post.id, this.lang).subscribe(
-                    (data) => {
-                        this.post = data;
-                        this.toastr.success(`Chỉnh sửa "${value_form.name}" thành công`);
-                        this.router.navigate(['/post/list']);
-                    },
-                    (error) => {
-                        // code 400, error validate
-                        if(error.code === 400){
-                            this.errorMessage = error.message;
-                            this.scrollTop.scrollTopFom();
-                        }else{
-                            this.router.navigate(['/error', { message: error.message}]);
-                        }
+                /* Edit upload image */
+                let edit_posts_image = []; // list image changed
+                let id_edit_post_image = [];// list id image changed
+                // get image != null
+                for(let i=0; i<this.input_edit_multi_image.length;i++){
+                    if(this.input_edit_multi_image[i].image){
+                        edit_posts_image.push(this.input_edit_multi_image[i].image);
+                        id_edit_post_image.push(this.input_edit_multi_image[i].id)
                     }
-                );
+                }
+                // check id image changed have in list image dels
+                let is_edit_clear_multi_image = this.areArrsMatch(id_edit_post_image, this.list_multi_image_id);
+
+                // set image and id edit into form post
+                this.formPost.value.edit_posts_image = edit_posts_image;
+                this.formPost.value.id_edit_post_image = id_edit_post_image;
+                /* End Edit upload image */
+
+                // convert Form Group to formData
+                let post_form_data = this.convertFormGroupToFormData(this.formPost);
+                let value_form = this.formPost.value;
+
+                // check remove image when select checkbox clear image and choose image
+                if(is_edit_clear_multi_image || (value_form.is_clear_image === true && typeof(value_form.image) != 'string')){
+                    // edit, multi upload imagge
+                    if(is_edit_clear_multi_image){
+                        this.msg_clear_multi_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                        $('.image-current li input').prop('checked', false);
+                        this.list_multi_image_id = [];
+                        $('html,body').animate({ scrollTop: $('.image-current').offset().top }, 'slow');
+                    }
+                    // upload imamge single
+                    if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
+                        this.formPost.get('is_clear_image').setValue(false);
+                        this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
+                        this.scrollTop.scrollTopFom();
+                    }
+                }else{
+                    this.postService.updatePost(post_form_data, this.post.id, this.lang).subscribe(
+                        (data) => {
+                            this.post = data;
+                            this.toastr.success(`Chỉnh sửa "${value_form.name}" thành công`);
+                            this.router.navigate(['/post/list']);
+                        },
+                        (error) => {
+                            // code 400, error validate
+                            if(error.code === 400){
+                                this.errorMessage = error.message;
+                                this.scrollTop.scrollTopFom();
+                            }else{
+                                this.router.navigate(['/error', { message: error.message}]);
+                            }
+                        }
+                    );
+                }
             }
         }
     }
@@ -382,7 +447,11 @@ export class FormPostComponent implements OnInit {
                     Object.keys(promotionValues[k]).forEach(l => { 
                         promotionFormData.append('posts_image', promotionValues[k][l].value);
                     });
-                } else {
+                } else if(k === 'edit_posts_image'){
+                    Object.keys(promotionValues[k]).forEach(l => { 
+                        promotionFormData.append('edit_posts_image', promotionValues[k][l].value);
+                    });
+                }else {
                     promotionFormData.append(k, promotionValues[k]);
                 }
             });
