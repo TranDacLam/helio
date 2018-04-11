@@ -55,7 +55,9 @@ export class FeedbackListComponent implements OnInit {
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
-                this.customizeDatatable.dataTableSorting();
+            },
+            initComplete:(setting) =>  {
+                this.customizeDatatable.dataTableSorting("#table_id thead th");
             },
             columnDefs: [
                 {

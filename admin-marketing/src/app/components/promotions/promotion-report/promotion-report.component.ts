@@ -6,6 +6,7 @@ import { Promotion } from './../../../shared/class/promotion';
 import { User } from './../../../shared/class/user';
 import { Subject } from 'rxjs/Subject';
 import * as datatable_config from '../../../shared/commons/datatable_config';
+import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
 
 @Component({
     selector: 'app-promotion-report',
@@ -33,6 +34,7 @@ export class PromotionReportComponent implements OnInit {
         private promotionService: PromotionService,
         private route: ActivatedRoute,
         private router: Router,
+        private customizeDataTable:CustomizeDataTable,
     ) { }
 
   	ngOnInit() {
@@ -47,7 +49,7 @@ export class PromotionReportComponent implements OnInit {
         // custom datatable option
         let dt_options_custom = {
             initComplete: (setting) => {
-                this.dataTableSorting();
+                this.customizeDataTable.dataTableSorting('#table_id thead th');
                 $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
                 $('.info_search').css('text-align', 'right');
             },
@@ -81,18 +83,6 @@ export class PromotionReportComponent implements OnInit {
                 this.router.navigate(['/error', {message: error.message}]);
             }
         );
-    }
-
-    /* 
-        Customize dataTable iconsort
-        @author: Trangle
-    */
-    dataTableSorting() {
-        var spanSorting = '<span class="arrow-hack">&nbsp;&nbsp;&nbsp;</span>';
-        $("#table_id thead th").each(function(i, th) {
-            $(th).find('.arrow-hack').remove();
-            $(th).append(spanSorting); 
-        });     
     }
 
     /*

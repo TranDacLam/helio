@@ -7,11 +7,11 @@ export class CustomizeDataTable {
         Customize icon sorting
         @author: Trangle
     */
-    dataTableSorting() {
-        var spanSorting = '<span class="arrow-hack">&nbsp;&nbsp;&nbsp;</span>';
-        $("#table_id thead th").not(':first').each(function(i, th) {
-            $(th).find('.arrow-hack').remove();
-            $(th).append(spanSorting); 
+    dataTableSorting(dataTableID) {
+        // var spanSorting = '<span class="arrow-hack">&nbsp;&nbsp;&nbsp;</span>';
+        $(dataTableID).each(function(i, th) {
+            $(th).find('arrow-hack').remove();
+            $(th).find('span').addClass('arrow-hack'); 
         });     
     }
 }
