@@ -9,3 +9,6 @@
     padding-bottom: 20px;
     margin-bottom: 30px;
 }
+.custom-select {
+	width: auto;
+}
