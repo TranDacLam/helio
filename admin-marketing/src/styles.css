@@ -211,16 +211,6 @@ h1.h1-title {
 /* END DATATABLE */
 
 /* Table */
-table.dataTable {
-    border-bottom: 1px solid #111111;
-}
-table.dataTable tfoot {
-    display: table-header-group;
-}
-table.dataTable tfoot td {
-    border-bottom: 1px solid #111111;
-    padding: 10px;
-}
 .dataTables_paginate{
     margin-top: 20px;
 }
