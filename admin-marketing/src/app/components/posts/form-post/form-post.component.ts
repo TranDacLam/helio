@@ -41,6 +41,8 @@ export class FormPostComponent implements OnInit {
 
     ckEditorConfig:any;
     list_multi_image_id = [];
+    input_multi_image = [{index: 0, image: null}, {index: 1, image: null}];
+    index_multi_image: number = 1;
 
     constructor(
         private postService: PostService,
@@ -145,23 +147,24 @@ export class FormPostComponent implements OnInit {
     }
 
     /*
-        Function onFileMultipleChange(): Input multiple file image to get base 64
+        Function onFileMultipleChange(): Input file image into input multi image
         author: Lam
     */ 
-    onFileMultipleChange(event): void{
-        let multi_imgae = [];
+    onFileMultipleChange(event, number): void{
         let obj_image: any;
         if(event.target.files && event.target.files.length > 0) {
-            for(let i = 0; i < event.target.files.length; i++){
-                let file = event.target.files[i];
-                obj_image = {
-                    filename: file.name,
-                    filetype: file.type,
-                    value: file,
-                }
-                multi_imgae.push(obj_image);
+            let file = event.target.files[0];
+            obj_image = {
+                filename: file.name,
+                filetype: file.type,
+                value: file,
             }
-            this.formPost.get('posts_image').setValue(multi_imgae);
+            // find location array have index = number, set image of array have location = obj_image
+            for(let i=0; i< this.input_multi_image.length; i++){
+                if(this.input_multi_image[i].index === number){
+                    this.input_multi_image[i].image = obj_image;
+                }
+            }
         }
     }
 
@@ -175,6 +178,23 @@ export class FormPostComponent implements OnInit {
         }else{
             this.list_multi_image_id = this.list_multi_image_id.filter(k => k !== post_image.id);
         }
+    }
+
+    /*
+        Function addImagePost(): click button add input image, push 1 object into list input multi image 
+        author: Lam
+    */ 
+    addImagePost(){
+        this.index_multi_image += 1;
+        this.input_multi_image.push({index: this.index_multi_image, image: null});
+    }
+
+    /*
+        Function addImagePost(): remove input image 
+        author: Lam
+    */
+    subImagePost(number){
+        this.input_multi_image = this.input_multi_image.filter(x => x.index !== number);
     }
 
 
@@ -194,8 +214,20 @@ export class FormPostComponent implements OnInit {
             ValidateSubmit.validateAllFormFields(this.formPost);
             this.scrollTop.scrollTopFom();
         }else{
+
+            let multi_image = []; // create multi image empty
+            // push image exist into multi image
+            this.input_multi_image.forEach(function(element){
+                if(element.image){
+                    multi_image.push(element.image);
+                }
+            });
+            // set mutil image for posts image of form
+            this.formPost.value.posts_image = multi_image;
+
             // push list_clearimage into form post value
             this.formPost.value.list_clear_image = this.list_multi_image_id;
+
             // parse post_type id string to int
             if(this.formPost.value.post_type){
                 this.formPost.value.post_type = parseInt(this.formPost.value.post_type);
