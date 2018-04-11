@@ -8,6 +8,8 @@ import { NumberValidators } from './../../../shared/validators/number-validators
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'form-user-embed',
@@ -69,7 +71,7 @@ export class FormUserEmbedComponent implements OnInit, AfterViewChecked {
             email: [this.user_embed.email, [Validators.required, Validators.email]],
             phone: [this.user_embed.phone, 
                 [Validators.required, NumberValidators.validPhone]],
-            birth_date: [this.user_embed.birth_date, 
+            birth_date: [this.user_embed.birth_date ? moment(this.user_embed.birth_date,"DD/MM/YYYY").toDate() : '', 
                 [DateValidators.requiredBirthDayEmbed, DateValidators.validBirthDayLessCurrentDayEmbed, 
                 DateValidators.validBirthDayEmbed, DateValidators.formatBirthDayEmbed]],
             personal_id: [this.user_embed.personal_id, 
@@ -94,7 +96,7 @@ export class FormUserEmbedComponent implements OnInit, AfterViewChecked {
                         full_name: this.user_embed.full_name,
                         email: this.user_embed.email,
                         phone: this.user_embed.phone,
-                        birth_date: this.user_embed.birth_date,
+                        birth_date: this.user_embed.birth_date ? moment(this.user_embed.birth_date,"DD/MM/YYYY").toDate() : '',
                         personal_id: this.user_embed.personal_id,
                         address: this.user_embed.address
                     });

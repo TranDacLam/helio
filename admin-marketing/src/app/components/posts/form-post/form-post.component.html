@@ -123,14 +123,21 @@
                 </li>
             </ul>
             <p *ngIf="msg_clear_image" class="msg_error">{{msg_clear_image}}</p>
-            <input type="file" accept="image/*" title='Nhấn "Ctrl" để chọn nhiều hình ảnh'
-            (change)="onFileMultipleChange($event)" multiple/>
+            <ul class="multi-image">
+                <li *ngFor="let num of input_multi_image">
+                    <input type="file" accept="image/*" (change)="onFileMultipleChange($event, num.index)"/>
+                    <i class="fa fa-minus fa-2x pull-right" (click)="subImagePost(num.index)"></i>
+                </li>
+            </ul>
             <ul class="error_valid" 
                 *ngIf="formPost.get('posts_image') && formPost.get('posts_image')?.errors">
                 <li style="color: red" *ngIf="formPost.get('posts_image').errors?.fomatMultiFile">
                     Vui lòng tải tệp lên với các định dạng này (jpg, jpeg, png, ico, bmp)
                 </li>
             </ul>
+            <button class="btn btn-primary" (click)="addImagePost()">
+                <i class="fa fa-plus"></i> Thêm một Hình ảnh bài viết
+            </button>
         </div>
     </div>
 
