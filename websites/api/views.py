@@ -1104,11 +1104,6 @@ def send_notification(request):
             promotion_obj = notify_obj.promotion
 
             if promotion_obj:
-                if not promotion_obj.is_save:
-                    error = {
-                        "code": 400, "message": "Please select list user to send", "fields": "", "flag": False}
-                    return Response(error, status=400)
-
                 user_of_notification = Gift.objects.filter(
                     promotion=promotion_obj).values_list('user_id', flat=True)
             else:

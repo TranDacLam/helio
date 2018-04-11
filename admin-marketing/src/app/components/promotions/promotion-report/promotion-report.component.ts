@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DataTableDirective } from 'angular-datatables';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PromotionService } from './../../../shared/services/promotion.service';
 import { Promotion } from './../../../shared/class/promotion';
@@ -25,6 +26,9 @@ export class PromotionReportComponent implements OnInit {
     count_user_not_deviced: number;
     list_user: any;
 
+    @ViewChild(DataTableDirective)
+    dtElement: DataTableDirective;
+
   	constructor(
         private promotionService: PromotionService,
         private route: ActivatedRoute,
@@ -42,8 +46,10 @@ export class PromotionReportComponent implements OnInit {
         this.dtOptions = datatable_config.data_config('Khách Hàng');
         // custom datatable option
         let dt_options_custom = {
-            drawCallback: (setting) => {
+            initComplete: (setting) => {
                 this.dataTableSorting();
+                $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
+                $('.info_search').css('text-align', 'right');
             },
             columnDefs: [
                 {
@@ -70,10 +76,6 @@ export class PromotionReportComponent implements OnInit {
                 this.count_user_deviced = data.count_user_device;
                 this.count_user_not_deviced = data.count_user;
                 this.list_user = data.gift_user;
-                setTimeout(()=>{
-                    $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
-                    $('.info_search').css('text-align', 'right');
-                },300);
             }, 
             (error) => {
                 this.router.navigate(['/error', {message: error.message}]);

@@ -58,10 +58,8 @@ export class DenominationAddComponent implements OnInit {
         if (this.denoForm.invalid) {
             ValidateSubmit.validateAllFormFields(this.denoForm);
         } else {
-            var denoArr = [];
             let denomi = this.convert_format_currency(this.data);
             denomination.denomination = denomi
-            denoArr.push(denomination);
 
             this.denominationService.createDenomination(denomination)
                 .subscribe(
