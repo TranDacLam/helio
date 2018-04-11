@@ -43,6 +43,8 @@ export class FormPostComponent implements OnInit {
     list_multi_image_id = [];
     input_multi_image = [{index: 0, image: null}, {index: 1, image: null}];
     index_multi_image: number = 1;
+    msg_multi_image: string = '';
+    is_valid_multi_image: boolean = true;
 
     constructor(
         private postService: PostService,
@@ -94,7 +96,7 @@ export class FormPostComponent implements OnInit {
             key_query: [this.post.key_query, [Validators.required, Validators.maxLength(255)]],
             is_draft: [this.post.is_draft],
             is_clear_image: [false],
-            posts_image: [[], [ImageValidators.validateMultiFile]]
+            posts_image: [[]]
         });
     }
 
@@ -165,6 +167,7 @@ export class FormPostComponent implements OnInit {
                     this.input_multi_image[i].image = obj_image;
                 }
             }
+            this.validateMultiFile(this.input_multi_image);
         }
     }
 
@@ -197,6 +200,38 @@ export class FormPostComponent implements OnInit {
         this.input_multi_image = this.input_multi_image.filter(x => x.index !== number);
     }
 
+    /*
+        Function validateMultiFile(): validate iamge accept jpg, jpeg, png, ico, bmp
+        Author: Lam
+    */
+    validateMultiFile(multi_image) {
+        let is_valid = true; 
+        // check image of list mutil image 
+        multi_image.forEach(function(element){
+            if(element.image){
+                // get name image, set "default.jpg" in case update
+                // Case Update: data is a string 'media/abc/xyz.jpg', when choose image is a object {filename, value,...}
+                let name = element.image.filename ? element.image.filename : 'default.jpg';
+                let extension = {'jpg': true, 'jpeg': true, 'png': true, 'ico': true, 'bmp': true, 'gif': true};
+                // get imgae format
+                let ext = name.substring(name.lastIndexOf('.') + 1);
+                // check image format
+                if (!(ext.toLowerCase() in extension)) {
+                    is_valid = false;
+                }
+            }
+        })
+        if(is_valid === true){
+            // set is_valid_multi_image when submit form
+            this.is_valid_multi_image = true;
+            this.msg_multi_image = '';
+        }else{
+            // set is_valid_multi_image when submit form
+            this.is_valid_multi_image = false;
+            this.msg_multi_image = 'Vui lòng tải tệp lên với các định dạng này (jpg, jpeg, png, ico, bmp)';
+        }
+    }
+
 
     /*
         Function onSubmit():
@@ -214,7 +249,10 @@ export class FormPostComponent implements OnInit {
             ValidateSubmit.validateAllFormFields(this.formPost);
             this.scrollTop.scrollTopFom();
         }else{
-
+            // check is_valid_multi_image when submit form, valide multi image
+            if(this.is_valid_multi_image === false){
+                return;
+            }
             let multi_image = []; // create multi image empty
             // push image exist into multi image
             this.input_multi_image.forEach(function(element){
