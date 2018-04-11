@@ -343,7 +343,7 @@ class PostSerializer(serializers.ModelSerializer):
             key_query = 'kq_' + value.replace(' ', '_')
             key_query_is_exist = Post.objects.filter( key_query = key_query )
             if key_query_is_exist:
-                raise serializers.ValidationError('key_query is exist.')
+                raise serializers.ValidationError(_('key_query is exist.'))
             return value
         return value
 
@@ -592,5 +592,6 @@ class OpenTimeSerializer(serializers.Serializer):
         if data['start_time'] >= data['end_time']:
             raise serializers.ValidationError(_("Start time is before than End time"))
         return data
+
 
     
