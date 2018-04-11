@@ -11,6 +11,7 @@
 .page-header-img-full {
 	margin-bottom: 60px;
 	position: relative;
+    min-height: 175px;
 }
 .page-header-img-full img {
     opacity: 0.3;
