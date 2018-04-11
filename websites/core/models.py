@@ -517,7 +517,7 @@ class Roles_Permission(DateTimeModel):
         ('change', 'Change'),
         ('read', 'Read')
     )
-    model_name = models.ForeignKey('Mode_Name',related_name='permission_model_rel', on_delete=models.CASCADE)
+    model_name = models.ForeignKey('Model_Name',related_name='permission_model_rel', on_delete=models.CASCADE)
     role = models.ForeignKey(Roles,related_name='permission_roles_rel', on_delete=models.CASCADE)
     permission = models.CharField(_('Permission'), max_length=255, choices=PERMISSION) 
 
@@ -525,7 +525,7 @@ class Roles_Permission(DateTimeModel):
         return '%s' % (self.model_name)  
 
 @python_2_unicode_compatible
-class Mode_Name(DateTimeModel):
+class Model_Name(DateTimeModel):
     key = models.CharField(_('Key'), max_length=255, unique=True)
     name = models.CharField(_('Name'), max_length=255)
     def __str__(self):

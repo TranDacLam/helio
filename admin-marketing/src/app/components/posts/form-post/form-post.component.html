@@ -79,10 +79,10 @@
             <label class="col-form-label form-check-label">Loại Bài Viết</label>
         </div>
         <div class="col-sm-6" *ngIf="post_types">
-            <select class="form-control" formControlName="post_type">
+            <select class="form-control" formControlName="post_type" #post_type (change)="check_post_career(post_type.value)">
                 <option value="">-- CHỌN LOẠI BÀI VIẾT --</option>
                 <option *ngFor="let type of post_types" 
-                    value="{{ type.id }}" [selected]="type.id === post.post_type"
+                     value="{{ type.id }}" [selected]="type.id === post.post_type"
                 >
                 {{ type.name }}</option>
             </select>
@@ -95,7 +95,7 @@
             <label class="col-form-label form-check-label">Pin To Top</label>
         </div>
         <div class="col-sm-8">
-            <input type="checkbox" value="" formControlName="pin_to_top" />
+            <input type="checkbox" value="" formControlName="pin_to_top" [attr.disabled]="is_post_career ? null : false"/>
         </div>
     </div>
 
