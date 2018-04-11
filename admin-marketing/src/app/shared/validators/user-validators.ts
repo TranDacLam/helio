@@ -48,18 +48,30 @@ export class UserValidators {
 		return null;
 	}
 
-	static birtdateValidators(fc: FormControl): ValidationErrors {
-		let birtdate = $('#birth_date').val() ? moment($('#birth_date').val(), "DD/MM/YYYY").toDate() : '';
-		var today = new Date();
-		if (birtdate >= today) {
-			return {
-				'birtdateValidate': {
-					'message': 'Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại.'
-				}
-			}
-		}
-		return null;
-	}
+    birtdateValidators(message_error, date){
+        const message = {
+            'birtdateValidate': {
+                'message': message_error
+            }
+        };
+        // get today
+        let today = new Date();
+        // get day, month, year
+        let formatDate = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+	    let date_now = moment(formatDate, "DD/MM/YYYY").toDate();
+        // Get date by #id
+        let getValdate = $('#'+date).val() ? moment($('#'+date).val(),"DD/MM/YYYY").toDate() : '';
+        if(getValdate < date_now){
+            return null;
+        }
+        return message;
+    }
+
+    static birtdateValidators(): ValidationErrors {
+        let message = "Vui lòng nhập ngày sinh nhỏ hơn ngày hiện tại";
+        let userValidators = new UserValidators();
+        return userValidators.birtdateValidators(message, 'birth_date');
+    }
 
 	static formatBirtday(c: FormControl): ValidationErrors {
         if(c.dirty){
