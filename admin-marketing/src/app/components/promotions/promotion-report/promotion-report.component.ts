@@ -48,17 +48,6 @@ export class PromotionReportComponent implements OnInit {
         let dt_options_custom = {
             initComplete: (setting) => {
                 this.dataTableSorting();
-                // TODO apply all + move to common
-                this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                    dtInstance.columns().every(function () {
-                        const that = this;
-                        $('input, select', this.footer()).on('keyup change', function () {
-                            if (that.search() !== this['value']) {
-                                that.search(this['value']).draw();
-                            }
-                        });
-                    });
-                });
                 $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
                 $('.info_search').css('text-align', 'right');
             },
