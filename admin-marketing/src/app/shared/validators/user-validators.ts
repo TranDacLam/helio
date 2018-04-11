@@ -82,7 +82,7 @@ export class UserValidators {
                 return null;
             } else if (!getValDate.match(validatePattern)) {
             	return {
-            		'fomatBirtdate': {
+            		'birtdateValidate': {
                         'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/mm/yyyy'
                     }
             	}
@@ -95,13 +95,13 @@ export class UserValidators {
 				if (((date.getDate()!=dd) || date.getMonth()+1!=mm)||(date.getFullYear()!=yyyy)) 
 				{
 					return {
-						'invalidDate': {
+						'birtdateValidate': {
 							'message': 'Vui lòng nhập vào ngày hợp lệ'
 						}
 					}
 				} else if (yyyy < 1900) {
 					return {
-						'errorBefore1900': {
+						'birtdateValidate': {
 							'message': 'Vui lòng chọn năm sinh lớn hơn 1900'
 						}
 					}

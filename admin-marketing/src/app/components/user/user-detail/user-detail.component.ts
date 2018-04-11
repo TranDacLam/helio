@@ -60,8 +60,8 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
     }
     ngAfterViewChecked(){
         if(this.checkDisable()){
-            // disabled birth_date
-            $('#birth_date').prop('disabled', true);
+            // disabled input wwith class textDisable
+            $('.textDisable').prop('disabled', true);
         }
     }
 
