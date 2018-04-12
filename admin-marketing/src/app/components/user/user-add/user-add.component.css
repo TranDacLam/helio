@@ -10,7 +10,7 @@ p.title {
 	font-size: 34px;
 }
 .content-form-add-user {
-	margin: 10px 0 15px 0;
+    padding: 8px 0px;
 }
 p.errors {
 	color: red;

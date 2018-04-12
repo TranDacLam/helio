@@ -9,8 +9,6 @@ import { ToastrService } from 'ngx-toastr';
 
 import { DenominationService } from '../../../shared/services/denomination.service';
 import { data_config } from '../../../shared/commons/datatable_config';
-import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
-
 declare var bootbox: any;
 
 @Component({
@@ -41,7 +39,6 @@ export class DenominationListComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastrService,
-        private customizeDatatable: CustomizeDataTable,
     ) {
         this.denominations = [];
     }
@@ -52,7 +49,6 @@ export class DenominationListComponent implements OnInit {
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
-                this.customizeDatatable.dataTableSorting();
             },
             columnDefs: [
                 {

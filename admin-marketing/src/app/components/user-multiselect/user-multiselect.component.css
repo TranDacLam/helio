@@ -9,3 +9,9 @@
     margin-bottom: 10px;
     margin-right: 20px;
 }
+/*Customize sort dataTable*/
+table.dataTable thead .sorting > span,
+table.dataTable thead .sorting_asc > span,
+table.dataTable thead .sorting_desc > span{
+    width: 64px;
+}

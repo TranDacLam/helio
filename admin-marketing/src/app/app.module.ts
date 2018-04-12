@@ -46,7 +46,6 @@ import { FeedbackService } from './shared/services/feedback.service';
 import { CategoryService } from './shared/services/category.service';
 import { BannerService } from './shared/services/banner.service';
 import { ScrollTop } from './shared/commons/scroll-top';
-import { CustomizeDataTable } from './shared/commons/customize_datatable';
 import { AuthGuard } from './shared/auth/auth.guard';
 
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
@@ -209,7 +208,6 @@ export const MY_MOMENT_FORMATS = {
     UserPermissionService,
     VariableGlobals,
     ScrollTop,
-    CustomizeDataTable,
     {
         provide: RequestOptions, 
         useClass: AuthRequestOptions

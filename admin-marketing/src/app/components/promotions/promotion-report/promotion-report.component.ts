@@ -47,7 +47,6 @@ export class PromotionReportComponent implements OnInit {
         // custom datatable option
         let dt_options_custom = {
             initComplete: (setting) => {
-                this.dataTableSorting();
                 $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
                 $('.info_search').css('text-align', 'right');
             },
@@ -81,18 +80,6 @@ export class PromotionReportComponent implements OnInit {
                 this.router.navigate(['/error', {message: error.message}]);
             }
         );
-    }
-
-    /* 
-        Customize dataTable iconsort
-        @author: Trangle
-    */
-    dataTableSorting() {
-        var spanSorting = '<span class="arrow-hack">&nbsp;&nbsp;&nbsp;</span>';
-        $("#table_id thead th").each(function(i, th) {
-            $(th).find('.arrow-hack').remove();
-            $(th).append(spanSorting); 
-        });     
     }
 
     /*
