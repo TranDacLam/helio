@@ -27,7 +27,8 @@
 }
 .filter-type-post {
     margin-bottom: 15px;
-    padding-right: 0px
+    padding-right: 0px;
+    width: 172px;
 }
 .filter-type-post option:first-child{
     display:none;
