@@ -192,6 +192,12 @@ h1.h1-title {
 .footer-text {
     display: inline;
 }
+.icon-footer a:hover, .icon-footer a:focus {
+    color: #fff;
+}
+.icon-footer .icon-youtube-play:hover, .icon-footer .icon-youtube-play:focus {
+    color: #e336b6;
+}
 /* END FOOTER*/
 /* START BREADCRUMB */
 .breadcrumb {
