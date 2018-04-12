@@ -35,11 +35,9 @@ export class ShowErrorValidComponent implements OnInit {
        'denominationValidate': (param) => param.message,
        'emailValidate': (param) => param.message,
        'birtdateValidate': (params) => params.message,
-       'fomatBirtdate':(params) => params.message,
        'invalidDate':(params) => params.message,
        'fomatFile': (params) => params.message,
        'requiredSelectedRole': (params) => params.message,
-       'errorBefore1900':(params) => params.message,
        'feeValidate': (params) => params.message,
     };
 

@@ -41,6 +41,9 @@ export class FormPostComponent implements OnInit {
 
     ckEditorConfig:any;
     list_multi_image_id = [];
+    // check post is for career
+    is_post_career:boolean = false;
+
     input_multi_image = [{index: 0, image: null}, {index: 1, image: null}];
     select_input_multi_image = [];
     index_multi_image: number = 1;
@@ -84,6 +87,14 @@ export class FormPostComponent implements OnInit {
             this.creatForm();
         }
     }
+    /*
+        function check_post_career(): check post is for career
+        author: HOang
+    */ 
+    check_post_career(post_type){
+        this.is_post_career = post_type == 2 ? true: false;
+    }
+
 
     /*
         function creatForm(): Create Reactive Form
@@ -119,6 +130,7 @@ export class FormPostComponent implements OnInit {
                     this.input_edit_multi_image.push({id: this.post.posts_image[i].id, image: null});
                 }
                 this.creatForm();
+                this.check_post_career(data.post_type);
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.message}]);
