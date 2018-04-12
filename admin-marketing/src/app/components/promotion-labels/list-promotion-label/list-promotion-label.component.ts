@@ -6,7 +6,6 @@ import { PromotionLabelService } from '../../../shared/services/promotion-label.
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 import * as datatable_config from '../../../shared/commons/datatable_config';
-import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
 
 declare var bootbox:any;
 
@@ -39,7 +38,6 @@ export class ListPromotionLabelComponent implements OnInit {
         private promotionLabelService: PromotionLabelService,  
         private router: Router,
         private toastr: ToastrService,
-        private customizeDatatable: CustomizeDataTable,
     ) { }
 
     ngOnInit() {
@@ -48,9 +46,6 @@ export class ListPromotionLabelComponent implements OnInit {
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
-            },
-            initComplete:(setting) =>  {
-                this.customizeDatatable.dataTableSorting("#table_id thead th");
             },
             columnDefs: [
                 {

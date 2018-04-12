@@ -6,7 +6,6 @@ import { Notification } from './../../shared/class/notification';
 import { Promotion } from './../../shared/class/promotion';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
-import { CustomizeDataTable } from './../../shared/commons/customize_datatable';
 
 @Component({
     selector: 'app-user-multiselect',
@@ -55,7 +54,6 @@ export class UserMultiselectComponent implements OnInit {
     constructor(
         private variableGlobals: VariableGlobals,
         private datePipe: DatePipe,
-        private customizeDataTable: CustomizeDataTable,
     ) { }
 
     ngOnInit() {
@@ -101,10 +99,6 @@ export class UserMultiselectComponent implements OnInit {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckboxLeft(); 
             },
-            initComplete:(setting) =>  {
-                $('.dataTables_scrollHeadInner').addClass('dataTable_customizeSortIcon')
-                this.customizeDataTable.dataTableSorting('.dataTable_customizeSortIcon thead th');
-            },
         }
         
         this.dtOptions_right = {
@@ -149,10 +143,6 @@ export class UserMultiselectComponent implements OnInit {
             },
             drawCallback: (setting) => {
                 this.checkSelectAllCheckboxRight();
-            },
-            initComplete:(setting) =>  {
-                $('.dataTables_scrollHeadInner').addClass('dataTable_customizeSortIcon')
-                this.customizeDataTable.dataTableSorting('.dataTable_customizeSortIcon thead th');
             },
         }
         // get current user

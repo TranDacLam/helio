@@ -238,18 +238,20 @@ table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc,
 table.dataTable thead .sorting {
     background: none;
 }
-span.arrow-hack {
+table.dataTable thead .sorting > span,
+table.dataTable thead .sorting_asc > span,
+table.dataTable thead .sorting_desc > span{
     padding-right: 20px;
     display: inline-table;
 }
 /*Append icon sort image*/
-table.dataTable thead .sorting_asc > span.arrow-hack  {
+table.dataTable thead .sorting_asc > span  {
     background: url("assets/images/sort_asc.png") right center no-repeat ;
 }
-table.dataTable thead .sorting_desc > span.arrow-hack{
+table.dataTable thead .sorting_desc > span{
     background: url("assets/images/sort_desc.png") right center no-repeat;
 }
-table.dataTable thead .sorting > span.arrow-hack{
+table.dataTable thead .sorting > span{
     background: url("assets/images/sort_both.png") right center no-repeat;
 }
 /* === End Customize icon sort dataTable === */
