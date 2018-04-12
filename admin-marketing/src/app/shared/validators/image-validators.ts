@@ -36,16 +36,19 @@ export class ImageValidators {
             let is_valid = true; 
             // check image of list mutil image 
             c.value.forEach(function(element){
-                // get name image, set "default.jpg" in case update
-                // Case Update: data is a string 'media/abc/xyz.jpg', when choose image is a object {filename, value,...}
-                let name = element.filename ? element.filename : 'default.jpg';
-                let extension = {'jpg': true, 'jpeg': true, 'png': true, 'ico': true, 'bmp': true, 'gif': true};
-                // get imgae format
-                let ext = name.substring(name.lastIndexOf('.') + 1);
-                // check image format
-                if (!(ext.toLowerCase() in extension)) {
-                    is_valid = false;
+                if(element.image){
+                    // get name image, set "default.jpg" in case update
+                    // Case Update: data is a string 'media/abc/xyz.jpg', when choose image is a object {filename, value,...}
+                    let name = element.image.filename ? element.image.filename : 'default.jpg';
+                    let extension = {'jpg': true, 'jpeg': true, 'png': true, 'ico': true, 'bmp': true, 'gif': true};
+                    // get imgae format
+                    let ext = name.substring(name.lastIndexOf('.') + 1);
+                    // check image format
+                    if (!(ext.toLowerCase() in extension)) {
+                        is_valid = false;
+                    }
                 }
+                
             })
             if(is_valid === true){
                 return null;

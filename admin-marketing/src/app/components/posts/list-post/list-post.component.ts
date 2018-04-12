@@ -112,7 +112,6 @@ export class ListPostComponent implements OnInit {
         Author: Hoang
     */
     reloadDatatable(): void {
-        console.log(this.post_type_id)
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.draw();
         });
