@@ -8,7 +8,6 @@ import { PostTypeService } from '../../../shared/services/post-type.service';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 import * as datatable_config from '../../../shared/commons/datatable_config';
-import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
 
 declare var bootbox:any;
 
@@ -44,7 +43,6 @@ export class ListPostComponent implements OnInit {
         private postTypeService: PostTypeService,
         private router: Router,
         private toastr: ToastrService,
-        private customizeDatatable: CustomizeDataTable,
     ) { }
 
     ngOnInit() {
@@ -65,7 +63,6 @@ export class ListPostComponent implements OnInit {
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
-                this.customizeDatatable.dataTableSorting();
             },
             columnDefs: [
                 {
@@ -110,7 +107,6 @@ export class ListPostComponent implements OnInit {
         Author: Hoang
     */
     reloadDatatable(): void {
-        console.log(this.post_type_id)
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.draw();
         });

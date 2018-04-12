@@ -79,10 +79,10 @@
             <label class="col-form-label form-check-label">Loại Bài Viết</label>
         </div>
         <div class="col-sm-6" *ngIf="post_types">
-            <select class="form-control" formControlName="post_type">
+            <select class="form-control" formControlName="post_type" #post_type (change)="check_post_career(post_type.value)">
                 <option value="">-- CHỌN LOẠI BÀI VIẾT --</option>
                 <option *ngFor="let type of post_types" 
-                    value="{{ type.id }}" [selected]="type.id === post.post_type"
+                     value="{{ type.id }}" [selected]="type.id === post.post_type"
                 >
                 {{ type.name }}</option>
             </select>
@@ -92,16 +92,16 @@
 
     <div class="form-group row noti-image">
         <div class="col-sm-2">
-            <label class="col-form-label form-check-label">Pin To Top</label>
+            <label class="col-form-label form-check-label">Hiển Thị Đầu Trang</label>
         </div>
         <div class="col-sm-8">
-            <input type="checkbox" value="" formControlName="pin_to_top" />
+            <input type="checkbox" value="" formControlName="pin_to_top" [attr.disabled]="is_post_career ? null : false"/>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-sm-2">
-            <label class="col-form-label form-check-label">Key query</label>
+            <label class="col-form-label form-check-label">Key Query</label>
         </div>
         <div class="col-sm-8">
             <input type="text" class="form-control" formControlName="key_query" 
@@ -115,16 +115,23 @@
             <label class="col-form-label form-check-label">Hình Ảnh Bài Viết</label>
         </div>
         <div class="col-sm-8">
-            <ul *ngIf="post.posts_image">
+            <ul class="list-group image-current" *ngIf="post.posts_image">
                 Hiện tại:
-                <li *ngFor="let post_image of post.posts_image">
+                <li class="list-group-item" *ngFor="let post_image of post.posts_image">
                     <input type="checkbox" (change)="delsMutilImage($event, post_image)"/> Xóa &emsp;&emsp;
                     <a href="{{api_domain}}{{post_image.image}}" target="_blank">{{post_image.image}}</a>
+                    <p>Thay đổi: <input type="file" accept="image/*" (change)="editFileImage($event, post_image)"/></p>
                 </li>
+                <p *ngIf="msg_clear_multi_image" class="msg_error">{{msg_clear_multi_image}}</p>
             </ul>
-            <p *ngIf="msg_clear_image" class="msg_error">{{msg_clear_image}}</p>
-            <ul class="multi-image">
-                <li *ngFor="let num of input_multi_image">
+            <ul class="multi-image list-group">
+                <p>Multiupload</p>
+                <li class="list-group-item">
+                    <input type="file" accept="image/*" title='Nhấn "Ctrl" để chọn nhiều hình ảnh'
+                        (change)="onFileMultipleChange($event, -1)" multiple/>
+                </li>
+                <p>Upload</p>
+                <li class="list-group-item" *ngFor="let num of input_multi_image">
                     <input type="file" accept="image/*" (change)="onFileMultipleChange($event, num.index)"/>
                     <i class="fa fa-minus fa-2x pull-right" (click)="subImagePost(num.index)"></i>
                 </li>

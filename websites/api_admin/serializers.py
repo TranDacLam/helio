@@ -343,12 +343,18 @@ class PostSerializer(serializers.ModelSerializer):
             key_query = 'kq_' + value.replace(' ', '_')
             key_query_is_exist = Post.objects.filter( key_query = key_query )
             if key_query_is_exist:
-                raise serializers.ValidationError('key_query is exist.')
+                raise serializers.ValidationError(_('key_query is exist.'))
             return value
         return value
 
     def create(self, validated_data):
+        # only 1 post_career has pin_to_top 
+        if validated_data['pin_to_top']:
+            post_career = Post.objects.filter( post_type = const.CAREERS_POST_TYPE_ID )
+            post_career.update( pin_to_top = False )
+
         post = Post.objects.create( **validated_data )
+
         if self.context['request']:
             posts_image = self.context['request'].data.getlist('posts_image', None)
         if posts_image:
@@ -367,6 +373,11 @@ class PostSerializer(serializers.ModelSerializer):
             list_clear_image = self.context['request'].data.getlist('list_clear_image', None)
             is_clear_image = self.context['request'].data.get('is_clear_image')
         
+        # only 1 post_career has pin_to_top 
+        if validated_data['pin_to_top']:
+            post_career = Post.objects.filter( post_type = const.CAREERS_POST_TYPE_ID )
+            post_career.update( pin_to_top = False )
+
         if list_clear_image and list_clear_image[0] != '':
             convert_list = list_clear_image[0].split(',')
             Post_Image.objects.filter(id__in = convert_list).delete()
@@ -582,4 +593,17 @@ class OpenTimeSerializer(serializers.Serializer):
             raise serializers.ValidationError(_("Start time is before than End time"))
         return data
 
+class ModelNameSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Model_Name
+        fields = ('key', 'name')
+
+class RolesPermissionSerializer(serializers.ModelSerializer):
+    model_name = ModelNameSerializer( many = True, read_only = False )
+    role = RoleSerializer( many = True, read_only = False )
+
+    class Meta:
+        model = Roles_Permission
+        fields = ('model_name', 'role', 'permission')
     

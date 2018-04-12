@@ -33,8 +33,8 @@
         </div> 
     </div>
 </div>
-<div *ngIf="postTypes" class="col-sm-2 pull-right filter-type-post">
-    <select class="form-control" (change)="reloadDatatable()" [(ngModel)]="post_type_id" >
+<div *ngIf="postTypes" class="col-sm-2 pull-right ">
+    <select class="form-control filter-type-post" (change)="reloadDatatable()" [(ngModel)]="post_type_id" >
         <option [ngValue]="null" >Bộ lọc</option>
         <option [ngValue]="null" >Tất cả</option>
         <option *ngFor="let type of postTypes" [ngValue]="type.id" >{{type.name}}</option>
@@ -46,9 +46,9 @@
         <thead>
             <tr>
                 <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
-                <th>ID</th>
-                <th>Bài Viết</th>
-                <th></th>
+                <th><span>ID</span></th>
+                <th><span>Bài Viết</span></th>
+                <th><span>&nbsp;&nbsp;</span></th>
             </tr>
         </thead>
         <tbody>
