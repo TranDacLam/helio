@@ -10,7 +10,6 @@ export class CustomizeDataTable {
     dataTableSorting(dataTableID) {
         // var spanSorting = '<span class="arrow-hack">&nbsp;&nbsp;&nbsp;</span>';
         $(dataTableID).each(function(i, th) {
-            $(th).find('arrow-hack').remove();
             $(th).find('span').addClass('arrow-hack'); 
         });     
     }
