@@ -25,7 +25,6 @@ export class OpenTimeComponent implements OnInit {
     formOpenTime: FormGroup;
 
     list_day = [];
-    select_all: boolean = false;
 
     events_new = [];
 
@@ -33,6 +32,7 @@ export class OpenTimeComponent implements OnInit {
 
     // config options full calendar
     calendarOptions: Options;
+    is_init_calendar: boolean = true;
 
     constructor(
         private fb: FormBuilder,
@@ -47,46 +47,43 @@ export class OpenTimeComponent implements OnInit {
         
 
         let date_now = new Date();
-        this.openTimeService.getOpenTime(date_now.getMonth() + 1, date_now.getFullYear()).subscribe(
-            (data) => {
-                this.calendarOptions = {
-                    locale: 'vi',
-                    editable: false,
-                    eventLimit: false,
-                    buttonText: {
-                        today: 'Hôm nay'
-                    },
-                    events: data
-                };
-            },
-            (error) => {
-
-            }
-        );
+        this.getOpenTime(date_now.getMonth() + 1, date_now.getFullYear());
     }
 
 
     getOpenTime(month, year){
         this.openTimeService.getOpenTime(month, year).subscribe(
             (data) => {
-                console.log(data);
-                let el = [
-                    {
-                        title: 'Meeting',
-                        start: '2018-04-12T10:30:00',
-                        end: '2018-04-14T12:30:00'
-                    },
-                    {
-                        title: 'Lunch',
-                        start: '2018-04-12T12:00:00'
-                    }
-                ];
+                if(this.is_init_calendar){
+                    this.calendarOptions = {
+                        locale: 'vi',
+                        editable: false,
+                        eventLimit: false,
+                        buttonText: {
+                            today: 'Hôm nay'
+                        },
+                        events: data
+                    };
+                    this.is_init_calendar = false;
+                }else{
+                    let el = [
+                        {
+                            title: 'Meeting',
+                            start: '2018-04-12T10:30:00',
+                            end: '2018-04-14T12:30:00'
+                        },
+                        {
+                            title: 'Lunch',
+                            start: '2018-04-12T12:00:00'
+                        }
+                    ];
 
-                this.viCalendar.fullCalendar('removeEvents');
-                this.viCalendar.fullCalendar('addEventSource', data);
+                    this.viCalendar.fullCalendar('removeEvents');
+                    this.viCalendar.fullCalendar('addEventSource', data);
+                }
             },
             (error) => {
-
+                this.router.navigate(['/error', { message: error.message}]);
             }
         );
     }
@@ -142,10 +139,10 @@ export class OpenTimeComponent implements OnInit {
             this.list_day.push(number_day);
             // check length list_day = 7(7 day in week) let input checkbox all will checked
             if(this.list_day.length === 7){
-                this.select_all = true;
+                $('#checked_all').prop('checked', true);
             }
         }else{ 
-            this.select_all = false;
+            $('#checked_all').prop('checked', false);
             // Remove number day in array list_day
             this.list_day = this.list_day.filter(k => k !== number_day);
         }
@@ -163,6 +160,11 @@ export class OpenTimeComponent implements OnInit {
             this.openTimeService.addOpenTime(this.formOpenTime.value).subscribe(
                 (data) => {
                     this.toastr.success(`Thêm mới giờ mở cửa thành công`);
+                    this.formOpenTime.reset();
+                    this.list_day = [];
+                    $('.table-open-time tr td input:checkbox').prop('checked', false);
+                    let date_now = new Date();
+                    this.getOpenTime(date_now.getMonth() + 1, date_now.getFullYear());
                 },
                 (error) => {
                     // code 400, erro validate

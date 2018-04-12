@@ -32,6 +32,10 @@ export class OpenTimeService {
         return this.http.get(url_getOpenTime, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
+    /* 
+        function addOpenTime(): add date start to end
+        author: Lam
+    */
     addOpenTime(value): Observable<any> {
         let body = JSON.stringify(value); // String payload
         return this.http.post(api.opentime, body, this.httpOptions)

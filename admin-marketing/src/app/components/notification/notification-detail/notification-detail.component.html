@@ -25,13 +25,11 @@
     </p>
     <p>ID: {{noti_detail.id}}</p>
     <p>Tên Thông Báo: {{noti_detail.subject}}</p>
-    <span *ngIf="!promotion">
-        <p *ngIf="noti_detail.sent_date">Trạng Thái: Đã gửi</p>
-        <p *ngIf="!noti_detail.sent_date">Trạng Thái: Chưa gửi</p>
-        <p>Ngày Gửi: {{noti_detail.sent_date | date: 'dd/MM/yyyy'}}</p>
-        <p>Người Gửi: {{noti_detail.sent_user?.email}}</p>
-        <p>Ngày Cập Nhật: {{noti_detail.modified | date: 'dd/MM/yyyy'}}</p>
-    </span>
+    <p *ngIf="noti_detail.sent_date">Trạng Thái: Đã gửi</p>
+    <p *ngIf="!noti_detail.sent_date">Trạng Thái: Chưa gửi</p>
+    <p>Ngày Gửi: {{noti_detail.sent_date | date: 'dd/MM/yyyy'}}</p>
+    <p>Người Gửi: {{noti_detail.sent_user?.email}}</p>
+    <p>Ngày Cập Nhật: {{noti_detail.modified | date: 'dd/MM/yyyy'}}</p>
     <span *ngIf="promotion">
         <p>ID Khuyến Mãi: {{promotion.id}}</p>
         <p>Tên Khuyến Mãi: {{promotion.name}}</p>
