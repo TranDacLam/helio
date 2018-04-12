@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, AfterViewChecked } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../../../shared/class/user';
@@ -8,6 +8,8 @@ import { NumberValidators } from './../../../shared/validators/number-validators
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'form-user-app',
@@ -15,7 +17,7 @@ import 'rxjs/add/observable/throw';
   styleUrls: ['./form-user-app.component.css'],
   providers: [LinkCardService]
 })
-export class FormUserAppComponent implements OnInit {
+export class FormUserAppComponent implements OnInit, AfterViewChecked {
 
     /*
         Author: Lam
@@ -49,6 +51,11 @@ export class FormUserAppComponent implements OnInit {
 
     ngOnInit() {;
         this.userAppForm();
+        this.isDisableBirthday();
+    }
+
+    ngAfterViewChecked(){
+        this.isDisableBirthday();
     }
 
     /*
@@ -61,8 +68,9 @@ export class FormUserAppComponent implements OnInit {
             email: [this.user_app.email, [Validators.required, Validators.email]],
             phone: [this.user_app.phone, 
                 [Validators.required, NumberValidators.validPhone]],
-            birth_date: [this.user_app.birth_date, 
-                [Validators.required, DateValidators.validBirthDay, DateValidators.formatDate]],
+            birth_date: [this.user_app.birth_date ? moment(this.user_app.birth_date,"DD/MM/YYYY").toDate() : '', 
+                [DateValidators.requiredBirthDayApp, DateValidators.validBirthDayLessCurrentDayApp, 
+                DateValidators.validBirthDayApp, DateValidators.formatBirthDayApp]],
             personal_id: [this.user_app.personal_id, 
                 [Validators.required, NumberValidators.validPersonID]],
             address: [this.user_app.address, Validators.required],
@@ -91,7 +99,7 @@ export class FormUserAppComponent implements OnInit {
                     full_name: this.user_app.full_name,
                     email: this.user_app.email,
                     phone: this.user_app.phone,
-                    birth_date: this.user_app.birth_date,
+                    birth_date: this.user_app.birth_date ? moment(this.user_app.birth_date,"DD/MM/YYYY").toDate() : '',
                     personal_id: this.user_app.personal_id,
                     address: this.user_app.address
                 });
@@ -169,6 +177,14 @@ export class FormUserAppComponent implements OnInit {
         return false;
     }
 
+    isDisableBirthday(){
+        if(this.dis_input_app.birth_date){
+            $('#birth_date_app').prop('disabled', true);
+        }else{
+            $('#birth_date_app').prop('disabled', false);
+        }
+    }
+
     /*
         Function onSubmitApp(): call service function updateUserApp() to update user app
         Author: Lam
@@ -179,6 +195,7 @@ export class FormUserAppComponent implements OnInit {
             ValidateSubmit.validateAllFormFields(this.appForm);
         }else{
             let id = this.user_app.id;
+            this.appForm.value.birth_date = $('#birth_date_app').val();
             this.linkCardService.updateUserApp(this.appForm.value, id).subscribe(
                 (data) => {
                     this.searchEmail(this.appForm.value.email);

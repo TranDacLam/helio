@@ -8,12 +8,12 @@
             <thead>
                 <tr>
                     <th><input type="checkbox" name="select_all_left" id="select-all-left" (change)="selectAllPageLeft($event);"/></th>
-                    <th>ID</th>
-                    <th>Họ Và Tên</th>
-                    <th>Ngày Sinh</th>
-                    <th>Email</th>
-                    <th>Số Điện Thoại</th>
-                    <th>Trạng Thái Thẻ</th>
+                    <th><span>ID</span></th>
+                    <th><span>Họ Và Tên</span></th>
+                    <th><span>Ngày Sinh</span></th>
+                    <th><span>Email</span></th>
+                    <th><span>Số Điện Thoại</span></th>
+                    <th><span>Trạng Thái Thẻ</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -21,7 +21,7 @@
                     <td><input type="checkbox"/></td>
                     <td>{{ user.id }}</td>
                     <td>{{ user.full_name }}</td>
-                    <td>{{ user.birth_date}}</td>
+                    <td><span class="hidden">{{ convertToDate(user.birth_date)}}</span>{{ user.birth_date}}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.phone }}</td>
                     <td>{{ user.barcode ? 'Đã Liên Kết' : 'Chưa Liên Kết' }}</td>
@@ -46,12 +46,12 @@
             <thead>
                 <tr>
                     <th><input type="checkbox" name="select_all_right" id="select-all-right" (change)="selectAllPageRight($event);"/></th>
-                    <th>ID</th>
-                    <th>Họ Và Tên</th>
-                    <th>Ngày Sinh</th>
-                    <th>Email</th>
-                    <th>Số Điện Thoại</th>
-                    <th>Trạng Thái Thẻ</th>
+                    <th><span>ID</span></th>
+                    <th><span>Họ Và Tên</span></th>
+                    <th><span>Ngày Sinh</span></th>
+                    <th><span>Email</span></th>
+                    <th><span>Số Điện Thoại</span></th>
+                    <th><span>Trạng Thái Thẻ</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -59,7 +59,7 @@
                     <td><input type="checkbox"/></td>
                     <td>{{ user.id }}</td>
                     <td> {{ user.full_name }}</td>
-                    <td>{{ user.birth_date }}</td>
+                    <td><span class="hidden">{{ convertToDate(user.birth_date)}}</span>{{ user.birth_date }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.phone }}</td>
                     <td>{{ user.barcode ? 'Đã Liên Kết' : 'Chưa Liên Kết' }}</td>

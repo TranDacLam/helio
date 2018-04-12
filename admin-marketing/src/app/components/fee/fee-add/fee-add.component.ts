@@ -30,13 +30,12 @@ export class FeeAddComponent implements OnInit {
       @author: hoangnguyen 
     */
     createFee(value: any) {
-        var feeArr = [];
-        let feeValue = this.convert_format_currency(this.data);
-        value.fee = feeValue;
-        feeArr.push(value);
+        
         if (this.feeAddForm.invalid) {
             ValidateSubmit.validateAllFormFields(this.feeAddForm);
         } else {
+            let feeValue = this.convert_format_currency(this.data);
+            value.fee = feeValue;
             this.feeService.createFee(value).subscribe(
             result => {
                 this.messageResult = "success";
@@ -55,7 +54,7 @@ export class FeeAddComponent implements OnInit {
     }
     ngOnInit() {
         this.feeAddForm = this.formBuilder.group({
-            fee: [null, [Validators.required, Validators.maxLength(10), NumberValidators.validateFee]],
+            fee: [null, [Validators.required, Validators.maxLength(13), NumberValidators.validateFee]],
             position: [null, Validators.required],
             fee_type: ['vnd', Validators.required],
             is_apply: [false],

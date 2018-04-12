@@ -97,9 +97,8 @@ export class UserMultiselectComponent implements OnInit {
                 return row;
             },
             drawCallback: (setting) => {
-                this.checkSelectAllCheckboxLeft();
-                this.dataTableSorting();
-            }
+                this.checkSelectAllCheckboxLeft(); 
+            },
         }
         
         this.dtOptions_right = {
@@ -119,6 +118,7 @@ export class UserMultiselectComponent implements OnInit {
             scrollX: true,
             scrollY: "400px",
             scrollCollapse: true,
+            fixedHeader: true,
             language: {
                 sSearch: "",
                 sInfoFiltered: "",
@@ -143,8 +143,7 @@ export class UserMultiselectComponent implements OnInit {
             },
             drawCallback: (setting) => {
                 this.checkSelectAllCheckboxRight();
-                this.dataTableSorting();
-            }
+            },
         }
         // get current user
         this.current_user = this.variableGlobals.user_current;
@@ -370,15 +369,14 @@ export class UserMultiselectComponent implements OnInit {
     }
 
     /*
-        dataTable customize sort ion
+        Convert date tye dd/MM/yyyy to string yyyyMMdd
         @author: Trangle
-    */
-    dataTableSorting() {
-        var spanSorting = '<span class="arrow-hack">&nbsp;&nbsp;&nbsp;</span>';
-        $(".dataTables_scrollHead thead th").not(':first').each(function(i, th) {
-            $(th).find('.arrow-hack').remove();
-            $(th).append(spanSorting); 
-        });     
+     */
+    convertToDate(date) {
+        if (date !== null) {
+            let day = date.split('/');
+            return String(day[2]) + String(day[1]) + String(day[0]);
+        }
     }
 
 }

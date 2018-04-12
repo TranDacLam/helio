@@ -442,7 +442,7 @@ def careers(request):
 
         # Careers pin to top
         careers_pin_top = Post.objects.filter(
-            is_draft=False, pin_to_top=True).first()
+            is_draft=False, pin_to_top=True, post_type=careers_type).first()
         result["careers_pin_top"] = careers_pin_top
 
         # Careers list

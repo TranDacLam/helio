@@ -32,3 +32,10 @@ form .input-group{
 .mb-30{
     margin-bottom: 30px;
 }
+.multi-image li{
+    margin-bottom: 10px;
+}
+.multi-image li i{
+    margin-top: -20px;
+    cursor: pointer;
+}

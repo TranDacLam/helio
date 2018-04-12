@@ -2,11 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
 import { Post } from '../../../shared/class/post';
+import { PostType } from '../../../shared/class/post-type';
 import { PostService } from '../../../shared/services/post.service';
+import { PostTypeService } from '../../../shared/services/post-type.service';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 import * as datatable_config from '../../../shared/commons/datatable_config';
-import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
 
 declare var bootbox:any;
 
@@ -14,7 +15,7 @@ declare var bootbox:any;
     selector: 'app-list-post',
     templateUrl: './list-post.component.html',
     styleUrls: ['./list-post.component.css'],
-    providers: [PostService]
+    providers: [PostService, PostTypeService]
 })
 export class ListPostComponent implements OnInit {
 
@@ -32,39 +33,83 @@ export class ListPostComponent implements OnInit {
     length_selected: Number = 0;
 
     posts: Post[];
+    postTypes: PostType[];
 
+    post_type_id:number = null;
     lang: string = 'vi';
 
     constructor(
         private postService: PostService, 
+        private postTypeService: PostTypeService,
         private router: Router,
         private toastr: ToastrService,
-        private customizeDatatable: CustomizeDataTable,
     ) { }
 
     ngOnInit() {
+        // config datatable to filter follow post_type
+        $.fn['dataTable'].ext.search.push((settings, data, dataIndex) => {
+            const id = parseInt(data[3]) || null; // use data for the id column
+            if (!this.post_type_id){
+                return true;
+            }
+            if (id === this.post_type_id) {
+                return true;
+            }
+            return false;
+        });
+
         this.dtOptions = datatable_config.data_config('Bài Viết');
         // custom datatable option
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
-                this.customizeDatatable.dataTableSorting();
             },
             columnDefs: [
                 {
                     targets: 1,
-                    visible: false
+                    visible: false,
+                    searchable: false,
                 },
                 { 
                     orderable: false, 
                     targets: 0 
+                },
+                { 
+                    orderable: false, 
+                    targets: 3,
+                    visible: false
                 }
             ]
         };
         // create new object from 2 object use operator spread es6
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
-
         this.getPosts();
+        this.getPostTypes();
+    }
+    /*
+        Function getPostTypes(): Callback service function getPostTypes() get all Post
+        Author: Hoang
+    */
+    getPostTypes(){
+        this.postTypeService.getPostTypes(this.lang).subscribe(
+            (data) => {
+                this.postTypes = data;
+                
+            },
+            (error) => {
+                this.router.navigate(['/error', { message: error.message}]);
+            }
+        );
+    }
+    /*
+        Function reloadDatatable(): 
+            reload datatable after filter
+        Author: Hoang
+    */
+    reloadDatatable(): void {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.draw();
+        });
     }
 
     /*
@@ -203,10 +248,15 @@ export class ListPostComponent implements OnInit {
             this.posts = null;
             this.lang = value;
             this.getPosts();
+            this.getPostTypes();
             setTimeout(()=>{
                 $('.custom_table').attr('style', 'height: auto');
             },100);
         }
+    }
+    ngOnDestroy(): void {
+        // config datatable to filter follow post_type
+        $.fn['dataTable'].ext.search.pop();
     }
 
 }

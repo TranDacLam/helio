@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -25,7 +25,7 @@ declare var bootbox: any;
     styleUrls: ['./user-detail.component.css'],
     providers: [UserService]
 })
-export class UserDetailComponent implements OnInit {
+export class UserDetailComponent implements OnInit, AfterViewChecked {
 
     user; user_current: User;
     formUser: FormGroup; // formUser is type of FormGroup
@@ -36,6 +36,9 @@ export class UserDetailComponent implements OnInit {
     errors: string = '';
     api_domain: string = "";
     msg_clear_image: string = '';
+    textValue: string = '';
+    token: string = '';
+    is_disable: boolean = false;
 
     constructor(
         private fb: FormBuilder,
@@ -54,6 +57,12 @@ export class UserDetailComponent implements OnInit {
 
         this.user_current = this.variable_globals.user_current;
 
+    }
+    ngAfterViewChecked(){
+        if(this.checkDisable()){
+            // disabled input wwith class textDisable
+            $('.textDisable').prop('disabled', true);
+        }
     }
 
 	/*
@@ -93,6 +102,7 @@ export class UserDetailComponent implements OnInit {
                 (data) => {
                     this.user = data;
                     this.createFormUser();
+                    this.checkDisableInput();
                 },
                 (error) => {
                     this.router.navigate(['/error', { message: error.json().message }])
@@ -130,9 +140,32 @@ export class UserDetailComponent implements OnInit {
                 let userFormGroup = this.convertFormGroupToFormData(this.formUser);
                 this.userService.updateUser(userFormGroup, this.user.id).subscribe(
                     (data) => {
-                        // Navigate to promotion page where success
                         self.toastr.success(`Chỉnh sửa "${this.formUser.value.email}" thành công`);
-                        self.router.navigate(['/user-list']);
+                        /*
+                            Check user_current login change email and password
+                            True: 
+                                + localStorage remove auth_token and current_user
+                                + Set user_current = null and nagivate login
+                            False: Nagivate to user_list 
+                         */
+                        if(this.user_current.email == this.user.email){
+                            if (data.new_password !== '' || this.user_current.email !== data.email){
+                                localStorage.removeItem('auth_token');
+                                localStorage.removeItem('current_user');
+                                this.variable_globals.user_current = null;
+                                self.router.navigate(['/login']);
+                            } else {
+                                // Navigate to promotion page where success
+                                this.variable_globals.user_current = data;
+                                // Update localStorage
+                                let data_user = {id: data.id, full_name: data.full_name, email: data.email, role: data.role };
+                                localStorage.setItem('current_user', JSON.stringify(data_user));
+                                self.router.navigate(['/user-list']);
+                            }
+                        } else {
+                            // Navigate to promotion page where success
+                            self.router.navigate(['/user-list']);
+                        }
                     },
                     (error) => {
                         if (error.code == 400) {
@@ -280,11 +313,36 @@ export class UserDetailComponent implements OnInit {
         Disable birth_date with owlDateTime
         @author:
      */
-    disableInputDate() {
+    checkDisableInput() {
         if(this.user.is_staff == 1 && this.user_current.role !== 1) {
-            $('#birth_date').prop('disabled', true);
-        } else {
-            $('#birth_date').prop('disabled', false);
+            this.is_disable = true;
+        }else {
+            this.is_disable = false;
         }   
+    }
+
+    /*
+        validOnlyNumber for phone and personal_id
+        @author: Trangle
+     */
+    validOnlyNumber(value, field) {
+        this.formUser.get(field).setValue(value.replace(/[^0-9]/g, ''));
+    }
+
+    /*
+        Check disable birt_date
+        @author: Trangle
+     */
+    checkDisable(){
+        /*
+            Check if exist user_current, user, user.id
+            check user.is_staff and user_current.role: true ? false
+        */
+        if(this.user_current && this.user && this.user.id){
+            if(this.user.is_staff == 1 && this.user_current.role !== 1){
+                return true;
+            }
+        }
+        return false;
     }
 }

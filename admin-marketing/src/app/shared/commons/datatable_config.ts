@@ -25,6 +25,9 @@ export let data_config = function(record) {
             infoEmpty: ""
         },
         responsive: true,
-        pagingType: "full_numbers"
+        pagingType: "full_numbers",
+        search: {
+            smart: false
+        }
     };
 }

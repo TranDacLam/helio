@@ -9,7 +9,6 @@ import { Advertisement } from '../../../shared/class/advertisement';
 
 import { AdvertisementService } from '../../../shared/services/advertisement.service';
 import { data_config } from '../../../shared/commons/datatable_config';
-import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
 
 // Using bootbox plugin
 declare var bootbox: any;
@@ -46,7 +45,6 @@ export class AdvertisementListComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastrService,
-        private customizeDatatable: CustomizeDataTable,
     ) {
         this.advs = [];
     }
@@ -57,8 +55,7 @@ export class AdvertisementListComponent implements OnInit {
 
         let dt_options_custom = {
             drawCallback: (setting) => {
-                this.checkSelectAllCheckbox();
-                this.customizeDatatable.dataTableSorting();
+                this.checkSelectAllCheckbox();  
             },
             columnDefs: [
                 {

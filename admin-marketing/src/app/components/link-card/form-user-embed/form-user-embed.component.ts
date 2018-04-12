@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, AfterViewChecked } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Customer } from '../../../shared/class/customer';
@@ -8,6 +8,8 @@ import { NumberValidators } from './../../../shared/validators/number-validators
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'form-user-embed',
@@ -15,7 +17,7 @@ import 'rxjs/add/observable/throw';
   styleUrls: ['./form-user-embed.component.css'],
   providers: [LinkCardService]
 })
-export class FormUserEmbedComponent implements OnInit {
+export class FormUserEmbedComponent implements OnInit, AfterViewChecked {
 
     /*
         Author: Lam
@@ -51,6 +53,11 @@ export class FormUserEmbedComponent implements OnInit {
 
     ngOnInit() {
         this.userEmbedForm();
+        this.isDisableBirthday();
+    }
+
+    ngAfterViewChecked(){
+        this.isDisableBirthday();
     }
 
     /*
@@ -64,8 +71,9 @@ export class FormUserEmbedComponent implements OnInit {
             email: [this.user_embed.email, [Validators.required, Validators.email]],
             phone: [this.user_embed.phone, 
                 [Validators.required, NumberValidators.validPhone]],
-            birth_date: [this.user_embed.birth_date, 
-                [Validators.required, DateValidators.validBirthDay, DateValidators.formatDate]],
+            birth_date: [this.user_embed.birth_date ? moment(this.user_embed.birth_date,"DD/MM/YYYY").toDate() : '', 
+                [DateValidators.requiredBirthDayEmbed, DateValidators.validBirthDayLessCurrentDayEmbed, 
+                DateValidators.validBirthDayEmbed, DateValidators.formatBirthDayEmbed]],
             personal_id: [this.user_embed.personal_id, 
                 [Validators.required, NumberValidators.validPersonID]],
             address: [this.user_embed.address, Validators.required],
@@ -88,7 +96,7 @@ export class FormUserEmbedComponent implements OnInit {
                         full_name: this.user_embed.full_name,
                         email: this.user_embed.email,
                         phone: this.user_embed.phone,
-                        birth_date: this.user_embed.birth_date,
+                        birth_date: this.user_embed.birth_date ? moment(this.user_embed.birth_date,"DD/MM/YYYY").toDate() : '',
                         personal_id: this.user_embed.personal_id,
                         address: this.user_embed.address
                     });
@@ -153,6 +161,14 @@ export class FormUserEmbedComponent implements OnInit {
         }
     }
 
+    isDisableBirthday(){
+        if(this.dis_input_embed.birth_date){
+            $('#birth_date_embed').prop('disabled', true);
+        }else{
+            $('#birth_date_embed').prop('disabled', false);
+        }
+    }
+
     /*
         Function stripText(): numbers only
         Author: Lam
@@ -186,6 +202,7 @@ export class FormUserEmbedComponent implements OnInit {
         if(this.embedForm.invalid){
             ValidateSubmit.validateAllFormFields(this.embedForm);
         }else{
+            this.embedForm.value.birth_date = $('#birth_date_embed').val();
             this.linkCardService.updateUserEmbed(this.embedForm.value).subscribe(
                 (data) => {
                     this.searchBarcode(this.embedForm.value.barcode);

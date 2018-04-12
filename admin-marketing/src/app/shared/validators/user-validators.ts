@@ -18,7 +18,6 @@ export class UserValidators {
 	}
 
 	static phoneValidators(fc: FormControl):ValidationErrors {
-
 		// Allows only numerals betwen 
 		let phoneRegx = /^[0-9].{9,10}$/;
 		let phone = String($('#phone').val());
@@ -49,18 +48,30 @@ export class UserValidators {
 		return null;
 	}
 
-	static birtdateValidators(fc: FormControl): ValidationErrors {
-		let birtdate = $('#birth_date').val() ? moment($('#birth_date').val(), "DD/MM/YYYY").toDate() : '';
-		var today = new Date();
-		if (birtdate > today) {
-			return {
-				'birtdateValidate': {
-					'message': 'Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại.'
-				}
-			}
-		}
-		return null;
-	}
+    birtdateValidators(message_error, date){
+        const message = {
+            'birtdateValidate': {
+                'message': message_error
+            }
+        };
+        // get today
+        let today = new Date();
+        // get day, month, year
+        let formatDate = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+	    let date_now = moment(formatDate, "DD/MM/YYYY").toDate();
+        // Get date by #id
+        let getValdate = $('#'+date).val() ? moment($('#'+date).val(),"DD/MM/YYYY").toDate() : '';
+        if(getValdate < date_now){
+            return null;
+        }
+        return message;
+    }
+
+    static birtdateValidators(): ValidationErrors {
+        let message = "Vui lòng nhập ngày sinh nhỏ hơn ngày hiện tại";
+        let userValidators = new UserValidators();
+        return userValidators.birtdateValidators(message, 'birth_date');
+    }
 
 	static formatBirtday(c: FormControl): ValidationErrors {
         if(c.dirty){
@@ -71,7 +82,7 @@ export class UserValidators {
                 return null;
             } else if (!getValDate.match(validatePattern)) {
             	return {
-            		'fomatBirtdate': {
+            		'birtdateValidate': {
                         'message': 'Định dạng ngày sai. Vui lòng chọn lại ngày dd/mm/yyyy'
                     }
             	}
@@ -84,13 +95,13 @@ export class UserValidators {
 				if (((date.getDate()!=dd) || date.getMonth()+1!=mm)||(date.getFullYear()!=yyyy)) 
 				{
 					return {
-						'invalidDate': {
+						'birtdateValidate': {
 							'message': 'Vui lòng nhập vào ngày hợp lệ'
 						}
 					}
 				} else if (yyyy < 1900) {
 					return {
-						'errorBefore1900': {
+						'birtdateValidate': {
 							'message': 'Vui lòng chọn năm sinh lớn hơn 1900'
 						}
 					}

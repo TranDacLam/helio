@@ -36,22 +36,22 @@
             <table id="table_id" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" *ngIf="list_user">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Họ Và Tên</th>
-                        <th>Ngày Sinh</th>
-                        <th>Email</th>
-                        <th>Số Điện Thoại</th>
-                        <th>Trạng Thái Thẻ</th>
-                        <th>Tình Trạng</th>
-                        <th>Ngày Nhận</th>
-                        <th>Device ID</th>
+                        <th><span>ID</span></th>
+                        <th><span>Họ Và Tên</span></th>
+                        <th><span>Ngày Sinh</span></th>
+                        <th><span>Email</span></th>
+                        <th><span>Số Điện Thoại</span></th>
+                        <th><span>Trạng Thái Thẻ</span></th>
+                        <th><span>Tình Trạng</span></th>
+                        <th><span>Ngày Nhận</span></th>
+                        <th><span>Device ID</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of list_user">
                         <td>{{ item.id }}</td>
                         <td>{{ item.user.full_name }}</td>
-                        <td>{{ item.user.birth_date }}</td>
+                        <td><span class="hidden">{{ convertToDate(item.user.birth_date)}}</span>{{ item.user.birth_date }}</td>
                         <td><a routerLink="/user-detail/{{ item.user.id }}" >{{ item.user.email }}</a></td>
                         <td>{{ item.user.phone }}</td>
                         <td *ngIf="item.user.barcode">
