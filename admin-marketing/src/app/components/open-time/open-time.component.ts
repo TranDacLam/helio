@@ -26,8 +26,6 @@ export class OpenTimeComponent implements OnInit {
 
     list_day = [];
 
-    events_new = [];
-
     errorMessage: any;
 
     // config options full calendar
@@ -50,10 +48,22 @@ export class OpenTimeComponent implements OnInit {
         this.getOpenTime(date_now.getMonth() + 1, date_now.getFullYear());
     }
 
-
+    /*
+        function getOpenTime(): Create Reactive Form
+        author: Lam
+    */ 
     getOpenTime(month, year){
         this.openTimeService.getOpenTime(month, year).subscribe(
             (data) => {
+                let events_new = [];
+                if(data){
+                    data.map(item => {
+                        events_new.push({
+                            title: `${this.StrimTime(item.start_time)} - ${this.StrimTime(item.end_time)}`,
+                            start: item.open_date
+                        });
+                    })
+                }
                 if(this.is_init_calendar){
                     this.calendarOptions = {
                         locale: 'vi',
@@ -62,36 +72,18 @@ export class OpenTimeComponent implements OnInit {
                         buttonText: {
                             today: 'Hôm nay'
                         },
-                        events: data
+                        events: events_new
                     };
                     this.is_init_calendar = false;
                 }else{
-                    let el = [
-                        {
-                            title: 'Meeting',
-                            start: '2018-04-12T10:30:00',
-                            end: '2018-04-14T12:30:00'
-                        },
-                        {
-                            title: 'Lunch',
-                            start: '2018-04-12T12:00:00'
-                        }
-                    ];
-
                     this.viCalendar.fullCalendar('removeEvents');
-                    this.viCalendar.fullCalendar('addEventSource', data);
+                    this.viCalendar.fullCalendar('addEventSource', events_new);
                 }
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.message}]);
             }
         );
-    }
-
-    clickButton(event) {
-        let month = event.data.month() + 1;
-        let year = event.data.year();
-        this.getOpenTime(month, year);
     }
 
     /*
@@ -148,6 +140,25 @@ export class OpenTimeComponent implements OnInit {
         }
     }
 
+    /*
+        function clickButton(): event click today, pre, next fullcalendar
+        author: Lam
+    */ 
+    clickButton(event) {
+        let month = event.data.month() + 1;
+        let year = event.data.year();
+        this.getOpenTime(month, year);
+    }
+
+    /*
+        function StrimTime(): get HH:mm of string HH:mm:ss
+        author: Lam
+    */ 
+    StrimTime(time){
+        let str = time.substring(0,5);
+        return str;
+    }
+
     onSubmit(){
         if(this.formOpenTime.invalid){
             ValidateSubmit.validateAllFormFields(this.formOpenTime);
@@ -165,6 +176,7 @@ export class OpenTimeComponent implements OnInit {
                     $('.table-open-time tr td input:checkbox').prop('checked', false);
                     let date_now = new Date();
                     this.getOpenTime(date_now.getMonth() + 1, date_now.getFullYear());
+                    this.errorMessage = null;
                 },
                 (error) => {
                     // code 400, erro validate
