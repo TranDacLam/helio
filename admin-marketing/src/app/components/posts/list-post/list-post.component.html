@@ -33,7 +33,7 @@
         </div> 
     </div>
 </div>
-<div *ngIf="postTypes" class="col-sm-2 pull-right ">
+<div *ngIf="postTypes" class="pull-right ">
     <select class="form-control filter-type-post" (change)="reloadDatatable()" [(ngModel)]="post_type_id" >
         <option [ngValue]="null" >Bộ lọc</option>
         <option [ngValue]="null" >Tất cả</option>
