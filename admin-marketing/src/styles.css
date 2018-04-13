@@ -254,6 +254,13 @@ table.dataTable thead .sorting > span{
     background: url("assets/images/sort_both.png") right center no-repeat;
 }
 /* === End Customize icon sort dataTable === */
+
+/*
+    Customize padding display td
+*/
+table.dataTable thead th, table.dataTable thead td{
+    padding: 8px 10px;
+}
 /* 
     Custom button add
     author: Lam; 

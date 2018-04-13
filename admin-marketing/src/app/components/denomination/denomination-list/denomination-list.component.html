@@ -24,7 +24,7 @@
 	<table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" *ngIf="denominations">
         <thead>
             <tr>
-                <th class='check-denomi'><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
                 <th><span>ID</span></th>
                 <th><span>Mệnh Giá Nạp Tiền(VNĐ)</span></th>
             </tr>

@@ -13,9 +13,6 @@
 .messsage{
     color: green;
 }
-.row-border tr td:first-child input{
-    margin-left: 6px;
-}
 .dels-promotion_label{
     margin-bottom: 50px;
 }

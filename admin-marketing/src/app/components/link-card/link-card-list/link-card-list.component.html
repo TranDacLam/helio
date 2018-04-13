@@ -22,7 +22,7 @@
 <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" *ngIf="link_cards">
     <thead>
         <tr>
-            <th class="checkbox-link-card"><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+            <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
             <th><span>ID</span></th>
             <th><span>Card Barcode</span></th>
             <th><span>Email</span></th>

@@ -16,9 +16,6 @@
 .messsage{
     color: green;
 }
-.row-border tr td:first-child input{
-    margin-left: 6px;
-}
 .dels-event{
     margin-bottom: 50px;
 }

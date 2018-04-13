@@ -1,7 +1,4 @@
 /* Begin Content advertiment*/
-.row-border tr td:first-child input{
-    margin-left: 6px;
-}
 .title-adv {
 	margin: 15px 0px;
 	border-bottom: 2px solid #333;
@@ -15,9 +12,6 @@ a.pull-left {
 .title-adv a {
 	padding: 5px 0;
 	text-transform: uppercase;
-}
-.button-adv {
-	margin-left: 30px;
 }
 .mb-30{
     margin-bottom: 30px;
