@@ -15,9 +15,8 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { RECAPTCHA_LANGUAGE } from 'ng-recaptcha';
 import { DatePipe } from '@angular/common';
 import { MapToIterablePipe } from './shared/pipes/map-to-iterable.pipe';
-import { CalendarModule } from "ap-angular2-fullcalendar"; // https://fullcalendar.io/
 import { ToastrModule } from 'ngx-toastr'; // https://github.com/scttcper/ngx-toastr
-
+import { FullCalendarModule } from 'ng-fullcalendar'; // https://github.com/Jamaks/ng-fullcalendar
 
 import { AppComponent } from './app.component';
 import { AddLinkCardComponent } from './components/link-card/add-link-card/add-link-card.component';
@@ -181,7 +180,7 @@ export const MY_MOMENT_FORMATS = {
     OwlMomentDateTimeModule,
     RecaptchaModule.forRoot(), // Keep in mind the "forRoot"-magic nuances!
     RecaptchaFormsModule,
-    CalendarModule,
+    FullCalendarModule,
     ToastrModule.forRoot({
         positionClass: 'toast-top-full-width',
         maxOpened: 1,

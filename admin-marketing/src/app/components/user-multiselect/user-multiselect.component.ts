@@ -136,7 +136,7 @@ export class UserMultiselectComponent implements OnInit {
             },
             "sDom": "<'row'<'col-md-12'f><'col-md-12 info_search'><'col-md-12'l>>rt<'row'<'col-md-12'i>p>",
             rowCallback: (row: Node, data: any[] | Object, index: number) => {
-                $('td', row).find('input:checkbox').off().bind('change', () => {
+                $('td', row).find('input:checkbox').off().bind('change', event => {
                     this.selectCheckboxRight(event);
                 });
                 return row;
@@ -257,10 +257,8 @@ export class UserMultiselectComponent implements OnInit {
     */
     selectCheckboxLeft(event) {   
         $(event.target).closest( "tr" ).toggleClass( "selected" );
-        this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
-            // Any row not selected then checked all button is not checked
-            $('#select-all-left').prop('checked', dtInstance.rows('tr:not(.selected)').count() < 1);
-        });
+        // Any row not selected then checked all button is not checked
+        $('#select-all-left').prop('checked', $("#table_id_1 tbody").find('tr:not(.selected)').length < 1);
     }
 
     /*
@@ -271,10 +269,8 @@ export class UserMultiselectComponent implements OnInit {
     */
     selectCheckboxRight(event) {   
         $(event.target).closest( "tr" ).toggleClass( "selected" );
-        this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
-            // Any row not selected then checked all button is not checked
-            $('#select-all-right').prop('checked', dtInstance.rows('tr:not(.selected)').count() < 1);
-        });
+        // Any row not selected then checked all button is not checked
+        $('#select-all-right').prop('checked', $("#table_id_2 tbody").find('tr:not(.selected)').length < 1);
     }
     /*
         Move all row is checked to right tatble
