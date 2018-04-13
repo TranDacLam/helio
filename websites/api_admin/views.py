@@ -1788,7 +1788,7 @@ class PostListAPI(APIView):
     def get(self, request):
         try:
             post = Post.objects.all()
-            postSerializer = admin_serializers.PostSerializer(post, many=True)
+            postSerializer = admin_serializers.PostListSerializer(post, many=True)
             return Response(postSerializer.data)
         except Exception, e:
             print "HotListAPI", e

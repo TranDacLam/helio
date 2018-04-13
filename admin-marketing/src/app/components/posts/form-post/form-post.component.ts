@@ -290,8 +290,10 @@ export class FormPostComponent implements OnInit {
 
             /* upload image */
             let multi_image = []; // create multi image empty
+            // create new array include two arr select input multi and input multi image
+            let get_all_create_image = [...this.select_input_multi_image, ...this.input_multi_image];
             // push image exist into multi image
-            this.get_all_image.forEach(function(element){
+            get_all_create_image.forEach(function(element){
                 if(element.image){
                     multi_image.push(element.image);
                 }
@@ -347,7 +349,7 @@ export class FormPostComponent implements OnInit {
 
                 // set image and id edit into form post
                 this.formPost.value.edit_posts_image = edit_posts_image;
-                this.formPost.value.id_edit_post_image = id_edit_post_image;
+                this.formPost.value.id_edit_post_image = id_edit_post_image.length > 0 ? id_edit_post_image: null;
                 /* End Edit upload image */
 
                 // convert Form Group to formData
