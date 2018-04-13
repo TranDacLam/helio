@@ -607,3 +607,8 @@ class RolesPermissionSerializer(serializers.ModelSerializer):
         model = Roles_Permission
         fields = ('model_name', 'role', 'permission')
     
+class OpenTimeDisplaySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OpenTime
+        fields = ('id', 'open_date', 'start_time', 'end_time')
