@@ -1,8 +1,7 @@
 /* css for date-time in form event */
 @import "~ng-pick-datetime/assets/style/picker.min.css";
-
 /* css  fullcalendar compnent open-time */
-@import "~fullcalendar/dist/fullcalendar.min.css";
+@import "~fullcalendar/dist/fullcalendar.css";
 /* You can add global styles to this file, and also import other style files */
 @font-face {
     font-family: 'Cabin';

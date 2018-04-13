@@ -82,7 +82,8 @@ export class ListPostComponent implements OnInit {
                 { 
                     orderable: false, 
                     targets: 3,
-                    visible: false
+                    visible: false,
+                    searchable: false,
                 }
             ]
         };

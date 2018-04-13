@@ -1360,6 +1360,10 @@ def ticket_transfer(request):
                 error = {
                     "status": "05", "message": _("Please check required fields : [source_card_barcode, received_card_barcode, ticket_amount, fee]")}
                 return JsonResponse(error, status=400)
+            if source_card_barcode == received_card_barcode:
+                error = {
+                    "status": "05", "message": _("Can not transfer to itseft")}
+                return JsonResponse(error, status=400)
 
             if not request.user.full_name:
                 error = {"code": 400,
