@@ -13,7 +13,6 @@ import { ToastrService } from 'ngx-toastr';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { User } from '../../../shared/class/user';
 import { env } from '../../../../environments/environment';
-import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
 import * as moment from 'moment';
 
 declare var bootbox:any;
@@ -62,7 +61,6 @@ export class ListPromotionComponent implements OnInit {
         private variable_globals: VariableGlobals,
         private toastr: ToastrService,
         private datePipe: DatePipe,
-        private customizeDatatable: CustomizeDataTable,
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -73,7 +71,6 @@ export class ListPromotionComponent implements OnInit {
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
-                this.customizeDatatable.dataTableSorting();
             },
             columnDefs: [
                 { 

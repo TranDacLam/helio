@@ -192,6 +192,12 @@ h1.h1-title {
 .footer-text {
     display: inline;
 }
+.icon-footer a:hover, .icon-footer a:focus {
+    color: #fff;
+}
+.icon-footer .icon-youtube-play:hover, .icon-footer .icon-youtube-play:focus {
+    color: #e336b6;
+}
 /* END FOOTER*/
 /* START BREADCRUMB */
 .breadcrumb {
@@ -228,29 +234,25 @@ h1.h1-title {
 }
 /* === Begin Customize icon sort dataTable ==*/
 /*Hiden background image icon sort default dataTable*/
-/*table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc,
 table.dataTable thead .sorting {
     background: none;
-}*/
-span.arrow-hack {
-    margin-left: 10px;
-    display: none;
+}
+table.dataTable thead .sorting > span,
+table.dataTable thead .sorting_asc > span,
+table.dataTable thead .sorting_desc > span{
+    padding-right: 20px;
+    display: inline-table;
 }
 /*Append icon sort image*/
-table.dataTable thead .sorting_asc > span.arrow-hack  {
-    background: url("assets/images/sort_asc.png");
-    background-repeat: repeat-y, no-repeat;
-    background-position: center top, -550px 50px;
+table.dataTable thead .sorting_asc > span  {
+    background: url("assets/images/sort_asc.png") right center no-repeat ;
 }
-table.dataTable thead .sorting_desc > span.arrow-hack{
-    background: url("assets/images/sort_desc.png");
-    background-repeat: no-repeat;
-    background-position: center top, -550px 50px;
+table.dataTable thead .sorting_desc > span{
+    background: url("assets/images/sort_desc.png") right center no-repeat;
 }
-table.dataTable thead .sorting > span.arrow-hack{
-    background: url("assets/images/sort_both.png");
-    background-repeat: repeat-y, no-repeat;
-    background-position: center top, -550px 50px;
+table.dataTable thead .sorting > span{
+    background: url("assets/images/sort_both.png") right center no-repeat;
 }
 /* === End Customize icon sort dataTable === */
 /* 

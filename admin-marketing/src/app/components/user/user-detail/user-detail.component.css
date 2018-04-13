@@ -1,8 +1,11 @@
-.content-user {
-	padding: 8px 15px;
+.content-user, .info-user-content  {
+    padding: 8px 0px;
 }
 .input-password {
 	padding: 5px 50px 5px 10px;
+}
+.button-user_detail {
+	padding: 0px;
 }
 .file-icon {
 	float: right;
@@ -17,9 +20,7 @@ p.errors {
 p.info-users {
 	/*padding: 15px 0;*/
 	font-size: 16px;
-}
-.info-user-content {
-	margin: 10px 0;
+	margin: 0px 12px;
 }
 label.center-block {
 	text-transform: capitalize;

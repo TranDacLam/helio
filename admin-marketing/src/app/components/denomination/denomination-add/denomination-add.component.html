@@ -28,7 +28,6 @@
             <div class="col-sm-6">
                 <input class='form-control' name="denomination" 
                 formControlName="denomination" id="denomination"
-                placeholder="Mệnh Giá Nạp Tiền"
                 [(ngModel)]="data"
                 (click)="removeMessage(errorMessage)"
                 (keyup) ="format_currency($event.target.value)"

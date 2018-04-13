@@ -60,8 +60,8 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
     }
     ngAfterViewChecked(){
         if(this.checkDisable()){
-            // disabled birth_date
-            $('#birth_date').prop('disabled', true);
+            // disabled input wwith class textDisable
+            $('.textDisable').prop('disabled', true);
         }
     }
 
@@ -156,6 +156,10 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                                 self.router.navigate(['/login']);
                             } else {
                                 // Navigate to promotion page where success
+                                this.variable_globals.user_current = data;
+                                // Update localStorage
+                                let data_user = {id: data.id, full_name: data.full_name, email: data.email, role: data.role };
+                                localStorage.setItem('current_user', JSON.stringify(data_user));
                                 self.router.navigate(['/user-list']);
                             }
                         } else {

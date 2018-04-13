@@ -8,7 +8,6 @@ import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { User } from '../../../shared/class/user';
 import 'rxjs/add/observable/throw';
 import * as datatable_config from '../../../shared/commons/datatable_config';
-import { CustomizeDataTable } from './../../../shared/commons/customize_datatable';
 
 declare var bootbox:any;
 
@@ -43,7 +42,6 @@ export class ListNotificationComponent implements OnInit {
         private router: Router,
         private variable_globals: VariableGlobals,
         private toastr: ToastrService,
-        private customizeDatatable: CustomizeDataTable,
     ) { }
 
     ngOnInit() {
@@ -52,7 +50,6 @@ export class ListNotificationComponent implements OnInit {
         let dt_options_custom = {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
-                this.customizeDatatable.dataTableSorting();
             },
             columnDefs: [
                 { 

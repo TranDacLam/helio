@@ -1,3 +1,5 @@
+declare var window:any;
+
 /* 
     Function: Customize dataTable
     @author: Trangle
@@ -31,3 +33,22 @@ export let data_config = function(record) {
         }
     };
 }
+
+export let datatable_custom_order = function ( locales ) {
+    if ( window.Intl ) {
+        var collator = new window.Intl.Collator( locales );
+        let types:any = $.fn.dataTable.ext.type;
+        delete types.order['string-pre'];
+        delete types.order['html-pre'];
+        types.order['string-asc'] = function ( a, b ) {  
+            a = a ? a.replace( /<.*?>/g, "" ).toLowerCase() : '';
+            b = b ? b.replace( /<.*?>/g, "" ).toLowerCase() : '';
+            return collator.compare( a, b ) * 1;
+        };
+        types.order['string-desc'] = function ( a, b ) {
+            a = a ? a.replace( /<.*?>/g, "" ).toLowerCase() : '';
+            b = b ? b.replace( /<.*?>/g, "" ).toLowerCase() : '';
+            return collator.compare( a, b ) * -1;
+        };
+    }
+};
