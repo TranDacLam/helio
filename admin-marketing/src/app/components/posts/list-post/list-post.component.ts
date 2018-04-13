@@ -64,6 +64,11 @@ export class ListPostComponent implements OnInit {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
             },
+            initComplete: function () {
+                $('.dataTables_filter input[type="search"]').css(
+                     {'width':'160px','display':'inline-block'}
+                  );
+            },
             columnDefs: [
                 {
                     targets: 1,
