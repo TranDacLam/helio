@@ -4,9 +4,6 @@ table.dataTable thead .sorting {
 }
 
 /*=== Customize table feedback ==*/
-.checkbox-feedback {
-	padding: 10px;
-}
 #table_feedback_wrapper {
 	overflow: scroll;
 }
