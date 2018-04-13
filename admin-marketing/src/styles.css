@@ -327,6 +327,12 @@ button.btn:focus {
     border-bottom: 1px solid;
     padding-bottom: 5px;
 }
+.multiselect_user .dataTables_scroll{
+    overflow-x: scroll;
+}
+.multiselect_user .dataTables_scrollBody{
+    overflow: initial !important;
+}
 /* 
     custom multi select user in user permission
     author: Hoangnguyen; 

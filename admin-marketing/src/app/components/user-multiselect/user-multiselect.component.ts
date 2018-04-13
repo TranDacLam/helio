@@ -71,7 +71,6 @@ export class UserMultiselectComponent implements OnInit {
                 }
             ], 
             order: [[ 1, 'asc' ]],
-            scrollX: true,
             scrollY: "400px",
             scrollCollapse: true,
             language: {
@@ -99,6 +98,12 @@ export class UserMultiselectComponent implements OnInit {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckboxLeft(); 
             },
+            initComplete: function () {
+                // add html in table except user-permission page
+                if(!$(".wrapper-permission").length){
+                    $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
+                }
+            }
         }
         
         this.dtOptions_right = {
@@ -115,7 +120,6 @@ export class UserMultiselectComponent implements OnInit {
                 }
             ], 
             order: [[ 1, 'asc' ]],
-            scrollX: true,
             scrollY: "400px",
             scrollCollapse: true,
             fixedHeader: true,
@@ -144,14 +148,16 @@ export class UserMultiselectComponent implements OnInit {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckboxRight();
             },
+            initComplete: function () {
+                // add html in table except user-permission page
+                if(!$(".wrapper-permission").length){
+                    $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
+                }
+            }
         }
         // get current user
         this.current_user = this.variableGlobals.user_current;
         setTimeout(() => {
-            // add html in table except user-permission page
-            if(!$(".wrapper-permission").length){
-                $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
-            }
             // get current user
             this.disableAllTable();
         },300);
