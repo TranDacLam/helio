@@ -11,54 +11,6 @@ import django.contrib.auth.password_validation as validators
 from rest_framework import serializers  
 from django.utils.translation import ugettext_lazy as _  
 
-class Base64ImageField(serializers.ImageField):
-    """
-    A Django REST framework field for handling image-uploads through raw post data.
-    It uses base64 for encoding and decoding the contents of the file.
-
-    Heavily based on
-    https://github.com/tomchristie/django-rest-framework/pull/1268
-
-    Updated for Django REST framework 3.
-    """
-
-    def to_internal_value(self, data):
-        from django.core.files.base import ContentFile
-        import base64
-        import six
-        import uuid
-
-        # Check if this is a base64 string
-        if isinstance(data, six.string_types):
-            # Check if the base64 string is in the "data:" format
-            if 'data:' in data and ';base64,' in data:
-                # Break out the header from the base64 content
-                header, data = data.split(';base64,')
-
-            # Try to decode the file. Return validation error if it fails.
-            try:
-                decoded_file = base64.b64decode(data)
-            except TypeError:
-                self.fail('invalid_image')
-
-            # Generate file name:
-            file_name = str(uuid.uuid4())[:12] # 12 characters are more than enough.
-            # Get the file name extension:
-            file_extension = self.get_file_extension(file_name, decoded_file)
-
-            complete_file_name = "%s.%s" % (file_name, file_extension, )
-
-            data = ContentFile(decoded_file, name=complete_file_name)
-
-        return super(Base64ImageField, self).to_internal_value(data)
-
-    def get_file_extension(self, file_name, decoded_file):
-        import imghdr
-
-        extension = imghdr.what(file_name, decoded_file)
-        extension = "jpg" if extension == "jpeg" else extension
-
-        return extension
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -363,28 +315,40 @@ class PostSerializer(serializers.ModelSerializer):
         return post
     '''
         Event update multi image
-            - Delete Post_Image which has id in list_clear_image
-            - Create Post_Image in posts_image
+            - Delete Post_Image which has id in id_delete_post_image
+            - Create Post_Image 
+            - Update Post_Image
             - Clear image of post id is_clear_image = true
     '''
     def update(self, instance, validated_data):
         if self.context['request']:
-            posts_image = self.context['request'].data.getlist('posts_image', None)
-            list_clear_image = self.context['request'].data.getlist('list_clear_image', None)
-            is_clear_image = self.context['request'].data.get('is_clear_image')
-        
+            new_posts_image = self.context['request'].data.getlist('posts_image', None)
+            id_delete_image = self.context['request'].data.getlist('list_clear_image', None)
+            is_clear_image = self.context['request'].data.get('is_clear_image', None)
+            edit_posts_image = self.context['request'].data.getlist('edit_posts_image', None)
+            id_edit_image = self.context['request'].data.getlist('id_edit_post_image' , None)
+            
         # only 1 post_career has pin_to_top 
         if validated_data['pin_to_top']:
             post_career = Post.objects.filter( post_type = const.CAREERS_POST_TYPE_ID )
             post_career.update( pin_to_top = False )
 
-        if list_clear_image and list_clear_image[0] != '':
-            convert_list = list_clear_image[0].split(',')
-            Post_Image.objects.filter(id__in = convert_list).delete()
+        # edit image
+        if id_edit_image and id_edit_image[0] != '':
+            id_edit_image = id_edit_image[0].split(',')
+            for i in range(len(id_edit_image)):
+                Post_Image.objects.filter(id = int(id_edit_image[i]) ).update( image = edit_posts_image[i])
         
-        if posts_image:
-            for item in posts_image:
+        # delete image
+        if id_delete_image and id_delete_image[0] != '':
+            convert_delete = id_delete_image[0].split(',')
+            Post_Image.objects.filter(id__in = convert_delete).delete()
+        
+        # create image
+        if new_posts_image:
+            for item in new_posts_image:
                 Post_Image.objects.create( post = instance, image = item )
+
         if is_clear_image == "false" and not validated_data.get('image'):
             validated_data['image'] = instance.image
         return super(PostSerializer, self).update(instance, validated_data)
@@ -612,3 +576,11 @@ class OpenTimeDisplaySerializer(serializers.ModelSerializer):
     class Meta:
         model = OpenTime
         fields = ('id', 'open_date', 'start_time', 'end_time')
+
+class PostListSerializer(serializers.ModelSerializer):
+
+    post_type = serializers.StringRelatedField()
+
+    class Meta:
+        model = Post
+        fields = ('id','name','post_type' )
