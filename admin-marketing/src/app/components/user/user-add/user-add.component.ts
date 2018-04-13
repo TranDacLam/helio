@@ -152,10 +152,10 @@ export class UserAddComponent implements OnInit {
     showPassword(input: any): any {
         if (input.type = input.type === "password") {
             input.type = "text";
-            $('span#toggleShowHide').addClass('fa-eye-slash').removeClass('fa-eye');
+            $('span#toggleShowHide').addClass('fa fa-eye').removeClass('fa-eye-slash');
         } else {
             input.type = "password";
-            $('span#toggleShowHide').addClass('fa-eye').removeClass('fa-eye-slash');
+            $('span#toggleShowHide').addClass('fa-eye-slash').removeClass('fa-eye');
         }
     }
     /*

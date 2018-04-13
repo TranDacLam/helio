@@ -19,9 +19,6 @@
 .dels-noti{
     margin-bottom: 50px;
 }
-table.dataTable tbody td{
-    padding: 8px 18px;
-}
 .messsage_error{
     color: red;
 }

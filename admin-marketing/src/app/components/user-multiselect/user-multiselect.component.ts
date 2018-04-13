@@ -71,7 +71,6 @@ export class UserMultiselectComponent implements OnInit {
                 }
             ], 
             order: [[ 1, 'asc' ]],
-            scrollX: true,
             scrollY: "400px",
             scrollCollapse: true,
             language: {
@@ -99,6 +98,12 @@ export class UserMultiselectComponent implements OnInit {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckboxLeft(); 
             },
+            initComplete: function () {
+                // add html in table except user-permission page
+                if(!$(".wrapper-permission").length){
+                    $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
+                }
+            }
         }
         
         this.dtOptions_right = {
@@ -115,7 +120,6 @@ export class UserMultiselectComponent implements OnInit {
                 }
             ], 
             order: [[ 1, 'asc' ]],
-            scrollX: true,
             scrollY: "400px",
             scrollCollapse: true,
             fixedHeader: true,
@@ -136,7 +140,7 @@ export class UserMultiselectComponent implements OnInit {
             },
             "sDom": "<'row'<'col-md-12'f><'col-md-12 info_search'><'col-md-12'l>>rt<'row'<'col-md-12'i>p>",
             rowCallback: (row: Node, data: any[] | Object, index: number) => {
-                $('td', row).find('input:checkbox').off().bind('change', () => {
+                $('td', row).find('input:checkbox').off().bind('change', event => {
                     this.selectCheckboxRight(event);
                 });
                 return row;
@@ -144,14 +148,16 @@ export class UserMultiselectComponent implements OnInit {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckboxRight();
             },
+            initComplete: function () {
+                // add html in table except user-permission page
+                if(!$(".wrapper-permission").length){
+                    $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
+                }
+            }
         }
         // get current user
         this.current_user = this.variableGlobals.user_current;
         setTimeout(() => {
-            // add html in table except user-permission page
-            if(!$(".wrapper-permission").length){
-                $('.info_search').html('<i class="fa fa-exclamation-circle"></i> Để tìm kiếm ngày sinh bạn cần gõ từ khóa tìm kiếm kèm theo dấu /');
-            }
             // get current user
             this.disableAllTable();
         },300);
@@ -257,10 +263,8 @@ export class UserMultiselectComponent implements OnInit {
     */
     selectCheckboxLeft(event) {   
         $(event.target).closest( "tr" ).toggleClass( "selected" );
-        this.dtElements.first.dtInstance.then((dtInstance: DataTables.Api) => {
-            // Any row not selected then checked all button is not checked
-            $('#select-all-left').prop('checked', dtInstance.rows('tr:not(.selected)').count() < 1);
-        });
+        // Any row not selected then checked all button is not checked
+        $('#select-all-left').prop('checked', $("#table_id_1 tbody").find('tr:not(.selected)').length < 1);
     }
 
     /*
@@ -271,10 +275,8 @@ export class UserMultiselectComponent implements OnInit {
     */
     selectCheckboxRight(event) {   
         $(event.target).closest( "tr" ).toggleClass( "selected" );
-        this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
-            // Any row not selected then checked all button is not checked
-            $('#select-all-right').prop('checked', dtInstance.rows('tr:not(.selected)').count() < 1);
-        });
+        // Any row not selected then checked all button is not checked
+        $('#select-all-right').prop('checked', $("#table_id_2 tbody").find('tr:not(.selected)').length < 1);
     }
     /*
         Move all row is checked to right tatble

@@ -35,7 +35,7 @@ export class ListPostComponent implements OnInit {
     posts: Post[];
     postTypes: PostType[];
 
-    post_type_id:number = null;
+    post_type:string = null;
     lang: string = 'vi';
 
     constructor(
@@ -48,11 +48,11 @@ export class ListPostComponent implements OnInit {
     ngOnInit() {
         // config datatable to filter follow post_type
         $.fn['dataTable'].ext.search.push((settings, data, dataIndex) => {
-            const id = parseInt(data[3]) || null; // use data for the id column
-            if (!this.post_type_id){
+            const post_type_data = data[3] || null; // use data for the id column
+            if (!this.post_type){
                 return true;
             }
-            if (id === this.post_type_id) {
+            if (post_type_data === this.post_type) {
                 return true;
             }
             return false;
@@ -64,6 +64,12 @@ export class ListPostComponent implements OnInit {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
             },
+            initComplete: function () {
+                $('.dataTables_filter input[type="search"]').css(
+                     {'width':'160px','display':'inline-block'}
+                );
+            },
+            
             columnDefs: [
                 {
                     targets: 1,
@@ -73,11 +79,6 @@ export class ListPostComponent implements OnInit {
                 { 
                     orderable: false, 
                     targets: 0 
-                },
-                { 
-                    orderable: false, 
-                    targets: 3,
-                    visible: false
                 }
             ]
         };

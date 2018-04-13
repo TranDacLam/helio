@@ -13,9 +13,6 @@
 .messsage{
     color: green;
 }
-.row-border tr td:first-child input{
-    margin-left: 6px;
-}
 .dels-hot{
     margin-bottom: 50px;
 }

@@ -1,8 +1,7 @@
 /* css for date-time in form event */
 @import "~ng-pick-datetime/assets/style/picker.min.css";
-
 /* css  fullcalendar compnent open-time */
-@import "~fullcalendar/dist/fullcalendar.min.css";
+@import "~fullcalendar/dist/fullcalendar.css";
 /* You can add global styles to this file, and also import other style files */
 @font-face {
     font-family: 'Cabin';
@@ -255,6 +254,13 @@ table.dataTable thead .sorting > span{
     background: url("assets/images/sort_both.png") right center no-repeat;
 }
 /* === End Customize icon sort dataTable === */
+
+/*
+    Customize padding display td
+*/
+table.dataTable thead th, table.dataTable thead td{
+    padding: 8px 10px;
+}
 /* 
     Custom button add
     author: Lam; 
@@ -327,6 +333,12 @@ button.btn:focus {
     margin-bottom: 15px;
     border-bottom: 1px solid;
     padding-bottom: 5px;
+}
+.multiselect_user .dataTables_scroll{
+    overflow-x: scroll;
+}
+.multiselect_user .dataTables_scrollBody{
+    overflow: initial !important;
 }
 /* 
     custom multi select user in user permission

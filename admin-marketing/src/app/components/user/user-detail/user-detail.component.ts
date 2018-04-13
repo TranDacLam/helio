@@ -53,8 +53,12 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-        this.getUserById();
-
+        this.route.params.subscribe(
+            params => {
+                const id = +this.route.snapshot.paramMap.get('id');
+                this.getUserById();
+            }
+        );
         this.user_current = this.variable_globals.user_current;
 
     }

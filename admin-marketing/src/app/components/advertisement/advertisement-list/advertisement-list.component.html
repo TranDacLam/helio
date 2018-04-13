@@ -12,14 +12,13 @@
     <p class="title">Quảng Cáo</p>
 </div>
 <div class='row title-adv'>
-	<a class="pull-right" routerLink="/advertisement-add">
-		<div class="btn btn-primary">
-			<span class="glyphicon glyphicon-plus"></span>
-			Thêm Quảng Cáo
-		</div>
-	</a>
+    <a class="pull-right" [routerLink]="['/advertisement-add', {lang: lang}]">
+        <div class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus"></span>
+            Thêm Quảng Cáo
+        </div>
+    </a>
 </div>
-<br>
 <div class="row mb-30 language">
     <div class="col-xs-12 col-sm-12">
         <div class="btn-group pull-right">
@@ -32,8 +31,8 @@
         </div> 
     </div>
 </div>
-<div class="custom-table">
-	<table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="advs">
+<div class="custom_table">
+    <table datatable class="row-border hover" [dtOptions]='dtOptions' id="table_id" dt-instance="dtInstanceCallback" *ngIf="advs">
         <thead>
             <tr>
                 <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
@@ -49,15 +48,15 @@
             </tr>
         </tbody>
     </table>
-	<div class='row'>
-		<div class="col-md-3">
-			<select name="" class="form-control">
-				<option value="">Xóa các quảng cáo được chọn</option>
-			</select>
-		</div>
-		<div class="col-md-3">
-			{{length_selected}} của {{length_all}} được chọn
-			<button (click)="confirmDelete()" type="button" class="button-adv btn btn-danger">Thực hiện</button>
-		</div>
-	</div>
+</div>
+<div class="row dels-event" *ngIf="advs">
+    <div class="col-md-3">
+        <select name="" class="form-control">
+            <option value="1">Xóa các quảng cáo được chọn</option>
+        </select>
+    </div>
+    <div class="col-md-3 dels-list">
+        {{length_selected}} của {{length_all}} được chọn
+        <button (click)="confirmDelete()" type="button" class="btn btn-danger">Thực hiện</button>
+    </div>
 </div>

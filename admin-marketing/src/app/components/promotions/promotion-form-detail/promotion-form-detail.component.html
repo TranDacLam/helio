@@ -157,6 +157,12 @@
         </div>
         <div class="col-md-offset-2 custom-date">
             <show-error-valid [control]="promotionForm.get('apply_date')"></show-error-valid>
+            <ul *ngIf="!promotionForm.get('end_time').errors?.fomatDate && 
+                !promotionForm.get('apply_time').errors?.fomatDate">
+                <li style="color: red">
+                    {{ promotionForm.errors?.datempty ? 'Vui lòng nhập ngày áp dụng': '' }}
+                </li>
+            </ul>
         </div>
     </div>
     <div class="form-group row">
@@ -217,7 +223,6 @@
             <ul *ngIf="!promotionForm.get('end_time').errors?.fomatDate && 
                 !promotionForm.get('apply_time').errors?.fomatDate">
                 <li style="color: red">
-                    {{ promotionForm.errors?.datempty ? 'Vui lòng nhập ngày áp dụng': '' }}
                     {{ promotionForm.errors?.slectedtime ? 'Vui lòng nhập thời gian áp dụng/kết thúc': '' }}
                     {{ promotionForm.errors?.times ? 'Vui lòng nhập thời gian kết thúc lớn hơn thời gian áp dụng': '' }}
                 </li>
