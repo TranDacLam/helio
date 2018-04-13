@@ -2534,8 +2534,8 @@ class OpenTimeAPI(APIView):
             year = request.query_params.get('year', None)
             if month and year:
                 open_time = OpenTime.objects.filter(Q(open_date__year= year) & Q(open_date__month = month))
-                openTimeSerializer = admin_serializers.OpenTimeSerializer(open_time, many = True)
-                return Response(openTimeSerializer.data)
+                openTimeDisplaySerializer = admin_serializers.OpenTimeDisplaySerializer(open_time, many = True)
+                return Response(openTimeDisplaySerializer.data)
             return Response({"code": 400, "message": _("Not found month and year."), "fields": ""}, status=400)
         except Exception, e:
             print "OpenTimeAPI", e
