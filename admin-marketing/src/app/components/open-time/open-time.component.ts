@@ -67,6 +67,9 @@ export class OpenTimeComponent implements OnInit {
                 if(this.is_init_calendar){
                     this.calendarOptions = {
                         locale: 'vi',
+                        monthNames: ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6',
+                            'Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'],
+                        dayNamesShort: ['Chủ Nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7']
                         editable: false,
                         eventLimit: false,
                         buttonText: {
@@ -101,7 +104,7 @@ export class OpenTimeComponent implements OnInit {
             end_time: ['',
                 [DateValidators.validEndTime, DateValidators.requiredEndTime, DateValidators.formatEndTime]],
             is_draft: [false],
-        }, {validator: DateValidators.dateTimeLessThan()});
+        }, {validator: DateValidators.dateTimeLessThanOpenTime()});
     }
 
     /*
