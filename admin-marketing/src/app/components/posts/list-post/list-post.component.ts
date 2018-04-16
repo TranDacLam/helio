@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Post } from '../../../shared/class/post';
 import { PostType } from '../../../shared/class/post-type';
 import { PostService } from '../../../shared/services/post.service';
@@ -43,9 +43,17 @@ export class ListPostComponent implements OnInit {
         private postTypeService: PostTypeService,
         private router: Router,
         private toastr: ToastrService,
+        private route: ActivatedRoute
     ) { }
 
     ngOnInit() {
+        // get params url
+        this.route.params.subscribe(params => {
+            if(params.post_type && params.post_type !== 'null'){
+                this.post_type = params.post_type;
+            }
+        });
+
         // config datatable to filter follow post_type
         $.fn['dataTable'].ext.search.push((settings, data, dataIndex) => {
             const post_type_data = data[3] || null; // use data for the id column

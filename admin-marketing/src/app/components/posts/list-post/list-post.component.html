@@ -55,7 +55,7 @@
             <tr class="row-data" *ngFor="let post of posts">
                 <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
                 <td>{{ post.id }}</td>
-                <td><a [routerLink]="['/post/edit/', post.id, {lang: lang}]">{{ post.name }}</a></td>
+                <td><a [routerLink]="['/post/edit/', post.id, {lang: lang, post_type: post_type}]">{{ post.name }}</a></td>
                 <td>{{ post.post_type ? post.post_type: null}}</td>
             </tr>
         </tbody>
