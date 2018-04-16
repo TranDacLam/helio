@@ -53,6 +53,8 @@ export class FormPostComponent implements OnInit {
     id_edit_multi_image = [];
     msg_clear_multi_image: string = '';
 
+    post_type:string = '';
+
     constructor(
         private postService: PostService,
         private postTypeService: PostTypeService,
@@ -71,6 +73,9 @@ export class FormPostComponent implements OnInit {
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;
+            }
+            if(params.post_type){
+                this.post_type = params.post_type;
             }
         });
 
@@ -376,7 +381,7 @@ export class FormPostComponent implements OnInit {
                         (data) => {
                             this.post = data;
                             this.toastr.success(`Chỉnh sửa "${value_form.name}" thành công`);
-                            this.router.navigate(['/post/list']);
+                            this.router.navigate(['/post/list', {post_type: this.post_type}]);
                         },
                         (error) => {
                             // code 400, error validate
