@@ -321,36 +321,38 @@ class PostSerializer(serializers.ModelSerializer):
             - Clear image of post id is_clear_image = true
     '''
     def update(self, instance, validated_data):
+        # only 1 post_career has pin_to_top 
+        if validated_data['pin_to_top']:
+            post_career = Post.objects.filter( post_type = const.CAREERS_POST_TYPE_ID )
+            post_career.update( pin_to_top = False )
+            
         if self.context['request']:
             new_posts_image = self.context['request'].data.getlist('posts_image', None)
             id_delete_image = self.context['request'].data.getlist('list_clear_image', None)
             is_clear_image = self.context['request'].data.get('is_clear_image', None)
             edit_posts_image = self.context['request'].data.getlist('edit_posts_image', None)
             id_edit_image = self.context['request'].data.getlist('id_edit_post_image' , None)
+
+            # edit image
+            if id_edit_image and id_edit_image[0] != '':
+                id_edit_image = id_edit_image[0].split(',')
+                for i in range(len(id_edit_image)):
+                    post = Post_Image.objects.get(id = int(id_edit_image[i]) )
+                    post.image = edit_posts_image[i]
+                    post.save()
+
+            # delete image
+            if id_delete_image and id_delete_image[0] != '':
+                convert_delete = id_delete_image[0].split(',')
+                Post_Image.objects.filter(id__in = convert_delete).delete()
             
-        # only 1 post_career has pin_to_top 
-        if validated_data['pin_to_top']:
-            post_career = Post.objects.filter( post_type = const.CAREERS_POST_TYPE_ID )
-            post_career.update( pin_to_top = False )
+            # create image
+            if new_posts_image:
+                for item in new_posts_image:
+                    Post_Image.objects.create( post = instance, image = item )
 
-        # edit image
-        if id_edit_image and id_edit_image[0] != '':
-            id_edit_image = id_edit_image[0].split(',')
-            for i in range(len(id_edit_image)):
-                Post_Image.objects.filter(id = int(id_edit_image[i]) ).update( image = edit_posts_image[i])
-        
-        # delete image
-        if id_delete_image and id_delete_image[0] != '':
-            convert_delete = id_delete_image[0].split(',')
-            Post_Image.objects.filter(id__in = convert_delete).delete()
-        
-        # create image
-        if new_posts_image:
-            for item in new_posts_image:
-                Post_Image.objects.create( post = instance, image = item )
-
-        if is_clear_image == "false" and not validated_data.get('image'):
-            validated_data['image'] = instance.image
+            if is_clear_image == "false" and not validated_data.get('image'):
+                validated_data['image'] = instance.image
         return super(PostSerializer, self).update(instance, validated_data)
 
 
