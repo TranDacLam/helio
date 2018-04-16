@@ -82,7 +82,7 @@
             <label class="col-form-label form-check-label">Mô Tả</label>
         </div>
         <div class="col-sm-8">
-            <textarea rows="3" class="form-control" formControlName="short_description"></textarea>
+            <textarea rows="3" class="form-control" formControlName="short_description" (keyup)="checkIsNewline($event.target.value)"></textarea>
             <show-error-valid [control]="formEvent.get('short_description')"></show-error-valid>
         </div>
     </div>
