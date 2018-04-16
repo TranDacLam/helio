@@ -371,6 +371,14 @@ button.btn:focus {
 }
 
 /*
+    Fullcalendar
+    author: Lam;
+*/
+.fc-unthemed td.fc-today{
+    background: #90b5e8;
+}
+
+/*
     Deletes list
     author: Lam;
 */
