@@ -55,11 +55,13 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'multiupload',
     'captcha',
-    'push_notifications'
+    'push_notifications',
+    'corsheaders'
     
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -198,7 +200,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'main.custom_jwt.CustomJSONWebTokenAuthentication',
@@ -224,11 +226,11 @@ LOCALE_PATHS = (
 )
 
 # # config model translation
-# gettext = lambda s: s
-# LANGUAGES = (
-#     ('vi', gettext('Vietnamese')),
-#     ('en', gettext('English')),
-# )
+gettext = lambda s: s
+LANGUAGES = (
+    ('vi', gettext('Vietnamese')),
+    ('en', gettext('English')),
+)
 
 # MODELTRANSLATION_DEFAULT_LANGUAGE = 'vi'
 
@@ -259,6 +261,7 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, "static"),
 )
+CORS_ORIGIN_ALLOW_ALL = True
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
@@ -307,9 +310,7 @@ PUSH_NOTIFICATIONS_SETTINGS = {
 }
 
 try:
-    if 'DEVELOPMENT' in os.environ and os.environ['DEVELOPMENT']:
-        from config.setting_local import *
-
+    
     if 'API_HELIO' in os.environ and os.environ['API_HELIO']:
         from config.setting_api import *
     

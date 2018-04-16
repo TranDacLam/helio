@@ -4,30 +4,30 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 DATABASES = {
     'default': {
-        'NAME': 'helio_web',
+        'NAME': 'helio_web_uat',
         'ENGINE': 'django.db.backends.mysql',
         'HOST': 'localhost',
         'PORT': 3306,
-        'USER': 'helio',
-        'PASSWORD': 'admin@helio.vn'
+        'USER': 'helio_uat',
+        'PASSWORD': 'hel1o@uat'
     },
     'sql_db': {
         'NAME': 'ECS7',
         'ENGINE': 'sqlserver_pymssql',
-        'HOST': '113.160.225.204:1433',
+        'HOST': '172.16.12.16',
         'USER': 'sa',
-        'PASSWORD': 'vooc2017',
+        'PASSWORD': 'Helio@2017',
         'PORT':1433
     }
 
 }
 
-RECAPTCHA_PUBLIC_KEY = '6LfMmSYUAAAAANJJC-toiepJxWBFlPXgfz9Cg5tA'
-RECAPTCHA_PRIVATE_KEY = '6LfMmSYUAAAAAI8a3MHrDW07gjr9kddPAMd2nOTL'
+RECAPTCHA_PUBLIC_KEY = '6LdnaFEUAAAAAP_GrD8AcxWQQYCt92_t7OKpzN0k'
+RECAPTCHA_PRIVATE_KEY = '6LdnaFEUAAAAAK-uyg0gVJ8AXjaXAOA_YMHA1XPF'
 
-FB_APP_ID = '125339261388351'
-SOCIAL_AUTH_FACEBOOK_KEY = '125339261388351'
-SOCIAL_AUTH_FACEBOOK_SECRET = '407b1c042cfcd960750adc6eaed8728e'
+FB_APP_ID = '160199168026175'
+SOCIAL_AUTH_FACEBOOK_KEY = '160199168026175'
+SOCIAL_AUTH_FACEBOOK_SECRET = '3f680749bf6a5bddb425d6e673354616'
 
 PUSH_NOTIFICATIONS_SETTINGS = {
     "FCM_API_KEY": "AAAAMkND2_U:APA91bEVkDFA8uACGPTTj-Vc86kg4fuyhrPuUmGHJdzkuBaaJh4ZQuc09zMZCEt2xaSj5Xi7opPT9OZHq-hxDrWmqfkRGqRv38uC2nqHHK3Xwy-jwglWoSwIYywpT-qcsoW9TKAsiUayeRAkj_AYJ0AG-D02Ubx0jg",
@@ -36,3 +36,6 @@ PUSH_NOTIFICATIONS_SETTINGS = {
     "APNS_USE_SANDBOX": True,
     "APNS_TOPIC": "vn.vooc.helio.mobile",
 }
+
+BASE_URL_DMZ_API = "http://172.16.12.19:9000/api/"
+DMZ_API_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFwaV91YXRAbWV0aXoudm4iLCJvcmlnX2lhdCI6MTUyMjk4MTcxNiwidXNlcl9pZCI6MiwiZW1haWwiOiJhcGlfdWF0QG1ldGl6LnZuIiwiZXhwIjoxNTIyOTgyMDE2fQ.91QJf8aycSB6P_Zfethn5hsF0bbF2VYKCJVIrQpZRaA"

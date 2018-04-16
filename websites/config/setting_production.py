@@ -12,14 +12,14 @@ DATABASES = {
         'USER': 'helio',
         'PASSWORD': 'admin@helio.vn'
     },
-    'sql_db': {
-        'NAME': 'ECS7',
-        'ENGINE': 'sqlserver_pymssql',
-        'HOST': '113.176.107.20:1433',
-        'USER': 'apiembed',
-        'PASSWORD': 'ed@2017API',
-        'PORT':1433
-    }
+    # 'sql_db': {
+    #     'NAME': 'ECS7',
+    #     'ENGINE': 'sqlserver_pymssql',
+    #     'HOST': '113.176.107.20:1433',
+    #     'USER': 'apiembed',
+    #     'PASSWORD': 'ed@2017API',
+    #     'PORT':1433
+    # }
 
 }
 
@@ -36,8 +36,9 @@ SOCIAL_AUTH_FACEBOOK_SECRET = '560179f08361bae229869d5b50312ea5'
 RECAPTCHA_PUBLIC_KEY = '6LfMmSYUAAAAANJJC-toiepJxWBFlPXgfz9Cg5tA'
 RECAPTCHA_PRIVATE_KEY = '6LfMmSYUAAAAAI8a3MHrDW07gjr9kddPAMd2nOTL'
 
+# Account Google FCM : voocdn@gmail.com
 PUSH_NOTIFICATIONS_SETTINGS = {
-    "FCM_API_KEY": "AAAAMkND2_U:APA91bEVkDFA8uACGPTTj-Vc86kg4fuyhrPuUmGHJdzkuBaaJh4ZQuc09zMZCEt2xaSj5Xi7opPT9OZHq-hxDrWmqfkRGqRv38uC2nqHHK3Xwy-jwglWoSwIYywpT-qcsoW9TKAsiUayeRAkj_AYJ0AG-D02Ubx0jg",
+    "FCM_API_KEY": "AAAAARPFyW4:APA91bGqrXAbmz2YmtXdLZImLNPESNEHe4_uDucmwtHdHUfyxkx4xs542TRxWXusV9xvO4ozI23PpRi-c3APYX1WHgxQ8XwYYhtH8PxwCsATk9ZjIBwyf3wa3HK2sy4C8GekvmS1zjC0",
     "FCM_ERROR_TIMEOUT": 3600,
     "APNS_CERTIFICATE": os.path.join(BASE_DIR, "key_apns/pem_tester/apns-dis-cert.pem"),
     "APNS_USE_SANDBOX": False,
@@ -47,3 +48,7 @@ PUSH_NOTIFICATIONS_SETTINGS = {
 # SECURE_SSL_REDIRECT = True
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+
+
+BASE_URL_DMZ_API = ""
+DMZ_API_TOKEN = ""
