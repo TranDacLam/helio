@@ -95,8 +95,23 @@ export class FormEventComponent implements OnInit {
             is_clear_image: [false],
             is_clear_image_thumbnail: [false]
         }, {validator: DateValidators.dateTimeLessThan()});
-    }
 
+    }
+     /*
+        Function checkIsNewline():
+         + check value has new line, 
+         + check length + count_line > 350
+         + if true, return error maxlength
+        Author: HOang
+    */
+    checkIsNewline(value: string){
+        var count_line = value.split(/\r\n|\r|\n/).length-1;
+        if (count_line > 0){
+            if(this.formEvent.value.short_description.length + count_line > 350){
+                this.formEvent.controls['short_description'].setErrors({'maxlength': {requiredLength: 350, actualLength: 351}});
+            }
+        }
+    }
     /*
         Function getEvent():
          + Get id from url path
@@ -109,6 +124,7 @@ export class FormEventComponent implements OnInit {
             (data) => {
                 this.event = data;
                 this.creatForm();
+                this.checkIsNewline(data.short_description);
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.message}]);

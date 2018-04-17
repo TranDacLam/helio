@@ -226,6 +226,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     start_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required = True)
     end_date = serializers.DateField(format="%d/%m/%Y", input_formats=['%d/%m/%Y'], required =  True)
+    short_description = serializers.CharField(required=True, max_length = 350, error_messages = {'max_length': _('Max length field is 350.')})
 
     class Meta:
         model = Event

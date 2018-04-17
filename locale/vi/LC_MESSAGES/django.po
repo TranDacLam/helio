@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-11 15:27+0700\n"
+"POT-Creation-Date: 2018-04-16 15:38+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -711,8 +711,8 @@ msgstr "Lỗi hệ thống."
 
 #: websites/api/dmz_message.py:14 websites/api/views.py:655
 #: websites/api/views.py:734 websites/api/views.py:787
-#: websites/api/views.py:840 websites/api/views.py:1473
-#: websites/api/views.py:1592
+#: websites/api/views.py:840 websites/api/views.py:1477
+#: websites/api/views.py:1596
 msgid "Card id field is required."
 msgstr "Trường card_id không được bỏ trống."
 
@@ -732,8 +732,8 @@ msgstr "Thẻ không hợp lệ."
 msgid "update userembed success"
 msgstr "Đã cập nhật thông tin thẻ Helio Embed thành công."
 
-#: websites/api/serializers.py:31 websites/api_admin/serializers.py:444
-#: websites/api_admin/serializers.py:481
+#: websites/api/serializers.py:31 websites/api_admin/serializers.py:411
+#: websites/api_admin/serializers.py:448
 msgid "This email is already taken. Please, try again"
 msgstr "Địa chỉ email đã tồn tại trong hệ thống. Vui lòng chọn email khác."
 
@@ -837,8 +837,8 @@ msgstr "Giá trị này phải là số nguyên."
 
 #: websites/api/views.py:710 websites/api/views.py:764
 #: websites/api/views.py:815 websites/api/views.py:868
-#: websites/api/views.py:1415 websites/api/views.py:1501
-#: websites/api/views.py:1620
+#: websites/api/views.py:1419 websites/api/views.py:1505
+#: websites/api/views.py:1624
 msgid "You don't have permission to access."
 msgstr "Bạn không có quyền truy cập."
 
@@ -940,29 +940,33 @@ msgstr ""
 "Các trường sau không được bỏ trống : [source_card_barcode, "
 "received_card_barcode, ticket_amount, fee]"
 
-#: websites/api/views.py:1366
+#: websites/api/views.py:1365
+msgid "Can not transfer to itseft"
+msgstr ""
+
+#: websites/api/views.py:1370
 msgid "Please update full name of user"
 msgstr "Vui lòng cập nhật tên của tài khoản"
 
 # msgid "This field is required."
 # msgstr "Trường này là bắt buộc."
-#: websites/api/views.py:1373
+#: websites/api/views.py:1377
 msgid "Fee & Ticket Amount must be is number"
 msgstr "Fee & Ticket Amount phải là số nguyên."
 
-#: websites/api/views.py:1434
+#: websites/api/views.py:1438
 msgid "Position field is required."
 msgstr "Trường position không được bỏ trống."
 
-#: websites/api/views.py:1441
+#: websites/api/views.py:1445
 msgid "Fee not found."
 msgstr "Không tìm thấy phí giao dịch"
 
-#: websites/api/views.py:1459
+#: websites/api/views.py:1463
 msgid "Hot Advs not found."
 msgstr "Không tìm thấy Hot Advs"
 
-#: websites/api/views.py:1524
+#: websites/api/views.py:1528
 msgid ""
 "Please check required fields : [card_barcode, email, full_name, phone, "
 "reload_amount]"
@@ -972,74 +976,78 @@ msgstr ""
 
 # msgid "This field is required."
 # msgstr "Trường này là bắt buộc."
-#: websites/api/views.py:1531
+#: websites/api/views.py:1535
 msgid "Amount must be is number"
 msgstr "Fee & Ticket Amount phải là số nguyên."
 
-#: websites/api_admin/serializers.py:65 websites/api_admin/serializers.py:210
+#: websites/api_admin/serializers.py:17 websites/api_admin/serializers.py:162
 msgid "Birth date is invalid."
 msgstr "Vui lòng nhập vào ngày hợp lệ."
 
-#: websites/api_admin/serializers.py:74 websites/api_admin/serializers.py:219
-#: websites/api_admin/serializers.py:455 websites/api_admin/serializers.py:493
+#: websites/api_admin/serializers.py:26 websites/api_admin/serializers.py:171
+#: websites/api_admin/serializers.py:422 websites/api_admin/serializers.py:460
 msgid "Birthday must less then today"
 msgstr "Vui lòng chọn ngày sinh nhỏ hơn ngày hiện tại."
 
-#: websites/api_admin/serializers.py:173
+#: websites/api_admin/serializers.py:125
 msgid "This denomination is already taken"
 msgstr "Mệnh giá nạp tiền này đã tồn tại."
 
-#: websites/api_admin/serializers.py:175
+#: websites/api_admin/serializers.py:127
 msgid "Denomination exceed the permitted value."
 msgstr "Mệnh giá nạp tiền vượt quá giá trị cho phép."
 
-#: websites/api_admin/serializers.py:223
+#: websites/api_admin/serializers.py:175
 msgid "Fee exceed the permitted value."
 msgstr "Phí giao dịch vượt quá giá trị cho phép."
 
-#: websites/api_admin/serializers.py:234
+#: websites/api_admin/serializers.py:186
 msgid "Fee already is exist."
 msgstr "Phí này đã tồn tại."
 
-#: websites/api_admin/serializers.py:284 websites/api_admin/serializers.py:591
+#: websites/api_admin/serializers.py:229
+msgid "Max length field is 350."
+msgstr "Số ký tự cho phép tối đa là 350."
+
+#: websites/api_admin/serializers.py:237 websites/api_admin/serializers.py:558
 msgid "Start day is before than End day"
 msgstr "Ngày bắt đầu phải trước hơn ngày kết thúc."
 
-#: websites/api_admin/serializers.py:286 websites/api_admin/serializers.py:593
+#: websites/api_admin/serializers.py:239 websites/api_admin/serializers.py:560
 msgid "Start time is before than End time"
 msgstr "Vui lòng nhập thời gian kết thúc lớn hơn thời gian bắt đầu."
 
-#: websites/api_admin/serializers.py:346
+#: websites/api_admin/serializers.py:299
 msgid "key_query is exist."
 msgstr "Bài viết có Key Query đã tồn tại."
 
 # msgid "This field is required."
 # msgstr "Trường này là bắt buộc."
-#: websites/api_admin/serializers.py:407
+#: websites/api_admin/serializers.py:374
 msgid "This question is exist."
 msgstr "Câu hỏi đã tồn tại."
 
-#: websites/api_admin/serializers.py:417
+#: websites/api_admin/serializers.py:384
 msgid "This category is unvalid"
 msgstr "Danh mục này không hợp lệ."
 
-#: websites/api_admin/serializers.py:438 websites/api_admin/serializers.py:475
+#: websites/api_admin/serializers.py:405 websites/api_admin/serializers.py:442
 msgid "This phone is already taken"
 msgstr "Số điện thoại này đã tồn tại."
 
-#: websites/api_admin/serializers.py:500
+#: websites/api_admin/serializers.py:467
 msgid "Cannot change password of customer user"
 msgstr "Không thể thay đổi mật khẩu của Customer User."
 
-#: websites/api_admin/serializers.py:553
+#: websites/api_admin/serializers.py:520
 msgid "Hot Ads has name already exist"
 msgstr "Hot Ads có Tên đã tồn tại."
 
-#: websites/api_admin/serializers.py:583 websites/api_admin/serializers.py:584
+#: websites/api_admin/serializers.py:550 websites/api_admin/serializers.py:551
 msgid "Date is invalid."
 msgstr "Vui lòng nhập vào ngày hợp lệ."
 
-#: websites/api_admin/serializers.py:585 websites/api_admin/serializers.py:586
+#: websites/api_admin/serializers.py:552 websites/api_admin/serializers.py:553
 msgid "Time is invalid."
 msgstr "Vui lòng nhập vào giờ hợp lệ."
 
