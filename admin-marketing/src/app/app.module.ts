@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpModule, RequestOptions } from "@angular/http";
+import { HttpModule, RequestOptions, Http } from "@angular/http";
 import { HttpClientModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app.routing';
@@ -44,6 +44,7 @@ import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
 import { CategoryService } from './shared/services/category.service';
 import { BannerService } from './shared/services/banner.service';
+import { AuthenticatedHttpService } from './shared/services/authenticated-http.service';
 import { ScrollTop } from './shared/commons/scroll-top';
 import { AuthGuard } from './shared/auth/auth.guard';
 
@@ -210,7 +211,8 @@ export const MY_MOMENT_FORMATS = {
     {
         provide: RequestOptions, 
         useClass: AuthRequestOptions
-    }
+    },
+    { provide: Http, useClass: AuthenticatedHttpService }
   ],
   bootstrap: [AppComponent]
 })
