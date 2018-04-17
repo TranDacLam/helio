@@ -27,7 +27,8 @@ export class FormPostComponent implements OnInit {
     /*
         author: Lam
     */
-
+    // post_type fo carrer
+    post_type_carrer:number = 2;
     post: Post;
 
     formPost: FormGroup;
@@ -93,11 +94,21 @@ export class FormPostComponent implements OnInit {
         }
     }
     /*
-        function check_post_career(): check post is for career
+        function check_post_career():
+            if post is in post_type_carrer, enable and set value for pin_to_top
+            else disable and uncheck pin_to_top
         author: HOang
     */ 
     check_post_career(post_type){
-        this.is_post_career = post_type == 2 ? true: false;
+        if (post_type == this.post_type_carrer){
+            this.is_post_career = true;
+            this.formPost.controls.pin_to_top.setValue(this.post.pin_to_top);
+        }else{
+            this.is_post_career = false;
+            this.formPost.controls.pin_to_top.setValue(false);
+        }
+
+
     }
 
 
