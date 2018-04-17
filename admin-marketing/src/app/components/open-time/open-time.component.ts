@@ -32,6 +32,10 @@ export class OpenTimeComponent implements OnInit {
     calendarOptions: Options;
     is_init_calendar: boolean = true;
 
+    month_event: any;
+    year_event: any;
+
+
     constructor(
         private fb: FormBuilder,
         private router: Router,
@@ -69,7 +73,7 @@ export class OpenTimeComponent implements OnInit {
                         locale: 'vi',
                         monthNames: ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6',
                             'Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'],
-                        dayNamesShort: ['Chủ Nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7']
+                        dayNamesShort: ['Chủ Nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'],
                         editable: false,
                         eventLimit: false,
                         buttonText: {
@@ -148,9 +152,9 @@ export class OpenTimeComponent implements OnInit {
         author: Lam
     */ 
     clickButton(event) {
-        let month = event.data.month() + 1;
-        let year = event.data.year();
-        this.getOpenTime(month, year);
+        this.month_event = event.data.month() + 1;
+        this.year_event = event.data.year();
+        this.getOpenTime(this.month_event, this.year_event);
     }
 
     /*
@@ -162,10 +166,16 @@ export class OpenTimeComponent implements OnInit {
         return str;
     }
 
+    /*
+        function onSubmit(): save open time
+        author: Lam
+    */
     onSubmit(){
+        // show error valdiate when submit form
         if(this.formOpenTime.invalid){
             ValidateSubmit.validateAllFormFields(this.formOpenTime);
         }else{
+            // Get value and format date, time for value form open time
             this.formOpenTime.value.day_of_week = this.list_day;
             this.formOpenTime.value.start_date = this.formOpenTime.value.start_date.format("DD/MM/YYYY");
             this.formOpenTime.value.end_date = this.formOpenTime.value.end_date.format("DD/MM/YYYY");
@@ -174,11 +184,17 @@ export class OpenTimeComponent implements OnInit {
             this.openTimeService.addOpenTime(this.formOpenTime.value).subscribe(
                 (data) => {
                     this.toastr.success(`Thêm mới giờ mở cửa thành công`);
-                    this.formOpenTime.reset();
+                    this.formOpenTime.reset(); // reset form
                     this.list_day = [];
                     $('.table-open-time tr td input:checkbox').prop('checked', false);
-                    let date_now = new Date();
-                    this.getOpenTime(date_now.getMonth() + 1, date_now.getFullYear());
+                    // get data events month select current
+                    if(this.month_event && this.year_event){
+                        this.getOpenTime(this.month_event, this.year_event);
+                    }else{
+                        // get data events month current
+                        let date_now = new Date();
+                        this.getOpenTime(date_now.getMonth() + 1, date_now.getFullYear());
+                    }
                     this.errorMessage = null;
                 },
                 (error) => {

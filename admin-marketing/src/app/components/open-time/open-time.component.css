@@ -24,3 +24,12 @@ form ul{
     padding-left: 0;
     margin-top: 5px;
 }
+.table-open-time tbody tr{
+    height: 44px;
+}
+.table-open-time tbody tr td{
+    padding-top: 12px;
+}
+.table-open-time thead th{
+    width: 40px;
+}
