@@ -4,12 +4,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 DATABASES = {
     'default': {
-        'NAME': 'helio_web',
+        'NAME': 'helio_web_uat',
         'ENGINE': 'django.db.backends.mysql',
         'HOST': 'localhost',
         'PORT': 3306,
-        'USER': 'helio',
-        'PASSWORD': 'admin@helio.vn'
+        'USER': 'helio_uat',
+        'PASSWORD': 'hel1o@uat'
     },
     'sql_db': {
         'NAME': 'ECS7',
@@ -22,8 +22,8 @@ DATABASES = {
 
 }
 
-RECAPTCHA_PUBLIC_KEY = '6LeuKE8UAAAAAF_Zn3MJtKTB1DA1GJqKhzZPf8Do'
-RECAPTCHA_PRIVATE_KEY = '6LeuKE8UAAAAAFKkk1mYmcMlP0lWh6t1ae-stcmi'
+RECAPTCHA_PUBLIC_KEY = '6LdnaFEUAAAAAP_GrD8AcxWQQYCt92_t7OKpzN0k'
+RECAPTCHA_PRIVATE_KEY = '6LdnaFEUAAAAAK-uyg0gVJ8AXjaXAOA_YMHA1XPF'
 
 FB_APP_ID = '160199168026175'
 SOCIAL_AUTH_FACEBOOK_KEY = '160199168026175'
