@@ -92,6 +92,10 @@ const routes: Routes = [{
         component: DenominationAddComponent,
         canActivate: [AuthGuard]
     }, {
+        path: 'denomination-detail/:id',
+        component: DenominationAddComponent,
+        canActivate: [AuthGuard]
+    },{
         path: 'denomination-list',
         component: DenominationListComponent,
         canActivate: [AuthGuard]
@@ -106,8 +110,12 @@ const routes: Routes = [{
     }, {
         path: 'hot-advs-add',
         component: HotAdvsAddComponent,
-         canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
     }, {
+        path: 'hot-advs-detail/:id',
+        component: HotAdvsAddComponent,
+        canActivate: [AuthGuard]
+    },{
         path: 'hot-advs-list',
         component: HotAdvsListComponent,
         canActivate: [AuthGuard]
@@ -178,6 +186,10 @@ const routes: Routes = [{
     {
         path: 'fee/list',
         component: FeeListComponent,
+        canActivate: [AuthGuard]
+    }, {
+        path: 'fee/detail/:id',
+        component: FeeAddComponent,
         canActivate: [AuthGuard]
     },
     {

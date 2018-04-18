@@ -33,7 +33,7 @@
             <tr class="row-data" *ngFor="let denomination of denominations">
                 <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
                 <td>{{ denomination.id }}</td>
-                <td>{{denomination.denomination | number}}</td>
+                <td><a routerLink="/denomination-detail/{{ denomination.id }}">{{denomination.denomination | number}}</a></td>
             </tr>
         </tbody>
     </table>
