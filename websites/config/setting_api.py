@@ -43,3 +43,6 @@ PUSH_NOTIFICATIONS_SETTINGS = {
     "APNS_USE_SANDBOX": False,
     "APNS_TOPIC": "vn.vooc.helio.mobile",
 }
+
+BASE_URL_DMZ_API = "https://connectdev.helio.vn/api/"
+DMZ_API_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFwaV91YXRAbWV0aXoudm4iLCJvcmlnX2lhdCI6MTUyNDAyNjEwMiwidXNlcl9pZCI6MiwiZW1haWwiOiJhcGlfdWF0QG1ldGl6LnZuIiwiZXhwIjoxNTI0MDI2NDAyfQ.-lLaD4n2cBK9ztUc7Vw-mO2Idet_s_0ljfP-a5HQlsY"
