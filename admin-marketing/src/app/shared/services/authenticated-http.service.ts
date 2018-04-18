@@ -21,6 +21,7 @@ export class AuthenticatedHttpService extends Http {
         return super.request(url, options).catch((error: Response) => {
             if ((error.status === 401 || error.status === 403)) {
                 localStorage.removeItem('auth_token');
+                localStorage.removeItem('current_user');
                 this.router.navigate(['/login']);
                 return Observable.of(error);
             }
