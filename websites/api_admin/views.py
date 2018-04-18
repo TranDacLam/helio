@@ -2464,8 +2464,8 @@ class OpenTimeAPI(APIView):
             day_of_week = serializer.data['day_of_week'] if 'day_of_week' in serializer.data else None
             start_time = serializer.data['start_time']
             end_time = serializer.data['end_time']
-            start_date = datetime.strptime(request.data['start_date'], "%d/%m/%Y").date()
-            end_date = datetime.strptime(request.data['end_date'], "%d/%m/%Y").date()
+            start_date = datetime.strptime(serializer.data['start_date'], "%d/%m/%Y").date()
+            end_date = datetime.strptime(serializer.data['end_date'], "%d/%m/%Y").date()
 
             kwargs = {}
             if day_of_week:
@@ -2541,4 +2541,32 @@ class OpenTimeAPI(APIView):
             print "OpenTimeAPI", e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
+"""
+    UserRoleAPI
+    @author :Hoangnguyen
+"""
 
+@permission_classes((AllowAny,))
+class UserRoleAPI(APIView):
+    def get( self, request):
+        try:
+            model_name = Model_Name.objects.all()
+            model_name_serializer = admin_serializers.ModelNameSerializer( model_name, many = True)
+            return Response(model_name_serializer.data)
+        except Exception, e:
+            print "UserRoleAPI", e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
+
+    def post( self, request, format = None):
+        try:
+            serializer =  admin_serializers.RolesPermissionSerializer(data = request.data, many = True)
+            if serializer.is_valid():
+                Roles_Permission.objects.all().delete()
+                serializer.save()
+                return Response(serializer.data)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+        except Exception, e:
+            print "UserRoleAPI", e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
