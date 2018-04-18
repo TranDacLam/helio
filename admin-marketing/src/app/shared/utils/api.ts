@@ -80,6 +80,8 @@ export const api = {
 
     promotion_statistic: 'promotion_statistic/',
 
-    opentime: env.api_domain + 'opentime/'
+    opentime: env.api_domain + 'opentime/',
+
+    user_role: env.api_domain + 'user_role/'
 
 };
