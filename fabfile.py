@@ -1,54 +1,54 @@
 from fabric.api import *
 
-ENV = 'development' # Choices ['uat','production','development']
+ENV = 'api' # Choices ['uat','production','development']
 
 #ENV = 'production'
 SERVERS = {
     'development': '172.16.12.10',
     'uat': '172.16.12.19',
-    'production' : '49.156.53.49',
-    # 'api' : '49.156.53.49'
+    'production' : '103.95.197.81',
+    'api' : '103.95.197.81'
 }
 BRANCH = {
     'development': 'develop',
     'uat': 'uat',
     'production': 'production',
-    # 'api': 'production',
+    'api': 'api',
 }
 
 USERS = {
     'development': 'adminvn',
     'uat': 'api',
     'production': 'thangv',
-    # 'api': 'thangv'
+    'api': 'thangv'
 }
 
 PASSWORDS = {
     'development': 'Abc@123',
     'uat': 'Ahe2017$%',
-    'production': 'develop@vooc.vn',
-    # 'api': 'develop@vooc.vn'
+    'production': 'Admin@Hel10.vn',
+    'api': 'Admin@Hel10.vn'
 }
 
 VIRTUAL_ENVS = {
     'development': 'source /home/adminvn/envs_root/helio_web_env/bin/activate',
     'uat': 'source /home/api/projects/envs_root/helio_web_env/bin/activate',
     'production': 'source /home/thangv/envs/helio_web_env/bin/activate',
-    # 'api': 'source /home/thangv/envs/api_helio_web_env/bin/activate'
+    'api': 'source /home/thangv/envs/api_helio_web_env/bin/activate'
 }
 
 PATHS = {
     'development': '/home/adminvn/sites/helio_web',
     'uat': '/home/api/projects/helio_web',
     'production': '/home/thangv/projects/helio_web/',
-    # 'api' : '/home/thangv/projects/api_source/helio_web'
+    'api' : '/home/thangv/projects/api_source/helio_web'
 }
 
 PROCESS_ID = {
     'development': '/tmp/helio_web.pid',
     'uat': '/tmp/helio_web_uat.pid',
     'production': '/tmp/helio_web.pid',
-    # 'api' : '/tmp/helio_api_web.pid'
+    'api' : '/tmp/helio_api_web.pid'
 }
 
 OUTPUT_ANGULAR = {
@@ -108,7 +108,7 @@ def deploy():
         run('find . -name "*.pyc" -exec rm -rf {} \;')
 
     restart_web_server()
-    restart_admin_marketing()
+    # restart_admin_marketing()
         
             
     
