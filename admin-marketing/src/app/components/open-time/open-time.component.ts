@@ -35,6 +35,8 @@ export class OpenTimeComponent implements OnInit {
     month_event: any;
     year_event: any;
 
+    is_disabled_day_of_week: boolean = false;
+
 
     constructor(
         private fb: FormBuilder,
@@ -108,8 +110,44 @@ export class OpenTimeComponent implements OnInit {
             end_time: ['',
                 [DateValidators.validEndTime, DateValidators.requiredEndTime, DateValidators.formatEndTime]],
             is_draft: [false],
-        }, {validator: DateValidators.dateTimeLessThanOpenTime()});
+        }, {validator: this.dateTimeLessThanOpenTime()});
     }
+
+    /*
+        Function dateTimeLessThanOpenTime(): validate date, time
+        Author: Lam
+    */
+    dateTimeLessThanOpenTime(){
+        return (group: FormGroup): {[key: string]: any} => {
+            // get val date, time by #id
+            let start_date = $('#start_date').val() ? moment($('#start_date').val(), "DD/MM/YYYY").toDate() : '';
+            let end_date = $('#end_date').val() ? moment($('#end_date').val(), "DD/MM/YYYY").toDate() : '';
+            let start_time = $('#start_time').val() ? moment($('#start_time').val(), 'HH:mm').toDate() : '';
+            let end_time = $('#end_time').val() ? moment($('#end_time').val(), 'HH:mm').toDate() : '';
+            // check start date = end date (check date == not working) and start >= end time let return error
+            if(start_time !== '' && end_time !== '' && start_time >= end_time){
+                return {
+                    times: "Vui lòng nhập thời gian kết thúc lớn hơn thời gian bắt đầu"
+                };
+            }
+
+            // case start date = end date, disabled input day of week 
+            if(start_date !== '' && end_date !== '' && start_date >= end_date && start_date <= end_date){
+                this.is_disabled_day_of_week = true;
+                this.list_day = [];
+            }else{
+                this.is_disabled_day_of_week = false;
+            }
+
+            // check start and end date not empty, start date > end date let return error
+            if(start_date !== '' && end_date !== '' && start_date > end_date){
+                return {
+                    dates: "Vui lòng nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu"
+                };
+            }
+            return {};
+        }
+    } 
 
     /*
         function ckbDayAll(): select checkbox all dates of the week

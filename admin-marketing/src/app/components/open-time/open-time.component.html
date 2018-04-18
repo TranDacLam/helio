@@ -115,16 +115,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td><input type="checkbox" id="checked_all" (change)="ckbDayAll($event)"/></td>
-                        <td><input type="checkbox" value="2" (change)="ckbDay($event)"/></td>
-                        <td><input type="checkbox" value="3" (change)="ckbDay($event)"/></td>
-                        <td><input type="checkbox" value="4" (change)="ckbDay($event)"/></td>
-                        <td><input type="checkbox" value="5" (change)="ckbDay($event)"/></td>
-                        <td><input type="checkbox" value="6" (change)="ckbDay($event)"/></td>
-                        <td><input type="checkbox" value="7" (change)="ckbDay($event)"/></td>
-                        <td><input type="checkbox" value="1" (change)="ckbDay($event)"/></td>
-                      </tr>
+                        <tr *ngIf="is_disabled_day_of_week">
+                            <td><input type="checkbox" disabled/></td>
+                            <td><input type="checkbox" disabled/></td>
+                            <td><input type="checkbox" disabled/></td>
+                            <td><input type="checkbox" disabled/></td>
+                            <td><input type="checkbox" disabled/></td>
+                            <td><input type="checkbox" disabled/></td>
+                            <td><input type="checkbox" disabled/></td>
+                            <td><input type="checkbox" disabled/></td>
+                        </tr>
+                        <tr *ngIf="!is_disabled_day_of_week">
+                            <td><input type="checkbox" id="checked_all" (change)="ckbDayAll($event)"/></td>
+                            <td><input type="checkbox" value="2" (change)="ckbDay($event)"/></td>
+                            <td><input type="checkbox" value="3" (change)="ckbDay($event)"/></td>
+                            <td><input type="checkbox" value="4" (change)="ckbDay($event)"/></td>
+                            <td><input type="checkbox" value="5" (change)="ckbDay($event)"/></td>
+                            <td><input type="checkbox" value="6" (change)="ckbDay($event)"/></td>
+                            <td><input type="checkbox" value="7" (change)="ckbDay($event)"/></td>
+                            <td><input type="checkbox" value="1" (change)="ckbDay($event)"/></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
