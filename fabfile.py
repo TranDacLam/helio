@@ -5,57 +5,49 @@ ENV = 'api' # Choices ['uat','production','development']
 #ENV = 'production'
 SERVERS = {
     'development': '172.16.12.10',
-    'uat': '172.16.12.19',
-    'production' : '103.95.197.81',
-    'api' : '103.95.197.81'
+    'uat': '103.95.197.81',
+    'production' : '103.95.197.81'
 }
 BRANCH = {
     'development': 'develop',
     'uat': 'uat',
-    'production': 'production',
-    'api': 'api',
+    'production': 'production'
 }
 
 USERS = {
     'development': 'adminvn',
-    'uat': 'api',
+    'uat': 'thangv',
     'production': 'thangv',
-    'api': 'thangv'
 }
 
 PASSWORDS = {
     'development': 'Abc@123',
-    'uat': 'Ahe2017$%',
-    'production': 'Admin@Hel10.vn',
-    'api': 'Admin@Hel10.vn'
+    'uat': 'AdminV00c@Hel10.vn',
+    'production': 'Admin@Hel10.vn'
 }
 
 VIRTUAL_ENVS = {
     'development': 'source /home/adminvn/envs_root/helio_web_env/bin/activate',
-    'uat': 'source /home/api/projects/envs_root/helio_web_env/bin/activate',
-    'production': 'source /home/thangv/envs/helio_web_env/bin/activate',
-    'api': 'source /home/thangv/envs/api_helio_web_env/bin/activate'
+    'uat': 'source /home/thangv/envs/api_helio_web_env/bin/activate',
+    'production': 'source /home/thangv/envs/helio_web_env/bin/activate'
 }
 
 PATHS = {
     'development': '/home/adminvn/sites/helio_web',
-    'uat': '/home/api/projects/helio_web',
-    'production': '/home/thangv/projects/helio_web/',
-    'api' : '/home/thangv/projects/api_source/helio_web'
+    'uat': '/home/thangv/projects/api_source/helio_web',
+    'production': '/home/thangv/projects/helio_web/'
 }
 
 PROCESS_ID = {
     'development': '/tmp/helio_web.pid',
-    'uat': '/tmp/helio_web_uat.pid',
-    'production': '/tmp/helio_web.pid',
-    'api' : '/tmp/helio_api_web.pid'
+    'uat': '/tmp/helio_api_web.pid',
+    'production': '/tmp/helio_web.pid'
 }
 
 OUTPUT_ANGULAR = {
     'development': '/home/adminvn/sites/build_angular',
-    # 'api': None,
-    'uat': '/home/api/projects/build_angular',
-    'production': None,
+    'uat': '/home/thangv/projects/api_source/build_angular',
+    'production': None
 }
 
 ANGULAR_ENV = {
