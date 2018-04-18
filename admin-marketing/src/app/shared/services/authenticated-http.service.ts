@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { Router } from '@angular/router';
+import { VariableGlobals } from '../../shared/commons/variable_globals';
 
 
 @Injectable()
@@ -13,6 +14,7 @@ export class AuthenticatedHttpService extends Http {
         private backend: XHRBackend,
         private defaultOptions: RequestOptions,
         private router: Router,
+        public variable_globals: VariableGlobals,
     ) {
         super(backend, defaultOptions);
     }
@@ -22,6 +24,7 @@ export class AuthenticatedHttpService extends Http {
             if ((error.status === 401 || error.status === 403)) {
                 localStorage.removeItem('auth_token');
                 localStorage.removeItem('current_user');
+                this.variable_globals.user_current = null;
                 this.router.navigate(['/login']);
                 return Observable.of(error);
             }
