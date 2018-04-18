@@ -561,18 +561,33 @@ class OpenTimeSerializer(serializers.Serializer):
         return data
 
 class ModelNameSerializer(serializers.ModelSerializer):
-
+    permission = serializers.SerializerMethodField()
+    
     class Meta:
         model = Model_Name
-        fields = ('key', 'name')
+        fields = ('id', 'key', 'name', 'permission')
+
+    def get_permission(self, model_name):
+        role_permission = model_name.permission_model_rel.all()
+        data = {'full' : list(), 'read' : list(), 'change' : list()}
+        for item in role_permission:
+            if item.permission == 'full':
+                data['full'].append(RoleSerializer(item.role).data)
+            if item.permission == 'read':
+                data['read'].append(RoleSerializer(item.role).data)
+            if item.permission == 'change':
+                data['change'].append(RoleSerializer(item.role).data)
+        return data
+
 
 class RolesPermissionSerializer(serializers.ModelSerializer):
-    model_name = ModelNameSerializer( many = True, read_only = False )
-    role = RoleSerializer( many = True, read_only = False )
+    key_model = serializers.SlugRelatedField( many = False, queryset=Model_Name.objects.all(), slug_field='key', source = 'model_name' )
+    role = serializers.PrimaryKeyRelatedField( many=False, queryset=Roles.objects.all())
 
     class Meta:
         model = Roles_Permission
-        fields = ('model_name', 'role', 'permission')
+        fields = ('key_model', 'role', 'permission')
+         
     
 class OpenTimeDisplaySerializer(serializers.ModelSerializer):
 

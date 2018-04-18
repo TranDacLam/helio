@@ -107,8 +107,6 @@ export class FormPostComponent implements OnInit {
             this.is_post_career = false;
             this.formPost.controls.pin_to_top.setValue(false);
         }
-
-
     }
 
 

@@ -91,4 +91,6 @@ urlpatterns = [
 	url(r'^set_role/(?P<role_id>[0-9]+)/$', views.SetRoleAPI.as_view(), name="set-role"),
 
 	url(r'^opentime/$', views.OpenTimeAPI.as_view(), name="open-time"),
+	url(r'^user_role/$', views.UserRoleAPI.as_view(), name="open-time"),
+
 ]
