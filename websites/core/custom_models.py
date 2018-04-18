@@ -5,7 +5,6 @@ from django.utils.translation import ugettext_lazy as _
 from utils.codes import RandomPassword
 from django.utils import timezone
 
-
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None, username=None, **extra_fields):
         """
@@ -47,19 +46,19 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('ios', 'IOS')
     )
 
-    full_name = models.CharField(max_length=255, null=True, blank=True) 
-    username = models.CharField(max_length=255, null=True, blank=True)
+    full_name = models.CharField(_('Full name'), max_length=255, null=True, blank=True) 
+    username = models.CharField(_('User name'),max_length=255, null=True, blank=True)
     email = models.EmailField(
-        verbose_name='email address',
+        verbose_name=_('Email address'),
         max_length=255,
         unique=True,
     )
-    birth_date = models.DateField(null=True, blank=True)
-    phone = models.CharField(max_length=50, unique=True, null=True, blank=False)
-    personal_id = models.CharField(max_length=50, null=True, blank=True)
-    country = models.CharField(max_length=255, null=True, blank=True)
-    address = models.CharField(max_length=255, null=True, blank=True)
-    city = models.CharField(max_length=255, null=True, blank=True)
+    birth_date = models.DateField(_('Birth date'),null=True, blank=True)
+    phone = models.CharField(_('Phone'),max_length=50, unique=True, null=True, blank=False)
+    personal_id = models.CharField(_('Personal id'),max_length=50, null=True, blank=True)
+    country = models.CharField(_('Country'),max_length=255, null=True, blank=True)
+    address = models.CharField(_('Address'), max_length=255, null=True, blank=True)
+    city = models.CharField(_('City'),max_length=255, null=True, blank=True)
     # is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(
         _('Staff Status'), default=False,
@@ -87,10 +86,20 @@ class User(AbstractBaseUser, PermissionsMixin):
     flag_notification = models.BooleanField(default=True)
     token_last_expired = models.DateTimeField(default=timezone.now)
 
+    barcode = models.CharField(max_length=100, null=True, blank=True)
+    username_mapping = models.CharField(max_length=255, null=True, blank=True)
+    date_mapping = models.DateTimeField(null=True, blank=True)
+
+    role = models.ForeignKey('Roles', related_name='user_role_rel', null=True, blank=True)
+
     objects = MyUserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    class Meta:
+        verbose_name = 'User'
+        verbose_name_plural = 'User'
+        
     def secure_code(self):
         rand = RandomPassword()
         code = rand.get(max_value=settings.CODE_LEN)
@@ -123,3 +132,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     #     "Is the user a member of staff?"
     #     # Simplest possible answer: All admins are staff
     #     return self.is_superuser
+    

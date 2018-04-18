@@ -24,8 +24,8 @@ class UserSerializer(SetCustomErrorMessagesMixin, serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'full_name', 'phone', 'device_unique', 'birth_date', 'phone',
-                  'personal_id', 'country', 'address', 'city', 'avatar', 'is_staff')
+        fields = ('id', 'email', 'password', 'full_name', 'phone', 'device_unique', 'birth_date', 'phone',
+                  'personal_id', 'country', 'address', 'city', 'avatar', 'is_staff', 'role', 'is_active')
         custom_error_messages_for_validators = {
             'email': {
                 UniqueValidator: _('This email is already taken. Please, try again')
@@ -44,48 +44,48 @@ class UserSerializer(SetCustomErrorMessagesMixin, serializers.ModelSerializer):
         return user
 
 
-class HotsSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField(max_length=255)
-    sub_url = serializers.CharField(max_length=1000)
-    image = serializers.ImageField(max_length=1000)
-    is_show = serializers.BooleanField()
+class HotsSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Hot
+        fields = ('id', 'name', 'sub_url', 'image', 'is_show')
 
 
-class CategorySerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField(max_length=255)
-    description = serializers.CharField()
+
+class CategorySerializer(serializers.ModelSerializer):
+ 
+    class Meta:
+        model = Category
+        fields = ('id', 'name', 'description')
 
 
-class TypeSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField(max_length=255)
-    description = serializers.CharField()
+class TypeSerializer(serializers.ModelSerializer):
     category = CategorySerializer(many=False)
+    class Meta:
+        model = Type
+        fields = ('id', 'name', 'description', 'category')
 
 
 class GameSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField(max_length=255)
-    short_description = serializers.CharField()
-    image = serializers.ImageField(max_length=1000)
     game_type = TypeSerializer(many=False)
+    class Meta:
+        model = Type
+        fields = ('id', 'name', 'short_description', 'image', 'game_type')
 
 
-class GameDetailSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField(max_length=255)
-    short_description = serializers.CharField()
-    content = serializers.CharField()
-    image = serializers.ImageField(max_length=1000)
+class GameDetailSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Game
+        fields = ('id', 'name', 'short_description', 'content', 'image')
 
 
-class FAQsSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    question = serializers.CharField(max_length=255)
-    answer = serializers.CharField()
+class FAQsSerializer(serializers.ModelSerializer):
+
     category = CategorySerializer(many=False)
+    class Meta:
+        model = FAQ
+        fields = ('id', 'question', 'answer', 'category')
 
 
 class EntertainmentDetailSerializer(serializers.Serializer):
@@ -172,6 +172,7 @@ class FeedBackSerializer(serializers.Serializer):
         max_length=500, required=False, allow_null=True, allow_blank=True)
 
     def create(self, validated_data):
+        validated_data['feedback_type'] = 'feedback'
         fb = FeedBack.objects.create(**validated_data)
         return fb
 
@@ -204,3 +205,17 @@ class UserNotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User_Notification
         fields = ('user', 'notification', 'is_read',)
+
+
+class FeeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Fee
+        fields = ('fee', 'fee_type', 'position')
+
+
+class HotAdvsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Hot_Advs
+        fields = ('id', 'name', 'image', 'is_register', 'is_view_detail', 'content', 'sub_url_register', 'sub_url_view_detail')

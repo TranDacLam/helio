@@ -68,7 +68,11 @@ $(document).ready(function() {
 		        	$("input").val("");
 		            $("textarea").val("");
 		            $("#message_success").css('display','block');
+		            setTimeout(function(){
+					    $("#message_success").css('display','none');
+					}, 5000);
 		            $("#message_error").css('display','none');
+		            grecaptcha.reset();
 		        },
 		        error: function(data) {
 		        	var form_err = $.parseJSON(data.responseText);

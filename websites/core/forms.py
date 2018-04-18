@@ -1,5 +1,5 @@
 from django import forms
-from models import Contact
+from models import FeedBack
 import api.utils as utils
 from captcha.fields import ReCaptchaField
 from django.conf import settings
@@ -35,12 +35,13 @@ class ContactForm(forms.Form):
 
         if commit:
             try:
-                contact = Contact()
+                contact = FeedBack()
                 contact.name = name
                 contact.email = email
                 contact.phone = phone
                 contact.subject = subject
                 contact.message = message
+                contact.feedback_type = 'contact'
                 contact.save()
 
                 message_plain = "websites/email/contact_email.txt"
