@@ -16,250 +16,53 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Quyền Trên Modle</th>
+                    <th>Quyền Trên Model</th>
                     <th colspan="5" class="text-center">Phân Quyền</th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="style_font_top">
                     <td></td>
-                    <td class="text-center">System Admin</td>
-                    <td class="text-center">Manager</td>
-                    <td class="text-center">Author</td>
-                    <td class="text-center">Customer Care</td>
-                    <td class="text-center">Teller</td>
+                    <td class="text-center" *ngFor="let role of roles">{{role.name}}</td>
                 </tr>
-                <tr>
-                    <td colspan="6">Auth Token</td>
-                </tr>
-                <tr>
-                    <td>Token</td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Full</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Change</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Read</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr>
-                    <td colspan="6" class="pd-30"></td>
-                </tr>
-                <tr>
-                    <td colspan="6">Core</td>
-                </tr>
-                <tr>
-                    <td>Quảng Cáo</td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Full</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Change</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Read</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr>
-                    <td colspan="6">Banner</td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Full</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Change</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Read</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr>
-                    <td colspan="6">Danh Mục</td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Full</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Change</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Read</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr>
-                    <td colspan="6">Danh Mục Thông Báo</td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Full</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Change</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Read</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr>
-                    <td colspan="6">Phản Hồi</td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Full</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Change</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Read</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr>
-                    <td colspan="6">Sự Kiện</td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Full</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Change</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Read</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr>
-                    <td colspan="6">Câu Hỏi Thường Gặp</td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Full</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Change</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
-                <tr class="style_border_top">
-                    <td>Read</td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                    <td class="text-center"><input type="checkbox" /></td>
-                </tr>
+                <ng-container *ngFor="let model of models">
+                    <tr>
+                        <td colspan="6">{{model.name}}</td>
+                    </tr>
+                    <tr class="style_border_top">
+                        <td>Full</td>
+                        <td class="text-center" *ngFor="let role of roles">
+                            <input type="checkbox"  id="full-{{model.id}}-{{role.id}}"
+                                class="permission-{{model.id}}-{{role.id}}"
+                                (change)="changePermission($event, model, role, 'full')" 
+                            />
+                        </td>
+                    </tr>
+                    <tr class="style_border_top">
+                        <td>Change</td>
+                        <td class="text-center" *ngFor="let role of roles">
+                            <input type="checkbox" id="change-{{model.id}}-{{role.id}}"
+                                class="permission-{{model.id}}-{{role.id}}"
+                                (change)="changePermission($event, model, role, 'change')" 
+                            />
+                        </td>
+                    </tr>
+                    <tr class="style_border_top">
+                        <td>Read</td>
+                        <td class="text-center" *ngFor="let role of roles">
+                            <input type="checkbox" id="read-{{model.id}}-{{role.id}}"
+                                class="permission-{{model.id}}-{{role.id}}"
+                                (change)="changePermission($event, model, role, 'read')" 
+                            />
+                        </td>
+                    </tr>
+                </ng-container>
             </tbody>
         </table>
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-12 col-sm-8 col-md-4">
+    <div class="col-xs-8 col-sm-8 col-md-4">
         <div class="panel-group">
             <div class="panel panel-primary">
                 <div class="panel-heading">Ghi Chú</div>
@@ -270,5 +73,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-7">
+        <button class="btn btn-primary pull-right" (click)="onSubmit()">LƯU</button>
     </div>
 </div>
