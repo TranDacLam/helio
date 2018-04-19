@@ -2458,7 +2458,7 @@ class HotAdvsDetailView(APIView):
 
         try:
             serializer = admin_serializers.HotAdvsSerializer(
-                hot_ads, data= request.data, context={'request': request})
+                instance=hot_ads, data= request.data, context={'request': request})
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
