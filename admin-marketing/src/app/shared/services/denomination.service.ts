@@ -37,12 +37,39 @@ export class DenominationService {
 	}
 
 	/*
+		GET: Get Denomination By Id
+		@author: Trangle
+	 */
+	getDenominationById(id:number): Observable<Denomination> {
+		let url = `${api.denomination}${id}/`;
+		return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+	}
+	/*
 		POST: Create a new denomination
 		Author: TrangLe
 	*/
 	createDenomination(deno: any): Observable<Denomination> {
 		let urlDeno = `${api.denomination}`;
 		return this.http.post(urlDeno, deno, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+	}
+
+	/*
+		PUT: Update Denomination Detail
+		@author: Trangle
+	 */
+	updateDenomination(denomi, id:number): Observable<Denomination> {
+		let url = `${api.denomination}${id}/`;
+		return this.http.put(url, denomi, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+	}
+
+	/*
+		DELETE: Delete Denomination Detail
+		@author: Trangle
+	 */
+	
+	deleteDenominationByid(id:number): Observable<Denomination> {
+		let url = `${api.denomination}${id}/`;
+		return this.http.delete(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 	}
 
 	/*
