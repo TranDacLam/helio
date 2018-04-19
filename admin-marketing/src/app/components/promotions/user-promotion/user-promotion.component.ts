@@ -129,7 +129,6 @@ export class UserPromotionComponent implements OnInit {
             this.is_update = false;
         }
     }
-
     /*
         Function updatePromotion(): Get promotion from component popup-edit-promotion
         Author: Lam
