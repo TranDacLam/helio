@@ -280,7 +280,11 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
         // case form invalid, show error fields, scroll top
         if(this.promotionForm.invalid){
             ValidateSubmit.validateAllFormFields(this.promotionForm);
-            this.scrollTop.scrollTopFom();
+            if(this.position !== 'popup'){
+                this.scrollTop.scrollTopFom();
+            }else{
+                $('#UpdatePromotion').animate({ scrollTop: $('.modal-title').offset().top }, 'slow');
+            }
         }else{
             // get value date, time by #id 
             this.promotionForm.value.apply_date = $('#start_date').val();
@@ -309,7 +313,11 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                         this.promotionForm.get('is_clear_image_thumbnail').setValue(false);
                         this.msg_clear_thumbnail = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                     }
-                    this.scrollTop.scrollTopFom();
+                    if(this.position !== 'popup'){
+                        this.scrollTop.scrollTopFom();
+                    }else{
+                        $('#UpdatePromotion').animate({ scrollTop: $('.modal-title').offset().top }, 'slow');
+                    }
                 }else{
                     this.promotionService.updatePromotion(promotionFormData, this.promotion.id, this.lang).subscribe(
                         (data) => {
@@ -318,6 +326,8 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                                 this.promotion = data;
                                 this.update_promotion.emit(this.promotion);
                                 $('#UpdatePromotion').modal('toggle');
+                                this.msg_clear_image = '';
+                                this.msg_clear_thumbnail = '';
                                 this.toastr.success(`Chỉnh sửa "${this.promotionForm.value.name}" thành công`);
                             }else{
                                 // Navigate to promotion page where success
@@ -328,7 +338,11 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                         (error) => {
                             if(error.code === 400){
                                 that.errors = error.message;
-                                this.scrollTop.scrollTopFom();
+                                if(this.position !== 'popup'){
+                                    this.scrollTop.scrollTopFom();
+                                }else{
+                                    $('#UpdatePromotion').animate({ scrollTop: $('.modal-title').offset().top }, 'slow');
+                                }
                             }else{
                                 that.router.navigate(['/error']);
                             }

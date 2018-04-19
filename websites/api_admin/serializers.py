@@ -598,3 +598,4 @@ class PostListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id','name','post_type' )
+

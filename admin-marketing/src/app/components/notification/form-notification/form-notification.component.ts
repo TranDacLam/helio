@@ -191,7 +191,11 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
         // case form invalid, show error fields, scroll top
         if(this.formNotification.invalid){
             ValidateSubmit.validateAllFormFields(this.formNotification);
-            this.scrollTop.scrollTopFom();
+            if(this.position !== 'popup'){
+                this.scrollTop.scrollTopFom();
+            }else{
+                $('#UpdateNoti').animate({ scrollTop: $('.modal-title').offset().top }, 'slow');
+            }
         }else{
             // parse category id strin to int
             this.formNotification.value.category = parseInt(this.formNotification.value.category);
@@ -225,7 +229,11 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                 if(value_form.is_clear_image === true && typeof(value_form.image) != 'string'){
                     this.formNotification.get('is_clear_image').setValue(false);
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
-                    this.scrollTop.scrollTopFom();
+                    if(this.position !== 'popup'){
+                        this.scrollTop.scrollTopFom();
+                    }else{
+                        $('#UpdateNoti').animate({ scrollTop: $('.modal-title').offset().top }, 'slow');
+                    }
                 }else{
                     this.notificationService.updateNoti(noti_form_data, this.noti.id, this.lang).subscribe(
                         (data) => {
@@ -234,6 +242,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                             if(this.position === "popup"){
                                 this.update_noti.emit(this.noti);
                                 $('#UpdateNoti').modal('toggle');
+                                this.msg_clear_image = '';
                                 this.toastr.success(`Chỉnh sửa "${value_form.subject}" thành công`);
                             }else {
                                 this.toastr.success(`Chỉnh sửa "${value_form.subject}" thành công`);
@@ -249,7 +258,11 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                             // code 400, error validate
                             if(error.code === 400){
                                 this.errorMessage = error.message;
-                                this.scrollTop.scrollTopFom();
+                                if(this.position !== 'popup'){
+                                    this.scrollTop.scrollTopFom();
+                                }else{
+                                    $('#UpdateNoti').animate({ scrollTop: $('.modal-title').offset().top }, 'slow');
+                                }
                             }else{
                                 this.router.navigate(['/error']);
                             }
