@@ -66,7 +66,7 @@ class TypeSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'description', 'category')
 
 
-class GameSerializer(serializers.Serializer):
+class GameSerializer(serializers.ModelSerializer):
     game_type = TypeSerializer(many=False)
     class Meta:
         model = Type

@@ -35,6 +35,7 @@ urlpatterns = [
 	url(r'^promotion-type/$', views.PromotionTypeView.as_view(), name="promotion-type"),
 
 	url(r'^denomination/$', views.DenominationView.as_view(), name="denomination"),
+	url(r'^denomination/(?P<pk>[0-9]+)/$', views.DenominationDetailView.as_view(), name="denomination-detail"),
 
 	url(r'^fee/$', views.FeeAPI.as_view(), name="fees"),
 	url(r'^fee/(?P<id>[0-9]+)/$', views.FeeAPI.as_view(), name="fee-update"),
@@ -85,6 +86,7 @@ urlpatterns = [
 	url(r'^type_list/$', views.TypeListAPI.as_view(), name="type-list"),
 
 	url(r'^hot_advs/$', views.HotAdvsView.as_view(), name="hot_advs"),
+	url(r'^hot_advs/(?P<pk>[0-9]+)/$', views.HotAdvsDetailView.as_view(), name="hot_advs-detail"),
 
 	url(r'^role_list/$', views.RoleListAPI.as_view(), name="role-list"),
 	url(r'^users_role/$', views.UserRoleListAPI.as_view(), name="user-list"),

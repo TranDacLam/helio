@@ -44,7 +44,7 @@ import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
 import { CategoryService } from './shared/services/category.service';
 import { BannerService } from './shared/services/banner.service';
-import { AuthenticatedHttpService } from './shared/services/authenticated-http.service';
+import { AuthHttp } from './shared/auth/auth-http';
 import { ScrollTop } from './shared/commons/scroll-top';
 import { AuthGuard } from './shared/auth/auth.guard';
 
@@ -212,7 +212,7 @@ export const MY_MOMENT_FORMATS = {
         provide: RequestOptions, 
         useClass: AuthRequestOptions
     },
-    { provide: Http, useClass: AuthenticatedHttpService }
+    { provide: Http, useClass: AuthHttp }
   ],
   bootstrap: [AppComponent]
 })

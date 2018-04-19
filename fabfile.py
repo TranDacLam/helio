@@ -1,6 +1,6 @@
 from fabric.api import *
 
-ENV = 'api' # Choices ['uat','production','development']
+ENV = 'uat' # Choices ['uat','production','development']
 
 #ENV = 'production'
 SERVERS = {
@@ -10,7 +10,7 @@ SERVERS = {
 }
 BRANCH = {
     'development': 'develop',
-    'uat': 'uat',
+    'uat': 'api',
     'production': 'production'
 }
 

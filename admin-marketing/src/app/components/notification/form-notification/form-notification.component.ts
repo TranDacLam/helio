@@ -12,7 +12,6 @@ import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { User } from '../../../shared/class/user';
 import 'rxjs/add/observable/throw';
 import { env } from '../../../../environments/environment';
-import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
 
 
@@ -60,7 +59,6 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
     lang = 'vi';
     promotion_id: number;
     title_page = '';
-    ckEditorConfig:any;
 
     constructor(
         private notificationService: NotificationService,
@@ -86,8 +84,6 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
             }
         });
 
-        this.ckEditorConfig = ckeditor_config.config;
-
         this.getCategory();
         // get current user
         this.user_current = this.variable_globals.user_current;
@@ -107,7 +103,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
     ngAfterViewChecked(){
         if(this.isDisable()){
             // disabled button, input, select, only view
-            $('.form-notification button, .form-notification input, .form-notification select').attr('disabled', true);
+            $('.form-notification button, .form-notification input, .form-notification select, .form-notification textarea').attr('disabled', true);
         }
     }
 

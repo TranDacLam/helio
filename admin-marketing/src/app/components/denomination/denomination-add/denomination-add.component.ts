@@ -7,9 +7,10 @@ import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { ToastrService } from 'ngx-toastr';
 
 import { DenominationService } from '../../../shared/services/denomination.service';
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { DenominationValidators } from './../../../shared/validators/denomination-validators';
 
+declare var bootbox: any;
 @Component({
     selector: 'app-denomination-add',
     templateUrl: './denomination-add.component.html',
@@ -18,7 +19,9 @@ import { DenominationValidators } from './../../../shared/validators/denominatio
 export class DenominationAddComponent implements OnInit {
 
     denominations: Denomination[] = [];
+    denomination: Denomination;
     errorMessage: string;
+    title: string;
 
     denoForm: FormGroup; // denoForm is type of FormGroup
     data: string = '';
@@ -28,10 +31,21 @@ export class DenominationAddComponent implements OnInit {
         private fb: FormBuilder,
         private denominationService: DenominationService,
         private toastr: ToastrService,
+        private route: ActivatedRoute,
+
     ) { }
 
     ngOnInit() {
-        this.createForm();
+        if (this.route.snapshot.paramMap.get('id')) {
+            // Update Init Form
+            this.title = "Chỉnh Sửa Mệnh Giá Nạp Tiền";
+            this.getDenomintion();
+        } else {
+            // Add new Form
+            this.title = "Thêm Mệnh Giá Nạp Tiền";
+            this.denomination = new Denomination()
+            this.createForm();
+        }
     }
 
     /*
@@ -39,10 +53,28 @@ export class DenominationAddComponent implements OnInit {
         @author: Trangle
      */
     createForm() {
+        if(this.denomination.denomination){
+            this.data = this.denomination.denomination.toLocaleString();
+        };
         this.denoForm = this.fb.group({
             // The FormControl call denomination
-            denomination: ['', [Validators.required, Validators.maxLength(13), DenominationValidators.denominationValidators]],
+            denomination: [this.data, [Validators.required, Validators.maxLength(13), DenominationValidators.denominationValidators]],
         });
+    }
+
+    /*
+        get denomination detal
+     */
+    
+    getDenomintion() {
+        const id = +this.route.snapshot.paramMap.get('id');
+        this.denominationService.getDenominationById(id).subscribe(
+            (result) => {
+                this.denomination = result;
+                this.createForm();
+            },
+            (error) => this.router.navigate(['/error', { message: error }])
+        );
     }
     /* 
         Add Denomination
@@ -60,9 +92,24 @@ export class DenominationAddComponent implements OnInit {
         } else {
             let denomi = this.convert_format_currency(this.data);
             denomination.denomination = denomi
-
-            this.denominationService.createDenomination(denomination)
-                .subscribe(
+            if(this.denomination.id){
+                this.denominationService.updateDenomination(denomination, this.denomination.id).subscribe(
+                    (result) => {
+                        this.toastr.success(`Chỉnh sửa ${this.data} thành công`);
+                        this.router.navigate(['/denomination-list'])
+                    },
+                    (error) => {
+                        if (error.status == 400) {
+                            // Show message on form
+                            this.errorMessage = error.json();
+                        } else {
+                            // nagivate to component error and show message
+                            this.router.navigate(['/error', { message: error.json().message }]);
+                        }
+                    }      
+                )
+            }else{
+                this.denominationService.createDenomination(denomination).subscribe(
                     (denomination) => {
                         this.denominations.push(denomination);
                         this.toastr.success(`Thêm ${this.data} thành công`);
@@ -78,8 +125,57 @@ export class DenominationAddComponent implements OnInit {
                         }
                     }
                 )
+            }
+            
         }
     }
+
+    /*
+        Confirm Delete 
+        Using libary: bootbox
+        @author: TrangLe
+    */
+
+    confirmDelete(denomination: Denomination) {
+        bootbox.confirm({
+            title: "Bạn có chắc chắn?",
+            message: "Bạn muốn xóa Mệnh Giá Nạp Tiền này?",
+            buttons: {
+                cancel: {
+                    label: "HỦY"
+                },
+                confirm: {
+                    label: "XÓA"
+                }
+            },
+            callback: (result) => {
+                if (result) {
+                    // Check result = true. call function callback
+                    this.deleteDenomiById(denomination)
+                }
+            }
+        });
+    }
+
+    /*
+        DELETE: Delete Denomination By Id
+        @author: Trangle
+     */
+    deleteDenomiById(denomi: Denomination) {
+        this.denominationService.deleteDenominationByid(denomi.id).subscribe(
+            () => {
+                this.toastr.success(`Xóa ${denomi.denomination} thành công`);
+                this.router.navigate(['/denomination-list']);
+            },
+            error => this.router.navigate(['/error', { message: error.json().message }])
+        );
+    }
+
+    /*
+        DELETE: Delete denomination By ID
+        @author: Trangle 
+     */
+
     /* 
         Return errorMessage = '', when click input tag 
         @author: Trangle
