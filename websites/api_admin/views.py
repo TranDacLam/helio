@@ -1252,6 +1252,17 @@ class FeeAPI(APIView):
     def put(self, request, id, format=None):
         try:
             fee = Fee.objects.get(id=id)
+
+            serializer = admin_serializers.FeeSerializer(
+            fee, data=request.data)
+            if serializer.is_valid():
+                if serializer.validated_data['is_apply']:
+                    position = serializer.validated_data['position']
+                    f = Fee.objects.filter(position=position, is_apply=True)
+                    if f:
+                        f.update(is_apply=False)
+                serializer.save()
+                return Response(serializer.data)
             # cancel apply fee
             if fee.is_apply:
                 fee.is_apply = False

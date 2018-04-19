@@ -139,7 +139,7 @@ export class DenominationAddComponent implements OnInit {
     confirmDelete(denomination: Denomination) {
         bootbox.confirm({
             title: "Bạn có chắc chắn?",
-            message: "Bạn muốn xóa Quảng Cáo này?",
+            message: "Bạn muốn xóa Mệnh Giá Nạp Tiền này?",
             buttons: {
                 cancel: {
                     label: "HỦY"
