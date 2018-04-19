@@ -38,10 +38,9 @@
         </button>
     </div>
     <div class="col-md-5 datatable-content" *ngIf="user_list_right">
-        <h4 *ngIf="notification || promotion; else user_permission" class="text-center">DANH SÁCH KHÁCH HÀNG ĐƯỢC NHẬN THÔNG BÁO</h4>
-        <ng-template #user_permission>
-            <h4 class="text-center">DANH SÁCH USER ĐƯỢC CHỌN</h4>
-        </ng-template>
+        <h4 *ngIf="notification" class="text-center">DANH SÁCH KHÁCH HÀNG ĐƯỢC NHẬN THÔNG BÁO</h4>
+        <h4 *ngIf="promotion" class="text-center">DANH SÁCH KHÁCH HÀNG ĐƯỢC NHẬN KHUYẾN MÃI</h4>
+        <h4 *ngIf="!notification && !promotion" class="text-center">DANH SÁCH USER ĐƯỢC CHỌN</h4>
         <table id="table_id_2" datatable [dtOptions]="dtOptions_right" class="row-border hover">
             <thead>
                 <tr>
