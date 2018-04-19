@@ -2,12 +2,12 @@
 	<ol class="breadcrumb">
 		<li><a routerLink='/'>Trang Chủ</a></li>
 		<li><a routerLink="/fee/list">Phí Giao Dịch</a></li>
-		<li class="active" >Thêm Phí Giao Dịch</li>
+		<li class="active" >{{title}}</li>
 	</ol>
 </nav>
 <div class="container">
 	<div class="row mt-30 mb-30">
-		<p class="title text-center">Thêm Phí Giao Dịch</p>
+		<p class="title text-center">{{title}}</p>
 	    <hr/>
 	</div>
 	<ng-container *ngIf="errorMessage">
@@ -15,7 +15,7 @@
 	{{error.val}}
 	</h4>
 	</ng-container>
-	<form [formGroup]="feeAddForm" (ngSubmit)="createFee(feeAddForm.value)">
+	<form [formGroup]="feeAddForm" *ngIf="fee">
 		<div class="form-group row">
 			<div class="col-sm-1">
 				<label>Phí</label>
@@ -27,7 +27,7 @@
 				>
 			</div>
 			<select formControlName="fee_type" id="fee_type" class="form-control">
-				<option value="%" selected >%</option>
+				<option value="%">%</option>
 				<option value="vnd">VNĐ</option>
 			</select>
 			<div class="col-sm-offset-1 feeAddForm_error">
@@ -55,8 +55,11 @@
 		</div>
 		<hr>
 		<div class="col-md-12">
-			<button class="pull-right btn btn-primary" >
+			<button type="submit" class="pull-right btn btn-primary" (click)="createFee(feeAddForm.value)" >
 			LƯU LẠI
+			</button>
+			<button class="pull-left btn btn-danger" *ngIf="fee.id" (click)="confirmDelete(fee)">
+				XÓA
 			</button>
 		</div>
 	</form>

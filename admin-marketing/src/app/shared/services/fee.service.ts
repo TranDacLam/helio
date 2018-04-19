@@ -33,9 +33,33 @@ export class FeeService {
         return this.http.get(this.feeUrlList, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
+    /*
+        get Detail Fee
+        @author: Trangle
+     */
+    getFee(id: number): Observable<Fee> {
+        let url = this.feeUrl + `${id}/`;
+        return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    }
+
     createFee(fee: Fee): Observable<Fee> {
         return this.http.post(this.feeUrl, fee, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
+
+    /*
+        Update Fee
+        @author: Trangle
+     */
+    updateFee(fee, id:number): Observable<Fee> {
+        let url = this.feeUrl + `${id}/`;
+        return this.http.put(url, fee, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    }
+    
+    deleteFeeById(id:number): Observable<Fee> {
+        let url = this.feeUrl + `${id}/`;
+        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    }
+
     deleteListFee(list_id: number[]): Observable<Fee> {
         let options = new RequestOptions({
             body: { 'list_id': list_id },
