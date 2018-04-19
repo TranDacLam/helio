@@ -526,18 +526,14 @@ class HotAdvsSerializer(serializers.ModelSerializer):
         exclude = ('created', 'modified')
 
     def update(self, instance, validated_data):
-        image = validated_data.get('image', instance.image)
-        if image:
-            instance.image = image
-        instance.name = validated_data.get('name', instance.name)
-        instance.content = validated_data.get('content', instance.content)
-        instance.is_register = validated_data.get('is_register', instance.is_register)
-        instance.is_view_detail = validated_data.get('is_view_detail', instance.is_view_detail)
-        instance.sub_url_register = validated_data.get('sub_url_register', instance.sub_url_register)
-        instance.sub_url_view_detail = validated_data.get('sub_url_view_detail', instance.sub_url_view_detail)
-        instance.is_draft = validated_data.get('is_draft', instance.is_draft)
-        instance.save()
-        return instance
+
+        if self.context['request']:
+            is_clear_image = self.context['request'].data.get('is_clear_image')
+            if is_clear_image == "false" and not validated_data.get('image'):
+                validated_data['image'] = instance.image
+            elif is_clear_image == "true":
+                validated_data['image'] = None
+        return super(HotAdvsSerializer, self).update(instance, validated_data)
 
 
 class RoleSerializer(serializers.ModelSerializer):

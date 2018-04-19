@@ -54,7 +54,7 @@ export class DenominationAddComponent implements OnInit {
      */
     createForm() {
         if(this.denomination.denomination){
-            this.data = this.denomination.denomination.toLocaleString();
+            this.data = this.numberWithCommas(this.denomination.denomination);
         };
         this.denoForm = this.fb.group({
             // The FormControl call denomination
@@ -201,5 +201,12 @@ export class DenominationAddComponent implements OnInit {
         // Conver format currency from form to number. Save databse
         var denomi = number.replace(/,/g, '');
         return denomi;
+    }
+
+    /*
+        Function: Number format with comma
+     */
+    numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 }
