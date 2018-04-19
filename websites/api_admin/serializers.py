@@ -598,3 +598,11 @@ class PostListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id','name','post_type' )
+
+class PromotionDetailSerializer(serializers.ModelSerializer):
+    promotion_type = PromotionTypeSerializer()
+    user_implementer = UserSerializer()
+
+    class Meta:
+        model = Promotion
+        fields = '__all__'

@@ -130,26 +130,11 @@ export class UserPromotionComponent implements OnInit {
         }
     }
     /*
-        Function getPromotion(): Get promotion by id
-        Author: HOang
-    */
-    getPromotion(){
-        const id = +this.route.snapshot.paramMap.get('id');
-        this.promotionService.getPromotionById(id, this.lang).subscribe(
-            (data) => {
-                this.promotion = data;
-            },
-            (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
-            }
-        );
-    }
-    /*
         Function updatePromotion(): Get promotion from component popup-edit-promotion
         Author: Lam
     */
     updatePromotion(event){
-        this.getPromotion();
+        this.promotion = event;
     }
 
     generator_QR_code(event , id: number) {
