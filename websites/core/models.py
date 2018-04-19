@@ -197,7 +197,7 @@ class Promotion(DateTimeModel):
             box_size=6,
             border=0,
         )
-        qr.add_data("promotion-%s" % (self.id))
+        qr.add_data(self.id)
         qr.make(fit=True)
         img = qr.make_image()
         buffer = StringIO.StringIO()

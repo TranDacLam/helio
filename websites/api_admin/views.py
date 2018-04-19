@@ -966,7 +966,7 @@ class SummaryAPI(APIView):
                         count_item['rate']['good'] = item['rate__count']
                     if item['rate'] == 'Tuyệt vời':
                         count_item['rate']['great'] = item['rate__count']
-                    if item['rate'] == 'Xấu':
+                    if item['rate'] == 'Không tốt':
                         count_item['rate']['bad'] = item['rate__count']
                     count_item['rate_sum'] = count_item[
                         'rate_sum'] + item['rate__count']
