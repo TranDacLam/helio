@@ -517,7 +517,7 @@ class DenominationDetailView(APIView):
         denomi = self.get_object(pk)
 
         try:
-            serializer = admin_serializers.DenominationSerializer(data=request.data)
+            serializer = admin_serializers.DenominationSerializer(denomi, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
