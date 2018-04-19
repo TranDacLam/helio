@@ -129,7 +129,7 @@ class PromotionDetail(APIView):
                 item, context={'request': request}, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                dataSerializer = admin_serializers.PromotionDetailSerializer(item)
+                dataSerializer = admin_serializers.PromotionDisplaySerializer(item)
                 return Response(dataSerializer.data)
             print serializer.errors
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status = 400)
