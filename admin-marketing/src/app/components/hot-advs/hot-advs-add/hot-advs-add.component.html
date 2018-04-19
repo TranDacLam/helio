@@ -4,7 +4,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
             <li class="breadcrumb-item"><a routerLink="/hot-advs-list">Hot Ads</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Thêm Hot Ads</li>
+            <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
         </ol>
     </nav>
 </div>
@@ -18,119 +18,125 @@
         {{ errorMessage.name }}
     </p>
 </ng-container>
-<form [formGroup]="formHotAds" enctype="multipart/form-data">
-	<div class="col-md-12">
-		<div class="form-group row">
-			<div class="col-sm-3">
-				<label class="center-block"> Tên</label>
-			</div>
-        	<div class="col-sm-8">	
-				<input class='form-control' name="name" 
-				formControlName="name"
-				(click)="removeErrorMessage()"
-				>
-				<show-error-valid [control]="formHotAds.get('name')"></show-error-valid>	
-        	</div>
-        </div>
-        <div class="form-group row">
-	        <div class="col-sm-3">
-	            <label class="center-block">Hình Ảnh</label>
-	        </div>
-	        <div class="col-sm-8">
-            	<input type="file" id="image" accept="image/*"
-		        (change)="onFileChange($event)"
-		        />
-		        <div *ngIf="errorMessage">
-					<p class='errors'> {{ errorMessage.image }} </p>
-				</div>
-            	<show-error-valid [control]="formHotAds.get('image')"></show-error-valid>
-        	</div>
-        	
+<form [formGroup]="formHotAds" enctype="multipart/form-data" *ngIf="hot_ads">
+	<div class="form-group row">
+		<div class="col-sm-3">
+			<label class="center-block"> Tên</label>
+		</div>
+    	<div class="col-sm-8">	
+			<input class='form-control' name="name" 
+			formControlName="name"
+			(click)="removeErrorMessage()"
+			>
+			<show-error-valid [control]="formHotAds.get('name')"></show-error-valid>	
     	</div>
-        <div class="form-group row">
-			<div class="col-sm-3">
-				<label class="center-block"> Nội Dung</label>
-			</div>
-        	<div class="col-sm-8">	
-				<ckeditor formControlName="content" [config]="ckEditorConfig"> </ckeditor>
-				<div *ngIf="errorMessage">
-					<p class='errors'> {{ errorMessage.content }} </p>
-				</div>
-				<show-error-valid [control]="formHotAds.get('content')"></show-error-valid>
-        	</div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-3">
+            <label class="center-block">Hình Ảnh</label>
         </div>
-        <div class="form-group row">
-			<div class="col-sm-3">
-				<label class="center-block">Button</label>
+        <div class="col-sm-8">
+        	<p *ngIf="hot_ads.image">
+                <span>Hiện tại: <a href="{{api_domain}}{{hot_ads.image}}" target="_blank">{{hot_ads.image}}</a></span>
+            </p>
+            <p *ngIf="hot_ads.image" class="clear_image">
+                <input type="checkbox" formControlName="is_clear_image"/> Xóa
+            </p>
+            <p *ngIf="msg_clear_image" class="error_msg">{{msg_clear_image}}</p>
+        	<input type="file" id="image" accept="image/*"
+	        (change)="onFileChange($event)"
+	        />
+	        <div *ngIf="errorMessage">
+				<p class='errors'> {{ errorMessage.image }} </p>
 			</div>
-        	<div class="col-sm-8">	
-				<div class="row">
-					<div class="col-md-3">
-						<button type="button" class="btn btn-info">Đăng Ký</button>
-					</div>
-					<div class="form-check col-md-3">
-						<label class="checkbox-label">
-					    	<input type="checkbox" class="form-check-input" id="is_register" formControlName="is_register">
-					    	Hiển Thị
-						</label>
-					</div>
-					<div class="col-md-3">
-						<button type="button" class='btn btn-success'>Xem Chi Tiết</button>
-					</div>
-					<div class="form-check col-md-3">
-						<label class="checkbox-label">
-					    	<input type="checkbox" class="form-check-input" id="is_view_detail" formControlName="is_view_detail">
-					    	Hiển Thị
-						</label>
-					</div>
-				</div>
-        	</div>
-        </div>
-        <div class="form-group row">
-			<div class="col-sm-3">
-				<label class="center-block"> Sub_url Button Đăng kí</label>
-			</div>
-        	<div class="col-sm-8">	
-				<input class='form-control' name="sub_url_register" 
-				formControlName="sub_url_register"
-				>
-				<div *ngIf="errorMessage">
-					<p class='errors'> {{ errorMessage.sub_url_register }} </p>
-				</div>
-				<show-error-valid [control]="formHotAds.get('sub_url_register')"></show-error-valid>
-        	</div>
-        </div>
-        <div class="form-group row">
-			<div class="col-sm-3">
-				<label class="center-block"> Sub_url Button Xem Chi Tiết</label>
-			</div>
-        	<div class="col-sm-8">	
-				<input class='form-control' name="sub_url_view_detail" 
-				formControlName="sub_url_view_detail"
-				>
-				<div *ngIf="errorMessage">
-					<p class='errors'> {{ errorMessage.sub_url_view_detail }} </p>
-				</div>
-				<show-error-valid [control]="formHotAds.get('sub_url_view_detail')"></show-error-valid>
-        	</div>
-        </div>
-        <div class="form-group row">
-        	<div class="col-sm-3">
-				<label class="center-block"> Trạng Thái</label>
-			</div>
-        	<div class="form-check col-sm-8">
-        		<label class="checkbox-label">
-			    	<input  formControlName="is_draft" type="checkbox" class="form-check-input" id="is_draft">
-			    	Is Draft
-				</label>
-			</div>
-        </div>
+        	<show-error-valid [control]="formHotAds.get('image')"></show-error-valid>
+    	</div>
+    	
 	</div>
+    <div class="form-group row">
+		<div class="col-sm-3">
+			<label class="center-block"> Nội Dung</label>
+		</div>
+    	<div class="col-sm-8">	
+			<ckeditor formControlName="content" [config]="ckEditorConfig"> </ckeditor>
+			<div *ngIf="errorMessage">
+				<p class='errors'> {{ errorMessage.content }} </p>
+			</div>
+			<show-error-valid [control]="formHotAds.get('content')"></show-error-valid>
+    	</div>
+    </div>
+    <div class="form-group row">
+		<div class="col-sm-3">
+			<label class="center-block">Button</label>
+		</div>
+    	<div class="col-sm-8">	
+			<div class="row">
+				<div class="col-md-3">
+					<button type="button" class="btn btn-info">Đăng Ký</button>
+				</div>
+				<div class="form-check col-md-3">
+					<label class="checkbox-label">
+				    	<input type="checkbox" class="form-check-input" id="is_register" formControlName="is_register">
+				    	Hiển Thị
+					</label>
+				</div>
+				<div class="col-md-3">
+					<button type="button" class='btn btn-success'>Xem Chi Tiết</button>
+				</div>
+				<div class="form-check col-md-3">
+					<label class="checkbox-label">
+				    	<input type="checkbox" class="form-check-input" id="is_view_detail" formControlName="is_view_detail">
+				    	Hiển Thị
+					</label>
+				</div>
+			</div>
+    	</div>
+    </div>
+    <div class="form-group row">
+		<div class="col-sm-3">
+			<label class="center-block"> Sub_url Button Đăng kí</label>
+		</div>
+    	<div class="col-sm-8">	
+			<input class='form-control' name="sub_url_register" 
+			formControlName="sub_url_register"
+			>
+			<div *ngIf="errorMessage">
+				<p class='errors'> {{ errorMessage.sub_url_register }} </p>
+			</div>
+			<show-error-valid [control]="formHotAds.get('sub_url_register')"></show-error-valid>
+    	</div>
+    </div>
+    <div class="form-group row">
+		<div class="col-sm-3">
+			<label class="center-block"> Sub_url Button Xem Chi Tiết</label>
+		</div>
+    	<div class="col-sm-8">	
+			<input class='form-control' name="sub_url_view_detail" 
+			formControlName="sub_url_view_detail"
+			>
+			<div *ngIf="errorMessage">
+				<p class='errors'> {{ errorMessage.sub_url_view_detail }} </p>
+			</div>
+			<show-error-valid [control]="formHotAds.get('sub_url_view_detail')"></show-error-valid>
+    	</div>
+    </div>
+    <div class="form-group row">
+    	<div class="col-sm-3">
+			<label class="center-block"> Trạng Thái</label>
+		</div>
+    	<div class="form-check col-sm-8">
+    		<label class="checkbox-label">
+		    	<input  formControlName="is_draft" type="checkbox" class="form-check-input" id="is_draft">
+		    	Is Draft
+			</label>
+		</div>
+    </div>
 	<div class="clearfix"></div>
 	<hr>
 	<div class="area-button row">
 		<div class="col-md-12">
     		<button (click)="onSubmit();" class="bt-hot-advs pull-right btn btn-primary">LƯU LẠI</button>
+    		<button *ngIf="hot_ads.id" (click)="confirmDelete(hot_ads);" class="bt-hot-advs pull-left btn btn-danger">XÓA</button>
     	</div>
     </div>
 </form>
