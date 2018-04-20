@@ -170,8 +170,7 @@ export class FeeAddComponent implements OnInit {
      */
     convert_format_currency(number) {
         // Conver format currency from form to number. Save databse
-        var value = number.replace(/,/g, '');
-        return value;
+        return number ? number.replace(/,/g, ''): number;
     }
 
     /*
