@@ -969,13 +969,14 @@ class SummaryAPI(APIView):
                 }
 
                 for item in count_rate:
-                    # Remove vietnames accent and lower string
-                    rate = unidecode.unidecode(item['rate']).lower()
-                    # Return count group by rate
-                    count_item['rate'][RATE_MAPPING[rate]] = item['rate__count']
-                    # return sum rate
-                    count_item['rate_sum'] = count_item[
-                        'rate_sum'] + item['rate__count']
+                    if item['rate']:
+                        # Remove vietnames accent and lower string
+                        rate = unidecode.unidecode(item['rate']).lower()
+                        # Return count group by rate
+                        count_item['rate'][RATE_MAPPING[rate]] = item['rate__count']
+                        # return sum rate
+                        count_item['rate_sum'] = count_item[
+                            'rate_sum'] + item['rate__count']
 
             # if search_field is not status and rate
             if search_field is not None and search_field != 'rate' and search_field != 'status':
