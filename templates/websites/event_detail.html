@@ -3,6 +3,8 @@
 
 {% block metacontent %}
     <meta property="og:title" content="{{event.name}}" />
+    <meta property="og:description" content="{{ event.short_description }}" />
+    <meta property="og:image" content="http://{{ request.get_host }}{{MEDIA_URL}}{{event.image}}"/>
 {% endblock %}
 
 {% block title %}{{event.name}}{% endblock %}

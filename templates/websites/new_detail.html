@@ -3,6 +3,8 @@
 
 {% block metacontent %}
     <meta property="og:title" content="{{new.name}}" />
+    <meta property="og:description" content="{{ new.short_description }}" />
+    <meta property="og:image" content="http://{{ request.get_host }}{{MEDIA_URL}}{{new.image}}"/>
 {% endblock %}
 
 {% block title %}{{new.name}}{% endblock %}
