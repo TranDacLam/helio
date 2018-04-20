@@ -10,14 +10,6 @@ DATABASES = {
         'PORT': 3306,
         'USER': 'helio_uat',
         'PASSWORD': 'hel1o@uat'
-    },
-    'sql_db': {
-        'NAME': 'ECS7',
-        'ENGINE': 'sqlserver_pymssql',
-        'HOST': '172.16.12.16',
-        'USER': 'sa',
-        'PASSWORD': 'Helio@2017',
-        'PORT':1433
     }
 
 }

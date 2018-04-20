@@ -1013,10 +1013,12 @@ class UserEmbedDetail(APIView):
 
                 if response.status_code == 401: 
                     print "DMZ reponse status code 401", response.text
-                    raise Exception('Unauthorized: %s (HTTP status: %s)' % (response.text, response.status_code)) 
+                    error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+                    return Response(error, status=500)
                 if response.status_code != 200 and response.status_code != 400: 
                     print "DMZ reponse status code not 200", response.text
-                    raise Exception('%s (HTTP status: %s)' % (response.text, response.status_code))
+                    error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+                    return Response(error, status=500)
 
                 # Get data from dmz reponse
                 dmz_result = response.json()
@@ -1091,10 +1093,12 @@ class UserEmbedDetail(APIView):
 
             if response.status_code == 401: 
                 print "DMZ reponse status code 401", response.text
-                raise Exception('Unauthorized: %s (HTTP status: %s)' % (response.text, response.status_code)) 
+                error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+                return Response(error, status=500)
             if response.status_code != 200 and response.status_code != 400: 
                 print "DMZ reponse status code not 200", response.text
-                raise Exception('%s (HTTP status: %s)' % (response.text, response.status_code))
+                error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+                return Response(error, status=500)
 
             # Get data from dmz reponse
             result = response.json()
@@ -1138,33 +1142,54 @@ class RelateAPI(APIView):
                 if user.barcode:
                     return Response({"code": 400, "message": _("User is related."), "fields": ""}, status=400)
                 
-                # check user embed is exist
-                cursor = connections['sql_db'].cursor()
-                query_str = """SELECT C.Card_State, Cust.Customer_Id
-                    FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
-                    WHERE C.Card_Barcode = '{0}'"""
-                cursor.execute(query_str.format(barcode))
-                userembed_item = cursor.fetchone()
-                if not userembed_item:
-                    return Response({"code": 400, "message": _("Barcode not found"), "fields": ""}, status=400)
-                # card_state is 0 or 1 or 2
-                if userembed_item[0] != 0:
-                    if userembed_item[0] == 2:
-                        return Response({"code": 400, "message": _("Card is used."), "fields": ""}, status=400)
-                    if userembed_item[0] == 1:
-                        return Response({"code": 400, "message": _("Card is locked."), "fields": ""}, status=400)
-                    return Response({"code": 400, "message": _("Card is invalid."), "fields": ""}, status=400)
+                headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': settings.DMZ_API_TOKEN
+                }
+                card_information_api_url = '{}card/{}/information/'.format(
+                    settings.BASE_URL_DMZ_API, barcode)
+
+                response = requests.get(card_information_api_url, params={'is_full_info': True}, headers=headers)
+
+                if response.status_code == 401: 
+                    print "DMZ reponse status code 401", response.text
+                    error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+                    return Response(error, status=500)
+                if response.status_code != 200 and response.status_code != 400: 
+                    print "DMZ reponse status code not 200", response.text
+                    error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+                    return Response(error, status=500)
+
+                # Get data from dmz reponse
+                dmz_result = response.json()
+                # Translate error message when code is 400
+                if response.status_code == 400:
+                    result["message"] = _(dmz_result["message"])
+                    return Response(result, status=response.status_code)
+
+                if not dmz_result:
+                    return Response({"code": 400, "message": _("Barcode not found."), "fields": ""}, status=400)
                 # check Customer_Id is exist
-                if not userembed_item[1]:
+                if not dmz_result['customer_id']:
                     return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
-                
+
+                MAPPING_ERROR = {
+                    1: _("Card is locked."),
+                    2: _("Card is used.") 
+                }
+
+                if dmz_result['card_state'] in MAPPING_ERROR:
+                    return Response({"code": 400, "message": MAPPING_ERROR[dmz_result['card_state']], "fields": ""}, status=400)
+
+                if dmz_result['card_state'] > 2:
+                    return Response({"code": 400, "message": _("Card is invalid."), "fields": ""}, status=400)
+
                 # check user embed is related
                 userembed_is_related = User.objects.filter(barcode=barcode)
                 if userembed_is_related:
                     return Response({"code": 400, "message": _("Userembed is related."), "fields": ""}, status=400)
 
                 user.barcode = barcode
-                # TO DO
                 user.username_mapping = request.user.email
                 user.date_mapping = datetime.now()
                 user.save()
