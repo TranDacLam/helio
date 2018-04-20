@@ -60,7 +60,7 @@
                         </td>
                         <td *ngIf="!item.user.barcode">Chưa liên kết</td>
                         <td>{{item.is_used ? 'Đã nhận' : 'Chưa nhận' }}</td>
-                        <td></td>
+                        <td><span *ngIf="item.is_used">{{ item.modified }}</span></td>
                         <td>{{ item.device_id }}</td>
                     </tr>
                 </tbody>
