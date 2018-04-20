@@ -178,10 +178,6 @@ export class FeeAddComponent implements OnInit {
         Function: Number format with comma
      */
     numberWithCommas(x) {
-        if (x) {
-            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        } else {
-            return x
-        }
+        return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : x;
     }
 }
