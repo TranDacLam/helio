@@ -108,6 +108,7 @@ class PromotionSerializer(serializers.ModelSerializer):
 
 class GiftSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, required=False, read_only=False)
+    modified = serializers.DateTimeField(format="%d/%m/%Y", read_only=True)
 
     class Meta:
         model = Gift
