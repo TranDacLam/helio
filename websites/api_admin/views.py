@@ -34,6 +34,7 @@ import requests
 import traceback
 from dateutil.parser import parse
 
+
 """
     Get Promotion
     @author: diemnguyen
@@ -910,6 +911,7 @@ class NotificationUser(APIView):
     if search_field is status then get status feedback
 
 """
+import unidecode
 
 
 class SummaryAPI(APIView):
@@ -955,19 +957,23 @@ class SummaryAPI(APIView):
                     'nomal': 0, 'notbad': 0, 'good': 0, 'great': 0, 'bad': 0}
                 count_rate = feedback.values('rate').annotate(Count('rate'))
                 count_item['rate_sum'] = 0
+
+                print count_rate
+
+                RATE_MAPPING = {
+                    'binh thuong' : 'nomal',
+                    'khong co gi' : 'notbad',
+                    'tot' : 'good',
+                    'tuyet voi' : 'great',
+                    'khong tot' : 'bad'
+                }
+
                 for item in count_rate:
-                    if item['rate'] == '':
-                        continue
-                    if item['rate'] == 'Bình thường':
-                        count_item['rate']['nomal'] = item['rate__count']
-                    if item['rate'] == 'Không có gì':
-                        count_item['rate']['notbad'] = item['rate__count']
-                    if item['rate'] == 'Tốt':
-                        count_item['rate']['good'] = item['rate__count']
-                    if item['rate'] == 'Tuyệt vời':
-                        count_item['rate']['great'] = item['rate__count']
-                    if item['rate'] == 'Không tốt':
-                        count_item['rate']['bad'] = item['rate__count']
+                    # Remove vietnames accent and lower string
+                    rate = unidecode.unidecode(item['rate']).lower()
+                    # Return count group by rate
+                    count_item['rate'][RATE_MAPPING[rate]] = item['rate__count']
+                    # return sum rate
                     count_item['rate_sum'] = count_item[
                         'rate_sum'] + item['rate__count']
 
