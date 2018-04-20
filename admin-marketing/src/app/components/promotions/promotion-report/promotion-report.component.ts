@@ -22,8 +22,8 @@ export class PromotionReportComponent implements OnInit {
 
     lang = 'vi';
     count_user_total: number;
-    count_user_deviced: number;
-    count_user_not_deviced: number;
+    count_user_received: number;
+    count_user_not_received: number;
     list_user: any;
 
     @ViewChild(DataTableDirective)
@@ -72,8 +72,8 @@ export class PromotionReportComponent implements OnInit {
             (data) => {
                 this.promotion = data.promotion;
                 this.count_user_total = data.count_user_total;
-                this.count_user_deviced = data.count_user_device;
-                this.count_user_not_deviced = data.count_user;
+                this.count_user_received = data.count_user_received;
+                this.count_user_not_received = data.count_user_not_received;
                 this.list_user = data.gift_user;
             }, 
             (error) => {

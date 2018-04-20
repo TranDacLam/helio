@@ -239,28 +239,23 @@ class PromotionUser(APIView):
 class PromotionStatistic(APIView):
     def get(self, request, pk, format=None):
         try:
+            # Get promotion detail by id
             promotion_detail = Promotion.objects.get(pk=pk)
             if promotion_detail:
-                # Get list user ID by promition id
-                promotion_user_id_list = Gift.objects.filter(
-                    promotion_id=pk).values_list('user_id', flat=True)
-                print promotion_user_id_list
-
-                user_promotion_list = User.objects.filter(
-                    pk__in=promotion_user_id_list)
-
-                gift_list = Gift.objects.filter(user_id__in=promotion_user_id_list).filter(promotion_id=promotion_detail)
-
                 result = {}
+                # Get list user promotion
+                gift_list = Gift.objects.filter(promotion=promotion_detail)
 
+                # Return json with [promotion,total user, total user recieved, not recieved]
                 result['promotion'] = admin_serializers.PromotionSerializer(
                     promotion_detail, many=False).data
+
                 result['gift_user'] = admin_serializers.GiftSerializer(gift_list, many=True).data
-
-                result['count_user_total'] = user_promotion_list.count()
-                result['count_user_device'] = promotion_user_id_list.exclude(device_id__isnull=True).count()
-                result['count_user'] = result['count_user_total'] - result['count_user_device']
-
+                result['count_user_total'] = gift_list.count()
+                # If is used is True then user recieved gift
+                result['count_user_received'] = gift_list.filter(is_used=True).count()
+                # List not recieved = total - recieved
+                result['count_user_not_received'] = result['count_user_total'] - result['count_user_received']
                 return Response(result, status=200)
             else:
                 return Response({"code": 400, "message": "Promotion not found", "fields": ""}, status=400)
