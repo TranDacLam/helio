@@ -1288,14 +1288,21 @@ class FeeAPI(APIView):
 
             serializer = admin_serializers.FeeSerializer(
             fee, data=request.data)
-            if serializer.is_valid():
-                if serializer.validated_data['is_apply']:
-                    position = serializer.validated_data['position']
-                    f = Fee.objects.filter(position=position, is_apply=True)
-                    if f:
-                        f.update(is_apply=False)
-                serializer.save()
-                return Response(serializer.data)
+            
+            # TODO : Check condition to edit object or apply fee at list page
+            if request.data:
+                if serializer.is_valid():
+                    if serializer.validated_data['is_apply']:
+                        position = serializer.validated_data['position']
+                        f = Fee.objects.filter(position=position, is_apply=True)
+                        if f:
+                            f.update(is_apply=False)
+                    serializer.save()
+                    return Response(serializer.data)
+                else:
+                    return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+
+
             # cancel apply fee
             if fee.is_apply:
                 fee.is_apply = False
