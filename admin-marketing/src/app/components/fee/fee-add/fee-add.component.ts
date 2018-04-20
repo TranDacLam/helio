@@ -92,9 +92,10 @@ export class FeeAddComponent implements OnInit {
     
 
     createForm() {
-        if(this.fee.fee) {
+        if(this.fee.fee !== null) {
             this.data = this.numberWithCommas(this.fee.fee);
         }
+
         this.feeAddForm = this.formBuilder.group({
             fee: [this.data, [Validators.required, Validators.maxLength(13), NumberValidators.validateFee]],
             position: [this.fee.position, Validators.required],
@@ -177,6 +178,10 @@ export class FeeAddComponent implements OnInit {
         Function: Number format with comma
      */
     numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        if (x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        } else {
+            return x
+        }
     }
 }
