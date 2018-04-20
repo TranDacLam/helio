@@ -864,6 +864,10 @@ class NotificationUser(APIView):
 
     def post(self, request, id):
         try:
+            # Update modified time notification
+            notification = Notification.objects.get(pk=id)
+            notification.save()
+            
             list_user_id = self.request.data.get('list_user_id', '')
 
             # Get list user by notification_id

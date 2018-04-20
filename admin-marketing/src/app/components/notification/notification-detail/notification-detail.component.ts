@@ -144,6 +144,7 @@ export class NotificationDetailComponent implements OnInit {
                     // get length user right
                     this.notificationService.getUserNotification(id, this.lang).subscribe(
                         (data_user) => {
+                            this.getNotification();
                             this.length_user_right = data_user.user_notification.length;
                         }
                     );
