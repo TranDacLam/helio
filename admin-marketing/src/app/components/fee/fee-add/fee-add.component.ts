@@ -92,9 +92,10 @@ export class FeeAddComponent implements OnInit {
     
 
     createForm() {
-        if(this.fee.fee) {
+        if(this.fee.fee !== null) {
             this.data = this.numberWithCommas(this.fee.fee);
         }
+
         this.feeAddForm = this.formBuilder.group({
             fee: [this.data, [Validators.required, Validators.maxLength(13), NumberValidators.validateFee]],
             position: [this.fee.position, Validators.required],
@@ -169,14 +170,13 @@ export class FeeAddComponent implements OnInit {
      */
     convert_format_currency(number) {
         // Conver format currency from form to number. Save databse
-        var value = number.replace(/,/g, '');
-        return value;
+        return number ? number.replace(/,/g, ''): number;
     }
 
     /*
         Function: Number format with comma
      */
     numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : x;
     }
 }

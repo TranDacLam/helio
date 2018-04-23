@@ -3,16 +3,26 @@ import { FormControl, FormBuilder, FormArray, ValidationErrors } from '@angular/
 export class DenominationValidators {
 
 	static denominationValidators(c: FormControl): ValidationErrors {
-		let denomiRegx = /^[0-9,]+$/;
-		let denomiVal = String($('#denomination').val());
-		let denomiValues = denomiVal.match(denomiRegx);
-		if(denomiValues === null && denomiVal !== '') {
+		let denomiVal = c.value;
+		let val_num = denomiVal ? denomiVal.replace(/,/g, '') : denomiVal;
+
+		if (!denomiVal) {
+			return;
+		} else
+		if (isNaN(val_num)) {
 			return {
-                'denominationValidate': {
-                    'message': 'Vui lòng nhập mệnh giá tiền hợp lệ.'
-                }
-            };
+            	'denominationValidate': {
+                	'message': 'Vui lòng nhập mệnh giá tiền hợp lệ.'
+            	}
+        	};
+		} else if (Number(val_num) == 0) {
+			return {
+            	'denominationValidate': {
+                	'message': 'Vui lòng nhập mệnh giá tiền lớn hơn 0.'
+            	}
+        	};
 		}
-        return null;	
+    	return null; 
+
 	}
 }
