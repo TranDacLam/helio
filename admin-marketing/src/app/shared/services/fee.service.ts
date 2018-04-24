@@ -27,6 +27,7 @@ export class FeeService {
 
     private feeUrl = api.fee;
     private feeUrlList = api.fee_list;
+    private feeApply = api.fee_apply;
 
 
     getFees(): Observable<Fee[]> {
@@ -69,7 +70,7 @@ export class FeeService {
         return this.http.delete(this.feeUrlList, options).map((res: Response) => res.json()).catch(this.handleError);
     }
     applyFee(id: number): Observable<Fee> {
-        let feeDetailUrl = this.feeUrl + `${id}/`;
+        let feeDetailUrl = this.feeApply + `${id}/`;
         return this.http.put(feeDetailUrl, null, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
 
     }
