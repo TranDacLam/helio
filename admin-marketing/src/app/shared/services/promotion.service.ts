@@ -172,7 +172,7 @@ export class PromotionService {
     }
 
     private handleError(error: Response) {
-        return Observable.throw(error.statusText);
+        return Observable.throw(error.json());
     }
 
 

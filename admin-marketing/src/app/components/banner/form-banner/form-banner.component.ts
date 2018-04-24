@@ -88,7 +88,7 @@ export class FormBannerComponent implements OnInit {
                 this.createForm();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error }]);
+                this.router.navigate(['/error', { message: error.json().message ? error.json().message : 'ERR_CONNECTION_REFUSED' }]);
             }
         );
     }

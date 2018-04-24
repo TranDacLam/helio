@@ -333,7 +333,7 @@ class AdvertisementView(APIView):
                 adv_list, many=True)
             return Response(serializer.data)
         except Exception, e:
-            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -349,7 +349,7 @@ class AdvertisementView(APIView):
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
-            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, format=None):
@@ -506,7 +506,7 @@ class DenominationDetailView(APIView):
             serializer = admin_serializers.DenominationSerializer(denomi)
             return Response(serializer.data)
         except Exception, e:
-            print 'BannerViewDetail ', e
+            print 'DenominationDetailView ', e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
@@ -520,7 +520,7 @@ class DenominationDetailView(APIView):
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
-            print 'BannerViewDetail PUT', e
+            print 'DenominationDetailView PUT', e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
@@ -1393,7 +1393,7 @@ class BannerView(APIView):
 
         except Exception, e:
             print e
-            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
