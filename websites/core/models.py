@@ -197,7 +197,7 @@ class Promotion(DateTimeModel):
             box_size=6,
             border=0,
         )
-        qr.add_data("promotion-%s" % (self.id))
+        qr.add_data(self.id)
         qr.make(fit=True)
         img = qr.make_image()
         buffer = StringIO.StringIO()
@@ -521,6 +521,9 @@ class Roles_Permission(DateTimeModel):
     role = models.ForeignKey(Roles,related_name='permission_roles_rel', on_delete=models.CASCADE)
     permission = models.CharField(_('Permission'), max_length=255, choices=PERMISSION) 
 
+    class Meta:
+        unique_together = ('model_name', 'role') 
+    
     def __str__(self):
         return '%s' % (self.model_name)  
 

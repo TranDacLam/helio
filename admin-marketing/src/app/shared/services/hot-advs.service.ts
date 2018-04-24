@@ -34,6 +34,14 @@ export class HotAdvsService {
     }
 
     /*
+        GET: Get Hot Ads By ID
+        @author: Trangle
+     */
+    getHotAdsById(id: number): Observable<HotAdvs> {
+        let url =  `${api.hot_advs}${id}/`;
+        return this.http.get(url, this.httpOptions).map((res:Response) => res.json()).catch(this.handleError);
+    }
+    /*
       POST: Create a New Hot_Advs
       @author: TrangLe
     */
@@ -58,7 +66,43 @@ export class HotAdvsService {
             }
         });
     }
+    /*
+        PUT: Update Hot Ads Detail
+        @author: Trangle
+     */
+    updateHotAds(hotAdvsFormData: FormData, id: number): Observable<any> {
 
+        return Observable.create(observer => {
+            let url = `${api.hot_advs}${id}/`
+            let xhr = new XMLHttpRequest();
+            xhr.open('PUT', url);
+            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            xhr.send(hotAdvsFormData);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if(xhr.status === 200) {
+                        observer.next(JSON.parse(xhr.response));
+                        observer.complete();
+                    } else {
+                        observer.error(JSON.parse(xhr.response));
+                    }
+                }
+            }
+        });
+    }
+    /*
+        DELETE: Delete hot ads by id
+        @author: Trangle
+     */
+    deleteHotAdsById(id: number): Observable<HotAdvs> {
+        let url =  `${api.hot_advs}${id}/`;
+        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+    } 
+    /*
+        DELETE:  Delete multi hot_ads
+        @author: Trangle
+     */
     deleteHotAdvsSelected(hot_advs_id): Observable<any> {
         let url = `${api.hot_advs}`;
         let param = {

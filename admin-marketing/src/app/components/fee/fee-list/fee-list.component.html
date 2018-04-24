@@ -30,8 +30,8 @@
 					<input type="checkbox" name="{{fee.id}}" id='checkbox_{{fee.id}}'[value]=fee.id (change)="selectCheckbox($event);" >
 				</td>
 				<td>{{fee.id}}</td>
-				<td *ngIf="fee.fee_type == '%'" class="fee-tb">{{fee.fee | number}} {{fee.fee_type}}</td>
-				<td *ngIf="fee.fee_type == 'vnd'" class="fee-tb">{{fee.fee | number}} VNĐ</td>
+				<td *ngIf="fee.fee_type == '%'" class="fee-tb"><a routerLink="/fee/detail/{{ fee.id }}">{{fee.fee | number}} {{fee.fee_type}}</a></td>
+				<td *ngIf="fee.fee_type == 'vnd'" class="fee-tb"><a routerLink="/fee/detail/{{ fee.id }}">{{fee.fee | number}} VNĐ</a></td>
 				<td *ngIf="fee.position == 'deposit'" class="position-tb">Phí Nạp Tiền</td>
 				<td *ngIf="fee.position == 'tickets'" class="position-tb">Phí Chuyển Ticket </td>
 				

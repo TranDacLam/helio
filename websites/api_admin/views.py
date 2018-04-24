@@ -129,7 +129,8 @@ class PromotionDetail(APIView):
                 item, context={'request': request}, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data)
+                dataSerializer = admin_serializers.PromotionDisplaySerializer(item)
+                return Response(dataSerializer.data)
             print serializer.errors
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status = 400)
         except Exception, e:
@@ -236,30 +237,26 @@ class PromotionUser(APIView):
     @author: TrangLe
 """
 class PromotionStatistic(APIView):
+    
     def get(self, request, pk, format=None):
         try:
+            # Get promotion detail by id
             promotion_detail = Promotion.objects.get(pk=pk)
             if promotion_detail:
-                # Get list user ID by promition id
-                promotion_user_id_list = Gift.objects.filter(
-                    promotion_id=pk).values_list('user_id', flat=True)
-                print promotion_user_id_list
-
-                user_promotion_list = User.objects.filter(
-                    pk__in=promotion_user_id_list)
-
-                gift_list = Gift.objects.filter(user_id__in=promotion_user_id_list).filter(promotion_id=promotion_detail)
-
                 result = {}
+                # Get list user promotion
+                gift_list = Gift.objects.filter(promotion=promotion_detail)
 
+                # Return json with [promotion,total user, total user recieved, not recieved]
                 result['promotion'] = admin_serializers.PromotionSerializer(
                     promotion_detail, many=False).data
+
                 result['gift_user'] = admin_serializers.GiftSerializer(gift_list, many=True).data
-
-                result['count_user_total'] = user_promotion_list.count()
-                result['count_user_device'] = promotion_user_id_list.exclude(device_id__isnull=True).count()
-                result['count_user'] = result['count_user_total'] - result['count_user_device']
-
+                result['count_user_total'] = gift_list.count()
+                # If is used is True then user recieved gift
+                result['count_user_received'] = gift_list.filter(is_used=True).count()
+                # List not recieved = total - recieved
+                result['count_user_not_received'] = result['count_user_total'] - result['count_user_received']
                 return Response(result, status=200)
             else:
                 return Response({"code": 400, "message": "Promotion not found", "fields": ""}, status=400)
@@ -336,7 +333,7 @@ class AdvertisementView(APIView):
                 adv_list, many=True)
             return Response(serializer.data)
         except Exception, e:
-            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -352,7 +349,7 @@ class AdvertisementView(APIView):
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
-            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, format=None):
@@ -441,7 +438,6 @@ class PromotionTypeView(APIView):
     @author: Trangle
 """
 
-@permission_classes((AllowAny, ))
 class DenominationView(APIView):
 
     def get(self, request, format=None):
@@ -489,6 +485,55 @@ class DenominationView(APIView):
         except Exception, e:
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
+
+"""
+    PUT, DELETE Denomination
+    @author: Trangle
+"""
+class DenominationDetailView(APIView):
+
+    def get_object(self,pk):
+        try:
+            queryset = Denomination.objects.get(pk=pk)
+            return queryset
+        except Denomination.DoesNotExist, e:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        denomi = self.get_object(pk)
+
+        try:
+            serializer = admin_serializers.DenominationSerializer(denomi)
+            return Response(serializer.data)
+        except Exception, e:
+            print 'DenominationDetailView ', e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
+
+    def put(self, request, pk, format=None):
+        denomi = self.get_object(pk)
+
+        try:
+            serializer = admin_serializers.DenominationSerializer(denomi, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception, e:
+            print 'DenominationDetailView PUT', e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, pk, format=None):
+        try:
+            denomi = self.get_object(pk)
+            denomi.delete()
+            return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+        except Exception, e:
+            print "denomiViewApi", e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
+
 
 
 """
@@ -820,6 +865,10 @@ class NotificationUser(APIView):
 
     def post(self, request, id):
         try:
+            # Update modified time notification
+            notification = Notification.objects.get(pk=id)
+            notification.save()
+            
             list_user_id = self.request.data.get('list_user_id', '')
 
             # Get list user by notification_id
@@ -862,6 +911,7 @@ class NotificationUser(APIView):
     if search_field is status then get status feedback
 
 """
+import unidecode
 
 
 class SummaryAPI(APIView):
@@ -907,21 +957,27 @@ class SummaryAPI(APIView):
                     'nomal': 0, 'notbad': 0, 'good': 0, 'great': 0, 'bad': 0}
                 count_rate = feedback.values('rate').annotate(Count('rate'))
                 count_item['rate_sum'] = 0
+
+                print count_rate
+
+                RATE_MAPPING = {
+                    'binh thuong' : 'nomal',
+                    'khong co gi' : 'notbad',
+                    'tot' : 'good',
+                    'tuyet voi' : 'great',
+                    'khong tot' : 'bad'
+                }
+
                 for item in count_rate:
-                    if item['rate'] == '':
-                        continue
-                    if item['rate'] == 'Bình thường':
-                        count_item['rate']['nomal'] = item['rate__count']
-                    if item['rate'] == 'Không có gì':
-                        count_item['rate']['notbad'] = item['rate__count']
-                    if item['rate'] == 'Tốt':
-                        count_item['rate']['good'] = item['rate__count']
-                    if item['rate'] == 'Tuyệt vời':
-                        count_item['rate']['great'] = item['rate__count']
-                    if item['rate'] == 'Xấu':
-                        count_item['rate']['bad'] = item['rate__count']
-                    count_item['rate_sum'] = count_item[
-                        'rate_sum'] + item['rate__count']
+                    if item['rate']:
+                        # Remove vietnames accent and lower string
+                        rate = unidecode.unidecode(item['rate']).lower()
+                        if rate in RATE_MAPPING:
+                            # Return count group by rate
+                            count_item['rate'][RATE_MAPPING[rate]] = item['rate__count']
+                            # return sum rate
+                            count_item['rate_sum'] = count_item[
+                                'rate_sum'] + item['rate__count']
 
             # if search_field is not status and rate
             if search_field is not None and search_field != 'rate' and search_field != 'status':
@@ -965,10 +1021,12 @@ class UserEmbedDetail(APIView):
 
                 if response.status_code == 401: 
                     print "DMZ reponse status code 401", response.text
-                    raise Exception('Unauthorized: %s (HTTP status: %s)' % (response.text, response.status_code)) 
+                    error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+                    return Response(error, status=500)
                 if response.status_code != 200 and response.status_code != 400: 
                     print "DMZ reponse status code not 200", response.text
-                    raise Exception('%s (HTTP status: %s)' % (response.text, response.status_code))
+                    error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+                    return Response(error, status=500)
 
                 # Get data from dmz reponse
                 dmz_result = response.json()
@@ -1043,10 +1101,12 @@ class UserEmbedDetail(APIView):
 
             if response.status_code == 401: 
                 print "DMZ reponse status code 401", response.text
-                raise Exception('Unauthorized: %s (HTTP status: %s)' % (response.text, response.status_code)) 
+                error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+                return Response(error, status=500)
             if response.status_code != 200 and response.status_code != 400: 
                 print "DMZ reponse status code not 200", response.text
-                raise Exception('%s (HTTP status: %s)' % (response.text, response.status_code))
+                error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+                return Response(error, status=500)
 
             # Get data from dmz reponse
             result = response.json()
@@ -1090,33 +1150,54 @@ class RelateAPI(APIView):
                 if user.barcode:
                     return Response({"code": 400, "message": _("User is related."), "fields": ""}, status=400)
                 
-                # check user embed is exist
-                cursor = connections['sql_db'].cursor()
-                query_str = """SELECT C.Card_State, Cust.Customer_Id
-                    FROM Cards C LEFT JOIN Customers Cust ON C.Customer_Id = Cust.Customer_Id 
-                    WHERE C.Card_Barcode = '{0}'"""
-                cursor.execute(query_str.format(barcode))
-                userembed_item = cursor.fetchone()
-                if not userembed_item:
-                    return Response({"code": 400, "message": _("Barcode not found"), "fields": ""}, status=400)
-                # card_state is 0 or 1 or 2
-                if userembed_item[0] != 0:
-                    if userembed_item[0] == 2:
-                        return Response({"code": 400, "message": _("Card is used."), "fields": ""}, status=400)
-                    if userembed_item[0] == 1:
-                        return Response({"code": 400, "message": _("Card is locked."), "fields": ""}, status=400)
-                    return Response({"code": 400, "message": _("Card is invalid."), "fields": ""}, status=400)
+                headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': settings.DMZ_API_TOKEN
+                }
+                card_information_api_url = '{}card/{}/information/'.format(
+                    settings.BASE_URL_DMZ_API, barcode)
+
+                response = requests.get(card_information_api_url, params={'is_full_info': True}, headers=headers)
+
+                if response.status_code == 401: 
+                    print "DMZ reponse status code 401", response.text
+                    error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+                    return Response(error, status=500)
+                if response.status_code != 200 and response.status_code != 400: 
+                    print "DMZ reponse status code not 200", response.text
+                    error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+                    return Response(error, status=500)
+
+                # Get data from dmz reponse
+                dmz_result = response.json()
+                # Translate error message when code is 400
+                if response.status_code == 400:
+                    result["message"] = _(dmz_result["message"])
+                    return Response(result, status=response.status_code)
+
+                if not dmz_result:
+                    return Response({"code": 400, "message": _("Barcode not found."), "fields": ""}, status=400)
                 # check Customer_Id is exist
-                if not userembed_item[1]:
+                if not dmz_result['customer_id']:
                     return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
-                
+
+                MAPPING_ERROR = {
+                    1: _("Card is locked."),
+                    2: _("Card is used.") 
+                }
+
+                if dmz_result['card_state'] in MAPPING_ERROR:
+                    return Response({"code": 400, "message": MAPPING_ERROR[dmz_result['card_state']], "fields": ""}, status=400)
+
+                if dmz_result['card_state'] > 2:
+                    return Response({"code": 400, "message": _("Card is invalid."), "fields": ""}, status=400)
+
                 # check user embed is related
                 userembed_is_related = User.objects.filter(barcode=barcode)
                 if userembed_is_related:
                     return Response({"code": 400, "message": _("Userembed is related."), "fields": ""}, status=400)
 
                 user.barcode = barcode
-                # TO DO
                 user.username_mapping = request.user.email
                 user.date_mapping = datetime.now()
                 user.save()
@@ -1188,9 +1269,40 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    def get(self, request, id, format=None):
+        try:
+            fee = Fee.objects.get(id=id)
+            serializer = admin_serializers.FeeSerializer(fee)
+            return Response(serializer.data)
+
+        except Fee.DoesNotExist, e:
+            return Response({"code": 400, "message": _("Not Found Fee"), "fields": ""}, status=400)
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
+
     def put(self, request, id, format=None):
         try:
             fee = Fee.objects.get(id=id)
+
+            serializer = admin_serializers.FeeSerializer(
+            fee, data=request.data)
+            
+            # TODO : Check condition to edit object or apply fee at list page
+            if request.data:
+                if serializer.is_valid():
+                    if serializer.validated_data['is_apply']:
+                        position = serializer.validated_data['position']
+                        f = Fee.objects.filter(position=position, is_apply=True)
+                        if f:
+                            f.update(is_apply=False)
+                    serializer.save()
+                    return Response(serializer.data)
+                else:
+                    return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+
+
             # cancel apply fee
             if fee.is_apply:
                 fee.is_apply = False
@@ -1206,7 +1318,7 @@ class FeeAPI(APIView):
             return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
 
         except Fee.DoesNotExist, e:
-            error = {"code": 400, "message": "Not Found Fee.", "fields": ""}
+            error = {"code": 400, "message": "Not Found Fee", "fields": ""}
             return Response(error, status=400)
 
         except Exception, e:
@@ -1214,6 +1326,18 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    def delete(self, request, id, format=None):
+        try:
+            fee = Fee.objects.get(id=id)
+            fee.delete()
+            return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
+            
+        except Fee.DoesNotExist, e:
+            return Response({"code": 400, "message": _("Not Found Fee"), "fields": ""}, status=400)
+        except Exception, e:
+            print "GameAPI", e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
 
 class FeeListAPI(APIView):
 
@@ -1269,7 +1393,7 @@ class BannerView(APIView):
 
         except Exception, e:
             print e
-            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -2342,6 +2466,57 @@ class HotAdvsView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+"""
+    PUT, DELETE Hot Ads
+    @author: Trangle
+"""
+@parser_classes((MultiPartParser, JSONParser))
+class HotAdvsDetailView(APIView):
+    """
+    Retrieve, update, delete detail hot_ads by ID
+    """
+    def get_object(self, pk):
+        try:
+            queryset = Hot_Advs.objects.get(pk=pk)
+            return queryset
+        except Hot_Advs.DoesNotExist, e:
+            print e
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        hot_ads = self.get_object(pk)
+        try:
+            serializer = admin_serializers.HotAdvsSerializer(hot_ads)
+            return Response(serializer.data)
+        except Exception, e:
+            print e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
+
+    def put(self, request, pk, format=None):
+        hot_ads = self.get_object(pk)
+
+        try:
+            serializer = admin_serializers.HotAdvsSerializer(
+                instance=hot_ads, data= request.data, context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+        except Exception, e:
+            print "Error", e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, pk, format=None):
+        try:
+            hot_ads = self.get_object(pk)
+            hot_ads.delete()
+            return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+        except Exception, e:
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
+
 
 """
     RoleList
@@ -2545,24 +2720,30 @@ class OpenTimeAPI(APIView):
     UserRoleAPI
     @author :Hoangnguyen
 """
-
 @permission_classes((AllowAny,))
 class UserRoleAPI(APIView):
+
     def get( self, request):
         try:
             model_name = Model_Name.objects.all()
-            model_name_serializer = admin_serializers.ModelNameSerializer( model_name, many = True)
+            model_name_serializer = admin_serializers.RolesPerDisplaySerializer( model_name, many = True)
             return Response(model_name_serializer.data)
         except Exception, e:
             print "UserRoleAPI", e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
-    def post( self, request, format = None):
+    def put( self, request, format = None):
+        '''
+            get all record in DB
+            if data has no id, create object
+            if data has id, update object
+            if record is not in data, delete record
+        '''
         try:
-            serializer =  admin_serializers.RolesPermissionSerializer(data = request.data, many = True)
+            instances = Roles_Permission.objects.all()
+            serializer =  admin_serializers.RolesPerSerializer(instance = instances, data = request.data, many = True, partial=True)
             if serializer.is_valid():
-                Roles_Permission.objects.all().delete()
                 serializer.save()
                 return Response(serializer.data)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)

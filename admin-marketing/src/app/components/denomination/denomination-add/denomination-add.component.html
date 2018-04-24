@@ -4,13 +4,13 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
             <li class="breadcrumb-item"><a routerLink="/denomination-list">Mệnh Giá Nạp Tiền</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Thêm Mệnh Giá Nạp Tiền</li>
+            <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
 <div class='title-denomi row'>
-    <p class="title text-center">Thêm Mệnh Giá Nạp Tiền</p>
+    <p class="title text-center">{{title}}</p>
 </div>
 <hr>
 <ng-container *ngIf="errorMessage">
@@ -19,7 +19,7 @@
     </p>
 </ng-container>
 
-<form [formGroup]="denoForm" class="row form-add-denomi" accept-charset="utf-8" novalidate="">
+<form [formGroup]="denoForm" (click)="removeMessage(errorMessage)" class="row form-add-denomi" *ngIf="denomination" novalidate="">
     <div class="content-denomi">
         <div class="form-group row">
             <div class="col-sm-2">
@@ -29,7 +29,6 @@
                 <input class='form-control' name="denomination" 
                 formControlName="denomination" id="denomination"
                 [(ngModel)]="data"
-                (click)="removeMessage(errorMessage)"
                 (keyup) ="format_currency($event.target.value)"
                 > 
                 <show-error-valid [control]="denoForm.get('denomination')"></show-error-valid>
@@ -41,10 +40,10 @@
     </div>
     <hr>
     <div class="form-group row">
-        <div class="col-sm-2"></div>
-        <div class='col-sm-8'>
+        <div class='col-sm-12'>
             <button (click)="addDenomination(denoForm.value)"
             class="pull-right btn btn-primary">LƯU LẠI</button>
+            <button type="submit" class='pull-left btn btn-danger' (click)="confirmDelete(denomination)" *ngIf="denomination.id">XÓA</button>
         </div>
-    </div>  
+    </div> 
 </form>

@@ -5,7 +5,7 @@
 
 export const env = {
     production: true, 
-    api_domain: 'http://172.16.12.19:8000/vi/api/',
-    api_domain_root: 'http://172.16.12.19:8000',
-    key_recaptcha: '6Lc5ZVEUAAAAAPo-jrtER_8DIZvJaBO6cWqPXJRh'
+    api_domain: 'https://uat.helio.vn/vi/api/',
+    api_domain_root: 'https://uat.helio.vn',
+    key_recaptcha: '6LdnaFEUAAAAAP_GrD8AcxWQQYCt92_t7OKpzN0k'
 };

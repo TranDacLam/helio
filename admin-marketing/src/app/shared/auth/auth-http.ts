@@ -8,7 +8,7 @@ import { VariableGlobals } from '../../shared/commons/variable_globals';
 
 
 @Injectable()
-export class AuthenticatedHttpService extends Http {
+export class AuthHttp extends Http {
 
     constructor(
         private backend: XHRBackend,
