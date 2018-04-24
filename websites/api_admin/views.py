@@ -34,7 +34,6 @@ import requests
 import traceback
 from dateutil.parser import parse
 
-
 """
     Get Promotion
     @author: diemnguyen
@@ -238,6 +237,7 @@ class PromotionUser(APIView):
     @author: TrangLe
 """
 class PromotionStatistic(APIView):
+    
     def get(self, request, pk, format=None):
         try:
             # Get promotion detail by id
@@ -2720,24 +2720,30 @@ class OpenTimeAPI(APIView):
     UserRoleAPI
     @author :Hoangnguyen
 """
-
 @permission_classes((AllowAny,))
 class UserRoleAPI(APIView):
+
     def get( self, request):
         try:
             model_name = Model_Name.objects.all()
-            model_name_serializer = admin_serializers.ModelNameSerializer( model_name, many = True)
+            model_name_serializer = admin_serializers.RolesPerDisplaySerializer( model_name, many = True)
             return Response(model_name_serializer.data)
         except Exception, e:
             print "UserRoleAPI", e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
-    def post( self, request, format = None):
+    def put( self, request, format = None):
+        '''
+            get all record in DB
+            if data has no id, create object
+            if data has id, update object
+            if record is not in data, delete record
+        '''
         try:
-            serializer =  admin_serializers.RolesPermissionSerializer(data = request.data, many = True)
+            instances = Roles_Permission.objects.all()
+            serializer =  admin_serializers.RolesPerSerializer(instance = instances, data = request.data, many = True, partial=True)
             if serializer.is_valid():
-                Roles_Permission.objects.all().delete()
                 serializer.save()
                 return Response(serializer.data)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
