@@ -83,7 +83,9 @@ export class DenominationListComponent implements OnInit {
                 this.dtTrigger.next();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error }]);
+                this.router.navigate(['/error', { 
+                    message: error.json().message ? error.json().message: "ERR_CONNECTION_REFUSED"
+                }]);
             }
         );
     }
@@ -196,7 +198,9 @@ export class DenominationListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error.json().message }]);
+                    this.router.navigate(['/error', { 
+                        message: error.json().message ? error.json().message: "ERR_CONNECTION_REFUSED"
+                    }]);
                 });
         });
     }

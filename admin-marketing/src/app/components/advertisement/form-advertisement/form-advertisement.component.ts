@@ -75,7 +75,11 @@ export class FormAdvertisementComponent implements OnInit {
 				this.adv = result;
 				this.createForm();
 			},
-			(error) => this.router.navigate(['/error', { message: error }])
+			(error) => {
+				this.router.navigate(['/error', { 
+                    message: error.json().message ? error.json().message : 'ERR_CONNECTION_REFUSED' 
+                }])
+			}
 		);
 	}
 
@@ -105,7 +109,9 @@ export class FormAdvertisementComponent implements OnInit {
 							this.errorMessage = error.json().name
 						} else {
 							// navigate to component error 
-							this.router.navigate(['/error', { message: error.json().message }])
+							this.router.navigate(['/error', { 
+                    			message: error.json().message ? error.json().message : 'ERR_CONNECTION_REFUSED' 
+                			}])
 						}
 					}
 				);
@@ -120,7 +126,9 @@ export class FormAdvertisementComponent implements OnInit {
 						if (error.status == 400) {
 							this.errorMessage = error.json()
 						} else {
-							this.router.navigate(['/error', { message: error.json().message }])
+							this.router.navigate(['/error', { 
+                   				message: error.json().message ? error.json().message : 'ERR_CONNECTION_REFUSED' 
+                			}])
 						}
 					}
 				);
@@ -142,7 +150,11 @@ export class FormAdvertisementComponent implements OnInit {
 					this.toastr.success(`Xóa ${adv.name} thành công`);
 					this.router.navigate(['/advertisement-list']);
 				},
-				error => this.router.navigate(['/error', { message: error.json().message }])
+				error => {
+					this.router.navigate(['/error', { 
+                    	message: error.json().message ? error.json().message : 'ERR_CONNECTION_REFUSED' 
+                	}])
+				}
 			);
 	}
     /*

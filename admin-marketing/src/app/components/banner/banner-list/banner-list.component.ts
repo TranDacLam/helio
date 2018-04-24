@@ -127,7 +127,9 @@ export class BannerListComponent implements OnInit {
                 this.length_all = this.banners.length; // Set length_all
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.json().message }])
+                this.router.navigate(['/error', { 
+                    message: error.json().message ? error.json().message : 'ERR_CONNECTION_REFUSED' 
+                }])
             }
         )
     };
@@ -193,7 +195,9 @@ export class BannerListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
+                    this.router.navigate(['/error', { 
+                        message: error.json().message ? error.json().message : 'ERR_CONNECTION_REFUSED' 
+                    }])
                 });
         });
     }
