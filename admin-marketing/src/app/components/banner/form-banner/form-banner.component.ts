@@ -88,7 +88,7 @@ export class FormBannerComponent implements OnInit {
                 this.createForm();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.json().message ? error.json().message : 'ERR_CONNECTION_REFUSED' }]);
+                this.router.navigate(['/error', { message: error }]);
             }
         );
     }
@@ -145,7 +145,7 @@ export class FormBannerComponent implements OnInit {
                                 this.errorMessage = error.message
                             } else {
                                 // nagivate component error
-                                self.router.navigate(['/error', { message: error.message }]);
+                                self.router.navigate(['/error', { message: error }]);
                             }
                         }
                     );
@@ -183,7 +183,7 @@ export class FormBannerComponent implements OnInit {
                 this.router.navigate(['/banner-list']);
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message }])
+                this.router.navigate(['/error', { message: error }])
             }
         );
     }

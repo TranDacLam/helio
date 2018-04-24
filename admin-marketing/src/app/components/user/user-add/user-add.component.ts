@@ -84,7 +84,7 @@ export class UserAddComponent implements OnInit {
                 this.roles = result
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.json().message }])
+                this.router.navigate(['/error', { message: error }])
             }
         )
     }
@@ -123,7 +123,7 @@ export class UserAddComponent implements OnInit {
                         self.errorMessage = error.message;
                     } else {
                         // Nagivate component error and show error message
-                        this.router.navigate(['/error', { message: error.message }]);
+                        this.router.navigate(['/error', { message: error }]);
                     }
                 }
             )

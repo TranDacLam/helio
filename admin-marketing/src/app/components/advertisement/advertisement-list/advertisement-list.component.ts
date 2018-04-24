@@ -91,9 +91,11 @@ export class AdvertisementListComponent implements OnInit {
                 this.length_all = this.advs.length; // Set length_all
             },
             (error) => {
-                this.router.navigate(['/error', { 
-                    message: error.json().message ? error.json().message : 'ERR_CONNECTION_REFUSED' 
-                }])
+                if(error.status == 400) {
+                    this.router.navigate(['/error', { message: error.json().message }])
+                }else {
+                    this.router.navigate(['/error', { message: error}])
+                }
             }
         );
     }
@@ -201,9 +203,11 @@ export class AdvertisementListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    this.router.navigate(['/error', { 
-                        message: error.json().message ? error.json().message : 'ERR_CONNECTION_REFUSED' 
-                    }])
+                    if(error.status == 400) {
+                        this.router.navigate(['/error', { message: error.json().message }])
+                    }else {
+                        this.router.navigate(['/error', { message: error}])
+                    }
                 });
         });
     }

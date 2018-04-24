@@ -74,9 +74,7 @@ export class DenominationAddComponent implements OnInit {
                 this.createForm();
             },
             (error) => {
-                this.router.navigate(['/error', { 
-                    message: error.json().message ? error.json().message: "ERR_CONNECTION_REFUSED"
-                }]);
+                this.router.navigate(['/error', { message: error}]);
             }
         );
     }
@@ -108,9 +106,7 @@ export class DenominationAddComponent implements OnInit {
                             this.errorMessage = error.json();
                         } else {
                             // nagivate to component error and show message
-                            this.router.navigate(['/error', { 
-                                message: error.json().message ? error.json().message: "ERR_CONNECTION_REFUSED"
-                            }]);
+                            this.router.navigate(['/error', { message: error }]);
                         }
                     }      
                 )
@@ -127,9 +123,7 @@ export class DenominationAddComponent implements OnInit {
                             this.errorMessage = error.json();
                         } else {
                             // nagivate to component error and show message
-                            this.router.navigate(['/error', { 
-                                message: error.json().message ? error.json().message: "ERR_CONNECTION_REFUSED"
-                            }]);
+                            this.router.navigate(['/error', { message: error}]);
                         }
                     }
                 )
@@ -176,9 +170,7 @@ export class DenominationAddComponent implements OnInit {
                 this.router.navigate(['/denomination-list']);
             },
             error => {
-                this.router.navigate(['/error', { 
-                    message: error.json().message ? error.json().message: "ERR_CONNECTION_REFUSED"
-                }]);
+                this.router.navigate(['/error', { message: error }]);
             }
         );
     }

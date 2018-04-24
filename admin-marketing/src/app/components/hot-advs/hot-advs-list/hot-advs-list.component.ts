@@ -83,7 +83,7 @@ export class HotAdvsListComponent implements OnInit {
                 this.dtTrigger.next();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.json().message }])
+                this.router.navigate(['/error', { message: error}])
             }
         )
     }
@@ -190,7 +190,11 @@ export class HotAdvsListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
+                    if(error.status == 400) {
+                        this.toastr.error(`${error.json().message}`);
+                    }else {
+                        this.router.navigate(['/error', { message: error}])
+                    }
                 });
         });
     }

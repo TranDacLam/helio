@@ -155,7 +155,7 @@ export class HotAdvsAddComponent implements OnInit {
                             this.scrollTop.scrollTopFom();
                             self.errorMessage = error.message
                         } else {
-                            this.router.navigate(['/error', { message: error.message }]);
+                            this.router.navigate(['/error', { message: error }]);
                         }
                     }
                 )
@@ -200,7 +200,7 @@ export class HotAdvsAddComponent implements OnInit {
                 this.router.navigate(['/hot-advs-list'])
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message }]);
+                this.router.navigate(['/error', { message: error }]);
             }
         )
     }

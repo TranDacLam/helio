@@ -34,7 +34,7 @@ export class FeedbackService {
 	 */
 	getFeedbackById(id: number): Observable<Feedback> {
 		const url = `${api.feedback}${id}/`;
-		return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
 	}
 
 	/*
@@ -51,7 +51,7 @@ export class FeedbackService {
 			params: filter
 		});
 
-		return this.http.get(url, _options).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(url, _options).map((res: Response) => res.json());
 	}
 	/*
 		PUT: Edit Feedback By ID
@@ -59,7 +59,7 @@ export class FeedbackService {
 	updateFeedbackById(feedback, id: number): Observable<any> {
 		const url = `${api.feedback}${id}/`;
 		var body = JSON.stringify(feedback);
-		return this.http.put(url, body, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.put(url, this.httpOptions).map((res: Response) => res.json());
 	}
 	/*
 		DELETE: Delete Feedback By ID
@@ -68,7 +68,7 @@ export class FeedbackService {
 	deleteFeedbackById(feedback: Feedback): Observable<Feedback> {
 		const id = feedback.id;
 		const url = `${api.feedback}${id}/`;
-		return this.http.delete(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.delete(url, this.httpOptions).map((res: Response) => res.json());
 	}
 	/*
 		DELETE: Delete All Feedback chosen
@@ -83,7 +83,7 @@ export class FeedbackService {
 			body: JSON.stringify(param)
 		});
 		return this.http.delete(api.feedback, _options)
-			.map((res: Response) => res.json()).catch(this.handleError);
+			.map((res: Response) => res.json());
 	}
 
     /* 
@@ -91,7 +91,7 @@ export class FeedbackService {
         author: Lam
     */
 	getStatisticFeedback(): Observable<any> {
-		return this.http.get(this.url_summary, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(this.url_summary, this.httpOptions).map((res: Response) => res.json());
 	}
 
     /* 
@@ -100,14 +100,14 @@ export class FeedbackService {
     */
 	searchStatisticFeedback(name, start, end): Observable<any> {
 		let url_search = `${this.url_summary}?search_field=${name}&start_date=${start}&end_date=${end}`;
-		return this.http.get(url_search, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(url_search, this.httpOptions).map((res: Response) => res.json());
 	}
 
 
 	/*
 		Handler Error
 	*/
-	handleError(error: Response) {
-		return Observable.throw(error);
-	}
+	// handleError(error: Response) {
+	// 	return Observable.throw(error);
+	// }
 }
