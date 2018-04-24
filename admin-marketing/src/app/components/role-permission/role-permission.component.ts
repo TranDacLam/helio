@@ -39,7 +39,7 @@ export class RolePermissionComponent implements OnInit {
                 this.models = data;
                 setTimeout(() => {
                     this.initCheckedRolePermission();
-                }, 1000);
+                }, 500);
 
             },
             (error) => {
@@ -72,21 +72,32 @@ export class RolePermissionComponent implements OnInit {
         Author: Lam
     */
     changePermission(event, model, role, permission){
+        // get class of every input
         let getClass = `permission-${model.id}-${role.id}`;
-        let getid = `${permission}-${model.id}-${role.id}`;
+        // get index
+        let index = this.list_role_permission.findIndex(item => (item.key_model === model.key && item.role === role.id));
         if(event.target.checked){
-            $('.'+getClass).not('#'+getid).prop('checked', false);
-            let index = this.list_role_permission.findIndex(item => (item.key_model === model.key && item.role === role.id));
-            if(index !== -1){
-                this.list_role_permission[index].permission = permission;
-            }else{
+            // unchecked input except this input
+            $('.'+getClass).not('#'+event.target.id).prop('checked', false);
+            // not found index
+            if(index == -1){
+                // push object for list role permission
                 this.list_role_permission.push({key_model: model.key, role: role.id, permission: permission});
+            }else{
+                // reset permission 
+                this.list_role_permission[index].permission = permission;
             }
         }else{
-            $('#'+getid).prop('checked', false);
-            this.list_role_permission = this.list_role_permission.filter(
-                item => !(item.role === role.id && item.key_model === model.key)
-            );
+            // unchecked this input
+            event.target.checked = false;
+            // check is exist in object of list role permission
+            if(this.list_role_permission[index].id){
+                // ser permission empty
+                this.list_role_permission[index].permission = '';
+            }else{
+                // remove object in list role permission
+                this.list_role_permission.splice(index, 1);
+            }
         }
     }
 
@@ -95,15 +106,28 @@ export class RolePermissionComponent implements OnInit {
         Author: Lam
     */
     initCheckedRolePermission(){
+        // each models
         this.models.map(model => {
+            // each model permission full
             model.permission.full.map(item => {
-                $('#full-'+model.id+'-'+item.id).prop('checked', true);
+                // push object into list_role_permission
+                this.list_role_permission.push({id: item.id,key_model: model.key, role: item.role.id, permission: 'full'});
+                // checked input 
+                $('#full-'+model.id+'-'+item.role.id).prop('checked', true);
             });
+            // each model permission change
             model.permission.change.map(item => {
-                $('#change-'+model.id+'-'+item.id).prop('checked', true);
+                // push object into list_role_permission
+                this.list_role_permission.push({id: item.id,key_model: model.key, role: item.role.id, permission: 'change'});
+                // checked input 
+                $('#change-'+model.id+'-'+item.role.id).prop('checked', true);
             });
+            // each model permission read
             model.permission.read.map(item => {
-                $('#read-'+model.id+'-'+item.id).prop('checked', true);
+                // push object into list_role_permission
+                this.list_role_permission.push({id: item.id,key_model: model.key, role: item.role.id, permission: 'read'});
+                // checked input 
+                $('#read-'+model.id+'-'+item.role.id).prop('checked', true);
             });
         });
     }
@@ -113,10 +137,12 @@ export class RolePermissionComponent implements OnInit {
         Author: Lam
     */
     onSubmit(){
+        this.list_role_permission = this.list_role_permission.filter(item => item.permission !== '');
         this.rolePermissionService.saveRolePermission(this.list_role_permission).subscribe(
             (data) => {
                 this.toastr.success("Lưu thành công");
                 this.list_role_permission = [];
+                this.getRolePermission();
                 this.scrollTop.scrollTopFom();
             },
             (error) => {
