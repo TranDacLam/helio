@@ -29,6 +29,10 @@ export class RolePermissionComponent implements OnInit {
         this.getRole();
     }
 
+    /*
+        Function getRolePermission(): call service function getRolePermission() get all models
+        Author: Lam
+    */
     getRolePermission(){
         this.rolePermissionService.getRolePermission().subscribe(
             (data) => {
@@ -36,6 +40,7 @@ export class RolePermissionComponent implements OnInit {
                 setTimeout(() => {
                     this.initCheckedRolePermission();
                 }, 1000);
+
             },
             (error) => {
                 this.router.navigate(['/error', { message: error.message }])
@@ -43,6 +48,10 @@ export class RolePermissionComponent implements OnInit {
         );
     }
 
+    /*
+        Function getRole(): call service function getRole() get all Roles
+        Author: Lam
+    */
     getRole(){
         this.rolePermissionService.getRole().subscribe(
             (data) => {
@@ -55,34 +64,36 @@ export class RolePermissionComponent implements OnInit {
         );
     }
 
+    /*
+        Function changePermission()
+         + Step 1: Get class and id of every input
+         + Step 2: checked, unchecked input have .class, checked #id, find index and set/push data
+         + Step 3: unchecked, remove object
+        Author: Lam
+    */
     changePermission(event, model, role, permission){
-        let obj = {key_model: model.key, role: role.id, permission: permission};
-        let is_permission = false;
         let getClass = `permission-${model.id}-${role.id}`;
         let getid = `${permission}-${model.id}-${role.id}`;
-
         if(event.target.checked){
-            $('.'+getClass).prop('checked', false);
-            $('#'+getid).prop('checked', true);
-            for(let i=0; i<this.list_role_permission.length; i++){
-                if(this.list_role_permission[i].key_model === obj.key_model && 
-                    this.list_role_permission[i].role === obj.role){
-                    this.list_role_permission[i].permission = permission;
-                    is_permission = true;
-                    break;
-                }
-            }
-            if(is_permission === false){
-                this.list_role_permission.push(obj);
+            $('.'+getClass).not('#'+getid).prop('checked', false);
+            let index = this.list_role_permission.findIndex(item => (item.key_model === model.key && item.role === role.id));
+            if(index !== -1){
+                this.list_role_permission[index].permission = permission;
+            }else{
+                this.list_role_permission.push({key_model: model.key, role: role.id, permission: permission});
             }
         }else{
-            $('.'+getClass).prop('checked', false);
+            $('#'+getid).prop('checked', false);
             this.list_role_permission = this.list_role_permission.filter(
-                item => !(item.role === obj.role && item.key_model === obj.key_model)
+                item => !(item.role === role.id && item.key_model === model.key)
             );
         }
     }
 
+    /*
+        Function initCheckedRolePermission(): init, get all permission role and set checked for input
+        Author: Lam
+    */
     initCheckedRolePermission(){
         this.models.map(model => {
             model.permission.full.map(item => {
@@ -97,6 +108,10 @@ export class RolePermissionComponent implements OnInit {
         });
     }
 
+    /*
+        Function onSubmit(): call service saveRolePermission() create and update data
+        Author: Lam
+    */
     onSubmit(){
         this.rolePermissionService.saveRolePermission(this.list_role_permission).subscribe(
             (data) => {
