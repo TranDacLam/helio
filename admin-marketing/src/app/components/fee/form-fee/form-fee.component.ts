@@ -11,11 +11,11 @@ import { Fee } from '../../../shared/class/fee';
 declare var bootbox: any;
 
 @Component({
-    selector: 'app-fee-add',
-    templateUrl: './fee-add.component.html',
-    styleUrls: ['./fee-add.component.css']
+    selector: 'app-form-fee',
+    templateUrl: './form-fee.component.html',
+    styleUrls: ['./form-fee.component.css']
 })
-export class FeeAddComponent implements OnInit {
+export class FormFeeComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,

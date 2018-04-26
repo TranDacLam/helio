@@ -15,12 +15,12 @@ import { env } from '../../../../environments/environment';
 declare var bootbox: any;
 
 @Component({
-    selector: 'app-hot-advs-add',
-    templateUrl: './hot-advs-add.component.html',
-    styleUrls: ['./hot-advs-add.component.css'],
+    selector: 'app-form-hot-advs',
+    templateUrl: './form-hot-advs.component.html',
+    styleUrls: ['./form-hot-advs.component.css'],
     providers: [HotAdvsService]
 })
-export class HotAdvsAddComponent implements OnInit {
+export class FormHotAdvsComponent implements OnInit {
 
     formHotAds: FormGroup; // formHotAdvs is tyoe of FormGroup
     hot_ads: HotAdvs;

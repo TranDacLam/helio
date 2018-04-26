@@ -12,11 +12,11 @@ import { DenominationValidators } from './../../../shared/validators/denominatio
 
 declare var bootbox: any;
 @Component({
-    selector: 'app-denomination-add',
-    templateUrl: './denomination-add.component.html',
-    styleUrls: ['./denomination-add.component.css']
+    selector: 'app-form-denomination',
+    templateUrl: './form-denomination.component.html',
+    styleUrls: ['./form-denomination.component.css']
 })
-export class DenominationAddComponent implements OnInit {
+export class FormDenominationComponent implements OnInit {
 
     denominations: Denomination[] = [];
     denomination: Denomination;
