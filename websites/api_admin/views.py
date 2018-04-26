@@ -33,7 +33,6 @@ from django.utils.translation import ugettext_lazy as _
 import requests
 import traceback
 from dateutil.parser import parse
-
 """
     Get Promotion
     @author: diemnguyen
@@ -2745,7 +2744,9 @@ class UserRoleAPI(APIView):
             serializer =  admin_serializers.RolesPerSerializer(instance = instances, data = request.data, many = True, partial=True)
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data)
+                model_name = Model_Name.objects.all()
+                model_name_serializer = admin_serializers.RolesPerDisplaySerializer( model_name, many = True)
+                return Response(model_name_serializer.data)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
         except Exception, e:
             print "UserRoleAPI", e

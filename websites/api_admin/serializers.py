@@ -556,13 +556,13 @@ class OpenTimeSerializer(serializers.Serializer):
         if data['start_time'] >= data['end_time']:
             raise serializers.ValidationError(_("Start time is before than End time"))
         return data
+        
 class RolesMappingSerializer(serializers.ModelSerializer):
     role = RoleSerializer()
     
     class Meta:
         model = Roles_Permission
         fields = ('id', 'role')
-
 
 class RolesPerDisplaySerializer(serializers.ModelSerializer):
     permission = serializers.SerializerMethodField()
@@ -583,8 +583,6 @@ class RolesPerDisplaySerializer(serializers.ModelSerializer):
 
 class RolesPerListSerializer(serializers.ListSerializer):
 
-    
-
     def create(self, validated_data):
         role_permission = []
         for item in validated_data:
@@ -598,7 +596,6 @@ class RolesPerListSerializer(serializers.ListSerializer):
         """
             instance_mapping is all record in db
             data_mapping is list data from request
-            
         """
         ret = []
         # Maps for id->instance .
@@ -632,7 +629,7 @@ class RolesPerListSerializer(serializers.ListSerializer):
 class RolesPerSerializer(serializers.ModelSerializer):      
     key_model = serializers.CharField(required=True , write_only = True)
     role = serializers.CharField(required=True)
-    permission = serializers.CharField(required=True)
+    permission = serializers.ChoiceField(required=True, choices = Roles_Permission.PERMISSION)
     id = serializers.IntegerField(required=False)
 
     class Meta:
