@@ -1289,19 +1289,43 @@ class FeeAPI(APIView):
             serializer = admin_serializers.FeeSerializer(
             fee, data=request.data)
             
-            # TODO : Check condition to edit object or apply fee at list page
-            if request.data:
-                if serializer.is_valid():
-                    if serializer.validated_data['is_apply']:
-                        position = serializer.validated_data['position']
-                        f = Fee.objects.filter(position=position, is_apply=True)
-                        if f:
-                            f.update(is_apply=False)
-                    serializer.save()
-                    return Response(serializer.data)
-                else:
-                    return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+            if serializer.is_valid():
+                if serializer.validated_data['is_apply']:
+                    position = serializer.validated_data['position']
+                    f = Fee.objects.filter(position=position, is_apply=True)
+                    if f:
+                        f.update(is_apply=False)
+                serializer.save()
+                return Response(serializer.data)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
 
+        except Fee.DoesNotExist, e:
+            error = {"code": 400, "message": "Not Found Fee", "fields": ""}
+            return Response(error, status=400)
+
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id, format=None):
+        try:
+            fee = Fee.objects.get(id=id)
+            fee.delete()
+            return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
+            
+        except Fee.DoesNotExist, e:
+            return Response({"code": 400, "message": _("Not Found Fee"), "fields": ""}, status=400)
+        except Exception, e:
+            print "GameAPI", e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
+
+class FeeApplyAPI(APIView):
+
+    def put(self, request, id, format=None):
+        try:
+            fee = Fee.objects.get(id=id)
 
             # cancel apply fee
             if fee.is_apply:
@@ -1323,19 +1347,6 @@ class FeeAPI(APIView):
 
         except Exception, e:
             print "FeeAPI ", e
-            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
-            return Response(error, status=500)
-
-    def delete(self, request, id, format=None):
-        try:
-            fee = Fee.objects.get(id=id)
-            fee.delete()
-            return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
-            
-        except Fee.DoesNotExist, e:
-            return Response({"code": 400, "message": _("Not Found Fee"), "fields": ""}, status=400)
-        except Exception, e:
-            print "GameAPI", e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 

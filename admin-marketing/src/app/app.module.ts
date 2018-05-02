@@ -28,7 +28,6 @@ import { UserMultiselectComponent } from './components/user-multiselect/user-mul
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
 import { PromotionTypeListComponent } from './components/promotion-type/promotion-type-list/promotion-type-list.component';
 import { DenominationListComponent } from './components/denomination/denomination-list/denomination-list.component';
-import { DenominationAddComponent } from './components/denomination/denomination-add/denomination-add.component';
 import { FeedbackListComponent } from './components/feedback/feedback-list/feedback-list.component';
 import { FeedbackDetailComponent } from './components/feedback/feedback-detail/feedback-detail.component';
 import { NotificationDetailComponent } from './components/notification/notification-detail/notification-detail.component';
@@ -36,7 +35,6 @@ import { FormNotificationComponent } from './components/notification/form-notifi
 import { PopupEditNotificationComponent } from './components/notification/popup-edit-notification/popup-edit-notification.component';
 import { ShowErrorValidComponent } from './components/show-error-valid/show-error-valid.component';
 import { HotAdvsListComponent } from './components/hot-advs/hot-advs-list/hot-advs-list.component';
-import { HotAdvsAddComponent } from './components/hot-advs/hot-advs-add/hot-advs-add.component';
 
 import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
@@ -55,7 +53,6 @@ import { UserDetailComponent } from './components/user/user-detail/user-detail.c
 import { LinkCardListComponent } from './components/link-card/link-card-list/link-card-list.component';
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeService } from './shared/services/fee.service';
-import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
 import { BannerListComponent } from './components/banner/banner-list/banner-list.component';
 
 import { ListEventComponent } from './components/events/list-event/list-event.component';
@@ -88,6 +85,9 @@ import { FormBannerComponent } from './components/banner/form-banner/form-banner
 
 
 import { AuthRequestOptions } from './shared/auth/auth-request';
+import { FormDenominationComponent } from './components/denomination/form-denomination/form-denomination.component';
+import { FormFeeComponent } from './components/fee/form-fee/form-fee.component';
+import { FormHotAdvsComponent } from './components/hot-advs/form-hot-advs/form-hot-advs.component';
 
 /*
     Translate datetime-picker
@@ -122,7 +122,6 @@ export const MY_MOMENT_FORMATS = {
     AdvertisementListComponent,
     PromotionTypeListComponent,
     DenominationListComponent,
-    DenominationAddComponent,
     FeedbackListComponent,
     FeedbackDetailComponent,
     NotificationDetailComponent,
@@ -131,13 +130,11 @@ export const MY_MOMENT_FORMATS = {
     ShowErrorValidComponent,
     StatisticsFeedbackComponent,
     HotAdvsListComponent,
-    HotAdvsAddComponent,
     UserListComponent,
     UserAddComponent,
     UserDetailComponent,
     LinkCardListComponent,
     FeeListComponent,
-    FeeAddComponent,
     BannerListComponent,
     ListEventComponent,
     ListFaqComponent,
@@ -165,6 +162,9 @@ export const MY_MOMENT_FORMATS = {
     RolePermissionComponent,
     FormAdvertisementComponent,
     FormBannerComponent,
+    FormDenominationComponent,
+    FormFeeComponent,
+    FormHotAdvsComponent,
     
   ],
   imports: [

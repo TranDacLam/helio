@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HotAdvsAddComponent } from './hot-advs-add.component';
+import { FormHotAdvsComponent } from './form-hot-advs.component';
 
-describe('HotAdvsAddComponent', () => {
-  let component: HotAdvsAddComponent;
-  let fixture: ComponentFixture<HotAdvsAddComponent>;
+describe('FormHotAdvsComponent', () => {
+  let component: FormHotAdvsComponent;
+  let fixture: ComponentFixture<FormHotAdvsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HotAdvsAddComponent ]
+      declarations: [ FormHotAdvsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HotAdvsAddComponent);
+    fixture = TestBed.createComponent(FormHotAdvsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

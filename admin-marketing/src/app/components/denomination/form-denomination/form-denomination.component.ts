@@ -12,11 +12,11 @@ import { DenominationValidators } from './../../../shared/validators/denominatio
 
 declare var bootbox: any;
 @Component({
-    selector: 'app-denomination-add',
-    templateUrl: './denomination-add.component.html',
-    styleUrls: ['./denomination-add.component.css']
+    selector: 'app-form-denomination',
+    templateUrl: './form-denomination.component.html',
+    styleUrls: ['./form-denomination.component.css']
 })
-export class DenominationAddComponent implements OnInit {
+export class FormDenominationComponent implements OnInit {
 
     denominations: Denomination[] = [];
     denomination: Denomination;
@@ -74,9 +74,7 @@ export class DenominationAddComponent implements OnInit {
                 this.createForm();
             },
             (error) => {
-                this.router.navigate(['/error', { 
-                    message: error.json().message ? error.json().message: "ERR_CONNECTION_REFUSED"
-                }]);
+                this.router.navigate(['/error', { message: error}]);
             }
         );
     }
@@ -108,9 +106,7 @@ export class DenominationAddComponent implements OnInit {
                             this.errorMessage = error.json();
                         } else {
                             // nagivate to component error and show message
-                            this.router.navigate(['/error', { 
-                                message: error.json().message ? error.json().message: "ERR_CONNECTION_REFUSED"
-                            }]);
+                            this.router.navigate(['/error', { message: error }]);
                         }
                     }      
                 )
@@ -127,9 +123,7 @@ export class DenominationAddComponent implements OnInit {
                             this.errorMessage = error.json();
                         } else {
                             // nagivate to component error and show message
-                            this.router.navigate(['/error', { 
-                                message: error.json().message ? error.json().message: "ERR_CONNECTION_REFUSED"
-                            }]);
+                            this.router.navigate(['/error', { message: error}]);
                         }
                     }
                 )
@@ -176,23 +170,15 @@ export class DenominationAddComponent implements OnInit {
                 this.router.navigate(['/denomination-list']);
             },
             error => {
-                this.router.navigate(['/error', { 
-                    message: error.json().message ? error.json().message: "ERR_CONNECTION_REFUSED"
-                }]);
+                this.router.navigate(['/error', { message: error }]);
             }
         );
     }
-
-    /*
-        DELETE: Delete denomination By ID
-        @author: Trangle 
-     */
-
     /* 
         Return errorMessage = '', when click input tag 
         @author: Trangle
     */
-    removeMessage(er) {
+    removeMessage() {
         this.errorMessage = '';
     }
 
@@ -201,6 +187,7 @@ export class DenominationAddComponent implements OnInit {
         @author: Trangle
      */
     format_currency(nStr) {
+        this.errorMessage = '';
         // Convert number to format currency
         this.data = nStr.replace(/,/g, "").toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     }

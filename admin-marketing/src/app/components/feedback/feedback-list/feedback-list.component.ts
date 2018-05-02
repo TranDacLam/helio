@@ -79,7 +79,11 @@ export class FeedbackListComponent implements OnInit {
                         this.dtTrigger.next();
                     },
                     (error) => {
-                        this.router.navigate(['/error', { message: error.json().message }])
+                        if(error.status == 400) {
+                            this.router.navigate(['/error', {message: error.json().message}]);
+                        }else {
+                            this.router.navigate(['/error', {message: error}]);
+                        }
                     }
                 )
             });
@@ -190,12 +194,15 @@ export class FeedbackListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    if (error.json().code == 405) {
+                    if (error.status == 405) {
                         this.toastr.error(`${error.json().message}`);
-                    } else {
-                        this.router.navigate(['/error', { message: error.json().message }]);
+                    }else if(error.status == 400) {
+                        this.router.navigate(['/error', {message: error.json().message}]);
+                    }else {
+                        this.router.navigate(['/error', {message: error}]);
                     }
-                });
+                }
+            );
         });
     }
 }

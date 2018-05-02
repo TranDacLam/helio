@@ -57,7 +57,7 @@ export class BannerService {
             let xhr = new XMLHttpRequest();
             xhr.open('PUT', url);
             xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
-            xhr.send(bannerFormData);
+            xhr.send();
 
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {

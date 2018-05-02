@@ -109,7 +109,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                     this.checkDisableInput();
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error.json().message }])
+                    this.router.navigate(['/error', { message: error }])
                 }
             );
     }
@@ -181,7 +181,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                         } else if (error.code == 405) {
                             self.toastr.error(`${error.message}`);
                         } else {
-                            self.router.navigate(['/error', { message: error.message }]);
+                            self.router.navigate(['/error', { message: error }]);
                         }
                     }
                 );
@@ -207,7 +207,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                     if (error.status == 405) {
                         this.toastr.error(`${error.json().message}`);
                     } else {
-                        this.router.navigate(['/error', { message: error.json().message }])
+                        this.router.navigate(['/error', { message: error }])
                     }
                 }
             );
