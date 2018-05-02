@@ -174,17 +174,11 @@ export class FormDenominationComponent implements OnInit {
             }
         );
     }
-
-    /*
-        DELETE: Delete denomination By ID
-        @author: Trangle 
-     */
-
     /* 
         Return errorMessage = '', when click input tag 
         @author: Trangle
     */
-    removeMessage(er) {
+    removeMessage() {
         this.errorMessage = '';
     }
 
@@ -193,6 +187,7 @@ export class FormDenominationComponent implements OnInit {
         @author: Trangle
      */
     format_currency(nStr) {
+        this.errorMessage = '';
         // Convert number to format currency
         this.data = nStr.replace(/,/g, "").toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     }

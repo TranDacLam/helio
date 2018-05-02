@@ -19,7 +19,7 @@
     </p>
 </ng-container>
 
-<form [formGroup]="advForm" (click)='removeMessage()' class="row form-adv-add" *ngIf="adv">
+<form [formGroup]="advForm" (keyup)='removeMessage()' (click) ="removeMessage()" class="row form-adv-add" *ngIf="adv">
 	<div class="content-adv">
 		<div class="form-group row">
             <div class="col-sm-2">
