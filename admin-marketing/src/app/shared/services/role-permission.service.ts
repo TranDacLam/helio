@@ -41,7 +41,7 @@ export class RolePermissionService {
 
     saveRolePermission(list_role_permission): Observable<any> {
         let body = JSON.stringify(list_role_permission);
-        return this.http.post(api.user_role, body, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.put(api.user_role, body, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     // exception

@@ -51,7 +51,11 @@ export class FeeListComponent implements OnInit {
                 this.length_all = success.length;
             },
             error => {
-                this.router.navigate(['/error']);
+                if(error.status == 400){
+                    this.router.navigate(['/error', { message: error.json().message}]);
+                }else {
+                    this.router.navigate(['/error', { message: error}]);
+                }
             });
     }
     /*
@@ -148,10 +152,10 @@ export class FeeListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    if (error.code == 400) {
-                        this.toastr.error(`${error.message}`);
+                    if (error.status == 400) {
+                        this.toastr.error(`${error.json().message}`);
                     } else {
-                        this.router.navigate(['/error', { message: error.message }]);
+                        this.router.navigate(['/error', { message: error }]);
                     }
                 }
             );
@@ -179,10 +183,10 @@ export class FeeListComponent implements OnInit {
                 fee.is_apply = true;
             },
             error => {
-                if (error.code == 400) {
-                    this.toastr.error(`${error.message}`);
+                if (error.status == 400) {
+                    this.toastr.error(`${error.json().message}`);
                 } else {
-                    this.router.navigate(['/error', { message: error.message }]);
+                    this.router.navigate(['/error', { message: error }]);
                 }
             }
         );
@@ -202,10 +206,10 @@ export class FeeListComponent implements OnInit {
                 }
             },
             error => {
-                if (error.code == 400) {
-                    this.toastr.error(`${error.message}`);
+                if (error.status == 400) {
+                    this.toastr.error(`${error.json().message}`);
                 } else {
-                    this.router.navigate(['/error', { message: error.message }]);
+                    this.router.navigate(['/error', { message: error }]);
                 }
             }
         );

@@ -50,6 +50,13 @@ export class StatisticsFeedbackComponent implements OnInit {
                 this.fb_rate = data.message.rate;
                 this.status_sum = data.message.status_sum;
                 this.rate_sum = data.message.rate_sum;
+            },
+            (error) => {
+                if(error.status == 400) {
+                    this.router.navigate(['/error', {message: error.json().message}]);
+                }else {
+                    this.router.navigate(['/error', {message: error}]);
+                }
             }
         );
     }
@@ -83,7 +90,11 @@ export class StatisticsFeedbackComponent implements OnInit {
                 this.status_sum = data.message.status_sum;
             },
             (error) => {
-                this.router.navigate(['/error', {message: error.message}]);
+                if(error.status == 400) {
+                    this.router.navigate(['/error', {message: error.json().message}]);
+                }else {
+                    this.router.navigate(['/error', {message: error}]);
+                }
             }
         );
     }
@@ -113,7 +124,11 @@ export class StatisticsFeedbackComponent implements OnInit {
                 this.rate_sum = data.message.rate_sum;
             },
             (error) => {
-                this.router.navigate(['/error', {message: error.message}]);
+                if(error.status == 400) {
+                    this.router.navigate(['/error', {message: error.json().message}]);
+                }else {
+                    this.router.navigate(['/error', {message: error}]);
+                }
             }
         );
     }

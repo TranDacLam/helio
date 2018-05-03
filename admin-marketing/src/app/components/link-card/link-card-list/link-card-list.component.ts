@@ -199,7 +199,11 @@ export class LinkCardListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
+                    if(error.status == 400){
+                        this.toastr.error(`error.json().message + error.json().fields`);
+                    }else{
+                        this.router.navigate(['/error', { message: error }])
+                    }
                 });
         }
         );

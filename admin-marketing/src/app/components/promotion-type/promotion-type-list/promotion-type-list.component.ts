@@ -38,7 +38,11 @@ export class PromotionTypeListComponent implements OnInit {
                 this.proTypes = result;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.json().message }])
+                if(error.status == 400){
+                    this.router.navigate(['/error', { message: error.json().message }])
+                }else {
+                    this.router.navigate(['/error', { message: error }])
+                }
             }
         )
     }

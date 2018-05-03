@@ -19,7 +19,7 @@
     </p>
 </ng-container>
 
-<form [formGroup]="denoForm" class="row form-add-denomi" *ngIf="denomination" novalidate="">
+<form [formGroup]="denoForm" (click)="removeMessage()" class="row form-add-denomi" *ngIf="denomination" novalidate="">
     <div class="content-denomi">
         <div class="form-group row">
             <div class="col-sm-2">
@@ -29,7 +29,6 @@
                 <input class='form-control' name="denomination" 
                 formControlName="denomination" id="denomination"
                 [(ngModel)]="data"
-                (click)="removeMessage(errorMessage)"
                 (keyup) ="format_currency($event.target.value)"
                 > 
                 <show-error-valid [control]="denoForm.get('denomination')"></show-error-valid>

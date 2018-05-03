@@ -33,8 +33,6 @@ from django.utils.translation import ugettext_lazy as _
 import requests
 import traceback
 from dateutil.parser import parse
-
-
 """
     Get Promotion
     @author: diemnguyen
@@ -238,6 +236,7 @@ class PromotionUser(APIView):
     @author: TrangLe
 """
 class PromotionStatistic(APIView):
+    
     def get(self, request, pk, format=None):
         try:
             # Get promotion detail by id
@@ -333,7 +332,7 @@ class AdvertisementView(APIView):
                 adv_list, many=True)
             return Response(serializer.data)
         except Exception, e:
-            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -349,7 +348,7 @@ class AdvertisementView(APIView):
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
-            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def delete(self, request, format=None):
@@ -506,7 +505,7 @@ class DenominationDetailView(APIView):
             serializer = admin_serializers.DenominationSerializer(denomi)
             return Response(serializer.data)
         except Exception, e:
-            print 'BannerViewDetail ', e
+            print 'DenominationDetailView ', e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
@@ -520,7 +519,7 @@ class DenominationDetailView(APIView):
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
-            print 'BannerViewDetail PUT', e
+            print 'DenominationDetailView PUT', e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
@@ -1289,19 +1288,43 @@ class FeeAPI(APIView):
             serializer = admin_serializers.FeeSerializer(
             fee, data=request.data)
             
-            # TODO : Check condition to edit object or apply fee at list page
-            if request.data:
-                if serializer.is_valid():
-                    if serializer.validated_data['is_apply']:
-                        position = serializer.validated_data['position']
-                        f = Fee.objects.filter(position=position, is_apply=True)
-                        if f:
-                            f.update(is_apply=False)
-                    serializer.save()
-                    return Response(serializer.data)
-                else:
-                    return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+            if serializer.is_valid():
+                if serializer.validated_data['is_apply']:
+                    position = serializer.validated_data['position']
+                    f = Fee.objects.filter(position=position, is_apply=True)
+                    if f:
+                        f.update(is_apply=False)
+                serializer.save()
+                return Response(serializer.data)
+            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
 
+        except Fee.DoesNotExist, e:
+            error = {"code": 400, "message": "Not Found Fee", "fields": ""}
+            return Response(error, status=400)
+
+        except Exception, e:
+            print "FeeAPI ", e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
+
+    def delete(self, request, id, format=None):
+        try:
+            fee = Fee.objects.get(id=id)
+            fee.delete()
+            return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
+            
+        except Fee.DoesNotExist, e:
+            return Response({"code": 400, "message": _("Not Found Fee"), "fields": ""}, status=400)
+        except Exception, e:
+            print "GameAPI", e
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
+
+class FeeApplyAPI(APIView):
+
+    def put(self, request, id, format=None):
+        try:
+            fee = Fee.objects.get(id=id)
 
             # cancel apply fee
             if fee.is_apply:
@@ -1323,19 +1346,6 @@ class FeeAPI(APIView):
 
         except Exception, e:
             print "FeeAPI ", e
-            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
-            return Response(error, status=500)
-
-    def delete(self, request, id, format=None):
-        try:
-            fee = Fee.objects.get(id=id)
-            fee.delete()
-            return Response({"code": 204, "message": _("success"), "fields": ""}, status=200)
-            
-        except Fee.DoesNotExist, e:
-            return Response({"code": 400, "message": _("Not Found Fee"), "fields": ""}, status=400)
-        except Exception, e:
-            print "GameAPI", e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
@@ -1393,7 +1403,7 @@ class BannerView(APIView):
 
         except Exception, e:
             print e
-            error = {"code": 500, "message": "%s" % e, "fields": ""}
+            error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
     def post(self, request, format=None):
@@ -2720,26 +2730,34 @@ class OpenTimeAPI(APIView):
     UserRoleAPI
     @author :Hoangnguyen
 """
-
 @permission_classes((AllowAny,))
 class UserRoleAPI(APIView):
+
     def get( self, request):
         try:
             model_name = Model_Name.objects.all()
-            model_name_serializer = admin_serializers.ModelNameSerializer( model_name, many = True)
+            model_name_serializer = admin_serializers.RolesPerDisplaySerializer( model_name, many = True)
             return Response(model_name_serializer.data)
         except Exception, e:
             print "UserRoleAPI", e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
-    def post( self, request, format = None):
+    def put( self, request, format = None):
+        '''
+            get all record in DB
+            if data has no id, create object
+            if data has id, update object
+            if record is not in data, delete record
+        '''
         try:
-            serializer =  admin_serializers.RolesPermissionSerializer(data = request.data, many = True)
+            instances = Roles_Permission.objects.all()
+            serializer =  admin_serializers.RolesPerSerializer(instance = instances, data = request.data, many = True, partial=True)
             if serializer.is_valid():
-                Roles_Permission.objects.all().delete()
                 serializer.save()
-                return Response(serializer.data)
+                model_name = Model_Name.objects.all()
+                model_name_serializer = admin_serializers.RolesPerDisplaySerializer( model_name, many = True)
+                return Response(model_name_serializer.data)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
         except Exception, e:
             print "UserRoleAPI", e

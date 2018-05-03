@@ -39,7 +39,7 @@ urlpatterns = [
 
 	url(r'^fee/$', views.FeeAPI.as_view(), name="fees"),
 	url(r'^fee/(?P<id>[0-9]+)/$', views.FeeAPI.as_view(), name="fee-update"),
-	url(r'^apply_fee/(?P<id>[0-9]+)/$', views.FeeAPI.as_view(), name="fee-apply"),
+	url(r'^apply_fee/(?P<id>[0-9]+)/$', views.FeeApplyAPI.as_view(), name="fee-apply"),
 
 	url(r'^feedback/$', views.FeedbackView.as_view(), name="feedback"),
 	url(r'^feedback/(?P<pk>[0-9]+)/$', views.FeedbackDetailView.as_view(), name="feedback-detail"),

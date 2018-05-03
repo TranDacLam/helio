@@ -11,11 +11,11 @@ import { Fee } from '../../../shared/class/fee';
 declare var bootbox: any;
 
 @Component({
-    selector: 'app-fee-add',
-    templateUrl: './fee-add.component.html',
-    styleUrls: ['./fee-add.component.css']
+    selector: 'app-form-fee',
+    templateUrl: './form-fee.component.html',
+    styleUrls: ['./form-fee.component.css']
 })
-export class FeeAddComponent implements OnInit {
+export class FormFeeComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
@@ -64,10 +64,10 @@ export class FeeAddComponent implements OnInit {
                         this.toastr.success(`Chỉnh sửa "${this.data} ${this.feeAddForm.value.fee_type}" thành công`);
                     },
                     (error) => {
-                        if (error.code === 400) {
-                            this.errorMessage = error.message;
+                        if (error.status === 400) {
+                            this.errorMessage = error.json().message;
                         } else {
-                            this.router.navigate(['/error', { message: error.message }]);
+                            this.router.navigate(['/error', { message: error}]);
                         }
                     }
                 )
@@ -79,10 +79,10 @@ export class FeeAddComponent implements OnInit {
                         this.toastr.success(`Thêm mới "${this.data} ${this.feeAddForm.value.fee_type}" thành công`);
                     },
                     (error) => {
-                        if (error.code === 400) {
-                            this.errorMessage = error.message;
+                        if (error.status === 400) {
+                            this.errorMessage = error.json().message;
                         } else {
-                            this.router.navigate(['/error', { message: error.message }]);
+                            this.router.navigate(['/error', { message: error}]);
                         }
                     }
                 );
@@ -111,7 +111,13 @@ export class FeeAddComponent implements OnInit {
                 this.fee = result;
                 this.createForm();
             },
-            (error) => this.router.navigate(['/error', { message: error }])
+            (error) => {
+                if(error.status == 400) {
+                    this.router.navigate(['/error', { message: error.json().message }])
+                } else {
+                    this.router.navigate(['/error', { message: error }])
+                }
+            }
         )
     }
 
@@ -151,7 +157,11 @@ export class FeeAddComponent implements OnInit {
                 this.router.navigate(['/fee/list']);
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message }]);
+                if(error.status == 400) {
+                    this.router.navigate(['/error', { message: error.json().message}]);
+                }else{
+                    this.router.navigate(['/error', { message: error}]);
+                }
             }
         )
     }
