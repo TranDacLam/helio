@@ -70,10 +70,11 @@
                         <li><a href="{% url 'helio_photos' %}">{% trans "menu.helio_photos" %}</a></li>
                         <li><a href="{% url 'faqs' %}">{% trans "menu.faq" %}</a></li>
                         <li class="time-info visible-xs">
-	                        <div class="time-wrapper">
-		            			<p>THỨ HAI - THỨ SÁU | 17:30 - 18:30</p>
-		            			<p>THỨ BAY - CHU NHAT | 17:30 - 18:30</p>
+	                        {% if time_active %}
+		            		<div class="time-wrapper">
+		            			{{time_active.content | safe}}
 		            		</div>
+		            		{% endif %}
 	            		</li>
                     </ul>
 			    </div><!-- /.navbar-collapse -->
