@@ -52,12 +52,12 @@ export class BannerService {
 
     updateBanner(bannerFormData: FormData, id: number, lang): Observable<any> {
         // let url = `${api.banner}${id}/`;
-        let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`
+        let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`;
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
             xhr.open('PUT', url);
             xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
-            xhr.send();
+            xhr.send(bannerFormData);
 
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
