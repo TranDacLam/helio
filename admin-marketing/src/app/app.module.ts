@@ -45,7 +45,6 @@ import { CategoryService } from './shared/services/category.service';
 import { BannerService } from './shared/services/banner.service';
 import { AuthHttp } from './shared/auth/auth-http';
 import { ScrollTop } from './shared/commons/scroll-top';
-import { Loading } from './shared/commons/loading';
 import { AuthGuard } from './shared/auth/auth.guard';
 
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
@@ -211,7 +210,6 @@ export const MY_MOMENT_FORMATS = {
     UserPermissionService,
     VariableGlobals,
     ScrollTop,
-    Loading,
     {
         provide: RequestOptions, 
         useClass: AuthRequestOptions
