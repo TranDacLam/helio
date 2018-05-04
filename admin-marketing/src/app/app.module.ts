@@ -15,6 +15,7 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { RECAPTCHA_LANGUAGE } from 'ng-recaptcha';
 import { DatePipe } from '@angular/common';
 import { MapToIterablePipe } from './shared/pipes/map-to-iterable.pipe';
+import { SortStringPipe } from './shared/pipes/sort-string.pipe';
 import { ToastrModule } from 'ngx-toastr'; // https://github.com/scttcper/ngx-toastr
 import { FullCalendarModule } from 'ng-fullcalendar'; // https://github.com/Jamaks/ng-fullcalendar
 
@@ -44,6 +45,7 @@ import { CategoryService } from './shared/services/category.service';
 import { BannerService } from './shared/services/banner.service';
 import { AuthHttp } from './shared/auth/auth-http';
 import { ScrollTop } from './shared/commons/scroll-top';
+import { Loading } from './shared/commons/loading';
 import { AuthGuard } from './shared/auth/auth.guard';
 
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
@@ -156,6 +158,7 @@ export const MY_MOMENT_FORMATS = {
     UserPermissionComponent,
     LoginComponent,
     MapToIterablePipe,
+    SortStringPipe,
     OpenTimeComponent,
     PromotionReportComponent,
     PopupEditPromotionComponent,
@@ -208,6 +211,7 @@ export const MY_MOMENT_FORMATS = {
     UserPermissionService,
     VariableGlobals,
     ScrollTop,
+    Loading,
     {
         provide: RequestOptions, 
         useClass: AuthRequestOptions
