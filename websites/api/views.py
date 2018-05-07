@@ -1306,15 +1306,46 @@ def gift_user(request):
             if obj_promotion.id == core_constants.PROMOTION_ID_SETUP_DEVICE:
                 return gift_install_app(user, promotion_id)
 
-            gift = Gift.objects.get(user=user, promotion_id=promotion_id)
+            promotion_type = obj_promotion.promotion_type
+
+            # Promotion must be have type.
+            if not promotion_type or promotion_type.id == core_constants.PROMOTION_TYPE_PUBLIC:
+                error = {
+                    "code": 400, "message": _("Error. Promotion Invalid."), "fields": "promotion_id"}
+                return Response(error, status=400)
 
             message = _("Error. User or Deivce Have get gift from promotion.")
             status_code = 501
-            if not gift.is_used:
-                message = "Success"
-                status_code = 200
-                gift.is_used = True
-                gift.save()
+            # With promotion by user. Check user in list admin select
+            if promotion_type.id == core_constants.PROMOTION_TYPE_USER:
+                gift = Gift.objects.get(user=user, promotion_id=promotion_id)
+                if not gift.is_used:
+                    message = "Success"
+                    status_code = 200
+                    gift.is_used = True
+                    gift.save()
+            # With promotion by user and device id then check user and device
+            elif promotion_type.id == core_constants.PROMOTION_TYPE_USER_DEVICE:
+                device_id = request.data.get('device_id', '')
+                if not device_id:
+                    error = {
+                        "code": 400, "message": _("The device_id is required."), "fields": "device_id"}
+                    return Response(error, status=400)
+
+                gift_user = Gift.objects.filter(
+                    user=user, promotion_id=promotion_id)
+                gift_device = Gift.objects.filter(
+                    device_id=device_id, promotion_id=promotion_id)
+
+                if not gift_user and not gift_device:
+                    message = "Success"
+                    status_code = 200
+                    gift = Gift()
+                    gift.promotion = obj_promotion
+                    gift.device_id = device_id
+                    gift.user = user
+                    gift.is_used = True
+                    gift.save()
 
             return Response({'message': message}, status=status_code)
         else:

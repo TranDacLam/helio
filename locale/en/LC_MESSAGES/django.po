@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-07 15:44+0700\n"
+"POT-Creation-Date: 2018-05-07 16:19+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -724,8 +724,8 @@ msgstr ""
 
 #: websites/api/dmz_message.py:14 websites/api/views.py:655
 #: websites/api/views.py:744 websites/api/views.py:816
-#: websites/api/views.py:872 websites/api/views.py:1516
-#: websites/api/views.py:1642
+#: websites/api/views.py:872 websites/api/views.py:1547
+#: websites/api/views.py:1673
 #, fuzzy
 #| msgid "This field is required."
 msgid "Card id field is required."
@@ -855,24 +855,24 @@ msgstr ""
 
 #: websites/api/views.py:678 websites/api/views.py:703
 #: websites/api/views.py:771 websites/api/views.py:830
-#: websites/api/views.py:886 websites/api/views.py:1440
-#: websites/api/views.py:1530 websites/api/views.py:1605
-#: websites/api/views.py:1656
+#: websites/api/views.py:886 websites/api/views.py:1471
+#: websites/api/views.py:1561 websites/api/views.py:1636
+#: websites/api/views.py:1687
 msgid "Call API Unauthorized."
 msgstr ""
 
 #: websites/api/views.py:683 websites/api/views.py:708
 #: websites/api/views.py:776 websites/api/views.py:835
-#: websites/api/views.py:891 websites/api/views.py:1445
-#: websites/api/views.py:1535 websites/api/views.py:1610
-#: websites/api/views.py:1661
+#: websites/api/views.py:891 websites/api/views.py:1476
+#: websites/api/views.py:1566 websites/api/views.py:1641
+#: websites/api/views.py:1692
 msgid "Call API error."
 msgstr ""
 
 #: websites/api/views.py:720 websites/api/views.py:790
 #: websites/api/views.py:847 websites/api/views.py:903
-#: websites/api/views.py:1457 websites/api/views.py:1547
-#: websites/api/views.py:1673
+#: websites/api/views.py:1488 websites/api/views.py:1578
+#: websites/api/views.py:1704
 msgid "You don't have permission to access."
 msgstr ""
 
@@ -906,7 +906,7 @@ msgstr ""
 
 #: websites/api/views.py:1049 websites/api/views.py:1070
 #: websites/api/views.py:1179 websites/api/views.py:1236
-#: websites/api/views.py:1274 websites/api/views.py:1321
+#: websites/api/views.py:1274 websites/api/views.py:1352
 msgid "Anonymous User Cannot Call This Action."
 msgstr ""
 
@@ -955,63 +955,75 @@ msgstr ""
 msgid "The promotion_id is required."
 msgstr "This field is required."
 
-#: websites/api/views.py:1311 websites/api/views.py:1362
-#: websites/api/views.py:1364
+#: websites/api/views.py:1314
+#, fuzzy
+#| msgid "promotionpage.menu.all"
+msgid "Error. Promotion Invalid."
+msgstr "ALL"
+
+#: websites/api/views.py:1317 websites/api/views.py:1393
+#: websites/api/views.py:1395
 msgid "Error. User or Deivce Have get gift from promotion."
 msgstr ""
 
-#: websites/api/views.py:1324
+#: websites/api/views.py:1332
+#, fuzzy
+#| msgid "This field is required."
+msgid "The device_id is required."
+msgstr "This field is required."
+
+#: websites/api/views.py:1355
 msgid "Promotion for user does not matching. Please check again."
 msgstr ""
 
-#: websites/api/views.py:1328 websites/api/views.py:1333
-#: websites/api/views.py:1379
+#: websites/api/views.py:1359 websites/api/views.py:1364
+#: websites/api/views.py:1410
 msgid "Your account not apply current promotion. Please contact administrator."
 msgstr ""
 
-#: websites/api/views.py:1351
+#: websites/api/views.py:1382
 msgid "Error. DeivceID of user is empty. Please check again."
 msgstr ""
 
-#: websites/api/views.py:1396
+#: websites/api/views.py:1427
 msgid ""
 "Please check required fields : [source_card_barcode, received_card_barcode, "
 "ticket_amount, fee]"
 msgstr ""
 
-#: websites/api/views.py:1400
+#: websites/api/views.py:1431
 msgid "Can not transfer to itseft"
 msgstr ""
 
-#: websites/api/views.py:1405
+#: websites/api/views.py:1436
 msgid "Please update full name of user"
 msgstr ""
 
-#: websites/api/views.py:1412
+#: websites/api/views.py:1443
 msgid "Fee & Ticket Amount must be is number"
 msgstr ""
 
-#: websites/api/views.py:1476
+#: websites/api/views.py:1507
 #, fuzzy
 #| msgid "This field is required."
 msgid "Position field is required."
 msgstr "This field is required."
 
-#: websites/api/views.py:1483
+#: websites/api/views.py:1514
 msgid "Fee not found."
 msgstr ""
 
-#: websites/api/views.py:1501
+#: websites/api/views.py:1532
 msgid "Hot Advs not found."
 msgstr ""
 
-#: websites/api/views.py:1571
+#: websites/api/views.py:1602
 msgid ""
 "Please check required fields : [card_barcode, email, full_name, phone, "
 "reload_amount]"
 msgstr ""
 
-#: websites/api/views.py:1578
+#: websites/api/views.py:1609
 msgid "Amount must be is number"
 msgstr ""
 
