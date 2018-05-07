@@ -23,6 +23,7 @@ import { env } from '../../../../environments/environment';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import * as moment from 'moment';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
+import * as CONSTANT from './../../../shared/commons/constant';
 
 declare var $ :any; // declare Jquery
 declare var bootbox:any;
@@ -64,6 +65,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
 
     lang = 'vi';
     title_page = "";
+    SYSTEM_ADMIN: number;
 
     constructor(
         private promotionService: PromotionService,
@@ -82,6 +84,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
+        this.SYSTEM_ADMIN = CONSTANT.SYSTEM_ADMIN;
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;
@@ -419,7 +422,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
         if(this.user_current && this.promotion && this.promotion.id){
             let date_now = moment(this.datePipe.transform(Date.now(), 'dd/MM/yyy'), "DD/MM/YYYY").toDate();
             let end_date = this.promotion.end_date ? moment(this.promotion.end_date, "DD/MM/YYYY").toDate() : '';
-            if((this.promotion.is_draft === false || (end_date !== '' && end_date < date_now)) && this.user_current.role !== 1){
+            if((this.promotion.is_draft === false || (end_date !== '' && end_date < date_now)) && this.user_current.role !== this.SYSTEM_ADMIN){
                 return true;
             }
         }
