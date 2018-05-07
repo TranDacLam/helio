@@ -123,7 +123,7 @@
 
     <hr/>
     <button class="btn btn-danger" (click)="deleteNotificationEvent()" 
-        *ngIf="noti.id && position !== 'popup' && (!noti.sent_date || (noti.sent_date && user_current?.role === 1))"
+        *ngIf="noti.id && position !== 'popup' && (!noti.sent_date || (noti.sent_date && user_current?.role === SYSTEM_ADMIN))"
     >
         XÓA
     </button>

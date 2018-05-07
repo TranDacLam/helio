@@ -49,10 +49,10 @@
         </thead>
         <tbody>
             <tr *ngFor="let noti of notifications" 
-                class="row-data {{(noti.sent_date && user_current?.role !== 1) ? 'disabled_checkbox': ''}}">
+                class="row-data {{(noti.sent_date && user_current?.role !== SYSTEM_ADMIN) ? 'disabled_checkbox': ''}}">
                 <td>
                     <input type="checkbox" (change)="selectCheckbox($event);" 
-                        [disabled]="noti.sent_date && user_current?.role !== 1"
+                        [disabled]="noti.sent_date && user_current?.role !== SYSTEM_ADMIN"
                     />
                 </td>
                 <td>{{ noti.id }}</td>
