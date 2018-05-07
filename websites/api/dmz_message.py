@@ -20,3 +20,6 @@
 "17"=_("update userembed success")
 
 
+#Login error
+_("Unable to log in with provided credentials.")
+_('User account is disabled.')

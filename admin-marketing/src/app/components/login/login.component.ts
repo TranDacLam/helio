@@ -104,7 +104,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigateByUrl('/');
                 },
                 (error) => {
-                    this.msg_error = error.non_field_errors[0] ? "Email hoặc mật khẩu không chính xác." : "Lỗi";
+                    this.msg_error = error.non_field_errors[0] ? error.non_field_errors[0] : "Lỗi";
                 }
             );
         }
