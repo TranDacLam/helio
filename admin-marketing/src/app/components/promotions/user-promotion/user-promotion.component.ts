@@ -83,7 +83,8 @@ export class UserPromotionComponent implements OnInit {
                 //  current user is not system admin and (check promotion is draft or expires of pormotion)
                 if((this.user_current.role !== this.SYSTEM_ADMIN && 
                     (this.promotion.is_draft === false || (promotion_end_date !== '' && promotion_end_date < this.date_now))) || 
-                    data.promotion_detail.id === CONSTANT.ID_PROMOTION_FIRST_INSTALL_APP){
+                    (data.promotion_detail.id === CONSTANT.ID_PROMOTION_FIRST_INSTALL_APP) ||
+                    (data.promotion_detail.promotion_type && data.promotion_detail.promotion_type.id === CONSTANT.ID_TYPE_PROMOTION_USER_AND_DEVICE)){
                     this.is_disable_promotion = true;
                 }else{
                     this.is_disable_promotion = false;
