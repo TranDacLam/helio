@@ -15,6 +15,7 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { RECAPTCHA_LANGUAGE } from 'ng-recaptcha';
 import { DatePipe } from '@angular/common';
 import { MapToIterablePipe } from './shared/pipes/map-to-iterable.pipe';
+import { SortStringPipe } from './shared/pipes/sort-string.pipe';
 import { ToastrModule } from 'ngx-toastr'; // https://github.com/scttcper/ngx-toastr
 import { FullCalendarModule } from 'ng-fullcalendar'; // https://github.com/Jamaks/ng-fullcalendar
 
@@ -156,6 +157,7 @@ export const MY_MOMENT_FORMATS = {
     UserPermissionComponent,
     LoginComponent,
     MapToIterablePipe,
+    SortStringPipe,
     OpenTimeComponent,
     PromotionReportComponent,
     PopupEditPromotionComponent,

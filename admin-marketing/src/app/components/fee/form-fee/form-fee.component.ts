@@ -170,6 +170,7 @@ export class FormFeeComponent implements OnInit {
         @author: Trangle
     */
     format_currency(nStr) {
+        this.errorMessage='';
         // Convert number to format currency
         this.data = nStr.replace(/,/g, "").toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     }
@@ -188,5 +189,12 @@ export class FormFeeComponent implements OnInit {
      */
     numberWithCommas(x) {
         return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : x;
+    }
+
+    /*
+        remove message from server
+     */
+    removeMessage() {
+        this.errorMessage = '';
     }
 }
