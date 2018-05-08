@@ -33,6 +33,8 @@ from django.utils.translation import ugettext_lazy as _
 import requests
 import traceback
 from dateutil.parser import parse
+from decorator import check_role_permission
+import model_key
 """
     Get Promotion
     @author: diemnguyen
@@ -41,6 +43,7 @@ from dateutil.parser import parse
 
 class PromotionList(APIView):
 
+    @check_role_permission(model_key.promotion)
     def get(self, request, format=None):
         try:
             lst_item = Promotion.objects.all()
@@ -52,6 +55,7 @@ class PromotionList(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.promotion)
     def delete(self, request, format=None):
         """
         DELETE: Multi ids select
@@ -91,6 +95,7 @@ class PromotionDetail(APIView):
         except Promotion.DoesNotExist, e:
             raise Http404
 
+    @check_role_permission(model_key.promotion)
     def get(self, request, id, format=None):
         item = self.get_object(id)
         try:
@@ -102,6 +107,7 @@ class PromotionDetail(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.promotion)
     def post(self, request, format=None):
         try:
             print request.data
@@ -118,6 +124,7 @@ class PromotionDetail(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.promotion)
     def put(self, request, id, format=None):
         print request.data
         # print request.user
@@ -150,6 +157,7 @@ class PromotionDetail(APIView):
 
 class PromotionUser(APIView):
 
+    @check_role_permission(model_key.promotion)
     def get(self, request, id, format=None):
         try:
             promotion_detail = Promotion.objects.get(pk=id)
@@ -191,6 +199,7 @@ class PromotionUser(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.promotion)
     def post(self, request, id, format=None):
         try:
             # Set is_save to True to block change user list
@@ -237,6 +246,7 @@ class PromotionUser(APIView):
 """
 class PromotionStatistic(APIView):
     
+    @check_role_permission(model_key.promotion)
     def get(self, request, pk, format=None):
         try:
             # Get promotion detail by id
@@ -322,6 +332,7 @@ GET and POST Advertisement
 
 class AdvertisementView(APIView):
 
+    @check_role_permission(model_key.advertisement)
     def get(self, request, format=None):
         """
         Get all Advertisement
@@ -335,6 +346,7 @@ class AdvertisementView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.advertisement)
     def post(self, request, format=None):
         """
         POST: Create a new Advertisement
@@ -351,6 +363,7 @@ class AdvertisementView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.advertisement)
     def delete(self, request, format=None):
         """
         DELETE: multi checbox
@@ -387,11 +400,13 @@ class AdvertisementDetail(APIView):
         except Exception, e:
             return Response(status=500)
 
+    @check_role_permission(model_key.advertisement)
     def get(self, request, pk, format=None):
         advertisement = self.get_object(pk)
         serializer = admin_serializers.AdvertisementSerializer(advertisement)
         return Response(serializer.data)
 
+    @check_role_permission(model_key.advertisement)
     def put(self, request, pk, format=None):
         advertisement = self.get_object(pk)
         serializer = admin_serializers.AdvertisementSerializer(
@@ -401,6 +416,7 @@ class AdvertisementDetail(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @check_role_permission(model_key.advertisement)
     def delete(self, request, pk, format=None):
         try: 
             advertisement = self.get_object(pk)
@@ -418,9 +434,9 @@ Get PromotionType
 @author: Trangle
 """
 
-
 class PromotionTypeView(APIView):
 
+    @check_role_permission(model_key.promotion_type)
     def get(self, request, format=None):
         try:
             list_pro_type = Promotion_Type.objects.all()
@@ -438,7 +454,8 @@ class PromotionTypeView(APIView):
 """
 
 class DenominationView(APIView):
-
+    
+    @check_role_permission(model_key.denomination)
     def get(self, request, format=None):
         """
         Get all Denomination to list 
@@ -453,6 +470,7 @@ class DenominationView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.denomination)            
     def post(self, request, format=None):
         """
         Create a new Denomination
@@ -469,6 +487,7 @@ class DenominationView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.denomination)
     def delete(self, request, format=None):
         """
         DELETE: Multi ids select
@@ -498,6 +517,7 @@ class DenominationDetailView(APIView):
         except Denomination.DoesNotExist, e:
             raise Http404
 
+    @check_role_permission(model_key.denomination)
     def get(self, request, pk, format=None):
         denomi = self.get_object(pk)
 
@@ -509,6 +529,7 @@ class DenominationDetailView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.denomination)
     def put(self, request, pk, format=None):
         denomi = self.get_object(pk)
 
@@ -523,6 +544,7 @@ class DenominationDetailView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.denomination)            
     def delete(self, request, pk, format=None):
         try:
             denomi = self.get_object(pk)
@@ -543,6 +565,7 @@ GET FeedBack
 
 class FeedbackView(APIView):
 
+    @check_role_permission(model_key.feedback)
     def get(self, request, format=None):
         """
         Get Feedback
@@ -598,6 +621,7 @@ class FeedbackView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.feedback)
     def delete(self, request, format=None):
         print "Delete"
         try:
@@ -632,11 +656,13 @@ class FeedbackDetailView(APIView):
         except Exception, e:
             return Response(status=500)
 
+    @check_role_permission(model_key.feedback)
     def get(self, request, pk, format=None):
         feedback = self.get_object(pk)
         serializer = admin_serializers.FeedBackSerializer(feedback)
         return Response(serializer.data)
 
+    @check_role_permission(model_key.feedback)
     def put(self, request, pk, format=None):
         feedback = self.get_object(pk)
         serializer = admin_serializers.FeedBackSerializer(
@@ -650,6 +676,7 @@ class FeedbackDetailView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.feedback)
     def delete(self, request, pk, format=None):
         feedback = self.get_object(pk)
         try:
@@ -712,6 +739,7 @@ Get Notification List
 
 class NotificationList(APIView):
 
+    @check_role_permission(model_key.notification)
     def get(self, request, format=None):
         try:
             lst_item = Notification.objects.all()
@@ -722,6 +750,7 @@ class NotificationList(APIView):
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.notification)
     def delete(self, request, format=None):
         """
         DELETE: Multi ids select
@@ -764,6 +793,7 @@ class NotificationDetail(APIView):
         except Notification.DoesNotExist, e:
             raise Http404
 
+    @check_role_permission(model_key.notification)
     def get(self, request, id, format=None):
         item = self.get_object(id)
         try:
@@ -775,6 +805,7 @@ class NotificationDetail(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.notification)
     def post(self, request, format=None):
         try:
             print request.data
@@ -789,6 +820,7 @@ class NotificationDetail(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.notification)
     def put(self, request, id, format=None):
         print request.data
         item = self.get_object(id)
@@ -805,6 +837,7 @@ class NotificationDetail(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.notification)
     def delete(self, request, id, format=None):
         item = self.get_object(id).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -819,6 +852,7 @@ class NotificationDetail(APIView):
 
 class NotificationUser(APIView):
 
+    @check_role_permission(model_key.notification)
     def get(self, request, id):
         try:
             notification_detail = Notification.objects.get(pk=id)
@@ -862,6 +896,7 @@ class NotificationUser(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.notification)
     def post(self, request, id):
         try:
             # Update modified time notification
@@ -915,6 +950,7 @@ import unidecode
 
 class SummaryAPI(APIView):
 
+    @check_role_permission(model_key.feedback)
     def get(self, request, format=None):
         try:
             start_date_req = self.request.query_params.get('start_date', None)
@@ -1001,6 +1037,8 @@ class SummaryAPI(APIView):
 
 
 class UserEmbedDetail(APIView):
+
+    @check_role_permission(model_key.link_card)
     def get(self, request, format=None):
         try:
             result = {}
@@ -1065,6 +1103,7 @@ class UserEmbedDetail(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.link_card)
     def put(self, request, barcode):
         """
             update user embed 
@@ -1129,6 +1168,7 @@ class UserEmbedDetail(APIView):
 
 class RelateAPI(APIView):
 
+    @check_role_permission(model_key.link_card)
     def post(self, request, format=None):
         """
             - check user exist by email
@@ -1213,6 +1253,7 @@ class RelateAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.link_card)
     def delete(self, request, id, format=None):
         """
             - check user is related
@@ -1248,6 +1289,7 @@ class RelateAPI(APIView):
 
 class FeeAPI(APIView):
 
+    @check_role_permission(model_key.fee)
     def post(self, request, format=None):
         try:
             feeSerializer = admin_serializers.FeeSerializer(data=request.data)
@@ -1268,6 +1310,7 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.fee)
     def get(self, request, id, format=None):
         try:
             fee = Fee.objects.get(id=id)
@@ -1281,6 +1324,7 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.fee)
     def put(self, request, id, format=None):
         try:
             fee = Fee.objects.get(id=id)
@@ -1307,6 +1351,7 @@ class FeeAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.fee)
     def delete(self, request, id, format=None):
         try:
             fee = Fee.objects.get(id=id)
@@ -1322,6 +1367,7 @@ class FeeAPI(APIView):
 
 class FeeApplyAPI(APIView):
 
+    @check_role_permission(model_key.fee)
     def put(self, request, id, format=None):
         try:
             fee = Fee.objects.get(id=id)
@@ -1351,6 +1397,7 @@ class FeeApplyAPI(APIView):
 
 class FeeListAPI(APIView):
 
+    @check_role_permission(model_key.fee)
     def get(self, request, format=None):
         try:
             fee = Fee.objects.all()
@@ -1362,6 +1409,7 @@ class FeeListAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.fee)
     def delete(self, request, format=None):
         try:
             list_id = request.data.get('list_id', None)
@@ -1391,6 +1439,7 @@ class FeeListAPI(APIView):
 @parser_classes((MultiPartParser, JSONParser))
 class BannerView(APIView):
 
+    @check_role_permission(model_key.banner)
     def get(self, request, format=None):
         """
         Get All Banner
@@ -1406,6 +1455,7 @@ class BannerView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.banner)
     def post(self, request, format=None):
         print "Method POST"
         try:
@@ -1420,6 +1470,7 @@ class BannerView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.banner)
     def delete(self, request, format=None):
         """
         Delete All Banner Selected
@@ -1457,6 +1508,7 @@ class BannerViewDetail(APIView):
         except Banner.DoesNotExist, e:
             raise Http404
 
+    @check_role_permission(model_key.banner)
     def get(self, request, pk, format=None):
         banner = self.get_object(pk)
         try:
@@ -1468,6 +1520,7 @@ class BannerViewDetail(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.banner)
     def put(self, request, pk, format=None):
         print('request', request.data)
         banner = self.get_object(pk)
@@ -1486,6 +1539,7 @@ class BannerViewDetail(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.banner)
     def delete(self, request, pk, format=None):
         try:
             banner = self.get_object(pk)
@@ -1529,6 +1583,7 @@ class CategoryNotifications(APIView):
 @parser_classes((MultiPartParser, JSONParser))
 class EventAPI(APIView):
 
+    @check_role_permission(model_key.event)
     def get(self, request, id):
         try:
             event = Event.objects.get(id=id)
@@ -1542,6 +1597,7 @@ class EventAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.event)
     def post(self, request, format=None):
         try:
             eventSerializer = admin_serializers.EventSerializer(
@@ -1556,6 +1612,7 @@ class EventAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.event)            
     def put(self, request, id):
         try:
             event = Event.objects.get(id=id)
@@ -1574,6 +1631,7 @@ class EventAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.event)
     def delete(self, request, id, format=None):
         try:
             event = Event.objects.get(id=id)
@@ -1597,6 +1655,7 @@ class EventAPI(APIView):
 
 class EventListAPI(APIView):
 
+    @check_role_permission(model_key.event)
     def get(self, request, format=None):
         try:
             events = Event.objects.all()
@@ -1608,6 +1667,7 @@ class EventListAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.event)
     def delete(self, request):
         try:
             list_id = request.data.get('list_id', None)
@@ -1641,6 +1701,7 @@ class PromotionLabelAPI(APIView):
         except Promotion_Label.DoesNotExist, e:
             raise Http404
 
+    @check_role_permission(model_key.promotion_label)
     def get(self, request, id):
         try:
             promotionLabel = Promotion_Label.objects.get(id=id)
@@ -1655,6 +1716,7 @@ class PromotionLabelAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.promotion_label)
     def post(self, request, format=None):
         try:
             promotionLabelSerializer = admin_serializers.PromotionLabelSerializer(
@@ -1669,6 +1731,7 @@ class PromotionLabelAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.promotion_label)
     def put(self, request, id):
         promotionLabel = self.get_object(id)
         try:
@@ -1684,6 +1747,7 @@ class PromotionLabelAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.promotion_label)
     def delete(self, request, id):
         try:
             promotionLabel = Promotion_Label.objects.get(id=id)
@@ -1707,6 +1771,7 @@ class PromotionLabelAPI(APIView):
 
 class PromotionLabelListAPI(APIView):
 
+    @check_role_permission(model_key.promotion_label)
     def get(self, request):
         try:
             promotionLabels = Promotion_Label.objects.all()
@@ -1718,6 +1783,7 @@ class PromotionLabelListAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.promotion_label)
     def delete(self, request):
         try:
             list_id = request.data.get('list_id', None)
@@ -1746,6 +1812,7 @@ class PromotionLabelListAPI(APIView):
 @parser_classes((MultiPartParser, JSONParser))
 class HotAPI(APIView):
 
+    @check_role_permission(model_key.hot)
     def get(self, request, id):
         try:
             hot = Hot.objects.get(id=id)
@@ -1759,6 +1826,7 @@ class HotAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.hot)            
     def post(self, request, format=None):
         try:
             hotSerializer = admin_serializers.HotSerializer(data=request.data)
@@ -1772,6 +1840,7 @@ class HotAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.hot)            
     def put(self, request, id):
         try:
             print request.data
@@ -1791,6 +1860,7 @@ class HotAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.hot)
     def delete(self, request, id, format=None):
         try:
             hot = Hot.objects.get(id=id)
@@ -1813,6 +1883,7 @@ class HotAPI(APIView):
 
 class HotListAPI(APIView):
 
+    @check_role_permission(model_key.hot)
     def get(self, request):
         try:
             hot = Hot.objects.all()
@@ -1823,6 +1894,7 @@ class HotListAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.hot)
     def delete(self, request):
         try:
             list_id = request.data.get('list_id', None)
@@ -1849,6 +1921,7 @@ class HotListAPI(APIView):
 @parser_classes((MultiPartParser, JSONParser))
 class PostAPI(APIView):
 
+    @check_role_permission(model_key.post)
     def get(self, request, id):
         try:
             post = Post.objects.get(id=id)
@@ -1863,6 +1936,7 @@ class PostAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.post)
     def post(self, request, format=None):
         try:
             postSerializer = admin_serializers.PostSerializer(
@@ -1877,6 +1951,7 @@ class PostAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.post)
     def put(self, request, id):
         try:
             post = Post.objects.get(id=id)
@@ -1895,6 +1970,7 @@ class PostAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.post)
     def delete(self, request, id, format=None):
         try:
             post = Post.objects.get(id=id)
@@ -1919,6 +1995,7 @@ class PostAPI(APIView):
 
 class PostListAPI(APIView):
 
+    @check_role_permission(model_key.post)
     def get(self, request):
         try:
             post = Post.objects.all()
@@ -1929,6 +2006,7 @@ class PostListAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.post)
     def delete(self, request):
         try:
             list_id = request.data.get('list_id', None)
@@ -1976,6 +2054,7 @@ class PostTypeListAPI(APIView):
 @parser_classes((JSONParser,))
 class FAQAPI(APIView):
 
+    @check_role_permission(model_key.faq)
     def get(self, request, id):
         try:
             faq = FAQ.objects.get(id=id)
@@ -1989,6 +2068,7 @@ class FAQAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.faq)
     def post(self, request, format=None):
         try:
             faqSerializer = admin_serializers.FAQSerializer(data=request.data)
@@ -2002,6 +2082,7 @@ class FAQAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.faq)
     def put(self, request, id):
         try:
             faq = FAQ.objects.get(id=id)
@@ -2019,6 +2100,7 @@ class FAQAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.faq)
     def delete(self, request, id, format=None):
         try:
             faq = FAQ.objects.get(id=id)
@@ -2042,6 +2124,7 @@ class FAQAPI(APIView):
 
 class FAQListAPI(APIView):
 
+    @check_role_permission(model_key.faq)
     def get(self, request):
         try:
             faq = FAQ.objects.all()
@@ -2052,6 +2135,7 @@ class FAQListAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.faq)
     def delete(self, request):
         try:
             list_id = request.data.get('list_id', None)
@@ -2307,6 +2391,7 @@ class RolesView(APIView):
 @parser_classes((MultiPartParser,))
 class GameAPI(APIView):
 
+    @check_role_permission(model_key.game)
     def get(self, request, id):
         try:
             game = Game.objects.get(id=id)
@@ -2320,6 +2405,7 @@ class GameAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.game)
     def post(self, request, format=None):
         try:
             gameSerializer = admin_serializers.GameSerializer(
@@ -2334,6 +2420,7 @@ class GameAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.game)
     def put(self, request, id):
         try:
             game = Game.objects.get(id=id)
@@ -2352,6 +2439,7 @@ class GameAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.game)
     def delete(self, request, id, format=None):
         try:
             game = Game.objects.get(id=id)
@@ -2375,6 +2463,7 @@ class GameAPI(APIView):
 
 class GameListAPI(APIView):
 
+    @check_role_permission(model_key.game)
     def get(self, request):
         try:
             game = Game.objects.all()
@@ -2385,6 +2474,7 @@ class GameListAPI(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.game)
     def delete(self, request):
         try:
             list_id = request.data.get('list_id', None)
@@ -2431,6 +2521,7 @@ class TypeListAPI(APIView):
 @parser_classes((MultiPartParser, JSONParser))
 class HotAdvsView(APIView):
 
+    @check_role_permission(model_key.hot_ads)
     def get(self, request):
         try:
             hot_advs = Hot_Advs.objects.all().order_by('-created')
@@ -2442,6 +2533,7 @@ class HotAdvsView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.hot_ads)
     def post(self, request, format=None):
         print "Method POST"
         try:
@@ -2456,6 +2548,7 @@ class HotAdvsView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.hot_ads)
     def delete(self, request, format=None):
         """
         Delete All Hot_Advs Selected
@@ -2493,6 +2586,7 @@ class HotAdvsDetailView(APIView):
             print e
             raise Http404
 
+    @check_role_permission(model_key.hot_ads)
     def get(self, request, pk, format=None):
         hot_ads = self.get_object(pk)
         try:
@@ -2503,6 +2597,7 @@ class HotAdvsDetailView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.hot_ads)
     def put(self, request, pk, format=None):
         hot_ads = self.get_object(pk)
 
@@ -2518,6 +2613,7 @@ class HotAdvsDetailView(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.hot_ads)
     def delete(self, request, pk, format=None):
         try:
             hot_ads = self.get_object(pk)
@@ -2640,6 +2736,7 @@ class OpenTimeAPI(APIView):
     # list for create date
     create_objs = list()
 
+    @check_role_permission(model_key.open_time)
     def post( self, request, format = None):
         try:
             serializer = admin_serializers.OpenTimeSerializer(data = request.data)
@@ -2712,7 +2809,7 @@ class OpenTimeAPI(APIView):
         # update date in db
         OpenTime.objects.filter( open_date__in = update_objs ).update(start_time=start_time, end_time=end_time)
 
-
+    @check_role_permission(model_key.open_time)
     def get(self, request):
         try:
             month = request.query_params.get('month', None)
