@@ -144,7 +144,9 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.twitter.TwitterOAuth',  # OAuth1.0
-    'django.contrib.auth.backends.ModelBackend',
+    # 'django.contrib.auth.backends.ModelBackend',
+    # Acept user not active login and show error
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
 )
 
 SOCIAL_AUTH_PIPELINE = (

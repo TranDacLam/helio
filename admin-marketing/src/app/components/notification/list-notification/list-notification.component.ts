@@ -8,6 +8,7 @@ import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { User } from '../../../shared/class/user';
 import 'rxjs/add/observable/throw';
 import * as datatable_config from '../../../shared/commons/datatable_config';
+import * as CONSTANT from './../../../shared/commons/constant';
 
 declare var bootbox:any;
 
@@ -36,6 +37,7 @@ export class ListNotificationComponent implements OnInit {
     user_current: User;
 
     lang: string = 'vi';
+    SYSTEM_ADMIN: number;
 
     constructor(
         private notificationService: NotificationService, 
@@ -61,6 +63,7 @@ export class ListNotificationComponent implements OnInit {
         // create new object from 2 object use operator spread es6
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
 
+        this.SYSTEM_ADMIN = CONSTANT.SYSTEM_ADMIN;
         this.getNotifications();
         // get current user
         this.user_current = this.variable_globals.user_current;

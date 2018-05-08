@@ -14,6 +14,7 @@ import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { User } from '../../../shared/class/user';
 import { env } from '../../../../environments/environment';
 import * as moment from 'moment';
+import * as CONSTANT from './../../../shared/commons/constant';
 
 declare var bootbox:any;
 declare var $: any;
@@ -48,6 +49,8 @@ export class ListPromotionComponent implements OnInit {
     api_domain:string = "";
     lang: string = 'vi';
     date_now: any;
+    ID_TYPE_PROMOTION_DAI_TRA: number;
+    SYSTEM_ADMIN: number;
 
     /*
         Using trigger becase fetching the list of feedbacks can be quite long
@@ -66,6 +69,8 @@ export class ListPromotionComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.SYSTEM_ADMIN =  CONSTANT.SYSTEM_ADMIN;
+        this.ID_TYPE_PROMOTION_DAI_TRA = CONSTANT.ID_TYPE_PROMOTION_DAI_TRA;
     	this.getAllPromotion();
         this.dtOptions = datatable_config.data_config('Khuyến Mãi');
         let dt_options_custom = {
@@ -244,7 +249,7 @@ export class ListPromotionComponent implements OnInit {
     */
     isDisable(promotion){
         let end_date = promotion.end_date ? moment(promotion.end_date, "DD/MM/YYYY").toDate() : '';
-        if((promotion.is_draft === false || (end_date !== '' && end_date < this.date_now)) && this.user_current.role !== 1){
+        if((promotion.is_draft === false || (end_date !== '' && end_date < this.date_now)) && this.user_current.role !== this.SYSTEM_ADMIN){
             return true;
         }
         return null;
@@ -256,7 +261,7 @@ export class ListPromotionComponent implements OnInit {
     */
     isCheckDisplay(promotion){
         let end_date = promotion.end_date ? moment(promotion.end_date, "DD/MM/YYYY").toDate() : '';
-        if((promotion.is_draft === false || (end_date !== '' && end_date < this.date_now)) && this.user_current.role !== 1){
+        if((promotion.is_draft === false || (end_date !== '' && end_date < this.date_now)) && this.user_current.role !== this.SYSTEM_ADMIN){
             return true;
         }
         return false;
@@ -268,7 +273,7 @@ export class ListPromotionComponent implements OnInit {
     */
     isDisableQRCode(promotion){
         let end_date = promotion.end_date ? moment(promotion.end_date, "DD/MM/YYYY").toDate() : '';
-        if((end_date !== '' && end_date < this.date_now) && this.user_current.role !== 1){
+        if((end_date !== '' && end_date < this.date_now) && this.user_current.role !== this.SYSTEM_ADMIN){
             return true;
         }
         return null;

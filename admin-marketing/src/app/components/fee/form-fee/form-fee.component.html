@@ -15,7 +15,7 @@
 	{{error.val}}
 	</h4>
 	</ng-container>
-	<form [formGroup]="feeAddForm" *ngIf="fee">
+	<form [formGroup]="feeAddForm" *ngIf="fee" (click)="removeMessage()">
 		<div class="form-group row">
 			<div class="col-sm-1">
 				<label>Phí</label>

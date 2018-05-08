@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { sites } from '../../shared/class/home';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  	constructor() { }
 
-  ngOnInit() {
-  }
+  	sites = sites;
+  	
+  	ngOnInit() {
+  	}
 
 }

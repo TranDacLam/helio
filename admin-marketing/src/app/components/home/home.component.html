@@ -2,31 +2,14 @@
 <div class="row">
 	<div class="col-md-6">
 		<div class="list-group">
-			<a routerLink="/advertisement-list" class="list-group-item list-group-item-action">Quảng Cáo</a>
-			<a routerLink="/banner-list" class="list-group-item list-group-item-action">Banner</a>
-			<a routerLink="/event/list" class="list-group-item list-group-item-action">Sự Kiện</a>
-			<a routerLink="/faq/list" class="list-group-item list-group-item-action">Câu Hỏi Thường Gặp</a>
-			<a routerLink="/feedback-list" class="list-group-item list-group-item-action">Phản Hồi</a>
-			<a routerLink="/game/list" class="list-group-item list-group-item-action">Trò Chơi</a>
-			<a routerLink="/hot/list" class="list-group-item list-group-item-action">Hot</a>
-			<a routerLink="/post/list" class="list-group-item list-group-item-action">Bài Viết</a>
-			<a routerLink="/promotion-label/list" class="list-group-item list-group-item-action">Nhãn Khuyến Mãi</a>
-			<a routerLink="/link-card-list" class="list-group-item list-group-item-action">Thẻ Liên Kết</a>
-			<a routerLink="/notification/list" class="list-group-item list-group-item-action">Quản Lý Thông Báo</a>
-			<a routerLink="/promotions" class="list-group-item list-group-item-action">Quản Lý Khuyến Mãi</a>
-
-			<a routerLink="/fee/list" class="list-group-item list-group-item-action">Phí Giao Dịch</a>
-			<a routerLink="/denomination-list" class="list-group-item list-group-item-action">Mệnh Giá Nạp Tiền</a>
-			<a routerLink="/hot-advs-list" class="list-group-item list-group-item-action">Hot Ads</a>
-			<a routerLink="/promotion-type-list" class="list-group-item list-group-item-action">Loại Khuyến Mãi</a>
-			<a routerLink="/open-time" class="list-group-item list-group-item-action">Giờ Mở Cửa</a>
+			<a *ngFor="let site of sites | sortString:'name'" routerLink="{{ site.link }}" class="list-group-item list-group-item-action" >{{ site.name }}</a>
 		</div>
 	</div>
 	<div class="col-md-6">
 		<div class="list-group">
-			<a routerLink="/user-list" class="list-group-item">User</a>
 			<a routerLink="/role-permission" class="list-group-item list-group-item-action">Phân Quyền Cho Role</a>
 			<a routerLink="/user-permission" class="list-group-item list-group-item-action">Phân Quyền Cho User</a>
+			<a routerLink="/user-list" class="list-group-item">User</a>
 		</div>
 	</div>
 </div>

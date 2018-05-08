@@ -3,7 +3,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item"><a routerLink="/notification/list">Quản Lý Thông Báo</a></li>
+            <li class="breadcrumb-item"><a routerLink="/notification/list">Thông Báo</a></li>
             <li class="breadcrumb-item active" aria-current="page">Chi Tiết Thông Báo</li>
         </ol>
     </nav>
@@ -35,7 +35,7 @@
         <p>Tên Khuyến Mãi: {{promotion.name}}</p>
     </span>
     <p *ngIf="user_current"><button class="btn custom-button" (click)="checkSendNotification()" 
-            [disabled]="user_current.role !== 1 && noti_detail.sent_date"
+            [disabled]="user_current.role !== SYSTEM_ADMIN && noti_detail.sent_date"
         >
             <i class="fa fas fa-paper-plane icon-button"></i>
             <ng-container *ngIf="!noti_detail.sent_date">GỬI THÔNG BÁO</ng-container>
@@ -45,7 +45,7 @@
         </button>
     </p>
     <p *ngIf="user_current">
-        <input type="checkbox" (change)="isUpdateNoti($event)" [disabled]="user_current.role !== 1"/> 
+        <input type="checkbox" (change)="isUpdateNoti($event)" [disabled]="user_current.role !== SYSTEM_ADMIN"/> 
         Sửa thông báo đã gửi (Chức năng này chỉ dành cho System Admin)
     </p>
     <p *ngIf="is_update">

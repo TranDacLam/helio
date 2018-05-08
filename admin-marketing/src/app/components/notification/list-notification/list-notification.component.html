@@ -3,13 +3,13 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Quản Lý Thông Báo</li>
+            <li class="breadcrumb-item active" aria-current="page">Thông Báo</li>
         </ol>
     </nav>
 </div>
 <!-- End breadcrumb -->
 <div class="row text-center">
-    <p class="title">Quản Lý Thông Báo</p>
+    <p class="title">Thông Báo</p>
 </div>
 <div class="row mt-50 mb-15 custom-title">
     <div class="col-xs-12 col-sm-12">
@@ -49,10 +49,10 @@
         </thead>
         <tbody>
             <tr *ngFor="let noti of notifications" 
-                class="row-data {{(noti.sent_date && user_current?.role !== 1) ? 'disabled_checkbox': ''}}">
+                class="row-data {{(noti.sent_date && user_current?.role !== SYSTEM_ADMIN) ? 'disabled_checkbox': ''}}">
                 <td>
                     <input type="checkbox" (change)="selectCheckbox($event);" 
-                        [disabled]="noti.sent_date && user_current?.role !== 1"
+                        [disabled]="noti.sent_date && user_current?.role !== SYSTEM_ADMIN"
                     />
                 </td>
                 <td>{{ noti.id }}</td>

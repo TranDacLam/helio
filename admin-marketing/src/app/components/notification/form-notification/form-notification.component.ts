@@ -13,6 +13,7 @@ import { User } from '../../../shared/class/user';
 import 'rxjs/add/observable/throw';
 import { env } from '../../../../environments/environment';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
+import * as CONSTANT from './../../../shared/commons/constant';
 
 
 declare var $ :any; // declare Jquery
@@ -59,6 +60,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
     lang = 'vi';
     promotion_id: number;
     title_page = '';
+    SYSTEM_ADMIN: number;
 
     constructor(
         private notificationService: NotificationService,
@@ -83,7 +85,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                 this.lang = params.lang;
             }
         });
-
+        this.SYSTEM_ADMIN =  CONSTANT.SYSTEM_ADMIN;
         this.getCategory();
         // get current user
         this.user_current = this.variable_globals.user_current;
@@ -366,7 +368,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
     */
     isDisable(){
         if(this.user_current && this.noti && this.noti.id){
-            if(this.noti.sent_date && this.user_current.role !== 1){
+            if(this.noti.sent_date && this.user_current.role !== this.SYSTEM_ADMIN){
                 return true;
             }
         }

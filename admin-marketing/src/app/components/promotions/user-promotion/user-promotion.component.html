@@ -3,7 +3,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item"><a routerLink="/promotions">Quản Lý Khuyến Mãi</a></li>
+            <li class="breadcrumb-item"><a routerLink="/promotions">Khuyến Mãi</a></li>
             <li class="breadcrumb-item active" aria-current="page">Chi Tiết Khuyến Mãi</li>
         </ol>
     </nav>
@@ -25,9 +25,13 @@
             <p><label>Ngày Tạo : </label> {{promotion.created | date : 'dd/MM/yyyy'}}</p>
             <p><label>Người Triển Khai :</label> {{ promotion.user_implementer?.email }}</p>
             <p><label>Loại Khuyến Mãi : </label> {{ promotion.promotion_type?.name }}</p>
-            <p><label>QR code : </label> <img src="{{api_domain}}{{promotion.QR_code}}" *ngIf="promotion.QR_code" height="50px" width="50px" /></p>
+            <p><label>QR code : </label> 
+                <ng-container *ngIf="ID_TYPE_PROMOTION_DAI_TRA !== promotion.promotion_type?.id">
+                    <img src="{{api_domain}}{{promotion.QR_code}}" *ngIf="promotion.QR_code" height="50px" width="50px" />
+                </ng-container>
+            </p>
             <p *ngIf="user_current">
-        <input type="checkbox" (change)="isUpdatePromotion($event)" [disabled]="user_current.role !== 1"/> 
+        <input type="checkbox" (change)="isUpdatePromotion($event)" [disabled]="user_current.role !== SYSTEM_ADMIN"/> 
             Sửa khuyến mãi đã triển khai (Chức năng này chỉ dành cho System Admin)
         </p>
         <p *ngIf="is_update">
@@ -39,7 +43,7 @@
         </div>
         
     </div>
-    <div class="col-sm-2 qr_code">
+    <div class="col-sm-2 qr_code" *ngIf="ID_TYPE_PROMOTION_DAI_TRA !== promotion.promotion_type?.id">
         <button *ngIf="!promotion.QR_code && user_current" class="btn custom-button btn-block text-right" 
             (click)="generator_QR_code($event, promotion.id)"
             [attr.disabled]="isDisableQRCode(promotion)"
