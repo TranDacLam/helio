@@ -15,6 +15,7 @@ import * as datatable_config from './shared/commons/datatable_config';
 export class AppComponent {
 
     token = '';
+    
   	
     constructor(
         private router: Router,
