@@ -25,7 +25,7 @@ export class AuthRequestOptions extends BaseRequestOptions {
 		} else {
 			newOptions.headers.set(AUTH_HEADER_KEY, `${AUTH_PREFIX} ${token}`);
 			// Current time + 15 minutes
-			var exp_time = moment().add(1, 'minutes').valueOf().toString();
+			var exp_time = moment().add(15, 'minutes').valueOf().toString();
 			localStorage.setItem('time', exp_time);
 		}
 		
