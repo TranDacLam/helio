@@ -30,6 +30,7 @@ export class AppComponent {
         if(!localStorage.getItem('current_user') || !localStorage.getItem('auth_token')){
             localStorage.removeItem('auth_token');
             localStorage.removeItem('current_user');
+            localStorage.removeItem('time');
             this.router.navigate(['/login']);
         }
     }
@@ -41,6 +42,7 @@ export class AppComponent {
     logout(){
         localStorage.removeItem('auth_token');
         localStorage.removeItem('current_user');
+        localStorage.removeItem('time');
         this.variable_globals.user_current = null;
         this.toastr.success(`Đăng xuất thành công`);
         this.router.navigate(['/login']);
