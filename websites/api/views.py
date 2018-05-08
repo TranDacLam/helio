@@ -1302,6 +1302,24 @@ def gift_user(request):
 
             obj_promotion = Promotion.objects.get(pk=promotion_id)
 
+            current_time = datetime.datetime.now()
+
+            if(obj_promotion.apply_date and obj_promotion.apply_time):
+                start_datetime = datetime.datetime.combine(
+                    obj_promotion.apply_date, obj_promotion.apply_time)
+                if start_datetime > current_time:
+                    error = {
+                        "code": 400, "message": _("Error. Promotion Is Not Start."), "fields": "promotion_id"}
+                    return Response(error, status=400)
+
+            if(obj_promotion.end_date and obj_promotion.end_time):
+                end_datetime = datetime.datetime.combine(
+                    obj_promotion.end_date, obj_promotion.end_time)
+                if end_datetime < current_time:
+                    error = {
+                        "code": 400, "message": _("Error. Promotion expired."), "fields": "promotion_id"}
+                    return Response(error, status=400)
+
             # CHECK Promotion Category is new user install app helio
             if obj_promotion.id == core_constants.PROMOTION_ID_SETUP_DEVICE:
                 return gift_install_app(user, promotion_id)
