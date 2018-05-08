@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, RequestOptions, Http } from "@angular/http";
 import { HttpClientModule } from '@angular/common/http';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app.routing';
 import { OwlDateTimeModule, OwlDateTimeIntl, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime'; // date and time
@@ -189,6 +190,7 @@ export const MY_MOMENT_FORMATS = {
         maxOpened: 1,
         autoDismiss: true
     }), // ToastrModule added
+    Ng4LoadingSpinnerModule.forRoot() //Ng Loading data
   ],
   providers: [
     AdvertisementService,
