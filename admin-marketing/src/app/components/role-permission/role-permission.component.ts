@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ScrollTop } from './../../shared/commons/scroll-top';
 import { HandleError } from '../../shared/commons/handle_error';
 import { VariableGlobals } from '../../shared/commons/variable_globals';
+import * as CONSTANT from '../../shared/commons/constant';
 
 @Component({
     selector: 'app-role-permission',
@@ -20,6 +21,7 @@ export class RolePermissionComponent implements OnInit {
     user_current: User;
     models = [];
     list_role_permission = [];
+    SYSTEM_ADMIN: number;
 
     constructor(
         private router: Router,
@@ -32,7 +34,7 @@ export class RolePermissionComponent implements OnInit {
 
     ngOnInit() {
         this.getRole();
-
+        this.SYSTEM_ADMIN =  CONSTANT.SYSTEM_ADMIN;
         this.user_current = this.variable_globals.user_current;
     }
 

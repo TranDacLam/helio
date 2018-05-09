@@ -36,7 +36,7 @@ export class FeedbackListComponent implements OnInit {
 
     // Using trigger becase fetching the list of feedbacks can be quite long
     // thus we ensure the data is fetched before rensering
-    dtTrigger: Subject<any> = new Subject();
+    // dtTrigger: Subject<any> = new Subject();
     constructor(
         private feedbackService: FeedbackService,
         private route: ActivatedRoute,
@@ -77,7 +77,7 @@ export class FeedbackListComponent implements OnInit {
                     (result) => {
                         this.feedbacks = result;
                         this.length_all = this.feedbacks.length;
-                        this.dtTrigger.next();
+                        // this.dtTrigger.next();
                     },
                     (error) => {
                         this.handleError.handle_error(error);
