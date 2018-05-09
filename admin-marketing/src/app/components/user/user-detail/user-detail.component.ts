@@ -157,6 +157,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                             if (data.new_password !== '' || this.user_current.email !== data.email){
                                 localStorage.removeItem('auth_token');
                                 localStorage.removeItem('current_user');
+                                localStorage.removeItem('time');
                                 this.variable_globals.user_current = null;
                                 self.router.navigate(['/login']);
                             } else {

@@ -29,6 +29,7 @@ export class AuthHttp extends Http {
                 case 401 || 403:
                     localStorage.removeItem('auth_token');
                     localStorage.removeItem('current_user');
+                    localStorage.removeItem('time');
                     this.variable_globals.user_current = null;
                     this.router.navigate(['/login']);
                     return Observable.of(error);
