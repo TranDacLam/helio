@@ -5,7 +5,7 @@
 <div class="row text-center">
     <p class="title">PHÂN QUYỀN CHO USER</p>
 </div>
-<div *ngIf="user_current?.role == 1">
+<div *ngIf="user_current?.role == SYSTEM_ADMIN">
     <div [hidden]="!roles" class="wrapper-permission">
         <div class="row permission-content">
             <div class="wrap-head">

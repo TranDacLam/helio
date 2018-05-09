@@ -225,12 +225,12 @@
 						#input
 						[attr.disabled]="readonly_value ? 'disabled' : null"
 						>
-						<button (click)="showPassword(input)" [disabled]="user.is_staff == 0 || user_current?.role !== 1" type="button" class="file-icon btn btn-default"><span id="toggleShowHide" class="fa fa-eye-slash"></span></button>
+						<button (click)="showPassword(input)" [disabled]="user.is_staff == 0 || user_current?.role !== SYSTEM_ADMIN" type="button" class="file-icon btn btn-default"><span id="toggleShowHide" class="fa fa-eye-slash"></span></button>
 						<show-error-valid [control]="formUser.get('new_password')"></show-error-valid>
 						<div *ngIf="errorMessage">
 							<p class='errors'> {{ errorMessage.password }} </p>
 						</div>
-						<input type="checkbox" [disabled]="user.is_staff == 0 || user_current?.role !== 1" (change)="ChangeReadonly($event)"> 
+						<input type="checkbox" [disabled]="user.is_staff == 0 || user_current?.role !== SYSTEM_ADMIN" (change)="ChangeReadonly($event)"> 
 						Thay đổi mật khẩu(Chức năng này chỉ dành cho System Admin)
 		        	</div>
 	        	</div>

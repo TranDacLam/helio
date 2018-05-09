@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UserMultiselectComponent } from '../user-multiselect/user-multiselect.component';
 import { HandleError } from '../../shared/commons/handle_error';
 import { VariableGlobals } from '../../shared/commons/variable_globals';
+import * as CONSTANT from '../../shared/commons/constant';
 
 @Component({
     selector: 'app-user-permission',
@@ -30,6 +31,7 @@ export class UserPermissionComponent implements OnInit {
     user_list_right: User[];
     user_current: User;
     roles: Role[];
+    SYSTEM_ADMIN: number;
     @ViewChild(UserMultiselectComponent)
     userMultiselect: UserMultiselectComponent
 
@@ -103,7 +105,7 @@ export class UserPermissionComponent implements OnInit {
             searchable: false
         };
         let column_356 = { targets: [3 ,5 ,6 ],visible: false, searchable: false };
-        if(this.user_current.role == 1){
+        if(this.userMultiselect){
             this.userMultiselect.dtOptions_right.columnDefs.push(column_0, column_2, column_356);
             this.userMultiselect.dtOptions_left.columnDefs.push(column_0, column_2,column_356);
             this.userMultiselect.dtOptions_right.scrollX = false;
@@ -113,7 +115,7 @@ export class UserPermissionComponent implements OnInit {
 
     ngOnInit() {
         this.getRoles();
-
+        this.SYSTEM_ADMIN =  CONSTANT.SYSTEM_ADMIN;
         this.user_current = this.variable_globals.user_current;
     }
 
