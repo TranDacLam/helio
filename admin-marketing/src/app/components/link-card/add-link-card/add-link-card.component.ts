@@ -133,11 +133,7 @@ export class AddLinkCardComponent implements OnInit {
                 },
                 (error) => {
                     // code 400, error validate
-                    if(error.code === 400){
-                        this.toastr.error(`${error.message}`);
-                    }else{
-                        this.handleError.handle_error(error);;
-                    }
+                    this.handleError.handle_error(error);
                 }
             );
         }

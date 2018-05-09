@@ -178,11 +178,12 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                         }
                     },
                     (error) => {
-                        if (error.code == 400) {
-                            if (error.message.non_field_errors) {
-                                self.toastr.error(`${error.message.non_field_errors}`);
+                        if (error.status == 400) {
+                            let error_txt = JSON.parse(error.response);
+                            if (error_txt.message.non_field_errors) {
+                                self.toastr.error(`${error_txt.message.non_field_errors}`);
                             } else {
-                                this.errorMessage = error.message
+                                this.errorMessage = error_txt.message
                             }
                         } else {
                             self.handleError.handle_error(error);
