@@ -2832,7 +2832,7 @@ class UserRoleAPI(APIView):
 
     def get( self, request):
         try:
-            model_name = Model_Name.objects.all()
+            model_name = Model_Name.objects.all().order_by('name')
             model_name_serializer = admin_serializers.RolesPerDisplaySerializer( model_name, many = True)
             return Response(model_name_serializer.data)
         except Exception, e:
