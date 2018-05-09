@@ -76,9 +76,6 @@ urlpatterns = [
 	url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetailView.as_view(), name="users_detail"),
 
 	url(r'^role/$', views.RolesView.as_view(), name="role"),
-	
-	url(r'^upload_file/$', views.postUpload, name="upload-file"),
-
 
 	url(r'^game_detail/$', views.GameAPI.as_view(), name="game"),
 	url(r'^game_detail/(?P<id>[0-9]+)/$', views.GameAPI.as_view(), name="game-detail"),
