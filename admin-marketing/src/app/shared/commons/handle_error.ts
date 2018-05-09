@@ -8,20 +8,23 @@ export class HandleError {
 	constructor(private router: Router, private toastr: ToastrService,){
 
     }
-	handle_error(error){
-		if (error.status == 403 || error.code == 403 ){
-			if (error.message){
-				return this.toastr.warning(`${error.message}`);
-			}
-			return this.toastr.warning(`Bạn không có quyền.`);
-		}
-		if (error.status == 401 || error.code == 401 ){
-			return this.router.navigate(['/login']);
-		}
-		if (error.status == 400 || error.code == 400 ){
-            return this.router.navigate(['/error', { message: error.message}]);
+	handle_error(error) {
+		switch (error.status) {
+			case 401:
+				return this.router.navigate(['/login']);
+            case 403: 
+                return this.toastr.warning(`${error.json().message}`);
+            case 400: 
+                return this.router.navigate(['/error', { message: error.json().message}]);
+            case 404:
+            	return this.router.navigate(['/error', { message: 'HTTP 404 Not Found'}]);
+            case 500:
+            	return this.router.navigate(['/error', { message: '500 - Internal Server Error'}]);
+            case 0:
+            	return this.router.navigate(['/error', { message: 'ERR_CONNECTION_REFUSED'}]);
+            default:
+                return this.router.navigate(['/error', { message: '501 - Other Error'}]);
+
         }
-        return this.router.navigate(['/error', { message: error.message}]);
-        
 	};
 }

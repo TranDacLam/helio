@@ -24,18 +24,7 @@ export class AuthHttp extends Http {
 
     request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
         this.showLoader();
-        return super.request(url, options).catch((error: Response) => {
-            switch (error.status) {
-                case 404:
-                    return Observable.throw("HTTP 404 Not Found");
-                case 0:
-                    return Observable.throw("ERR_CONNECTION_REFUSED");
-                case 500:
-                    return Observable.throw("500 - Internal Server Error")
-                default:
-                    return Observable.throw(error);
-            }
-        }).finally(() => {
+        return super.request(url, options).finally(() => {
             this.hideLoader();
         });
     }
