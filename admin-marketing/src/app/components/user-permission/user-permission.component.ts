@@ -9,7 +9,7 @@ import { Subject } from 'rxjs/Subject';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserMultiselectComponent } from '../user-multiselect/user-multiselect.component';
-
+import { HandleError } from '../../shared/commons/handle_error';
 
 
 @Component({
@@ -22,7 +22,8 @@ export class UserPermissionComponent implements OnInit {
     constructor(
         private userPermissionService: UserPermissionService,
         private toastr: ToastrService,
-        private router: Router) { }
+        private router: Router,
+        private handleError:HandleError) { }
 
     user_list_left: User[];
     user_list_right: User[];
@@ -43,7 +44,7 @@ export class UserPermissionComponent implements OnInit {
                 this.user_list_left = data.users_all;
             },
             error => {
-                this.router.navigate(['/error', { message: error.json().message }]);
+                this.handleError.handle_error(error);
             }
         )
     }
@@ -62,7 +63,7 @@ export class UserPermissionComponent implements OnInit {
                 }
             },
             error => {
-                this.router.navigate(['/error', { message: error.json().message }]);
+                this.handleError.handle_error(error);
             }
         )
     }
@@ -77,12 +78,7 @@ export class UserPermissionComponent implements OnInit {
                 this.toastr.success(`Thay đổi danh sách thành công.`);
             },
             error => {
-                if (error.status == 400) {
-                    this.toastr.error(`${error.json().message}`);
-                } else {
-                    this.router.navigate(['/error', { message: error.json().message }]);
-                }
-
+                this.handleError.handle_error(error);
             }
         )
     }

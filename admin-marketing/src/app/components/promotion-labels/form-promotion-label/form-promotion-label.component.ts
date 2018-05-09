@@ -5,6 +5,7 @@ import { PromotionLabel } from '../../../shared/class/promotion-label';
 import { PromotionLabelService } from '../../../shared/services/promotion-label.service';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { ToastrService } from 'ngx-toastr';
+import { HandleError } from '../../../shared/commons/handle_error';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -35,7 +36,8 @@ export class FormPromotionLabelComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private route: ActivatedRoute,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -73,7 +75,7 @@ export class FormPromotionLabelComponent implements OnInit {
                 this.creatForm();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -112,7 +114,7 @@ export class FormPromotionLabelComponent implements OnInit {
                         if(error.code === 400){
                             this.errorMessage = error.message;
                         }else{
-                            this.router.navigate(['/error', { message: error.message}]);
+                            this.handleError.handle_error(error);;
                         }
                     }
                 );
@@ -127,7 +129,7 @@ export class FormPromotionLabelComponent implements OnInit {
                         if(error.code === 400){
                             this.errorMessage = error.message;
                         }else{
-                            this.router.navigate(['/error', { message: error.message}]);
+                            this.handleError.handle_error(error);;
                         }
                     }
                 );
@@ -174,7 +176,7 @@ export class FormPromotionLabelComponent implements OnInit {
                 this.router.navigate(['/promotion-label/list']);
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }

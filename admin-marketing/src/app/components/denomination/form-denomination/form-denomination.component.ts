@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DenominationService } from '../../../shared/services/denomination.service';
 import { Router, ActivatedRoute } from "@angular/router";
 import { DenominationValidators } from './../../../shared/validators/denomination-validators';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 declare var bootbox: any;
 @Component({
@@ -32,6 +33,7 @@ export class FormDenominationComponent implements OnInit {
         private denominationService: DenominationService,
         private toastr: ToastrService,
         private route: ActivatedRoute,
+        private handleError:HandleError
 
     ) { }
 
@@ -74,7 +76,7 @@ export class FormDenominationComponent implements OnInit {
                 this.createForm();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -101,13 +103,7 @@ export class FormDenominationComponent implements OnInit {
                         this.router.navigate(['/denomination-list'])
                     },
                     (error) => {
-                        if (error.status == 400) {
-                            // Show message on form
-                            this.errorMessage = error.json();
-                        } else {
-                            // nagivate to component error and show message
-                            this.router.navigate(['/error', { message: error }]);
-                        }
+                        this.handleError.handle_error(error);
                     }      
                 )
             }else{
@@ -118,13 +114,7 @@ export class FormDenominationComponent implements OnInit {
                         this.router.navigate(['/denomination-list'])
                     },
                     (error) => {
-                        if (error.status == 400) {
-                            // Show message on form
-                            this.errorMessage = error.json();
-                        } else {
-                            // nagivate to component error and show message
-                            this.router.navigate(['/error', { message: error}]);
-                        }
+                        this.handleError.handle_error(error);
                     }
                 )
             }
@@ -170,7 +160,7 @@ export class FormDenominationComponent implements OnInit {
                 this.router.navigate(['/denomination-list']);
             },
             error => {
-                this.router.navigate(['/error', { message: error }]);
+                this.handleError.handle_error(error);
             }
         );
     }

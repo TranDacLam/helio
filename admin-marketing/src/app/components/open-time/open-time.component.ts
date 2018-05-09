@@ -8,6 +8,7 @@ import { OpenTimeService } from './../../shared/services/open-time.service';
 import * as moment from 'moment';
 import { ValidateSubmit } from './../../shared/validators/validate-submit';
 import { ToastrService } from 'ngx-toastr';
+import { HandleError } from '../../shared/commons/handle_error';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -44,6 +45,7 @@ export class OpenTimeComponent implements OnInit {
         private route: ActivatedRoute,
         private openTimeService: OpenTimeService,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -90,7 +92,7 @@ export class OpenTimeComponent implements OnInit {
                 }
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -240,7 +242,7 @@ export class OpenTimeComponent implements OnInit {
                     if(error.code === 400){
                         this.errorMessage = error.message;
                     }else{
-                        this.router.navigate(['/error', { message: error.message}]);
+                        this.handleError.handle_error(error);;
                     }
                 }
             );

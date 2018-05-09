@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NumberValidators } from './../../../shared/validators/number-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { Fee } from '../../../shared/class/fee';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 // Using bootbox 
 declare var bootbox: any;
@@ -22,7 +23,8 @@ export class FormFeeComponent implements OnInit {
         private feeService: FeeService,
         private router: Router,
         private route: ActivatedRoute,
-        private toastr: ToastrService) {
+        private toastr: ToastrService,
+        private handleError:HandleError) {
 
     }
 
@@ -64,11 +66,7 @@ export class FormFeeComponent implements OnInit {
                         this.toastr.success(`Chỉnh sửa "${this.data} ${this.feeAddForm.value.fee_type}" thành công`);
                     },
                     (error) => {
-                        if (error.status === 400) {
-                            this.errorMessage = error.json().message;
-                        } else {
-                            this.router.navigate(['/error', { message: error}]);
-                        }
+                        this.handleError.handle_error(error);
                     }
                 )
             }else{
@@ -79,11 +77,7 @@ export class FormFeeComponent implements OnInit {
                         this.toastr.success(`Thêm mới "${this.data} ${this.feeAddForm.value.fee_type}" thành công`);
                     },
                     (error) => {
-                        if (error.status === 400) {
-                            this.errorMessage = error.json().message;
-                        } else {
-                            this.router.navigate(['/error', { message: error}]);
-                        }
+                        this.handleError.handle_error(error);
                     }
                 );
             }   
@@ -112,11 +106,7 @@ export class FormFeeComponent implements OnInit {
                 this.createForm();
             },
             (error) => {
-                if(error.status == 400) {
-                    this.router.navigate(['/error', { message: error.json().message }])
-                } else {
-                    this.router.navigate(['/error', { message: error }])
-                }
+                this.handleError.handle_error(error);
             }
         )
     }
@@ -157,11 +147,7 @@ export class FormFeeComponent implements OnInit {
                 this.router.navigate(['/fee/list']);
             },
             (error) => {
-                if(error.status == 400) {
-                    this.router.navigate(['/error', { message: error.json().message}]);
-                }else{
-                    this.router.navigate(['/error', { message: error}]);
-                }
+                this.handleError.handle_error(error);
             }
         )
     }

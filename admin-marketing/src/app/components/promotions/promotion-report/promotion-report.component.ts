@@ -6,7 +6,7 @@ import { Promotion } from './../../../shared/class/promotion';
 import { User } from './../../../shared/class/user';
 import { Subject } from 'rxjs/Subject';
 import * as datatable_config from '../../../shared/commons/datatable_config';
-
+import { HandleError } from '../../../shared/commons/handle_error'; 
 @Component({
     selector: 'app-promotion-report',
     templateUrl: './promotion-report.component.html',
@@ -33,6 +33,7 @@ export class PromotionReportComponent implements OnInit {
         private promotionService: PromotionService,
         private route: ActivatedRoute,
         private router: Router,
+        private handleError:HandleError
     ) { }
 
   	ngOnInit() {
@@ -77,7 +78,7 @@ export class PromotionReportComponent implements OnInit {
                 this.list_user = data.gift_user;
             }, 
             (error) => {
-                this.router.navigate(['/error', {message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }

@@ -10,6 +10,7 @@ import { FeedbackService } from '../../../shared/services/feedback.service';
 
 import { Subject } from 'rxjs/Subject';
 import { data_config } from '../../../shared/commons/datatable_config';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 declare var bootbox: any;
 
@@ -41,6 +42,7 @@ export class FeedbackListComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
         this.feedbacks = [];
     }
@@ -79,11 +81,7 @@ export class FeedbackListComponent implements OnInit {
                         this.dtTrigger.next();
                     },
                     (error) => {
-                        if(error.status == 400) {
-                            this.router.navigate(['/error', {message: error.json().message}]);
-                        }else {
-                            this.router.navigate(['/error', {message: error}]);
-                        }
+                        this.handleError.handle_error(error);
                     }
                 )
             });
@@ -194,13 +192,7 @@ export class FeedbackListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    if (error.status == 405) {
-                        this.toastr.error(`${error.json().message}`);
-                    }else if(error.status == 400) {
-                        this.router.navigate(['/error', {message: error.json().message}]);
-                    }else {
-                        this.router.navigate(['/error', {message: error}]);
-                    }
+                    this.handleError.handle_error(error);
                 }
             );
         });

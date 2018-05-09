@@ -26,13 +26,6 @@ export class AuthHttp extends Http {
         this.showLoader();
         return super.request(url, options).catch((error: Response) => {
             switch (error.status) {
-                case 401 || 403:
-                    localStorage.removeItem('auth_token');
-                    localStorage.removeItem('current_user');
-                    localStorage.removeItem('time');
-                    this.variable_globals.user_current = null;
-                    this.router.navigate(['/login']);
-                    return Observable.of(error);
                 case 404:
                     return Observable.throw("HTTP 404 Not Found");
                 case 0:

@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 import * as CONSTANT from './../../../shared/commons/constant';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox:any;
 declare var $: any;
 
@@ -49,7 +49,8 @@ export class UserPromotionComponent implements OnInit {
         private promotionService: PromotionService,
         private variable_globals: VariableGlobals,
         private toastr: ToastrService,
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
+        private handleError:HandleError
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -91,7 +92,7 @@ export class UserPromotionComponent implements OnInit {
                 }
             }, 
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             });
     }
 
@@ -120,7 +121,7 @@ export class UserPromotionComponent implements OnInit {
                 } 
             }, 
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -156,7 +157,7 @@ export class UserPromotionComponent implements OnInit {
                 element.button('reset');
             }, 
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             });
     }
 

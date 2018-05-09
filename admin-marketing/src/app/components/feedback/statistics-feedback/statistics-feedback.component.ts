@@ -5,7 +5,7 @@ import 'rxjs/add/observable/throw';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { CheckDateValid } from './../../../shared/validators/check-date-valid';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 
 @Component({
     selector: 'app-statistics-feedback',
@@ -32,7 +32,8 @@ export class StatisticsFeedbackComponent implements OnInit {
     constructor(
         private feedbackService: FeedbackService, 
         private router: Router,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private handleError:HandleError
     ) {}
 
     ngOnInit() {
@@ -52,11 +53,7 @@ export class StatisticsFeedbackComponent implements OnInit {
                 this.rate_sum = data.message.rate_sum;
             },
             (error) => {
-                if(error.status == 400) {
-                    this.router.navigate(['/error', {message: error.json().message}]);
-                }else {
-                    this.router.navigate(['/error', {message: error}]);
-                }
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -90,11 +87,7 @@ export class StatisticsFeedbackComponent implements OnInit {
                 this.status_sum = data.message.status_sum;
             },
             (error) => {
-                if(error.status == 400) {
-                    this.router.navigate(['/error', {message: error.json().message}]);
-                }else {
-                    this.router.navigate(['/error', {message: error}]);
-                }
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -124,11 +117,7 @@ export class StatisticsFeedbackComponent implements OnInit {
                 this.rate_sum = data.message.rate_sum;
             },
             (error) => {
-                if(error.status == 400) {
-                    this.router.navigate(['/error', {message: error.json().message}]);
-                }else {
-                    this.router.navigate(['/error', {message: error}]);
-                }
+                this.handleError.handle_error(error);
             }
         );
     }

@@ -23,6 +23,7 @@ import { env } from '../../../../environments/environment';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import * as moment from 'moment';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
+import { HandleError } from '../../../shared/commons/handle_error';
 import * as CONSTANT from './../../../shared/commons/constant';
 
 declare var $ :any; // declare Jquery
@@ -78,7 +79,8 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
         private datePipe: DatePipe,
         private toastr: ToastrService,
         private variable_globals: VariableGlobals,
-        private scrollTop: ScrollTop
+        private scrollTop: ScrollTop,
+        private handleError:HandleError
     ) {
         this.api_domain = env.api_domain_root;
     }
@@ -198,7 +200,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
             this.promotion = data;
             this.creatPromotionForm();
         }, (error) => {
-            this.router.navigate(['/error', { message: error.message}]);
+            this.handleError.handle_error(error);;
         });
     }
 
@@ -212,7 +214,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                 this.categorys = data;
             },
             (error) => {
-                this.router.navigate(['/error']);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -227,7 +229,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                 this.promotionTypes = data;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -242,7 +244,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                 this.promotionLabels = data;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }

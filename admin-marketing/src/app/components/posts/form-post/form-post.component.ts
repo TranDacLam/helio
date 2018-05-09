@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { env } from '../../../../environments/environment';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
+import { HandleError } from '../../../shared/commons/handle_error';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -63,7 +64,8 @@ export class FormPostComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private toastr: ToastrService,
-        private scrollTop: ScrollTop
+        private scrollTop: ScrollTop,
+        private handleError:HandleError
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -147,7 +149,7 @@ export class FormPostComponent implements OnInit {
                 this.check_post_career(data.post_type);
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -343,7 +345,7 @@ export class FormPostComponent implements OnInit {
                             this.errorMessage = error.message;
                             this.scrollTop.scrollTopFom();
                         }else{
-                            this.router.navigate(['/error', { message: error.message}]);
+                            this.handleError.handle_error(error);;
                         }
                     }
                 );
@@ -398,7 +400,7 @@ export class FormPostComponent implements OnInit {
                                 this.errorMessage = error.message;
                                 this.scrollTop.scrollTopFom();
                             }else{
-                                this.router.navigate(['/error', { message: error.message}]);
+                                this.handleError.handle_error(error);;
                             }
                         }
                     );
@@ -446,7 +448,7 @@ export class FormPostComponent implements OnInit {
                 this.router.navigate(['/post/list']);
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }

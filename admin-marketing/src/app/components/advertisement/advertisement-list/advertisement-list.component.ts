@@ -9,6 +9,7 @@ import { Advertisement } from '../../../shared/class/advertisement';
 
 import { AdvertisementService } from '../../../shared/services/advertisement.service';
 import { data_config } from '../../../shared/commons/datatable_config';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 // Using bootbox plugin
 declare var bootbox: any;
@@ -45,6 +46,7 @@ export class AdvertisementListComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
         this.advs = [];
     }
@@ -91,11 +93,7 @@ export class AdvertisementListComponent implements OnInit {
                 this.length_all = this.advs.length; // Set length_all
             },
             (error) => {
-                if(error.status == 400) {
-                    this.router.navigate(['/error', { message: error.json().message }])
-                }else {
-                    this.router.navigate(['/error', { message: error}])
-                }
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -203,11 +201,7 @@ export class AdvertisementListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    if(error.status == 400) {
-                        this.router.navigate(['/error', { message: error.json().message }])
-                    }else {
-                        this.router.navigate(['/error', { message: error}])
-                    }
+                    this.handleError.handle_error(error);
                 });
         });
     }

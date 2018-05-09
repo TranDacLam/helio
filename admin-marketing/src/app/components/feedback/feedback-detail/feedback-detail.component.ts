@@ -9,6 +9,7 @@ import * as moment from 'moment';
 
 import { FeedbackService } from '../../../shared/services/feedback.service';
 import { Feedback, Status, en_Status, vi_Type, en_Type } from '../../../shared/class/feedback';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 // Using bootbox 
 declare var bootbox: any;
@@ -39,6 +40,7 @@ export class FeedbackDetailComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError,
     ) {
 
     }
@@ -82,11 +84,7 @@ export class FeedbackDetailComponent implements OnInit {
                     this.createFormFeedback();
             },
             error => {
-                if(error.status == 400){
-                    this.router.navigate(['/error', { message: error.json().message }])
-                }else {
-                    this.router.navigate(['/error', { message: error }])
-                }
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -105,14 +103,7 @@ export class FeedbackDetailComponent implements OnInit {
                 this.router.navigate(['/feedback-list']);
             },
             (error) => {
-                if (error.code == 405) {
-                    // Show error message in form
-                    this.toastr.error(`${error.json().message}`);
-                }else if(error.status == 400){
-                    this.router.navigate(['/error', { message: error.json().message }])
-                }else {
-                    this.router.navigate(['/error', { message: error }])
-                }
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -132,13 +123,7 @@ export class FeedbackDetailComponent implements OnInit {
                 this.router.navigate(['/feedback-list']);
             },
             (error) => {
-                if (error.status == 400) {
-                    // Show error message in form
-                    this.errorMessage = error.json()
-                }else {
-                    // Nagivate component error and show error message
-                    this.router.navigate(['/error', { message: error }])
-                }
+                this.handleError.handle_error(error);
             }
         )
     }

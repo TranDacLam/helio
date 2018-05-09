@@ -9,7 +9,7 @@ import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 import * as moment from 'moment';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 
 @Component({
   selector: 'form-user-embed',
@@ -48,7 +48,8 @@ export class FormUserEmbedComponent implements OnInit, AfterViewChecked {
         private fb: FormBuilder, 
         private linkCardService: LinkCardService,
         private router: Router,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -218,7 +219,7 @@ export class FormUserEmbedComponent implements OnInit, AfterViewChecked {
                         // emit to parent set object status error  
                         this.is_submit.emit(true);
                     }else{
-                        this.router.navigate(['/error', { message: error.message}]);
+                        this.handleError.handle_error(error);;
                     }
                 }
             );

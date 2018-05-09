@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '
 import { ActivatedRoute, Router } from '@angular/router';
 import { Promotion } from '../../../shared/class/promotion';
 import { PromotionService } from '../../../shared/services/promotion.service';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 @Component({
     selector: 'popup-edit-promotion',
     templateUrl: './popup-edit-promotion.component.html',
@@ -27,7 +27,8 @@ export class PopupEditPromotionComponent implements OnInit {
     constructor(
         private promotionService: PromotionService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -52,7 +53,7 @@ export class PopupEditPromotionComponent implements OnInit {
                 this.promotion = data;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }

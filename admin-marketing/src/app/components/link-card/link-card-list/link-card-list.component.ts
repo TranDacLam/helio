@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import { data_config } from '../../../shared/commons/datatable_config';
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox: any;
 declare var $: any;
 
@@ -42,6 +43,7 @@ export class LinkCardListComponent implements OnInit {
         private linkCardService: LinkCardService,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
         this.link_cards = [];
     }
@@ -85,7 +87,9 @@ export class LinkCardListComponent implements OnInit {
                 // Caling the DT trigger to manually render the table
                 this.dtTrigger.next();
             },
-            (error) => this.router.navigate(['/error', { message: error }])
+            (error) => {
+                this.handleError.handle_error(error);
+            }
         )
     }
 
@@ -199,11 +203,7 @@ export class LinkCardListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    if(error.status == 400){
-                        this.toastr.error(`error.json().message + error.json().fields`);
-                    }else{
-                        this.router.navigate(['/error', { message: error }])
-                    }
+                    this.handleError.handle_error(error);
                 });
         }
         );
