@@ -119,9 +119,9 @@ export class UserAddComponent implements OnInit {
                     self.router.navigate(['/user-list']);
                 },
                 (error) => {
-                    if (error.code == 400) {
+                    if (error.status == 400) {
                         // Show message in form
-                        self.errorMessage = error.message;
+                        self.errorMessage = JSON.parse(error.response).message;
                     } else {
                         // Nagivate component error and show error message
                         this.handleError.handle_error(error);

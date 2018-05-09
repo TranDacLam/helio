@@ -205,7 +205,7 @@ export class NotificationDetailComponent implements OnInit {
                 this.toastr.success(`${data.message}`);
             },
             (error) => {
-                this.toastr.error(`${error.message}`);
+                this.toastr.error(`${error.json().message}`);
             }
         );
     }

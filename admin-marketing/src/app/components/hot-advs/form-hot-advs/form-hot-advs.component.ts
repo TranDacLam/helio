@@ -136,9 +136,9 @@ export class FormHotAdvsComponent implements OnInit {
                             self.router.navigate(['/hot-advs-list'])
                         },
                         (error) => {
-                            if (error.code == 400) {
+                            if (error.status == 400) {
                                 this.scrollTop.scrollTopFom();
-                                self.errorMessage = error.message
+                                self.errorMessage = JSON.parse(error.response).message;
                             } else {
                                 this.handleError.handle_error(error);
                             }
@@ -152,9 +152,9 @@ export class FormHotAdvsComponent implements OnInit {
                         self.router.navigate(['/hot-advs-list'])
                     },
                     (error) => {
-                        if (error.code == 400) {
+                        if (error.status == 400) {
                             this.scrollTop.scrollTopFom();
-                            self.errorMessage = error.message
+                            self.errorMessage = JSON.parse(error.response).message;
                         } else {
                             this.handleError.handle_error(error);
                         }

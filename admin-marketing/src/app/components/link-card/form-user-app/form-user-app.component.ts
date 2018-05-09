@@ -117,7 +117,7 @@ export class FormUserAppComponent implements OnInit, AfterViewChecked {
                 }
             },
             (error) => { 
-                this.errorMessage = error.message; 
+                this.errorMessage = error.json().message; 
                 this.msg_error = null;
                 this.disabledEmbed(true);
                 // emit to parent set object status error
@@ -207,8 +207,8 @@ export class FormUserAppComponent implements OnInit, AfterViewChecked {
                 },
                 (error) => {
                     // code 400, error validate
-                    if(error.code === 400){
-                        this.msg_error = error.message;
+                    if(error.status === 400){
+                        this.msg_error = error.json().message;
                         // emit to parent set object status error
                         this.is_submit.emit(true);
                     }else{

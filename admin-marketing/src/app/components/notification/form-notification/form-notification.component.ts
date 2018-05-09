@@ -219,8 +219,8 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                     },
                     (error) => {
                         // code 400, error validate
-                        if(error.code === 400){
-                            this.errorMessage = error.message;
+                        if(error.status === 400){
+                            this.errorMessage = JSON.parse(error.response).message;
                             this.scrollTop.scrollTopFom();
                         }else{
                             this.handleError.handle_error(error);
@@ -259,8 +259,8 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                         },
                         (error) => {
                             // code 400, error validate
-                            if(error.code === 400){
-                                this.errorMessage = error.message;
+                            if(error.status === 400){
+                                this.errorMessage = JSON.parse(error.response).message;
                                 if(this.position !== 'popup'){
                                     this.scrollTop.scrollTopFom();
                                 }else{

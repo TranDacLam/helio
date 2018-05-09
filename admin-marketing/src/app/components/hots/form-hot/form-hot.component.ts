@@ -144,10 +144,9 @@ export class FormHotComponent implements OnInit {
                         this.router.navigate(['/hot/list']);
                     },
                     (error) => {
-                        console.log("error", error.status);
                         // code 400, erro validate
-                        if(error.code === 400){
-                            this.errorMessage = error.message;
+                        if(error.status == 400){
+                            this.errorMessage = JSON.parse(error.response).message;
                             this.scrollTop.scrollTopFom();
                         }else{
                             this.handleError.handle_error(error);
@@ -168,8 +167,8 @@ export class FormHotComponent implements OnInit {
                         },
                         (error) => {
                             // code 400, erro validate
-                            if(error.code === 400){
-                                this.errorMessage = error.message;
+                            if(error.status == 400){
+                                this.errorMessage = JSON.parse(error.response).message;
                                 this.scrollTop.scrollTopFom();
                             }else{
                                 this.handleError.handle_error(error);

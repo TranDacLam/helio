@@ -239,8 +239,8 @@ export class OpenTimeComponent implements OnInit {
                 },
                 (error) => {
                     // code 400, erro validate
-                    if(error.code === 400){
-                        this.errorMessage = error.message;
+                    if(error.status === 400){
+                        this.errorMessage = error.json().message;
                     }else{
                         this.handleError.handle_error(error);;
                     }
