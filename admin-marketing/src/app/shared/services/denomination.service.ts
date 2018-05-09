@@ -33,7 +33,7 @@ export class DenominationService {
 	 */
 	getAllDenomination(): Observable<Denomination[]> {
 		let urlDeno = `${api.denomination}`;
-		return this.http.get(urlDeno, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(urlDeno, this.httpOptions).map((res: Response) => res.json());
 	}
 
 	/*
@@ -42,7 +42,7 @@ export class DenominationService {
 	 */
 	getDenominationById(id:number): Observable<Denomination> {
 		let url = `${api.denomination}${id}/`;
-		return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
 	}
 	/*
 		POST: Create a new denomination
@@ -50,7 +50,7 @@ export class DenominationService {
 	*/
 	createDenomination(deno: any): Observable<Denomination> {
 		let urlDeno = `${api.denomination}`;
-		return this.http.post(urlDeno, deno, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.post(urlDeno, deno, this.httpOptions).map((res: Response) => res.json());
 	}
 
 	/*
@@ -59,7 +59,7 @@ export class DenominationService {
 	 */
 	updateDenomination(denomi, id:number): Observable<Denomination> {
 		let url = `${api.denomination}${id}/`;
-		return this.http.put(url, denomi, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.put(url, denomi, this.httpOptions).map((res: Response) => res.json());
 	}
 
 	/*
@@ -69,7 +69,7 @@ export class DenominationService {
 	
 	deleteDenominationByid(id:number): Observable<Denomination> {
 		let url = `${api.denomination}${id}/`;
-		return this.http.delete(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.delete(url, this.httpOptions).map((res: Response) => res.json());
 	}
 
 	/*
@@ -85,13 +85,6 @@ export class DenominationService {
 			body: JSON.stringify(param)
 		});
 
-		return this.http.delete(url, _options).map((res: Response) => res.json()).catch(this.handleError);
-	}
-
-	/* 
-		Handle error
-	*/
-	handleError(error: Response) {
-		return Observable.throw(error);
+		return this.http.delete(url, _options).map((res: Response) => res.json());
 	}
 }

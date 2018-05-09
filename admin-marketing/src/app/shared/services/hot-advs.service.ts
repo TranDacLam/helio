@@ -30,7 +30,7 @@ export class HotAdvsService {
     */
     getAllHotAdvs(): Observable<HotAdvs[]> {
         let url = `${api.hot_advs}`
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
     }
 
     /*
@@ -39,7 +39,7 @@ export class HotAdvsService {
      */
     getHotAdsById(id: number): Observable<HotAdvs> {
         let url =  `${api.hot_advs}${id}/`;
-        return this.http.get(url, this.httpOptions).map((res:Response) => res.json()).catch(this.handleError);
+        return this.http.get(url, this.httpOptions).map((res:Response) => res.json());
     }
     /*
       POST: Create a New Hot_Advs
@@ -97,7 +97,7 @@ export class HotAdvsService {
      */
     deleteHotAdsById(id: number): Observable<HotAdvs> {
         let url =  `${api.hot_advs}${id}/`;
-        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json());
     } 
     /*
         DELETE:  Delete multi hot_ads
@@ -113,14 +113,6 @@ export class HotAdvsService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(url, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url, _options).map((res: Response) => res.json());
     }
-
-    /* 
-      Handle error
-    */
-    handleError(error: Response) {
-        return Observable.throw(error);
-    }
-
 }

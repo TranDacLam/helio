@@ -35,7 +35,7 @@ export class HotAdvsListComponent implements OnInit {
 
     // Using trigger becase fetching the list of feedbacks can be quite long
     // thus we ensure the data is fetched before rensering
-    dtTrigger: Subject<any> = new Subject();
+    // dtTrigger: Subject<any> = new Subject();
 
     constructor(
         private route: ActivatedRoute,
@@ -81,7 +81,7 @@ export class HotAdvsListComponent implements OnInit {
             (result) => {
                 this.hot_advs = result;
                 this.length_all = this.hot_advs.length; // Set length_all
-                this.dtTrigger.next();
+                // this.dtTrigger.next();
             },
             (error) => {
                 this.handleError.handle_error(error);

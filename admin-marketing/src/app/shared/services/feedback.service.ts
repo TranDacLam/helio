@@ -102,12 +102,4 @@ export class FeedbackService {
 		let url_search = `${this.url_summary}?search_field=${name}&start_date=${start}&end_date=${end}`;
 		return this.http.get(url_search, this.httpOptions).map((res: Response) => res.json());
 	}
-
-
-	/*
-		Handler Error
-	*/
-	// handleError(error: Response) {
-	// 	return Observable.throw(error);
-	// }
 }

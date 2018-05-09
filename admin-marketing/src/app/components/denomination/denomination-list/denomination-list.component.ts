@@ -33,7 +33,7 @@ export class DenominationListComponent implements OnInit {
 
     // Using trigger becase fetching the list of denominations can be quite long
     // thus we ensure the data is fetched before rensering
-    dtTrigger: Subject<any> = new Subject();
+    // dtTrigger: Subject<any> = new Subject();
 
     constructor(
         private denominationService: DenominationService,
@@ -82,7 +82,7 @@ export class DenominationListComponent implements OnInit {
             (result) => {
                 this.denominations = result;
                 this.length_all = this.denominations.length; // Set length_all
-                this.dtTrigger.next();
+                // this.dtTrigger.next();
             },
             (error) => {
                 this.handleError.handle_error(error);
