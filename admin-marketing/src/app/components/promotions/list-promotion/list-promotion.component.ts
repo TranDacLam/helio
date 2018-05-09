@@ -15,7 +15,7 @@ import { User } from '../../../shared/class/user';
 import { env } from '../../../../environments/environment';
 import * as moment from 'moment';
 import * as CONSTANT from './../../../shared/commons/constant';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox:any;
 declare var $: any;
 
@@ -64,6 +64,7 @@ export class ListPromotionComponent implements OnInit {
         private variable_globals: VariableGlobals,
         private toastr: ToastrService,
         private datePipe: DatePipe,
+        private handleError:HandleError
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -102,7 +103,7 @@ export class ListPromotionComponent implements OnInit {
                 this.length_all = data.length;
             }, 
             (error) => {
-                this.router.navigate(['/error', {message: error.message}]);
+                this.handleError.handle_error(error);
             });
     }
 
@@ -193,7 +194,7 @@ export class ListPromotionComponent implements OnInit {
                 element.button('reset');
             }, 
             (error) => {
-                this.router.navigate(['/error']);
+                this.handleError.handle_error(error);
             });
     }
 
@@ -218,11 +219,11 @@ export class ListPromotionComponent implements OnInit {
                         this.length_all =  dtInstance.rows().count();
                         this.length_selected = 0;
                     } else {
-                        this.router.navigate(['/error', { message: data.message}]);
+                        this.handleError.handle_error(data);
                     }
                 }, 
                 (error) => {
-                    this.router.navigate(['/error', { message: error.message}]);
+                    this.handleError.handle_error(error);
                 });
         });
     }

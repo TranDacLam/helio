@@ -6,7 +6,7 @@ import { GameService } from '../../../shared/services/game.service';
 import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
 import * as datatable_config from '../../../shared/commons/datatable_config';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox:any;
 
 @Component({
@@ -41,6 +41,7 @@ export class ListGameComponent implements OnInit {
         private gameService: GameService, 
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -79,7 +80,7 @@ export class ListGameComponent implements OnInit {
                 this.length_all = this.games.length;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -186,11 +187,11 @@ export class ListGameComponent implements OnInit {
                         this.length_selected = 0;
                         this.errorMessage = '';
                     } else {
-                        this.router.navigate(['/error', { message: data.message}]);
+                        this.handleError.handle_error(data);
                     }
                 }, 
                 (error) => {
-                    this.router.navigate(['/error', { message: error.message}]);
+                    this.handleError.handle_error(error);
                 });
         });
     }

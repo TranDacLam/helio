@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { Advertisement } from '../../../shared/class/advertisement';
 import { AdvertisementService } from '../../../shared/services/advertisement.service';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 // Using bootbox 
 declare var bootbox: any;
 
@@ -32,6 +32,7 @@ export class FormAdvertisementComponent implements OnInit {
 		private router: Router,
 		private fb: FormBuilder, // inject FormBuilder
 		private toastr: ToastrService,
+		private handleError:HandleError
 	) { }
 
 	ngOnInit() {
@@ -76,11 +77,7 @@ export class FormAdvertisementComponent implements OnInit {
 				this.createForm();
 			},
 			(error) => {
-				if(error.status == 400) {
-                    this.router.navigate(['/error', { message: error.json().message }])
-                }else {
-                    this.router.navigate(['/error', { message: error}])
-                }
+				this.handleError.handle_error(error);
 			}
 		);
 	}
@@ -105,13 +102,7 @@ export class FormAdvertisementComponent implements OnInit {
 						this.router.navigate(['/advertisement-list']);
 					},
 					(error) => {
-						// Check return error 
-						if (error.status == 400) {
-							// Show error in form
-							this.errorMessage = error.json().name
-						}else {
-							this.router.navigate(['/error', {message: error}])
-						}
+						this.handleError.handle_error(error);
 					}
 				);
 			} else {
@@ -122,11 +113,7 @@ export class FormAdvertisementComponent implements OnInit {
 						this.router.navigate(['/advertisement-list'])
 					},
 					(error) => {
-						if (error.status == 400) {
-							this.errorMessage = error.json()
-						}else {
-							this.router.navigate(['/error', {message: error}])
-						}
+						this.handleError.handle_error(error);
 					}
 				);
 			}
@@ -148,9 +135,7 @@ export class FormAdvertisementComponent implements OnInit {
 					this.router.navigate(['/advertisement-list']);
 				},
 				error => {
-					this.router.navigate(['/error', { 
-                    	message: error.json().message ? error.json().message : 'ERR_CONNECTION_REFUSED' 
-                	}])
+					this.handleError.handle_error(error);
 				}
 			);
 	}

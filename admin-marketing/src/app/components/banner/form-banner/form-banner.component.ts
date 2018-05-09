@@ -5,6 +5,7 @@ import { Banner, positions } from '../../../shared/class/banner';
 import { BannerService } from '../../../shared/services/banner.service';
 import { ToastrService } from 'ngx-toastr';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { HandleError } from '../../../shared/commons/handle_error';
 import { env } from '../../../../environments/environment';
 
 // Using bootbox 
@@ -36,6 +37,7 @@ export class FormBannerComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
         this.api_domain = env.api_domain_root;
     }
@@ -88,7 +90,7 @@ export class FormBannerComponent implements OnInit {
                 this.createForm();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error }]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -145,7 +147,7 @@ export class FormBannerComponent implements OnInit {
                                 this.errorMessage = error.message
                             } else {
                                 // nagivate component error
-                                self.router.navigate(['/error', { message: error }]);
+                                self.handleError.handle_error(error);
                             }
                         }
                     );
@@ -183,7 +185,7 @@ export class FormBannerComponent implements OnInit {
                 this.router.navigate(['/banner-list']);
             },
             (error) => {
-                this.router.navigate(['/error', { message: error }])
+                this.handleError.handle_error(error);
             }
         );
     }

@@ -12,7 +12,7 @@ import { RoleService } from '../../../shared/services/role.service';
 import { UserValidators } from './../../../shared/validators/user-validators';
 import { NumberValidators } from './../../../shared/validators/number-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 
@@ -41,6 +41,7 @@ export class UserAddComponent implements OnInit {
         private router: Router,
         private datePipe: DatePipe,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
     }
 
@@ -84,7 +85,7 @@ export class UserAddComponent implements OnInit {
                 this.roles = result
             },
             (error) => {
-                this.router.navigate(['/error', { message: error }])
+                this.handleError.handle_error(error);
             }
         )
     }
@@ -123,7 +124,7 @@ export class UserAddComponent implements OnInit {
                         self.errorMessage = error.message;
                     } else {
                         // Nagivate component error and show error message
-                        this.router.navigate(['/error', { message: error }]);
+                        this.handleError.handle_error(error);
                     }
                 }
             )

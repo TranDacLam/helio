@@ -11,6 +11,7 @@ import { env } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
+import { HandleError } from '../../../shared/commons/handle_error';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -48,7 +49,8 @@ export class FormGameComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private toastr: ToastrService,
-        private scrollTop: ScrollTop
+        private scrollTop: ScrollTop,
+        private handleError:HandleError
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -106,7 +108,7 @@ export class FormGameComponent implements OnInit {
                 this.creatForm();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -121,7 +123,7 @@ export class FormGameComponent implements OnInit {
                 this.types = data;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -176,7 +178,7 @@ export class FormGameComponent implements OnInit {
                             this.errorMessage = error.message;
                             this.scrollTop.scrollTopFom();
                         }else{
-                            this.router.navigate(['/error', { message: error.message}]);
+                            this.handleError.handle_error(error);
                         }
                     }
                 );
@@ -199,7 +201,7 @@ export class FormGameComponent implements OnInit {
                                 this.errorMessage = error.message;
                                 this.scrollTop.scrollTopFom();
                             }else{
-                                this.router.navigate(['/error', { message: error.message}]);
+                                this.handleError.handle_error(error);
                             }
                         }
                     );
@@ -248,7 +250,7 @@ export class FormGameComponent implements OnInit {
                 this.router.navigate(['/game/list']);
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }

@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from '../../../shared/class/user';
 import { UserService } from '../../../shared/services/user.service';
 import { data_config } from '../../../shared/commons/datatable_config';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox: any;
 
 @Component({
@@ -41,6 +41,7 @@ export class UserListComponent implements OnInit {
         private userService: UserService,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
         this.users = [];
     }
@@ -86,7 +87,7 @@ export class UserListComponent implements OnInit {
                 this.dtTrigger.next();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error }])
+                this.handleError.handle_error(error);
             }
         )
     }
@@ -201,7 +202,7 @@ export class UserListComponent implements OnInit {
                     if (error.json().code == 405) {
                         this.toastr.error(`${error.json().message}`);
                     } else {
-                        this.router.navigate(['/error', { message: error }]);
+                        this.handleError.handle_error(error);
                     }
                 });
         });

@@ -6,7 +6,7 @@ import { HotService } from '../../../shared/services/hot.service';
 import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
 import * as datatable_config from '../../../shared/commons/datatable_config';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox:any;
 
 @Component({
@@ -40,6 +40,7 @@ export class ListHotComponent implements OnInit {
         private hotService: HotService,  
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -78,7 +79,7 @@ export class ListHotComponent implements OnInit {
                 this.length_all = this.hots.length;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -184,11 +185,11 @@ export class ListHotComponent implements OnInit {
                         this.length_all =  dtInstance.rows().count();
                         this.length_selected = 0;
                     } else {
-                        this.router.navigate(['/error', { message: data.message}]);
+                        this.handleError.handle_error(data);
                     }
                 }, 
                 (error) => {
-                    this.router.navigate(['/error', { message: error.message}]);
+                    this.handleError.handle_error(error);;
                 });
         });
     }

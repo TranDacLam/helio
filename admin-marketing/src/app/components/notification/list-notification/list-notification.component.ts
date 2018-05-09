@@ -9,7 +9,7 @@ import { User } from '../../../shared/class/user';
 import 'rxjs/add/observable/throw';
 import * as datatable_config from '../../../shared/commons/datatable_config';
 import * as CONSTANT from './../../../shared/commons/constant';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox:any;
 
 @Component({
@@ -44,6 +44,7 @@ export class ListNotificationComponent implements OnInit {
         private router: Router,
         private variable_globals: VariableGlobals,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -80,7 +81,7 @@ export class ListNotificationComponent implements OnInit {
                 this.length_all = this.notifications.length;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -190,11 +191,11 @@ export class ListNotificationComponent implements OnInit {
                         this.length_all =  dtInstance.rows().count();
                         this.length_selected = 0;
                     } else {
-                        this.router.navigate(['/error', { message: data.message}]);
+                        this.handleError.handle_error(data);
                     }
                 }, 
                 (error) => {
-                    this.router.navigate(['/error', { message: error.message}]);
+                    this.handleError.handle_error(error);;
                 });
         });
     }

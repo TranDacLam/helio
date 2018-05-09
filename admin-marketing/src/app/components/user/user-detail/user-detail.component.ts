@@ -10,7 +10,7 @@ import { UserValidators } from './../../../shared/validators/user-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { NumberValidators } from './../../../shared/validators/number-validators';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 
@@ -48,6 +48,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
         private datePipe: DatePipe,
         private toastr: ToastrService,
         private variable_globals: VariableGlobals,
+        private handleError:HandleError
     ) {
         this.api_domain = env.api_domain_root;
     }
@@ -109,7 +110,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                     this.checkDisableInput();
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error }])
+                    this.handleError.handle_error(error);
                 }
             );
     }
@@ -204,11 +205,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                     this.router.navigate(['/user-list']);
                 },
                 (error) => {
-                    if (error.status == 405) {
-                        this.toastr.error(`${error.json().message}`);
-                    } else {
-                        this.router.navigate(['/error', { message: error }])
-                    }
+                    this.handleError.handle_error(error);
                 }
             );
     }

@@ -14,7 +14,7 @@ import 'rxjs/add/observable/throw';
 import { env } from '../../../../environments/environment';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
 import * as CONSTANT from './../../../shared/commons/constant';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 
 declare var $ :any; // declare Jquery
 declare var bootbox:any;
@@ -70,7 +70,8 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
         private route: ActivatedRoute,
         private variable_globals: VariableGlobals,
         private toastr: ToastrService,
-        private scrollTop: ScrollTop
+        private scrollTop: ScrollTop,
+        private handleError:HandleError
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -157,7 +158,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                 this.categories = data.message;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -222,7 +223,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                             this.errorMessage = error.message;
                             this.scrollTop.scrollTopFom();
                         }else{
-                            this.router.navigate(['/error']);
+                            this.handleError.handle_error(error);
                         }
                     }
                 );
@@ -266,7 +267,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                                     $('#UpdateNoti').animate({ scrollTop: $('.modal-title').offset().top }, 'slow');
                                 }
                             }else{
-                                this.router.navigate(['/error']);
+                                this.handleError.handle_error(error);
                             }
                         }
                     );
@@ -314,7 +315,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                 this.router.navigate(['/notification/list']);
             },
             (error) => {
-                 this.router.navigate(['/error', { message: error.message}]);
+                 this.handleError.handle_error(error);;
             }
         );
     }

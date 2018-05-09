@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
+import { HandleError } from '../../../shared/commons/handle_error';
 import * as CONSTANT from './../../../shared/commons/constant';
 
 
@@ -44,7 +45,8 @@ export class NotificationDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private variable_globals: VariableGlobals,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -80,7 +82,7 @@ export class NotificationDetailComponent implements OnInit {
                             this.promotion = data;
                         },
                         (error) => {
-                            this.router.navigate(['/error', { message: error.message}]);
+                            this.handleError.handle_error(error);;
                         }
                     );
                 }
@@ -108,7 +110,7 @@ export class NotificationDetailComponent implements OnInit {
                 this.noti_detail = data;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -152,7 +154,7 @@ export class NotificationDetailComponent implements OnInit {
                     );
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error.message}]);
+                    this.handleError.handle_error(error);;
                 }
             );
         }else{

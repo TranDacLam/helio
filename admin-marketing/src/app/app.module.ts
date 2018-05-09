@@ -91,6 +91,7 @@ import { FormDenominationComponent } from './components/denomination/form-denomi
 import { FormFeeComponent } from './components/fee/form-fee/form-fee.component';
 import { FormHotAdvsComponent } from './components/hot-advs/form-hot-advs/form-hot-advs.component';
 
+import { HandleError } from './shared/commons/handle_error';
 /*
     Translate datetime-picker
     author: Lam
@@ -216,7 +217,8 @@ export const MY_MOMENT_FORMATS = {
         provide: RequestOptions, 
         useClass: AuthRequestOptions
     },
-    { provide: Http, useClass: AuthHttp }
+    { provide: Http, useClass: AuthHttp },
+    HandleError,
   ],
   bootstrap: [AppComponent]
 })

@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Banner } from '../../../shared/class/banner';
 import { BannerService } from '../../../shared/services/banner.service';
 import { data_config } from '../../../shared/commons/datatable_config';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox: any;
 
 @Component({
@@ -39,6 +39,7 @@ export class BannerListComponent implements OnInit {
         private bannerService: BannerService,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
         this.banners = [];
     }
@@ -127,7 +128,7 @@ export class BannerListComponent implements OnInit {
                 this.length_all = this.banners.length; // Set length_all
             },
             (error) => {
-                this.router.navigate(['/error', { message: error}])
+                this.handleError.handle_error(error);
             }
         )
     };
@@ -193,11 +194,7 @@ export class BannerListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    if(error.status == 400) {
-                        this.router.navigate(['/error', { message: error.json().message }])
-                    }else {
-                        this.router.navigate(['/error', { message: error }])
-                    }
+                    this.handleError.handle_error(error);
                 }
             );
         });

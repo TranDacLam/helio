@@ -8,6 +8,7 @@ import { HotAdvs } from '../../../shared/class/hot-advs';
 import { HotAdvsService } from '../../../shared/services/hot-advs.service';
 
 import { data_config } from '../../../shared/commons/datatable_config';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 declare var bootbox: any;
 
@@ -41,6 +42,7 @@ export class HotAdvsListComponent implements OnInit {
         private hotAdvsSerice: HotAdvsService,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
         this.hot_advs = [];
     }
@@ -83,7 +85,7 @@ export class HotAdvsListComponent implements OnInit {
                 this.dtTrigger.next();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error}])
+                this.handleError.handle_error(error);
             }
         )
     }
@@ -190,11 +192,7 @@ export class HotAdvsListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    if(error.status == 400) {
-                        this.toastr.error(`${error.json().message}`);
-                    }else {
-                        this.router.navigate(['/error', { message: error}])
-                    }
+                    this.handleError.handle_error(error);
                 });
         });
     }

@@ -4,7 +4,7 @@ import { Role } from './../../shared/class/role';
 import { RolePermissionService } from './../../shared/services/role-permission.service';
 import { ToastrService } from 'ngx-toastr';
 import { ScrollTop } from './../../shared/commons/scroll-top';
-
+import { HandleError } from '../../shared/commons/handle_error';
 
 @Component({
     selector: 'app-role-permission',
@@ -22,7 +22,8 @@ export class RolePermissionComponent implements OnInit {
         private router: Router,
         private rolePermissionService: RolePermissionService,
         private toastr: ToastrService,
-        private scrollTop: ScrollTop
+        private scrollTop: ScrollTop,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -43,7 +44,7 @@ export class RolePermissionComponent implements OnInit {
 
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message }])
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -59,7 +60,7 @@ export class RolePermissionComponent implements OnInit {
                 this.getRolePermission();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message }])
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -146,7 +147,7 @@ export class RolePermissionComponent implements OnInit {
                 this.scrollTop.scrollTopFom();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message }])
+                this.handleError.handle_error(error);
             }
         );
     }

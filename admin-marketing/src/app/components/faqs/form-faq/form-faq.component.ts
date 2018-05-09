@@ -9,6 +9,7 @@ import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 const FAQS_CATEGORY = [1,2,3,5,6];
 
@@ -43,7 +44,8 @@ export class FormFaqComponent implements OnInit {
         private route: ActivatedRoute,
         private categoryService: CategoryService,
         private toastr: ToastrService,
-        private scrollTop: ScrollTop
+        private scrollTop: ScrollTop,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -82,7 +84,7 @@ export class FormFaqComponent implements OnInit {
                 this.creatForm();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -110,7 +112,7 @@ export class FormFaqComponent implements OnInit {
                 this.categories = this.categories.filter(({id}) => FAQS_CATEGORY.includes(id));
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -142,7 +144,7 @@ export class FormFaqComponent implements OnInit {
                             this.errorMessage = error.message;
                             this.scrollTop.scrollTopFom();
                         }else{
-                            this.router.navigate(['/error', { message: error.message}]);
+                            this.handleError.handle_error(error);
                         }
                     }
                 );
@@ -159,7 +161,7 @@ export class FormFaqComponent implements OnInit {
                             this.errorMessage = error.message;
                             this.scrollTop.scrollTopFom();
                         }else{
-                            this.router.navigate(['/error', { message: error.message}]);
+                            this.handleError.handle_error(error);
                         }
                     }
                 );
@@ -206,7 +208,7 @@ export class FormFaqComponent implements OnInit {
                 this.router.navigate(['/faq/list']);
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }

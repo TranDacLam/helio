@@ -4,7 +4,7 @@ import { Customer } from '../../../shared/class/customer';
 import { LinkCardService } from '../../../shared/services/link-card.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox:any;
 
 @Component({
@@ -22,7 +22,8 @@ export class LinkCardDetailComponent implements OnInit {
         private linkCardService: LinkCardService, 
         private route: ActivatedRoute,
         private router: Router,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -48,7 +49,7 @@ export class LinkCardDetailComponent implements OnInit {
                 this.user_app = data_app;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message }]);
+                this.handleError.handle_error(error);
             }
         );
         this.linkCardService.getBarcode(barcode).subscribe(
@@ -56,7 +57,7 @@ export class LinkCardDetailComponent implements OnInit {
                 this.user_embed = data_embed;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message }]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -100,7 +101,7 @@ export class LinkCardDetailComponent implements OnInit {
                 this.router.navigate(['/link-card-list']); // redirect list link card
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message }]); // redirect list link card
+                this.handleError.handle_error(error);
             }
         );
     }

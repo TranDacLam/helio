@@ -7,7 +7,7 @@ import { HotAdvsService } from '../../../shared/services/hot-advs.service';
 import { ToastrService } from 'ngx-toastr';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 import { Router, ActivatedRoute } from "@angular/router";
 import { env } from '../../../../environments/environment';
 
@@ -39,6 +39,7 @@ export class FormHotAdvsComponent implements OnInit {
         private toastr: ToastrService,
         private route: ActivatedRoute,
         private scrollTop: ScrollTop,
+        private handleError:HandleError
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -100,7 +101,7 @@ export class FormHotAdvsComponent implements OnInit {
                 this.creatForm();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message }]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -139,7 +140,7 @@ export class FormHotAdvsComponent implements OnInit {
                                 this.scrollTop.scrollTopFom();
                                 self.errorMessage = error.message
                             } else {
-                                this.router.navigate(['/error', { message: error.message }]);
+                                this.handleError.handle_error(error);
                             }
                         }
                     )
@@ -155,7 +156,7 @@ export class FormHotAdvsComponent implements OnInit {
                             this.scrollTop.scrollTopFom();
                             self.errorMessage = error.message
                         } else {
-                            this.router.navigate(['/error', { message: error }]);
+                            this.handleError.handle_error(error);
                         }
                     }
                 )
@@ -200,7 +201,7 @@ export class FormHotAdvsComponent implements OnInit {
                 this.router.navigate(['/hot-advs-list'])
             },
             (error) => {
-                this.router.navigate(['/error', { message: error }]);
+                this.handleError.handle_error(error);
             }
         )
     }
