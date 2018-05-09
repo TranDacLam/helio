@@ -144,6 +144,7 @@ export class FormHotComponent implements OnInit {
                         this.router.navigate(['/hot/list']);
                     },
                     (error) => {
+                        console.log("error", error.status);
                         // code 400, erro validate
                         if(error.code === 400){
                             this.errorMessage = error.message;

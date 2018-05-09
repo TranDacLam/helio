@@ -41,6 +41,6 @@ export class PromotionTypeService {
         Handle error
     */
     handleError(error: Response) {
-        return Observable.throw(error.json());
+        return Observable.throw(error);
     }
 }

@@ -59,10 +59,8 @@ export class HotAdvsService {
                     if (xhr.status === 200) {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
-                    }else if (xhr.status == 0){
-                        observer.error("ERR_CONNECTION_REFUSED")
                     } else {
-                        observer.error(JSON.parse(xhr.response));
+                        observer.error(xhr);
                     }
                 }
             }
@@ -86,10 +84,8 @@ export class HotAdvsService {
                     if(xhr.status === 200) {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
-                    }else if (xhr.status == 0){
-                        observer.error("ERR_CONNECTION_REFUSED")
                     } else {
-                        observer.error(JSON.parse(xhr.response));
+                        observer.error(xhr);
                     }
                 }
             }
@@ -124,7 +120,7 @@ export class HotAdvsService {
       Handle error
     */
     handleError(error: Response) {
-        return Observable.throw(error.json());
+        return Observable.throw(error);
     }
 
 }
