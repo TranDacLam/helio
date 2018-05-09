@@ -2657,20 +2657,23 @@ class RoleListAPI(APIView):
 class UserRoleListAPI(APIView):
 
     def get(self, request):
+        check_role = self.request.user.role_id
         try:
-            role_id = self.request.query_params.get('role_id', None)
-            if not role_id:
-                return Response({"code": 400}, status=400)
+            if check_role == 1:
+                role_id = self.request.query_params.get('role_id', None)
+                if not role_id:
+                    return Response({"code": 400}, status=400)
 
-            result = {}
-            
-            users_selected = User.objects.filter(role_id=role_id).order_by('-date_joined')
-            users_all = User.objects.filter(is_staff=True, role__isnull=True).order_by('-date_joined')
+                result = {}
+                
+                users_selected = User.objects.filter(role_id=role_id).order_by('-date_joined')
+                users_all = User.objects.filter(is_staff=True, role__isnull=True).order_by('-date_joined')
 
-            result['users_selected'] = admin_serializers.UserSerializer(users_selected, many=True).data
-            result['users_all'] = admin_serializers.UserSerializer(users_all, many=True).data
+                result['users_selected'] = admin_serializers.UserSerializer(users_selected, many=True).data
+                result['users_all'] = admin_serializers.UserSerializer(users_all, many=True).data
 
-            return Response(result)
+                return Response(result)
+            return Response({"code": 403, "message": _("This function is only for System Admin"), "fields": ""}, status=403)
 
         except Roles.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Role."), "fields": ""}, status=400)
@@ -2831,10 +2834,13 @@ class OpenTimeAPI(APIView):
 class UserRoleAPI(APIView):
 
     def get( self, request):
+        role_id = self.request.user.role_id
         try:
-            model_name = Model_Name.objects.all().order_by('name')
-            model_name_serializer = admin_serializers.RolesPerDisplaySerializer( model_name, many = True)
-            return Response(model_name_serializer.data)
+            if role_id == 1:
+                model_name = Model_Name.objects.all().order_by('name')
+                model_name_serializer = admin_serializers.RolesPerDisplaySerializer( model_name, many = True)
+                return Response(model_name_serializer.data)
+            return Response({"code": 403, "message": _("This function is only for System Admin"), "fields": ""}, status=403)  
         except Exception, e:
             print "UserRoleAPI", e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
@@ -2847,15 +2853,18 @@ class UserRoleAPI(APIView):
             if data has id, update object
             if record is not in data, delete record
         '''
+        role_id = self.request.user.role_id
         try:
-            instances = Roles_Permission.objects.all()
-            serializer =  admin_serializers.RolesPerSerializer(instance = instances, data = request.data, many = True, partial=True)
-            if serializer.is_valid():
-                serializer.save()
-                model_name = Model_Name.objects.all()
-                model_name_serializer = admin_serializers.RolesPerDisplaySerializer( model_name, many = True)
-                return Response(model_name_serializer.data)
-            return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+            if role_id == 1:
+                instances = Roles_Permission.objects.all()
+                serializer =  admin_serializers.RolesPerSerializer(instance = instances, data = request.data, many = True, partial=True)
+                if serializer.is_valid():
+                    serializer.save()
+                    model_name = Model_Name.objects.all()
+                    model_name_serializer = admin_serializers.RolesPerDisplaySerializer( model_name, many = True)
+                    return Response(model_name_serializer.data)
+                return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+            return Response({"code": 403, "message": _("This function is only for System Admin"), "fields": ""}, status=403)
         except Exception, e:
             print "UserRoleAPI", e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}

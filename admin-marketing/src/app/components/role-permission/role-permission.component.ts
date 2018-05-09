@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Role } from './../../shared/class/role';
+import { User } from './../../shared/class/user';
 import { RolePermissionService } from './../../shared/services/role-permission.service';
 import { ToastrService } from 'ngx-toastr';
 import { ScrollTop } from './../../shared/commons/scroll-top';
 import { HandleError } from '../../shared/commons/handle_error';
+import { VariableGlobals } from '../../shared/commons/variable_globals';
 
 @Component({
     selector: 'app-role-permission',
@@ -15,6 +17,7 @@ import { HandleError } from '../../shared/commons/handle_error';
 export class RolePermissionComponent implements OnInit {
 
     roles: Role[];
+    user_current: User;
     models = [];
     list_role_permission = [];
 
@@ -23,11 +26,14 @@ export class RolePermissionComponent implements OnInit {
         private rolePermissionService: RolePermissionService,
         private toastr: ToastrService,
         private scrollTop: ScrollTop,
+        private variable_globals: VariableGlobals,
         private handleError:HandleError
     ) { }
 
     ngOnInit() {
         this.getRole();
+
+        this.user_current = this.variable_globals.user_current;
     }
 
     /*

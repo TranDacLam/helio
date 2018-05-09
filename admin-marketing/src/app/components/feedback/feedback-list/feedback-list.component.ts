@@ -44,7 +44,6 @@ export class FeedbackListComponent implements OnInit {
         private toastr: ToastrService,
         private handleError:HandleError
     ) {
-        this.feedbacks = [];
     }
 
 

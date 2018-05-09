@@ -63,7 +63,7 @@ export class FormFeeComponent implements OnInit {
                 this.feeService.updateFee(value, this.fee.id).subscribe(
                     (result) => {
                         this.router.navigate(['/fee/list']);
-                        this.toastr.success(`Chỉnh sửa "${this.data} ${this.feeAddForm.value.fee_type}" thành công`);
+                        this.toastr.success(`Chỉnh sửa "${this.data} ${this.upCaseFeeType(this.feeAddForm.value.fee_type)}" thành công`);
                     },
                     (error) => {
                         if (error.status === 400) {
@@ -79,7 +79,7 @@ export class FormFeeComponent implements OnInit {
                     result => {
                         this.messageResult = "success";
                         this.router.navigate(['/fee/list']);
-                        this.toastr.success(`Thêm mới "${this.data} ${this.feeAddForm.value.fee_type}" thành công`);
+                        this.toastr.success(`Thêm mới "${this.data} ${this.upCaseFeeType(this.feeAddForm.value.fee_type)}" thành công`);
                     },
                     (error) => {
                         if (error.status === 400) {
@@ -191,5 +191,16 @@ export class FormFeeComponent implements OnInit {
      */
     removeMessage() {
         this.errorMessage = '';
+    }
+
+    /*
+        Change value fee_type from vnd to VNĐ
+     */
+    upCaseFeeType(fee_type) {
+        if (fee_type == 'vnd') {
+            return 'VNĐ'
+        } else {
+            return fee_type
+        }
     }
 }
