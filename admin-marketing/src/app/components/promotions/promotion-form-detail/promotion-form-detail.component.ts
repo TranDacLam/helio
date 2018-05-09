@@ -341,8 +341,8 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                             }
                         }, 
                         (error) => {
-                            if(error.code === 400){
-                                that.errors = error.message;
+                            if(error.status == 400){
+                                that.errors = JSON.parse(error.response).message;
                                 if(this.position !== 'popup'){
                                     this.scrollTop.scrollTopFom();
                                 }else{
@@ -362,8 +362,8 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                         that.router.navigate(['/promotions']);
                     }, 
                     (error) => {
-                        if(error.code === 400){
-                            that.errors = error.message;
+                        if(error.status == 400){
+                            that.errors = JSON.parse(error.response).message;
                             this.scrollTop.scrollTopFom();
                         }else{
                             this.handleError.handle_error(error);
