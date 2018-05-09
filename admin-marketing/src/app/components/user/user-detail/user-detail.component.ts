@@ -13,6 +13,7 @@ import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { HandleError } from '../../../shared/commons/handle_error';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
+import * as CONSTANT from '../../../shared/commons/constant';
 
 import { env } from '../../../../environments/environment';
 
@@ -40,6 +41,8 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
     token: string = '';
     is_disable: boolean = false;
 
+    SYSTEM_ADMIN: number;
+
     constructor(
         private fb: FormBuilder,
         private route: ActivatedRoute,
@@ -60,6 +63,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                 this.getUserById();
             }
         );
+        this.SYSTEM_ADMIN =  CONSTANT.SYSTEM_ADMIN;
         this.user_current = this.variable_globals.user_current;
 
     }
@@ -314,7 +318,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
         @author:
      */
     checkDisableInput() {
-        if(this.user.is_staff == 1 && this.user_current.role !== 1) {
+        if(this.user.is_staff == 1 && this.user_current.role !== this.SYSTEM_ADMIN) {
             this.is_disable = true;
         }else {
             this.is_disable = false;
@@ -339,7 +343,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
             check user.is_staff and user_current.role: true ? false
         */
         if(this.user_current && this.user && this.user.id){
-            if(this.user.is_staff == 1 && this.user_current.role !== 1){
+            if(this.user.is_staff == 1 && this.user_current.role !== this.SYSTEM_ADMIN){
                 return true;
             }
         }
