@@ -199,11 +199,7 @@ export class UserListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    if (error.json().code == 405) {
-                        this.toastr.error(`${error.json().message}`);
-                    } else {
-                        this.handleError.handle_error(error);
-                    }
+                    this.handleError.handle_error(error);
                 });
         });
 

@@ -633,7 +633,7 @@ class FeedbackView(APIView):
                 if self.request.user.role_id == 1:
                     queryset = FeedBack.objects.filter(pk__in=fed_id).delete()
                     return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
-                return Response({"code": 405, "message": _("Just System Admin accept delete"), "fields": ""}, status=405)
+                return Response({"code": 403, "message": _("Just System Admin accept delete"), "fields": ""}, status=403)
             return Response({"code": 400, "message": "Not found ID ", "fields": "id"}, status=400)
         except Exception, e:
             print e
@@ -684,7 +684,7 @@ class FeedbackDetailView(APIView):
             if role_id == 1:
                 feedback.delete()
                 return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
-            return Response({"code": 405, "message": _("Just System Admin accept delete"), "fields": ""}, status=405)
+            return Response({"code": 403, "message": _("Just System Admin accept delete"), "fields": ""}, status=403)
         except Exception, e:
             print 'FeedbackDetailView delete', e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
@@ -2273,7 +2273,7 @@ class UserListView(APIView):
                     return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
                 return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
             else:
-                return Response({"code": 405, "message": _("Just System Admin accept delete"), "fields": ""}, status=405)
+                return Response({"code": 403, "message": _("Just System Admin accept delete"), "fields": ""}, status=403)
         except Exception, e:
             print e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
@@ -2325,12 +2325,12 @@ class UserDetailView(APIView):
 
             if serializer.is_valid():
                 if (self.request.user.is_staff == True and self.request.user.role_id != 1 and user.is_staff == True):
-                    return Response({"code": 405, "message": _("This function is only for System Admin"), "fields": ""}, status=405) 
+                    return Response({"code": 403, "message": _("This function is only for System Admin"), "fields": ""}, status=403) 
                 if(serializer.validated_data['new_password']):
                     if(self.request.user.role_id == 1):
                         user.set_password(self.request.data.get("new_password"))
                     else:
-                        return Response({"code": 405, "message": _("Just System Admin Change password"), "fields": ""}, status=405) 
+                        return Response({"code": 403, "message": _("Just System Admin Change password"), "fields": ""}, status=403) 
                 else:
                     user.password = self.request.data.get('password', user.password)
                 serializer.save()
@@ -2355,7 +2355,7 @@ class UserDetailView(APIView):
                 user.delete()
                 return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             else:
-                return Response({"code": 405, "message": _("Just System Admin accept delete"), "fields": ""}, status=405)
+                return Response({"code": 403, "message": _("Just System Admin accept delete"), "fields": ""}, status=403)
         except Exception, e:
             print 'UserDetailView PUT', e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}

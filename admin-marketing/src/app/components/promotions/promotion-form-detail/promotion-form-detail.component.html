@@ -23,7 +23,7 @@
     </p>
 </ng-container>
 
-<form [formGroup]="promotionForm" novalidate *ngIf="promotion && user_current">
+<form [formGroup]="promotionForm" novalidate *ngIf="promotion && promotionTypes && promotionLabels && categorys && user_current">
     <div class="form-group row">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Tên Khuyến Mãi </label>

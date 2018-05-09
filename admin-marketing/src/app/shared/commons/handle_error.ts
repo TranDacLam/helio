@@ -9,12 +9,11 @@ export class HandleError {
 
     }
 	handle_error(error){
-		// for functions for Feedback
-		if (error.code == 405) {
-            return this.toastr.error(`${error.json().message}`);
-        }
 		if (error.status == 403 || error.code == 403 ){
-			return this.toastr.warning(`Bạn không có quyền`);
+			if (error.message){
+				return this.toastr.warning(`${error.message}`);
+			}
+			return this.toastr.warning(`Bạn không có quyền.`);
 		}
 		if (error.status == 401 || error.code == 401 ){
 			return this.router.navigate(['/login']);

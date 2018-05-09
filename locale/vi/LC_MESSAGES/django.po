@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-08 15:37+0700\n"
+"POT-Creation-Date: 2018-05-09 09:50+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -332,7 +332,8 @@ msgstr "Đội quản lý tài khoản Helio Center."
 #: templates/websites/experience.html:63 templates/websites/faqs.html:77
 #: templates/websites/helio_kids.html:141
 #: templates/websites/helio_play.html:139 templates/websites/news.html:63
-#: templates/websites/power_card.html:73 templates/websites/promotions.html:125
+#: templates/websites/power_card.html:73
+#: templates/websites/promotions.html:125
 #: templates/websites/redemption_store.html:148
 msgid "btn.view_more"
 msgstr "Hiển thị thêm"
@@ -1042,20 +1043,16 @@ msgid "Unauthorized"
 msgstr ""
 
 #: websites/api_admin/decorator.py:16
-#, fuzzy
-#| msgid "User is not related"
 msgid "User has no role."
-msgstr "User chưa được liên kết."
+msgstr "Bạn chưa được xét quyền."
 
 #: websites/api_admin/decorator.py:24 websites/api_admin/decorator.py:28
 msgid "Forbidden"
-msgstr ""
+msgstr "Bạn không có quyền này."
 
 #: websites/api_admin/decorator.py:34
-#, fuzzy
-#| msgid "You don't have permission to access."
 msgid "User don't have permission."
-msgstr "Bạn không có quyền truy cập."
+msgstr "Bạn không có quyền ở mục này."
 
 #: websites/api_admin/serializers.py:17 websites/api_admin/serializers.py:163
 msgid "Birth date is invalid."
@@ -1279,8 +1276,8 @@ msgid "Not found month and year."
 msgstr "Nhãn Khuyến Mãi không tồn tại."
 
 #: websites/config/setting_api.py:19 websites/config/setting_develop.py:17
-#: websites/config/setting_local.py:18 websites/config/setting_production.py:28
-#: websites/settings.py:233
+#: websites/config/setting_local.py:18
+#: websites/config/setting_production.py:28 websites/settings.py:233
 msgid "Vietnamese"
 msgstr ""
 

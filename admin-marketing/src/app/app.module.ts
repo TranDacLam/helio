@@ -44,7 +44,6 @@ import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
 import { CategoryService } from './shared/services/category.service';
 import { BannerService } from './shared/services/banner.service';
-import { AuthHttp } from './shared/auth/auth-http';
 import { ScrollTop } from './shared/commons/scroll-top';
 import { AuthGuard } from './shared/auth/auth.guard';
 
@@ -91,6 +90,7 @@ import { FormDenominationComponent } from './components/denomination/form-denomi
 import { FormFeeComponent } from './components/fee/form-fee/form-fee.component';
 import { FormHotAdvsComponent } from './components/hot-advs/form-hot-advs/form-hot-advs.component';
 
+import { AuthHttp } from './shared/auth/auth-http';
 import { HandleError } from './shared/commons/handle_error';
 /*
     Translate datetime-picker

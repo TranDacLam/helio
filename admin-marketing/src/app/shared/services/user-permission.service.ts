@@ -45,6 +45,6 @@ export class UserPermissionService {
 
     // throw error
     handleError(error: Response) {
-        return Observable.throw(error);
+        return Observable.throw(error.json());
     }
 }

@@ -180,10 +180,8 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                             } else {
                                 this.errorMessage = error.message
                             }
-                        } else if (error.code == 405) {
-                            self.toastr.error(`${error.message}`);
                         } else {
-                            self.router.navigate(['/error', { message: error }]);
+                            self.handleError.handle_error(error);
                         }
                     }
                 );
