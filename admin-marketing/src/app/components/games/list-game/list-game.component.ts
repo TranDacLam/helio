@@ -142,10 +142,10 @@ export class ListGameComponent implements OnInit {
                 message: "Bạn muốn xóa " + this.length_selected + " Trò Chơi đã chọn?",
                 buttons: {
                     cancel: {
-                        label: "Hủy"
+                        label: "HỦY"
                     },
                     confirm: {
-                        label: "Xóa"
+                        label: "XÓA"
                     }
                 },
                 callback: function (result) {
