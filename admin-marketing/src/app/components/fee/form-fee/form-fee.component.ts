@@ -66,7 +66,12 @@ export class FormFeeComponent implements OnInit {
                         this.toastr.success(`Chỉnh sửa "${this.data} ${this.feeAddForm.value.fee_type}" thành công`);
                     },
                     (error) => {
-                        this.handleError.handle_error(error);
+                        if (error.status === 400) {
+                            this.errorMessage = error.json().message;
+                        } else {
+                            this.handleError.handle_error(error);
+                        }
+
                     }
                 )
             }else{
@@ -77,7 +82,11 @@ export class FormFeeComponent implements OnInit {
                         this.toastr.success(`Thêm mới "${this.data} ${this.feeAddForm.value.fee_type}" thành công`);
                     },
                     (error) => {
-                        this.handleError.handle_error(error);
+                        if (error.status === 400) {
+                            this.errorMessage = error.json().message;
+                        } else {
+                            this.handleError.handle_error(error);
+                        }
                     }
                 );
             }   

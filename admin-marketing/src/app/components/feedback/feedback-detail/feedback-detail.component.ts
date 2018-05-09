@@ -123,7 +123,13 @@ export class FeedbackDetailComponent implements OnInit {
                 this.router.navigate(['/feedback-list']);
             },
             (error) => {
-                this.handleError.handle_error(error);
+                if (error.status == 400) {
+                    // Show error message in form
+                    this.errorMessage = error.json();
+                }else {
+                    this.handleError.handle_error(error);
+                }
+
             }
         )
     }

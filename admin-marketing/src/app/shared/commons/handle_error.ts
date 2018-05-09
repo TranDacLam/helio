@@ -12,14 +12,11 @@ export class HandleError {
 		switch (error.status) {
 			case 401:
 				return this.router.navigate(['/login']);
-            case 403: 
+            case 403 || 400: 
             	if (error.response) {
             		return this.toastr.warning(`${JSON.parse(error.response).message}`);
-            	} else {
-            		return this.toastr.warning(`${error.json().message}`);
-            	}
-            case 400: 
-                return this.router.navigate(['/error', { message: error.json().message}]);
+            	} 
+            	return this.toastr.warning(`${error.json().message}`);
             case 404:
             	return this.router.navigate(['/error', { message: 'HTTP 404 Not Found'}]);
             case 500:
