@@ -229,7 +229,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                 this.promotionTypes = data;
             },
             (error) => {
-                this.handleError.handle_error(error);;
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -244,7 +244,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                 this.promotionLabels = data;
             },
             (error) => {
-                this.handleError.handle_error(error);;
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -349,7 +349,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                                     $('#UpdatePromotion').animate({ scrollTop: $('.modal-title').offset().top }, 'slow');
                                 }
                             }else{
-                                that.router.navigate(['/error']);
+                                this.handleError.handle_error(error);
                             }
                         }
                     );
@@ -366,7 +366,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                             that.errors = error.message;
                             this.scrollTop.scrollTopFom();
                         }else{
-                            that.router.navigate(['/error']);
+                            this.handleError.handle_error(error);
                         }
                     }
                 );
