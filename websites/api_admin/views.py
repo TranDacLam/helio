@@ -144,6 +144,7 @@ class PromotionDetail(APIView):
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
 
+    @check_role_permission(model_key.promotion)
     def delete(self, request, id, format=None):
         item = self.get_object(id).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -2154,7 +2155,7 @@ class FAQListAPI(APIView):
 
 
 class GeneratorQRCode(APIView):
-
+    @check_role_permission(model_key.promotion)
     def post(self, request, id, format=None):
         try:
             promotion = Promotion.objects.get(pk=id)
@@ -2188,20 +2189,6 @@ class CategoryList(APIView):
             print "FeeAPI ", e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
             return Response(error, status=500)
-
-
-# @parser_classes((MultiPartParser, FormParser))
-# @permission_classes((AllowAny,))
-# def UploadFile(APIView):
-@csrf_exempt
-def postUpload(request):
-    print "request", request.FILES
-    result = {
-        'uploaded': 1,
-        'fileName': 'logo.png',
-        'url': 'https://helio.vn/static/assets/images/logo.png'
-    }
-    return JsonResponse(result, status=200)
 
 
 """

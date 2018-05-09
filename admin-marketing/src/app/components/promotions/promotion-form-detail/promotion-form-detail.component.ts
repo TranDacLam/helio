@@ -405,7 +405,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                                 that.router.navigate(['/promotions']);
                             }, 
                             (error) => {
-                                that.router.navigate(['/error', { message: error.message}]);
+                                that.handleError.handle_error(error);
                             });
                     }
                 }
