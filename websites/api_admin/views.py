@@ -35,6 +35,7 @@ import traceback
 from dateutil.parser import parse
 from decorator import check_role_permission
 import model_key
+import unidecode
 """
     Get Promotion
     @author: diemnguyen
@@ -698,7 +699,7 @@ DELETE all checkbox selected
 
 
 class UserLinkCardList(APIView):
-
+    @check_role_permission(model_key.link_card)
     def get(self, request, format=None):
         """
         Get all user linked card
@@ -710,7 +711,7 @@ class UserLinkCardList(APIView):
         except Exception, e:
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
-
+    @check_role_permission(model_key.link_card)
     def delete(self, request, format=None):
         """
         DELETE: multi checbox
@@ -946,8 +947,6 @@ class NotificationUser(APIView):
     if search_field is status then get status feedback
 
 """
-import unidecode
-
 
 class SummaryAPI(APIView):
 
