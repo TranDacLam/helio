@@ -103,10 +103,12 @@ export class UserPermissionComponent implements OnInit {
             searchable: false
         };
         let column_356 = { targets: [3 ,5 ,6 ],visible: false, searchable: false };
-        this.userMultiselect.dtOptions_right.columnDefs.push(column_0, column_2, column_356);
-        this.userMultiselect.dtOptions_left.columnDefs.push(column_0, column_2,column_356);
-        this.userMultiselect.dtOptions_right.scrollX = false;
-        this.userMultiselect.dtOptions_left.scrollX = false;
+        if(this.user_current.role == 1){
+            this.userMultiselect.dtOptions_right.columnDefs.push(column_0, column_2, column_356);
+            this.userMultiselect.dtOptions_left.columnDefs.push(column_0, column_2,column_356);
+            this.userMultiselect.dtOptions_right.scrollX = false;
+            this.userMultiselect.dtOptions_left.scrollX = false;
+        }
     }
 
     ngOnInit() {
