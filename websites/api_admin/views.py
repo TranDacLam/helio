@@ -2837,7 +2837,7 @@ class UserRoleAPI(APIView):
         role_id = self.request.user.role_id
         try:
             if role_id == 1:
-                model_name = Model_Name.objects.all()
+                model_name = Model_Name.objects.all().order_by('name')
                 model_name_serializer = admin_serializers.RolesPerDisplaySerializer( model_name, many = True)
                 return Response(model_name_serializer.data)
             return Response({"code": 403, "message": _("This function is only for System Admin"), "fields": ""}, status=403)  
