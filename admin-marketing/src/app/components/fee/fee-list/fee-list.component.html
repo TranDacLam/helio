@@ -47,13 +47,13 @@
 		</tbody>
 	</table>
 </div>
-<div class='row under-table'>
+<div class='row under-table' *ngIf="fees">
 	<div class="col-md-3">
 		<select name="" class="form-control">
 			<option value="">Xóa các phí giao dịch được chọn</option>
 		</select>
 	</div>
-	<div class="col-md-3" *ngIf="fees" >
+	<div class="col-md-3">
 		{{length_selected}} của {{length_all}} được chọn
 		<button type="button" class="btn btn-danger btn-delete-fee" (click)="confirm_delete();">Thực hiện</button>
 	</div>
