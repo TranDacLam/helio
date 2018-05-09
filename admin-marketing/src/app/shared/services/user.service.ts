@@ -29,7 +29,7 @@ export class UserService {
      */
     getAllUsers(): Observable<User[]> {
         let url = `${api.users}`;
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
     }
 
     /*
@@ -38,7 +38,7 @@ export class UserService {
      */
     getUserById(id: number): Observable<User> {
         const url = `${api.users}${id}/`;
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
     }
 
     /*
@@ -48,7 +48,7 @@ export class UserService {
     deleteUserById(user: User): Observable<User> {
         const id = user.id;
         const url = `${api.users}${id}/`;
-        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json());
     }
 
     /*
@@ -117,7 +117,7 @@ export class UserService {
             headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
-        return this.http.delete(url, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url, _options).map((res: Response) => res.json());
     }
 
     /*
@@ -131,13 +131,6 @@ export class UserService {
                 'Authorization': `Bearer ${value}`
             })
         };
-        return this.http.get(api.account_users, _option).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    /* 
-      Handle error
-    */
-    handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.get(api.account_users, _option).map((res: Response) => res.json());
     }
 }

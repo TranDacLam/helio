@@ -33,7 +33,7 @@ export class BannerService {
     */
     getAllBanner(lang): Observable<Banner[]> {
         let url_banner = `${env.api_domain_root}/${lang}/api/${api.banner}`;
-        return this.http.get(url_banner, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_banner, this.httpOptions).map((res: Response) => res.json());
     }
 
     /*
@@ -43,7 +43,7 @@ export class BannerService {
     getBannerById(id: number, lang): Observable<Banner> {
         // const url = `${api.banner}${id}/`;
         let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
     }
     /*
         PUT: Update Banner By Id
@@ -96,7 +96,7 @@ export class BannerService {
     }
     deleteUserById(id: number, lang): Observable<any> {
         let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`
-        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json());
     }
 
     deleteBannerSelected(banner_id, lang): Observable<any> {
@@ -109,12 +109,6 @@ export class BannerService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(url, _options).map((res: Response) => res.json()).catch(this.handleError);
-    }
-    /* 
-      Handle error
-    */
-    handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.delete(url, _options).map((res: Response) => res.json());
     }
 }

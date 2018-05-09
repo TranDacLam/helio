@@ -33,12 +33,12 @@ export class GameService {
     */
     getGames(lang): Observable<any>{
         const url_getGames = `${env.api_domain_root}/${lang}/api/${api.game_list}`;
-        return this.http.get(url_getGames, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getGames, this.httpOptions).map((res: Response) => res.json());
     }
 
     getGame(id: number, lang): Observable<any>{
         const url_getGame = `${env.api_domain_root}/${lang}/api/${api.game}${id}/`;
-        return this.http.get(url_getGame, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getGame, this.httpOptions).map((res: Response) => res.json());
     }
 
     /* 
@@ -57,7 +57,7 @@ export class GameService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(url_onDelGameSelect, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_onDelGameSelect, _options).map((res: Response) => res.json());
     }
 
     addGame(value: FormData, lang): Observable<any>{
@@ -104,13 +104,7 @@ export class GameService {
 
     onDelGame(id, lang): Observable<any>{
         const url_onDelGame = `${env.api_domain_root}/${lang}/api/${api.game}${id}/`;
-        return this.http.delete(url_onDelGame, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.delete(url_onDelGame, this.httpOptions).map((res: Response) => res.json());
     }
 
 }

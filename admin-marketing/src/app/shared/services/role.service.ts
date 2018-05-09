@@ -29,13 +29,6 @@ export class RoleService {
     */
     getAllRoles(): Observable<Role[]> {
         let url = `${api.role}`;
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-	/*
-      Handle error
-    */
-    handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
     }
 }

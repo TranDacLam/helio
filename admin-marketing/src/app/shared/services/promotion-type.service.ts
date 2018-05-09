@@ -34,13 +34,6 @@ export class PromotionTypeService {
     */
     getAllPromotionsType(): Observable<any[]>{
         let urlPromotionType = `${api.promotion_type}`;
-        return this.http.get(urlPromotionType, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    /*
-        Handle error
-    */
-    handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.get(urlPromotionType, this.httpOptions).map((res: Response) => res.json());
     }
 }

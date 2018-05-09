@@ -36,7 +36,7 @@ export class PromotionService {
     */
     getUsersPromotion(id: number, lang): Observable<any> {
         const url_getUsersPromotion = `${env.api_domain_root}/${lang}/api/${api.user_promotion}${id}/`;
-        return this.http.get(url_getUsersPromotion, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getUsersPromotion, this.httpOptions).map((res: Response) => res.json());
 
     }
 
@@ -46,7 +46,7 @@ export class PromotionService {
     */
     getAllPromotion(lang): Observable<any> {
         const url_getAllPromotion = `${env.api_domain_root}/${lang}/api/${api.promotion_list}`;
-        return this.http.get(url_getAllPromotion, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getAllPromotion, this.httpOptions).map((res: Response) => res.json());
     }
 
     /*  
@@ -55,7 +55,7 @@ export class PromotionService {
     */
     getPromotionById(id: number, lang): Observable<any> {
         const url_getPromotionById = `${env.api_domain_root}/${lang}/api/${api.promotion}${id}/`;
-        return this.http.get(url_getPromotionById, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getPromotionById, this.httpOptions).map((res: Response) => res.json());
     }
 
 
@@ -65,7 +65,7 @@ export class PromotionService {
     */
     deletePromotionById(id: number, lang): Observable<any> {
         const url_deletePromotionById = `${env.api_domain_root}/${lang}/api/${api.promotion}${id}/`;
-        return this.http.delete(url_deletePromotionById, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_deletePromotionById, this.httpOptions).map((res: Response) => res.json());
     }
 
     /*  
@@ -138,7 +138,7 @@ export class PromotionService {
             headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
-        return this.http.delete(url_deletePromotionList, _options_delete).catch(this.handleError);
+        return this.http.delete(url_deletePromotionList, _options_delete);
     }
 
     /*  
@@ -150,7 +150,7 @@ export class PromotionService {
         let param = {
             list_user_id: list_user_id
         }
-        return this.http.post(url_updateUserPromotion, JSON.stringify(param), this.httpOptions).catch(this.handleError);
+        return this.http.post(url_updateUserPromotion, JSON.stringify(param), this.httpOptions);
     }
     /*  
         Generator QR code
@@ -158,7 +158,7 @@ export class PromotionService {
     */
     generator_QR_code(id: number): Observable<any>{
         let generator_QR_code_url = `${api.generator_QR_code}${id}/`
-        return this.http.post(generator_QR_code_url, JSON.stringify({'vo':'promotion'}), this.httpOptions).catch(this.handleError);
+        return this.http.post(generator_QR_code_url, JSON.stringify({'vo':'promotion'}), this.httpOptions);
     }
 
     /*  
@@ -168,13 +168,6 @@ export class PromotionService {
     getPromotionReport(id: number, lang): Observable<any>{
         let url_getPromotionReport = `${env.api_domain_root}/${lang}/api/${api.promotion_statistic}${id}/`
         return this.http.get(url_getPromotionReport, this.httpOptions).
-            map((res: Response) => res.json()).catch(this.handleError);
+            map((res: Response) => res.json());
     }
-
-    private handleError(error: Response) {
-        return Observable.throw(error);
-    }
-
-
-
 }

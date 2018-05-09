@@ -30,12 +30,7 @@ export class PostTypeService {
     */
     getPostTypes(lang): Observable<any>{
         const url = `${env.api_domain_root}/${lang}/api/${api.post_type_list}`;
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
     }
 
 }
