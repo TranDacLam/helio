@@ -193,10 +193,10 @@ export class FormHotComponent implements OnInit {
             message: "Bạn muốn xóa Hot này?",
             buttons: {
                 cancel: {
-                    label: "Hủy"
+                    label: "HỦY"
                 },
                 confirm: {
-                    label: "Xóa"
+                    label: "XÓA"
                 }
             },
             callback: function (result) {

@@ -141,10 +141,10 @@ export class ListHotComponent implements OnInit {
                 message: "Bạn muốn xóa " + this.length_selected + " Hot đã chọn?",
                 buttons: {
                     cancel: {
-                        label: "Hủy"
+                        label: "HỦY"
                     },
                     confirm: {
-                        label: "Xóa"
+                        label: "XÓA"
                     }
                 },
                 callback: function (result) {

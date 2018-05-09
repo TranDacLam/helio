@@ -42,7 +42,7 @@ export class DenominationListComponent implements OnInit {
         private toastr: ToastrService,
         private handleError:HandleError
     ) {
-        this.denominations = [];
+       
     }
 
     ngOnInit() {
