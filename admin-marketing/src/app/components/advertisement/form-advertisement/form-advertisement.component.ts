@@ -113,7 +113,11 @@ export class FormAdvertisementComponent implements OnInit {
 						this.router.navigate(['/advertisement-list'])
 					},
 					(error) => {
-						this.handleError.handle_error(error);
+						if (error.status == 400) {
+							this.errorMessage = error.json()
+						}else {
+							this.handleError.handle_error(error);
+						}
 					}
 				);
 			}

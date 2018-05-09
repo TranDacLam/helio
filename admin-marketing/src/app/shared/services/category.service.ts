@@ -34,7 +34,7 @@ export class CategoryService {
 
     // exception
     private handleError(error: Response) {
-        return Observable.throw(error.json());
+        return Observable.throw(error);
     }
 
 }

@@ -64,7 +64,7 @@ export class NotificationService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(JSON.parse(xhr.response));
+                        observer.error(xhr);
                     }
                 }
             }
@@ -90,7 +90,7 @@ export class NotificationService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(JSON.parse(xhr.response));
+                        observer.error(xhr);
                     }
                 }
             }
@@ -166,7 +166,7 @@ export class NotificationService {
 
     // exception
     private handleError(error: Response) {
-        return Observable.throw(error.json());
+        return Observable.throw(error);
     }
 
 }

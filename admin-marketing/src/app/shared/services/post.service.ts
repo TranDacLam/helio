@@ -61,7 +61,7 @@ export class PostService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(JSON.parse(xhr.response));
+                        observer.error(xhr);
                     }
                 }
             }
@@ -83,7 +83,7 @@ export class PostService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(JSON.parse(xhr.response));
+                        observer.error(xhr);
                     }
                 }
             }
@@ -97,7 +97,7 @@ export class PostService {
 
     // exception
     private handleError(error: Response) {
-        return Observable.throw(error.json());
+        return Observable.throw(error);
     }
 
 }

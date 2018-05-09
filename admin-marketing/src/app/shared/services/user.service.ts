@@ -69,7 +69,7 @@ export class UserService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(JSON.parse(xhr.response));
+                        observer.error(xhr);
                     }
                 }
             }
@@ -96,7 +96,7 @@ export class UserService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(JSON.parse(xhr.response));
+                        observer.error(xhr);
                     }
                 }
             }
@@ -138,6 +138,6 @@ export class UserService {
       Handle error
     */
     handleError(error: Response) {
-        return Observable.throw(error.json());
+        return Observable.throw(error);
     }
 }

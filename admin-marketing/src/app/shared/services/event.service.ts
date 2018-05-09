@@ -70,7 +70,7 @@ export class EventService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(JSON.parse(xhr.response));
+                        observer.error(xhr);
                     }
                 }
             }
@@ -91,7 +91,7 @@ export class EventService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(JSON.parse(xhr.response));
+                        observer.error(xhr);
                     }
                 }
             }
@@ -105,7 +105,7 @@ export class EventService {
 
     // exception
     private handleError(error: Response) {
-        return Observable.throw(error.json());
+        return Observable.throw(error);
     }
 
 }
