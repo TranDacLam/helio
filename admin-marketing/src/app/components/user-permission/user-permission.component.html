@@ -5,7 +5,7 @@
 <div class="row text-center">
     <p class="title">PHÂN QUYỀN CHO USER</p>
 </div>
-<div [hidden]="!roles" class="wrapper-permission">
+<div [hidden]="!roles || user_current?.role !== 1" class="wrapper-permission">
     <div class="row permission-content">
         <div class="wrap-head">
             <h4>Các quyền</h4>

@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserMultiselectComponent } from '../user-multiselect/user-multiselect.component';
 import { HandleError } from '../../shared/commons/handle_error';
-
+import { VariableGlobals } from '../../shared/commons/variable_globals';
 
 @Component({
     selector: 'app-user-permission',
@@ -23,10 +23,12 @@ export class UserPermissionComponent implements OnInit {
         private userPermissionService: UserPermissionService,
         private toastr: ToastrService,
         private router: Router,
+        private variable_globals: VariableGlobals,
         private handleError:HandleError) { }
 
     user_list_left: User[];
     user_list_right: User[];
+    user_current: User;
     roles: Role[];
     @ViewChild(UserMultiselectComponent)
     userMultiselect: UserMultiselectComponent
@@ -109,6 +111,8 @@ export class UserPermissionComponent implements OnInit {
 
     ngOnInit() {
         this.getRoles();
+
+        this.user_current = this.variable_globals.user_current;
     }
 
 }
