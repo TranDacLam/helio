@@ -21,7 +21,7 @@
 </div>
 <br>
 <div class="table card-list">
-	<table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="users">
+	<table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" *ngIf="users">
         <thead>
             <tr>
                 <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>

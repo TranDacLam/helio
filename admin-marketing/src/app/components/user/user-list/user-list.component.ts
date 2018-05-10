@@ -34,7 +34,7 @@ export class UserListComponent implements OnInit {
         Using trigger becase fetching the list of feedbacks can be quite long
   	    thus we ensure the data is fetched before rensering
     */
-    // dtTrigger: Subject<any> = new Subject();
+    dtTrigger: Subject<any> = new Subject();
 
     constructor(
         private route: ActivatedRoute,
@@ -43,6 +43,7 @@ export class UserListComponent implements OnInit {
         private toastr: ToastrService,
         private handleError:HandleError
     ) {
+        this.users = [];
     }
 
     ngOnInit() {
@@ -83,6 +84,7 @@ export class UserListComponent implements OnInit {
             (data) => {
                 this.users = data;
                 this.length_all = this.users.length;
+                this.dtTrigger.next();
             },
             (error) => {
                 this.handleError.handle_error(error);
