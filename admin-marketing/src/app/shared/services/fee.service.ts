@@ -31,7 +31,7 @@ export class FeeService {
 
 
     getFees(): Observable<Fee[]> {
-        return this.http.get(this.feeUrlList, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(this.feeUrlList, this.httpOptions).map((res: Response) => res.json());
     }
 
     /*
@@ -40,11 +40,11 @@ export class FeeService {
      */
     getFee(id: number): Observable<Fee> {
         let url = this.feeUrl + `${id}/`;
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
     }
 
     createFee(fee: Fee): Observable<Fee> {
-        return this.http.post(this.feeUrl, fee, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.post(this.feeUrl, fee, this.httpOptions).map((res: Response) => res.json());
     }
 
     /*
@@ -53,12 +53,12 @@ export class FeeService {
      */
     updateFee(fee, id:number): Observable<Fee> {
         let url = this.feeUrl + `${id}/`;
-        return this.http.put(url, fee, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.put(url, fee, this.httpOptions).map((res: Response) => res.json());
     }
     
     deleteFeeById(id:number): Observable<Fee> {
         let url = this.feeUrl + `${id}/`;
-        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json());
     }
 
     deleteListFee(list_id: number[]): Observable<Fee> {
@@ -67,16 +67,11 @@ export class FeeService {
             headers: this.httpOptions.headers,
             method: RequestMethod.Delete,
         })
-        return this.http.delete(this.feeUrlList, options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(this.feeUrlList, options).map((res: Response) => res.json());
     }
     applyFee(id: number): Observable<Fee> {
         let feeDetailUrl = this.feeApply + `${id}/`;
-        return this.http.put(feeDetailUrl, null, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.put(feeDetailUrl, null, this.httpOptions).map((res: Response) => res.json());
 
     }
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error);
-    }
-
 }

@@ -21,12 +21,12 @@ export class PostService {
     */
     getPosts(lang): Observable<any> {
         const url_getPosts = `${env.api_domain_root}/${lang}/api/${api.post_list}`;
-        return this.http.get(url_getPosts).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getPosts).map((res: Response) => res.json());
     }
 
     getPost(id: number, lang): Observable<any> {
         const url_getPost = `${env.api_domain_root}/${lang}/api/${api.post}${id}/`;
-        return this.http.get(url_getPost).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getPost).map((res: Response) => res.json());
     }
 
     /* 
@@ -43,7 +43,7 @@ export class PostService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(url_onDelPostSelect, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_onDelPostSelect, _options).map((res: Response) => res.json());
     }
 
     addPost(value: FormData, lang): Observable<any> {
@@ -92,12 +92,7 @@ export class PostService {
 
     onDelPost(id: number, lang): Observable<any> {
         const url_onDelPost = `${env.api_domain_root}/${lang}/api/${api.post}${id}/`;
-        return this.http.delete(url_onDelPost).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.delete(url_onDelPost).map((res: Response) => res.json());
     }
 
 }

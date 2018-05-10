@@ -29,7 +29,7 @@ export class OpenTimeService {
     */
     getOpenTime(month, year): Observable<any> {
         const url_getOpenTime = `${api.opentime}?month=${month}&year=${year}`;
-        return this.http.get(url_getOpenTime, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getOpenTime, this.httpOptions).map((res: Response) => res.json());
     }
 
     /* 
@@ -39,12 +39,7 @@ export class OpenTimeService {
     addOpenTime(value): Observable<any> {
         let body = JSON.stringify(value); // String payload
         return this.http.post(api.opentime, body, this.httpOptions)
-            .map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error);
+            .map((res: Response) => res.json());
     }
 
 }

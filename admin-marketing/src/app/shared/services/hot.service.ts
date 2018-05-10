@@ -30,12 +30,12 @@ export class HotService {
     */
     getHots(lang): Observable<any>{
         const url_getHots = `${env.api_domain_root}/${lang}/api/${api.hot_list}`;
-        return this.http.get(url_getHots, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getHots, this.httpOptions).map((res: Response) => res.json());
     }
 
     getHot(id: number, lang): Observable<any>{
         const url_getHot = `${env.api_domain_root}/${lang}/api/${api.hot}${id}/`;
-        return this.http.get(url_getHot, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getHot, this.httpOptions).map((res: Response) => res.json());
     }
 
     /* 
@@ -54,7 +54,7 @@ export class HotService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(url_onDelHotSelect, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_onDelHotSelect, _options).map((res: Response) => res.json());
     }
 
     addHot(value: FormData, lang): Observable<any>{
@@ -103,12 +103,7 @@ export class HotService {
 
     onDelHot(id, lang): Observable<any>{
         const url_onDelHot = `${env.api_domain_root}/${lang}/api/${api.hot}${id}/`;
-        return this.http.delete(url_onDelHot, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.delete(url_onDelHot, this.httpOptions).map((res: Response) => res.json());
     }
 
 }

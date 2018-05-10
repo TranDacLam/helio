@@ -28,7 +28,7 @@ export class RolePermissionService {
         author: Lam
     */
     getRolePermission(): Observable<any> {
-        return this.http.get(api.user_role, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(api.user_role, this.httpOptions).map((res: Response) => res.json());
     }
 
     /* 
@@ -36,17 +36,12 @@ export class RolePermissionService {
         author: Lam
     */
     getRole(): Observable<any> {
-        return this.http.get(api.role_list, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(api.role_list, this.httpOptions).map((res: Response) => res.json());
     }
 
     saveRolePermission(list_role_permission): Observable<any> {
         let body = JSON.stringify(list_role_permission);
-        return this.http.put(api.user_role, body, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.put(api.user_role, body, this.httpOptions).map((res: Response) => res.json());
     }
 
 }

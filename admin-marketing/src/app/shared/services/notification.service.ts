@@ -31,8 +31,7 @@ export class NotificationService {
     */
     getNotification(id: number, lang): Observable<any> {
         const url_getNotification = `${env.api_domain_root}/${lang}/api/${api.notification}${id}/`;
-        return this.http.get(url_getNotification, this.httpOptions).map((res: Response) => res.json())
-            .catch(this.handleError);
+        return this.http.get(url_getNotification, this.httpOptions).map((res: Response) => res.json());
     }
 
     /* 
@@ -41,8 +40,7 @@ export class NotificationService {
     */
     getNotifications(lang): Observable<any> {
         const url_getNotifications = `${env.api_domain_root}/${lang}/api/${api.notification_list}`;
-        return this.http.get(url_getNotifications, this.httpOptions).map((res: Response) => res.json())
-            .catch(this.handleError);
+        return this.http.get(url_getNotifications, this.httpOptions).map((res: Response) => res.json());
     }
 
     /* 
@@ -104,7 +102,7 @@ export class NotificationService {
     onDelNoti(id: number, lang): Observable<any>{
         const url_onDelNoti = `${env.api_domain_root}/${lang}/api/${api.notification}${id}/`;
 
-        return this.http.delete(url_onDelNoti, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_onDelNoti, this.httpOptions).map((res: Response) => res.json());
     }
 
     /* 
@@ -123,7 +121,7 @@ export class NotificationService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(url_onDelNotiSelect, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_onDelNotiSelect, _options).map((res: Response) => res.json());
     }
 
     /* 
@@ -132,8 +130,7 @@ export class NotificationService {
     */
     getUserNotification(id, lang): Observable<any> {
         const url_getUserNotification = `${env.api_domain_root}/${lang}/api/${api.user_notification}${id}/`;
-        return this.http.get(url_getUserNotification, this.httpOptions).map((res: Response) => res.json())
-            .catch(this.handleError);
+        return this.http.get(url_getUserNotification, this.httpOptions).map((res: Response) => res.json());
     }
 
     /* 
@@ -147,7 +144,7 @@ export class NotificationService {
             list_user_id: user_noti
         }
         return this.http.post(url_updateUserNoti, JSON.stringify(param), this.httpOptions)
-            .map((res: Response) => res.json()).catch(this.handleError);
+            .map((res: Response) => res.json());
     }
 
     /*
@@ -160,13 +157,7 @@ export class NotificationService {
             notification_id: id
         }
         return this.http.post(url_sendNotification, JSON.stringify(param), this.httpOptions)
-            .map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error);
+            .map((res: Response) => res.json());
     }
 
 }

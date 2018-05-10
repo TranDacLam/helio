@@ -29,12 +29,12 @@ export class EventService {
     */
     getEvents(lang): Observable<any>{
         const url_getEvents = `${env.api_domain_root}/${lang}/api/${api.event_list}`;
-        return this.http.get(url_getEvents, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getEvents, this.httpOptions).map((res: Response) => res.json());
     }
 
     getEvent(id: number, lang): Observable<any>{
         const url_getEvent = `${env.api_domain_root}/${lang}/api/${api.event}${id}/`;
-        return this.http.get(url_getEvent, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getEvent, this.httpOptions).map((res: Response) => res.json());
     }
 
     /* 
@@ -53,7 +53,7 @@ export class EventService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(url_onDelEventSelect, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_onDelEventSelect, _options).map((res: Response) => res.json());
     }
 
     addEvent(value: FormData, lang): Observable<any>{
@@ -100,12 +100,7 @@ export class EventService {
 
     onDelEvent(id: number, lang): Observable<any>{
         const url_onDelEvent = `${env.api_domain_root}/${lang}/api/${api.event}${id}/`;
-        return this.http.delete(url_onDelEvent, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.delete(url_onDelEvent, this.httpOptions).map((res: Response) => res.json());
     }
 
 }
