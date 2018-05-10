@@ -403,6 +403,11 @@ button.btn:focus {
 .modal-backdrop {
     z-index: 850;
 }
+/*class for no permission*/
+.no-permission{
+  margin-bottom: 200px;
+}
+
 /* End Fix bugs confict z-index of datepicker + modal popup */
 @media (min-width: 768px) {
     /* START HEADER*/
