@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigateByUrl('/');
                 },
                 (error) => {
-                    this.msg_error = error.non_field_errors[0] ? error.non_field_errors[0] : "Lỗi";
+                    this.msg_error = error.json().non_field_errors[0] ? error.json().non_field_errors[0] : "Lỗi";
                 }
             );
         }
