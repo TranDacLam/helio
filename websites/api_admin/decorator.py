@@ -2,14 +2,15 @@ from core.models import Roles_Permission
 from rest_framework.response import Response
 from django.utils.translation import ugettext_lazy as _  
 
-def clear_image_data(request):
-    # Fix bugs readv() failed
-    request.data['image'] = None
-    request.data['image_thumbnail'] = None
-    request.data['avatar'] = None
-
 def check_role_permission(model_key):
     def wrapper(view_func):
+        def clear_image_data(request):
+            if request.data:
+                # Fix bugs readv() failed
+                request.data['image'] = None
+                request.data['image_thumbnail'] = None
+                request.data['avatar'] = None
+
         def wrapped(self, request, *args, **kwargs):
             print "Check role permission"
             try:
