@@ -35,7 +35,8 @@ export class FeeListComponent implements OnInit {
     record: string = "Phí Giao Dịch";
     length_selected: number;
     length_all: number;
-
+    // check permission to display page
+    error_permission:boolean = false;
     // action when hover
     hoverIn(fee) {
         fee.isHover = true;
@@ -48,10 +49,12 @@ export class FeeListComponent implements OnInit {
     getFees() {
         return this.feeService.getFees().subscribe(
             success => {
+                this.error_permission = false;
                 this.fees = success;
                 this.length_all = success.length;
             },
             error => {
+                this.error_permission = true;
                 this.handleError.handle_error(error);
             });
     }

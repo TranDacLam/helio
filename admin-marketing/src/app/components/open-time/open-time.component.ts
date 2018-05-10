@@ -37,8 +37,8 @@ export class OpenTimeComponent implements OnInit {
     year_event: any;
 
     is_disabled_day_of_week: boolean = false;
-
-
+    // check permission to display page
+    error_permission:boolean = false;
     constructor(
         private fb: FormBuilder,
         private router: Router,
@@ -63,6 +63,7 @@ export class OpenTimeComponent implements OnInit {
     getOpenTime(month, year){
         this.openTimeService.getOpenTime(month, year).subscribe(
             (data) => {
+                this.error_permission = false;
                 let events_new = [];
                 if(data){
                     data.map(item => {
@@ -92,6 +93,7 @@ export class OpenTimeComponent implements OnInit {
                 }
             },
             (error) => {
+                this.error_permission = true;
                 this.handleError.handle_error(error);;
             }
         );
