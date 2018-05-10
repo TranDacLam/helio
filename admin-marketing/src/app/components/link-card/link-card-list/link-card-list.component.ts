@@ -38,7 +38,7 @@ export class LinkCardListComponent implements OnInit {
 
     // Using trigger becase fetching the list of link_cards can be quite long
     // thus we ensure the data is fetched before rensering
-    dtTrigger: Subject<any> = new Subject();
+    // dtTrigger: Subject<any> = new Subject();
     constructor(
         private route: ActivatedRoute,
         private linkCardService: LinkCardService,
@@ -46,7 +46,6 @@ export class LinkCardListComponent implements OnInit {
         private toastr: ToastrService,
         private handleError:HandleError
     ) {
-        this.link_cards = [];
     }
 
     ngOnInit() {
@@ -86,8 +85,6 @@ export class LinkCardListComponent implements OnInit {
                 this.error_permission = false;
                 this.link_cards = result;
                 this.length_all = this.link_cards.length;
-                // Caling the DT trigger to manually render the table
-                this.dtTrigger.next();
             },
             (error) => {
                 this.error_permission = true;
