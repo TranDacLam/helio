@@ -30,21 +30,16 @@ export class UserPermissionService {
 
 
     getRoles(): Observable<Role[]>{
-        return this.http.get(this.role_list, this.httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(this.role_list, this.httpOptions ).map((res: Response) => res.json());
     }
 
     getUserListByRole( id: number ): Observable<any>{
         let users_role_id = this.users_role + `?role_id=${id}`
-        return this.http.get( users_role_id, this.httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get( users_role_id, this.httpOptions ).map((res: Response) => res.json());
     }
     setRoleForUser( list_id: number[], role_id: any ): Observable<User[]>{
         let set_role_url = this.set_role + `${role_id}/`;
         let body = { 'list_id': list_id };
-        return this.http.put( set_role_url, body, this.httpOptions ).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    // throw error
-    handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.put( set_role_url, body, this.httpOptions ).map((res: Response) => res.json());
     }
 }

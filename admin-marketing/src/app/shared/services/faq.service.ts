@@ -30,12 +30,12 @@ export class FaqService {
     */
     getFaqs(lang): Observable<any>{
         const url_getFaqs = `${env.api_domain_root}/${lang}/api/${api.faq_list}`;
-        return this.http.get(url_getFaqs, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getFaqs, this.httpOptions).map((res: Response) => res.json());
     }
 
     getFaq(id: number, lang): Observable<any>{
         const url_getFaq = `${env.api_domain_root}/${lang}/api/${api.faq}${id}/`;
-        return this.http.get(url_getFaq, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getFaq, this.httpOptions).map((res: Response) => res.json());
     }
 
     /* 
@@ -54,30 +54,25 @@ export class FaqService {
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(url_onDelFaqSelect, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_onDelFaqSelect, _options).map((res: Response) => res.json());
     }
 
     addFaq(value, lang): Observable<any>{
         const url_addFaq = `${env.api_domain_root}/${lang}/api/${api.faq}`;
         let body = JSON.stringify(value); // String payload
         return this.http.post(url_addFaq, body, this.httpOptions)
-            .map((res: Response) => res.json()).catch(this.handleError);
+            .map((res: Response) => res.json());
     }
 
     updateFaq(value, id: number, lang): Observable<any>{
         const url_updateFaq = `${env.api_domain_root}/${lang}/api/${api.faq}${id}/`;
         return this.http.put(url_updateFaq, JSON.stringify(value), this.httpOptions)
-            .map((res: Response) => res.json()).catch(this.handleError);
+            .map((res: Response) => res.json());
     }
 
     onDelFaq(id: number, lang): Observable<any>{
         const url_onDelFaq = `${env.api_domain_root}/${lang}/api/${api.faq}${id}/`;
-        return this.http.delete(url_onDelFaq, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.delete(url_onDelFaq, this.httpOptions).map((res: Response) => res.json());
     }
 
 }

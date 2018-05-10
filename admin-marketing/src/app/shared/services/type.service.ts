@@ -30,12 +30,6 @@ export class TypeService {
     */
     getTypes(lang): Observable<any>{
         const url_getTypes = `${env.api_domain_root}/${lang}/api/${api.type_list}`;
-        return this.http.get(url_getTypes, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getTypes, this.httpOptions).map((res: Response) => res.json());
     }
-
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error);
-    }
-
 }

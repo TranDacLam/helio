@@ -29,12 +29,7 @@ export class CategoryService {
         author: Lam
     */
     getAllCategory(): Observable<any> {
-        return this.http.get(api.category_list, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.get(api.category_list, this.httpOptions).map((res: Response) => res.json());
     }
 
 }

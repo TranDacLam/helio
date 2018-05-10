@@ -32,12 +32,7 @@ export class CategoryNotificationService {
     */
     getCategoryNotifications(lang): Observable<any> {
         const url = `${env.api_domain_root}/${lang}/api/${api.category_notifications}`;
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
     }
 
 }
