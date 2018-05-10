@@ -30,7 +30,8 @@ export class LinkCardListComponent implements OnInit {
 
     errorMessage: string;
     record: string = "Thẻ Liên Kết";
-
+    // check permission to display
+    error_permission:boolean = false;
     // Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
@@ -81,10 +82,12 @@ export class LinkCardListComponent implements OnInit {
     getAllLinkCards() {
         this.linkCardService.getAllLinkedUsers().subscribe(
             (result) => {
+                this.error_permission = false;
                 this.link_cards = result;
                 this.length_all = this.link_cards.length;
             },
             (error) => {
+                this.error_permission = true;
                 this.handleError.handle_error(error);
             }
         )

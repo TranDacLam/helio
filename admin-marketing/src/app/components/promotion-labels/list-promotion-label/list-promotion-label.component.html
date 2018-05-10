@@ -11,57 +11,62 @@
 <div class="row text-center">
     <p class="title">Nhãn Khuyến Mãi</p>
 </div>
-<div class="row mt-50 mb-15 custom-title">
-    <div class="col-xs-12 col-sm-12">
-        <a class="pull-right" [routerLink]="['/promotion-label/add/', {lang: lang}]">
-            <div class="btn btn-primary">
-                <span class="glyphicon glyphicon-plus"></span>
-                THÊM NHÃN KHUYẾN MÃI
-            </div>
-        </a>
+<div *ngIf="promotion_labels; else no_permission">
+    <div class="row mt-50 mb-15 custom-title">
+        <div class="col-xs-12 col-sm-12">
+            <a class="pull-right" [routerLink]="['/promotion-label/add/', {lang: lang}]">
+                <div class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    THÊM NHÃN KHUYẾN MÃI
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row mb-30 language">
+        <div class="col-xs-12 col-sm-12">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
+                    (click)="changeLang('vi')"
+                >VI</button>
+                <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
+                    (click)="changeLang('en')"
+                >EN</button>
+            </div> 
+        </div>
+    </div>
+    <div class="custom_table">
+        <table datatable class="row-border hover" id="table_id" [dtOptions]="dtOptions"  
+            dt-instance="dtInstanceCallback">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                    <th><span>ID</span></th>
+                    <th><span>Nhãn Khuyến Mãi</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="row-data" *ngFor="let promotion_label of promotion_labels">
+                    <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                    <td>{{ promotion_label.id }}</td>
+                    <td><a [routerLink]="['/promotion-label/edit/', promotion_label.id, {lang: lang}]">
+                        {{ promotion_label.name }}
+                    </a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row dels-promotion_label" *ngIf="promotion_labels">
+        <div class="col-md-3">
+            <select name="" class="form-control">
+                <option value="1">Xóa các nhãn khuyến mãi được chọn</option>
+            </select>
+        </div>
+        <div class="col-md-3 dels-list">
+            {{ length_selected }} của {{ length_all }} được chọn 
+            <button class="btn btn-danger" (click)="deletePormotionLabelEvent()">Thực hiện</button>
+        </div>
     </div>
 </div>
-<div class="row mb-30 language">
-    <div class="col-xs-12 col-sm-12">
-        <div class="btn-group pull-right">
-            <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
-                (click)="changeLang('vi')"
-            >VI</button>
-            <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
-                (click)="changeLang('en')"
-            >EN</button>
-        </div> 
-    </div>
-</div>
-<div class="custom_table">
-    <table datatable class="row-border hover" id="table_id" [dtOptions]="dtOptions"  
-        dt-instance="dtInstanceCallback" *ngIf="promotion_labels">
-        <thead>
-            <tr>
-                <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
-                <th><span>ID</span></th>
-                <th><span>Nhãn Khuyến Mãi</span></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="row-data" *ngFor="let promotion_label of promotion_labels">
-                <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
-                <td>{{ promotion_label.id }}</td>
-                <td><a [routerLink]="['/promotion-label/edit/', promotion_label.id, {lang: lang}]">
-                    {{ promotion_label.name }}
-                </a></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<div class="row dels-promotion_label" *ngIf="promotion_labels">
-    <div class="col-md-3">
-        <select name="" class="form-control">
-            <option value="1">Xóa các nhãn khuyến mãi được chọn</option>
-        </select>
-    </div>
-    <div class="col-md-3 dels-list">
-        {{ length_selected }} của {{ length_all }} được chọn 
-        <button class="btn btn-danger" (click)="deletePormotionLabelEvent()">Thực hiện</button>
-    </div>
-</div>
+<ng-template #no_permission >
+    <div class="no-permission"></div>
+</ng-template>
