@@ -11,60 +11,65 @@
 <div class="row text-center">
     <p class="title">Trò Chơi</p>
 </div>
-<div class="row mt-50 mb-15 custom-title">
-    <div class="col-xs-12 col-sm-12">
-        <a class="pull-right" [routerLink]="['/game/add/', {lang: lang}]">
-            <div class="btn btn-primary">
-                <span class="glyphicon glyphicon-plus"></span>
-                THÊM TRÒ CHƠI
-            </div>
-        </a>
+<div *ngIf="!error_permission; else no_permission">
+    <div class="row mt-50 mb-15 custom-title">
+        <div class="col-xs-12 col-sm-12">
+            <a class="pull-right" [routerLink]="['/game/add/', {lang: lang}]">
+                <div class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    THÊM TRÒ CHƠI
+                </div>
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-12 mt-15 messsage_error alert alert-danger" *ngIf="errorMessage">
+            <h4>{{errorMessage}}</h4>
+        </div>
+        <div class="col-xs-12 col-sm-12 mt-15 messsage alert alert-success" *ngIf="message_result">
+            <h4>{{message_result}}</h4>
+        </div>
     </div>
-    <div class="col-xs-12 col-sm-12 mt-15 messsage_error alert alert-danger" *ngIf="errorMessage">
-        <h4>{{errorMessage}}</h4>
+    <div class="row mb-30 language">
+        <div class="col-xs-12 col-sm-12">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
+                    (click)="changeLang('vi')"
+                >VI</button>
+                <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
+                    (click)="changeLang('en')"
+                >EN</button>
+            </div> 
+        </div>
     </div>
-    <div class="col-xs-12 col-sm-12 mt-15 messsage alert alert-success" *ngIf="message_result">
-        <h4>{{message_result}}</h4>
+    <div class="custom_table">
+        <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="games">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                    <th><span>ID</span></th>
+                    <th><span>Trò Chơi</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="row-data" *ngFor="let game of games">
+                    <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                    <td>{{ game.id }}</td>
+                    <td><a [routerLink]="['/game/edit/', game.id, {lang: lang}]">{{ game.name }}</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row dels-game" *ngIf="games">
+        <div class="col-md-3">
+            <select name="" class="form-control">
+                <option value="1">Xóa các trò chơi được chọn</option>
+            </select>
+        </div>
+        <div class="col-md-3 dels-list">
+            {{ length_selected }} của {{ length_all }} được chọn 
+            <button class="btn btn-danger" (click)="deleteGameEvent()">Thực hiện</button>
+        </div>
     </div>
 </div>
-<div class="row mb-30 language">
-    <div class="col-xs-12 col-sm-12">
-        <div class="btn-group pull-right">
-            <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
-                (click)="changeLang('vi')"
-            >VI</button>
-            <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
-                (click)="changeLang('en')"
-            >EN</button>
-        </div> 
-    </div>
-</div>
-<div class="custom_table">
-    <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="games">
-        <thead>
-            <tr>
-                <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
-                <th><span>ID</span></th>
-                <th><span>Trò Chơi</span></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="row-data" *ngFor="let game of games">
-                <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
-                <td>{{ game.id }}</td>
-                <td><a [routerLink]="['/game/edit/', game.id, {lang: lang}]">{{ game.name }}</a></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<div class="row dels-game" *ngIf="games">
-    <div class="col-md-3">
-        <select name="" class="form-control">
-            <option value="1">Xóa các trò chơi được chọn</option>
-        </select>
-    </div>
-    <div class="col-md-3 dels-list">
-        {{ length_selected }} của {{ length_all }} được chọn 
-        <button class="btn btn-danger" (click)="deleteGameEvent()">Thực hiện</button>
-    </div>
-</div>
+<ng-template #no_permission >
+    <div class="no-permission"></div>
+</ng-template>

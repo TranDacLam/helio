@@ -29,7 +29,6 @@ export class FeedbackListComponent implements OnInit {
 
     errorMessage: string;
     record: string = "Phản Hồi";
-
     // Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;

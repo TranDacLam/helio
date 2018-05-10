@@ -36,7 +36,8 @@ export class ListGameComponent implements OnInit {
     errorMessage = '';
 
     lang: string = 'vi';
-
+    // check permission to display page
+    error_permission:boolean = false;
     constructor(
         private gameService: GameService, 
         private router: Router,
@@ -76,10 +77,12 @@ export class ListGameComponent implements OnInit {
     getGames(){
         this.gameService.getGames(this.lang).subscribe(
             (data) => {
+                this.error_permission = false;
                 this.games = data;
                 this.length_all = this.games.length;
             },
             (error) => {
+                this.error_permission = true;
                 this.handleError.handle_error(error);
             }
         );
