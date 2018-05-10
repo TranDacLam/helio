@@ -11,52 +11,57 @@
 <div class="row text-center">
     <p class="title">Quảng Cáo</p>
 </div>
-<div class='row title-adv'>
-    <a class="pull-right" [routerLink]="['/advertisement-add', {lang: lang}]">
-        <div class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>
-            Thêm Quảng Cáo
+<div *ngIf="!error_permission; else no_permission">
+    <div class='row title-adv'>
+        <a class="pull-right" [routerLink]="['/advertisement-add', {lang: lang}]">
+            <div class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>
+                Thêm Quảng Cáo
+            </div>
+        </a>
+    </div>
+    <div class="row mb-30 language">
+        <div class="col-xs-12 col-sm-12">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
+                    (click)="changeLang('vi')"
+                >VI</button>
+                <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
+                    (click)="changeLang('en')"
+                >EN</button>
+            </div> 
         </div>
-    </a>
-</div>
-<div class="row mb-30 language">
-    <div class="col-xs-12 col-sm-12">
-        <div class="btn-group pull-right">
-            <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
-                (click)="changeLang('vi')"
-            >VI</button>
-            <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
-                (click)="changeLang('en')"
-            >EN</button>
-        </div> 
+    </div>
+    <div class="custom_table">
+        <table datatable class="row-border hover" [dtOptions]='dtOptions' id="table_id" dt-instance="dtInstanceCallback" *ngIf="advs">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                    <th><span>ID</span></th>
+                    <th><span>Quảng Cáo</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="row-data" *ngFor="let adv of advs">
+                    <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                    <td>{{ adv.id }}</td>
+                    <td><a [routerLink]="['/advertisement-detail/', adv.id, {lang: lang}]">{{ adv.name }}</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row dels-event" *ngIf="advs">
+        <div class="col-md-3">
+            <select name="" class="form-control">
+                <option value="1">Xóa các quảng cáo được chọn</option>
+            </select>
+        </div>
+        <div class="col-md-3 dels-list">
+            {{length_selected}} của {{length_all}} được chọn
+            <button (click)="confirmDelete()" type="button" class="btn btn-danger">Thực hiện</button>
+        </div>
     </div>
 </div>
-<div class="custom_table">
-    <table datatable class="row-border hover" [dtOptions]='dtOptions' id="table_id" dt-instance="dtInstanceCallback" *ngIf="advs">
-        <thead>
-            <tr>
-                <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
-                <th><span>ID</span></th>
-                <th><span>Quảng Cáo</span></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="row-data" *ngFor="let adv of advs">
-                <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
-                <td>{{ adv.id }}</td>
-                <td><a [routerLink]="['/advertisement-detail/', adv.id, {lang: lang}]">{{ adv.name }}</a></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<div class="row dels-event" *ngIf="advs">
-    <div class="col-md-3">
-        <select name="" class="form-control">
-            <option value="1">Xóa các quảng cáo được chọn</option>
-        </select>
-    </div>
-    <div class="col-md-3 dels-list">
-        {{length_selected}} của {{length_all}} được chọn
-        <button (click)="confirmDelete()" type="button" class="btn btn-danger">Thực hiện</button>
-    </div>
-</div>
+<ng-template #no_permission >
+    <div class="no-permission"></div>
+</ng-template>
