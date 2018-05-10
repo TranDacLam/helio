@@ -157,6 +157,7 @@ export class UserPromotionComponent implements OnInit {
                 element.button('reset');
             }, 
             (error) => {
+                element.button('reset');
                 this.handleError.handle_error(error);;
             });
     }
