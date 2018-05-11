@@ -61,7 +61,7 @@
                 <input type="checkbox" formControlName="is_clear_image"/> Xóa
             </p>
             <p *ngIf="msg_clear_image" class="msg_error">{{msg_clear_image}}</p>
-            <input type="file" accept="image/*"
+            <input id="input_image" type="file" accept="image/*"
             (change)="onFileChange($event)" #inputImage/>
             <ul class="error_valid" 
                 *ngIf="formNotification.get('image') && formNotification.get('image')?.errors">

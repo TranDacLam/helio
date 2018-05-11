@@ -329,6 +329,9 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                             // popup edit pormotion at user promotion
                             if(this.position === 'popup'){
                                 this.promotion = data;
+                                // clean input image
+                                $("#image_thumbnail").val("");
+                                $("#image").val("");
                                 this.update_promotion.emit(this.promotion);
                                 $('#UpdatePromotion').modal('toggle');
                                 this.msg_clear_image = '';
@@ -450,7 +453,10 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                 if(promotionValues[k] == null) {
                     promotionFormData.append(k, '');
                 } else if (k === 'image' || k === 'image_thumbnail') {
-                    promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                    // if image has value, form data append image
+                    if (promotionValues[k].value){
+                        promotionFormData.append(k, promotionValues[k].value);
+                    }
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
                 }

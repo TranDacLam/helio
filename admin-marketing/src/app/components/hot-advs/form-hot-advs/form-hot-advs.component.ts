@@ -224,7 +224,10 @@ export class FormHotAdvsComponent implements OnInit {
                 if (hotAdvsValues[k] == null) {
                     hotAdvsFormData.append(k, '');
                 } else if (k === 'image') {
-                    hotAdvsFormData.append(k, hotAdvsValues[k].value, hotAdvsValues[k].name);
+                    // if image has value, form data append image
+                    if (hotAdvsValues[k].value){
+                        hotAdvsFormData.append(k, hotAdvsValues[k].value);
+                    }
                 } else {
                     hotAdvsFormData.append(k, hotAdvsValues[k]);
                 }

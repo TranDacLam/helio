@@ -244,7 +244,10 @@ export class FormHotComponent implements OnInit {
                 if(promotionValues[k] == null) {
                     promotionFormData.append(k, '');
                 } else if (k === 'image') {
-                    promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                    // if image has value, form data append image
+                    if (promotionValues[k].value){
+                        promotionFormData.append(k, promotionValues[k].value);
+                    }
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
                 }
