@@ -15,7 +15,7 @@
 	{{error.val}}
 	</h4>
 	</ng-container>
-	<form [formGroup]="feeAddForm" *ngIf="fee" (click)="removeMessage()">
+	<form [formGroup]="feeAddForm" *ngIf="fee" (change)="removeMessage()">
 		<div class="form-group row">
 			<div class="col-sm-1">
 				<label>Phí</label>
@@ -23,6 +23,7 @@
 			<div class="col-sm-2">
 				<input type="text" class="form-control no-arrow" formControlName="fee"
 				[(ngModel)]="data"
+				(click)="removeMessage()"
 				(keyup) ="format_currency($event.target.value)"
 				>
 			</div>
