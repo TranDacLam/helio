@@ -97,11 +97,15 @@ class PromotionSerializer(serializers.ModelSerializer):
             is_clear_image_thumbnail = self.context['request'].data.get('is_clear_image_thumbnail')
 
             # If image from request is None then set image = old value
-            if is_clear_image == "false" and not validated_data.get('image'):
+            if is_clear_image == "true":
+                validated_data['image'] = None
+            elif not validated_data.get('image'):
                 validated_data['image'] = instance.image
 
             # If image from request is None then set image = old value
-            if is_clear_image_thumbnail == "false" and not validated_data.get('image_thumbnail'):
+            if is_clear_image_thumbnail == "true":
+                validated_data['image_thumbnail'] = None
+            elif not validated_data.get('image_thumbnail'):
                 validated_data['image_thumbnail'] = instance.image_thumbnail
 
         return super(PromotionSerializer, self).update(instance, validated_data)
@@ -154,7 +158,9 @@ class NotificationSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         if self.context['request']:
             is_clear_image = self.context['request'].data.get('is_clear_image')
-            if is_clear_image == "false" and not validated_data.get('image'):
+            if is_clear_image == "true":
+                validated_data['image'] = None
+            elif not validated_data.get('image'):
                 validated_data['image'] = instance.image
         return super(NotificationSerializer, self).update(instance, validated_data)
 
@@ -243,7 +249,9 @@ class EventSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         if self.context['request']:
             is_clear_image = self.context['request'].data.get('is_clear_image')
-            if is_clear_image == "false" and not validated_data.get('image'):
+            if is_clear_image == "true":
+                validated_data['image'] = None
+            elif not validated_data.get('image'):
                 validated_data['image'] = instance.image
         return super(EventSerializer, self).update(instance, validated_data)
 
@@ -352,9 +360,12 @@ class PostSerializer(serializers.ModelSerializer):
             if new_posts_image:
                 for item in new_posts_image:
                     Post_Image.objects.create( post = instance, image = item )
-
-            if is_clear_image == "false" and not validated_data.get('image'):
+            
+            if is_clear_image == "true":
+                validated_data['image'] = None
+            elif not validated_data.get('image'):
                 validated_data['image'] = instance.image
+
         return super(PostSerializer, self).update(instance, validated_data)
 
 
@@ -474,7 +485,9 @@ class UserRoleSerializer(serializers.ModelSerializer):
 
         if self.context['request']:
             is_clear_image = self.context['request'].data.get('is_clear_image')
-            if is_clear_image == "false" and not validated_data.get('avatar'):
+            if is_clear_image == "true":
+                validated_data['avatar'] = None
+            elif not validated_data.get('avatar'):
                 validated_data['avatar'] = instance.avatar
         return super(UserRoleSerializer, self).update(instance, validated_data)
 
@@ -487,7 +500,9 @@ class GameSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         if self.context['request']:
             is_clear_image = self.context['request'].data.get('is_clear_image')
-            if is_clear_image == "false" and not validated_data.get('image'):
+            if is_clear_image == "true":
+                validated_data['image'] = None
+            elif not validated_data.get('image'):
                 validated_data['image'] = instance.image
         return super(GameSerializer, self).update(instance, validated_data)
 
