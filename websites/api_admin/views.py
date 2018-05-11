@@ -632,10 +632,9 @@ class FeedbackView(APIView):
             print self.request.user.role_id
             # Check if exist fed_id
             if fed_id:
-                if self.request.user.role_id == 1:
-                    queryset = FeedBack.objects.filter(pk__in=fed_id).delete()
-                    return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
-                return Response({"code": 403, "message": _("Just System Admin accept delete"), "fields": ""}, status=403)
+                queryset = FeedBack.objects.filter(pk__in=fed_id).delete()
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+            
             return Response({"code": 400, "message": "Not found ID ", "fields": "id"}, status=400)
         except Exception, e:
             print e
@@ -683,10 +682,8 @@ class FeedbackDetailView(APIView):
         feedback = self.get_object(pk)
         try:
             role_id = self.request.user.role_id
-            if role_id == 1:
-                feedback.delete()
-                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
-            return Response({"code": 403, "message": _("Just System Admin accept delete"), "fields": ""}, status=403)
+            feedback.delete()
+            return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
         except Exception, e:
             print 'FeedbackDetailView delete', e
             error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
