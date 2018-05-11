@@ -329,6 +329,9 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                             // popup edit pormotion at user promotion
                             if(this.position === 'popup'){
                                 this.promotion = data;
+                                // clean input image
+                                $("#image_thumbnail").val("");
+                                $("#image").val("");
                                 this.update_promotion.emit(this.promotion);
                                 $('#UpdatePromotion').modal('toggle');
                                 this.msg_clear_image = '';

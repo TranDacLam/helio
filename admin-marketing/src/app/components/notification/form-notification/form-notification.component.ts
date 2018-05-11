@@ -243,6 +243,8 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                             this.noti = data;
                             // position is popup, toggle popup, emit noti to parent
                             if(this.position === "popup"){
+                                // clean input message
+                                $("#input_image").val("");
                                 this.update_noti.emit(this.noti);
                                 $('#UpdateNoti').modal('toggle');
                                 this.msg_clear_image = '';
