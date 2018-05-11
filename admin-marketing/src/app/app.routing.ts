@@ -293,19 +293,23 @@ const routes: Routes = [{
     },
     {
         path: 'user-permission',
-        component: UserPermissionComponent
+        component: UserPermissionComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'open-time',
-        component: OpenTimeComponent
+        component: OpenTimeComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'promotions/report/:id',
-        component: PromotionReportComponent
+        component: PromotionReportComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'role-permission',
-        component: RolePermissionComponent
+        component: RolePermissionComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'error',
