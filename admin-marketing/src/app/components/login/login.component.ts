@@ -42,8 +42,6 @@ export class LoginComponent implements OnInit {
         if(this.variable_globals.user_current){
             this.router.navigateByUrl('/');
         }
-        
-        this.variable_globals.user_current = null;
 
         this.creatForm();
     }

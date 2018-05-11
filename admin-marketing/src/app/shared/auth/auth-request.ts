@@ -1,6 +1,7 @@
 
 import { Headers, Http, BaseRequestOptions, RequestOptionsArgs, RequestOptions } from '@angular/http';
 import * as moment from 'moment';
+import * as config_auth from './reset-auth-data';
 
 const AUTH_HEADER_KEY = 'Authorization';
 const AUTH_PREFIX = 'Bearer';
@@ -19,9 +20,7 @@ export class AuthRequestOptions extends BaseRequestOptions {
 
 		if (exp && moment().valueOf() > parseInt(exp)) {
 			newOptions.headers.set(AUTH_HEADER_KEY, `${AUTH_PREFIX}`);
-			localStorage.removeItem('time');
-			localStorage.removeItem('auth_token');
-			localStorage.removeItem('current_user');
+			config_auth.resetAuthData();
 		} else {
 			newOptions.headers.set(AUTH_HEADER_KEY, `${AUTH_PREFIX} ${token}`);
 			// Current time + 15 minutes
