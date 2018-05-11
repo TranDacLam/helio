@@ -38,6 +38,8 @@ export class ListNotificationComponent implements OnInit {
 
     lang: string = 'vi';
     SYSTEM_ADMIN: number;
+    // check permission to display
+    error_permission:boolean = false;
 
     constructor(
         private notificationService: NotificationService, 
@@ -77,10 +79,12 @@ export class ListNotificationComponent implements OnInit {
     getNotifications(){
         this.notificationService.getNotifications(this.lang).subscribe(
             (data) => {
+                this.error_permission = false;
                 this.notifications = data;
                 this.length_all = this.notifications.length;
             },
             (error) => {
+                this.error_permission = true;
                 this.handleError.handle_error(error);;
             }
         );

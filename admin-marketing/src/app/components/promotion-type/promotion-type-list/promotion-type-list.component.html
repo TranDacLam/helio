@@ -11,19 +11,24 @@
 <div class="row text-center">
     <p class="title">Loại Khuyến Mãi</p>
 </div>
-<div class="row content-promotion-type"> 
-    <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Loại Khuyến Mãi</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor ="let proType of proTypes">
-                <td>{{ proType.id }}</td>
-            <td>{{ proType.name }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div *ngIf="proTypes; else no_permission">
+    <div class="row content-promotion-type"> 
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Loại Khuyến Mãi</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor ="let proType of proTypes">
+                    <td>{{ proType.id }}</td>
+                <td>{{ proType.name }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+<ng-template #no_permission >
+    <div class="no-permission"></div>
+</ng-template>
