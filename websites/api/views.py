@@ -41,6 +41,10 @@ def custom_exception_handler(exc, context):
             print "custom_exception_handler ", e
             message = "errors"
             field = ""
+            
+        # fix bugs show popup login admin-marketing
+        if response.status_code == 401:
+            response['WWW-Authenticate'] = ''
 
         response.data['code'] = response.status_code
         response.data['message'] = response.data[
