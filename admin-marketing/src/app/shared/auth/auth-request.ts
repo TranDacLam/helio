@@ -18,7 +18,7 @@ export class AuthRequestOptions extends BaseRequestOptions {
 		var exp = localStorage.getItem('time');
 
 		if (exp && moment().valueOf() > parseInt(exp)) {
-			newOptions.headers.set(AUTH_HEADER_KEY, '');
+			newOptions.headers.set(AUTH_HEADER_KEY, `${AUTH_PREFIX}`);
 			localStorage.removeItem('time');
 			localStorage.removeItem('auth_token');
 			localStorage.removeItem('current_user');
