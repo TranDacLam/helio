@@ -5,6 +5,7 @@ import { UserService } from './shared/services/user.service';
 import { VariableGlobals } from './shared/commons/variable_globals';
 import { ToastrService } from 'ngx-toastr';
 import * as datatable_config from './shared/commons/datatable_config';
+import * as config_auth from './shared/auth/reset-auth-data';
 
 @Component({
     selector: 'app-root',
@@ -29,9 +30,7 @@ export class AppComponent {
         this.token = localStorage.getItem('auth_token');
         this.variable_globals.user_current = JSON.parse(localStorage.getItem('current_user'));
         if(!localStorage.getItem('current_user') || !localStorage.getItem('auth_token')){
-            localStorage.removeItem('auth_token');
-            localStorage.removeItem('current_user');
-            localStorage.removeItem('time');
+            config_auth.resetAuthData();
             this.router.navigate(['/login']);
         }
     }
@@ -41,9 +40,7 @@ export class AppComponent {
         Author: Lam
     */
     logout(){
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('current_user');
-        localStorage.removeItem('time');
+        config_auth.resetAuthData();
         this.variable_globals.user_current = null;
         this.toastr.success(`Đăng xuất thành công`);
         this.router.navigate(['/login']);

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
-
+import * as config_auth from './../../../shared/auth/reset-auth-data';
 import { User } from '../../../shared/class/user';
 import { UserService } from '../../../shared/services/user.service';
 import { UserValidators } from './../../../shared/validators/user-validators';
@@ -159,9 +159,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                          */
                         if(this.user_current.email == this.user.email){
                             if (data.new_password !== '' || this.user_current.email !== data.email){
-                                localStorage.removeItem('auth_token');
-                                localStorage.removeItem('current_user');
-                                localStorage.removeItem('time');
+                                config_auth.resetAuthData();
                                 this.variable_globals.user_current = null;
                                 self.router.navigate(['/login']);
                             } else {
