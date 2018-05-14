@@ -11,7 +11,7 @@
 <div class="row text-center">
     <p class="title">Thẻ Liên Kết</p>
 </div>
-<div *ngIf="!error_permission; else no_permission">
+<div *ngIf="link_cards">
     <div class='row custom-title'>
         <a class=" pull-right" routerLink="/link-card/add">
             <div class="btn btn-primary">
@@ -20,7 +20,7 @@
             </div>
         </a>
     </div>
-    <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="link_cards">
+    <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions'>
         <thead>
             <tr>
                 <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
@@ -51,7 +51,7 @@
         </tbody>
     </table>
 
-    <div class='row area-link-card-footer' *ngIf="link_cards">
+    <div class='row area-link-card-footer'>
     	<div class="col-md-3">
     		<select name="" class="form-control">
     			<option value="">Xóa các thẻ liên kết được chọn</option>
@@ -63,6 +63,3 @@
     	</div>
     </div>
 </div>
-<ng-template #no_permission >
-    <div class="no-permission"></div>
-</ng-template>
