@@ -36,6 +36,7 @@
                                 <input type="checkbox"  id="full-{{model.id}}-{{role.id}}"
                                     class="permission-{{model.id}}-{{role.id}}"
                                     (change)="changePermission($event, model, role, 'full')" 
+                                    [attr.disabled]="PROMOTION_TYPE === model.key ? true : null"
                                 />
                             </td>
                         </tr>
@@ -45,6 +46,7 @@
                                 <input type="checkbox" id="change-{{model.id}}-{{role.id}}"
                                     class="permission-{{model.id}}-{{role.id}}"
                                     (change)="changePermission($event, model, role, 'change')" 
+                                    [attr.disabled]="PROMOTION_TYPE === model.key ? true : null"
                                 />
                             </td>
                         </tr>
