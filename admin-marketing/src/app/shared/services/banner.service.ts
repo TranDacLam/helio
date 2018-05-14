@@ -1,31 +1,17 @@
 import { Injectable } from '@angular/core';
-
 import { Http, Headers, Response, RequestOptions } from "@angular/http";
-
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
-
 import { Banner } from '../../shared/class/banner';
 import { api } from '../utils/api';
 import { env } from './../../../environments/environment';
-
+import { get_token } from '../auth/auth-token';
 
 @Injectable()
 export class BannerService {
 
-    httpOptions: any;
-    token: any = '';
-
     constructor(private http: Http) {
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        }
     }
     /*
       GET: Get All Banner From Service
@@ -33,7 +19,7 @@ export class BannerService {
     */
     getAllBanner(lang): Observable<Banner[]> {
         let url_banner = `${env.api_domain_root}/${lang}/api/${api.banner}`;
-        return this.http.get(url_banner, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url_banner).map((res: Response) => res.json());
     }
 
     /*
@@ -43,7 +29,7 @@ export class BannerService {
     getBannerById(id: number, lang): Observable<Banner> {
         // const url = `${api.banner}${id}/`;
         let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url).map((res: Response) => res.json());
     }
     /*
         PUT: Update Banner By Id
@@ -53,10 +39,12 @@ export class BannerService {
     updateBanner(bannerFormData: FormData, id: number, lang): Observable<any> {
         // let url = `${api.banner}${id}/`;
         let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`;
+        
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
             xhr.open('PUT', url);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            let token = get_token();
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(bannerFormData);
 
             xhr.onreadystatechange = function() {
@@ -77,10 +65,12 @@ export class BannerService {
     */
     CreateBanner(bannerFormData: FormData, lang): Observable<any> {
         let url = `${env.api_domain_root}/${lang}/api/${api.banner}`;
+        
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
             xhr.open('POST', url);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            let token = get_token();
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(bannerFormData);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
@@ -96,7 +86,7 @@ export class BannerService {
     }
     deleteUserById(id: number, lang): Observable<any> {
         let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`
-        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json());
+        return this.http.delete(url).map((res: Response) => res.json());
     }
 
     deleteBannerSelected(banner_id, lang): Observable<any> {
@@ -105,7 +95,6 @@ export class BannerService {
             banner_id: banner_id
         }
         let _options = new RequestOptions({
-            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
 

@@ -11,18 +11,7 @@ import "rxjs/add/operator/catch";
 @Injectable()
 export class FeeService {
 
-    httpOptions: any;
-    token: any = '';
-
     constructor(private http: Http) {
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
     }
 
     private feeUrl = api.fee;
@@ -31,7 +20,7 @@ export class FeeService {
 
 
     getFees(): Observable<Fee[]> {
-        return this.http.get(this.feeUrlList, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(this.feeUrlList).map((res: Response) => res.json());
     }
 
     /*
@@ -40,11 +29,11 @@ export class FeeService {
      */
     getFee(id: number): Observable<Fee> {
         let url = this.feeUrl + `${id}/`;
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url).map((res: Response) => res.json());
     }
 
     createFee(fee: Fee): Observable<Fee> {
-        return this.http.post(this.feeUrl, fee, this.httpOptions).map((res: Response) => res.json());
+        return this.http.post(this.feeUrl, fee).map((res: Response) => res.json());
     }
 
     /*
@@ -53,25 +42,24 @@ export class FeeService {
      */
     updateFee(fee, id:number): Observable<Fee> {
         let url = this.feeUrl + `${id}/`;
-        return this.http.put(url, fee, this.httpOptions).map((res: Response) => res.json());
+        return this.http.put(url, fee ).map((res: Response) => res.json());
     }
     
     deleteFeeById(id:number): Observable<Fee> {
         let url = this.feeUrl + `${id}/`;
-        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json());
+        return this.http.delete(url ).map((res: Response) => res.json());
     }
 
     deleteListFee(list_id: number[]): Observable<Fee> {
         let options = new RequestOptions({
             body: { 'list_id': list_id },
-            headers: this.httpOptions.headers,
             method: RequestMethod.Delete,
         })
         return this.http.delete(this.feeUrlList, options).map((res: Response) => res.json());
     }
     applyFee(id: number): Observable<Fee> {
         let feeDetailUrl = this.feeApply + `${id}/`;
-        return this.http.put(feeDetailUrl, null, this.httpOptions).map((res: Response) => res.json());
+        return this.http.put(feeDetailUrl, null).map((res: Response) => res.json());
 
     }
 }

@@ -10,18 +10,7 @@ import "rxjs/add/operator/catch";
 @Injectable()
 export class FaqService {
 
-    httpOptions: any;
-    token: any = '';
-
     constructor(private http: Http) {
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({ 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
     }
 
     /* 
@@ -30,12 +19,12 @@ export class FaqService {
     */
     getFaqs(lang): Observable<any>{
         const url_getFaqs = `${env.api_domain_root}/${lang}/api/${api.faq_list}`;
-        return this.http.get(url_getFaqs, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url_getFaqs).map((res: Response) => res.json());
     }
 
     getFaq(id: number, lang): Observable<any>{
         const url_getFaq = `${env.api_domain_root}/${lang}/api/${api.faq}${id}/`;
-        return this.http.get(url_getFaq, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url_getFaq).map((res: Response) => res.json());
     }
 
     /* 
@@ -50,7 +39,6 @@ export class FaqService {
         }
 
         let _options = new RequestOptions({
-            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
 
@@ -60,19 +48,19 @@ export class FaqService {
     addFaq(value, lang): Observable<any>{
         const url_addFaq = `${env.api_domain_root}/${lang}/api/${api.faq}`;
         let body = JSON.stringify(value); // String payload
-        return this.http.post(url_addFaq, body, this.httpOptions)
+        return this.http.post(url_addFaq, body )
             .map((res: Response) => res.json());
     }
 
     updateFaq(value, id: number, lang): Observable<any>{
         const url_updateFaq = `${env.api_domain_root}/${lang}/api/${api.faq}${id}/`;
-        return this.http.put(url_updateFaq, JSON.stringify(value), this.httpOptions)
+        return this.http.put(url_updateFaq, JSON.stringify(value))
             .map((res: Response) => res.json());
     }
 
     onDelFaq(id: number, lang): Observable<any>{
         const url_onDelFaq = `${env.api_domain_root}/${lang}/api/${api.faq}${id}/`;
-        return this.http.delete(url_onDelFaq, this.httpOptions).map((res: Response) => res.json());
+        return this.http.delete(url_onDelFaq).map((res: Response) => res.json());
     }
 
 }

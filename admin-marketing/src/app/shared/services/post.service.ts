@@ -5,14 +5,12 @@ import { api } from '../utils/api';
 import { env } from './../../../environments/environment';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
+import { get_token } from '../auth/auth-token';
 
 @Injectable()
 export class PostService {
 
-    token: any = '';
-
     constructor(private http: Http) {
-        this.token = localStorage.getItem('auth_token');
     }
 
     /* 
@@ -48,11 +46,11 @@ export class PostService {
 
     addPost(value: FormData, lang): Observable<any> {
         const url_addPost = `${env.api_domain_root}/${lang}/api/${api.post}`;
-
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
             xhr.open('POST', url_addPost);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            let token = get_token();
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(value);
 
             xhr.onreadystatechange = function() {
@@ -70,11 +68,11 @@ export class PostService {
 
     updatePost(value: FormData, id: number, lang): Observable<any> {
         const url_updatePost = `${env.api_domain_root}/${lang}/api/${api.post}${id}/`;
-
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
             xhr.open('PUT', url_updatePost);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            let token = get_token();
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(value);
 
             xhr.onreadystatechange = function() {

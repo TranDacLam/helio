@@ -1,26 +1,14 @@
 import { Injectable } from '@angular/core';
-
 import { Observable } from 'rxjs/Observable';
 import { api } from '../utils/api';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
-
 import { User } from '../../shared/class/user';
+import { get_token } from '../auth/auth-token';
 
 @Injectable()
 export class UserService {
 
-    httpOptions: any;
-    token: any = '';
-
     constructor(private http: Http) {
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
     }
 
     /*
@@ -29,7 +17,7 @@ export class UserService {
      */
     getAllUsers(): Observable<User[]> {
         let url = `${api.users}`;
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url).map((res: Response) => res.json());
     }
 
     /*
@@ -38,7 +26,7 @@ export class UserService {
      */
     getUserById(id: number): Observable<User> {
         const url = `${api.users}${id}/`;
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url).map((res: Response) => res.json());
     }
 
     /*
@@ -48,7 +36,7 @@ export class UserService {
     deleteUserById(user: User): Observable<User> {
         const id = user.id;
         const url = `${api.users}${id}/`;
-        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json());
+        return this.http.delete(url).map((res: Response) => res.json());
     }
 
     /*
@@ -60,7 +48,8 @@ export class UserService {
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
             xhr.open('POST', api.users);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            let token = get_token();
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(userFormData);
 
             xhr.onreadystatechange = function() {
@@ -87,7 +76,8 @@ export class UserService {
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
             xhr.open('PUT', url);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            let token = get_token();
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(userForm);
 
             xhr.onreadystatechange = function() {
@@ -114,7 +104,6 @@ export class UserService {
             user_id: user_id
         };
         let _options = new RequestOptions({
-            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
         return this.http.delete(url, _options).map((res: Response) => res.json());
