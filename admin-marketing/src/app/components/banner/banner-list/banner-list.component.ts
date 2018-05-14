@@ -41,7 +41,6 @@ export class BannerListComponent implements OnInit {
         private toastr: ToastrService,
         private handleError:HandleError
     ) {
-        this.banners = [];
     }
 
     ngOnInit() {

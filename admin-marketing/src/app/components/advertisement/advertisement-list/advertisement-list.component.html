@@ -11,7 +11,7 @@
 <div class="row text-center">
     <p class="title">Quảng Cáo</p>
 </div>
-<div *ngIf="!error_permission; else no_permission">
+<div *ngIf="advs">
     <div class='row title-adv'>
         <a class="pull-right" [routerLink]="['/advertisement-add', {lang: lang}]">
             <div class="btn btn-primary">
@@ -33,7 +33,7 @@
         </div>
     </div>
     <div class="custom_table">
-        <table datatable class="row-border hover" [dtOptions]='dtOptions' id="table_id" dt-instance="dtInstanceCallback" *ngIf="advs">
+        <table datatable class="row-border hover" [dtOptions]='dtOptions' id="table_id" dt-instance="dtInstanceCallback">
             <thead>
                 <tr>
                     <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
@@ -50,7 +50,7 @@
             </tbody>
         </table>
     </div>
-    <div class="row dels-event" *ngIf="advs">
+    <div class="row dels-event">
         <div class="col-md-3">
             <select name="" class="form-control">
                 <option value="1">Xóa các quảng cáo được chọn</option>
@@ -62,6 +62,3 @@
         </div>
     </div>
 </div>
-<ng-template #no_permission >
-    <div class="no-permission"></div>
-</ng-template>
