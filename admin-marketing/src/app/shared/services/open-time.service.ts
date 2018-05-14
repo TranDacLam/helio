@@ -9,18 +9,7 @@ import "rxjs/add/operator/catch";
 @Injectable()
 export class OpenTimeService {
 
-    httpOptions: any;
-    token: any = '';
-
     constructor(private http: Http) { 
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({ 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
     }
 
     /* 
@@ -29,7 +18,7 @@ export class OpenTimeService {
     */
     getOpenTime(month, year): Observable<any> {
         const url_getOpenTime = `${api.opentime}?month=${month}&year=${year}`;
-        return this.http.get(url_getOpenTime, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url_getOpenTime).map((res: Response) => res.json());
     }
 
     /* 
@@ -38,7 +27,7 @@ export class OpenTimeService {
     */
     addOpenTime(value): Observable<any> {
         let body = JSON.stringify(value); // String payload
-        return this.http.post(api.opentime, body, this.httpOptions)
+        return this.http.post(api.opentime, body)
             .map((res: Response) => res.json());
     }
 
