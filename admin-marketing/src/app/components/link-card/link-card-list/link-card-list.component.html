@@ -20,7 +20,7 @@
             </div>
         </a>
     </div>
-    <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions'>
+    <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="link_cards">
         <thead>
             <tr>
                 <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
@@ -51,7 +51,7 @@
         </tbody>
     </table>
 
-    <div class='row area-link-card-footer'>
+    <div class='row area-link-card-footer' *ngIf="link_cards">
     	<div class="col-md-3">
     		<select name="" class="form-control">
     			<option value="">Xóa các thẻ liên kết được chọn</option>
