@@ -1459,6 +1459,10 @@ def ticket_transfer(request):
                 return Response(error, status=400)
             try:
                 ticket_amount = int(ticket_amount)
+                if ticket_amount < 0:
+                    error = {"code": 400,
+                         "message": _("Amount must be more than 0"), "fields": ""}
+                    return Response(error, status=400)
                 fee = int(fee)
             except ValueError:
                 error = {"code": 400,
@@ -1626,6 +1630,10 @@ def helio_card_reload(request):
 
         try:
             reload_amount = int(reload_amount)
+            if reload_amount < 0:
+                error = {"code": 400,
+                     "message": _("Amount must be more than 0"), "fields": ""}
+                return Response(error, status=400)
         except ValueError:
             error = {"code": 400,
                      "message": _("Amount must be is number"), "fields": ""}
