@@ -10,18 +10,7 @@ import "rxjs/add/operator/catch";
 @Injectable()
 export class TypeService {
 
-    httpOptions: any;
-    token: any = '';
-
     constructor(private http: Http) {
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({ 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
     }
 
     /* 
@@ -30,6 +19,6 @@ export class TypeService {
     */
     getTypes(lang): Observable<any>{
         const url_getTypes = `${env.api_domain_root}/${lang}/api/${api.type_list}`;
-        return this.http.get(url_getTypes, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url_getTypes).map((res: Response) => res.json());
     }
 }

@@ -4,11 +4,10 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { env } from './../../../environments/environment';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
-
 import { User } from '../class/user';
 import { Promotion } from '../class/promotion';
 import { api } from '../utils/api';
-
+import { get_token } from '../auth/auth-token';
 
 /*
     @author: diemnguyen
@@ -16,18 +15,7 @@ import { api } from '../utils/api';
 @Injectable()
 export class PromotionService {
 
-    httpOptions: any;
-    token: any = '';
-
     constructor(private http: Http) { 
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({ 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
     }
 
     /*  
@@ -36,7 +24,7 @@ export class PromotionService {
     */
     getUsersPromotion(id: number, lang): Observable<any> {
         const url_getUsersPromotion = `${env.api_domain_root}/${lang}/api/${api.user_promotion}${id}/`;
-        return this.http.get(url_getUsersPromotion, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url_getUsersPromotion).map((res: Response) => res.json());
 
     }
 
@@ -46,7 +34,7 @@ export class PromotionService {
     */
     getAllPromotion(lang): Observable<any> {
         const url_getAllPromotion = `${env.api_domain_root}/${lang}/api/${api.promotion_list}`;
-        return this.http.get(url_getAllPromotion, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url_getAllPromotion).map((res: Response) => res.json());
     }
 
     /*  
@@ -55,7 +43,7 @@ export class PromotionService {
     */
     getPromotionById(id: number, lang): Observable<any> {
         const url_getPromotionById = `${env.api_domain_root}/${lang}/api/${api.promotion}${id}/`;
-        return this.http.get(url_getPromotionById, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url_getPromotionById).map((res: Response) => res.json());
     }
 
 
@@ -65,7 +53,7 @@ export class PromotionService {
     */
     deletePromotionById(id: number, lang): Observable<any> {
         const url_deletePromotionById = `${env.api_domain_root}/${lang}/api/${api.promotion}${id}/`;
-        return this.http.delete(url_deletePromotionById, this.httpOptions).map((res: Response) => res.json());
+        return this.http.delete(url_deletePromotionById).map((res: Response) => res.json());
     }
 
     /*  
@@ -77,9 +65,9 @@ export class PromotionService {
 
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            
             xhr.open('POST', url_savePromotion);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            let token = get_token();
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(promotionFormData);
 
             xhr.onreadystatechange = function() {
@@ -107,7 +95,8 @@ export class PromotionService {
             let xhr = new XMLHttpRequest();
             // xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTE5Mjk1NDM1LCJ1c2VyX2lkIjozNjAsImVtYWlsIjoiZGllbW5ndXllbkB2b29jLnZuIiwiZXhwIjoxNTE5Mjk1NzM1fQ.z7K4Q6AiT0v6l2BMjrgjBXDqbFUMKTmVxfv4ASv70ng');
             xhr.open('PUT', url_savePromotion);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            let token = get_token();
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(promotionFormData);
 
             xhr.onreadystatechange = function() {
@@ -135,7 +124,6 @@ export class PromotionService {
         }
 
         let _options_delete = new RequestOptions({
-            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
         return this.http.delete(url_deletePromotionList, _options_delete);
@@ -150,7 +138,7 @@ export class PromotionService {
         let param = {
             list_user_id: list_user_id
         }
-        return this.http.post(url_updateUserPromotion, JSON.stringify(param), this.httpOptions);
+        return this.http.post(url_updateUserPromotion, JSON.stringify(param));
     }
     /*  
         Generator QR code
@@ -158,7 +146,7 @@ export class PromotionService {
     */
     generator_QR_code(id: number): Observable<any>{
         let generator_QR_code_url = `${api.generator_QR_code}${id}/`
-        return this.http.post(generator_QR_code_url, JSON.stringify({'vo':'promotion'}), this.httpOptions);
+        return this.http.post(generator_QR_code_url, JSON.stringify({'vo':'promotion'}));
     }
 
     /*  
@@ -167,7 +155,7 @@ export class PromotionService {
     */
     getPromotionReport(id: number, lang): Observable<any>{
         let url_getPromotionReport = `${env.api_domain_root}/${lang}/api/${api.promotion_statistic}${id}/`
-        return this.http.get(url_getPromotionReport, this.httpOptions).
+        return this.http.get(url_getPromotionReport).
             map((res: Response) => res.json());
     }
 }

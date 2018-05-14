@@ -1,27 +1,16 @@
 import { Injectable } from '@angular/core';
-
 import { Http, Headers, Response, RequestOptions } from "@angular/http";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
-
 import { HotAdvs } from '../../shared/class/hot-advs';
 import { api } from '../utils/api';
+import { get_token } from '../auth/auth-token';
 
 @Injectable()
 export class HotAdvsService {
 
-    httpOptions: any;
-    token: any = '';
-
     constructor(private http: Http) {
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
+       
     }
 
     /*
@@ -30,7 +19,7 @@ export class HotAdvsService {
     */
     getAllHotAdvs(): Observable<HotAdvs[]> {
         let url = `${api.hot_advs}`
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url ).map((res: Response) => res.json());
     }
 
     /*
@@ -39,7 +28,7 @@ export class HotAdvsService {
      */
     getHotAdsById(id: number): Observable<HotAdvs> {
         let url =  `${api.hot_advs}${id}/`;
-        return this.http.get(url, this.httpOptions).map((res:Response) => res.json());
+        return this.http.get(url).map((res:Response) => res.json());
     }
     /*
       POST: Create a New Hot_Advs
@@ -51,7 +40,8 @@ export class HotAdvsService {
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
             xhr.open('POST', api.hot_advs);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            let token = get_token();
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(hotAdvsFormData);
 
             xhr.onreadystatechange = function() {
@@ -76,7 +66,8 @@ export class HotAdvsService {
             let url = `${api.hot_advs}${id}/`
             let xhr = new XMLHttpRequest();
             xhr.open('PUT', url);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            let token = get_token();
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(hotAdvsFormData);
 
             xhr.onreadystatechange = function() {
@@ -97,7 +88,7 @@ export class HotAdvsService {
      */
     deleteHotAdsById(id: number): Observable<HotAdvs> {
         let url =  `${api.hot_advs}${id}/`;
-        return this.http.delete(url, this.httpOptions).map((res: Response) => res.json());
+        return this.http.delete(url).map((res: Response) => res.json());
     } 
     /*
         DELETE:  Delete multi hot_ads
@@ -109,7 +100,6 @@ export class HotAdvsService {
             hot_advs_id: hot_advs_id
         }
         let _options = new RequestOptions({
-            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
 

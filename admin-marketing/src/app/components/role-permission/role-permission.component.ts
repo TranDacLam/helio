@@ -22,6 +22,9 @@ export class RolePermissionComponent implements OnInit {
     models = [];
     list_role_permission = [];
     SYSTEM_ADMIN: number;
+    PROMOTION_TYPE: string;
+    // check permission to display page
+    error_permission:boolean = false;
 
     constructor(
         private router: Router,
@@ -35,6 +38,7 @@ export class RolePermissionComponent implements OnInit {
     ngOnInit() {
         this.getRole();
         this.SYSTEM_ADMIN =  CONSTANT.SYSTEM_ADMIN;
+        this.PROMOTION_TYPE = CONSTANT.PROMOTION_TYPE;
         this.user_current = this.variable_globals.user_current;
     }
 
