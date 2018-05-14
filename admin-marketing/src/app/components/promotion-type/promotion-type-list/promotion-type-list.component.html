@@ -11,7 +11,7 @@
 <div class="row text-center">
     <p class="title">Loại Khuyến Mãi</p>
 </div>
-<div *ngIf="proTypes; else no_permission">
+<div *ngIf="proTypes">
     <div class="row content-promotion-type"> 
         <table class="table table-striped">
             <thead>
@@ -29,6 +29,3 @@
         </table>
     </div>
 </div>
-<ng-template #no_permission >
-    <div class="no-permission"></div>
-</ng-template>

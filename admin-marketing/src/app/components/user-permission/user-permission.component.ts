@@ -32,6 +32,7 @@ export class UserPermissionComponent implements OnInit {
     user_current: User;
     roles: Role[];
     SYSTEM_ADMIN: number;
+
     @ViewChild(UserMultiselectComponent)
     userMultiselect: UserMultiselectComponent
 
@@ -60,6 +61,7 @@ export class UserPermissionComponent implements OnInit {
     getRoles() {
         this.userPermissionService.getRoles().subscribe(
             data => {
+                
                 this.setOptionDatatable();
                 if (data.length > 0) {
                     this.roles = data;

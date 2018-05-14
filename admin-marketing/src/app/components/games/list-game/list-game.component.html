@@ -11,7 +11,7 @@
 <div class="row text-center">
     <p class="title">Trò Chơi</p>
 </div>
-<div *ngIf="!error_permission; else no_permission">
+<div *ngIf="games">
     <div class="row mt-50 mb-15 custom-title">
         <div class="col-xs-12 col-sm-12">
             <a class="pull-right" [routerLink]="['/game/add/', {lang: lang}]">
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="custom_table">
-        <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' *ngIf="games">
+        <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions'>
             <thead>
                 <tr>
                     <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
@@ -58,7 +58,7 @@
             </tbody>
         </table>
     </div>
-    <div class="row dels-game" *ngIf="games">
+    <div class="row dels-game">
         <div class="col-md-3">
             <select name="" class="form-control">
                 <option value="1">Xóa các trò chơi được chọn</option>
@@ -70,6 +70,3 @@
         </div>
     </div>
 </div>
-<ng-template #no_permission >
-    <div class="no-permission"></div>
-</ng-template>

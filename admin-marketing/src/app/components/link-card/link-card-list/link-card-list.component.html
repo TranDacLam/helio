@@ -11,7 +11,7 @@
 <div class="row text-center">
     <p class="title">Thẻ Liên Kết</p>
 </div>
-<div *ngIf="!error_permission; else no_permission">
+<div *ngIf="link_cards">
     <div class='row custom-title'>
         <a class=" pull-right" routerLink="/link-card/add">
             <div class="btn btn-primary">
@@ -63,6 +63,3 @@
     	</div>
     </div>
 </div>
-<ng-template #no_permission >
-    <div class="no-permission"></div>
-</ng-template>
