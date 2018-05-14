@@ -11,7 +11,7 @@
 <div class="row text-center mb-30">
     <p class="title">Phân Quyền Cho Role</p>
 </div>
-<div *ngIf='!error_permission; else no_permission'>
+<div *ngIf='user_current?.role == SYSTEM_ADMIN'>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <table class="table table-hover">
@@ -80,6 +80,3 @@
         </div>
     </div>
 </div>
-<ng-template #no_permission >
-    <div class="no-permission"></div>
-</ng-template>

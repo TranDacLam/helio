@@ -11,7 +11,7 @@
 <div class="row text-center">
     <p class="title">Hot</p>
 </div>
-<div *ngIf="hots;else no_permission">
+<div *ngIf="hots">
     <div class="row mt-50 mb-15 custom-title">
         <div class="col-xs-12 col-sm-12">
             <a class="pull-right" [routerLink]="['/hot/add/', {lang: lang}]">
@@ -64,6 +64,3 @@
         </div>
     </div>
 </div>
-<ng-template #no_permission >
-    <div class="no-permission"></div>
-</ng-template>

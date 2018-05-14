@@ -11,7 +11,7 @@
 <div class="row text-center">
     <p class="title">Câu Hỏi Thường Gặp</p>
 </div>
-<div *ngIf="faqs; else no_permission">
+<div *ngIf="faqs">
     <div class="row mt-50 mb-15 custom-title">
         <div class="col-xs-12 col-sm-12">
             <a class="pull-right" [routerLink]="['/faq/add/', {lang: lang}]">
@@ -64,6 +64,3 @@
         </div>
     </div>
 </div>
-<ng-template #no_permission >
-    <div class="no-permission"></div>
-</ng-template>

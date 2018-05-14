@@ -11,7 +11,7 @@
 <div class="row text-center">
     <p class="title">Phản hồi</p>
 </div>
-<div *ngIf="feedbacks; else no_permission">
+<div *ngIf="feedbacks">
     <div class='row title-feedback'>
         <a class="pull-right" routerLink="/feedback/statistics">
             <div class="btn btn-primary">
@@ -59,6 +59,3 @@
     	</div>
     </div>
 </div>
-<ng-template #no_permission >
-    <div class="no-permission"></div>
-</ng-template>
