@@ -5,7 +5,7 @@
 <div class="row text-center">
     <p class="title">PHÂN QUYỀN CHO USER</p>
 </div>
-<div *ngIf="!error_permission; else no_permission">
+<div *ngIf="user_current?.role == SYSTEM_ADMIN">
     <div [hidden]="!roles" class="wrapper-permission">
         <div class="row permission-content">
             <div class="wrap-head">
@@ -29,6 +29,3 @@
         <p>Chưa có quyền nào.</p>
     </div>
 </div>
-<ng-template #no_permission >
-    <div class="no-permission"></div>
-</ng-template>

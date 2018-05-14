@@ -11,7 +11,7 @@
 <div class="row text-center">
     <p class="title">Mệnh Giá Nạp Tiền</p>
 </div>
-<div *ngIf="denominations; else no_permission">
+<div *ngIf="denominations">
     <div class='row title-denomination'>
     	<a class="pull-right" routerLink="/denomination-add">
     		<div class="btn btn-primary">
@@ -51,6 +51,3 @@
     	</div>
     </div>
 </div>
-<ng-template #no_permission >
-    <div class="no-permission"></div>
-</ng-template>

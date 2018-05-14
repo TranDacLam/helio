@@ -6,23 +6,12 @@ import { api } from '../utils/api';
 import { env } from './../../../environments/environment';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
-
+import { get_token } from '../auth/auth-token';
 
 @Injectable()
 export class NotificationService {
 
-    httpOptions: any;
-    token: any = '';
-
     constructor(private http: Http) { 
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({ 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
     }
 
     /* 
@@ -31,7 +20,7 @@ export class NotificationService {
     */
     getNotification(id: number, lang): Observable<any> {
         const url_getNotification = `${env.api_domain_root}/${lang}/api/${api.notification}${id}/`;
-        return this.http.get(url_getNotification, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url_getNotification).map((res: Response) => res.json());
     }
 
     /* 
@@ -40,7 +29,7 @@ export class NotificationService {
     */
     getNotifications(lang): Observable<any> {
         const url_getNotifications = `${env.api_domain_root}/${lang}/api/${api.notification_list}`;
-        return this.http.get(url_getNotifications, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url_getNotifications).map((res: Response) => res.json());
     }
 
     /* 
@@ -53,7 +42,8 @@ export class NotificationService {
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
             xhr.open('POST', url_addNoti);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            let token = get_token();
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(noti);
 
             xhr.onreadystatechange = function() {
@@ -79,7 +69,8 @@ export class NotificationService {
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
             xhr.open('PUT', url_updateNoti);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            let token = get_token();
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(noti);
 
             xhr.onreadystatechange = function() {
@@ -102,7 +93,7 @@ export class NotificationService {
     onDelNoti(id: number, lang): Observable<any>{
         const url_onDelNoti = `${env.api_domain_root}/${lang}/api/${api.notification}${id}/`;
 
-        return this.http.delete(url_onDelNoti, this.httpOptions).map((res: Response) => res.json());
+        return this.http.delete(url_onDelNoti).map((res: Response) => res.json());
     }
 
     /* 
@@ -117,7 +108,6 @@ export class NotificationService {
         }
 
         let _options = new RequestOptions({
-            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
 
@@ -130,7 +120,7 @@ export class NotificationService {
     */
     getUserNotification(id, lang): Observable<any> {
         const url_getUserNotification = `${env.api_domain_root}/${lang}/api/${api.user_notification}${id}/`;
-        return this.http.get(url_getUserNotification, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url_getUserNotification).map((res: Response) => res.json());
     }
 
     /* 
@@ -143,7 +133,7 @@ export class NotificationService {
         let param = {
             list_user_id: user_noti
         }
-        return this.http.post(url_updateUserNoti, JSON.stringify(param), this.httpOptions)
+        return this.http.post(url_updateUserNoti, JSON.stringify(param))
             .map((res: Response) => res.json());
     }
 
@@ -156,7 +146,7 @@ export class NotificationService {
         let param = {
             notification_id: id
         }
-        return this.http.post(url_sendNotification, JSON.stringify(param), this.httpOptions)
+        return this.http.post(url_sendNotification, JSON.stringify(param))
             .map((res: Response) => res.json());
     }
 

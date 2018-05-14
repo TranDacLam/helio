@@ -210,6 +210,7 @@ h1.h1-title {
 .container.main {
     padding-top: 20px;
     padding-bottom: 20px;
+    min-height: 200px;
 }
 /* START DATATABLE */
 
@@ -402,10 +403,6 @@ button.btn:focus {
 }
 .modal-backdrop {
     z-index: 850;
-}
-/*class for no permission*/
-.no-permission{
-  margin-bottom: 200px;
 }
 
 /* End Fix bugs confict z-index of datepicker + modal popup */

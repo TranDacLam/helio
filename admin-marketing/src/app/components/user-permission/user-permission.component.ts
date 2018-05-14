@@ -32,8 +32,6 @@ export class UserPermissionComponent implements OnInit {
     user_current: User;
     roles: Role[];
     SYSTEM_ADMIN: number;
-    // check permission to display page
-    error_permission:boolean = false;
 
     @ViewChild(UserMultiselectComponent)
     userMultiselect: UserMultiselectComponent
@@ -47,12 +45,10 @@ export class UserPermissionComponent implements OnInit {
         this.user_list_left = null;
         this.userPermissionService.getUserListByRole(id).subscribe(
             data => {
-                this.error_permission = false;
                 this.user_list_right = data.users_selected;
                 this.user_list_left = data.users_all;
             },
             error => {
-                this.error_permission = true;
                 this.handleError.handle_error(error);
             }
         )
@@ -65,7 +61,7 @@ export class UserPermissionComponent implements OnInit {
     getRoles() {
         this.userPermissionService.getRoles().subscribe(
             data => {
-                this.error_permission = false;
+                
                 this.setOptionDatatable();
                 if (data.length > 0) {
                     this.roles = data;
@@ -73,7 +69,6 @@ export class UserPermissionComponent implements OnInit {
                 }
             },
             error => {
-                this.error_permission = true;
                 this.handleError.handle_error(error);
             }
         )

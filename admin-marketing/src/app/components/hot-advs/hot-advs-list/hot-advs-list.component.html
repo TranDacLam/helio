@@ -11,7 +11,7 @@
 <div class="row text-center">
     <p class="title">Hot Ads</p>
 </div>
-<div *ngIf="hot_advs; else no_permission">
+<div *ngIf="hot_advs">
     <div class='row title-hot-advs'>
     	<a class="pull-right" routerLink="/hot-advs-add">
     		<div class="btn btn-primary">
@@ -51,6 +51,3 @@
     	</div>
     </div>
 </div>
-<ng-template #no_permission >
-    <div class="no-permission"></div>
-</ng-template>

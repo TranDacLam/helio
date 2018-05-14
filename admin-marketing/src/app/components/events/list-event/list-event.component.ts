@@ -32,8 +32,6 @@ export class ListEventComponent implements OnInit {
     length_selected: Number = 0;
 
     events: Event[];   
-    // check permission to display page
-    error_permission:boolean = false;
     lang: string = 'vi';
 
     constructor(
@@ -75,12 +73,10 @@ export class ListEventComponent implements OnInit {
     getEvents(){
         this.eventService.getEvents(this.lang).subscribe(
             (data) => {
-                this.error_permission = false;
                 this.events = data;
                 this.length_all = this.events.length;
             },
             (error) => {
-                this.error_permission = true;
                 this.handleError.handle_error(error);
             }
         );

@@ -10,18 +10,7 @@ import "rxjs/add/operator/catch";
 @Injectable()
 export class PostTypeService {
 
-    httpOptions: any;
-    token: any = '';
-
     constructor(private http: Http) {
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({ 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
     }
 
     /* 
@@ -30,7 +19,7 @@ export class PostTypeService {
     */
     getPostTypes(lang): Observable<any>{
         const url = `${env.api_domain_root}/${lang}/api/${api.post_type_list}`;
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json());
+        return this.http.get(url).map((res: Response) => res.json());
     }
 
 }

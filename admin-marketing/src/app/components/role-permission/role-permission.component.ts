@@ -22,6 +22,7 @@ export class RolePermissionComponent implements OnInit {
     models = [];
     list_role_permission = [];
     SYSTEM_ADMIN: number;
+    PROMOTION_TYPE: string;
     // check permission to display page
     error_permission:boolean = false;
 
@@ -37,6 +38,7 @@ export class RolePermissionComponent implements OnInit {
     ngOnInit() {
         this.getRole();
         this.SYSTEM_ADMIN =  CONSTANT.SYSTEM_ADMIN;
+        this.PROMOTION_TYPE = CONSTANT.PROMOTION_TYPE;
         this.user_current = this.variable_globals.user_current;
     }
 
@@ -47,7 +49,6 @@ export class RolePermissionComponent implements OnInit {
     getRolePermission(){
         this.rolePermissionService.getRolePermission().subscribe(
             (data) => {
-                this.error_permission = false;
                 this.models = data;
                 setTimeout(() => {
                     this.initCheckedRolePermission();
@@ -55,7 +56,6 @@ export class RolePermissionComponent implements OnInit {
 
             },
             (error) => {
-                this.error_permission = true;
                 this.handleError.handle_error(error);
             }
         );
@@ -68,12 +68,10 @@ export class RolePermissionComponent implements OnInit {
     getRole(){
         this.rolePermissionService.getRole().subscribe(
             (data) => {
-                this.error_permission = false;
                 this.roles = data;
                 this.getRolePermission();
             },
             (error) => {
-                this.error_permission = true;
                 this.handleError.handle_error(error);
             }
         );

@@ -5,7 +5,7 @@
 <div class="row text-center">
 	<p class="title">Phí Giao Dịch</p>
 </div>
-<div *ngIf="!error_permission; else no_permission">
+<div *ngIf="fees">
 	<div class="row mt-30 mb-30 custom-title">
 		<div class="col-xs-6 col-sm-6 pull-right">
 			<a class="btn btn-primary pull-right" routerLink="/fee/add">
@@ -15,7 +15,7 @@
 		</div>
 	</div>
 	<div class="wrapper-table">
-		<table datatable [dtOptions]="dtOptions" *ngIf="fees" id="table_id" class="row-border hover">
+		<table datatable [dtOptions]="dtOptions" id="table_id" class="row-border hover">
 			<thead>
 				<tr class="">
 					<th id="th-checkall"><input id='select-all' type="checkbox" name="" (change)="selectAllEvent($event);"></th>
@@ -48,7 +48,7 @@
 			</tbody>
 		</table>
 	</div>
-	<div class='row under-table' *ngIf="fees">
+	<div class='row under-table'>
 		<div class="col-md-3">
 			<select name="" class="form-control">
 				<option value="">Xóa các phí giao dịch được chọn</option>
@@ -60,6 +60,3 @@
 		</div>
 	</div>
 </div>
-<ng-template #no_permission >
-    <div class="no-permission"></div>
-</ng-template>

@@ -170,7 +170,7 @@ export class FormUserAppComponent implements OnInit, AfterViewChecked {
         Author: Lam
     */
     validateEmail(email): boolean{
-        let regex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+        let regex = /^[A-Za-z0-9_.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
         let is_check = regex.test(email);
         if (!is_check) {
             return true;

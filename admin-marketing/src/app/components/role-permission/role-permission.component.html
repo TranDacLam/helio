@@ -11,7 +11,7 @@
 <div class="row text-center mb-30">
     <p class="title">Phân Quyền Cho Role</p>
 </div>
-<div *ngIf='!error_permission; else no_permission'>
+<div *ngIf='user_current?.role == SYSTEM_ADMIN'>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <table class="table table-hover">
@@ -36,6 +36,7 @@
                                 <input type="checkbox"  id="full-{{model.id}}-{{role.id}}"
                                     class="permission-{{model.id}}-{{role.id}}"
                                     (change)="changePermission($event, model, role, 'full')" 
+                                    [attr.disabled]="PROMOTION_TYPE === model.key ? true : null"
                                 />
                             </td>
                         </tr>
@@ -45,6 +46,7 @@
                                 <input type="checkbox" id="change-{{model.id}}-{{role.id}}"
                                     class="permission-{{model.id}}-{{role.id}}"
                                     (change)="changePermission($event, model, role, 'change')" 
+                                    [attr.disabled]="PROMOTION_TYPE === model.key ? true : null"
                                 />
                             </td>
                         </tr>
@@ -80,6 +82,3 @@
         </div>
     </div>
 </div>
-<ng-template #no_permission >
-    <div class="no-permission"></div>
-</ng-template>

@@ -30,8 +30,7 @@ export class AdvertisementListComponent implements OnInit {
 
     record: string = "Quảng Cáo";
     lang: string = 'vi';
-    // check permission to display page
-    error_permission:boolean = false;
+
     // Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
@@ -49,7 +48,6 @@ export class AdvertisementListComponent implements OnInit {
         private toastr: ToastrService,
         private handleError:HandleError
     ) {
-        this.advs = [];
     }
     ngOnInit() {
 
@@ -90,12 +88,10 @@ export class AdvertisementListComponent implements OnInit {
         this.advs = null;
         this.advertisementService.getAllAdvertisement(this.lang).subscribe(
             (result) => {
-                this.error_permission = false;
                 this.advs = result;
                 this.length_all = this.advs.length; // Set length_all
             },
             (error) => {
-                this.error_permission = true;
                 this.handleError.handle_error(error);
             }
         );
