@@ -35,7 +35,7 @@
             Sửa khuyến mãi đã triển khai (Chức năng này chỉ dành cho System Admin)
         </p>
         <p *ngIf="is_update">
-            <button type="button" class="btn custom-button" data-toggle="modal" data-target="#UpdatePromotion">
+            <button type="button" class="btn custom-button" (click)="showPopup()" data-toggle="modal" data-target="#UpdatePromotion">
                 <i class="fa fas fa-pencil-square-o icon-button"></i>
                 {{promotion.is_draft ? 'SỬA NỘI DUNG KHUYẾN MÃI' : 'SỬA NỘI DUNG KHUYẾN MÃI ĐÃ TRIỂN KHAI'}}
             </button>
@@ -96,4 +96,4 @@
     *ngIf="promotion"
     >
 </app-user-multiselect>
-<popup-edit-promotion (update_promotion)='updatePromotion($event)'></popup-edit-promotion>
+<popup-edit-promotion *ngIf="is_show_popup" (update_promotion)='updatePromotion($event)'></popup-edit-promotion>

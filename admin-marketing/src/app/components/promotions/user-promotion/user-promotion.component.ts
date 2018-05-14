@@ -42,6 +42,7 @@ export class UserPromotionComponent implements OnInit {
     date_now: any;
     ID_TYPE_PROMOTION_DAI_TRA: number;
     SYSTEM_ADMIN: number;
+    is_show_popup: boolean = false;
 
     constructor(
         private router: Router,
@@ -211,6 +212,10 @@ export class UserPromotionComponent implements OnInit {
             return true;
         }
         return null;
+    }
+
+    showPopup(){
+        this.is_show_popup = true;
     }
 
 }
