@@ -36,6 +36,8 @@ from dateutil.parser import parse
 from decorator import check_role_permission
 import model_key
 import unidecode
+from django.http import QueryDict
+
 """
     Get Promotion
     @author: diemnguyen
@@ -3024,6 +3026,8 @@ class UserRoleAPI(APIView):
                         model_name, many=True)
                     return Response(model_name_serializer.data)
                 return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
+            
+            request.data = QueryDict({})
             return Response({"code": 403, "message": _("This function is only for System Admin"), "fields": ""}, status=403)
         except Exception, e:
             print "UserRoleAPI", e
