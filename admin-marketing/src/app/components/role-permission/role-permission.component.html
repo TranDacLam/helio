@@ -11,7 +11,7 @@
 <div class="row text-center mb-30">
     <p class="title">Phân Quyền Cho Role</p>
 </div>
-<div *ngIf='user_current?.role == SYSTEM_ADMIN'>
+<div *ngIf='!error_permission; else no_permission'>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <table class="table table-hover">
@@ -28,7 +28,7 @@
                     </tr>
                     <ng-container *ngFor="let model of models">
                         <tr>
-                            <td colspan="6">{{model.name}}</td>
+                            <td colspan="6" class="info">{{model.name}}</td>
                         </tr>
                         <tr class="style_border_top">
                             <td>Full</td>
@@ -82,3 +82,6 @@
         </div>
     </div>
 </div>
+<ng-template #no_permission >
+    <div class="no-permission"></div>
+</ng-template>

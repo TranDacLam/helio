@@ -14,6 +14,7 @@ export class AuthGuard implements CanActivate {
 
     canActivate() {
         if (localStorage.getItem('auth_token')) {
+            this.variableGlobals.user_current = JSON.parse(localStorage.getItem('current_user'));
             // logged in so return true
             return true;
         }

@@ -199,7 +199,10 @@ export class FormBannerComponent implements OnInit {
                 if (bannerValues[k] == null) {
                     bannerFormData.append(k, '');
                 } else if (k === 'image') {
-                    bannerFormData.append(k, bannerValues[k].value, bannerValues[k].name);
+                    // if image has value, form data append image
+                    if (bannerValues[k].value){
+                        bannerFormData.append(k, bannerValues[k].value);
+                    }
                 } else {
                     bannerFormData.append(k, bannerValues[k]);
                 }

@@ -320,7 +320,9 @@ export class FormEventComponent implements OnInit {
                 if(promotionValues[k] == null) {
                     promotionFormData.append(k, '');
                 } else if (k === 'image' || k === 'image_thumbnail') {
-                    promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                    if (promotionValues[k].value){
+                        promotionFormData.append(k, promotionValues[k].value);
+                    }
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
                 }

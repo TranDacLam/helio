@@ -44,9 +44,8 @@ def check_role_permission(model_key):
                 clear_image_data(request)
                 return Response({"code": 403, "message": _("User don't have permission."), "fields": ""}, status=403)
             except Exception, e:
-                print "Error: ", e
-                raise Exception(
-                    "ERROR : Internal Server Error .Please contact administrator.")
+                error = {"code": 500, "message": _("Internal Server Error"), "fields": ""}
+                return Response(error, status=500)
 
         return wrapped
     return wrapper

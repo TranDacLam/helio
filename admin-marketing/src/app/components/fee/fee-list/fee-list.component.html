@@ -15,7 +15,7 @@
 		</div>
 	</div>
 	<div class="wrapper-table">
-		<table datatable [dtOptions]="dtOptions" id="table_id" class="row-border hover">
+		<table datatable [dtOptions]="dtOptions" *ngIf="fees" id="table_id" class="row-border hover">
 			<thead>
 				<tr class="">
 					<th id="th-checkall"><input id='select-all' type="checkbox" name="" (change)="selectAllEvent($event);"></th>

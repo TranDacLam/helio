@@ -23,6 +23,8 @@ export class RolePermissionComponent implements OnInit {
     list_role_permission = [];
     SYSTEM_ADMIN: number;
     PROMOTION_TYPE: string;
+    // check permission to display page
+    error_permission:boolean = false;
 
     constructor(
         private router: Router,
@@ -47,6 +49,7 @@ export class RolePermissionComponent implements OnInit {
     getRolePermission(){
         this.rolePermissionService.getRolePermission().subscribe(
             (data) => {
+                this.error_permission = false;
                 this.models = data;
                 setTimeout(() => {
                     this.initCheckedRolePermission();
@@ -54,6 +57,7 @@ export class RolePermissionComponent implements OnInit {
 
             },
             (error) => {
+                this.error_permission = true;
                 this.handleError.handle_error(error);
             }
         );
@@ -66,10 +70,12 @@ export class RolePermissionComponent implements OnInit {
     getRole(){
         this.rolePermissionService.getRole().subscribe(
             (data) => {
+                this.error_permission = false;
                 this.roles = data;
                 this.getRolePermission();
             },
             (error) => {
+                this.error_permission = true;
                 this.handleError.handle_error(error);
             }
         );

@@ -295,7 +295,10 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                 if (userValues[k] == null) {
                     userFormData.append(k, '');
                 } else if (k === 'avatar') {
-                    userFormData.append(k, userValues[k].value, userValues[k].name);
+                    // if image has value, form data append image
+                    if (userValues[k].value){
+                        userFormData.append(k, userValues[k].value);
+                    }
                 } else {
                     userFormData.append(k, userValues[k]);
                 }
