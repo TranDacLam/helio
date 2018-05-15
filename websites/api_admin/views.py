@@ -2759,8 +2759,6 @@ class HotAdvsDetailView(APIView):
  
 """
 
-
-@permission_classes((AllowAny,))
 class RoleListAPI(APIView):
 
     def get(self, request):
@@ -2782,8 +2780,6 @@ class RoleListAPI(APIView):
     case 2: get user is staff, no role
 """
 
-
-@permission_classes((AllowAny,))
 class UserRoleListAPI(APIView):
 
     def get(self, request):
@@ -2830,8 +2826,6 @@ class UserRoleListAPI(APIView):
     
 """
 
-
-@permission_classes((AllowAny,))
 class SetRoleAPI(APIView):
 
     def put(self, request, role_id):
@@ -2868,8 +2862,6 @@ class SetRoleAPI(APIView):
     @author :Hoangnguyen
 """
 
-
-@permission_classes((AllowAny,))
 class OpenTimeAPI(APIView):
     '''
         if first_record > start_date, create date
@@ -2991,8 +2983,6 @@ class OpenTimeAPI(APIView):
     @author :Hoangnguyen
 """
 
-
-@permission_classes((AllowAny,))
 class UserRoleAPI(APIView):
 
     def get(self, request):
