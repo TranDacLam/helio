@@ -37,6 +37,8 @@ from decorator import check_role_permission
 import model_key
 import unidecode
 
+import constants as constant
+
 """
     Get Promotion
     @author: diemnguyen
@@ -2366,7 +2368,7 @@ class UserListView(APIView):
             # Get role_id
             role_id = self.request.user.role_id
             # Check role_id
-            if role_id == 1:
+            if role_id == constant.SYSTEM_ADMIN:
                 # Get list user id to delete
                 user_id = self.request.data.get('user_id', None)
                 print "User List Id", user_id
@@ -2431,10 +2433,10 @@ class UserDetailView(APIView):
                 user, data=request.data, context={'request': request})
 
             if serializer.is_valid():
-                if (self.request.user.is_staff == True and self.request.user.role_id != 1 and user.is_staff == True):
+                if (self.request.user.is_staff == True and self.request.user.role_id != constant.SYSTEM_ADMIN and user.is_staff == True):
                     return Response({"code": 403, "message": _("This function is only for System Admin"), "fields": ""}, status=403)
                 if(serializer.validated_data['new_password']):
-                    if(self.request.user.role_id == 1):
+                    if(self.request.user.role_id == constant.SYSTEM_ADMIN):
                         user.set_password(
                             self.request.data.get("new_password"))
                     else:
@@ -2460,7 +2462,7 @@ class UserDetailView(APIView):
             # Get role_id when user login
             role_id = self.request.user.role_id
             # If role = System admin(role_id=1). Accept delete user
-            if role_id == 1:
+            if role_id == constant.SYSTEM_ADMIN:
                 print "role_id", role_id
                 user.delete()
                 return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
@@ -2785,7 +2787,7 @@ class UserRoleListAPI(APIView):
     def get(self, request):
         check_role = self.request.user.role_id
         try:
-            if check_role == 1:
+            if check_role == constant.SYSTEM_ADMIN:
                 role_id = self.request.query_params.get('role_id', None)
                 if not role_id:
                     return Response({"code": 400}, status=400)
@@ -2832,7 +2834,7 @@ class SetRoleAPI(APIView):
 
         check_role = self.request.user.role_id
         try:
-            if check_role == 1:
+            if check_role == constant.SYSTEM_ADMIN:
                 role = Roles.objects.get(id=role_id)
                 list_id = request.data.get('list_id', None )
                 if list_id:
@@ -2988,7 +2990,7 @@ class UserRoleAPI(APIView):
     def get(self, request):
         role_id = self.request.user.role_id
         try:
-            if role_id == 1:
+            if role_id == constant.SYSTEM_ADMIN:
                 model_name = Model_Name.objects.all().order_by('name')
                 model_name_serializer = admin_serializers.RolesPerDisplaySerializer(
                     model_name, many=True)
@@ -3010,7 +3012,7 @@ class UserRoleAPI(APIView):
         print "Role data: ", request.data
         role_id = self.request.user.role_id
         try:
-            if role_id == 1:
+            if role_id == constant.SYSTEM_ADMIN:
                 instances = Roles_Permission.objects.all()
                 serializer = admin_serializers.RolesPerSerializer(
                     instance=instances, data=request.data, many=True, partial=True)
