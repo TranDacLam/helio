@@ -269,6 +269,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                                     $('#UpdateNoti').animate({ scrollTop: $('.modal-title').offset().top }, 'slow');
                                 }
                             }else{
+                                $('#UpdateNoti').modal('toggle');
                                 this.handleError.handle_error(error);
                             }
                         }
