@@ -36,7 +36,6 @@ from dateutil.parser import parse
 from decorator import check_role_permission
 import model_key
 import unidecode
-from django.http import QueryDict
 
 """
     Get Promotion
@@ -3013,6 +3012,7 @@ class UserRoleAPI(APIView):
             if data has id, update object
             if record is not in data, delete record
         '''
+        print "Role data: ", request.data
         role_id = self.request.user.role_id
         try:
             if role_id == 1:
