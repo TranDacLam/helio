@@ -100,7 +100,7 @@ def deploy():
         run('find . -name "*.pyc" -exec rm -rf {} \;')
 
     restart_web_server()
-    # restart_admin_marketing()
+    restart_admin_marketing()
         
             
     
