@@ -8,6 +8,8 @@ import { ScrollTop } from './../../shared/commons/scroll-top';
 import { HandleError } from '../../shared/commons/handle_error';
 import { VariableGlobals } from '../../shared/commons/variable_globals';
 import * as CONSTANT from '../../shared/commons/constant';
+import * as moment from 'moment';
+import * as config_auth from '../../shared/auth/reset-auth-data';
 
 @Component({
     selector: 'app-role-permission',
@@ -150,6 +152,12 @@ export class RolePermissionComponent implements OnInit {
         Author: Lam
     */
     onSubmit(){
+        var exp = localStorage.getItem('time');
+        if (exp && moment().valueOf() > parseInt(exp)) {
+            config_auth.resetAuthData();
+            return this.router.navigate(['/login']);
+        }
+
         this.list_role_permission = this.list_role_permission.filter(item => item.permission !== '');
         this.rolePermissionService.saveRolePermission(this.list_role_permission).subscribe(
             (data) => {
