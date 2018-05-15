@@ -352,6 +352,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                                     $('#UpdatePromotion').animate({ scrollTop: $('.modal-title').offset().top }, 'slow');
                                 }
                             }else{
+                                $('#UpdatePromotion').modal('toggle');
                                 this.handleError.handle_error(error);
                             }
                         }
