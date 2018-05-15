@@ -47,13 +47,13 @@ export class RolePermissionComponent implements OnInit {
         Author: Lam
     */
     getRolePermission(){
+        this.models = null;
         this.rolePermissionService.getRolePermission().subscribe(
             (data) => {
                 this.models = data;
                 setTimeout(() => {
                     this.initCheckedRolePermission();
                 }, 500);
-
             },
             (error) => {
                 this.handleError.handle_error(error);

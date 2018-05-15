@@ -61,7 +61,6 @@ export class UserPermissionComponent implements OnInit {
     getRoles() {
         this.userPermissionService.getRoles().subscribe(
             data => {
-                
                 this.setOptionDatatable();
                 if (data.length > 0) {
                     this.roles = data;
