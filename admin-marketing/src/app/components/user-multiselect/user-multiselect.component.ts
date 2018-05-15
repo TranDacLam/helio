@@ -157,6 +157,7 @@ export class UserMultiselectComponent implements OnInit {
         }
         // get current user
         this.current_user = this.variableGlobals.user_current;
+        
         setTimeout(() => {
             // get current user
             this.disableAllTable();
@@ -365,9 +366,12 @@ export class UserMultiselectComponent implements OnInit {
         $('#select-all-right').prop('checked', false);
         this.is_button_left = false;
         this.is_button_rigth = false;
-        this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
+
+        if(this.dtElements.last){
+            this.dtElements.last.dtInstance.then((dtInstance: DataTables.Api) => {
             this.save.emit(dtInstance.column(1).data().toArray());
-        });
+            });
+        }
     }
 
     /*

@@ -36,7 +36,6 @@ from dateutil.parser import parse
 from decorator import check_role_permission
 import model_key
 import unidecode
-from django.http import QueryDict
 
 """
     Get Promotion
@@ -2830,20 +2829,25 @@ class UserRoleListAPI(APIView):
 class SetRoleAPI(APIView):
 
     def put(self, request, role_id):
-        try:
-            role = Roles.objects.get(id=role_id)
-            list_id = request.data.get('list_id', None)
-            if list_id:
-                # set role for users
-                users = User.objects.filter(id__in=list_id)
-                if users:
-                    role.user_role_rel.set(users)
-                    return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
-                return Response({"code": 400, "message": _("Not Found users."), "fields": ""}, status=400)
-            # list_id is empty then clear all user of role
-            role.user_role_rel.clear()
-            return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
 
+        check_role = self.request.user.role_id
+        try:
+            if check_role == 1:
+                role = Roles.objects.get(id=role_id)
+                list_id = request.data.get('list_id', None )
+                if list_id:
+                    # set role for users
+                    users = User.objects.filter(id__in=list_id)
+                    print "users", users
+                    if users:
+                        role.user_role_rel.set(users)
+                        return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+                    return Response({"code": 400, "message": _("Not Found users."), "fields": ""}, status=400)
+                #list_id is empty then clear all user of role
+                role.user_role_rel.clear()
+                return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
+            return Response({"code": 403, "message": _("This function is only for System Admin"), "fields": ""}, status=403) 
+            
         except Roles.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Role."), "fields": ""}, status=400)
         except Exception, e:
@@ -3003,6 +3007,7 @@ class UserRoleAPI(APIView):
             if data has id, update object
             if record is not in data, delete record
         '''
+        print "Role data: ", request.data
         role_id = self.request.user.role_id
         try:
             if role_id == 1:
