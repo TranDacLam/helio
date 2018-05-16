@@ -41,7 +41,7 @@ def custom_exception_handler(exc, context):
             print "custom_exception_handler ", e
             message = "errors"
             field = ""
-            
+
         # fix bugs show popup login admin-marketing
         if response.status_code == 401:
             response['WWW-Authenticate'] = ''
@@ -1285,7 +1285,7 @@ def disconnect_device(request):
         print "Error connect_device : ", e
         return Response({'message': _('Internal Server Error. Please Contact Administrator.')}, status=500)
 
-
+        
 """
     Update user have get a gift
 """
@@ -1293,6 +1293,58 @@ def disconnect_device(request):
 
 @api_view(['PUT'])
 def gift_user(request):
+    try:
+        if not request.user.anonymously:
+            user = request.user
+            print "## Current User ", user
+            promotion_id = request.data.get('promotion_id', '')
+
+            if not promotion_id:
+                error = {
+                    "code": 400, "message": _("The promotion_id is required."), "fields": "promotion_id"}
+                return Response(error, status=400)
+
+            obj_promotion = Promotion.objects.get(pk=promotion_id)
+
+            # CHECK Promotion Category is new user install app helio
+            if obj_promotion.id == core_constants.PROMOTION_ID_SETUP_DEVICE:
+                return gift_install_app(user, promotion_id)
+
+            gift = Gift.objects.get(user=user, promotion_id=promotion_id)
+
+            message = _("Error. User or Deivce Have get gift from promotion.")
+            status_code = 501
+            if not gift.is_used:
+                message = "Success"
+                status_code = 200
+                gift.is_used = True
+                gift.save()
+
+            return Response({'message': message}, status=status_code)
+        else:
+            return Response({'message': _('Anonymous User Cannot Call This Action.')}, status=400)
+
+    except Promotion.DoesNotExist, e:
+        error = {"code": 400, "message": _("Promotion for user does not matching. Please check again."),
+                 "fields": ""}
+        return Response(error, status=400)
+    except Gift.DoesNotExist, e:
+        error = {"code": 400, "message": _("Your account not apply current promotion. Please contact administrator."),
+                 "fields": ""}
+        return Response(error, status=400)
+    except Exception, e:
+        print "Error gift_user ", e
+        error = {"code": 500, "message": _("Your account not apply current promotion. Please contact administrator."),
+                 "fields": ""}
+        return Response(error, status=500)
+
+"""
+    Update user have get a gift
+"""
+
+
+@api_view(['PUT'])
+def gift_user_v2(request):
     try:
         if not request.user.anonymously:
             user = request.user
@@ -1461,7 +1513,7 @@ def ticket_transfer(request):
                 ticket_amount = int(ticket_amount)
                 if ticket_amount < 0:
                     error = {"code": 400,
-                         "message": _("Amount must be more than 0"), "fields": ""}
+                             "message": _("Amount must be more than 0"), "fields": ""}
                     return Response(error, status=400)
                 fee = int(fee)
             except ValueError:
@@ -1632,7 +1684,7 @@ def helio_card_reload(request):
             reload_amount = int(reload_amount)
             if reload_amount < 0:
                 error = {"code": 400,
-                     "message": _("Amount must be more than 0"), "fields": ""}
+                         "message": _("Amount must be more than 0"), "fields": ""}
                 return Response(error, status=400)
         except ValueError:
             error = {"code": 400,
