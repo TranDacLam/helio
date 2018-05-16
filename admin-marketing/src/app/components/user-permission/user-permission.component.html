@@ -5,8 +5,8 @@
 <div class="row text-center">
     <p class="title">PHÂN QUYỀN CHO USER</p>
 </div>
-<div *ngIf="user_current?.role == SYSTEM_ADMIN && user_list_left && user_list_right">
-    <div class="wrapper-permission">
+<div *ngIf="user_current?.role == SYSTEM_ADMIN ">
+    <div class="wrapper-permission" id="hidden-content-permission">
         <div class="row permission-content">
             <div class="wrap-head">
                 <h4>Các quyền</h4>
