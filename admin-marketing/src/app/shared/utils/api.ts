@@ -34,7 +34,7 @@ export const api = {
     promotion_type: env.api_domain + 'promotion-type/',
 
 
-    banner: 'banner/',
+    banner: env.api_domain + 'banner/',
     fee: env.api_domain + 'fee/',
     fee_list: env.api_domain + 'fee_list/',
     fee_apply: env.api_domain + 'apply_fee/',
