@@ -28,6 +28,7 @@ export class HotAdvsListComponent implements OnInit {
     length_selected: Number = 0;
 
     record: String = "Hot Ads";
+    lang: string = 'vi';
 
     // Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
@@ -77,7 +78,7 @@ export class HotAdvsListComponent implements OnInit {
         @author: Trangle
      */
     getHotAdvs() {
-        this.hotAdvsSerice.getAllHotAdvs().subscribe(
+        this.hotAdvsSerice.getAllHotAdvs(this.lang).subscribe(
             (result) => {
                 this.hot_advs = result;
                 this.length_all = this.hot_advs.length; // Set length_all
@@ -180,7 +181,7 @@ export class HotAdvsListComponent implements OnInit {
             let list_id_selected = get_list_id.map(Number);
 
             // Call API remove list hot ads selected
-            this.hotAdvsSerice.deleteHotAdvsSelected(list_id_selected).subscribe(
+            this.hotAdvsSerice.deleteHotAdvsSelected(list_id_selected, this.lang).subscribe(
                 (data) => {
                     this.toastr.success(`Xóa ${this.length_selected} Hot Ads thành công`);
 
@@ -194,6 +195,24 @@ export class HotAdvsListComponent implements OnInit {
                     this.handleError.handle_error(error);
                 });
         });
+    }
+
+    /*
+        Function changeLangVI(): Change language and callback service getEvents()
+        Check language (!lang) ->  add style class custom_table
+        Set objects banners = null -> call getAllBanners() to show
+        Author: Trangle
+    */
+    changeLang(value) {
+        if (this.lang !== value) {
+            $('.custom_table').attr('style', 'height: 640px');
+            this.hot_advs = null;
+            this.lang = value;
+            this.getHotAdvs();
+            setTimeout(() => {
+                $('.custom_table').attr('style', 'height: auto');
+            }, 100);
+        }
     }
 
 }
