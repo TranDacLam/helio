@@ -14,7 +14,7 @@
 <div *ngIf="faqs">
     <div class="row mt-50 mb-15 custom-title">
         <div class="col-xs-12 col-sm-12">
-            <a class="pull-right" [routerLink]="['/faq/add/', {lang: lang}]">
+            <a class="pull-right" [routerLink]="['/faq/add/', {lang: 'vi'}]">
                 <div class="btn btn-primary">
                     <span class="glyphicon glyphicon-plus"></span>
                     THÊM CÂU HỎI
@@ -25,10 +25,10 @@
     <div class="row mb-30 language">
         <div class="col-xs-12 col-sm-12">
             <div class="btn-group pull-right">
-                <button type="button" class="btn btn-primary {{ lang === 'vi' ? 'active' : '' }}"
+                <button type="button" class="btn {{ lang === 'vi' ? 'btn-primary' : 'btn-info' }}"
                     (click)="changeLang('vi')"
                 >VI</button>
-                <button type="button" class="btn btn-primary {{ lang === 'vi' ? '' : 'active' }}"
+                <button type="button" class="btn {{ lang === 'vi' ? 'btn-info' : 'btn-primary' }}"
                     (click)="changeLang('en')"
                 >EN</button>
             </div> 

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import { HotAdvs } from '../../shared/class/hot-advs';
 import { api } from '../utils/api';
+import { env } from './../../../environments/environment';
 import { get_token } from '../auth/auth-token';
 
 @Injectable()
@@ -17,8 +18,8 @@ export class HotAdvsService {
       GET: Get All Banner Hot_Advs Service
       @author: TrangLe  
     */
-    getAllHotAdvs(): Observable<HotAdvs[]> {
-        let url = `${api.hot_advs}`
+    getAllHotAdvs(lang): Observable<HotAdvs[]> {
+        let url = `${env.api_domain_root}/${lang}/api/${api.hot_advs}`
         return this.http.get(url ).map((res: Response) => res.json());
     }
 
@@ -26,8 +27,8 @@ export class HotAdvsService {
         GET: Get Hot Ads By ID
         @author: Trangle
      */
-    getHotAdsById(id: number): Observable<HotAdvs> {
-        let url =  `${api.hot_advs}${id}/`;
+    getHotAdsById(id: number, lang): Observable<HotAdvs> {
+        let url = `${env.api_domain_root}/${lang}/api/${api.hot_advs}${id}/`
         return this.http.get(url).map((res:Response) => res.json());
     }
     /*
@@ -35,11 +36,12 @@ export class HotAdvsService {
       @author: TrangLe
     */
 
-    CreateHotAdvs(hotAdvsFormData: FormData): Observable<any> {
+    CreateHotAdvs(hotAdvsFormData: FormData, lang): Observable<any> {
+        let url = `${env.api_domain_root}/${lang}/api/${api.hot_advs}`;
 
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
-            xhr.open('POST', api.hot_advs);
+            xhr.open('POST', url);
             let token = get_token();
             xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(hotAdvsFormData);
@@ -60,10 +62,11 @@ export class HotAdvsService {
         PUT: Update Hot Ads Detail
         @author: Trangle
      */
-    updateHotAds(hotAdvsFormData: FormData, id: number): Observable<any> {
+    updateHotAds(hotAdvsFormData: FormData, id: number, lang): Observable<any> {
+
+        let url = `${env.api_domain_root}/${lang}/api/${api.hot_advs}${id}/`;
 
         return Observable.create(observer => {
-            let url = `${api.hot_advs}${id}/`
             let xhr = new XMLHttpRequest();
             xhr.open('PUT', url);
             let token = get_token();
@@ -86,16 +89,16 @@ export class HotAdvsService {
         DELETE: Delete hot ads by id
         @author: Trangle
      */
-    deleteHotAdsById(id: number): Observable<HotAdvs> {
-        let url =  `${api.hot_advs}${id}/`;
+    deleteHotAdsById(id: number, lang): Observable<HotAdvs> {
+        let url = `${env.api_domain_root}/${lang}/api/${api.hot_advs}${id}/`;
         return this.http.delete(url).map((res: Response) => res.json());
     } 
     /*
         DELETE:  Delete multi hot_ads
         @author: Trangle
      */
-    deleteHotAdvsSelected(hot_advs_id): Observable<any> {
-        let url = `${api.hot_advs}`;
+    deleteHotAdvsSelected(hot_advs_id, lang): Observable<any> {
+        let url = `${env.api_domain_root}/${lang}/api/${api.hot_advs}`;
         let param = {
             hot_advs_id: hot_advs_id
         }
