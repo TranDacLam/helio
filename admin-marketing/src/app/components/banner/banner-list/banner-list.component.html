@@ -13,7 +13,7 @@
 </div>
 <div *ngIf="banners">
     <div class='row content-banner'>
-        <a class="pull-right" [routerLink]="['/banner-add/', {lang: 'vi'}]">
+        <a class="pull-right" [routerLink]="['/banner-add']">
             <div class="btn btn-primary">
                 <span class="glyphicon glyphicon-plus"></span>
                 THÊM BANNER
@@ -22,18 +22,6 @@
     </div>
     <br>
     <div class="table card-list">
-        <div class="row mb-30 language">
-            <div class="col-xs-12 col-sm-12">
-                <div class="btn-group pull-right">
-                    <button type="button" class="btn {{ lang === 'vi' ? 'btn-primary' : 'btn-info' }}"
-                    (click)="changeLang('vi')"
-                    >VI</button>
-                    <button type="button" class="btn {{ lang === 'vi' ? 'btn-info' : 'btn-primary' }}"
-                        (click)="changeLang('en')"
-                    >EN</button>
-                </div> 
-            </div>
-        </div>
         <div class="custom-table">
             <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions'>
                 <thead>

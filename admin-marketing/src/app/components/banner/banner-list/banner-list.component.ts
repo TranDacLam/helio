@@ -30,7 +30,6 @@ export class BannerListComponent implements OnInit {
     length_selected: Number = 0;
 
     errorMessage: string; // Show error from server
-    lang: string = 'vi';
 
     record: string = "Banner";
 
@@ -121,7 +120,7 @@ export class BannerListComponent implements OnInit {
      */
     getAllBanners() {
         this.banners = null;
-        this.bannerService.getAllBanner(this.lang).subscribe(
+        this.bannerService.getAllBanner().subscribe(
             (result) => {
                 this.banners = result;
                 this.length_all = this.banners.length; // Set length_all
@@ -182,7 +181,7 @@ export class BannerListComponent implements OnInit {
             let list_id_selected = get_list_id.map(Number);
 
             // Call API remove list promotion selected
-            this.bannerService.deleteBannerSelected(list_id_selected, this.lang).subscribe(
+            this.bannerService.deleteBannerSelected(list_id_selected).subscribe(
                 (data) => {
                     this.toastr.success(`Xóa ${this.length_selected} Banner thành công`);
 
@@ -197,23 +196,5 @@ export class BannerListComponent implements OnInit {
                 }
             );
         });
-    }
-
-    /*
-        Function changeLangVI(): Change language and callback service getEvents()
-        Check language (!lang) ->  add style class custom_table
-        Set objects banners = null -> call getAllBanners() to show
-        Author: Trangle
-    */
-    changeLang(value) {
-        if (this.lang !== value) {
-            $('.custom_table').attr('style', 'height: 640px');
-            this.banners = null;
-            this.lang = value;
-            this.getAllBanners();
-            setTimeout(() => {
-                $('.custom_table').attr('style', 'height: auto');
-            }, 100);
-        }
     }
 }

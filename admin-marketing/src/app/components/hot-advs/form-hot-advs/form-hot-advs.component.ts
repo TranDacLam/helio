@@ -47,6 +47,12 @@ export class FormHotAdvsComponent implements OnInit {
 
     ngOnInit() {
 
+        this.route.params.subscribe(params => {
+            if (params.lang) {
+                this.lang = params.lang;
+            }
+        });
+
         this.ckEditorConfig = ckeditor_config.config;
 
         if (this.route.snapshot.paramMap.get('id')) {
