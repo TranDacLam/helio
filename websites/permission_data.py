@@ -3,9 +3,9 @@ from core.models import Model_Name, Roles, Roles_Permission
 MODEL_NAME_CONST = [
 {"key":"Advertisement", "name": "Quảng Cáo"},
 {"key":"Banner", "name": "Banner"},
-{"key":"Event", "name": "Event"},
-{"key":"FAQ", "name": "FAQ"},
-{"key":"FeedBack", "name": "FeedBack"},
+{"key":"Event", "name": "Sự Kiện"},
+{"key":"FAQ", "name": "Câu Hỏi Thường Gặp"},
+{"key":"FeedBack", "name": "Phản Hồi"},
 {"key":"Game", "name": "Trò Chơi"},
 {"key":"Hot", "name": "Hot"},
 {"key":"Post", "name": "Bài Viết"},
