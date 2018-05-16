@@ -23,7 +23,6 @@ export class FormBannerComponent implements OnInit {
 
     positions = positions; // import class positions
 
-    lang: string = 'vi';
     api_domain: string = "";
     errorMessage: string = "";
     title: string = "";
@@ -43,11 +42,6 @@ export class FormBannerComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.params.subscribe(params => {
-            if (params.lang) {
-                this.lang = params.lang;
-            }
-        });
 
         if (this.route.snapshot.paramMap.get('id')) {
             // Update Init Form
@@ -84,7 +78,7 @@ export class FormBannerComponent implements OnInit {
      */
     getBannerById() {
         const id = +this.route.snapshot.paramMap.get('id');
-        this.bannerService.getBannerById(id, this.lang).subscribe(
+        this.bannerService.getBannerById(id).subscribe(
             (banner) => {
                 this.banner = banner;
                 this.createForm();
@@ -135,7 +129,7 @@ export class FormBannerComponent implements OnInit {
                     // Show msg_clear_image when error file or choose both is_clear_image and file
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                 } else {
-                    this.bannerService.updateBanner(bannerFormGroup, this.banner.id, this.lang).subscribe(
+                    this.bannerService.updateBanner(bannerFormGroup, this.banner.id).subscribe(
                         (data) => {
                             // Navigate to promotion page where success
                             this.toastr.success(`Chỉnh sửa ${this.formBanner.value['sub_url']} thành công`);
@@ -147,7 +141,7 @@ export class FormBannerComponent implements OnInit {
                     );
                 }
             } else {
-                this.bannerService.CreateBanner(bannerFormGroup, this.lang).subscribe(
+                this.bannerService.CreateBanner(bannerFormGroup).subscribe(
                     (result) => {
                         self.toastr.success(`Thêm ${this.formBanner.value['sub_url']} thành công`);
                         self.router.navigate(['/banner-list'])
@@ -169,7 +163,7 @@ export class FormBannerComponent implements OnInit {
      */
     deleteBanner() {
         const id = this.banner.id;
-        this.bannerService.deleteUserById(id, this.lang).subscribe(
+        this.bannerService.deleteUserById(id).subscribe(
             (data) => {
                 this.toastr.success(`Xóa ${this.banner.sub_url} thành công`);
                 this.router.navigate(['/banner-list']);
