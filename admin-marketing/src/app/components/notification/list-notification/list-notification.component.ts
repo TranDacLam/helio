@@ -8,7 +8,8 @@ import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { User } from '../../../shared/class/user';
 import 'rxjs/add/observable/throw';
 import * as datatable_config from '../../../shared/commons/datatable_config';
-
+import * as CONSTANT from './../../../shared/commons/constant';
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox:any;
 
 @Component({
@@ -36,12 +37,14 @@ export class ListNotificationComponent implements OnInit {
     user_current: User;
 
     lang: string = 'vi';
+    SYSTEM_ADMIN: number;
 
     constructor(
         private notificationService: NotificationService, 
         private router: Router,
         private variable_globals: VariableGlobals,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -61,6 +64,7 @@ export class ListNotificationComponent implements OnInit {
         // create new object from 2 object use operator spread es6
         this.dtOptions = {...this.dtOptions, ...dt_options_custom };
 
+        this.SYSTEM_ADMIN = CONSTANT.SYSTEM_ADMIN;
         this.getNotifications();
         // get current user
         this.user_current = this.variable_globals.user_current;
@@ -77,7 +81,7 @@ export class ListNotificationComponent implements OnInit {
                 this.length_all = this.notifications.length;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -187,11 +191,11 @@ export class ListNotificationComponent implements OnInit {
                         this.length_all =  dtInstance.rows().count();
                         this.length_selected = 0;
                     } else {
-                        this.router.navigate(['/error', { message: data.message}]);
+                        this.handleError.handle_error(data);
                     }
                 }, 
                 (error) => {
-                    this.router.navigate(['/error', { message: error.message}]);
+                    this.handleError.handle_error(error);;
                 });
         });
     }

@@ -9,18 +9,7 @@ import { Role } from '../../shared/class/role';
 @Injectable()
 export class RoleService {
 
-    httpOptions: any;
-    token: any = '';
-
     constructor(private http: Http) {
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
     }
 
     /*
@@ -29,13 +18,6 @@ export class RoleService {
     */
     getAllRoles(): Observable<Role[]> {
         let url = `${api.role}`;
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-	/*
-      Handle error
-    */
-    handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.get(url).map((res: Response) => res.json());
     }
 }

@@ -14,18 +14,7 @@ import { PromotionType } from '../../shared/class/promotion-type';
 @Injectable()
 export class PromotionTypeService {
 
-    httpOptions: any;
-    token: any = '';
-
     constructor(private http: Http) {
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({ 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
     }
 
     /*
@@ -34,13 +23,6 @@ export class PromotionTypeService {
     */
     getAllPromotionsType(): Observable<any[]>{
         let urlPromotionType = `${api.promotion_type}`;
-        return this.http.get(urlPromotionType, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    /*
-        Handle error
-    */
-    handleError(error: Response) {
-        return Observable.throw(error);
+        return this.http.get(urlPromotionType).map((res: Response) => res.json());
     }
 }

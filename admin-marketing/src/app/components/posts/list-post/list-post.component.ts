@@ -8,7 +8,7 @@ import { PostTypeService } from '../../../shared/services/post-type.service';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 import * as datatable_config from '../../../shared/commons/datatable_config';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox:any;
 
 @Component({
@@ -43,7 +43,8 @@ export class ListPostComponent implements OnInit {
         private postTypeService: PostTypeService,
         private router: Router,
         private toastr: ToastrService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -106,7 +107,7 @@ export class ListPostComponent implements OnInit {
                 
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -132,7 +133,7 @@ export class ListPostComponent implements OnInit {
                 this.length_all = this.posts.length;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -238,11 +239,11 @@ export class ListPostComponent implements OnInit {
                         this.length_all =  dtInstance.rows().count();
                         this.length_selected = 0;
                     } else {
-                        this.router.navigate(['/error', { message: data.message}]);
+                        this.handleError.handle_error(data);
                     }
                 }, 
                 (error) => {
-                    this.router.navigate(['/error', { message: error.message}]);
+                    this.handleError.handle_error(error);;
                 });
         });
     }

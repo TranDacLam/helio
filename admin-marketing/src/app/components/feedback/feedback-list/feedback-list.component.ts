@@ -10,6 +10,7 @@ import { FeedbackService } from '../../../shared/services/feedback.service';
 
 import { Subject } from 'rxjs/Subject';
 import { data_config } from '../../../shared/commons/datatable_config';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 declare var bootbox: any;
 
@@ -28,21 +29,20 @@ export class FeedbackListComponent implements OnInit {
 
     errorMessage: string;
     record: string = "Phản Hồi";
-
     // Inject the DataTableDirective into the dtElement property
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
 
     // Using trigger becase fetching the list of feedbacks can be quite long
     // thus we ensure the data is fetched before rensering
-    dtTrigger: Subject<any> = new Subject();
+    // dtTrigger: Subject<any> = new Subject();
     constructor(
         private feedbackService: FeedbackService,
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
-        this.feedbacks = [];
     }
 
 
@@ -76,10 +76,10 @@ export class FeedbackListComponent implements OnInit {
                     (result) => {
                         this.feedbacks = result;
                         this.length_all = this.feedbacks.length;
-                        this.dtTrigger.next();
+                        // this.dtTrigger.next();
                     },
                     (error) => {
-                        this.router.navigate(['/error', { message: error.json().message }])
+                        this.handleError.handle_error(error);
                     }
                 )
             });
@@ -190,12 +190,9 @@ export class FeedbackListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    if (error.json().code == 405) {
-                        this.toastr.error(`${error.json().message}`);
-                    } else {
-                        this.router.navigate(['/error', { message: error.json().message }]);
-                    }
-                });
+                    this.handleError.handle_error(error);
+                }
+            );
         });
     }
 }

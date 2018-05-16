@@ -10,7 +10,8 @@ import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
-
+import * as CONSTANT from './../../../shared/commons/constant';
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox:any;
 declare var $: any;
 
@@ -39,6 +40,9 @@ export class UserPromotionComponent implements OnInit {
 
     lang = 'vi';
     date_now: any;
+    ID_TYPE_PROMOTION_DAI_TRA: number;
+    SYSTEM_ADMIN: number;
+    is_show_popup: boolean = false;
 
     constructor(
         private router: Router,
@@ -46,7 +50,8 @@ export class UserPromotionComponent implements OnInit {
         private promotionService: PromotionService,
         private variable_globals: VariableGlobals,
         private toastr: ToastrService,
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
+        private handleError:HandleError
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -58,6 +63,8 @@ export class UserPromotionComponent implements OnInit {
             }
         });
 
+        this.ID_TYPE_PROMOTION_DAI_TRA = CONSTANT.ID_TYPE_PROMOTION_DAI_TRA;
+        this.SYSTEM_ADMIN = CONSTANT.SYSTEM_ADMIN;
     	this.getUsersPromotion();
         // ger current user
         this.user_current = this.variable_globals.user_current;
@@ -76,15 +83,17 @@ export class UserPromotionComponent implements OnInit {
                 this.user_list_right = data.user_promotion;
                 let promotion_end_date = this.promotion.end_date ? moment(this.promotion.end_date, "DD/MM/YYYY").toDate() : '';
                 //  current user is not system admin and (check promotion is draft or expires of pormotion)
-                if(this.user_current.role !==1 && 
-                    (this.promotion.is_draft === false || (promotion_end_date !== '' && promotion_end_date < this.date_now))){
+                if((this.user_current.role !== this.SYSTEM_ADMIN && 
+                    (this.promotion.is_draft === false || (promotion_end_date !== '' && promotion_end_date < this.date_now))) || 
+                    (data.promotion_detail.id === CONSTANT.ID_PROMOTION_FIRST_INSTALL_APP) ||
+                    (data.promotion_detail.promotion_type && data.promotion_detail.promotion_type.id === CONSTANT.ID_TYPE_PROMOTION_USER_AND_DEVICE)){
                     this.is_disable_promotion = true;
                 }else{
                     this.is_disable_promotion = false;
                 }
             }, 
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             });
     }
 
@@ -96,7 +105,7 @@ export class UserPromotionComponent implements OnInit {
         if(this.promotion.is_draft === true){
             this.updateUser(list_user_id)
         }else{
-            if(this.user_current.role === 1){
+            if(this.user_current.role === this.SYSTEM_ADMIN){
                 this.updateUser(list_user_id);
             }else{
                 this.toastr.warning(`Chức năng này chỉ dành cho System Admin`);
@@ -113,7 +122,7 @@ export class UserPromotionComponent implements OnInit {
                 } 
             }, 
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -149,7 +158,8 @@ export class UserPromotionComponent implements OnInit {
                 element.button('reset');
             }, 
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                element.button('reset');
+                this.handleError.handle_error(error);;
             });
     }
 
@@ -159,7 +169,7 @@ export class UserPromotionComponent implements OnInit {
     */
     isDisable(promotion){
         let promotion_end_date = promotion.end_date ? moment(promotion.end_date, "DD/MM/YYYY").toDate() : '';
-        if((this.promotion.is_draft === false || (promotion_end_date !== '' && promotion_end_date < this.date_now)) && this.user_current.role !== 1){
+        if((this.promotion.is_draft === false || (promotion_end_date !== '' && promotion_end_date < this.date_now)) && this.user_current.role !== this.SYSTEM_ADMIN){
             return true;
         }
         return null;
@@ -171,7 +181,7 @@ export class UserPromotionComponent implements OnInit {
     */
     isDisableQRCode(promotion){
         let end_date = promotion.end_date ? moment(promotion.end_date, "DD/MM/YYYY").toDate() : '';
-        if((end_date !== '' && end_date < this.date_now) && this.user_current.role !== 1){
+        if((end_date !== '' && end_date < this.date_now) && this.user_current.role !== this.SYSTEM_ADMIN){
             return true;
         }
         return null;
@@ -183,7 +193,7 @@ export class UserPromotionComponent implements OnInit {
     */
     isDisableCreateNotificaiton(promotion){
         let promotion_end_date = promotion.end_date ? moment(promotion.end_date, "DD/MM/YYYY").toDate() : '';
-        if(this.user_current.role === 1){
+        if(this.user_current.role === this.SYSTEM_ADMIN){
             return false;
         }
         if(promotion_end_date !== '' && promotion_end_date < this.date_now){
@@ -198,10 +208,14 @@ export class UserPromotionComponent implements OnInit {
     */
     isDisableUpdateNotificaiton(pro, noti){
         let promotion_end_date = pro.end_date ? moment(pro.end_date, "DD/MM/YYYY").toDate() : '';
-        if((noti.sent_date || (promotion_end_date !== '' && promotion_end_date < this.date_now)) && this.user_current.role !== 1){
+        if((noti.sent_date || (promotion_end_date !== '' && promotion_end_date < this.date_now)) && this.user_current.role !== this.SYSTEM_ADMIN){
             return true;
         }
         return null;
+    }
+
+    showPopup(){
+        this.is_show_popup = true;
     }
 
 }

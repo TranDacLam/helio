@@ -8,6 +8,7 @@ import { HotAdvs } from '../../../shared/class/hot-advs';
 import { HotAdvsService } from '../../../shared/services/hot-advs.service';
 
 import { data_config } from '../../../shared/commons/datatable_config';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 declare var bootbox: any;
 
@@ -34,15 +35,15 @@ export class HotAdvsListComponent implements OnInit {
 
     // Using trigger becase fetching the list of feedbacks can be quite long
     // thus we ensure the data is fetched before rensering
-    dtTrigger: Subject<any> = new Subject();
+    // dtTrigger: Subject<any> = new Subject();
 
     constructor(
         private route: ActivatedRoute,
         private hotAdvsSerice: HotAdvsService,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
-        this.hot_advs = [];
     }
 
     ngOnInit() {
@@ -80,10 +81,10 @@ export class HotAdvsListComponent implements OnInit {
             (result) => {
                 this.hot_advs = result;
                 this.length_all = this.hot_advs.length; // Set length_all
-                this.dtTrigger.next();
+                // this.dtTrigger.next();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.json().message }])
+                this.handleError.handle_error(error);
             }
         )
     }
@@ -190,7 +191,7 @@ export class HotAdvsListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
+                    this.handleError.handle_error(error);
                 });
         });
     }

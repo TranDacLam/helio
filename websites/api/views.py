@@ -42,6 +42,10 @@ def custom_exception_handler(exc, context):
             message = "errors"
             field = ""
 
+        # fix bugs show popup login admin-marketing
+        if response.status_code == 401:
+            response['WWW-Authenticate'] = ''
+
         response.data['code'] = response.status_code
         response.data['message'] = response.data[
             'detail'] if 'detail' in response.data else str(message)
@@ -1281,7 +1285,7 @@ def disconnect_device(request):
         print "Error connect_device : ", e
         return Response({'message': _('Internal Server Error. Please Contact Administrator.')}, status=500)
 
-
+        
 """
     Update user have get a gift
 """
@@ -1315,6 +1319,107 @@ def gift_user(request):
                 status_code = 200
                 gift.is_used = True
                 gift.save()
+
+            return Response({'message': message}, status=status_code)
+        else:
+            return Response({'message': _('Anonymous User Cannot Call This Action.')}, status=400)
+
+    except Promotion.DoesNotExist, e:
+        error = {"code": 400, "message": _("Promotion for user does not matching. Please check again."),
+                 "fields": ""}
+        return Response(error, status=400)
+    except Gift.DoesNotExist, e:
+        error = {"code": 400, "message": _("Your account not apply current promotion. Please contact administrator."),
+                 "fields": ""}
+        return Response(error, status=400)
+    except Exception, e:
+        print "Error gift_user ", e
+        error = {"code": 500, "message": _("Your account not apply current promotion. Please contact administrator."),
+                 "fields": ""}
+        return Response(error, status=500)
+
+"""
+    Update user have get a gift
+"""
+
+
+@api_view(['PUT'])
+def gift_user_v2(request):
+    try:
+        if not request.user.anonymously:
+            user = request.user
+            print "## Current User ", user
+            promotion_id = request.data.get('promotion_id', '')
+
+            if not promotion_id:
+                error = {
+                    "code": 400, "message": _("The promotion_id is required."), "fields": "promotion_id"}
+                return Response(error, status=400)
+
+            obj_promotion = Promotion.objects.get(pk=promotion_id)
+
+            current_time = datetime.datetime.now()
+
+            if(obj_promotion.apply_date and obj_promotion.apply_time):
+                start_datetime = datetime.datetime.combine(
+                    obj_promotion.apply_date, obj_promotion.apply_time)
+                if start_datetime > current_time:
+                    error = {
+                        "code": 400, "message": _("Error. Promotion Is Not Start."), "fields": "promotion_id"}
+                    return Response(error, status=400)
+
+            if(obj_promotion.end_date and obj_promotion.end_time):
+                end_datetime = datetime.datetime.combine(
+                    obj_promotion.end_date, obj_promotion.end_time)
+                if end_datetime < current_time:
+                    error = {
+                        "code": 400, "message": _("Error. Promotion expired."), "fields": "promotion_id"}
+                    return Response(error, status=400)
+
+            # CHECK Promotion Category is new user install app helio
+            if obj_promotion.id == core_constants.PROMOTION_ID_SETUP_DEVICE:
+                return gift_install_app(user, promotion_id)
+
+            promotion_type = obj_promotion.promotion_type
+
+            # Promotion must be have type.
+            if not promotion_type or promotion_type.id == core_constants.PROMOTION_TYPE_PUBLIC:
+                error = {
+                    "code": 400, "message": _("Error. Promotion Invalid."), "fields": "promotion_id"}
+                return Response(error, status=400)
+
+            message = _("Error. User or Deivce Have get gift from promotion.")
+            status_code = 501
+            # With promotion by user. Check user in list admin select
+            if promotion_type.id == core_constants.PROMOTION_TYPE_USER:
+                gift = Gift.objects.get(user=user, promotion_id=promotion_id)
+                if not gift.is_used:
+                    message = "Success"
+                    status_code = 200
+                    gift.is_used = True
+                    gift.save()
+            # With promotion by user and device id then check user and device
+            elif promotion_type.id == core_constants.PROMOTION_TYPE_USER_DEVICE:
+                device_id = request.data.get('device_id', '')
+                if not device_id:
+                    error = {
+                        "code": 400, "message": _("The device_id is required."), "fields": "device_id"}
+                    return Response(error, status=400)
+
+                gift_user = Gift.objects.filter(
+                    user=user, promotion_id=promotion_id)
+                gift_device = Gift.objects.filter(
+                    device_id=device_id, promotion_id=promotion_id)
+
+                if not gift_user and not gift_device:
+                    message = "Success"
+                    status_code = 200
+                    gift = Gift()
+                    gift.promotion = obj_promotion
+                    gift.device_id = device_id
+                    gift.user = user
+                    gift.is_used = True
+                    gift.save()
 
             return Response({'message': message}, status=status_code)
         else:
@@ -1406,6 +1511,10 @@ def ticket_transfer(request):
                 return Response(error, status=400)
             try:
                 ticket_amount = int(ticket_amount)
+                if ticket_amount < 0:
+                    error = {"code": 400,
+                             "message": _("Amount must be more than 0"), "fields": ""}
+                    return Response(error, status=400)
                 fee = int(fee)
             except ValueError:
                 error = {"code": 400,
@@ -1573,6 +1682,10 @@ def helio_card_reload(request):
 
         try:
             reload_amount = int(reload_amount)
+            if reload_amount < 0:
+                error = {"code": 400,
+                         "message": _("Amount must be more than 0"), "fields": ""}
+                return Response(error, status=400)
         except ValueError:
             error = {"code": 400,
                      "message": _("Amount must be is number"), "fields": ""}

@@ -3,16 +3,17 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
-
+import * as config_auth from './../../../shared/auth/reset-auth-data';
 import { User } from '../../../shared/class/user';
 import { UserService } from '../../../shared/services/user.service';
 import { UserValidators } from './../../../shared/validators/user-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { NumberValidators } from './../../../shared/validators/number-validators';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
+import * as CONSTANT from '../../../shared/commons/constant';
 
 import { env } from '../../../../environments/environment';
 
@@ -40,6 +41,8 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
     token: string = '';
     is_disable: boolean = false;
 
+    SYSTEM_ADMIN: number;
+
     constructor(
         private fb: FormBuilder,
         private route: ActivatedRoute,
@@ -48,6 +51,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
         private datePipe: DatePipe,
         private toastr: ToastrService,
         private variable_globals: VariableGlobals,
+        private handleError:HandleError
     ) {
         this.api_domain = env.api_domain_root;
     }
@@ -59,6 +63,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                 this.getUserById();
             }
         );
+        this.SYSTEM_ADMIN =  CONSTANT.SYSTEM_ADMIN;
         this.user_current = this.variable_globals.user_current;
 
     }
@@ -109,7 +114,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                     this.checkDisableInput();
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error.json().message }])
+                    this.handleError.handle_error(error);
                 }
             );
     }
@@ -154,8 +159,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                          */
                         if(this.user_current.email == this.user.email){
                             if (data.new_password !== '' || this.user_current.email !== data.email){
-                                localStorage.removeItem('auth_token');
-                                localStorage.removeItem('current_user');
+                                config_auth.resetAuthData();
                                 this.variable_globals.user_current = null;
                                 self.router.navigate(['/login']);
                             } else {
@@ -172,16 +176,15 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                         }
                     },
                     (error) => {
-                        if (error.code == 400) {
-                            if (error.message.non_field_errors) {
-                                self.toastr.error(`${error.message.non_field_errors}`);
+                        if (error.status == 400) {
+                            let error_txt = JSON.parse(error.response);
+                            if (error_txt.message.non_field_errors) {
+                                self.toastr.error(`${error_txt.message.non_field_errors}`);
                             } else {
-                                this.errorMessage = error.message
+                                this.errorMessage = error_txt.message
                             }
-                        } else if (error.code == 405) {
-                            self.toastr.error(`${error.message}`);
                         } else {
-                            self.router.navigate(['/error', { message: error.message }]);
+                            self.handleError.handle_error(error);
                         }
                     }
                 );
@@ -204,11 +207,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                     this.router.navigate(['/user-list']);
                 },
                 (error) => {
-                    if (error.status == 405) {
-                        this.toastr.error(`${error.json().message}`);
-                    } else {
-                        this.router.navigate(['/error', { message: error.json().message }])
-                    }
+                    this.handleError.handle_error(error);
                 }
             );
     }
@@ -296,7 +295,10 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
                 if (userValues[k] == null) {
                     userFormData.append(k, '');
                 } else if (k === 'avatar') {
-                    userFormData.append(k, userValues[k].value, userValues[k].name);
+                    // if image has value, form data append image
+                    if (userValues[k].value){
+                        userFormData.append(k, userValues[k].value);
+                    }
                 } else {
                     userFormData.append(k, userValues[k]);
                 }
@@ -318,7 +320,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
         @author:
      */
     checkDisableInput() {
-        if(this.user.is_staff == 1 && this.user_current.role !== 1) {
+        if(this.user.is_staff == 1 && this.user_current.role !== this.SYSTEM_ADMIN) {
             this.is_disable = true;
         }else {
             this.is_disable = false;
@@ -343,7 +345,7 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
             check user.is_staff and user_current.role: true ? false
         */
         if(this.user_current && this.user && this.user.id){
-            if(this.user.is_staff == 1 && this.user_current.role !== 1){
+            if(this.user.is_staff == 1 && this.user_current.role !== this.SYSTEM_ADMIN){
                 return true;
             }
         }

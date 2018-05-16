@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, RequestOptions, Http } from "@angular/http";
 import { HttpClientModule } from '@angular/common/http';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app.routing';
 import { OwlDateTimeModule, OwlDateTimeIntl, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime'; // date and time
@@ -15,6 +16,7 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { RECAPTCHA_LANGUAGE } from 'ng-recaptcha';
 import { DatePipe } from '@angular/common';
 import { MapToIterablePipe } from './shared/pipes/map-to-iterable.pipe';
+import { SortStringPipe } from './shared/pipes/sort-string.pipe';
 import { ToastrModule } from 'ngx-toastr'; // https://github.com/scttcper/ngx-toastr
 import { FullCalendarModule } from 'ng-fullcalendar'; // https://github.com/Jamaks/ng-fullcalendar
 
@@ -28,7 +30,6 @@ import { UserMultiselectComponent } from './components/user-multiselect/user-mul
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
 import { PromotionTypeListComponent } from './components/promotion-type/promotion-type-list/promotion-type-list.component';
 import { DenominationListComponent } from './components/denomination/denomination-list/denomination-list.component';
-import { DenominationAddComponent } from './components/denomination/denomination-add/denomination-add.component';
 import { FeedbackListComponent } from './components/feedback/feedback-list/feedback-list.component';
 import { FeedbackDetailComponent } from './components/feedback/feedback-detail/feedback-detail.component';
 import { NotificationDetailComponent } from './components/notification/notification-detail/notification-detail.component';
@@ -36,7 +37,6 @@ import { FormNotificationComponent } from './components/notification/form-notifi
 import { PopupEditNotificationComponent } from './components/notification/popup-edit-notification/popup-edit-notification.component';
 import { ShowErrorValidComponent } from './components/show-error-valid/show-error-valid.component';
 import { HotAdvsListComponent } from './components/hot-advs/hot-advs-list/hot-advs-list.component';
-import { HotAdvsAddComponent } from './components/hot-advs/hot-advs-add/hot-advs-add.component';
 
 import { AdvertisementService } from './shared/services/advertisement.service';
 import { PromotionTypeService } from './shared/services/promotion-type.service';
@@ -44,7 +44,6 @@ import { DenominationService } from './shared/services/denomination.service';
 import { FeedbackService } from './shared/services/feedback.service';
 import { CategoryService } from './shared/services/category.service';
 import { BannerService } from './shared/services/banner.service';
-import { AuthHttp } from './shared/auth/auth-http';
 import { ScrollTop } from './shared/commons/scroll-top';
 import { AuthGuard } from './shared/auth/auth.guard';
 
@@ -55,7 +54,6 @@ import { UserDetailComponent } from './components/user/user-detail/user-detail.c
 import { LinkCardListComponent } from './components/link-card/link-card-list/link-card-list.component';
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
 import { FeeService } from './shared/services/fee.service';
-import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
 import { BannerListComponent } from './components/banner/banner-list/banner-list.component';
 
 import { ListEventComponent } from './components/events/list-event/list-event.component';
@@ -88,6 +86,12 @@ import { FormBannerComponent } from './components/banner/form-banner/form-banner
 
 
 import { AuthRequestOptions } from './shared/auth/auth-request';
+import { FormDenominationComponent } from './components/denomination/form-denomination/form-denomination.component';
+import { FormFeeComponent } from './components/fee/form-fee/form-fee.component';
+import { FormHotAdvsComponent } from './components/hot-advs/form-hot-advs/form-hot-advs.component';
+
+import { AuthHttp } from './shared/auth/auth-http';
+import { HandleError } from './shared/commons/handle_error';
 
 /*
     Translate datetime-picker
@@ -122,7 +126,6 @@ export const MY_MOMENT_FORMATS = {
     AdvertisementListComponent,
     PromotionTypeListComponent,
     DenominationListComponent,
-    DenominationAddComponent,
     FeedbackListComponent,
     FeedbackDetailComponent,
     NotificationDetailComponent,
@@ -131,13 +134,11 @@ export const MY_MOMENT_FORMATS = {
     ShowErrorValidComponent,
     StatisticsFeedbackComponent,
     HotAdvsListComponent,
-    HotAdvsAddComponent,
     UserListComponent,
     UserAddComponent,
     UserDetailComponent,
     LinkCardListComponent,
     FeeListComponent,
-    FeeAddComponent,
     BannerListComponent,
     ListEventComponent,
     ListFaqComponent,
@@ -159,12 +160,16 @@ export const MY_MOMENT_FORMATS = {
     UserPermissionComponent,
     LoginComponent,
     MapToIterablePipe,
+    SortStringPipe,
     OpenTimeComponent,
     PromotionReportComponent,
     PopupEditPromotionComponent,
     RolePermissionComponent,
     FormAdvertisementComponent,
     FormBannerComponent,
+    FormDenominationComponent,
+    FormFeeComponent,
+    FormHotAdvsComponent,
     
   ],
   imports: [
@@ -187,6 +192,7 @@ export const MY_MOMENT_FORMATS = {
         maxOpened: 1,
         autoDismiss: true
     }), // ToastrModule added
+    Ng4LoadingSpinnerModule.forRoot() //Ng Loading data
   ],
   providers: [
     AdvertisementService,
@@ -212,7 +218,8 @@ export const MY_MOMENT_FORMATS = {
         provide: RequestOptions, 
         useClass: AuthRequestOptions
     },
-    { provide: Http, useClass: AuthHttp }
+    { provide: Http, useClass: AuthHttp },
+    HandleError,
   ],
   bootstrap: [AppComponent]
 })

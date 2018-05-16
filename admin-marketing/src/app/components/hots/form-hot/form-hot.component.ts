@@ -9,6 +9,7 @@ import { ImageValidators } from './../../../shared/validators/image-validators';
 import { env } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
+import { HandleError } from '../../../shared/commons/handle_error';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -47,7 +48,8 @@ export class FormHotComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private toastr: ToastrService,
-        private scrollTop: ScrollTop
+        private scrollTop: ScrollTop,
+        private handleError:HandleError
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -143,11 +145,11 @@ export class FormHotComponent implements OnInit {
                     },
                     (error) => {
                         // code 400, erro validate
-                        if(error.code === 400){
-                            this.errorMessage = error.message;
+                        if(error.status == 400){
+                            this.errorMessage = JSON.parse(error.response).message;
                             this.scrollTop.scrollTopFom();
                         }else{
-                            this.router.navigate(['/error', { message: error.message}]);
+                            this.handleError.handle_error(error);
                         }
                     }
                 );
@@ -165,11 +167,11 @@ export class FormHotComponent implements OnInit {
                         },
                         (error) => {
                             // code 400, erro validate
-                            if(error.code === 400){
-                                this.errorMessage = error.message;
+                            if(error.status == 400){
+                                this.errorMessage = JSON.parse(error.response).message;
                                 this.scrollTop.scrollTopFom();
                             }else{
-                                this.router.navigate(['/error', { message: error.message}]);
+                                this.handleError.handle_error(error);
                             }
                         }
                     );
@@ -190,10 +192,10 @@ export class FormHotComponent implements OnInit {
             message: "Bạn muốn xóa Hot này?",
             buttons: {
                 cancel: {
-                    label: "Hủy"
+                    label: "HỦY"
                 },
                 confirm: {
-                    label: "Xóa"
+                    label: "XÓA"
                 }
             },
             callback: function (result) {
@@ -218,7 +220,7 @@ export class FormHotComponent implements OnInit {
                 this.router.navigate(['/hot/list']);
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -242,7 +244,10 @@ export class FormHotComponent implements OnInit {
                 if(promotionValues[k] == null) {
                     promotionFormData.append(k, '');
                 } else if (k === 'image') {
-                    promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                    // if image has value, form data append image
+                    if (promotionValues[k].value){
+                        promotionFormData.append(k, promotionValues[k].value);
+                    }
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
                 }

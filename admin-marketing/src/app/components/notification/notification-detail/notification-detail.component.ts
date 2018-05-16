@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { VariableGlobals } from './../../../shared/commons/variable_globals';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
+import { HandleError } from '../../../shared/commons/handle_error';
+import * as CONSTANT from './../../../shared/commons/constant';
 
 
 declare var bootbox:any;
@@ -35,6 +37,7 @@ export class NotificationDetailComponent implements OnInit {
     length_user_right: number = 0;
 
     lang = 'vi';
+    SYSTEM_ADMIN: number;
 
     constructor(
         private notificationService: NotificationService, 
@@ -42,7 +45,8 @@ export class NotificationDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private variable_globals: VariableGlobals,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -52,7 +56,7 @@ export class NotificationDetailComponent implements OnInit {
                 this.lang = params.lang;
             }
         });
-
+        this.SYSTEM_ADMIN =  CONSTANT.SYSTEM_ADMIN;
         this.getUserNotification();
         // get current user
         this.user_current = this.variable_globals.user_current;
@@ -78,12 +82,12 @@ export class NotificationDetailComponent implements OnInit {
                             this.promotion = data;
                         },
                         (error) => {
-                            this.router.navigate(['/error', { message: error.message}]);
+                            this.handleError.handle_error(error);;
                         }
                     );
                 }
                 // check promotion id exsit or current user is not system admin and exist sent date notifcation
-                if(this.noti_detail.promotion || (this.user_current.role !==1 && this.noti_detail.sent_date)){
+                if(this.noti_detail.promotion || (this.user_current.role !== this.SYSTEM_ADMIN && this.noti_detail.sent_date)){
                     this.is_disable_notification = true;
                 }else{
                     this.is_disable_notification = false;
@@ -106,7 +110,7 @@ export class NotificationDetailComponent implements OnInit {
                 this.noti_detail = data;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -136,7 +140,7 @@ export class NotificationDetailComponent implements OnInit {
         Author: Lam
     */
     update_user_noti(event){
-        if(!this.noti_detail.sent_date || (this.user_current.role === 1 && this.noti_detail.sent_date)){
+        if(!this.noti_detail.sent_date || (this.user_current.role === this.SYSTEM_ADMIN && this.noti_detail.sent_date)){
             const id = +this.route.snapshot.paramMap.get('id');
             this.notificationService.updateUserNoti(id, event, this.lang).subscribe(
                 (data) => {
@@ -150,7 +154,7 @@ export class NotificationDetailComponent implements OnInit {
                     );
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error.message}]);
+                    this.handleError.handle_error(error);;
                 }
             );
         }else{
@@ -201,7 +205,7 @@ export class NotificationDetailComponent implements OnInit {
                 this.toastr.success(`${data.message}`);
             },
             (error) => {
-                this.toastr.error(`${error.message}`);
+                this.toastr.error(`${error.json().message}`);
             }
         );
     }

@@ -13,7 +13,8 @@ import { User } from '../../../shared/class/user';
 import 'rxjs/add/observable/throw';
 import { env } from '../../../../environments/environment';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
-
+import * as CONSTANT from './../../../shared/commons/constant';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 declare var $ :any; // declare Jquery
 declare var bootbox:any;
@@ -59,6 +60,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
     lang = 'vi';
     promotion_id: number;
     title_page = '';
+    SYSTEM_ADMIN: number;
 
     constructor(
         private notificationService: NotificationService,
@@ -68,7 +70,8 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
         private route: ActivatedRoute,
         private variable_globals: VariableGlobals,
         private toastr: ToastrService,
-        private scrollTop: ScrollTop
+        private scrollTop: ScrollTop,
+        private handleError:HandleError
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -83,7 +86,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                 this.lang = params.lang;
             }
         });
-
+        this.SYSTEM_ADMIN =  CONSTANT.SYSTEM_ADMIN;
         this.getCategory();
         // get current user
         this.user_current = this.variable_globals.user_current;
@@ -155,7 +158,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                 this.categories = data.message;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -216,11 +219,11 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                     },
                     (error) => {
                         // code 400, error validate
-                        if(error.code === 400){
-                            this.errorMessage = error.message;
+                        if(error.status === 400){
+                            this.errorMessage = JSON.parse(error.response).message;
                             this.scrollTop.scrollTopFom();
                         }else{
-                            this.router.navigate(['/error']);
+                            this.handleError.handle_error(error);
                         }
                     }
                 );
@@ -240,6 +243,8 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                             this.noti = data;
                             // position is popup, toggle popup, emit noti to parent
                             if(this.position === "popup"){
+                                // clean input message
+                                $("#input_image").val("");
                                 this.update_noti.emit(this.noti);
                                 $('#UpdateNoti').modal('toggle');
                                 this.msg_clear_image = '';
@@ -256,15 +261,16 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                         },
                         (error) => {
                             // code 400, error validate
-                            if(error.code === 400){
-                                this.errorMessage = error.message;
+                            if(error.status === 400){
+                                this.errorMessage = JSON.parse(error.response).message;
                                 if(this.position !== 'popup'){
                                     this.scrollTop.scrollTopFom();
                                 }else{
                                     $('#UpdateNoti').animate({ scrollTop: $('.modal-title').offset().top }, 'slow');
                                 }
                             }else{
-                                this.router.navigate(['/error']);
+                                $('#UpdateNoti').modal('toggle');
+                                this.handleError.handle_error(error);
                             }
                         }
                     );
@@ -312,7 +318,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                 this.router.navigate(['/notification/list']);
             },
             (error) => {
-                 this.router.navigate(['/error', { message: error.message}]);
+                 this.handleError.handle_error(error);;
             }
         );
     }
@@ -366,7 +372,7 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
     */
     isDisable(){
         if(this.user_current && this.noti && this.noti.id){
-            if(this.noti.sent_date && this.user_current.role !== 1){
+            if(this.noti.sent_date && this.user_current.role !== this.SYSTEM_ADMIN){
                 return true;
             }
         }
@@ -392,7 +398,10 @@ export class FormNotificationComponent implements OnInit, AfterViewChecked {
                 if(promotionValues[k] == null) {
                     promotionFormData.append(k, '');
                 } else if (k === 'image') {
-                    promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                    // if image has value, form data append image
+                    if (promotionValues[k].value){
+                        promotionFormData.append(k, promotionValues[k].value);
+                    }
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
                 }

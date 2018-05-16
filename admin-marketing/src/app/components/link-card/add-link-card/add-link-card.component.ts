@@ -5,6 +5,7 @@ import { LinkCardService } from '../../../shared/services/link-card.service';
 import { FormUserAppComponent } from '../form-user-app/form-user-app.component';
 import { FormUserEmbedComponent } from '../form-user-embed/form-user-embed.component';
 import { ToastrService } from 'ngx-toastr';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 @Component({
     selector: 'app-add-link-card',
@@ -36,7 +37,8 @@ export class AddLinkCardComponent implements OnInit {
     constructor(
         private linkCardService: LinkCardService, 
         private router: Router,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -131,11 +133,7 @@ export class AddLinkCardComponent implements OnInit {
                 },
                 (error) => {
                     // code 400, error validate
-                    if(error.code === 400){
-                        this.toastr.error(`${error.message}`);
-                    }else{
-                        this.router.navigate(['/error', { message: error.message}]);
-                    }
+                    this.handleError.handle_error(error);
                 }
             );
         }

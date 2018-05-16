@@ -11,49 +11,51 @@
 <div class="row text-center">
     <p class="title">Phản hồi</p>
 </div>
-<div class='row title-feedback'>
-    <a class="pull-right" routerLink="/feedback/statistics">
-        <div class="btn btn-primary">
-            Thống kê phản hồi
-        </div>
-    </a>
-</div>
-<table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions' [dtTrigger]="dtTrigger" *ngIf="feedbacks">
-        <thead>
-            <tr>
-                <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
-                <th><span>ID</span></th>
-                <th><span>Phản Hồi</span> </th>
-                <th><span>Người Gửi</span></th>
-                <th><span>Ngày Nhận</span></th>
-                <th><span>Rating</span></th>
-                <th><span>Trạng Thái Xử Lý</span></th>
-                <th><span>Loại Phản Hồi</span></th>
-                <th><span>Ngày Xử Lý</span></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="row-data" *ngFor="let feedback of feedbacks">
-                <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
-                <td [ngStyle]="{'display':'none'}">{{feedback.id}}</td>
-                <td><a routerLink="/feedback-detail/{{ feedback.id }}">{{ feedback.subject }}</a></td>
-                <td>{{ feedback.name }}</td>
-                <td><span class="hidden">{{ feedback.created |date: 'yyyyMMdd'}}</span>{{ feedback.created |date: 'dd/MM/yyyy'}}</td>
-                <td>{{ feedback.rate }}</td>
-                <td>{{ feedback.status }}</td>
-                <td>{{ feedback.feedback_type }}</td>
-                <td><span class="hidden">{{ feedback.modified|date: 'yyyyMMdd' }}</span>{{ feedback.modified|date: 'dd/MM/yyyy' }}</td>
-            </tr>
-        </tbody>
-    </table>
-<div class='row area-feedback-footer'>
-	<div class="col-md-3">
-		<select name="" class="form-control">
-			<option value="">Xóa các phản hồi được chọn</option>
-		</select>
-	</div>
-	<div class="col-md-3" *ngIf="feedbacks">
-		{{length_selected}} của {{length_all}} được chọn
-		<button (click)="confirmDelete()" type="button" class="button-feedback btn btn-danger">Thực hiện</button>
-	</div>
+<div *ngIf="feedbacks">
+    <div class='row title-feedback'>
+        <a class="pull-right" routerLink="/feedback/statistics">
+            <div class="btn btn-primary">
+                Thống kê phản hồi
+            </div>
+        </a>
+    </div>
+    <table datatable class="row-border hover" id="table_id" dt-instance="dtInstanceCallback" [dtOptions]='dtOptions'>
+            <thead>
+                <tr>
+                    <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
+                    <th><span>ID</span></th>
+                    <th><span>Phản Hồi</span> </th>
+                    <th><span>Người Gửi</span></th>
+                    <th><span>Ngày Nhận</span></th>
+                    <th><span>Rating</span></th>
+                    <th><span>Trạng Thái Xử Lý</span></th>
+                    <th><span>Loại Phản Hồi</span></th>
+                    <th><span>Ngày Xử Lý</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="row-data" *ngFor="let feedback of feedbacks">
+                    <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
+                    <td [ngStyle]="{'display':'none'}">{{feedback.id}}</td>
+                    <td><a routerLink="/feedback-detail/{{ feedback.id }}">{{ feedback.subject }}</a></td>
+                    <td>{{ feedback.name }}</td>
+                    <td><span class="hidden">{{ feedback.created |date: 'yyyyMMdd'}}</span>{{ feedback.created |date: 'dd/MM/yyyy'}}</td>
+                    <td>{{ feedback.rate }}</td>
+                    <td>{{ feedback.status }}</td>
+                    <td>{{ feedback.feedback_type }}</td>
+                    <td><span class="hidden">{{ feedback.modified|date: 'yyyyMMdd' }}</span>{{ feedback.modified|date: 'dd/MM/yyyy' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    <div class='row area-feedback-footer' *ngIf="feedbacks">
+    	<div class="col-md-3">
+    		<select name="" class="form-control">
+    			<option value="">Xóa các phản hồi được chọn</option>
+    		</select>
+    	</div>
+    	<div class="col-md-3" *ngIf="feedbacks">
+    		{{length_selected}} của {{length_all}} được chọn
+    		<button (click)="confirmDelete()" type="button" class="button-feedback btn btn-danger">Thực hiện</button>
+    	</div>
+    </div>
 </div>

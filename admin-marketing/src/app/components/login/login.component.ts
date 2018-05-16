@@ -9,7 +9,7 @@ import { VariableGlobals } from './../../shared/commons/variable_globals';
 import { UserService } from './../../shared/services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { ValidateSubmit } from './../../shared/validators/validate-submit';
-
+import { HandleError } from '../../shared/commons/handle_error';
 
 @Component({
     selector: 'app-login',
@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         public variable_globals: VariableGlobals,
         private userService: UserService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private handleError:HandleError
     ) { 
         this.key_recaptcha = env.key_recaptcha 
     }
@@ -62,7 +63,7 @@ export class LoginComponent implements OnInit {
                 }
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -104,7 +105,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigateByUrl('/');
                 },
                 (error) => {
-                    this.msg_error = error.non_field_errors[0] ? "Email hoặc mật khẩu không chính xác." : "Lỗi";
+                    this.msg_error = error.json().non_field_errors[0] ? error.json().non_field_errors[0] : "Lỗi";
                 }
             );
         }

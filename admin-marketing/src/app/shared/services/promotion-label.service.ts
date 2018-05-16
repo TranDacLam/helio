@@ -13,19 +13,8 @@ export class PromotionLabelService {
   	private urlPromotionLabel = `${api.promotion_label}`;
     private urlPromotionLabelList = `${api.promotion_label_list}`;
 
-	httpOptions: any;
-    token: any = '';
-
     constructor(private http: Http) {
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({ 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
-     }
+    }
 	
     /* 
         function getPromotionLabels(): Get all promotion labels
@@ -33,7 +22,7 @@ export class PromotionLabelService {
     */
 	getPromotionLabels(lang): Observable<any>{
         const url_getPromotionLabels = `${env.api_domain_root}/${lang}/api/${api.promotion_label_list}`;
-		return this.http.get(url_getPromotionLabels, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(url_getPromotionLabels).map((res: Response) => res.json());
 	}
 
     /* 
@@ -43,8 +32,8 @@ export class PromotionLabelService {
 	addPromotionLabel(proLabel, lang): Observable<any> {
         const url_addPromotionLabel = `${env.api_domain_root}/${lang}/api/${api.promotion_label}`;
 		let body = JSON.stringify(proLabel); // String payload
-		return this.http.post(url_addPromotionLabel, body, this.httpOptions)
-			.map((res: Response) => res.json()).catch(this.handleError);	
+		return this.http.post(url_addPromotionLabel, body)
+			.map((res: Response) => res.json());	
 	}
 
     /* 
@@ -53,7 +42,7 @@ export class PromotionLabelService {
     */ 
 	getPromotionLabel(id: number, lang): Observable<any>{
         const url_getPromotionLabel = `${env.api_domain_root}/${lang}/api/${api.promotion_label}${id}/`;
-        return this.http.get(url_getPromotionLabel, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getPromotionLabel).map((res: Response) => res.json());
     }
 
     /* 
@@ -68,11 +57,10 @@ export class PromotionLabelService {
         }
 
         let _options = new RequestOptions({
-            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(url_onDelPromotionLabelSelect, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_onDelPromotionLabelSelect, _options).map((res: Response) => res.json());
     }
 
     /* 
@@ -81,8 +69,8 @@ export class PromotionLabelService {
     */
     updatePromotionLabel(value, id: number, lang): Observable<any>{
         const url_updatePromotionLabel = `${env.api_domain_root}/${lang}/api/${api.promotion_label}${id}/`;
-        return this.http.put(url_updatePromotionLabel, JSON.stringify(value), this.httpOptions)
-            .map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.put(url_updatePromotionLabel, JSON.stringify(value))
+            .map((res: Response) => res.json());
     }
 
     /* 
@@ -91,12 +79,6 @@ export class PromotionLabelService {
     */
     onDelPromotionLabel(id: number, lang): Observable<any>{
         const url_onDelPromotionLabel = `${env.api_domain_root}/${lang}/api/${api.promotion_label}${id}/`;
-        return this.http.delete(url_onDelPromotionLabel, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_onDelPromotionLabel).map((res: Response) => res.json());
     }
-
-	// exception
-    private handleError(error: Response) {
-        return Observable.throw(error.json());
-    }
-
 }

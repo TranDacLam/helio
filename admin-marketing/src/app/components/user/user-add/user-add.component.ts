@@ -12,7 +12,7 @@ import { RoleService } from '../../../shared/services/role.service';
 import { UserValidators } from './../../../shared/validators/user-validators';
 import { NumberValidators } from './../../../shared/validators/number-validators';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 
@@ -41,6 +41,7 @@ export class UserAddComponent implements OnInit {
         private router: Router,
         private datePipe: DatePipe,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
     }
 
@@ -84,7 +85,7 @@ export class UserAddComponent implements OnInit {
                 this.roles = result
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.json().message }])
+                this.handleError.handle_error(error);
             }
         )
     }
@@ -118,12 +119,12 @@ export class UserAddComponent implements OnInit {
                     self.router.navigate(['/user-list']);
                 },
                 (error) => {
-                    if (error.code == 400) {
+                    if (error.status == 400) {
                         // Show message in form
-                        self.errorMessage = error.message;
+                        self.errorMessage = JSON.parse(error.response).message;
                     } else {
                         // Nagivate component error and show error message
-                        this.router.navigate(['/error', { message: error.message }]);
+                        this.handleError.handle_error(error);
                     }
                 }
             )
@@ -177,7 +178,10 @@ export class UserAddComponent implements OnInit {
                 if (userValues[k] == null) {
                     userFormData.append(k, '');
                 } else if (k === 'avatar') {
-                    userFormData.append(k, userValues[k].value, userValues[k].name);
+                    // if image has value, form data append image
+                    if (userValues[k].value){
+                        userFormData.append(k, userValues[k].value);
+                    }
                 } else {
                     userFormData.append(k, userValues[k]);
                 }

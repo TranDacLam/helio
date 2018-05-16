@@ -9,18 +9,18 @@ import { NotificationDetailComponent } from './components/notification/notificat
 import { AdvertisementListComponent } from './components/advertisement/advertisement-list/advertisement-list.component';
 import { FormAdvertisementComponent } from './components/advertisement/form-advertisement/form-advertisement.component';
 import { PromotionTypeListComponent } from './components/promotion-type/promotion-type-list/promotion-type-list.component';
-import { DenominationAddComponent } from './components/denomination/denomination-add/denomination-add.component';
+import { FormDenominationComponent } from './components/denomination/form-denomination/form-denomination.component';
 import { DenominationListComponent } from './components/denomination/denomination-list/denomination-list.component';
 import { FeedbackDetailComponent } from './components/feedback/feedback-detail/feedback-detail.component';
 import { FeedbackListComponent } from './components/feedback/feedback-list/feedback-list.component';
 import { StatisticsFeedbackComponent } from './components/feedback/statistics-feedback/statistics-feedback.component';
-import { HotAdvsAddComponent } from './components/hot-advs/hot-advs-add/hot-advs-add.component';
+import { FormHotAdvsComponent } from './components/hot-advs/form-hot-advs/form-hot-advs.component';
 import { HotAdvsListComponent } from './components/hot-advs/hot-advs-list/hot-advs-list.component';
 import { UserAddComponent } from './components/user/user-add/user-add.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
 import { FeeListComponent } from './components/fee/fee-list/fee-list.component';
-import { FeeAddComponent } from './components/fee/fee-add/fee-add.component';
+import { FormFeeComponent } from './components/fee/form-fee/form-fee.component';
 import { BannerListComponent } from './components/banner/banner-list/banner-list.component';
 import { FormBannerComponent } from './components/banner/form-banner/form-banner.component';
 
@@ -89,11 +89,11 @@ const routes: Routes = [{
         canActivate: [AuthGuard]
     }, {
         path: 'denomination-add',
-        component: DenominationAddComponent,
+        component: FormDenominationComponent,
         canActivate: [AuthGuard]
     }, {
         path: 'denomination-detail/:id',
-        component: DenominationAddComponent,
+        component: FormDenominationComponent,
         canActivate: [AuthGuard]
     },{
         path: 'denomination-list',
@@ -109,11 +109,11 @@ const routes: Routes = [{
         canActivate: [AuthGuard]
     }, {
         path: 'hot-advs-add',
-        component: HotAdvsAddComponent,
+        component: FormHotAdvsComponent,
         canActivate: [AuthGuard]
     }, {
         path: 'hot-advs-detail/:id',
-        component: HotAdvsAddComponent,
+        component: FormHotAdvsComponent,
         canActivate: [AuthGuard]
     },{
         path: 'hot-advs-list',
@@ -189,12 +189,12 @@ const routes: Routes = [{
         canActivate: [AuthGuard]
     }, {
         path: 'fee/detail/:id',
-        component: FeeAddComponent,
+        component: FormFeeComponent,
         canActivate: [AuthGuard]
     },
     {
         path: 'fee/add',
-        component: FeeAddComponent,
+        component: FormFeeComponent,
         canActivate: [AuthGuard]
     },
     {
@@ -293,19 +293,23 @@ const routes: Routes = [{
     },
     {
         path: 'user-permission',
-        component: UserPermissionComponent
+        component: UserPermissionComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'open-time',
-        component: OpenTimeComponent
+        component: OpenTimeComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'promotions/report/:id',
-        component: PromotionReportComponent
+        component: PromotionReportComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'role-permission',
-        component: RolePermissionComponent
+        component: RolePermissionComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'error',

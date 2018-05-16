@@ -9,8 +9,9 @@ import { Subject } from 'rxjs/Subject';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserMultiselectComponent } from '../user-multiselect/user-multiselect.component';
-
-
+import { HandleError } from '../../shared/commons/handle_error';
+import { VariableGlobals } from '../../shared/commons/variable_globals';
+import * as CONSTANT from '../../shared/commons/constant';
 
 @Component({
     selector: 'app-user-permission',
@@ -22,11 +23,16 @@ export class UserPermissionComponent implements OnInit {
     constructor(
         private userPermissionService: UserPermissionService,
         private toastr: ToastrService,
-        private router: Router) { }
+        private router: Router,
+        private variable_globals: VariableGlobals,
+        private handleError:HandleError) { }
 
     user_list_left: User[];
     user_list_right: User[];
+    user_current: User;
     roles: Role[];
+    SYSTEM_ADMIN: number;
+
     @ViewChild(UserMultiselectComponent)
     userMultiselect: UserMultiselectComponent
 
@@ -43,7 +49,7 @@ export class UserPermissionComponent implements OnInit {
                 this.user_list_left = data.users_all;
             },
             error => {
-                this.router.navigate(['/error', { message: error.json().message }]);
+                this.handleError.handle_error(error);
             }
         )
     }
@@ -62,7 +68,7 @@ export class UserPermissionComponent implements OnInit {
                 }
             },
             error => {
-                this.router.navigate(['/error', { message: error.json().message }]);
+                this.handleError.handle_error(error);
             }
         )
     }
@@ -77,12 +83,7 @@ export class UserPermissionComponent implements OnInit {
                 this.toastr.success(`Thay đổi danh sách thành công.`);
             },
             error => {
-                if (error.status == 400) {
-                    this.toastr.error(`${error.json().message}`);
-                } else {
-                    this.router.navigate(['/error', { message: error.json().message }]);
-                }
-
+                this.handleError.handle_error(error);
             }
         )
     }
@@ -105,14 +106,18 @@ export class UserPermissionComponent implements OnInit {
             searchable: false
         };
         let column_356 = { targets: [3 ,5 ,6 ],visible: false, searchable: false };
-        this.userMultiselect.dtOptions_right.columnDefs.push(column_0, column_2, column_356);
-        this.userMultiselect.dtOptions_left.columnDefs.push(column_0, column_2,column_356);
-        this.userMultiselect.dtOptions_right.scrollX = false;
-        this.userMultiselect.dtOptions_left.scrollX = false;
+        if(this.userMultiselect){
+            this.userMultiselect.dtOptions_right.columnDefs.push(column_0, column_2, column_356);
+            this.userMultiselect.dtOptions_left.columnDefs.push(column_0, column_2,column_356);
+            this.userMultiselect.dtOptions_right.scrollX = false;
+            this.userMultiselect.dtOptions_left.scrollX = false;
+        }
     }
 
     ngOnInit() {
         this.getRoles();
+        this.SYSTEM_ADMIN =  CONSTANT.SYSTEM_ADMIN;
+        this.user_current = this.variable_globals.user_current;
     }
 
 }

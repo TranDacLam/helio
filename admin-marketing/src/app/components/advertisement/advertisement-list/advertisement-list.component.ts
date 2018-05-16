@@ -9,6 +9,7 @@ import { Advertisement } from '../../../shared/class/advertisement';
 
 import { AdvertisementService } from '../../../shared/services/advertisement.service';
 import { data_config } from '../../../shared/commons/datatable_config';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 // Using bootbox plugin
 declare var bootbox: any;
@@ -45,8 +46,8 @@ export class AdvertisementListComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
-        this.advs = [];
     }
     ngOnInit() {
 
@@ -91,7 +92,7 @@ export class AdvertisementListComponent implements OnInit {
                 this.length_all = this.advs.length; // Set length_all
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.json().message }])
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -199,7 +200,7 @@ export class AdvertisementListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error.json().message }]);
+                    this.handleError.handle_error(error);
                 });
         });
     }

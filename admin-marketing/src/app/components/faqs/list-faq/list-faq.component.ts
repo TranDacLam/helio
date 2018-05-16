@@ -6,6 +6,7 @@ import { FaqService } from '../../../shared/services/faq.service';
 import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
 import * as datatable_config from '../../../shared/commons/datatable_config';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 declare var bootbox:any;
 
@@ -38,6 +39,7 @@ export class ListFaqComponent implements OnInit {
         private faqService: FaqService, 
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -76,7 +78,7 @@ export class ListFaqComponent implements OnInit {
                 this.length_all = this.faqs.length;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -182,11 +184,11 @@ export class ListFaqComponent implements OnInit {
                         this.length_all =  dtInstance.rows().count();
                         this.length_selected = 0;
                     } else {
-                        this.router.navigate(['/error', { message: data.message}]);
+                        this.handleError.handle_error(data);
                     }
                 }, 
                 (error) => {
-                    this.router.navigate(['/error', { message: error.message}]);
+                    this.handleError.handle_error(error);
                 });
         });
     }

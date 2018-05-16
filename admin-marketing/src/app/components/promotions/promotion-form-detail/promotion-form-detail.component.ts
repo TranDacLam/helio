@@ -23,6 +23,8 @@ import { env } from '../../../../environments/environment';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import * as moment from 'moment';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
+import { HandleError } from '../../../shared/commons/handle_error';
+import * as CONSTANT from './../../../shared/commons/constant';
 
 declare var $ :any; // declare Jquery
 declare var bootbox:any;
@@ -64,6 +66,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
 
     lang = 'vi';
     title_page = "";
+    SYSTEM_ADMIN: number;
 
     constructor(
         private promotionService: PromotionService,
@@ -76,12 +79,14 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
         private datePipe: DatePipe,
         private toastr: ToastrService,
         private variable_globals: VariableGlobals,
-        private scrollTop: ScrollTop
+        private scrollTop: ScrollTop,
+        private handleError:HandleError
     ) {
         this.api_domain = env.api_domain_root;
     }
 
     ngOnInit() {
+        this.SYSTEM_ADMIN = CONSTANT.SYSTEM_ADMIN;
         this.route.params.subscribe(params => {
             if(params.lang){
                 this.lang = params.lang;
@@ -195,7 +200,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
             this.promotion = data;
             this.creatPromotionForm();
         }, (error) => {
-            this.router.navigate(['/error', { message: error.message}]);
+            this.handleError.handle_error(error);;
         });
     }
 
@@ -209,7 +214,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                 this.categorys = data;
             },
             (error) => {
-                this.router.navigate(['/error']);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -224,7 +229,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                 this.promotionTypes = data;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -239,7 +244,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                 this.promotionLabels = data;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -324,6 +329,9 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                             // popup edit pormotion at user promotion
                             if(this.position === 'popup'){
                                 this.promotion = data;
+                                // clean input image
+                                $("#image_thumbnail").val("");
+                                $("#image").val("");
                                 this.update_promotion.emit(this.promotion);
                                 $('#UpdatePromotion').modal('toggle');
                                 this.msg_clear_image = '';
@@ -336,15 +344,16 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                             }
                         }, 
                         (error) => {
-                            if(error.code === 400){
-                                that.errors = error.message;
+                            if(error.status == 400){
+                                that.errors = JSON.parse(error.response).message;
                                 if(this.position !== 'popup'){
                                     this.scrollTop.scrollTopFom();
                                 }else{
                                     $('#UpdatePromotion').animate({ scrollTop: $('.modal-title').offset().top }, 'slow');
                                 }
                             }else{
-                                that.router.navigate(['/error']);
+                                $('#UpdatePromotion').modal('toggle');
+                                this.handleError.handle_error(error);
                             }
                         }
                     );
@@ -357,11 +366,11 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                         that.router.navigate(['/promotions']);
                     }, 
                     (error) => {
-                        if(error.code === 400){
-                            that.errors = error.message;
+                        if(error.status == 400){
+                            that.errors = JSON.parse(error.response).message;
                             this.scrollTop.scrollTopFom();
                         }else{
-                            that.router.navigate(['/error']);
+                            this.handleError.handle_error(error);
                         }
                     }
                 );
@@ -400,7 +409,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                                 that.router.navigate(['/promotions']);
                             }, 
                             (error) => {
-                                that.router.navigate(['/error', { message: error.message}]);
+                                that.handleError.handle_error(error);
                             });
                     }
                 }
@@ -419,7 +428,7 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
         if(this.user_current && this.promotion && this.promotion.id){
             let date_now = moment(this.datePipe.transform(Date.now(), 'dd/MM/yyy'), "DD/MM/YYYY").toDate();
             let end_date = this.promotion.end_date ? moment(this.promotion.end_date, "DD/MM/YYYY").toDate() : '';
-            if((this.promotion.is_draft === false || (end_date !== '' && end_date < date_now)) && this.user_current.role !== 1){
+            if((this.promotion.is_draft === false || (end_date !== '' && end_date < date_now)) && this.user_current.role !== this.SYSTEM_ADMIN){
                 return true;
             }
         }
@@ -445,7 +454,10 @@ export class PromotionFormDetailComponent implements OnInit, AfterViewChecked {
                 if(promotionValues[k] == null) {
                     promotionFormData.append(k, '');
                 } else if (k === 'image' || k === 'image_thumbnail') {
-                    promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                    // if image has value, form data append image
+                    if (promotionValues[k].value){
+                        promotionFormData.append(k, promotionValues[k].value);
+                    }
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
                 }

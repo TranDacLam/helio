@@ -39,7 +39,7 @@ urlpatterns = [
 
 	url(r'^fee/$', views.FeeAPI.as_view(), name="fees"),
 	url(r'^fee/(?P<id>[0-9]+)/$', views.FeeAPI.as_view(), name="fee-update"),
-	url(r'^apply_fee/(?P<id>[0-9]+)/$', views.FeeAPI.as_view(), name="fee-apply"),
+	url(r'^apply_fee/(?P<id>[0-9]+)/$', views.FeeApplyAPI.as_view(), name="fee-apply"),
 
 	url(r'^feedback/$', views.FeedbackView.as_view(), name="feedback"),
 	url(r'^feedback/(?P<pk>[0-9]+)/$', views.FeedbackDetailView.as_view(), name="feedback-detail"),
@@ -76,9 +76,6 @@ urlpatterns = [
 	url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetailView.as_view(), name="users_detail"),
 
 	url(r'^role/$', views.RolesView.as_view(), name="role"),
-	
-	url(r'^upload_file/$', views.postUpload, name="upload-file"),
-
 
 	url(r'^game_detail/$', views.GameAPI.as_view(), name="game"),
 	url(r'^game_detail/(?P<id>[0-9]+)/$', views.GameAPI.as_view(), name="game-detail"),

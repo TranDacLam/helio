@@ -12,18 +12,7 @@ export class CategoryNotificationService {
 
     private url = api.category_notifications;
 
-    httpOptions: any;
-    token: any = '';
-
     constructor(private http: Http) { 
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({ 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
     }
 
     /* 
@@ -32,12 +21,7 @@ export class CategoryNotificationService {
     */
     getCategoryNotifications(lang): Observable<any> {
         const url = `${env.api_domain_root}/${lang}/api/${api.category_notifications}`;
-        return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error.json());
+        return this.http.get(url).map((res: Response) => res.json());
     }
 
 }

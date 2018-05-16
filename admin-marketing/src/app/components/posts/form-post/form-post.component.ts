@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { env } from '../../../../environments/environment';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
+import { HandleError } from '../../../shared/commons/handle_error';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -63,7 +64,8 @@ export class FormPostComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private toastr: ToastrService,
-        private scrollTop: ScrollTop
+        private scrollTop: ScrollTop,
+        private handleError:HandleError
     ) { 
         this.api_domain = env.api_domain_root;
     }
@@ -147,7 +149,7 @@ export class FormPostComponent implements OnInit {
                 this.check_post_career(data.post_type);
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -339,11 +341,11 @@ export class FormPostComponent implements OnInit {
                     },
                     (error) => {
                         // code 400, error validate
-                        if(error.code === 400){
-                            this.errorMessage = error.message;
+                        if(error.status == 400){
+                            this.errorMessage = JSON.parse(error.response).message;
                             this.scrollTop.scrollTopFom();
                         }else{
-                            this.router.navigate(['/error', { message: error.message}]);
+                            this.handleError.handle_error(error);;
                         }
                     }
                 );
@@ -394,11 +396,11 @@ export class FormPostComponent implements OnInit {
                         },
                         (error) => {
                             // code 400, error validate
-                            if(error.code === 400){
-                                this.errorMessage = error.message;
+                            if(error.status == 400){
+                                this.errorMessage = JSON.parse(error.response).message;
                                 this.scrollTop.scrollTopFom();
                             }else{
-                                this.router.navigate(['/error', { message: error.message}]);
+                                this.handleError.handle_error(error);;
                             }
                         }
                     );
@@ -446,7 +448,7 @@ export class FormPostComponent implements OnInit {
                 this.router.navigate(['/post/list']);
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -470,8 +472,11 @@ export class FormPostComponent implements OnInit {
                 if(promotionValues[k] == null) {
                     promotionFormData.append(k, '');
                 } else if (k === 'image') {
-                    promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
-                } else if(k === 'posts_image'){
+                    // if image has value, form data append image
+                    if (promotionValues[k].value){
+                        promotionFormData.append(k, promotionValues[k].value);
+                    }
+                 } else if(k === 'posts_image'){
                     Object.keys(promotionValues[k]).forEach(l => { 
                         promotionFormData.append('posts_image', promotionValues[k][l].value);
                     });

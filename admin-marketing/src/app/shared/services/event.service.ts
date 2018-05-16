@@ -5,22 +5,12 @@ import { api } from '../utils/api';
 import { env } from './../../../environments/environment';
 import 'rxjs/add/operator/map';
 import "rxjs/add/operator/catch";
+import { get_token } from '../auth/auth-token';
 
 @Injectable()
 export class EventService {
-    
-    httpOptions: any;
-    token: any = '';
 
     constructor(private http: Http) {
-        this.token = localStorage.getItem('auth_token');
-
-        this.httpOptions = {
-            headers: new Headers({ 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            })
-        };
      }
 
     /* 
@@ -29,12 +19,12 @@ export class EventService {
     */
     getEvents(lang): Observable<any>{
         const url_getEvents = `${env.api_domain_root}/${lang}/api/${api.event_list}`;
-        return this.http.get(url_getEvents, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getEvents).map((res: Response) => res.json());
     }
 
     getEvent(id: number, lang): Observable<any>{
         const url_getEvent = `${env.api_domain_root}/${lang}/api/${api.event}${id}/`;
-        return this.http.get(url_getEvent, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.get(url_getEvent).map((res: Response) => res.json());
     }
 
     /* 
@@ -49,19 +39,20 @@ export class EventService {
         }
 
         let _options = new RequestOptions({
-            headers: this.httpOptions.headers,
             body: JSON.stringify(param)
         });
 
-        return this.http.delete(url_onDelEventSelect, _options).map((res: Response) => res.json()).catch(this.handleError);
+        return this.http.delete(url_onDelEventSelect, _options).map((res: Response) => res.json());
     }
 
     addEvent(value: FormData, lang): Observable<any>{
         const url_addEvent = `${env.api_domain_root}/${lang}/api/${api.event}`;
+        
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
             xhr.open('POST', url_addEvent);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            let token = get_token();
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(value);
 
             xhr.onreadystatechange = function() {
@@ -70,7 +61,7 @@ export class EventService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(JSON.parse(xhr.response));
+                        observer.error(xhr);
                     }
                 }
             }
@@ -79,10 +70,12 @@ export class EventService {
 
     updateEvent(value: FormData, id: number, lang): Observable<any>{
         const url_updateEvent = `${env.api_domain_root}/${lang}/api/${api.event}${id}/`;
+        
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
             xhr.open('PUT', url_updateEvent);
-            xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+            let token = get_token();
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
             xhr.send(value);
 
             xhr.onreadystatechange = function() {
@@ -91,7 +84,7 @@ export class EventService {
                         observer.next(JSON.parse(xhr.response));
                         observer.complete();
                     } else {
-                        observer.error(JSON.parse(xhr.response));
+                        observer.error(xhr);
                     }
                 }
             }
@@ -100,12 +93,7 @@ export class EventService {
 
     onDelEvent(id: number, lang): Observable<any>{
         const url_onDelEvent = `${env.api_domain_root}/${lang}/api/${api.event}${id}/`;
-        return this.http.delete(url_onDelEvent, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
-    }
-
-    // exception
-    private handleError(error: Response) {
-        return Observable.throw(error.json());
+        return this.http.delete(url_onDelEvent).map((res: Response) => res.json());
     }
 
 }

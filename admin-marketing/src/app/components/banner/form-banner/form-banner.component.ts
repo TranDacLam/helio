@@ -5,6 +5,7 @@ import { Banner, positions } from '../../../shared/class/banner';
 import { BannerService } from '../../../shared/services/banner.service';
 import { ToastrService } from 'ngx-toastr';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
+import { HandleError } from '../../../shared/commons/handle_error';
 import { env } from '../../../../environments/environment';
 
 // Using bootbox 
@@ -36,6 +37,7 @@ export class FormBannerComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
         this.api_domain = env.api_domain_root;
     }
@@ -88,7 +90,7 @@ export class FormBannerComponent implements OnInit {
                 this.createForm();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error }]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -140,13 +142,7 @@ export class FormBannerComponent implements OnInit {
                             this.router.navigate(['/banner-list']);
                         },
                         (error) => {
-                            if (error.code == 400) {
-                                // Show message on form
-                                this.errorMessage = error.message
-                            } else {
-                                // nagivate component error
-                                self.router.navigate(['/error', { message: error.message }]);
-                            }
+                            self.handleError.handle_error(error);
                         }
                     );
                 }
@@ -157,11 +153,7 @@ export class FormBannerComponent implements OnInit {
                         self.router.navigate(['/banner-list'])
                     },
                     (error) => {
-                        if (error.code == 400) {
-                            self.errorMessage = error.message
-                        } else {
-                            self.router.navigate(['/error', { message: error }])
-                        }
+                        self.handleError.handle_error(error);
                     }
                 );
             }
@@ -183,7 +175,7 @@ export class FormBannerComponent implements OnInit {
                 this.router.navigate(['/banner-list']);
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message }])
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -207,7 +199,10 @@ export class FormBannerComponent implements OnInit {
                 if (bannerValues[k] == null) {
                     bannerFormData.append(k, '');
                 } else if (k === 'image') {
-                    bannerFormData.append(k, bannerValues[k].value, bannerValues[k].name);
+                    // if image has value, form data append image
+                    if (bannerValues[k].value){
+                        bannerFormData.append(k, bannerValues[k].value);
+                    }
                 } else {
                     bannerFormData.append(k, bannerValues[k]);
                 }

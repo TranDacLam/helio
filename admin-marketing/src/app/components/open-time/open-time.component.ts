@@ -8,6 +8,7 @@ import { OpenTimeService } from './../../shared/services/open-time.service';
 import * as moment from 'moment';
 import { ValidateSubmit } from './../../shared/validators/validate-submit';
 import { ToastrService } from 'ngx-toastr';
+import { HandleError } from '../../shared/commons/handle_error';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -37,13 +38,13 @@ export class OpenTimeComponent implements OnInit {
 
     is_disabled_day_of_week: boolean = false;
 
-
     constructor(
         private fb: FormBuilder,
         private router: Router,
         private route: ActivatedRoute,
         private openTimeService: OpenTimeService,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -90,7 +91,7 @@ export class OpenTimeComponent implements OnInit {
                 }
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);;
             }
         );
     }
@@ -215,10 +216,10 @@ export class OpenTimeComponent implements OnInit {
         }else{
             // Get value and format date, time for value form open time
             this.formOpenTime.value.day_of_week = this.list_day;
-            this.formOpenTime.value.start_date = this.formOpenTime.value.start_date.format("DD/MM/YYYY");
-            this.formOpenTime.value.end_date = this.formOpenTime.value.end_date.format("DD/MM/YYYY");
-            this.formOpenTime.value.start_time = this.formOpenTime.value.start_time.format("HH:mm");
-            this.formOpenTime.value.end_time = this.formOpenTime.value.end_time.format("HH:mm");
+            this.formOpenTime.value.start_date = $('#start_date').val();
+            this.formOpenTime.value.end_date = $('#end_date').val();
+            this.formOpenTime.value.start_time = $('#start_time').val();
+            this.formOpenTime.value.end_time = $('#end_time').val();
             this.openTimeService.addOpenTime(this.formOpenTime.value).subscribe(
                 (data) => {
                     this.toastr.success(`Thêm mới giờ mở cửa thành công`);
@@ -237,10 +238,10 @@ export class OpenTimeComponent implements OnInit {
                 },
                 (error) => {
                     // code 400, erro validate
-                    if(error.code === 400){
-                        this.errorMessage = error.message;
+                    if(error.status === 400){
+                        this.errorMessage = error.json().message;
                     }else{
-                        this.router.navigate(['/error', { message: error.message}]);
+                        this.handleError.handle_error(error);;
                     }
                 }
             );

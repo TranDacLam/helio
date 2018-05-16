@@ -9,6 +9,7 @@ import * as moment from 'moment';
 
 import { FeedbackService } from '../../../shared/services/feedback.service';
 import { Feedback, Status, en_Status, vi_Type, en_Type } from '../../../shared/class/feedback';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 // Using bootbox 
 declare var bootbox: any;
@@ -39,6 +40,7 @@ export class FeedbackDetailComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError,
     ) {
 
     }
@@ -81,7 +83,9 @@ export class FeedbackDetailComponent implements OnInit {
                 this.feedback = feedback,
                     this.createFormFeedback();
             },
-            error => this.router.navigate(['/error', { message: error }])
+            error => {
+                this.handleError.handle_error(error);
+            }
         );
     }
 
@@ -93,22 +97,15 @@ export class FeedbackDetailComponent implements OnInit {
         @author: TrangLe
     */
     deleteFeedback(feedback: Feedback) {
-        this.feedbackService.deleteFeedbackById(feedback)
-            .subscribe(
-                () => {
-                    this.toastr.success(`Xóa ${feedback.name} thành công`);
-                    this.router.navigate(['/feedback-list']);
-                },
-                (error) => {
-                    if (error.json().code == 405) {
-                        // Show error message in form
-                        this.toastr.error(`${error.json().message}`);
-                    } else {
-                        // Nagivate component error to show error message
-                        this.router.navigate(['/error', { message: error.json().message }]);
-                    }
-                }
-            );
+        this.feedbackService.deleteFeedbackById(feedback).subscribe(
+            () => {
+                this.toastr.success(`Xóa ${feedback.name} thành công`);
+                this.router.navigate(['/feedback-list']);
+            },
+            (error) => {
+                this.handleError.handle_error(error);
+            }
+        );
     }
     /* 
         PUT: Update Feedback by ID
@@ -120,23 +117,21 @@ export class FeedbackDetailComponent implements OnInit {
     */
     updateFeedback() {
         let valueForm = this.translateValueFeedbackForm(this.feedbackForm.value);
-        this.feedbackService.updateFeedbackById(valueForm, this.feedback.id)
-            .subscribe(
-                () => {
-                    this.toastr.success(`Chỉnh sửa ${this.feedback.name} thành công`);
-                    this.router.navigate(['/feedback-list']);
-                },
-                (error) => {
-                    if (error.status == 400) {
-                        // Show error message in form
-                        this.errorMessage = error.json().message
-                    } else {
-                        // Nagivate component error and show error message
-                        this.router.navigate(['/error', { message: error.json().message }])
-                    }
-
+        this.feedbackService.updateFeedbackById(valueForm, this.feedback.id).subscribe(
+            () => {
+                this.toastr.success(`Chỉnh sửa ${this.feedback.name} thành công`);
+                this.router.navigate(['/feedback-list']);
+            },
+            (error) => {
+                if (error.status == 400) {
+                    // Show error message in form
+                    this.errorMessage = error.json();
+                }else {
+                    this.handleError.handle_error(error);
                 }
-            )
+
+            }
+        )
     }
 
     /* 

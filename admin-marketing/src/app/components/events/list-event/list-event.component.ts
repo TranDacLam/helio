@@ -6,6 +6,7 @@ import { EventService } from '../../../shared/services/event.service';
 import 'rxjs/add/observable/throw';
 import { ToastrService } from 'ngx-toastr';
 import * as datatable_config from '../../../shared/commons/datatable_config';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 declare var bootbox:any;
 
@@ -31,13 +32,13 @@ export class ListEventComponent implements OnInit {
     length_selected: Number = 0;
 
     events: Event[];   
-
     lang: string = 'vi';
 
     constructor(
         private eventService: EventService,  
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -76,7 +77,7 @@ export class ListEventComponent implements OnInit {
                 this.length_all = this.events.length;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -183,11 +184,11 @@ export class ListEventComponent implements OnInit {
                         this.length_all =  dtInstance.rows().count();
                         this.length_selected = 0;
                     } else {
-                        this.router.navigate(['/error', { message: data.message}]);
+                        this.handleError.handle_error(data);
                     }
                 }, 
                 (error) => {
-                    this.router.navigate(['/error', { message: error.message}]);
+                    this.handleError.handle_error(error);
                 });
         });
     }

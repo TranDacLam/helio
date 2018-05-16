@@ -97,11 +97,15 @@ class PromotionSerializer(serializers.ModelSerializer):
             is_clear_image_thumbnail = self.context['request'].data.get('is_clear_image_thumbnail')
 
             # If image from request is None then set image = old value
-            if is_clear_image == "false" and not validated_data.get('image'):
+            if is_clear_image == "true":
+                validated_data['image'] = None
+            elif not validated_data.get('image'):
                 validated_data['image'] = instance.image
 
             # If image from request is None then set image = old value
-            if is_clear_image_thumbnail == "false" and not validated_data.get('image_thumbnail'):
+            if is_clear_image_thumbnail == "true":
+                validated_data['image_thumbnail'] = None
+            elif not validated_data.get('image_thumbnail'):
                 validated_data['image_thumbnail'] = instance.image_thumbnail
 
         return super(PromotionSerializer, self).update(instance, validated_data)
@@ -154,7 +158,9 @@ class NotificationSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         if self.context['request']:
             is_clear_image = self.context['request'].data.get('is_clear_image')
-            if is_clear_image == "false" and not validated_data.get('image'):
+            if is_clear_image == "true":
+                validated_data['image'] = None
+            elif not validated_data.get('image'):
                 validated_data['image'] = instance.image
         return super(NotificationSerializer, self).update(instance, validated_data)
 
@@ -243,7 +249,9 @@ class EventSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         if self.context['request']:
             is_clear_image = self.context['request'].data.get('is_clear_image')
-            if is_clear_image == "false" and not validated_data.get('image'):
+            if is_clear_image == "true":
+                validated_data['image'] = None
+            elif not validated_data.get('image'):
                 validated_data['image'] = instance.image
         return super(EventSerializer, self).update(instance, validated_data)
 
@@ -352,9 +360,12 @@ class PostSerializer(serializers.ModelSerializer):
             if new_posts_image:
                 for item in new_posts_image:
                     Post_Image.objects.create( post = instance, image = item )
-
-            if is_clear_image == "false" and not validated_data.get('image'):
+            
+            if is_clear_image == "true":
+                validated_data['image'] = None
+            elif not validated_data.get('image'):
                 validated_data['image'] = instance.image
+
         return super(PostSerializer, self).update(instance, validated_data)
 
 
@@ -474,7 +485,9 @@ class UserRoleSerializer(serializers.ModelSerializer):
 
         if self.context['request']:
             is_clear_image = self.context['request'].data.get('is_clear_image')
-            if is_clear_image == "false" and not validated_data.get('avatar'):
+            if is_clear_image == "true":
+                validated_data['avatar'] = None
+            elif not validated_data.get('avatar'):
                 validated_data['avatar'] = instance.avatar
         return super(UserRoleSerializer, self).update(instance, validated_data)
 
@@ -487,7 +500,9 @@ class GameSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         if self.context['request']:
             is_clear_image = self.context['request'].data.get('is_clear_image')
-            if is_clear_image == "false" and not validated_data.get('image'):
+            if is_clear_image == "true":
+                validated_data['image'] = None
+            elif not validated_data.get('image'):
                 validated_data['image'] = instance.image
         return super(GameSerializer, self).update(instance, validated_data)
 
@@ -556,8 +571,15 @@ class OpenTimeSerializer(serializers.Serializer):
         if data['start_time'] >= data['end_time']:
             raise serializers.ValidationError(_("Start time is before than End time"))
         return data
+        
+class RolesMappingSerializer(serializers.ModelSerializer):
+    role = RoleSerializer()
+    
+    class Meta:
+        model = Roles_Permission
+        fields = ('id', 'role')
 
-class ModelNameSerializer(serializers.ModelSerializer):
+class RolesPerDisplaySerializer(serializers.ModelSerializer):
     permission = serializers.SerializerMethodField()
     
     class Meta:
@@ -567,25 +589,77 @@ class ModelNameSerializer(serializers.ModelSerializer):
     def get_permission(self, model_name):
         role_permission = model_name.permission_model_rel.all()
         data = {'full' : list(), 'read' : list(), 'change' : list()}
+        state_mapping  = {'full' : 'full', 'read' : 'read', 'change' : 'change'}
+
         for item in role_permission:
-            if item.permission == 'full':
-                data['full'].append(RoleSerializer(item.role).data)
-            if item.permission == 'read':
-                data['read'].append(RoleSerializer(item.role).data)
-            if item.permission == 'change':
-                data['change'].append(RoleSerializer(item.role).data)
+            if item.permission == state_mapping[item.permission]:
+                data[item.permission].append( RolesMappingSerializer(item).data )
         return data
 
+class RolesPerListSerializer(serializers.ListSerializer):
 
-class RolesPermissionSerializer(serializers.ModelSerializer):
-    key_model = serializers.SlugRelatedField( many = False, queryset=Model_Name.objects.all(), slug_field='key', source = 'model_name' )
-    role = serializers.PrimaryKeyRelatedField( many=False, queryset=Roles.objects.all())
+    def create(self, validated_data):
+        role_permission = []
+        for item in validated_data:
+            item['role'] = Roles.objects.get(id = item['role'])
+            item['model_name'] = Model_Name.objects.get( key = item['key_model'])
+            item.pop('key_model', None)
+            role_permission.append( Roles_Permission(**item))
+        return Roles_Permission.objects.bulk_create(role_permission)
+
+    def update(self, instance, validated_data):
+        """
+            instance_mapping is all record in db
+            data_mapping is list data from request
+        """
+        ret = []
+        # Maps for id->instance .
+        instance_mapping = {role_per.id: role_per for role_per in instance}
+        data_mapping ={}
+
+        # perform create if no field id
+        list_create = []
+        for item in validated_data:
+            if item.get('id'):
+                # Maps for id->data .
+                data_mapping[item['id']] = item
+            else:
+                list_create.append(item)
+        if list_create:
+            ret = self.create(list_create)
+        # Perform updates in data_mapping
+        for instance_id, data in data_mapping.items():
+            role_per = instance_mapping.get(instance_id, None)
+            if role_per:
+                data['role'] = Roles.objects.get(id = data['role'])
+                ret.append(self.child.update(role_per, data))
+        # Perform deletions.
+        list_delete = []
+        list_delete = set(instance_mapping) - set(data_mapping)
+        if list_delete:
+            Roles_Permission.objects.filter(id__in = list_delete).delete()
+
+        return ret
+
+class RolesPerSerializer(serializers.ModelSerializer):      
+    key_model = serializers.CharField(required=True , write_only = True)
+    role = serializers.CharField(required=True)
+    permission = serializers.ChoiceField(required=True, choices = Roles_Permission.PERMISSION)
+    id = serializers.IntegerField(required=False)
 
     class Meta:
         model = Roles_Permission
-        fields = ('key_model', 'role', 'permission')
-         
+        fields = ('id', 'key_model', 'role', 'permission')
+        list_serializer_class = RolesPerListSerializer
     
+    def validate(self, data):
+        is_instance = data.get('id', None)
+        if not is_instance:
+            role_is_exist = Roles_Permission.objects.filter( model_name__key = data['key_model'], role = data['role'])
+            if role_is_exist:
+                raise serializers.ValidationError(_("Role_permission is exist."))
+        return data
+
 class OpenTimeDisplaySerializer(serializers.ModelSerializer):
 
     class Meta:

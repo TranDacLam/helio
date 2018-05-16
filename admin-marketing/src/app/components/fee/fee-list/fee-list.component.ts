@@ -6,7 +6,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
 import * as datatable_config from '../../../shared/commons/datatable_config';
 import { ToastrService } from 'ngx-toastr';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox: any;
 
 @Component({
@@ -20,6 +20,7 @@ export class FeeListComponent implements OnInit {
         private feeService: FeeService, 
         private router: Router, 
         private toastr: ToastrService,
+        private handleError:HandleError
         ) {
 
     }
@@ -51,7 +52,7 @@ export class FeeListComponent implements OnInit {
                 this.length_all = success.length;
             },
             error => {
-                this.router.navigate(['/error']);
+                this.handleError.handle_error(error);
             });
     }
     /*
@@ -148,11 +149,7 @@ export class FeeListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    if (error.code == 400) {
-                        this.toastr.error(`${error.message}`);
-                    } else {
-                        this.router.navigate(['/error', { message: error.message }]);
-                    }
+                    this.handleError.handle_error(error);
                 }
             );
         });
@@ -179,11 +176,7 @@ export class FeeListComponent implements OnInit {
                 fee.is_apply = true;
             },
             error => {
-                if (error.code == 400) {
-                    this.toastr.error(`${error.message}`);
-                } else {
-                    this.router.navigate(['/error', { message: error.message }]);
-                }
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -202,11 +195,7 @@ export class FeeListComponent implements OnInit {
                 }
             },
             error => {
-                if (error.code == 400) {
-                    this.toastr.error(`${error.message}`);
-                } else {
-                    this.router.navigate(['/error', { message: error.message }]);
-                }
+                this.handleError.handle_error(error);
             }
         );
     }

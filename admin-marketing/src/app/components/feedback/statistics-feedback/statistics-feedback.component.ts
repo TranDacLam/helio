@@ -5,7 +5,7 @@ import 'rxjs/add/observable/throw';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { CheckDateValid } from './../../../shared/validators/check-date-valid';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 
 @Component({
     selector: 'app-statistics-feedback',
@@ -28,11 +28,13 @@ export class StatisticsFeedbackComponent implements OnInit {
     end_date: string = '';
 
     checkDateValid = new CheckDateValid();
-
+    // check permission to display page
+    error_permission:boolean = false;
     constructor(
         private feedbackService: FeedbackService, 
         private router: Router,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private handleError:HandleError
     ) {}
 
     ngOnInit() {
@@ -46,10 +48,15 @@ export class StatisticsFeedbackComponent implements OnInit {
     getStatisticFeedback(){
         this.feedbackService.getStatisticFeedback().subscribe(
             (data) => {
+                this.error_permission = false;
                 this.fb_status = data.message.status;
                 this.fb_rate = data.message.rate;
                 this.status_sum = data.message.status_sum;
                 this.rate_sum = data.message.rate_sum;
+            },
+            (error) => {
+                this.error_permission = true;
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -83,7 +90,7 @@ export class StatisticsFeedbackComponent implements OnInit {
                 this.status_sum = data.message.status_sum;
             },
             (error) => {
-                this.router.navigate(['/error', {message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -113,7 +120,7 @@ export class StatisticsFeedbackComponent implements OnInit {
                 this.rate_sum = data.message.rate_sum;
             },
             (error) => {
-                this.router.navigate(['/error', {message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }

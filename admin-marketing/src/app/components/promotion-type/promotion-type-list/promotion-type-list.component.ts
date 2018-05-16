@@ -4,6 +4,7 @@ import { PromotionType } from '../../../shared/class/promotion-type';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { PromotionTypeService } from '../../../shared/services/promotion-type.service';
+import { HandleError } from '../../../shared/commons/handle_error';
 
 @Component({
   selector: 'app-promotion-type-list',
@@ -17,6 +18,7 @@ export class PromotionTypeListComponent implements OnInit {
     constructor(
         private promotionTypeService: PromotionTypeService,
         private router: Router,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {
@@ -38,7 +40,7 @@ export class PromotionTypeListComponent implements OnInit {
                 this.proTypes = result;
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.json().message }])
+                this.handleError.handle_error(error);
             }
         )
     }

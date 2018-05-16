@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import { ToastrService } from 'ngx-toastr';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
+import { HandleError } from '../../../shared/commons/handle_error';
 import 'rxjs/add/observable/throw';
 
 declare var bootbox:any;
@@ -45,7 +46,8 @@ export class FormEventComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private toastr: ToastrService,
-        private scrollTop: ScrollTop
+        private scrollTop: ScrollTop,
+        private handleError:HandleError
     ) {
         this.api_domain = env.api_domain_root;
     }
@@ -127,7 +129,7 @@ export class FormEventComponent implements OnInit {
                 this.checkIsNewline(data.short_description);
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -211,11 +213,11 @@ export class FormEventComponent implements OnInit {
                     },
                     (error) => {
                         // code 400, error validate
-                        if(error.code === 400){
-                            this.errorMessage = error.message;
+                        if(error.status == 400){
+                            this.errorMessage = JSON.parse(error.response).message;
                             this.scrollTop.scrollTopFom();
                         }else{
-                            this.router.navigate(['/error', { message: error.message}]);
+                            this.handleError.handle_error(error);
                         }
                     }
                 );
@@ -242,11 +244,11 @@ export class FormEventComponent implements OnInit {
                         },
                         (error) => {
                             // code 400, error validate
-                            if(error.code === 400){
-                                this.errorMessage = error.message;
+                            if(error.status == 400){
+                                this.errorMessage = JSON.parse(error.response).message;
                                 this.scrollTop.scrollTopFom();
                             }else{
-                                this.router.navigate(['/error', { message: error.message}]);
+                                this.handleError.handle_error(error);
                             }
                         }
                     );
@@ -294,7 +296,7 @@ export class FormEventComponent implements OnInit {
                 this.router.navigate(['/event/list']);
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.message}]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -318,7 +320,9 @@ export class FormEventComponent implements OnInit {
                 if(promotionValues[k] == null) {
                     promotionFormData.append(k, '');
                 } else if (k === 'image' || k === 'image_thumbnail') {
-                    promotionFormData.append(k, promotionValues[k].value, promotionValues[k].name);
+                    if (promotionValues[k].value){
+                        promotionFormData.append(k, promotionValues[k].value);
+                    }
                 } else {
                     promotionFormData.append(k, promotionValues[k]);
                 }

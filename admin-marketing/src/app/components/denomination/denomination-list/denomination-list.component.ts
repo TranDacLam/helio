@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { DenominationService } from '../../../shared/services/denomination.service';
 import { data_config } from '../../../shared/commons/datatable_config';
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox: any;
 
 @Component({
@@ -32,15 +33,16 @@ export class DenominationListComponent implements OnInit {
 
     // Using trigger becase fetching the list of denominations can be quite long
     // thus we ensure the data is fetched before rensering
-    dtTrigger: Subject<any> = new Subject();
+    // dtTrigger: Subject<any> = new Subject();
 
     constructor(
         private denominationService: DenominationService,
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
-        this.denominations = [];
+       
     }
 
     ngOnInit() {
@@ -80,10 +82,10 @@ export class DenominationListComponent implements OnInit {
             (result) => {
                 this.denominations = result;
                 this.length_all = this.denominations.length; // Set length_all
-                this.dtTrigger.next();
+                // this.dtTrigger.next();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error }]);
+                this.handleError.handle_error(error);
             }
         );
     }
@@ -196,7 +198,7 @@ export class DenominationListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error.json().message }]);
+                    this.handleError.handle_error(error);
                 });
         });
     }

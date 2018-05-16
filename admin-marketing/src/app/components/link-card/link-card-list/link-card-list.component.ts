@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import { data_config } from '../../../shared/commons/datatable_config';
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox: any;
 declare var $: any;
 
@@ -36,14 +37,14 @@ export class LinkCardListComponent implements OnInit {
 
     // Using trigger becase fetching the list of link_cards can be quite long
     // thus we ensure the data is fetched before rensering
-    dtTrigger: Subject<any> = new Subject();
+    // dtTrigger: Subject<any> = new Subject();
     constructor(
         private route: ActivatedRoute,
         private linkCardService: LinkCardService,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
-        this.link_cards = [];
     }
 
     ngOnInit() {
@@ -82,10 +83,10 @@ export class LinkCardListComponent implements OnInit {
             (result) => {
                 this.link_cards = result;
                 this.length_all = this.link_cards.length;
-                // Caling the DT trigger to manually render the table
-                this.dtTrigger.next();
             },
-            (error) => this.router.navigate(['/error', { message: error }])
+            (error) => {
+                this.handleError.handle_error(error);
+            }
         )
     }
 
@@ -199,7 +200,7 @@ export class LinkCardListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    this.router.navigate(['/error', { message: error.json().message + error.json().fields }])
+                    this.handleError.handle_error(error);
                 });
         }
         );

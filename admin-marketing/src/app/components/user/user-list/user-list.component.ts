@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from '../../../shared/class/user';
 import { UserService } from '../../../shared/services/user.service';
 import { data_config } from '../../../shared/commons/datatable_config';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 declare var bootbox: any;
 
 @Component({
@@ -34,15 +34,15 @@ export class UserListComponent implements OnInit {
         Using trigger becase fetching the list of feedbacks can be quite long
   	    thus we ensure the data is fetched before rensering
     */
-    dtTrigger: Subject<any> = new Subject();
+    // dtTrigger: Subject<any> = new Subject();
 
     constructor(
         private route: ActivatedRoute,
         private userService: UserService,
         private router: Router,
         private toastr: ToastrService,
+        private handleError:HandleError
     ) {
-        this.users = [];
     }
 
     ngOnInit() {
@@ -83,10 +83,9 @@ export class UserListComponent implements OnInit {
             (data) => {
                 this.users = data;
                 this.length_all = this.users.length;
-                this.dtTrigger.next();
             },
             (error) => {
-                this.router.navigate(['/error', { message: error.json().message }])
+                this.handleError.handle_error(error);
             }
         )
     }
@@ -198,11 +197,7 @@ export class UserListComponent implements OnInit {
                     this.length_selected = 0;
                 },
                 (error) => {
-                    if (error.json().code == 405) {
-                        this.toastr.error(`${error.json().message}`);
-                    } else {
-                        this.router.navigate(['/error', { message: error.json().message }]);
-                    }
+                    this.handleError.handle_error(error);
                 });
         });
 

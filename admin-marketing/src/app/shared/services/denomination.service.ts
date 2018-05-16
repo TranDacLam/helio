@@ -1,30 +1,17 @@
 import { Injectable } from '@angular/core';
-
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
-
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import { api } from '../utils/api';
-
 import { Denomination } from '../../shared/class/denomination';
 
 
 @Injectable()
 export class DenominationService {
 
-	httpOptions: any;
-	token: any = '';
-
 	constructor(private http: Http) {
-		this.token = localStorage.getItem('auth_token')
 
-		this.httpOptions = {
-			headers: new Headers({
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${this.token}`
-			})
-		};
 	}
 
 	/*
@@ -33,7 +20,7 @@ export class DenominationService {
 	 */
 	getAllDenomination(): Observable<Denomination[]> {
 		let urlDeno = `${api.denomination}`;
-		return this.http.get(urlDeno, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(urlDeno).map((res: Response) => res.json());
 	}
 
 	/*
@@ -42,7 +29,7 @@ export class DenominationService {
 	 */
 	getDenominationById(id:number): Observable<Denomination> {
 		let url = `${api.denomination}${id}/`;
-		return this.http.get(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.get(url).map((res: Response) => res.json());
 	}
 	/*
 		POST: Create a new denomination
@@ -50,7 +37,7 @@ export class DenominationService {
 	*/
 	createDenomination(deno: any): Observable<Denomination> {
 		let urlDeno = `${api.denomination}`;
-		return this.http.post(urlDeno, deno, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.post(urlDeno, deno).map((res: Response) => res.json());
 	}
 
 	/*
@@ -59,7 +46,7 @@ export class DenominationService {
 	 */
 	updateDenomination(denomi, id:number): Observable<Denomination> {
 		let url = `${api.denomination}${id}/`;
-		return this.http.put(url, denomi, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.put(url, denomi).map((res: Response) => res.json());
 	}
 
 	/*
@@ -69,7 +56,7 @@ export class DenominationService {
 	
 	deleteDenominationByid(id:number): Observable<Denomination> {
 		let url = `${api.denomination}${id}/`;
-		return this.http.delete(url, this.httpOptions).map((res: Response) => res.json()).catch(this.handleError);
+		return this.http.delete(url).map((res: Response) => res.json());
 	}
 
 	/*
@@ -81,17 +68,9 @@ export class DenominationService {
 			deno_id: deno_id
 		}
 		let _options = new RequestOptions({
-			headers: this.httpOptions.headers,
 			body: JSON.stringify(param)
 		});
 
-		return this.http.delete(url, _options).map((res: Response) => res.json()).catch(this.handleError);
-	}
-
-	/* 
-		Handle error
-	*/
-	handleError(error: Response) {
-		return Observable.throw(error);
+		return this.http.delete(url, _options).map((res: Response) => res.json());
 	}
 }

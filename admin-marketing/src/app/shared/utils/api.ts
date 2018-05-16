@@ -37,6 +37,7 @@ export const api = {
     banner: 'banner/',
     fee: env.api_domain + 'fee/',
     fee_list: env.api_domain + 'fee_list/',
+    fee_apply: env.api_domain + 'apply_fee/',
 
     category_notifications: 'category_notifications/',
 

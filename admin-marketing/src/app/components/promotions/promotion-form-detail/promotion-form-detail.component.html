@@ -3,7 +3,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a routerLink="">Trang Chủ</a></li>
-            <li class="breadcrumb-item"><a routerLink="/promotions">Quản Lý Khuyến Mãi</a></li>
+            <li class="breadcrumb-item"><a routerLink="/promotions">Khuyến Mãi</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{title_page}}</li>
         </ol>
     </nav>
@@ -23,7 +23,7 @@
     </p>
 </ng-container>
 
-<form [formGroup]="promotionForm" novalidate *ngIf="promotion && user_current">
+<form [formGroup]="promotionForm" novalidate *ngIf="promotion && promotionTypes && promotionLabels && categorys && user_current">
     <div class="form-group row">
         <div class="col-sm-2">
             <label class="col-form-label form-check-label">Tên Khuyến Mãi </label>

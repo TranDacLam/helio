@@ -9,7 +9,7 @@ import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { ToastrService } from 'ngx-toastr';
 import 'rxjs/add/observable/throw';
 import * as moment from 'moment';
-
+import { HandleError } from '../../../shared/commons/handle_error';
 
 @Component({
   selector: 'form-user-app',
@@ -46,7 +46,8 @@ export class FormUserAppComponent implements OnInit, AfterViewChecked {
         private fb: FormBuilder, 
         private linkCardService: LinkCardService,
         private router: Router,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private handleError:HandleError
     ) { }
 
     ngOnInit() {;
@@ -116,7 +117,7 @@ export class FormUserAppComponent implements OnInit, AfterViewChecked {
                 }
             },
             (error) => { 
-                this.errorMessage = error.message; 
+                this.errorMessage = error.json().message; 
                 this.msg_error = null;
                 this.disabledEmbed(true);
                 // emit to parent set object status error
@@ -169,7 +170,7 @@ export class FormUserAppComponent implements OnInit, AfterViewChecked {
         Author: Lam
     */
     validateEmail(email): boolean{
-        let regex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+        let regex = /^[A-Za-z0-9_.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
         let is_check = regex.test(email);
         if (!is_check) {
             return true;
@@ -206,12 +207,12 @@ export class FormUserAppComponent implements OnInit, AfterViewChecked {
                 },
                 (error) => {
                     // code 400, error validate
-                    if(error.code === 400){
-                        this.msg_error = error.message;
+                    if(error.status === 400){
+                        this.msg_error = error.json().message;
                         // emit to parent set object status error
                         this.is_submit.emit(true);
                     }else{
-                        this.router.navigate(['/error', { message: error.message}]);
+                        this.handleError.handle_error(error);;
                     }
                 }
             );
