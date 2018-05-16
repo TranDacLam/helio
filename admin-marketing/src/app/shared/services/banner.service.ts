@@ -5,7 +5,6 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import { Banner } from '../../shared/class/banner';
 import { api } from '../utils/api';
-import { env } from './../../../environments/environment';
 import { get_token } from '../auth/auth-token';
 
 @Injectable()
@@ -17,8 +16,8 @@ export class BannerService {
       GET: Get All Banner From Service
       @author: TrangLe  
     */
-    getAllBanner(lang): Observable<Banner[]> {
-        let url_banner = `${env.api_domain_root}/${lang}/api/${api.banner}`;
+    getAllBanner(): Observable<Banner[]> {
+        let url_banner = `${api.banner}`;
         return this.http.get(url_banner).map((res: Response) => res.json());
     }
 
@@ -26,9 +25,9 @@ export class BannerService {
       GET: Get Banner By Id
       @author: TrangLe
     */
-    getBannerById(id: number, lang): Observable<Banner> {
+    getBannerById(id: number): Observable<Banner> {
         // const url = `${api.banner}${id}/`;
-        let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`
+        let url = `${api.banner}${id}/`
         return this.http.get(url).map((res: Response) => res.json());
     }
     /*
@@ -36,9 +35,9 @@ export class BannerService {
         @author: Trangle
     */
 
-    updateBanner(bannerFormData: FormData, id: number, lang): Observable<any> {
+    updateBanner(bannerFormData: FormData, id: number): Observable<any> {
         // let url = `${api.banner}${id}/`;
-        let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`;
+        let url = `${api.banner}${id}/`;
         
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
@@ -63,8 +62,8 @@ export class BannerService {
       POST: Create a New Banner
       @author: TrangLe
     */
-    CreateBanner(bannerFormData: FormData, lang): Observable<any> {
-        let url = `${env.api_domain_root}/${lang}/api/${api.banner}`;
+    CreateBanner(bannerFormData: FormData): Observable<any> {
+        let url = `${api.banner}`;
         
         return Observable.create(observer => {
             let xhr = new XMLHttpRequest();
@@ -84,13 +83,13 @@ export class BannerService {
             }
         });
     }
-    deleteUserById(id: number, lang): Observable<any> {
-        let url = `${env.api_domain_root}/${lang}/api/${api.banner}${id}/`
+    deleteUserById(id: number): Observable<any> {
+        let url = `${api.banner}${id}/`
         return this.http.delete(url).map((res: Response) => res.json());
     }
 
-    deleteBannerSelected(banner_id, lang): Observable<any> {
-        let url = `${env.api_domain_root}/${lang}/api/${api.banner}`;
+    deleteBannerSelected(banner_id): Observable<any> {
+        let url = `${api.banner}`;
         let param = {
             banner_id: banner_id
         }

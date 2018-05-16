@@ -49,6 +49,9 @@ export class UserPermissionComponent implements OnInit {
                 this.user_list_left = data.users_all;
             },
             error => {
+                if(error.status == 403) {
+                    $('#hidden-content-permission').css('display','none')
+                }
                 this.handleError.handle_error(error);
             }
         )

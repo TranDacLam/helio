@@ -83,6 +83,7 @@ import { PopupEditPromotionComponent } from './components/promotions/popup-edit-
 import { RolePermissionComponent } from './components/role-permission/role-permission.component';
 import { FormAdvertisementComponent } from './components/advertisement/form-advertisement/form-advertisement.component';
 import { FormBannerComponent } from './components/banner/form-banner/form-banner.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 import { AuthRequestOptions } from './shared/auth/auth-request';
@@ -170,7 +171,7 @@ export const MY_MOMENT_FORMATS = {
     FormDenominationComponent,
     FormFeeComponent,
     FormHotAdvsComponent,
-    
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

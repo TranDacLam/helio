@@ -31,6 +31,7 @@ export class FormHotAdvsComponent implements OnInit {
     title: string = "";
     msg_clear_image: string = '';
     api_domain: string = "";
+    lang: string = 'vi';
 
     constructor(
         private fb: FormBuilder,
@@ -45,6 +46,12 @@ export class FormHotAdvsComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        this.route.params.subscribe(params => {
+            if (params.lang) {
+                this.lang = params.lang;
+            }
+        });
 
         this.ckEditorConfig = ckeditor_config.config;
 
@@ -95,7 +102,7 @@ export class FormHotAdvsComponent implements OnInit {
      */
     getHotAds() {
         const id = +this.route.snapshot.paramMap.get('id');
-        this.hotAdvsService.getHotAdsById(id).subscribe(
+        this.hotAdvsService.getHotAdsById(id, this.lang).subscribe(
             (data) => {
                 this.hot_ads = data;
                 this.creatForm();
@@ -130,7 +137,7 @@ export class FormHotAdvsComponent implements OnInit {
                     this.scrollTop.scrollTopFom();
                     this.msg_clear_image = 'Vui lòng gửi một tập tin hoặc để ô chọn trắng, không chọn cả hai.';
                 } else {
-                    this.hotAdvsService.updateHotAds(hotAdvsFormGroup, this.hot_ads.id).subscribe(
+                    this.hotAdvsService.updateHotAds(hotAdvsFormGroup, this.hot_ads.id, this.lang).subscribe(
                         (result) => {
                             this.toastr.success(`Chỉnh sửa ${this.formHotAds.value['name']} Hot Ads thành công`);
                             self.router.navigate(['/hot-advs-list'])
@@ -146,7 +153,7 @@ export class FormHotAdvsComponent implements OnInit {
                     )
                 }
             }else{
-                this.hotAdvsService.CreateHotAdvs(hotAdvsFormGroup).subscribe(
+                this.hotAdvsService.CreateHotAdvs(hotAdvsFormGroup, this.lang).subscribe(
                     (result) => {
                         this.toastr.success(`Thêm ${this.formHotAds.value['name']} Hot Ads thành công`);
                         self.router.navigate(['/hot-advs-list'])
@@ -195,7 +202,7 @@ export class FormHotAdvsComponent implements OnInit {
      */
     deleteHotAds() {
         const id = this.hot_ads.id;
-        this.hotAdvsService.deleteHotAdsById(id).subscribe(
+        this.hotAdvsService.deleteHotAdsById(id, this.lang).subscribe(
             () => {
                 this.toastr.success(`Xóa ${this.hot_ads.name} thành công`);
                 this.router.navigate(['/hot-advs-list'])

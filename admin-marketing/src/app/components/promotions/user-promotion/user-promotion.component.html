@@ -52,7 +52,7 @@
     <div class="col-sm-4 pull-right" *ngIf="user_current">
         <span *ngIf="!isDisableCreateNotificaiton(promotion)">
              <a *ngIf="!notification.id" class="btn custom-button btn-block" 
-                [routerLink]="['/notification/add', {promotion: promotion.id, lang: lang}]"
+                [routerLink]="['/notification/add', {promotion: promotion.id, lang: 'vi'}]"
             >
                 <i class="fa fas fa-plus icon-button"></i>
                 TẠO THÔNG BÁO CHO KHUYẾN MÃI
