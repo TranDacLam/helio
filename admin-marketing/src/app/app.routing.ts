@@ -49,6 +49,7 @@ import { UserPermissionComponent } from './components/user-permission/user-permi
 import { OpenTimeComponent } from './components/open-time/open-time.component'
 import { PromotionReportComponent } from './components/promotions/promotion-report/promotion-report.component';
 import { RolePermissionComponent } from './components/role-permission/role-permission.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 const routes: Routes = [{
@@ -315,6 +316,11 @@ const routes: Routes = [{
         path: 'error',
         component: ErrorComponent
     },
+    {
+        path: '404',
+        component: NotFoundComponent
+    },
+    {path: '**', redirectTo: '/404'},
 
 ];
 // imports: [ RouterModule.forRoot(routes, { useHash: true })],
