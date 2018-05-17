@@ -70,7 +70,7 @@ export class UserMultiselectComponent implements OnInit {
                     visible: false
                 }
             ], 
-            order: [[ 1, 'asc' ]],
+            order: [[ 2, 'asc' ]],
             scrollY: "400px",
             scrollCollapse: true,
             language: {
@@ -119,7 +119,7 @@ export class UserMultiselectComponent implements OnInit {
                     visible: false
                 }
             ], 
-            order: [[ 1, 'asc' ]],
+            order: [[ 2, 'asc' ]],
             scrollY: "400px",
             scrollCollapse: true,
             fixedHeader: true,
