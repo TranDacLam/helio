@@ -294,7 +294,6 @@ class FeedBack(DateTimeModel):
     status = models.CharField(_('Status'),
         max_length=50, choices=STATUS, default="no_process")
     answer = models.CharField(_('Answer'),max_length=1000, null=True, blank=True)
-    is_read = models.BooleanField(_('Is read'), default=False)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -534,3 +533,16 @@ class Model_Name(DateTimeModel):
     name = models.CharField(_('Name'), max_length=255)
     def __str__(self):
         return '%s' % (self.name)
+
+
+@python_2_unicode_compatible
+class User_Feedback(DateTimeModel):
+    user = models.ForeignKey(custom_models.User, on_delete=models.CASCADE)
+    feedback = models.ForeignKey('Feedback', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '%s' % (self.feedback)
+
+    class Meta:
+        verbose_name = _('User Feedback')
+        verbose_name_plural = _('User Feedback')
