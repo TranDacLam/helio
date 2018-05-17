@@ -294,6 +294,7 @@ class FeedBack(DateTimeModel):
     status = models.CharField(_('Status'),
         max_length=50, choices=STATUS, default="no_process")
     answer = models.CharField(_('Answer'),max_length=1000, null=True, blank=True)
+    is_read = models.BooleanField(_('Is read'), default=False)
 
     def __str__(self):
         return '%s' % (self.name)
