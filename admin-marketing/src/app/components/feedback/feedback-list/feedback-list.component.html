@@ -43,7 +43,8 @@
                     <td>{{ feedback.rate }}</td>
                     <td>{{ feedback.status }}</td>
                     <td>{{ feedback.feedback_type }}</td>
-                    <td><span class="hidden">{{ feedback.modified|date: 'yyyyMMdd' }}</span>{{ feedback.modified|date: 'dd/MM/yyyy' }}</td>
+                    <td *ngIf="feedback.status == 'Chưa xử lý'"></td>
+                    <td *ngIf="feedback.status !== 'Chưa xử lý'"><span class="hidden">{{ feedback.modified|date: 'yyyyMMdd' }}</span>{{ feedback.modified|date: 'dd/MM/yyyy' }}</td>
                 </tr>
             </tbody>
         </table>
