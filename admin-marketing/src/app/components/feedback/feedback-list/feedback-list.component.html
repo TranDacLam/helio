@@ -24,7 +24,6 @@
                 <tr>
                     <th><input type="checkbox" name="select_all" id="select-all" (change)="selectAllEvent($event);"/></th>
                     <th><span>ID</span></th>
-                    <th><span>Đã đọc</span></th>
                     <th><span>Phản Hồi</span> </th>
                     <th><span>Người Gửi</span></th>
                     <th><span>Ngày Nhận</span></th>
@@ -38,7 +37,6 @@
                 <tr class="row-data" *ngFor="let feedback of feedbacks" [ngStyle]="{'font-weight': (feedbacks_is_read.indexOf(feedback.id)> -1) ? 'normal': 'bold'}">
                     <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
                     <td [ngStyle]="{'display':'none'}">{{feedback.id}}</td>
-                    <td >{{feedbacks_is_read.indexOf(feedback.id)> -1}}</td>
                     <td><a routerLink="/feedback-detail/{{ feedback.id }}">{{ feedback.subject }}</a></td>
                     <td>{{ feedback.name }}</td>
                     <td><span class="hidden">{{ feedback.created |date: 'yyyyMMdd'}}</span>{{ feedback.created |date: 'dd/MM/yyyy'}}</td>

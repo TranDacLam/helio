@@ -65,12 +65,6 @@ export class FeedbackListComponent implements OnInit {
                     searchable: false, 
                 },
                 {
-                    // Hiden the third column
-                    visible: false,
-                    targets: 2,
-                    searchable: false, 
-                },
-                {
                     // Disable ordering the first colum
                     orderable: false,
                     targets: 0
