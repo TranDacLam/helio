@@ -645,11 +645,16 @@ class FeedbackView(APIView):
                     queryset, many=True)
                 return Response(serializer.data)
             else:
+                user = self.request.user
+                result = {}
+                # list feedback id is readed
+                result['feedbacks_is_read'] = User_Feedback.objects.filter(
+                    user=user).values_list('feedback', flat=True)
+                # all feedback
                 queryset = FeedBack.objects.all().order_by('-created')
-                serializer = admin_serializers.FeedBackSerializer(
-                    queryset, many=True)
-                return Response(serializer.data)
-            return Response({"code": 200, "message": queryset, "fields": ""}, status=200)
+                result['feedbacks'] = admin_serializers.FeedBackSerializer(
+                    queryset, many=True).data
+                return Response(result)
 
         except FeedBack.DoesNotExist, e:
             error = {"code": 400, "message": "Field Not Found.", "fields": ""}
@@ -694,12 +699,23 @@ class FeedbackDetailView(APIView):
             return queryset
         except Exception, e:
             return Response(status=500)
-
+    '''
+        get detail feedback
+        if user reads feedback, create instance User_Feedback 
+    '''
     @check_role_permission(model_key.feedback)
     def get(self, request, pk, format=None):
-        feedback = self.get_object(pk)
-        serializer = admin_serializers.FeedBackSerializer(feedback)
-        return Response(serializer.data)
+        try:
+            feedback = self.get_object(pk)
+            serializer = admin_serializers.FeedBackSerializer(feedback)
+            # create User_Feedback 
+            user = self.request.user
+            User_Feedback.objects.get_or_create(user=user, feedback=feedback)
+            return Response(serializer.data)
+        except Exception, e:
+            error = {"code": 500, "message": _(
+                "Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
 
     @check_role_permission(model_key.feedback)
     def put(self, request, pk, format=None):
@@ -2761,6 +2777,7 @@ class HotAdvsDetailView(APIView):
  
 """
 
+
 class RoleListAPI(APIView):
 
     def get(self, request):
@@ -2781,6 +2798,7 @@ class RoleListAPI(APIView):
     case 1: get user by role_id
     case 2: get user is staff, no role
 """
+
 
 class UserRoleListAPI(APIView):
 
@@ -2828,6 +2846,7 @@ class UserRoleListAPI(APIView):
     
 """
 
+
 class SetRoleAPI(APIView):
 
     def put(self, request, role_id):
@@ -2836,7 +2855,7 @@ class SetRoleAPI(APIView):
         try:
             if check_role == constant.SYSTEM_ADMIN:
                 role = Roles.objects.get(id=role_id)
-                list_id = request.data.get('list_id', None )
+                list_id = request.data.get('list_id', None)
                 if list_id:
                     # set role for users
                     users = User.objects.filter(id__in=list_id)
@@ -2845,11 +2864,11 @@ class SetRoleAPI(APIView):
                         role.user_role_rel.set(users)
                         return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
                     return Response({"code": 400, "message": _("Not Found users."), "fields": ""}, status=400)
-                #list_id is empty then clear all user of role
+                # list_id is empty then clear all user of role
                 role.user_role_rel.clear()
                 return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
-            return Response({"code": 403, "message": _("This function is only for System Admin"), "fields": ""}, status=403) 
-            
+            return Response({"code": 403, "message": _("This function is only for System Admin"), "fields": ""}, status=403)
+
         except Roles.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Role."), "fields": ""}, status=400)
         except Exception, e:
@@ -2863,6 +2882,7 @@ class SetRoleAPI(APIView):
     OpenTimeAPI
     @author :Hoangnguyen
 """
+
 
 class OpenTimeAPI(APIView):
     '''
@@ -2878,6 +2898,7 @@ class OpenTimeAPI(APIView):
     @check_role_permission(model_key.open_time)
     def post(self, request, format=None):
         try:
+            # validate data
             serializer = admin_serializers.OpenTimeSerializer(
                 data=request.data)
             if not serializer.is_valid():
@@ -2897,27 +2918,27 @@ class OpenTimeAPI(APIView):
                 kwargs['open_date__week_day__in'] = day_of_week
             kwargs['open_date__gte'] = start_date
             kwargs['open_date__lt'] = end_date + timedelta(days=1)
-
+            # get record in db
             record = OpenTime.objects.filter(**kwargs).order_by('open_date')
-            # check date is exist
+
             if record:
                 first_record = record.first().open_date
                 last_record = record.last().open_date
-                # create date
+                # to create date
                 if first_record > start_date:
                     self.createUpdateDate(
                         start_date, first_record - timedelta(days=1), day_of_week, start_time, end_time)
                 if last_record < end_date:
                     self.createUpdateDate(
                         last_record + timedelta(days=1), end_date, day_of_week, start_time, end_time)
-                # update date
+                # to update date
                 self.createUpdateDate(
                     first_record, last_record, day_of_week, start_time, end_time, record)
             else:
-                # create date
+                # to create date
                 self.createUpdateDate(
                     start_date, end_date, day_of_week, start_time, end_time)
-            # create in db
+            # bulk create date in db
             OpenTime.objects.bulk_create(OpenTimeAPI.create_objs)
             OpenTimeAPI.create_objs = []
             return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
@@ -2938,6 +2959,7 @@ class OpenTimeAPI(APIView):
         update_objs = list()
         for i in range(int((end_date - start_date).days + 1)):
             in_day_of_week = False
+            # check day is in day_of_week
             if day_of_week:
                 # day_of_week from 1 (Sunday) to 7 (Saturday).
                 # weekday() from 0 (Monday) to 6 (Sunday)
@@ -2946,9 +2968,10 @@ class OpenTimeAPI(APIView):
                     number = 1
                 if number in day_of_week:
                     in_day_of_week = True
+            #  to create or update date
             if not day_of_week or in_day_of_week:
+                # check each date is in record
                 if record:
-                    # check each date is in record to creat or update
                     date_is_exist = record.filter(
                         open_date=start_date + timedelta(days=i))
                     if date_is_exist:
@@ -2959,7 +2982,7 @@ class OpenTimeAPI(APIView):
                 else:
                     OpenTimeAPI.create_objs.append((OpenTime(
                         open_date=start_date + timedelta(days=i), start_time=start_time, end_time=end_time)))
-        # update date in db
+        # bulk update date in db
         OpenTime.objects.filter(open_date__in=update_objs).update(
             start_time=start_time, end_time=end_time)
 
@@ -2984,6 +3007,7 @@ class OpenTimeAPI(APIView):
     UserRoleAPI
     @author :Hoangnguyen
 """
+
 
 class UserRoleAPI(APIView):
 
