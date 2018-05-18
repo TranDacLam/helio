@@ -5,7 +5,8 @@ var en_message = {
 	"err_phone_required": "Please input your phone number",
 	"err_phone_maxlength": "The phone number you just inputed is unreal",
 	" err_phone_format": "Please input correct format phone number",
-	"err_subject_required": "Please input the subject"
+	"err_subject_required": "Please input the subject",
+	"err_message_required": "Please input the message"
 }
 var vi_message = {
 	"err_name_required": "Vui lòng nhập tên",
@@ -14,7 +15,8 @@ var vi_message = {
 	"err_phone_required": "Vui lòng nhập số điện thoại",
 	"err_phone_maxlength": "Số máy quý khách vừa nhập là số không có thực",
 	" err_phone_format": "Vui lòng nhập đúng định dạng số điện thoại",
-	"err_subject_required": "Vui lòng nhập chủ đề"	
+	"err_subject_required": "Vui lòng nhập chủ đề",	
+	"err_message_required": "Vui lòng nhập nội dung",	
 }
 
 
@@ -39,7 +41,8 @@ $(document).ready(function() {
 				maxlength: 11,
 				number: true
 			},
-			subject: "required"
+			subject: "required",
+			message: "required",
 		},
 
 		messages: {
@@ -53,7 +56,8 @@ $(document).ready(function() {
 				maxlength: contact_message["err_phone_maxlength"],
 				number: contact_message["err_phone_format"]
 			},
-			subject: contact_message["err_subject_required"]
+			subject: contact_message["err_subject_required"],
+			message: contact_message["err_message_required"]
 		}
 	});
 	$(document).on("click","#submitbutton",function() {
