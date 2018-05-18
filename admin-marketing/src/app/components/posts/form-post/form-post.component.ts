@@ -104,7 +104,7 @@ export class FormPostComponent implements OnInit {
     check_post_career(post_type){
         if (post_type == this.post_type_carrer){
             this.is_post_career = true;
-            this.formPost.controls.pin_to_top.setValue(this.post.pin_to_top);
+            this.formPost.controls.pin_to_top.setValue(this.post.id ? this.post.pin_to_top : false);
         }else{
             this.is_post_career = false;
             this.formPost.controls.pin_to_top.setValue(false);
