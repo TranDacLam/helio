@@ -1406,7 +1406,7 @@ class FeeAPI(APIView):
         except Fee.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Fee"), "fields": ""}, status=400)
         except Exception, e:
-            print "FeeAPI ", e
+            print "FeeAPI ", traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1691,6 +1691,7 @@ class EventAPI(APIView):
             eventSerializer = admin_serializers.EventSerializer(event)
             return Response(eventSerializer.data)
         except Event.DoesNotExist, e:
+            print "Event Not Exist"
             return Response({"code": 400, "message": _("Not Found Event."), "fields": ""}, status=400)
 
         except Exception, e:
