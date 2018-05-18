@@ -17,26 +17,26 @@
 	</ng-container>
 	<form [formGroup]="feeAddForm" *ngIf="fee" (change)="removeMessage()">
 		<div class="form-group row">
-			<div class="col-sm-1">
+			<div class="col-sm-2">
 				<label>Phí</label>
 			</div>
-			<div class="col-sm-2">
+			<div class="col-sm-6">
 				<input type="text" class="form-control no-arrow" formControlName="fee"
 				[(ngModel)]="data"
 				(click)="removeMessage()"
 				(keyup) ="format_currency($event.target.value)"
 				>
-			</div>
-			<select formControlName="fee_type" id="fee_type" class="form-control">
-				<option value="%">%</option>
-				<option value="vnd">VNĐ</option>
-			</select>
-			<div class="col-sm-offset-1 feeAddForm_error">
 				<show-error-valid [control]="feeAddForm.get('fee')"></show-error-valid>
+			</div>
+			<div class="col-sm-2">
+				<select formControlName="fee_type" id="fee_type" class="form-control">
+					<option value="%">%</option>
+					<option value="vnd">VNĐ</option>
+				</select>
 			</div>
 		</div>
 		<div class="form-group row">
-			<div class="col-sm-1">
+			<div class="col-sm-2">
 				<label>Vị Trí</label>
 			</div>
 			<div class="col-sm-6">
@@ -48,14 +48,18 @@
 			</div>
 		</div>
 		<div class="form-group row">
-			<div class="col-sm-offset-1 col-sm-6">
-				<input type="checkbox" formControlName="is_apply" id="is_apply">
+			<div class="col-sm-2">
 				<label for="is_apply">Áp Dụng Phí</label>
+			</div>
+			<div class="col-sm-6">
+				<input type="checkbox" formControlName="is_apply" id="is_apply">
+			</div>
+			<div class="feeAddForm_error">
 				<show-error-valid [control]="feeAddForm.get('is_apply')"></show-error-valid>
 			</div>
 		</div>
 		<hr>
-		<div class="col-md-12">
+		<div class="col-md-12 area-button">
 			<button type="submit" class="pull-right btn btn-primary" (click)="createFee(feeAddForm.value)" >
 			LƯU LẠI
 			</button>
