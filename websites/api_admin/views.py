@@ -80,7 +80,7 @@ class PromotionList(APIView):
             # Handle the exception
             print 'Please enter an integer'
         except Exception, e:
-            print e
+            print 'PromotionList %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -109,7 +109,7 @@ class PromotionDetail(APIView):
                 item, many=False)
             return Response(serializer.data)
         except Exception, e:
-            print 'PromotionDetailView ', e
+            print 'PromotionDetailView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -127,7 +127,7 @@ class PromotionDetail(APIView):
                 return Response(serializer.data)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
         except Exception, e:
-            print 'PromotionDetailView POST', e
+            print 'PromotionDetailView POST %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -149,7 +149,7 @@ class PromotionDetail(APIView):
             print serializer.errors
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
         except Exception, e:
-            print 'PromotionDetailView PUT', e
+            print 'PromotionDetailView PUT %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -206,7 +206,7 @@ class PromotionUser(APIView):
 
             return Response({"code": 400, "message": "Promotion not found", "fields": ""}, status=400)
         except Exception, e:
-            print 'PromotionUserView ', e
+            print 'PromotionUserView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -248,7 +248,7 @@ class PromotionUser(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         except Exception, e:
-            print 'PromotionUserView ', e
+            print 'PromotionUserView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -294,7 +294,7 @@ class PromotionStatistic(APIView):
                      "fields": ""}
             return Response(error, status=400)
         except Exception, e:
-            print 'PromotionStatistic ', e
+            print 'PromotionStatistic %s', traceback.format_exc()
             error = {"code": 500, "message": "Internal Server Error", "fields": ""}
             return Response(error, status=500)
 """
@@ -321,7 +321,7 @@ class UserDetail(APIView):
                      "fields": "email"}
             return Response(error, status=400)
         except Exception, e:
-            print "UserDetail", e
+            print 'UserDetail %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -341,7 +341,7 @@ class UserDetail(APIView):
             return Response({"code": 400, "message": _("Not Found User."), "fields": ""}, status=400)
 
         except Exception, e:
-            print "UserDetail", e
+            print 'UserDetail %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -366,6 +366,7 @@ class AdvertisementView(APIView):
                 adv_list, many=True)
             return Response(serializer.data)
         except Exception, e:
+            print 'AdvertisementView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -384,6 +385,7 @@ class AdvertisementView(APIView):
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
+            print 'AdvertisementView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -402,7 +404,7 @@ class AdvertisementView(APIView):
                 return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
-            print e
+            print 'AdvertisementView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -452,7 +454,7 @@ class AdvertisementDetail(APIView):
         except Advertisement.DoesNotExist, e:
             return Response({"code": 400, "message": "Not Found Game.", "fields": ""}, status=400)
         except Exception, e:
-            print "AdvertisementApI", e
+            print 'AdvertisementApI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -472,6 +474,7 @@ class PromotionTypeView(APIView):
                 list_pro_type, many=True)
             return Response(serializer.data)
         except Exception, e:
+            print 'PromotionTypeView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -496,7 +499,7 @@ class DenominationView(APIView):
                 list_denomination, many=True)
             return Response(serializer.data)
         except Exception, e:
-            print e
+            print 'DenominationView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -514,7 +517,7 @@ class DenominationView(APIView):
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
-            print e
+            print 'DenominationView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -533,6 +536,7 @@ class DenominationView(APIView):
                 return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found list id ", "fields": "id"}, status=400)
         except Exception, e:
+            print 'DenominationView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -560,7 +564,7 @@ class DenominationDetailView(APIView):
             serializer = admin_serializers.DenominationSerializer(denomi)
             return Response(serializer.data)
         except Exception, e:
-            print 'DenominationDetailView ', e
+            print 'DenominationDetailView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -577,7 +581,7 @@ class DenominationDetailView(APIView):
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
-            print 'DenominationDetailView PUT', e
+            print 'DenominationDetailView PUT %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -589,7 +593,7 @@ class DenominationDetailView(APIView):
             denomi.delete()
             return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
         except Exception, e:
-            print "denomiViewApi", e
+            print 'DenominationDetailView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -636,26 +640,34 @@ class FeedbackView(APIView):
             except ValueError, e:
                 error = {"code": 400, "message": "%s" % e, "fields": ""}
                 return Response(error, status=400)
-
+            result = {}
             if kwargs:
                 print "kwargs"
+                user = self.request.user
+                # list feedback id is readed
+                result['feedbacks_is_read'] = User_Feedback.objects.filter(
+                    user=user).values_list('feedback', flat=True)
                 queryset = FeedBack.objects.filter(
                     **kwargs)
-                serializer = admin_serializers.FeedBackSerializer(
-                    queryset, many=True)
-                return Response(serializer.data)
+                result['feedbacks'] = admin_serializers.FeedBackSerializer(
+                    queryset, many=True).data
+                return Response(result)
             else:
+                user = self.request.user
+                # list feedback id is readed
+                result['feedbacks_is_read'] = User_Feedback.objects.filter(
+                    user=user).values_list('feedback', flat=True)
+                # all feedback
                 queryset = FeedBack.objects.all().order_by('-created')
-                serializer = admin_serializers.FeedBackSerializer(
-                    queryset, many=True)
-                return Response(serializer.data)
-            return Response({"code": 200, "message": queryset, "fields": ""}, status=200)
+                result['feedbacks'] = admin_serializers.FeedBackSerializer(
+                    queryset, many=True).data
+                return Response(result)
 
         except FeedBack.DoesNotExist, e:
             error = {"code": 400, "message": "Field Not Found.", "fields": ""}
             return Response(error, status=400)
         except Exception, e:
-            print e
+            print 'FeedbackView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -674,7 +686,7 @@ class FeedbackView(APIView):
 
             return Response({"code": 400, "message": "Not found ID ", "fields": "id"}, status=400)
         except Exception, e:
-            print e
+            print 'FeedbackView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -694,12 +706,24 @@ class FeedbackDetailView(APIView):
             return queryset
         except Exception, e:
             return Response(status=500)
-
+    '''
+        get detail feedback
+        if user reads feedback, create instance User_Feedback 
+    '''
     @check_role_permission(model_key.feedback)
     def get(self, request, pk, format=None):
-        feedback = self.get_object(pk)
-        serializer = admin_serializers.FeedBackSerializer(feedback)
-        return Response(serializer.data)
+        try:
+            feedback = self.get_object(pk)
+            serializer = admin_serializers.FeedBackSerializer(feedback)
+            # create User_Feedback 
+            user = self.request.user
+            User_Feedback.objects.get_or_create(user=user, feedback=feedback)
+            return Response(serializer.data)
+        except Exception, e:
+            print 'FeedbackDetailView %s', traceback.format_exc()
+            error = {"code": 500, "message": _(
+                "Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
 
     @check_role_permission(model_key.feedback)
     def put(self, request, pk, format=None):
@@ -712,6 +736,7 @@ class FeedbackDetailView(APIView):
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception, e:
+            print 'FeedbackDetailView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -724,7 +749,7 @@ class FeedbackDetailView(APIView):
             feedback.delete()
             return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
         except Exception, e:
-            print 'FeedbackDetailView delete', e
+            print 'FeedbackDetailView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -748,6 +773,7 @@ class UserLinkCardList(APIView):
             serializer = admin_serializers.UserSerializer(lst_item, many=True)
             return Response(serializer.data)
         except Exception, e:
+            print 'UserLinkCardList %s', traceback.format_exc()
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
 
@@ -768,7 +794,7 @@ class UserLinkCardList(APIView):
                 return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": "Not found ", "fields": "id"}, status=400)
         except Exception, e:
-            print e
+            print 'UserLinkCardList %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -790,6 +816,7 @@ class NotificationList(APIView):
                 lst_item, many=True)
             return Response(serializer.data)
         except Exception, e:
+            print 'NotificationList %s', traceback.format_exc()
             error = {"code": 500, "message": "%s" % e, "fields": ""}
             return Response(error, status=500)
 
@@ -815,7 +842,7 @@ class NotificationList(APIView):
             # Handle the exception
             print 'Please enter an integer'
         except Exception, e:
-            print e
+            print 'NotificationList %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -845,7 +872,7 @@ class NotificationDetail(APIView):
                 item, many=False)
             return Response(serializer.data)
         except Exception, e:
-            print 'NotificationDetailView GET', e
+            print 'NotificationDetailView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -861,7 +888,7 @@ class NotificationDetail(APIView):
                 return Response(serializer.data)
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
         except Exception, e:
-            print 'NotificationDetailView PUT', e
+            print 'NotificationDetailView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -879,7 +906,7 @@ class NotificationDetail(APIView):
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
-            print 'NotificationDetailView PUT', e
+            print 'NotificationDetailView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -940,7 +967,7 @@ class NotificationUser(APIView):
             error = {"code": 400, "message": "Id Not Found.", "fields": ""}
             return Response(error, status=400)
         except Exception, e:
-            print 'NotificationUserView ', e
+            print 'NotificationUser %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -981,7 +1008,7 @@ class NotificationUser(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         except Exception, e:
-            print 'NotificationUserView ', e
+            print 'NotificationUser %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1071,7 +1098,7 @@ class SummaryAPI(APIView):
 
             return Response({"code": 200, "message": count_item, "fields": ""}, status=200)
         except Exception, e:
-            print "SummaryAPI ", e
+            print 'SummaryAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1315,7 +1342,7 @@ class RelateAPI(APIView):
             return Response(error, status=400)
 
         except Exception, e:
-            print "RelateAPI ", e
+            print 'RelateAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1343,7 +1370,7 @@ class RelateAPI(APIView):
             return Response(error, status=400)
 
         except Exception, e:
-            print "RelateAPI ", e
+            print 'RelateAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1375,7 +1402,7 @@ class FeeAPI(APIView):
             return Response({"code": 400, "message": feeSerializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
-            print "FeeAPI ", e
+            print 'FeeAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1390,7 +1417,7 @@ class FeeAPI(APIView):
         except Fee.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Fee"), "fields": ""}, status=400)
         except Exception, e:
-            print "FeeAPI ", e
+            print "FeeAPI ", traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1418,7 +1445,7 @@ class FeeAPI(APIView):
             return Response(error, status=400)
 
         except Exception, e:
-            print "FeeAPI ", e
+            print 'FeeAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1433,7 +1460,7 @@ class FeeAPI(APIView):
         except Fee.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Fee"), "fields": ""}, status=400)
         except Exception, e:
-            print "GameAPI", e
+            print 'FeeAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1465,7 +1492,7 @@ class FeeApplyAPI(APIView):
             return Response(error, status=400)
 
         except Exception, e:
-            print "FeeAPI ", e
+            print 'FeeApplyAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1481,7 +1508,7 @@ class FeeListAPI(APIView):
             return Response(feeSerializer.data)
 
         except Exception, e:
-            print "FeeListAPI ", e
+            print 'FeeListAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1500,7 +1527,7 @@ class FeeListAPI(APIView):
             return Response({"code": 400, "message": _("Not Found list_id"), "fields": ""}, status=400)
 
         except Exception, e:
-            print "FeeListAPI ", e
+            print 'FeeListAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1529,7 +1556,7 @@ class BannerView(APIView):
             return Response(serializer.data)
 
         except Exception, e:
-            print e
+            print 'BannerView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1545,7 +1572,7 @@ class BannerView(APIView):
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
-            print "banner ", e
+            print 'BannerView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1567,7 +1594,7 @@ class BannerView(APIView):
                 return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
             return Response({"code": 400, "message": "List ID Not found ", "fields": ""}, status=400)
         except Exception, e:
-            print e
+            print 'BannerView %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1597,7 +1624,7 @@ class BannerViewDetail(APIView):
             return Response(serializer.data)
 
         except Exception, e:
-            print 'BannerViewDetail ', e
+            print 'BannerViewDetail %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1617,7 +1644,7 @@ class BannerViewDetail(APIView):
             print serializer.errors
             return Response({"code": 400, "message": serializer.errors, "fields": ""}, status=400)
         except Exception, e:
-            print 'BannerViewDetail PUT', e
+            print 'BannerViewDetail %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1629,7 +1656,7 @@ class BannerViewDetail(APIView):
             banner.delete()
             return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
         except Exception, e:
-            print "BannerViewApi", e
+            print 'BannerViewDetail %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1652,7 +1679,7 @@ class CategoryNotifications(APIView):
             return Response({"code": 204, "message": serializer.data, "fields": ""}, status=200)
 
         except Exception, e:
-            print "FeeAPI ", e
+            print 'CategoryNotifications %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1675,10 +1702,11 @@ class EventAPI(APIView):
             eventSerializer = admin_serializers.EventSerializer(event)
             return Response(eventSerializer.data)
         except Event.DoesNotExist, e:
+            print "Event Not Exist"
             return Response({"code": 400, "message": _("Not Found Event."), "fields": ""}, status=400)
 
         except Exception, e:
-            print "EventAPI ", e
+            print 'EventAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1694,7 +1722,7 @@ class EventAPI(APIView):
             return Response({"code": 400, "message": eventSerializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
-            print "EventAPI ", e
+            print 'EventAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1714,7 +1742,7 @@ class EventAPI(APIView):
             return Response({"code": 400, "message": _("Not Found Event."), "fields": ""}, status=400)
 
         except Exception, e:
-            print "EventAPI", e
+            print 'EventAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1729,7 +1757,7 @@ class EventAPI(APIView):
         except Event.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Event."), "fields": ""}, status=400)
         except Exception, e:
-            print "EventAPI", e
+            print 'EventAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1752,7 +1780,7 @@ class EventListAPI(APIView):
                 events, many=True)
             return Response(eventSerializer.data)
         except Exception, e:
-            print "EventListAPI", e
+            print 'EventListAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1769,7 +1797,7 @@ class EventListAPI(APIView):
                 return Response({"code": 400, "message": _("Not Found Event."), "fields": ""}, status=400)
             return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
         except Exception, e:
-            print "EventListAPI", e
+            print 'EventListAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1803,7 +1831,7 @@ class PromotionLabelAPI(APIView):
         except Promotion_Label.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Promotion Label."), "fields": ""}, status=400)
         except Exception, e:
-            print "PromotionLabelAPI ", e
+            print 'PromotionLabelAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1819,7 +1847,7 @@ class PromotionLabelAPI(APIView):
             return Response({"code": 400, "message": promotionLabelSerializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
-            print "PromotionLabelAPI ", e
+            print 'PromotionLabelAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1836,7 +1864,7 @@ class PromotionLabelAPI(APIView):
             return Response({"code": 400, "message": promotionLabelSerializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
-            print "PromotionLabelAPI", e
+            print 'PromotionLabelAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1851,7 +1879,7 @@ class PromotionLabelAPI(APIView):
         except Promotion_Label.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Promotion Label."), "fields": ""}, status=400)
         except Exception, e:
-            print "PromotionLabelAPI", e
+            print 'PromotionLabelAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1874,7 +1902,7 @@ class PromotionLabelListAPI(APIView):
                 promotionLabels, many=True)
             return Response(promotionLabelSerializer.data)
         except Exception, e:
-            print "PromotionLabelListAPI", e
+            print 'PromotionLabelListAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1893,7 +1921,7 @@ class PromotionLabelListAPI(APIView):
             return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
         except Exception, e:
-            print "PromotionLabelListAPI", e
+            print 'PromotionLabelListAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1919,7 +1947,7 @@ class HotAPI(APIView):
         except Hot.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Hot."), "fields": ""}, status=400)
         except Exception, e:
-            print "HotAPI ", e
+            print 'HotAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1934,7 +1962,7 @@ class HotAPI(APIView):
             return Response({"code": 400, "message": hotSerializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
-            print "HotAPI ", e
+            print 'HotAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1955,7 +1983,7 @@ class HotAPI(APIView):
             return Response({"code": 400, "message": _("Not Found Hot."), "fields": ""}, status=400)
 
         except Exception, e:
-            print "HotAPI", e
+            print 'HotAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1970,7 +1998,7 @@ class HotAPI(APIView):
         except Hot.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Hot."), "fields": ""}, status=400)
         except Exception, e:
-            print "HotAPI", e
+            print 'HotAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -1991,7 +2019,7 @@ class HotListAPI(APIView):
             hotSerializer = admin_serializers.HotSerializer(hot, many=True)
             return Response(hotSerializer.data)
         except Exception, e:
-            print "HotListAPI", e
+            print 'HotListAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -2009,7 +2037,7 @@ class HotListAPI(APIView):
             return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
         except Exception, e:
-            print "HotListAPI", e
+            print 'HotListAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -2035,7 +2063,7 @@ class PostAPI(APIView):
             return Response({"code": 400, "message": _("Not Found Post."), "fields": ""}, status=400)
 
         except Exception, e:
-            print "PostAPI ", e
+            print 'PostAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -2051,7 +2079,7 @@ class PostAPI(APIView):
             return Response({"code": 400, "message": postSerializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
-            print "PostAPI ", e
+            print 'PostAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -2071,7 +2099,7 @@ class PostAPI(APIView):
             return Response({"code": 400, "message": "Not Found Post.", "fields": ""}, status=400)
 
         except Exception, e:
-            print "PostAPI", e
+            print 'PostAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -2086,7 +2114,7 @@ class PostAPI(APIView):
         except Post.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Post."), "fields": ""}, status=400)
         except Exception, e:
-            print "PostAPI", e
+            print 'PostAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -2109,7 +2137,7 @@ class PostListAPI(APIView):
                 post, many=True)
             return Response(postSerializer.data)
         except Exception, e:
-            print "HotListAPI", e
+            print 'HotListAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -2127,7 +2155,7 @@ class PostListAPI(APIView):
             return Response({"code": 400, "message": _("Not Found list_id."), "fields": ""}, status=400)
 
         except Exception, e:
-            print "HotListAPI", e
+            print 'HotListAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -2149,7 +2177,7 @@ class PostTypeListAPI(APIView):
                 post_Type, many=True)
             return Response(postSerializer.data)
         except Exception, e:
-            print "PostTypeListAPI", e
+            print 'PostTypeListAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -2174,7 +2202,7 @@ class FAQAPI(APIView):
         except FAQ.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found FAQ."), "fields": ""}, status=400)
         except Exception, e:
-            print "FAQAPI ", e
+            print 'FAQAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -2189,7 +2217,7 @@ class FAQAPI(APIView):
             return Response({"code": 400, "message": faqSerializer.errors, "fields": ""}, status=400)
 
         except Exception, e:
-            print "FAQAPI ", e
+            print 'FAQAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -2208,7 +2236,7 @@ class FAQAPI(APIView):
         except FAQ.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found FAQ."), "fields": ""}, status=400)
         except Exception, e:
-            print "FAQAPI", e
+            print 'FAQAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -2223,7 +2251,7 @@ class FAQAPI(APIView):
         except FAQ.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found FAQ."), "fields": ""}, status=400)
         except Exception, e:
-            print "FAQAPI", e
+            print 'FAQAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -2245,7 +2273,7 @@ class FAQListAPI(APIView):
             faqSerializer = admin_serializers.FAQSerializer(faq, many=True)
             return Response(faqSerializer.data)
         except Exception, e:
-            print "FAQListAPI", e
+            print 'FAQListAPI %s', traceback.format_exc()
             error = {"code": 500, "message": _(
                 "Internal Server Error"), "fields": ""}
             return Response(error, status=500)
@@ -2761,6 +2789,7 @@ class HotAdvsDetailView(APIView):
  
 """
 
+
 class RoleListAPI(APIView):
 
     def get(self, request):
@@ -2781,6 +2810,7 @@ class RoleListAPI(APIView):
     case 1: get user by role_id
     case 2: get user is staff, no role
 """
+
 
 class UserRoleListAPI(APIView):
 
@@ -2828,6 +2858,7 @@ class UserRoleListAPI(APIView):
     
 """
 
+
 class SetRoleAPI(APIView):
 
     def put(self, request, role_id):
@@ -2836,7 +2867,7 @@ class SetRoleAPI(APIView):
         try:
             if check_role == constant.SYSTEM_ADMIN:
                 role = Roles.objects.get(id=role_id)
-                list_id = request.data.get('list_id', None )
+                list_id = request.data.get('list_id', None)
                 if list_id:
                     # set role for users
                     users = User.objects.filter(id__in=list_id)
@@ -2845,11 +2876,11 @@ class SetRoleAPI(APIView):
                         role.user_role_rel.set(users)
                         return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
                     return Response({"code": 400, "message": _("Not Found users."), "fields": ""}, status=400)
-                #list_id is empty then clear all user of role
+                # list_id is empty then clear all user of role
                 role.user_role_rel.clear()
                 return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
-            return Response({"code": 403, "message": _("This function is only for System Admin"), "fields": ""}, status=403) 
-            
+            return Response({"code": 403, "message": _("This function is only for System Admin"), "fields": ""}, status=403)
+
         except Roles.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Role."), "fields": ""}, status=400)
         except Exception, e:
@@ -2863,6 +2894,7 @@ class SetRoleAPI(APIView):
     OpenTimeAPI
     @author :Hoangnguyen
 """
+
 
 class OpenTimeAPI(APIView):
     '''
@@ -2878,6 +2910,7 @@ class OpenTimeAPI(APIView):
     @check_role_permission(model_key.open_time)
     def post(self, request, format=None):
         try:
+            # validate data
             serializer = admin_serializers.OpenTimeSerializer(
                 data=request.data)
             if not serializer.is_valid():
@@ -2897,27 +2930,27 @@ class OpenTimeAPI(APIView):
                 kwargs['open_date__week_day__in'] = day_of_week
             kwargs['open_date__gte'] = start_date
             kwargs['open_date__lt'] = end_date + timedelta(days=1)
-
+            # get record in db
             record = OpenTime.objects.filter(**kwargs).order_by('open_date')
-            # check date is exist
+
             if record:
                 first_record = record.first().open_date
                 last_record = record.last().open_date
-                # create date
+                # to create date
                 if first_record > start_date:
                     self.createUpdateDate(
                         start_date, first_record - timedelta(days=1), day_of_week, start_time, end_time)
                 if last_record < end_date:
                     self.createUpdateDate(
                         last_record + timedelta(days=1), end_date, day_of_week, start_time, end_time)
-                # update date
+                # to update date
                 self.createUpdateDate(
                     first_record, last_record, day_of_week, start_time, end_time, record)
             else:
-                # create date
+                # to create date
                 self.createUpdateDate(
                     start_date, end_date, day_of_week, start_time, end_time)
-            # create in db
+            # bulk create date in db
             OpenTime.objects.bulk_create(OpenTimeAPI.create_objs)
             OpenTimeAPI.create_objs = []
             return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
@@ -2938,6 +2971,7 @@ class OpenTimeAPI(APIView):
         update_objs = list()
         for i in range(int((end_date - start_date).days + 1)):
             in_day_of_week = False
+            # check day is in day_of_week
             if day_of_week:
                 # day_of_week from 1 (Sunday) to 7 (Saturday).
                 # weekday() from 0 (Monday) to 6 (Sunday)
@@ -2946,9 +2980,10 @@ class OpenTimeAPI(APIView):
                     number = 1
                 if number in day_of_week:
                     in_day_of_week = True
+            #  to create or update date
             if not day_of_week or in_day_of_week:
+                # check each date is in record
                 if record:
-                    # check each date is in record to creat or update
                     date_is_exist = record.filter(
                         open_date=start_date + timedelta(days=i))
                     if date_is_exist:
@@ -2959,7 +2994,7 @@ class OpenTimeAPI(APIView):
                 else:
                     OpenTimeAPI.create_objs.append((OpenTime(
                         open_date=start_date + timedelta(days=i), start_time=start_time, end_time=end_time)))
-        # update date in db
+        # bulk update date in db
         OpenTime.objects.filter(open_date__in=update_objs).update(
             start_time=start_time, end_time=end_time)
 
@@ -2984,6 +3019,7 @@ class OpenTimeAPI(APIView):
     UserRoleAPI
     @author :Hoangnguyen
 """
+
 
 class UserRoleAPI(APIView):
 

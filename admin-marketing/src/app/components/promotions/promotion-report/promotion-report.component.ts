@@ -57,6 +57,7 @@ export class PromotionReportComponent implements OnInit {
                     visible: false
                 }
             ],
+            order: [[ 1, 'asc' ]],
             "sDom": "<'row'<'col-md-12'f><'col-md-6'l><'col-md-6 info_search'>>rt<'row'<'col-md-12'i><'col-md-12'p>>",
         };
         // create new object from 2 object use operator spread es6

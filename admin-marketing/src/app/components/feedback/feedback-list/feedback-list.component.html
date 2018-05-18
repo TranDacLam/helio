@@ -34,7 +34,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="row-data" *ngFor="let feedback of feedbacks">
+                <tr class="row-data" *ngFor="let feedback of feedbacks" [ngStyle]="{'font-weight': (feedbacks_is_read.indexOf(feedback.id)> -1) ? 'normal': 'bold'}">
                     <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
                     <td [ngStyle]="{'display':'none'}">{{feedback.id}}</td>
                     <td><a routerLink="/feedback-detail/{{ feedback.id }}">{{ feedback.subject }}</a></td>
@@ -43,7 +43,8 @@
                     <td>{{ feedback.rate }}</td>
                     <td>{{ feedback.status }}</td>
                     <td>{{ feedback.feedback_type }}</td>
-                    <td><span class="hidden">{{ feedback.modified|date: 'yyyyMMdd' }}</span>{{ feedback.modified|date: 'dd/MM/yyyy' }}</td>
+                    <td *ngIf="feedback.status == 'Chưa xử lý'"></td>
+                    <td *ngIf="feedback.status !== 'Chưa xử lý'"><span class="hidden">{{ feedback.modified|date: 'yyyyMMdd' }}</span>{{ feedback.modified|date: 'dd/MM/yyyy' }}</td>
                 </tr>
             </tbody>
         </table>

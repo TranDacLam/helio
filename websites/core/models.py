@@ -533,3 +533,16 @@ class Model_Name(DateTimeModel):
     name = models.CharField(_('Name'), max_length=255)
     def __str__(self):
         return '%s' % (self.name)
+
+
+@python_2_unicode_compatible
+class User_Feedback(DateTimeModel):
+    user = models.ForeignKey(custom_models.User, on_delete=models.CASCADE)
+    feedback = models.ForeignKey('Feedback', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '%s' % (self.feedback)
+
+    class Meta:
+        verbose_name = _('User Feedback')
+        verbose_name_plural = _('User Feedback')

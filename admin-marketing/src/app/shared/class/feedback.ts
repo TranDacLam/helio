@@ -12,6 +12,7 @@ export class Feedback {
 	answer: string;
 	created: Date;
 	modified: Date;
+	is_read: boolean = false;
 }
 
 export const en_Status = ['no_process', 'answered', 'moved'];

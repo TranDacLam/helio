@@ -35,7 +35,7 @@
                     <tr class="row-data" *ngFor="let banner of banners">
                         <td><input type="checkbox" (change)="selectCheckbox($event);"/></td>
                         <td>{{ banner.id }}</td>
-                        <td> <a [routerLink]="['/banner-detail/', banner.id, {lang: lang}]">{{ banner.sub_url }}</a></td>
+                        <td> <a [routerLink]="['/banner-detail/', banner.id]">{{ banner.sub_url }}</a></td>
                     </tr>
                 </tbody>
             </table>

@@ -23,6 +23,8 @@ export class FeedbackListComponent implements OnInit {
 
     dtOptions: any = {};
     feedbacks: Feedback[];
+    // list feeadback id is readed
+    feedbacks_is_read:number[];
 
     length_all: Number = 0;
     length_selected: Number = 0;
@@ -54,6 +56,7 @@ export class FeedbackListComponent implements OnInit {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
             },
+            // order: [[ 2, 'asc' ], [ 3, 'asc' ]],
             columnDefs: [
                 {
                     // Hiden the second column
@@ -74,8 +77,9 @@ export class FeedbackListComponent implements OnInit {
             params => {
                 this.feedbackService.getFeedbackFilter(params).subscribe(
                     (result) => {
-                        this.feedbacks = result;
+                        this.feedbacks = result.feedbacks;
                         this.length_all = this.feedbacks.length;
+                        this.feedbacks_is_read = result.feedbacks_is_read;
                         // this.dtTrigger.next();
                     },
                     (error) => {

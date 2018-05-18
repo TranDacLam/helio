@@ -81,7 +81,7 @@ export class AdvertisementListComponent implements OnInit {
     GET: Get All Advertiment To Show
     Call method form advertiment service
     True: Return objects value
-    Fasle: Show message 
+    Fasle: handle Error
     @author: TrangLe 
 */
     getAllAdvertisement() {
