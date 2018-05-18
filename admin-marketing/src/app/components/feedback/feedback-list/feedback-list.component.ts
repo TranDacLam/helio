@@ -56,18 +56,12 @@ export class FeedbackListComponent implements OnInit {
             drawCallback: (setting) => {
                 this.checkSelectAllCheckbox();
             },
-            order: [[ 2, 'asc' ], [ 3, 'asc' ]],
+            order: [[ 1, 'asc' ]],
             columnDefs: [
                 {
                     // Hiden the second column
                     visible: false,
                     targets: 1,
-                    searchable: false, 
-                },
-                {
-                    // Hiden the third column
-                    visible: false,
-                    targets: 2,
                     searchable: false, 
                 },
                 {
