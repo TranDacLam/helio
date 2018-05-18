@@ -645,11 +645,16 @@ class FeedbackView(APIView):
                     queryset, many=True)
                 return Response(serializer.data)
             else:
+                user = self.request.user
+                result = {}
+                # list feedback id is readed
+                result['feedbacks_is_read'] = User_Feedback.objects.filter(
+                    user=user).values_list('feedback', flat=True)
+                # all feedback
                 queryset = FeedBack.objects.all().order_by('-created')
-                serializer = admin_serializers.FeedBackSerializer(
-                    queryset, many=True)
-                return Response(serializer.data)
-            return Response({"code": 200, "message": queryset, "fields": ""}, status=200)
+                result['feedbacks'] = admin_serializers.FeedBackSerializer(
+                    queryset, many=True).data
+                return Response(result)
 
         except FeedBack.DoesNotExist, e:
             error = {"code": 400, "message": "Field Not Found.", "fields": ""}
@@ -694,12 +699,23 @@ class FeedbackDetailView(APIView):
             return queryset
         except Exception, e:
             return Response(status=500)
-
+    '''
+        get detail feedback
+        if user reads feedback, create instance User_Feedback 
+    '''
     @check_role_permission(model_key.feedback)
     def get(self, request, pk, format=None):
-        feedback = self.get_object(pk)
-        serializer = admin_serializers.FeedBackSerializer(feedback)
-        return Response(serializer.data)
+        try:
+            feedback = self.get_object(pk)
+            serializer = admin_serializers.FeedBackSerializer(feedback)
+            # create User_Feedback 
+            user = self.request.user
+            User_Feedback.objects.get_or_create(user=user, feedback=feedback)
+            return Response(serializer.data)
+        except Exception, e:
+            error = {"code": 500, "message": _(
+                "Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
 
     @check_role_permission(model_key.feedback)
     def put(self, request, pk, format=None):
@@ -2761,6 +2777,7 @@ class HotAdvsDetailView(APIView):
  
 """
 
+
 class RoleListAPI(APIView):
 
     def get(self, request):
@@ -2781,6 +2798,7 @@ class RoleListAPI(APIView):
     case 1: get user by role_id
     case 2: get user is staff, no role
 """
+
 
 class UserRoleListAPI(APIView):
 
@@ -2828,6 +2846,7 @@ class UserRoleListAPI(APIView):
     
 """
 
+
 class SetRoleAPI(APIView):
 
     def put(self, request, role_id):
@@ -2836,7 +2855,7 @@ class SetRoleAPI(APIView):
         try:
             if check_role == constant.SYSTEM_ADMIN:
                 role = Roles.objects.get(id=role_id)
-                list_id = request.data.get('list_id', None )
+                list_id = request.data.get('list_id', None)
                 if list_id:
                     # set role for users
                     users = User.objects.filter(id__in=list_id)
@@ -2845,11 +2864,11 @@ class SetRoleAPI(APIView):
                         role.user_role_rel.set(users)
                         return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
                     return Response({"code": 400, "message": _("Not Found users."), "fields": ""}, status=400)
-                #list_id is empty then clear all user of role
+                # list_id is empty then clear all user of role
                 role.user_role_rel.clear()
                 return Response({"code": 200, "message": _("success"), "fields": ""}, status=200)
-            return Response({"code": 403, "message": _("This function is only for System Admin"), "fields": ""}, status=403) 
-            
+            return Response({"code": 403, "message": _("This function is only for System Admin"), "fields": ""}, status=403)
+
         except Roles.DoesNotExist, e:
             return Response({"code": 400, "message": _("Not Found Role."), "fields": ""}, status=400)
         except Exception, e:
@@ -2863,6 +2882,7 @@ class SetRoleAPI(APIView):
     OpenTimeAPI
     @author :Hoangnguyen
 """
+
 
 class OpenTimeAPI(APIView):
     '''
@@ -2900,7 +2920,7 @@ class OpenTimeAPI(APIView):
             kwargs['open_date__lt'] = end_date + timedelta(days=1)
             # get record in db
             record = OpenTime.objects.filter(**kwargs).order_by('open_date')
-            
+
             if record:
                 first_record = record.first().open_date
                 last_record = record.last().open_date
@@ -2939,7 +2959,7 @@ class OpenTimeAPI(APIView):
         update_objs = list()
         for i in range(int((end_date - start_date).days + 1)):
             in_day_of_week = False
-            # check day is in day_of_week 
+            # check day is in day_of_week
             if day_of_week:
                 # day_of_week from 1 (Sunday) to 7 (Saturday).
                 # weekday() from 0 (Monday) to 6 (Sunday)
@@ -2987,6 +3007,7 @@ class OpenTimeAPI(APIView):
     UserRoleAPI
     @author :Hoangnguyen
 """
+
 
 class UserRoleAPI(APIView):
 
