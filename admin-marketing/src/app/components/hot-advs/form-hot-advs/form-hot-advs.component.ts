@@ -139,7 +139,7 @@ export class FormHotAdvsComponent implements OnInit {
                 } else {
                     this.hotAdvsService.updateHotAds(hotAdvsFormGroup, this.hot_ads.id, this.lang).subscribe(
                         (result) => {
-                            this.toastr.success(`Chỉnh sửa ${this.formHotAds.value['name']} Hot Ads thành công`);
+                            this.toastr.success(`Chỉnh sửa "${this.formHotAds.value['name']}" thành công`);
                             self.router.navigate(['/hot-advs-list'])
                         },
                         (error) => {
@@ -155,7 +155,7 @@ export class FormHotAdvsComponent implements OnInit {
             }else{
                 this.hotAdvsService.CreateHotAdvs(hotAdvsFormGroup, this.lang).subscribe(
                     (result) => {
-                        this.toastr.success(`Thêm ${this.formHotAds.value['name']} Hot Ads thành công`);
+                        this.toastr.success(`Thêm "${this.formHotAds.value['name']}" thành công`);
                         self.router.navigate(['/hot-advs-list'])
                     },
                     (error) => {
@@ -204,7 +204,7 @@ export class FormHotAdvsComponent implements OnInit {
         const id = this.hot_ads.id;
         this.hotAdvsService.deleteHotAdsById(id, this.lang).subscribe(
             () => {
-                this.toastr.success(`Xóa ${this.hot_ads.name} thành công`);
+                this.toastr.success(`Xóa "${this.hot_ads.name}" thành công`);
                 this.router.navigate(['/hot-advs-list'])
             },
             (error) => {

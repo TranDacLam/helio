@@ -132,7 +132,7 @@ export class FormBannerComponent implements OnInit {
                     this.bannerService.updateBanner(bannerFormGroup, this.banner.id).subscribe(
                         (data) => {
                             // Navigate to promotion page where success
-                            this.toastr.success(`Chỉnh sửa ${this.formBanner.value['sub_url']} thành công`);
+                            this.toastr.success(`Chỉnh sửa "${this.formBanner.value['sub_url']}" thành công`);
                             this.router.navigate(['/banner-list']);
                         },
                         (error) => {
@@ -143,7 +143,7 @@ export class FormBannerComponent implements OnInit {
             } else {
                 this.bannerService.CreateBanner(bannerFormGroup).subscribe(
                     (result) => {
-                        self.toastr.success(`Thêm ${this.formBanner.value['sub_url']} thành công`);
+                        self.toastr.success(`Thêm "${this.formBanner.value['sub_url']}" thành công`);
                         self.router.navigate(['/banner-list'])
                     },
                     (error) => {
@@ -165,7 +165,7 @@ export class FormBannerComponent implements OnInit {
         const id = this.banner.id;
         this.bannerService.deleteUserById(id).subscribe(
             (data) => {
-                this.toastr.success(`Xóa ${this.banner.sub_url} thành công`);
+                this.toastr.success(`Xóa "${this.banner.sub_url}" thành công`);
                 this.router.navigate(['/banner-list']);
             },
             (error) => {

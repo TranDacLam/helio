@@ -99,7 +99,7 @@ export class FormDenominationComponent implements OnInit {
             if(this.denomination.id){
                 this.denominationService.updateDenomination(denomination, this.denomination.id).subscribe(
                     (result) => {
-                        this.toastr.success(`Chỉnh sửa ${this.data} thành công`);
+                        this.toastr.success(`Chỉnh sửa "${this.data}" thành công`);
                         this.router.navigate(['/denomination-list'])
                     },
                     (error) => {
@@ -114,7 +114,7 @@ export class FormDenominationComponent implements OnInit {
                 this.denominationService.createDenomination(denomination).subscribe(
                     (denomination) => {
                         this.denominations.push(denomination);
-                        this.toastr.success(`Thêm ${this.data} thành công`);
+                        this.toastr.success(`Thêm "${this.data}" thành công`);
                         this.router.navigate(['/denomination-list'])
                     },
                     (error) => {
@@ -164,7 +164,7 @@ export class FormDenominationComponent implements OnInit {
     deleteDenomiById(denomi: Denomination) {
         this.denominationService.deleteDenominationByid(denomi.id).subscribe(
             () => {
-                this.toastr.success(`Xóa ${denomi.denomination} thành công`);
+                this.toastr.success(`Xóa "${denomi.denomination}" thành công`);
                 this.router.navigate(['/denomination-list']);
             },
             error => {
