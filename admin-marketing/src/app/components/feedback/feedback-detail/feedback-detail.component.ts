@@ -99,7 +99,7 @@ export class FeedbackDetailComponent implements OnInit {
     deleteFeedback(feedback: Feedback) {
         this.feedbackService.deleteFeedbackById(feedback).subscribe(
             () => {
-                this.toastr.success(`Xóa ${feedback.subject} thành công`);
+                this.toastr.success(`Xóa "${feedback.subject}" thành công`);
                 this.router.navigate(['/feedback-list']);
             },
             (error) => {
@@ -119,7 +119,7 @@ export class FeedbackDetailComponent implements OnInit {
         let valueForm = this.translateValueFeedbackForm(this.feedbackForm.value);
         this.feedbackService.updateFeedbackById(valueForm, this.feedback.id).subscribe(
             () => {
-                this.toastr.success(`Chỉnh sửa ${this.feedback.subject} thành công`);
+                this.toastr.success(`Chỉnh sửa "${this.feedback.subject}" thành công`);
                 this.router.navigate(['/feedback-list']);
             },
             (error) => {
