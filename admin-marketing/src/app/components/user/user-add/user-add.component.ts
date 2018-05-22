@@ -115,7 +115,7 @@ export class UserAddComponent implements OnInit {
             this.userService.createUser(userFormGroup).subscribe(
                 (data) => {
                     self.users.push(data);
-                    this.toastr.success(`Thêm ${this.formUser.value['email']} thành công`);
+                    this.toastr.success(`Thêm "${this.formUser.value['email']}" thành công`);
                     self.router.navigate(['/user-list']);
                 },
                 (error) => {

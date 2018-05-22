@@ -152,7 +152,7 @@ export class FormFeeComponent implements OnInit {
     deleteFeeById(fee: Fee) {
         this.feeService.deleteFeeById(fee.id).subscribe(
             () => {
-                this.toastr.success(`Xóa ${fee.fee} thành công`);
+                this.toastr.success(`Xóa "${fee.fee}" thành công`);
                 this.router.navigate(['/fee/list']);
             },
             (error) => {

@@ -98,7 +98,7 @@ export class FormAdvertisementComponent implements OnInit {
 			if (this.adv.id) {
 				this.advertisementService.updateAdv(this.advForm.value, this.adv.id, this.lang).subscribe(
 					() => {
-						this.toastr.success(`Chỉnh sửa ${this.advForm.value['name']} thành công`);
+						this.toastr.success(`Chỉnh sửa "${this.advForm.value['name']}" thành công`);
 						this.router.navigate(['/advertisement-list']);
 					},
 					(error) => {
@@ -113,7 +113,7 @@ export class FormAdvertisementComponent implements OnInit {
 				this.advertisementService.addAdvertisement(this.advForm.value, this.lang).subscribe(
 					(resultAdv) => {
 						// this.advs.push(resultAdv);
-						this.toastr.success(`Thêm ${this.advForm.value['name']} thành công`);
+						this.toastr.success(`Thêm "${this.advForm.value['name']}" thành công`);
 						this.router.navigate(['/advertisement-list'])
 					},
 					(error) => {
@@ -139,7 +139,7 @@ export class FormAdvertisementComponent implements OnInit {
 		this.advertisementService.deleteAdvById(adv.id, this.lang)
 			.subscribe(
 				() => {
-					this.toastr.success(`Xóa ${adv.name} thành công`);
+					this.toastr.success(`Xóa "${adv.name}" thành công`);
 					this.router.navigate(['/advertisement-list']);
 				},
 				error => {
