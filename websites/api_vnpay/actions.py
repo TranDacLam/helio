@@ -224,7 +224,7 @@ def reload_error_handle(request, reload_order, amount, reason):
             Case2: Reload error send email to admin and sms to customer 
         Case 2: If amount not match then send sms to customer and email to admin
 """
-def process_realod_payment_success(request, reload_order, amount):
+def process_reload_payment_success(request, reload_order, amount):
     print "Process reload payment success"
     try:
         # Amount Divisoon for 100 because vnpay return amount * 100

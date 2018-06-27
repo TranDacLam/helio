@@ -133,7 +133,7 @@ def payment_ipn(request):
 
                 if vnp_ResponseCode == '00':
                     # handle confirm reload and send sms , email
-                    actions.process_realod_payment_success(request, reload_order, amount)
+                    actions.process_reload_payment_success(request, reload_order, amount)
                     
                     # Return VNPAY: Merchant update success
                     result = JsonResponse(
