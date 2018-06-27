@@ -52,9 +52,9 @@ VNPAY_HASH_SECRET_KEY = 'WBWFEMOFBYBQZXPSQZTROPCKHQPGFAZD'  # Secret key for cre
 VNPAY_ORDER_TYPE = '190003'
 
 # SMS Config
-SMS_BRAND = "MetizCinema"
-SMS_USER = "metizcinema"
-SMS_PASSWORD = "metizcinema123"
+SMS_BRAND = "HelioCenter"
+SMS_USER = "heliocenter"
+SMS_PASSWORD = "truyenthonghelio"
 SMS_KEY = "VNFPT123BLUESEA1"
 SMS_KEY_IV = "154dxc1scfzzad21"
 SMS_URL = "http://ws.ctnet.vn/servicectnet.asmx?op=sendsms"
