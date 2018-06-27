@@ -37,7 +37,7 @@ BASE_URL_DMZ_API = "http://172.16.12.10:9000/api/"
 DMZ_API_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluQHZvb2Mudm4iLCJvcmlnX2lhdCI6MTUyMTYwNjc2NSwidXNlcl9pZCI6MSwiZW1haWwiOiJhZG1pbkB2b29jLnZuIiwiZXhwIjoxNTIxNjA3MDY1fQ.9hE6nQzUboTHYdG3kexLoJiTDAVYM-jIheXBFFr0gmM"
 
 # VNPAY CONFIG
-VNPAY_RETURN_URL = 'http://172.16.12.10:8000/vi/vnpay/payment_return'  # get from config
+VNPAY_RETURN_URL = 'http://172.16.12.10:8001/vi/vnpay/payment_return'  # get from config
 VNPAY_PAYMENT_URL = 'http://sandbox.vnpayment.vn/paymentv2/vpcpay.html'  # get from config
 VNPAY_API_URL = 'http://sandbox.vnpayment.vn/merchant_webapi/merchant.html'
 VNPAY_TMN_CODE = 'HELIOKP2'  # Website ID in VNPAY System, get from config
