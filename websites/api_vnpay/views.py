@@ -13,8 +13,10 @@ from django.utils.translation import ugettext_lazy as _
 import traceback
 from models import *
 import actions
+from rest_framework.permissions import AllowAny
 
 @api_view(['POST'])
+@permission_classes((AllowAny,))
 def payment(request):
     print "Payment:::Init URL Vnpay"
     try:
