@@ -1,0 +1,142 @@
+{% load i18n %} 
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Reload Errors</title>
+    <style>
+      /* -------------------------------------
+          GLOBAL RESETS
+      ------------------------------------- */
+      img {
+        border: none;
+        -ms-interpolation-mode: bicubic;
+        max-width: 100%; }
+
+      body {
+        /*background-color: #f6f6f6;*/
+        font-family: sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-size: 14px;
+        line-height: 1.4;~
+        margin: 0;
+        padding: 0; 
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%; }
+
+      table {
+        border-collapse: separate;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        width: 100%; }
+        table td {
+          font-family: Helvetica,Arial,sans-serif;
+          font-size: 14px;
+          line-height: 18px;
+          vertical-align: top; }
+
+        .padding-40{
+          padding:8px 40px 0px 40px
+        }
+        .font-20{
+          font-size: 20px;
+        }
+        .footer1{
+          color:#394f67;
+          padding:22px 40px 32px 40px
+        }
+        .padding-content{
+          padding:22px 0 0 0
+        }
+        .padding-logo{
+          padding:7px 40px 7px 40px
+        }
+        .img-logo{
+          border:0;
+          margin:0px;
+          padding:0px;
+          display:block;
+          width:121px;
+          height: 100px;
+        }
+        .header{
+          height:28px;
+          font-size:28px;
+          line-height:28px;
+          height:28px;
+          font-family:Helvetica,Arial,sans-serif;
+          color:#394f67;
+          padding:0px 40px 0px 40px;
+          font-weight:lighter
+        }
+        .activation{
+          text-decoration:none;
+          color:#1994d7
+        }
+        .sperator-header{
+          padding:0px 0px 40px 0px
+        }
+        .sperator-header>hr{
+          background-color: #b9b9b9;
+        }
+        .sperator-footer{
+          padding:32px 0px 26px 0px;
+          width: 100%;
+        }
+        .tb_welcome{
+          width: 100%;
+          border: 0;
+        }
+      /* -------------------------------------
+          BODY & CONTAINER
+      ------------------------------------- */
+
+      .body {
+        width: 100%; }
+
+      /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
+      
+
+    </style>
+  </head>
+  <body class="">
+    <table id="tb_welcome" style="" cellpadding="0" cellspacing="0" class="tb_welcome">
+      <tbody>
+          <tr>
+              <td colspan="2" class="padding-logo" align="left" valign="top"><img alt="Helio Center" src="{{protocol}}://{{ site }}{{ URL_LOGO }}" class="img-logo"></td>
+          </tr>
+          <tr>
+              <td colspan="2" class="sperator-header" align="center" valign="middle">
+                  <hr >
+              </td>
+          </tr>
+          <tr>
+              <td colspan="2" class="header" align="left" valign="top">Xin Chào Admin Helio</td>
+          </tr>
+          <tr>
+              <td colspan="2" class="padding-40" align="left" valign="top">Nạp tiền cho thẻ: <b>{{reload_order.barcode}} </b>bị lỗi.</td>
+              
+          </tr>
+          <tr>
+            <td colspan="2" class="padding-40" align="left" valign="top">Đã trừ tiền của khách hàng nhưng không thể nạp tiền vào tài khoản Helio.</br>
+            Lý do:  <b>{{reason}}</b></br>
+            Vnpay Amount: {{amount}} Helio Amount: {{reload_order.amount }}<br>
+            Vui lòng kiểm trả hoá đơn : {{reload_order.order_id}} để xử lý </br>
+            Điện thoại và Email của khách hàng nạp tiền: {{reload_order.phone }} và {{reload_order.email}}</td>
+          </tr>
+          <tr>
+              <td colspan="2" class="sperator-footer" align="left" valign="top">
+                  <hr>
+              </td>
+          </tr>
+          <tr>
+              <td colspan="2" class="footer1" align="left" valign="top">
+              <span class="padding-content">Thanks,</span>
+              <br/>
+              <span class="padding-content">Helio Center</span></td>
+          </tr>
+      </tbody>
+  </table>
+  </body>
+</html>

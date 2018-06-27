@@ -42,3 +42,4 @@ django-cors-headers==2.1.0
 qrcode==5.3
 python-dateutil==2.7.2
 Unidecode==1.0.22
+pycrypto==2.6.1

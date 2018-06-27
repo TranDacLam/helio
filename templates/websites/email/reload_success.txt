@@ -1,0 +1,6 @@
+Xin chào {{reload_order.full_name}},
+
+Bạn đã nạp thành công {{reload_order.amount}} cho thẻ {{reload_order.barcode}}
+
+Trân Trọng Cảm Ơn,
+Đội Ngũ Hỗ Trợ Helio Center.
