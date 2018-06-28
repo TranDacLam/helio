@@ -7,6 +7,8 @@ from core import helio_sms
 import api.utils as utils
 from django.contrib.sites.models import Site
 
+import core.constants as constants
+
 def send_mail_reload_success(is_secure, email, reload_order):
     try:
         message_html = "websites/email/reload_success.html"
@@ -103,10 +105,13 @@ def call_api_vefiry_card_barcode(barcode):
             return {"code": 400, "message": _(
                 "Card barcode not foun."), "fields": ""}
 
-        print result['card_status']
+        # Only accept reload for guest member gold
+        if result['card_status_code'] not in constants.CARD_TYPE_ACCEPT_RELOAD:
+            return {"code": 400, "message": _("Card can not reload."), "fields": ""}
+
+        # Only accept reload for current card ( carrd active)
         if result['card_state'] != 0:
             message = state_mapping_error(result['card_state'])
-            print message
             return {"code": 400, "message": message, "fields": ""}
 
         return {"code": 200, "message": _("Card Valid"), "fields": ""}
@@ -189,12 +194,12 @@ def reload_sucess_handle(request, reload_order, email, phone, cash_balance):
 
         content_sms += str(reload_order.order_desc.replace("\r\n", ""))
         # Send SMS for user
-        helio_sms.send_sms(reload_order.phone, content_sms)
+        helio_sms.send_sms(phone, content_sms)
 
     #  Send Email
     if email:
         print "Send Email"
-        send_mail_reload_success(request.is_secure(), reload_order.email, reload_order)
+        send_mail_reload_success(request.is_secure(), email, reload_order)
 
 
 """

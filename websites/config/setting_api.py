@@ -54,3 +54,7 @@ SMS_PASSWORD = "truyenthonghelio"
 SMS_KEY = "VNFPT123BLUESEA1"
 SMS_KEY_IV = "154dxc1scfzzad21"
 SMS_URL = "http://ws.ctnet.vn/servicectnet.asmx?op=sendsms"
+
+
+
+HELIO_ADMIN_EMAIL_TO = "diemnguyen@vooc.vn, hoangvo@vooc.vn"

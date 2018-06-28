@@ -301,9 +301,7 @@ EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = True
 
 HOT_LINE = "0236 3630 689"
-VOOC_LEADER_EMAIL = "diemnguyen@vooc.vn"
 HELIO_ADMIN_EMAIL_TO = "diemnguyen@vooc.vn"
-HELIO_ADMIN_EMAIL_CC = "diemnguyen@vooc.vn"
 
 
 CODE_LEN = 7 # Default code length
