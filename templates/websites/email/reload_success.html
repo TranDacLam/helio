@@ -1,0 +1,49 @@
+{% load i18n %} 
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+<p>Helio Center gửi bạn thông tin giao dịch:</p>
+
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="15" cellspacing="0" style="width:800px">
+    <thead>
+        <tr>
+            <th colspan="2" scope="col" style="background-color:#90b1ce; color: #fff;">GIAO DỊCH THÀNH CÔNG</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="width:151px"><strong>Họ v&agrave; t&ecirc;n</strong></td>
+            <td style="width:583px">{{reload_order.full_name}}</td>
+        </tr>
+        <tr>
+            <td style="width:151px"><strong>Số điện thoại</strong></td>
+            <td style="width:583px">{{reload_order.phone}}</td>
+        </tr>
+        <tr>
+            <td style="width:151px"><strong>Số thẻ</strong></td>
+            <td style="width:583px">{{reload_order.barcode}}</td>
+        </tr>
+        <tr>
+            <td style="width:151px"><strong>Số tiền nạp</strong></td>
+            <td style="width:583px">{{reload_order.amount}} VND</td>
+        </tr>
+        <tr>
+            <td style="width:151px"><strong>M&atilde; giao dịch</strong></td>
+            <td style="width:583px">{{reload_order.order_id}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><br />
+&nbsp;</p>
+
+<p>Tr&acirc;n Trọng Cảm Ơn,<br />
+Đội Ngũ Hỗ Trợ Helio Center.</p>
+</body>
+</html>

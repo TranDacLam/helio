@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% load humanize %}
+{% block title %}Helio{% endblock title %}
+{% block extrastylesheet %}
+    <link href="{{ STATIC_URL }}assets/websites/css/payment_return.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block main_content %}
+    
+<div class="container">
+    <div class="table-payment">
+        <div class="panel-heading">Kết quả thanh toán: {{ result }}</div>
+        <hr class="hr-custom">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-5 col-sm-3">
+                    <label>Mã giao dịch:</label>
+                </div>
+                <div class="col-xs-7 col-sm-9">
+                    {{ order_id }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-5 col-sm-3">
+                    <label>Số tiền:</label>
+                </div>
+                <div class="col-xs-7 col-sm-9">
+                    <span class="amout-pay-return">{{ amount | intcomma:False}}</span> VNĐ
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-5 col-sm-3 payment-order-desc">
+                    <label>Nội dung:</label>
+                </div>
+                <div class="col-xs-7 col-sm-9 payment-order-desc">
+                    {{ order_desc }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-5 col-sm-3">
+                    <label>Số giao dịch:</label>
+                </div>
+                <div class="col-xs-7 col-sm-9">
+                    {{ vnp_TransactionNo }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-5 col-sm-3">
+                    <label>Kết quả giao dịch:</label>
+                </div>
+                {% if vnp_ResponseCode == '00' %}
+                    <div class="col-xs-7 col-sm-9">
+                        Thành công
+                    </div>
+                {% else %}
+                    <div class="col-xs-7 col-sm-9">
+                        Lỗi
+                    </div>
+                {% endif %}
+            </div>
+            {% if msg %}
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12">
+                        <p class="alert-warning"> {{ msg }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

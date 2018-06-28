@@ -52,3 +52,26 @@ SESSION_COOKIE_SECURE = True
 
 BASE_URL_DMZ_API = ""
 DMZ_API_TOKEN = ""
+
+
+# VNPAY CONFIG
+VNPAY_RETURN_URL = 'https://helio.vn/vi/vnpay/payment_return'  # get from config
+VNPAY_PAYMENT_URL = 'http://sandbox.vnpayment.vn/paymentv2/vpcpay.html'  # get from config
+VNPAY_API_URL = 'http://sandbox.vnpayment.vn/merchant_webapi/merchant.html'
+VNPAY_TMN_CODE = 'HELIOKP2'  # Website ID in VNPAY System, get from config
+VNPAY_HASH_SECRET_KEY = 'WBWFEMOFBYBQZXPSQZTROPCKHQPGFAZD'  # Secret key for create checksum,get from config
+
+VNPAY_ORDER_TYPE = '190003'
+
+# SMS Config
+SMS_BRAND = "HelioCenter"
+SMS_USER = "heliocenter"
+SMS_PASSWORD = "truyenthonghelio"
+SMS_KEY = "VNFPT123BLUESEA1"
+SMS_KEY_IV = "154dxc1scfzzad21"
+SMS_URL = "http://ws.ctnet.vn/servicectnet.asmx?op=sendsms"
+
+
+
+
+HELIO_ADMIN_EMAIL_TO = "diemnguyen@vooc.vn, hoangvo@vooc.vn"

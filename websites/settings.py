@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.humanize',
     'rest_framework',
     'rest_framework.authtoken',
     'social_django',
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'main',
     'core',
     'api',
+    'api_vnpay',
     'ckeditor',
     'ckeditor_uploader',
     'multiupload',
@@ -297,6 +299,10 @@ EMAIL_HOST_PASSWORD = 'N0reply!@#'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = True
+
+HOT_LINE = "0236 3630 689"
+HELIO_ADMIN_EMAIL_TO = "diemnguyen@vooc.vn"
+
 
 CODE_LEN = 7 # Default code length
 

@@ -36,8 +36,30 @@ PUSH_NOTIFICATIONS_SETTINGS = {
 # access control allow origin
 CORS_ORIGIN_ALLOW_ALL = True
 
-BASE_URL_DMZ_API = "http://127.0.0.1:8003/api/"
-DMZ_API_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTIxMDk4NDk1LCJ1c2VyX2lkIjoxLCJlbWFpbCI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsImV4cCI6MTUyMTA5ODc5NX0.UYRCf2Pvc0HXYXfhKDVE0kZelBxaRWpPOA4GRgE_vI4"
+BASE_URL_DMZ_API = "http://127.0.0.1:9000/api/"
+DMZ_API_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsIm9yaWdfaWF0IjoxNTI4Nzg4MzcxLCJ1c2VyX2lkIjoxLCJlbWFpbCI6ImRpZW1uZ3V5ZW5Adm9vYy52biIsImV4cCI6MTUyODc4ODY3MX0.yHk5HAKza94SwBI7vRcBCoYHzGr40_pLvfRtaEB9cDA"
 
 
 print os.path.join(BASE_DIR, "key_apns/pem_production/push_dis.pem")
+
+# VNPAY CONFIG
+VNPAY_RETURN_URL = 'http://127.0.0.1:8000/vi/vnpay/payment_return'  # get from config
+VNPAY_PAYMENT_URL = 'http://sandbox.vnpayment.vn/paymentv2/vpcpay.html'  # get from config
+VNPAY_API_URL = 'http://sandbox.vnpayment.vn/merchant_webapi/merchant.html'
+VNPAY_TMN_CODE = 'HELIOKP2'  # Website ID in VNPAY System, get from config
+VNPAY_HASH_SECRET_KEY = 'WBWFEMOFBYBQZXPSQZTROPCKHQPGFAZD'  # Secret key for create checksum,get from config
+
+VNPAY_ORDER_TYPE = '190003'
+
+# SMS Config
+SMS_BRAND = "HelioCenter"
+SMS_USER = "heliocenter"
+SMS_PASSWORD = "truyenthonghelio"
+SMS_KEY = "VNFPT123BLUESEA1"
+SMS_KEY_IV = "154dxc1scfzzad21"
+SMS_URL = "http://ws.ctnet.vn/servicectnet.asmx?op=sendsms"
+
+
+HELIO_ADMIN_EMAIL_TO = "diemnguyen@vooc.vn, diemnt.pnv@gmail.com"
+
+

@@ -1,0 +1,8 @@
+Xin chào Admin, 
+
+Nạp tiền lỗi.
+Mã giao dịch : {{reload_order.order_id}}
+Lý do : {{reason}}
+
+Thanks,
+Helio

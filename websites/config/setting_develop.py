@@ -36,3 +36,22 @@ PUSH_NOTIFICATIONS_SETTINGS = {
 BASE_URL_DMZ_API = "http://172.16.12.10:9000/api/"
 DMZ_API_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluQHZvb2Mudm4iLCJvcmlnX2lhdCI6MTUyMTYwNjc2NSwidXNlcl9pZCI6MSwiZW1haWwiOiJhZG1pbkB2b29jLnZuIiwiZXhwIjoxNTIxNjA3MDY1fQ.9hE6nQzUboTHYdG3kexLoJiTDAVYM-jIheXBFFr0gmM"
 
+# VNPAY CONFIG
+VNPAY_RETURN_URL = 'http://172.16.12.10:8001/vi/vnpay/payment_return'  # get from config
+VNPAY_PAYMENT_URL = 'http://sandbox.vnpayment.vn/paymentv2/vpcpay.html'  # get from config
+VNPAY_API_URL = 'http://sandbox.vnpayment.vn/merchant_webapi/merchant.html'
+VNPAY_TMN_CODE = 'HELIOKP2'  # Website ID in VNPAY System, get from config
+VNPAY_HASH_SECRET_KEY = 'WBWFEMOFBYBQZXPSQZTROPCKHQPGFAZD'  # Secret key for create checksum,get from config
+
+VNPAY_ORDER_TYPE = '190003'
+
+# SMS Config
+SMS_BRAND = "HelioCenter"
+SMS_USER = "heliocenter"
+SMS_PASSWORD = "truyenthonghelio"
+SMS_KEY = "VNFPT123BLUESEA1"
+SMS_KEY_IV = "154dxc1scfzzad21"
+SMS_URL = "http://ws.ctnet.vn/servicectnet.asmx?op=sendsms"
+
+HELIO_ADMIN_EMAIL_TO = "diemnguyen@vooc.vn, hoangvo@vooc.vn"
+
