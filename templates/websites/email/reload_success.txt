@@ -1,4 +1,4 @@
-Xin chào {{reload_order.full_name}},
+Helio Center gửi bạn thông tin giao dịch:
 
 Bạn đã nạp thành công {{reload_order.amount}} cho thẻ {{reload_order.barcode}}
 

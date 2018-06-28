@@ -1,17 +1,10 @@
 {% extends "layout.html" %}
 {% load humanize %}
 {% block title %}Helio{% endblock title %}
+{% block extrastylesheet %}
+    <link href="{{ STATIC_URL }}assets/websites/css/payment_return.css" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block main_content %}
-<style type="text/css">
-    .table-payment {
-        max-width: 600px;
-        margin: 40px auto;
-        border: 1px solid #802ca2;
-    }
-    .hr-custom {
-        margin: 0px;
-    }
-</style>
     
 <div class="container">
     <div class="table-payment">
