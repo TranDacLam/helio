@@ -71,7 +71,4 @@ SMS_KEY = "VNFPT123BLUESEA1"
 SMS_KEY_IV = "154dxc1scfzzad21"
 SMS_URL = "http://ws.ctnet.vn/servicectnet.asmx?op=sendsms"
 
-
-
-
-HELIO_ADMIN_EMAIL_TO = "vietthang@khoiphat.vn, quynhpham@helio.vn, lamnguyen@helio.vn, ngochang@khoiphat.vn"
+HELIO_ADMIN_EMAIL_TO_LIST = ["vietthang@khoiphat.vn", "quynhpham@helio.vn", "lamnguyen@helio.vn", "ngochang@khoiphat.vn"]

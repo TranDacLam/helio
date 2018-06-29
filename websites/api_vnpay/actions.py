@@ -54,7 +54,7 @@ def send_mail_reload_error(is_secure, email, reload_order, amount, reason):
         }
         # Send email reload success
         utils.send_mail(subject=subject, message_plain=message_plain, message_html=message_html, 
-                                email_from=settings.DEFAULT_FROM_EMAIL, email_to=[email], data=data_binding)    
+                                email_from=settings.DEFAULT_FROM_EMAIL, email_to=email, data=data_binding)    
     except Exception, e:
         print "Error send_mail_reload_error : ", e
 
@@ -226,7 +226,7 @@ def reload_error_handle(request, reload_order, amount, reason):
     helio_sms.send_sms(reload_order.phone, content_sms)
 
     # Send email notification for admin transaction error
-    send_mail_reload_error(request.is_secure(), settings.HELIO_ADMIN_EMAIL_TO, reload_order, amount, reason)
+    send_mail_reload_error(request.is_secure(), settings.HELIO_ADMIN_EMAIL_TO_LIST, reload_order, amount, reason)
             
 """
     Process after payment on vnpay success
