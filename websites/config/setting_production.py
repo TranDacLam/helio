@@ -74,4 +74,4 @@ SMS_URL = "http://ws.ctnet.vn/servicectnet.asmx?op=sendsms"
 
 
 
-HELIO_ADMIN_EMAIL_TO = "diemnguyen@vooc.vn, hoangvo@vooc.vn"
+HELIO_ADMIN_EMAIL_TO = "vietthang@khoiphat.vn, quynhpham@helio.vn, lamnguyen@helio.vn, ngochang@khoiphat.vn"
