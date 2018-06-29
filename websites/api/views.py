@@ -28,7 +28,6 @@ import requests
 import json
 import traceback
 
-
 def custom_exception_handler(exc, context):
     # to get the standard error response.
     response = exception_handler(exc, context)
@@ -665,6 +664,7 @@ def card_information(request, card_id):
         card_information_api_url = '{}card/{}/information/'.format(
             settings.BASE_URL_DMZ_API, card_id)
 
+        """GET METHOD"""
         if request.method == 'GET':
             # Only staff or card link get full infomation
             is_full_info = request.user.is_staff or request.user.barcode == card_id
@@ -676,49 +676,18 @@ def card_information(request, card_id):
             response = requests.get(
                 card_information_api_url, params=params, headers=headers)
 
-            if response.status_code == 401:
-                print "DMZ reponse status code 401", response.text
-                error = {"code": 500, "message": _(
-                    "Call API Unauthorized."), "fields": ""}
-                return Response(error, status=500)
-            if response.status_code != 200 and response.status_code != 400:
-                print "DMZ reponse status code not 200", response.text
-                error = {"code": 500, "message": _(
-                    "Call API error."), "fields": ""}
-                return Response(error, status=500)
+            # Process DMZ reponse 
+            return helper.dmz_response_process(response)
 
-            # Get data from dmz reponse
-            result = response.json()
-            # Translate error message when code is 400
-            if response.status_code == 400:
-                result["message"] = _(result["message"])
-                return Response(result, status=response.status_code)
-            return Response(result, status=200)
-
+        """DELETE METHOD"""
         if request.method == 'DELETE':
             if request.user.is_staff or request.user.barcode == card_id:
                 # Call DMZ get card infomation
                 response = requests.delete(
                     card_information_api_url, headers=headers)
 
-                if response.status_code == 401:
-                    print "DMZ reponse status code 401", response.text
-                    error = {"code": 500, "message": _(
-                        "Call API Unauthorized."), "fields": ""}
-                    return Response(error, status=500)
-                if response.status_code != 200 and response.status_code != 400:
-                    print "DMZ reponse status code not 200", response.text
-                    error = {"code": 500, "message": _(
-                        "Call API error."), "fields": ""}
-                    return Response(error, status=500)
-
-                # Get data from dmz reponse
-                result = response.json()
-                # Translate error message when code is 400
-                if response.status_code == 400:
-                    result["message"] = _(result["message"])
-                    return Response(result, status=response.status_code)
-                return Response(result, status=200)
+                # Process DMZ reponse 
+                return helper.dmz_response_process(response)
             else:
                 error = {"code": 400, "message": _(
                     "You don't have permission to access."), "fields": ""}
@@ -727,11 +696,12 @@ def card_information(request, card_id):
 
     except requests.Timeout:
         print "Request DMZ time out "
-        return HttpResponse('API connection timeout')
+        error = {"code": 500, "message": _("API connection timeout."), "fields": ""}
+        return Response(error, status=500)
 
     except Exception, e:
         print('card_information: %s', traceback.format_exc())
-        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        error = {"code": 500, "message": _("Internal Server Error. Please contact administrator."), "fields": ""}
         return Response(error, status=500)
 
 """
@@ -769,40 +739,25 @@ def play_transactions(request):
             response = requests.get(
                 transactions_play_api_url, params=params_api, headers=headers)
 
-            if response.status_code == 401:
-                print "DMZ reponse status code 401", response.text
-                error = {"code": 500, "message": _(
-                    "Call API Unauthorized."), "fields": ""}
-                return Response(error, status=500)
-            if response.status_code != 200 and response.status_code != 400:
-                print "DMZ reponse status code not 200", response.text
-                error = {"code": 500, "message": _(
-                    "Call API error."), "fields": ""}
-                return Response(error, status=500)
+            # Process DMZ reponse 
+            return helper.dmz_response_process(response)
 
-            # Get data from dmz reponse
-            result = response.json()
-
-            # Translate error message when code is 400
-            if response.status_code == 400:
-                result["message"] = _(result["message"])
-                return Response(result, status=response.status_code)
-
-            return Response(result, status=200)
         else:
             error = {"code": 400, "message": _(
                 "You don't have permission to access."), "fields": ""}
             return Response(error, status=400)
-    except requests.Timeout:
-        print "Request DMZ time out "
-        return HttpResponse('API connection timeout')
+
     except Transaction_Type.DoesNotExist, e:
         error = {"code": 400, "message": _(
             "Filter Id Invalid."), "fields": ""}
         return Response(error, status=400)
+    except requests.Timeout:
+        print "Request DMZ time out "
+        error = {"code": 500, "message": _("API connection timeout."), "fields": ""}
+        return Response(error, status=500)
     except Exception, e:
-        print('play_transactions: %s', traceback.format_exc())
-        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        print('card_information: %s', traceback.format_exc())
+        error = {"code": 500, "message": _("Internal Server Error. Please contact administrator."), "fields": ""}
         return Response(error, status=500)
 
 
@@ -828,24 +783,8 @@ def card_transactions(request):
             response = requests.get(
                 transactions_card_api_url, params=request.GET, headers=headers)
 
-            if response.status_code == 401:
-                print "DMZ reponse status code 401", response.text
-                error = {"code": 500, "message": _(
-                    "Call API Unauthorized."), "fields": ""}
-                return Response(error, status=500)
-            if response.status_code != 200 and response.status_code != 400:
-                print "DMZ reponse status code not 200", response.text
-                error = {"code": 500, "message": _(
-                    "Call API error."), "fields": ""}
-                return Response(error, status=500)
-
-            # Get data from dmz reponse
-            result = response.json()
-            # Translate error message when code is 400
-            if response.status_code == 400:
-                result["message"] = _(result["message"])
-                return Response(result, status=response.status_code)
-            return Response(result, status=200)
+            # Process DMZ reponse 
+            return helper.dmz_response_process(response)
         else:
             error = {"code": 400, "message": _(
                 "You don't have permission to access."), "fields": ""}
@@ -853,11 +792,11 @@ def card_transactions(request):
 
     except requests.Timeout:
         print "Request DMZ time out "
-        return HttpResponse('API connection timeout')
-
+        error = {"code": 500, "message": _("API connection timeout."), "fields": ""}
+        return Response(error, status=500)
     except Exception, e:
-        print('card_transactions: %s', traceback.format_exc())
-        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        print('card_information: %s', traceback.format_exc())
+        error = {"code": 500, "message": _("Internal Server Error. Please contact administrator."), "fields": ""}
         return Response(error, status=500)
 
 
@@ -884,24 +823,8 @@ def reissue_history(request):
             response = requests.get(
                 reissue_history_api_url, params=request.GET, headers=headers)
 
-            if response.status_code == 401:
-                print "DMZ reponse status code 401", response.text
-                error = {"code": 500, "message": _(
-                    "Call API Unauthorized."), "fields": ""}
-                return Response(error, status=500)
-            if response.status_code != 200 and response.status_code != 400:
-                print "DMZ reponse status code not 200", response.text
-                error = {"code": 500, "message": _(
-                    "Call API error."), "fields": ""}
-                return Response(error, status=500)
-
-            # Get data from dmz reponse
-            result = response.json()
-            # Translate error message when code is 400
-            if response.status_code == 400:
-                result["message"] = _(result["message"])
-                return Response(result, status=response.status_code)
-            return Response(result, status=200)
+            # Process DMZ reponse 
+            return helper.dmz_response_process(response)
         else:
             error = {"code": 400, "message": _(
                 "You don't have permission to access."), "fields": ""}
@@ -909,11 +832,11 @@ def reissue_history(request):
 
     except requests.Timeout:
         print "Request DMZ time out "
-        return HttpResponse('API connection timeout')
-
+        error = {"code": 500, "message": _("API connection timeout."), "fields": ""}
+        return Response(error, status=500)
     except Exception, e:
-        print('reissue_history: %s', traceback.format_exc())
-        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        print('card_information: %s', traceback.format_exc())
+        error = {"code": 500, "message": _("Internal Server Error. Please contact administrator."), "fields": ""}
         return Response(error, status=500)
 
 
@@ -1543,24 +1466,9 @@ def ticket_transfer(request):
             # Call DMZ get card infomation
             response = requests.post(
                 ticket_transfer_api_url, data=json.dumps(params_api), headers=headers)
-            if response.status_code == 401:
-                print "DMZ reponse status code 401", response.text
-                error = {"code": 500, "message": _(
-                    "Call API Unauthorized."), "fields": ""}
-                return Response(error, status=500)
-            if response.status_code != 200 and response.status_code != 400:
-                print "DMZ reponse status code not 200", response.text
-                error = {"code": 500, "message": _(
-                    "Call API error."), "fields": ""}
-                return Response(error, status=500)
 
-            # Get data from dmz reponse
-            result = response.json()
-            # Translate error message when code is 400
-            if response.status_code == 400:
-                result["message"] = _(result["message"])
-                return Response(result, status=response.status_code)
-            return Response(result, status=200)
+            # Process DMZ reponse 
+            return helper.dmz_response_process(response)
         else:
             error = {"code": 400, "message": _(
                 "You don't have permission to access."), "fields": ""}
@@ -1568,11 +1476,11 @@ def ticket_transfer(request):
 
     except requests.Timeout:
         print "Request DMZ time out "
-        return HttpResponse('API connection timeout')
-
+        error = {"code": 500, "message": _("API connection timeout."), "fields": ""}
+        return Response(error, status=500)
     except Exception, e:
-        print('ticket_transfer: %s', traceback.format_exc())
-        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        print('card_information: %s', traceback.format_exc())
+        error = {"code": 500, "message": _("Internal Server Error. Please contact administrator."), "fields": ""}
         return Response(error, status=500)
 
 
@@ -1633,34 +1541,19 @@ def ticket_transfer_transactions(request):
             response = requests.get(
                 transactions_ticket_api_url, params=request.GET, headers=headers)
 
-            if response.status_code == 401:
-                print "DMZ reponse status code 401", response.text
-                error = {"code": 500, "message": _(
-                    "Call API Unauthorized."), "fields": ""}
-                return Response(error, status=500)
-            if response.status_code != 200 and response.status_code != 400:
-                print "DMZ reponse status code not 200", response.text
-                error = {"code": 500, "message": _(
-                    "Call API error."), "fields": ""}
-                return Response(error, status=500)
-
-            # Get data from dmz reponse
-            result = response.json()
-            # Translate error message when code is 400
-            if response.status_code == 400:
-                result["message"] = _(result["message"])
-                return Response(result, status=response.status_code)
-            return Response(result, status=200)
+            # Process DMZ reponse 
+            return helper.dmz_response_process(response)
         else:
             error = {"code": 400, "message": _(
                 "You don't have permission to access."), "fields": ""}
             return Response(error, status=400)
     except requests.Timeout:
         print "Request DMZ time out "
-        return HttpResponse('API connection timeout')
+        error = {"code": 500, "message": _("API connection timeout."), "fields": ""}
+        return Response(error, status=500)
     except Exception, e:
-        print('ticket_transfer_transactions: %s', traceback.format_exc())
-        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        print('card_information: %s', traceback.format_exc())
+        error = {"code": 500, "message": _("Internal Server Error. Please contact administrator."), "fields": ""}
         return Response(error, status=500)
 
 """
@@ -1685,24 +1578,8 @@ def other_transactions(request):
             response = requests.get(
                 other_transactions_api_url, params=request.GET, headers=headers)
 
-            if response.status_code == 401:
-                print "DMZ reponse status code 401", response.text
-                error = {"code": 500, "message": _(
-                    "Call API Unauthorized."), "fields": ""}
-                return Response(error, status=500)
-            if response.status_code != 200 and response.status_code != 400:
-                print "DMZ reponse status code not 200", response.text
-                error = {"code": 500, "message": _(
-                    "Call API error."), "fields": ""}
-                return Response(error, status=500)
-
-            # Get data from dmz reponse
-            result = response.json()
-            # Translate error message when code is 400
-            if response.status_code == 400:
-                result["message"] = _(result["message"])
-                return Response(result, status=response.status_code)
-            return Response(result, status=200)
+            # Process DMZ reponse 
+            return helper.dmz_response_process(response)
         else:
             error = {"code": 400, "message": _(
                 "You don't have permission to access."), "fields": ""}
@@ -1710,9 +1587,9 @@ def other_transactions(request):
 
     except requests.Timeout:
         print "Request DMZ time out "
-        return HttpResponse('API connection timeout')
-
+        error = {"code": 500, "message": _("API connection timeout."), "fields": ""}
+        return Response(error, status=500)
     except Exception, e:
-        print('card_transactions: %s', traceback.format_exc())
-        error = {"code": 500, "message": "%s" % e, "fields": ""}
+        print('card_information: %s', traceback.format_exc())
+        error = {"code": 500, "message": _("Internal Server Error. Please contact administrator."), "fields": ""}
         return Response(error, status=500)

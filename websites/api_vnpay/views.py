@@ -131,6 +131,10 @@ def payment_ipn(request):
                 if reload_order.order_status == 'done':
                     return JsonResponse({'RspCode': '02', 'Message': 'Order Already Update'})
 
+                # Save translation no to db to debugs
+                reload_order.transaction_no = vnp_TransactionNo
+                reload_order.save()
+
                 if vnp_ResponseCode == '00':
                     # handle confirm reload and send sms , email
                     actions.process_reload_payment_success(request, reload_order, amount)
@@ -179,21 +183,21 @@ def payment_return(request):
         if vnp.validate_response(settings.VNPAY_HASH_SECRET_KEY):
             if vnp_ResponseCode == "00":
                 return render(request, "websites/vnpay/payment_return.html", {"title": "Payment Result",
-                                                               "result": "Success", "order_id": order_id,
+                                                               "result": _("Success"), "order_id": order_id,
                                                                "amount": amount,
                                                                "order_desc": order_desc,
                                                                "vnp_TransactionNo": vnp_TransactionNo,
                                                                "vnp_ResponseCode": vnp_ResponseCode})
             else:
                 return render(request, "websites/vnpay/payment_return.html", {"title": "Payment Resutl",
-                                                               "result": "Error", "order_id": order_id,
+                                                               "result": _("Error"), "order_id": order_id,
                                                                "amount": amount,
                                                                "order_desc": order_desc,
                                                                "vnp_TransactionNo": vnp_TransactionNo,
                                                                "vnp_ResponseCode": vnp_ResponseCode})
         else:
             return render(request, "websites/vnpay/payment_return.html",
-                          {"title": "Payment Result", "result": "Error", "order_id": order_id, "amount": amount,
+                          {"title": "Payment Result", "result": _("Error"), "order_id": order_id, "amount": amount,
                            "order_desc": order_desc, "vnp_TransactionNo": vnp_TransactionNo,
                            "vnp_ResponseCode": vnp_ResponseCode, "msg": "Sai checksum"})
     else:

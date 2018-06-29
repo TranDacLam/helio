@@ -36,7 +36,7 @@ from dateutil.parser import parse
 from decorator import check_role_permission
 import model_key
 import unidecode
-
+import api.helper as helper
 import constants as constant
 
 """
@@ -1136,47 +1136,46 @@ class UserEmbedDetail(APIView):
                 response = requests.get(card_information_api_url, params={
                                         'is_full_info': True}, headers=headers)
 
-                if response.status_code == 401:
-                    print "DMZ reponse status code 401", response.text
-                    error = {"code": 500, "message": _(
-                        "Internal Server Error"), "fields": ""}
-                    return Response(error, status=500)
-                if response.status_code != 200 and response.status_code != 400:
-                    print "DMZ reponse status code not 200", response.text
-                    error = {"code": 500, "message": _(
-                        "Internal Server Error"), "fields": ""}
-                    return Response(error, status=500)
+               # handle decoding json
+                try:
+                    # convert response text to json
+                    json_data = json.loads(response.text)
+                except ValueError as e:
+                    print "Error convert json : %s" % e
+                    return Response({"code": 500, "message": _("Handle data error.")}, status=500)
 
-                # Get data from dmz reponse
-                dmz_result = response.json()
-                # Translate error message when code is 400
-                if response.status_code == 400:
-                    result["message"] = _(dmz_result["message"])
-                    return Response(result, status=response.status_code)
+                # Process DMZ reponse 
+                result = helper.code_mapping_error_dmz(response.status_code, json_data)
 
-                if not dmz_result:
+                if response.status_code != 200 :
+                    print "DMZ Response Text:::", response.text
+                    return Response(result, status=result['code'])
+
+                # If barcode is exist then dmz then return data. else return {}
+                if not result:
                     return Response({"code": 400, "message": _("Barcode not found."), "fields": ""}, status=400)
                 # check Customer_Id is exist
-                if not dmz_result['customer_id']:
+                if not result['customer_id']:
                     return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
+
                 # check user embed is related
                 user_app = User.objects.filter(barcode=barcode)
 
-                first_name = dmz_result['first_name'] if dmz_result[
+                first_name = result['first_name'] if result[
                     'first_name'] else ''
-                surname = dmz_result['surname'] if dmz_result[
+                surname = result['surname'] if result[
                     'surname'] else ''
                 result['full_name'] = (first_name + ' ' + surname).strip()
                 result['birth_date'] = datetime.strftime(
-                    parse(dmz_result['birthday']), '%d/%m/%Y') if dmz_result['birthday'] else ''
-                result['address'] = dmz_result['address']
-                result['email'] = dmz_result['email']
-                result['phone'] = dmz_result['phone']
-                result['customer_id'] = dmz_result['customer_id']
-                result['cards_state'] = dmz_result['card_state']
-                result['address'] = dmz_result['address']
+                    parse(result['birthday']), '%d/%m/%Y') if result['birthday'] else ''
+                result['address'] = result['address']
+                result['email'] = result['email']
+                result['phone'] = result['phone']
+                result['customer_id'] = result['customer_id']
+                result['cards_state'] = result['card_state']
+                result['address'] = result['address']
                 result['barcode'] = barcode
-                result['personal_id'] = dmz_result['peronal_id']
+                result['personal_id'] = result['peronal_id']
                 result['is_related'] = True if user_app else False
                 return Response(result, status=200)
 
@@ -1223,22 +1222,8 @@ class UserEmbedDetail(APIView):
             response = requests.put(card_information_api_url, data=json.dumps(
                 request.data), headers=headers)
 
-            if response.status_code == 401:
-                print "DMZ reponse status code 401", response.text
-                error = {"code": 500, "message": _(
-                    "Internal Server Error"), "fields": ""}
-                return Response(error, status=500)
-            if response.status_code != 200 and response.status_code != 400:
-                print "DMZ reponse status code not 200", response.text
-                error = {"code": 500, "message": _(
-                    "Internal Server Error"), "fields": ""}
-                return Response(error, status=500)
-
-            # Get data from dmz reponse
-            result = response.json()
-
-            result["message"] = _(result["message"])
-            return Response(result, status=response.status_code)
+            # Process DMZ reponse 
+            return helper.dmz_response_process(response)
 
         except Exception, e:
             print "Errors UserEmbedDetail PUT  : ", traceback.format_exc()
@@ -1288,28 +1273,26 @@ class RelateAPI(APIView):
                 response = requests.get(card_information_api_url, params={
                                         'is_full_info': True}, headers=headers)
 
-                if response.status_code == 401:
-                    print "DMZ reponse status code 401", response.text
-                    error = {"code": 500, "message": _(
-                        "Internal Server Error"), "fields": ""}
-                    return Response(error, status=500)
-                if response.status_code != 200 and response.status_code != 400:
-                    print "DMZ reponse status code not 200", response.text
-                    error = {"code": 500, "message": _(
-                        "Internal Server Error"), "fields": ""}
-                    return Response(error, status=500)
+                # handle decoding json
+                try:
+                    # convert response text to json
+                    json_data = json.loads(response.text)
+                except ValueError as e:
+                    print "Error convert json : %s" % e
+                    return Response({"code": 500, "message": _("Handle data error.")}, status=500)
 
-                # Get data from dmz reponse
-                dmz_result = response.json()
-                # Translate error message when code is 400
-                if response.status_code == 400:
-                    result["message"] = _(dmz_result["message"])
-                    return Response(result, status=response.status_code)
+                # Process DMZ reponse 
+                result = helper.code_mapping_error_dmz(response.status_code, json_data)
 
-                if not dmz_result:
+                if response.status_code != 200 :
+                    print "DMZ Response Text:::", response.text
+                    return Response(result, status=result['code'])
+
+                # If barcode is exist then dmz then return data. else return {}
+                if not result:
                     return Response({"code": 400, "message": _("Barcode not found."), "fields": ""}, status=400)
                 # check Customer_Id is exist
-                if not dmz_result['customer_id']:
+                if not result['customer_id']:
                     return Response({"code": 400, "message": _("Card has no user."), "fields": ""}, status=400)
 
                 MAPPING_ERROR = {
@@ -1317,10 +1300,10 @@ class RelateAPI(APIView):
                     2: _("Card is used.")
                 }
 
-                if dmz_result['card_state'] in MAPPING_ERROR:
-                    return Response({"code": 400, "message": MAPPING_ERROR[dmz_result['card_state']], "fields": ""}, status=400)
+                if result['card_state'] in MAPPING_ERROR:
+                    return Response({"code": 400, "message": MAPPING_ERROR[result['card_state']], "fields": ""}, status=400)
 
-                if dmz_result['card_state'] > 2:
+                if result['card_state'] > 2:
                     return Response({"code": 400, "message": _("Card is invalid."), "fields": ""}, status=400)
 
                 # check user embed is related
