@@ -249,14 +249,15 @@ def process_reload_payment_success(request, reload_order, amount):
             reload_error_handle(request, reload_order, amount, reason)
         else:
             result = call_api_reload_to_card_barcode(reload_order)
-            data = result['data']
+
             if result['code'] == 200:
+                data = result['data']
                 # Get phone and email recieved to send sms and email.
                 reload_sucess_handle(request, reload_order, data['email'], data['phone'], data['cash_balance'])
             else:
                 reason = 'Call DMZ '
                 if result['code'] == 400:
-                    reason = data['message']
+                    reason = result['message']
                 reload_error_handle(request, reload_order, amount, reason)
 
     except Exception, e:
