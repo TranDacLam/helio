@@ -179,21 +179,21 @@ def payment_return(request):
         if vnp.validate_response(settings.VNPAY_HASH_SECRET_KEY):
             if vnp_ResponseCode == "00":
                 return render(request, "websites/vnpay/payment_return.html", {"title": "Payment Result",
-                                                               "result": "Success", "order_id": order_id,
+                                                               "result": _("Success"), "order_id": order_id,
                                                                "amount": amount,
                                                                "order_desc": order_desc,
                                                                "vnp_TransactionNo": vnp_TransactionNo,
                                                                "vnp_ResponseCode": vnp_ResponseCode})
             else:
                 return render(request, "websites/vnpay/payment_return.html", {"title": "Payment Resutl",
-                                                               "result": "Error", "order_id": order_id,
+                                                               "result": _("Error"), "order_id": order_id,
                                                                "amount": amount,
                                                                "order_desc": order_desc,
                                                                "vnp_TransactionNo": vnp_TransactionNo,
                                                                "vnp_ResponseCode": vnp_ResponseCode})
         else:
             return render(request, "websites/vnpay/payment_return.html",
-                          {"title": "Payment Result", "result": "Error", "order_id": order_id, "amount": amount,
+                          {"title": "Payment Result", "result": _("Error"), "order_id": order_id, "amount": amount,
                            "order_desc": order_desc, "vnp_TransactionNo": vnp_TransactionNo,
                            "vnp_ResponseCode": vnp_ResponseCode, "msg": "Sai checksum"})
     else:

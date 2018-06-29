@@ -6,7 +6,7 @@ import json
 from core import helio_sms
 import api.utils as utils
 from django.contrib.sites.models import Site
-
+import api.helper as helper
 import core.constants as constants
 
 def send_mail_reload_success(is_secure, email, reload_order):
@@ -89,21 +89,24 @@ def call_api_vefiry_card_barcode(barcode):
         response = requests.get(
             card_information_api_url, headers=headers)
 
-        if response.status_code == 401:
-            print "DMZ reponse status code 401", response.text
-            return {"code": 500, "message": _(
-                "Call API Unauthorized."), "fields": ""}
+        # handle decoding json
+        try:
+            # convert response text to json
+            json_data = json.loads(response.text)
+        except ValueError as e:
+            print "Error convert json : %s" % e
+            return {"code": 500, "message": _("Handle data error."), "fields": ""}
 
-        if response.status_code != 200 and response.status_code != 400:
-            print "DMZ reponse status code not 200", response.text
-            return {"code": 500, "message": _("Call API error."), "fields": ""}
+        # Mapping status dmz reponse with reponse
+        result = helper.code_mapping_error_dmz(response.status_code, json_data)
+        if response.status_code != 200 :
+            print "DMZ Response Text:::", response.text
+            return result
 
-        # Get data from dmz reponse
-        result = response.json()
-
+        # if barcode exist in dmz then return data else return {}
         if not result:
             return {"code": 400, "message": _(
-                "Card barcode not foun."), "fields": ""}
+                "Card barcode not found."), "fields": ""}
 
         # Only accept reload for guest member gold
         if result['card_status_code'] not in constants.CARD_TYPE_ACCEPT_RELOAD:
@@ -118,7 +121,7 @@ def call_api_vefiry_card_barcode(barcode):
 
     except requests.Timeout:
         print "API connection timeout"
-        return {"code": 500, "message": "API connection timeout", "fields": ""}
+        return {"code": 500, "message": _("API connection timeout"), "fields": ""}
 
     except Exception, e:
         print('ticket_transfer: %s', traceback.format_exc())
@@ -156,22 +159,26 @@ def call_api_reload_to_card_barcode(reload_order):
         response = requests.post(
             reload_api_url, data=json.dumps(params_api), headers=headers)
 
-        print response.json()
-        if response.status_code == 401:
-            print "DMZ reponse status code 401", response.text
-            return {"code": 500, "message": _(
-                "Call API Unauthorized."), "fields": ""}
-        if response.status_code != 200 and response.status_code != 400:
-            print "DMZ reponse status code not 200", response.text
-            return {"code": 500, "message": _(
-                "Call API error."), "fields": ""}
+        # handle decoding json
+        try:
+            # convert response text to json
+            json_data = json.loads(response.text)
+        except ValueError as e:
+            print "Error convert json : %s" % e
+            return {"code": 500, "message": _("Handle data error."), "fields": ""}
+
+        # Mapping status dmz reponse with reponse
+        result = helper.code_mapping_error_dmz(response.status_code, json_data)
+        if response.status_code != 200 :
+            print "DMZ Response Text:::", response.text
+            return result
 
         # Get data from dmz reponse
-        return {'code': response.status_code, "data": response.json()}
+        return {'code': 200, "data": json_data}
 
     except requests.Timeout:
         print "API connection timeout"
-        return {"code": 500, "message": "API connection timeout", "fields": ""}
+        return {"code": 500, "message": _("API connection timeout"), "fields": ""}
 
     except Exception, e:
         print('ticket_transfer: %s', traceback.format_exc())
@@ -189,7 +196,7 @@ def reload_sucess_handle(request, reload_order, email, phone, cash_balance):
 
     if phone:
         cash_balance = '{:,.0f}'.format(cash_balance)
-        content_sms = """Ban vua duoc nap %s VND vao the %s. Ma giao dich: %s. So du hien tai: %s. Noi dung n tien: """  % (reload_order.amount, 
+        content_sms = """Ban vua duoc nap %s VND vao the %s. Ma giao dich: %s. So du hien tai: %s. Noi dung nap tien: """  % (reload_order.amount, 
                                 reload_order.barcode, reload_order.order_id, cash_balance)
 
         content_sms += str(reload_order.order_desc.replace("\r\n", ""))
