@@ -131,6 +131,10 @@ def payment_ipn(request):
                 if reload_order.order_status == 'done':
                     return JsonResponse({'RspCode': '02', 'Message': 'Order Already Update'})
 
+                # Save translation no to db to debugs
+                reload_order.transaction_no = vnp_TransactionNo
+                reload_order.save()
+
                 if vnp_ResponseCode == '00':
                     # handle confirm reload and send sms , email
                     actions.process_reload_payment_success(request, reload_order, amount)
