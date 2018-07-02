@@ -242,9 +242,9 @@ def process_reload_payment_success(request, reload_order, amount):
         # Amount Divisoon for 100 because vnpay return amount * 100
         amount = float(amount)/100
 
-        print "VNPAY amount:: %s , Helio Amount:: %s" % (amount, reload_order.amount)
+        print "VNPAY amount:: %s , Helio Amount:: %s" % (amount, reload_order.payment_amount)
 
-        if amount != reload_order.amount:
+        if amount != reload_order.payment_amount:
             reason = "Amount Not Match"
             reload_error_handle(request, reload_order, amount, reason)
         else:

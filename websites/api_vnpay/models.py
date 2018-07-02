@@ -26,3 +26,5 @@ class ReloadInfomation(DateTimeModel):
     barcode = models.CharField(max_length=100)
     full_name = models.CharField(max_length=100)
     transaction_no = models.CharField(_('Transaction No'), max_length=100, null=True, blank=True)
+    fee = models.IntegerField(_('Fee'))
+    payment_amount = models.IntegerField(_('Payment Amount'), default=0)
