@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from rest_framework import generics as drf_generics
 from core.models import *
 from api.serializers import *
+from api_admin import serializers as admin_serializers
 import helper
 import ast
 import constants
@@ -1506,6 +1507,7 @@ def fees_apply_by_type(request):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def hot_advs_latest(request):
     print "GET HOT ADVS LATEST"
     try:
@@ -1593,3 +1595,21 @@ def other_transactions(request):
         print('card_information: %s', traceback.format_exc())
         error = {"code": 500, "message": _("Internal Server Error. Please contact administrator."), "fields": ""}
         return Response(error, status=500)
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def denominations(request):
+        """
+        Get all Denomination to list 
+        """
+        try:
+            list_denomination = Denomination.objects.all().order_by('-created')
+            serializer = admin_serializers.DenominationSerializer(
+                list_denomination, many=True)
+            return Response(serializer.data)
+        except Exception, e:
+            print 'DenominationView %s', traceback.format_exc()
+            error = {"code": 500, "message": _(
+                "Internal Server Error"), "fields": ""}
+            return Response(error, status=500)
