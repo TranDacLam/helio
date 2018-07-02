@@ -62,4 +62,5 @@ urlpatterns = [
     url(r'^hot_advs/latest/$', views.hot_advs_latest, name="get-hot-advs-latest"),
     url(r'^transactions/ticket/transfer/$', views.ticket_transfer_transactions, name="ticket-transfer-transactions"),
     url(r'^transactions/other/$', views.other_transactions, name="other-transactions"),
+    url(r'^denominations/$', views.denominations, name="get-denomination"),
 ]
