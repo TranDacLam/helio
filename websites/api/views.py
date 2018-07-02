@@ -1418,11 +1418,12 @@ def ticket_transfer(request):
         received_card_barcode = request.data.get('received_card_barcode', 0)
         ticket_amount = request.data.get('ticket_amount', 0)
         fee = request.data.get('fee', '')
+        order_desc = request.data.get('order_desc', '')
 
         if request.user.barcode == source_card_barcode:
-            if not source_card_barcode or not received_card_barcode or not ticket_amount or (not fee and fee != 0):
+            if not order_desc or not source_card_barcode or not received_card_barcode or not ticket_amount or (not fee and fee != 0):
                 error = {
-                    "status": "05", "message": _("Please check required fields : [source_card_barcode, received_card_barcode, ticket_amount, fee]")}
+                    "status": "05", "message": _("Please check required fields : [source_card_barcode, received_card_barcode, ticket_amount, fee, order_desc]")}
                 return JsonResponse(error, status=400)
             if source_card_barcode == received_card_barcode:
                 error = {
@@ -1459,6 +1460,7 @@ def ticket_transfer(request):
                 "received_card_barcode": received_card_barcode,
                 "ticket_amount": ticket_amount,
                 "fee": fee,
+                "order_desc": order_desc,
                 "system_name": "helio_app",
                 "source_email": request.user.email,
                 "source_full_name": request.user.full_name

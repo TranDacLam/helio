@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-29 10:00+0700\n"
+"POT-Creation-Date: 2018-07-02 14:15+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -189,8 +189,8 @@ msgstr ""
 msgid "Empty file upload result"
 msgstr ""
 
-#: templates/multiupload/upload.html:198 websites/api_vnpay/views.py:189
-#: websites/api_vnpay/views.py:196
+#: templates/multiupload/upload.html:198 websites/api_vnpay/views.py:198
+#: websites/api_vnpay/views.py:205
 msgid "Error"
 msgstr ""
 
@@ -662,69 +662,70 @@ msgstr ""
 msgid "Query to DB embed fail"
 msgstr ""
 
-#: websites/api/dmz_message.py:13 websites/api_admin/decorator.py:50
-#: websites/api_admin/views.py:60 websites/api_admin/views.py:85
-#: websites/api_admin/views.py:114 websites/api_admin/views.py:132
-#: websites/api_admin/views.py:154 websites/api_admin/views.py:211
-#: websites/api_admin/views.py:253 websites/api_admin/views.py:326
-#: websites/api_admin/views.py:346 websites/api_admin/views.py:371
-#: websites/api_admin/views.py:390 websites/api_admin/views.py:409
-#: websites/api_admin/views.py:459 websites/api_admin/views.py:479
-#: websites/api_admin/views.py:504 websites/api_admin/views.py:522
-#: websites/api_admin/views.py:541 websites/api_admin/views.py:569
-#: websites/api_admin/views.py:586 websites/api_admin/views.py:598
-#: websites/api_admin/views.py:672 websites/api_admin/views.py:691
-#: websites/api_admin/views.py:725 websites/api_admin/views.py:741
-#: websites/api_admin/views.py:754 websites/api_admin/views.py:799
-#: websites/api_admin/views.py:847 websites/api_admin/views.py:877
-#: websites/api_admin/views.py:893 websites/api_admin/views.py:911
-#: websites/api_admin/views.py:972 websites/api_admin/views.py:1013
-#: websites/api_admin/views.py:1103 websites/api_admin/views.py:1187
-#: websites/api_admin/views.py:1232 websites/api_admin/views.py:1330
-#: websites/api_admin/views.py:1358 websites/api_admin/views.py:1390
-#: websites/api_admin/views.py:1405 websites/api_admin/views.py:1433
-#: websites/api_admin/views.py:1448 websites/api_admin/views.py:1480
-#: websites/api_admin/views.py:1496 websites/api_admin/views.py:1515
-#: websites/api_admin/views.py:1544 websites/api_admin/views.py:1560
-#: websites/api_admin/views.py:1582 websites/api_admin/views.py:1612
-#: websites/api_admin/views.py:1632 websites/api_admin/views.py:1644
-#: websites/api_admin/views.py:1667 websites/api_admin/views.py:1694
-#: websites/api_admin/views.py:1710 websites/api_admin/views.py:1730
-#: websites/api_admin/views.py:1745 websites/api_admin/views.py:1768
-#: websites/api_admin/views.py:1785 websites/api_admin/views.py:1819
-#: websites/api_admin/views.py:1835 websites/api_admin/views.py:1852
-#: websites/api_admin/views.py:1867 websites/api_admin/views.py:1890
-#: websites/api_admin/views.py:1909 websites/api_admin/views.py:1935
-#: websites/api_admin/views.py:1950 websites/api_admin/views.py:1971
-#: websites/api_admin/views.py:1986 websites/api_admin/views.py:2007
-#: websites/api_admin/views.py:2025 websites/api_admin/views.py:2051
-#: websites/api_admin/views.py:2067 websites/api_admin/views.py:2087
-#: websites/api_admin/views.py:2102 websites/api_admin/views.py:2125
-#: websites/api_admin/views.py:2143 websites/api_admin/views.py:2165
-#: websites/api_admin/views.py:2190 websites/api_admin/views.py:2205
-#: websites/api_admin/views.py:2224 websites/api_admin/views.py:2239
-#: websites/api_admin/views.py:2261 websites/api_admin/views.py:2279
-#: websites/api_admin/views.py:2318 websites/api_admin/views.py:2346
-#: websites/api_admin/views.py:2368 websites/api_admin/views.py:2397
-#: websites/api_admin/views.py:2431 websites/api_admin/views.py:2465
-#: websites/api_admin/views.py:2485 websites/api_admin/views.py:2507
-#: websites/api_admin/views.py:2532 websites/api_admin/views.py:2548
-#: websites/api_admin/views.py:2568 websites/api_admin/views.py:2583
-#: websites/api_admin/views.py:2605 websites/api_admin/views.py:2623
-#: websites/api_admin/views.py:2644 websites/api_admin/views.py:2667
-#: websites/api_admin/views.py:2683 websites/api_admin/views.py:2705
-#: websites/api_admin/views.py:2737 websites/api_admin/views.py:2754
-#: websites/api_admin/views.py:2765 websites/api_admin/views.py:2786
-#: websites/api_admin/views.py:2828 websites/api_admin/views.py:2872
-#: websites/api_admin/views.py:2943 websites/api_admin/views.py:2999
-#: websites/api_admin/views.py:3021 websites/api_admin/views.py:3049
+#: websites/api/dmz_message.py:13 websites/api/views.py:1616
+#: websites/api_admin/decorator.py:47 websites/api_admin/views.py:60
+#: websites/api_admin/views.py:85 websites/api_admin/views.py:114
+#: websites/api_admin/views.py:132 websites/api_admin/views.py:154
+#: websites/api_admin/views.py:211 websites/api_admin/views.py:253
+#: websites/api_admin/views.py:326 websites/api_admin/views.py:346
+#: websites/api_admin/views.py:371 websites/api_admin/views.py:390
+#: websites/api_admin/views.py:409 websites/api_admin/views.py:459
+#: websites/api_admin/views.py:479 websites/api_admin/views.py:504
+#: websites/api_admin/views.py:522 websites/api_admin/views.py:541
+#: websites/api_admin/views.py:569 websites/api_admin/views.py:586
+#: websites/api_admin/views.py:598 websites/api_admin/views.py:672
+#: websites/api_admin/views.py:691 websites/api_admin/views.py:725
+#: websites/api_admin/views.py:741 websites/api_admin/views.py:754
+#: websites/api_admin/views.py:799 websites/api_admin/views.py:847
+#: websites/api_admin/views.py:877 websites/api_admin/views.py:893
+#: websites/api_admin/views.py:911 websites/api_admin/views.py:972
+#: websites/api_admin/views.py:1013 websites/api_admin/views.py:1103
+#: websites/api_admin/views.py:1187 websites/api_admin/views.py:1232
+#: websites/api_admin/views.py:1330 websites/api_admin/views.py:1358
+#: websites/api_admin/views.py:1390 websites/api_admin/views.py:1405
+#: websites/api_admin/views.py:1433 websites/api_admin/views.py:1448
+#: websites/api_admin/views.py:1480 websites/api_admin/views.py:1496
+#: websites/api_admin/views.py:1515 websites/api_admin/views.py:1544
+#: websites/api_admin/views.py:1560 websites/api_admin/views.py:1582
+#: websites/api_admin/views.py:1612 websites/api_admin/views.py:1632
+#: websites/api_admin/views.py:1644 websites/api_admin/views.py:1667
+#: websites/api_admin/views.py:1694 websites/api_admin/views.py:1710
+#: websites/api_admin/views.py:1730 websites/api_admin/views.py:1745
+#: websites/api_admin/views.py:1768 websites/api_admin/views.py:1785
+#: websites/api_admin/views.py:1819 websites/api_admin/views.py:1835
+#: websites/api_admin/views.py:1852 websites/api_admin/views.py:1867
+#: websites/api_admin/views.py:1890 websites/api_admin/views.py:1909
+#: websites/api_admin/views.py:1935 websites/api_admin/views.py:1950
+#: websites/api_admin/views.py:1971 websites/api_admin/views.py:1986
+#: websites/api_admin/views.py:2007 websites/api_admin/views.py:2025
+#: websites/api_admin/views.py:2051 websites/api_admin/views.py:2067
+#: websites/api_admin/views.py:2087 websites/api_admin/views.py:2102
+#: websites/api_admin/views.py:2125 websites/api_admin/views.py:2143
+#: websites/api_admin/views.py:2165 websites/api_admin/views.py:2190
+#: websites/api_admin/views.py:2205 websites/api_admin/views.py:2224
+#: websites/api_admin/views.py:2239 websites/api_admin/views.py:2261
+#: websites/api_admin/views.py:2279 websites/api_admin/views.py:2318
+#: websites/api_admin/views.py:2346 websites/api_admin/views.py:2368
+#: websites/api_admin/views.py:2397 websites/api_admin/views.py:2431
+#: websites/api_admin/views.py:2465 websites/api_admin/views.py:2485
+#: websites/api_admin/views.py:2507 websites/api_admin/views.py:2532
+#: websites/api_admin/views.py:2548 websites/api_admin/views.py:2568
+#: websites/api_admin/views.py:2583 websites/api_admin/views.py:2605
+#: websites/api_admin/views.py:2623 websites/api_admin/views.py:2644
+#: websites/api_admin/views.py:2667 websites/api_admin/views.py:2683
+#: websites/api_admin/views.py:2705 websites/api_admin/views.py:2737
+#: websites/api_admin/views.py:2754 websites/api_admin/views.py:2765
+#: websites/api_admin/views.py:2786 websites/api_admin/views.py:2828
+#: websites/api_admin/views.py:2872 websites/api_admin/views.py:2943
+#: websites/api_admin/views.py:2999 websites/api_admin/views.py:3021
+#: websites/api_admin/views.py:3049
 msgid "Internal Server Error"
 msgstr ""
 
-#: websites/api/dmz_message.py:14 websites/api/views.py:658
-#: websites/api/views.py:718 websites/api/views.py:775
-#: websites/api/views.py:815 websites/api/views.py:1533
-#: websites/api/views.py:1570
+#: websites/api/dmz_message.py:14 websites/api/views.py:659
+#: websites/api/views.py:719 websites/api/views.py:776
+#: websites/api/views.py:816 websites/api/views.py:1537
+#: websites/api/views.py:1574
 #, fuzzy
 #| msgid "This field is required."
 msgid "Card id field is required."
@@ -783,263 +784,263 @@ msgstr ""
 msgid "Either message_plain or message_html should be not None"
 msgstr ""
 
-#: websites/api/views.py:105
+#: websites/api/views.py:106
 #, fuzzy
 #| msgid "This field is required."
 msgid "The email field is required."
 msgstr "This field is required."
 
-#: websites/api/views.py:122
+#: websites/api/views.py:123
 msgid "Send security code to email successfully."
 msgstr ""
 
-#: websites/api/views.py:126
+#: websites/api/views.py:127
 msgid "Email matching query does not exist."
 msgstr ""
 
-#: websites/api/views.py:141
+#: websites/api/views.py:142
 msgid ""
 "Please check required fields : [email, secure_code, password1, password2]"
 msgstr ""
 
-#: websites/api/views.py:144
+#: websites/api/views.py:145
 msgid "Password does not match."
 msgstr ""
 
-#: websites/api/views.py:153
+#: websites/api/views.py:154
 msgid "Reset Password Successfully."
 msgstr ""
 
-#: websites/api/views.py:156
+#: websites/api/views.py:157
 msgid "The secure code matching query does not exist."
 msgstr ""
 
-#: websites/api/views.py:173
+#: websites/api/views.py:174
 msgid "Upload avatar error. Please contact administartor"
 msgstr ""
 
-#: websites/api/views.py:193
+#: websites/api/views.py:194
 msgid "This phone number has already. Please choice another."
 msgstr ""
 
-#: websites/api/views.py:202
+#: websites/api/views.py:203
 msgid "Birth day invalid format (YYYY-MM-DD)."
 msgstr ""
 
-#: websites/api/views.py:217
+#: websites/api/views.py:218
 msgid "Update infomation user successfully."
 msgstr ""
 
-#: websites/api/views.py:221 websites/api/views.py:244
+#: websites/api/views.py:222 websites/api/views.py:245
 msgid "Cannot update infomation user. Please contact administrator."
 msgstr ""
 
-#: websites/api/views.py:240
+#: websites/api/views.py:241
 msgid "Update device unique successfully."
 msgstr ""
 
-#: websites/api/views.py:265 websites/api/views.py:704
-#: websites/api/views.py:760 websites/api/views.py:799
-#: websites/api/views.py:839 websites/api/views.py:870
-#: websites/api/views.py:1483 websites/api/views.py:1556
-#: websites/api/views.py:1594 websites/api_vnpay/views.py:92
+#: websites/api/views.py:266 websites/api/views.py:705
+#: websites/api/views.py:761 websites/api/views.py:800
+#: websites/api/views.py:840 websites/api/views.py:871
+#: websites/api/views.py:1486 websites/api/views.py:1560
+#: websites/api/views.py:1598 websites/api_vnpay/views.py:97
 msgid "Internal Server Error. Please contact administrator."
 msgstr ""
 
-#: websites/api/views.py:285
+#: websites/api/views.py:286
 msgid "Please check required fields : [old_password, new_password]"
 msgstr ""
 
-#: websites/api/views.py:294
+#: websites/api/views.py:295
 msgid "OldPassword does not match."
 msgstr ""
 
-#: websites/api/views.py:301
+#: websites/api/views.py:302
 msgid "Update password for user successfully."
 msgstr ""
 
-#: websites/api/views.py:305
+#: websites/api/views.py:306
 msgid "Cannot update password for user. Please contact administrator."
 msgstr ""
 
-#: websites/api/views.py:330
+#: websites/api/views.py:331
 msgid "Cannot send feedback. Please contact administrator."
 msgstr ""
 
-#: websites/api/views.py:580 websites/api/views.py:728
+#: websites/api/views.py:581 websites/api/views.py:729
 msgid "This value must be is integer."
 msgstr ""
 
-#: websites/api/views.py:693 websites/api/views.py:747
-#: websites/api/views.py:790 websites/api/views.py:830
-#: websites/api/views.py:1474 websites/api/views.py:1548
-#: websites/api/views.py:1585
+#: websites/api/views.py:694 websites/api/views.py:748
+#: websites/api/views.py:791 websites/api/views.py:831
+#: websites/api/views.py:1477 websites/api/views.py:1552
+#: websites/api/views.py:1589
 msgid "You don't have permission to access."
 msgstr ""
 
-#: websites/api/views.py:699 websites/api/views.py:756
-#: websites/api/views.py:795 websites/api/views.py:835
-#: websites/api/views.py:1479 websites/api/views.py:1552
-#: websites/api/views.py:1590
+#: websites/api/views.py:700 websites/api/views.py:757
+#: websites/api/views.py:796 websites/api/views.py:836
+#: websites/api/views.py:1482 websites/api/views.py:1556
+#: websites/api/views.py:1594
 msgid "API connection timeout."
 msgstr ""
 
-#: websites/api/views.py:752
+#: websites/api/views.py:753
 msgid "Filter Id Invalid."
 msgstr ""
 
-#: websites/api/views.py:855
+#: websites/api/views.py:856
 #, fuzzy
 #| msgid "This field is required."
 msgid "Date request is required."
 msgstr "This field is required."
 
-#: websites/api/views.py:926
+#: websites/api/views.py:927
 #, fuzzy
 #| msgid "This field is required."
 msgid "Notification Id is required."
 msgstr "This field is required."
 
-#: websites/api/views.py:928
+#: websites/api/views.py:929
 msgid "Anonymous User Cannot Update Notification"
 msgstr ""
 
-#: websites/api/views.py:934
+#: websites/api/views.py:935
 msgid "Successfull"
 msgstr ""
 
-#: websites/api/views.py:974
+#: websites/api/views.py:975
 msgid "Turn off notification successful."
 msgstr ""
 
-#: websites/api/views.py:976 websites/api/views.py:997
-#: websites/api/views.py:1106 websites/api/views.py:1163
-#: websites/api/views.py:1201 websites/api/views.py:1248
-#: websites/api/views.py:1349
+#: websites/api/views.py:977 websites/api/views.py:998
+#: websites/api/views.py:1107 websites/api/views.py:1164
+#: websites/api/views.py:1202 websites/api/views.py:1249
+#: websites/api/views.py:1350
 msgid "Anonymous User Cannot Call This Action."
 msgstr ""
 
-#: websites/api/views.py:980 websites/api/views.py:1001
-#: websites/api/views.py:1167 websites/api/views.py:1209
+#: websites/api/views.py:981 websites/api/views.py:1002
+#: websites/api/views.py:1168 websites/api/views.py:1210
 msgid "Internal Server Error. Please Contact Administrator."
 msgstr ""
 
-#: websites/api/views.py:995
+#: websites/api/views.py:996
 msgid "Turn on notification successful."
 msgstr ""
 
-#: websites/api/views.py:1037
+#: websites/api/views.py:1038
 msgid "Cannot add new notification. Please contact administrator."
 msgstr ""
 
-#: websites/api/views.py:1103
+#: websites/api/views.py:1104
 msgid "Push Notification Successfull"
 msgstr ""
 
-#: websites/api/views.py:1114
+#: websites/api/views.py:1115
 msgid "Cannot push notification. Please contact administrator."
 msgstr ""
 
-#: websites/api/views.py:1135 websites/api/views.py:1186
+#: websites/api/views.py:1136 websites/api/views.py:1187
 #, fuzzy
 #| msgid "This field is required."
 msgid "The device_uid field is required."
 msgstr "This field is required."
 
-#: websites/api/views.py:1161
+#: websites/api/views.py:1162
 msgid "Connect device successful."
 msgstr ""
 
-#: websites/api/views.py:1199
+#: websites/api/views.py:1200
 msgid "Disconnect device successful."
 msgstr ""
 
-#: websites/api/views.py:1204 websites/api/views.py:1206
+#: websites/api/views.py:1205 websites/api/views.py:1207
 msgid "Cannot disconnect device. DeviceID not found."
 msgstr ""
 
-#: websites/api/views.py:1227 websites/api/views.py:1279
+#: websites/api/views.py:1228 websites/api/views.py:1280
 #, fuzzy
 #| msgid "This field is required."
 msgid "The promotion_id is required."
 msgstr "This field is required."
 
-#: websites/api/views.py:1238 websites/api/views.py:1314
-#: websites/api/views.py:1390 websites/api/views.py:1392
+#: websites/api/views.py:1239 websites/api/views.py:1315
+#: websites/api/views.py:1391 websites/api/views.py:1393
 msgid "Error. User or Deivce Have get gift from promotion."
 msgstr ""
 
-#: websites/api/views.py:1251 websites/api/views.py:1352
+#: websites/api/views.py:1252 websites/api/views.py:1353
 msgid "Promotion for user does not matching. Please check again."
 msgstr ""
 
-#: websites/api/views.py:1255 websites/api/views.py:1260
-#: websites/api/views.py:1356 websites/api/views.py:1361
-#: websites/api/views.py:1407
+#: websites/api/views.py:1256 websites/api/views.py:1261
+#: websites/api/views.py:1357 websites/api/views.py:1362
+#: websites/api/views.py:1408
 msgid "Your account not apply current promotion. Please contact administrator."
 msgstr ""
 
-#: websites/api/views.py:1291
+#: websites/api/views.py:1292
 #, fuzzy
 #| msgid "promotionpage.menu.all"
 msgid "Error. Promotion Is Not Start."
 msgstr "ALL"
 
-#: websites/api/views.py:1299
+#: websites/api/views.py:1300
 #, fuzzy
 #| msgid "promotionpage.menu.all"
 msgid "Error. Promotion expired."
 msgstr "ALL"
 
-#: websites/api/views.py:1311
+#: websites/api/views.py:1312
 #, fuzzy
 #| msgid "promotionpage.menu.all"
 msgid "Error. Promotion Invalid."
 msgstr "ALL"
 
-#: websites/api/views.py:1329
+#: websites/api/views.py:1330
 #, fuzzy
 #| msgid "This field is required."
 msgid "The device_id is required."
 msgstr "This field is required."
 
-#: websites/api/views.py:1379
+#: websites/api/views.py:1380
 msgid "Error. DeivceID of user is empty. Please check again."
 msgstr ""
 
-#: websites/api/views.py:1424
+#: websites/api/views.py:1426
 msgid ""
 "Please check required fields : [source_card_barcode, received_card_barcode, "
-"ticket_amount, fee]"
+"ticket_amount, fee, order_desc]"
 msgstr ""
 
-#: websites/api/views.py:1428
+#: websites/api/views.py:1430
 msgid "Can not transfer to itseft"
 msgstr ""
 
-#: websites/api/views.py:1433
+#: websites/api/views.py:1435
 msgid "Please update full name of user"
 msgstr ""
 
-#: websites/api/views.py:1439
+#: websites/api/views.py:1441
 msgid "Amount must be more than 0"
 msgstr ""
 
-#: websites/api/views.py:1444
+#: websites/api/views.py:1446
 msgid "Fee & Ticket Amount must be is number"
 msgstr ""
 
-#: websites/api/views.py:1493
+#: websites/api/views.py:1496
 #, fuzzy
 #| msgid "This field is required."
 msgid "Position field is required."
 msgstr "This field is required."
 
-#: websites/api/views.py:1500
+#: websites/api/views.py:1503
 msgid "Fee not found."
 msgstr ""
 
-#: websites/api/views.py:1518
+#: websites/api/views.py:1522
 msgid "Hot Advs not found."
 msgstr ""
 
@@ -1047,15 +1048,15 @@ msgstr ""
 msgid "Unauthorized"
 msgstr ""
 
-#: websites/api_admin/decorator.py:25
+#: websites/api_admin/decorator.py:24
 msgid "User has no role."
 msgstr ""
 
-#: websites/api_admin/decorator.py:35 websites/api_admin/decorator.py:41
+#: websites/api_admin/decorator.py:33 websites/api_admin/decorator.py:38
 msgid "Forbidden"
 msgstr ""
 
-#: websites/api_admin/decorator.py:48
+#: websites/api_admin/decorator.py:45
 msgid "User don't have permission."
 msgstr ""
 
@@ -1342,11 +1343,24 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: websites/api_vnpay/views.py:88
+#: websites/api_vnpay/models.py:28
+msgid "Transaction No"
+msgstr ""
+
+#: websites/api_vnpay/models.py:29 websites/core/models.py:438
+#: websites/core/models.py:446 websites/core/models.py:447
+msgid "Fee"
+msgstr ""
+
+#: websites/api_vnpay/models.py:30
+msgid "Payment Amount"
+msgstr ""
+
+#: websites/api_vnpay/views.py:93
 msgid "Form input not validate"
 msgstr ""
 
-#: websites/api_vnpay/views.py:182
+#: websites/api_vnpay/views.py:191
 msgid "Success"
 msgstr ""
 
@@ -1696,11 +1710,6 @@ msgstr ""
 
 #: websites/core/models.py:436
 msgid "Deposit fee"
-msgstr ""
-
-#: websites/core/models.py:438 websites/core/models.py:446
-#: websites/core/models.py:447
-msgid "Fee"
 msgstr ""
 
 #: websites/core/models.py:439
