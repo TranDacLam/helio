@@ -37,18 +37,22 @@ def payment(request):
             if result_verify['code'] != 200:
                 return JsonResponse(result_verify, status = result_verify['code'])
 
-
             order_id = form.cleaned_data['order_id']
             amount = form.cleaned_data['amount']
+            fee = form.cleaned_data['fee']
             order_desc = form.cleaned_data['order_desc']
             bank_code = form.cleaned_data['bank_code']
             ipaddr = get_client_ip(request)
+
+            # Payment amount = reload amount + fee
+            payment_amount = amount + fee
+
             # Build URL Payment
             vnp = vnpay()
             vnp.requestData['vnp_Version'] = '2.0.0'
             vnp.requestData['vnp_Command'] = 'pay'
             vnp.requestData['vnp_TmnCode'] = settings.VNPAY_TMN_CODE
-            vnp.requestData['vnp_Amount'] = amount * 100
+            vnp.requestData['vnp_Amount'] = payment_amount * 100
             vnp.requestData['vnp_CurrCode'] = 'VND'
             vnp.requestData['vnp_TxnRef'] = order_id
             vnp.requestData['vnp_OrderInfo'] = order_desc
@@ -74,7 +78,8 @@ def payment(request):
             
             # Store order infomation with status is pendding
             reload_order = ReloadInfomation(order_id=order_id, order_desc=order_desc, amount=amount, phone=phone,
-                                              email=email, full_name=full_name, barcode=barcode, order_status="pendding")
+                                              email=email, full_name=full_name, barcode=barcode, payment_amount=payment_amount,
+                                              order_status="pendding", fee=fee)
 
             if not request.user.is_anonymous():
                 reload_order.user = request.user

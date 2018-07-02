@@ -10,3 +10,4 @@ class ReloadPaymentForm(forms.Form):
     email = forms.CharField(max_length=250)
     barcode = forms.CharField(max_length=50)
     full_name = forms.CharField(max_length=250)
+    fee = forms.IntegerField()
