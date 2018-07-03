@@ -1347,8 +1347,6 @@ msgid "Form input not validate"
 msgstr ""
 
 #: websites/api_vnpay/views.py:191
-#, fuzzy
-#| msgid "success"
 msgid "Success"
 msgstr "Thành công"
 
