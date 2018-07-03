@@ -1624,20 +1624,16 @@ def get_name_by_barcode(request, card_id):
             error = {
                 "code": 400, "message": _("Card id field is required."), "fields": "card_id"}
             return Response(error, status=400)
-        if request.user.is_staff or request.user.barcode == card_id:
-            headers = {'Authorization': settings.DMZ_API_TOKEN}
-            get_name_by_card_url = '{}card/{}/name/'.format(
-                settings.BASE_URL_DMZ_API, card_id)
 
-            # Call DMZ get card infomation
-            response = requests.get(get_name_by_card_url, headers=headers)
+        headers = {'Authorization': settings.DMZ_API_TOKEN}
+        get_name_by_card_url = '{}card/{}/name/'.format(
+            settings.BASE_URL_DMZ_API, card_id)
 
-            # Process DMZ reponse 
-            return helper.dmz_response_process(response)
-        else:
-            error = {"code": 400, "message": _(
-                "You don't have permission to access."), "fields": ""}
-            return Response(error, status=400)
+        # Call DMZ get card infomation
+        response = requests.get(get_name_by_card_url, headers=headers)
+
+        # Process DMZ reponse 
+        return helper.dmz_response_process(response)
 
     except requests.Timeout:
         print "Request DMZ time out "
