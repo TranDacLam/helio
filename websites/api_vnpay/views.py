@@ -1,6 +1,7 @@
 import urllib
 
 from datetime import datetime
+import time
 from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from django.core.serializers import json
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -23,21 +24,24 @@ def payment(request):
         # Process input data and build url payment
         form = ReloadPaymentForm(request.data)
         if form.is_valid():
-            order_id = form.cleaned_data['order_id']
+            # Get time unique to set for order id
+            unique_time = time.mktime(datetime.now().timetuple())*1e3 + datetime.now().microsecond/1e3
+            order_id = int(unique_time)
+            print "order_id::", order_id
+            # While order not unique then created orther order id
+            while ReloadInfomation.objects.filter(order_id=order_id).exists():
+                # Get time unique to set for order id
+                unique_time = time.mktime(datetime.now().timetuple())*1e3 + datetime.now().microsecond/1e3
+                order_id = int(unique_time)
+                print "order_id created::", order_id
+
             barcode = form.cleaned_data['barcode']
-
-            if ReloadInfomation.objects.filter(order_id=order_id).exists():
-                error = {'code': 400, 'message': 'Order ID is exist.', 'field': ''}
-                return JsonResponse(error, status = 400)
-
-
             result_verify = actions.call_api_vefiry_card_barcode(barcode)
             print "result_verify::::", result_verify
 
             if result_verify['code'] != 200:
                 return JsonResponse(result_verify, status = result_verify['code'])
 
-            order_id = form.cleaned_data['order_id']
             amount = form.cleaned_data['amount']
             fee = form.cleaned_data['fee']
             order_desc = form.cleaned_data['order_desc']

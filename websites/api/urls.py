@@ -63,4 +63,7 @@ urlpatterns = [
     url(r'^transactions/ticket/transfer/$', views.ticket_transfer_transactions, name="ticket-transfer-transactions"),
     url(r'^transactions/other/$', views.other_transactions, name="other-transactions"),
     url(r'^denominations/$', views.denominations, name="get-denomination"),
+
+
+    url(r'^card/(?P<card_id>[0-9]+)/name/$', views.get_name_by_barcode, name="get-card-name"),
 ]

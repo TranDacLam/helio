@@ -2,7 +2,6 @@ from django import forms
 
 
 class ReloadPaymentForm(forms.Form):
-    order_id = forms.CharField(max_length=250)
     amount = forms.IntegerField()
     order_desc = forms.CharField(max_length=100)
     bank_code = forms.CharField(max_length=20, required=False)
