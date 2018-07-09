@@ -58,7 +58,8 @@
 			<label class="center-block"> Nội Dung</label>
 		</div>
     	<div class="col-sm-8">	
-			<ckeditor formControlName="content" [config]="ckEditorConfig"> </ckeditor>
+			<!-- <ckeditor formControlName="content" [config]="ckEditorConfig"> </ckeditor> -->
+			<textarea class="form-control" rows="5" formControlName="content"></textarea>
 			<div *ngIf="errorMessage">
 				<p class='errors'> {{ errorMessage.content }} </p>
 			</div>

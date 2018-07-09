@@ -5,7 +5,6 @@ import { HotAdvs } from '../../../shared/class/hot-advs';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { HotAdvsService } from '../../../shared/services/hot-advs.service';
 import { ToastrService } from 'ngx-toastr';
-import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
 import { HandleError } from '../../../shared/commons/handle_error';
 import { Router, ActivatedRoute } from "@angular/router";
@@ -27,7 +26,6 @@ export class FormHotAdvsComponent implements OnInit {
 
     errorMessage: string = '';
 
-    ckEditorConfig: any;
     title: string = "";
     msg_clear_image: string = '';
     api_domain: string = "";
@@ -52,8 +50,6 @@ export class FormHotAdvsComponent implements OnInit {
                 this.lang = params.lang;
             }
         });
-
-        this.ckEditorConfig = ckeditor_config.config;
 
         if (this.route.snapshot.paramMap.get('id')) {
             // Update Init Form
