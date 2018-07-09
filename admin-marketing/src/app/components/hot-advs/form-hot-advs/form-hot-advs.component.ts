@@ -67,7 +67,7 @@ export class FormHotAdvsComponent implements OnInit {
     creatForm(): void {
         this.formHotAds = this.fb.group({
             name: [this.hot_ads.name, [Validators.required, Validators.maxLength(255)]],
-            content: [this.hot_ads.content, [Validators.required]],
+            content: [this.hot_ads.content],
             image: [this.hot_ads.image],
             is_register: [this.hot_ads.is_register === true ? true : false],
             is_view_detail: [this.hot_ads.is_view_detail === true ? true : false],
