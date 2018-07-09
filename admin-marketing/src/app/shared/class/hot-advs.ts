@@ -5,7 +5,6 @@ export class HotAdvs {
 	content: string;
 	is_register: boolean;
 	is_view_detail: boolean;
-	sub_url_register: string;
 	sub_url_view_detail: string;
 	is_draft: boolean;
 }

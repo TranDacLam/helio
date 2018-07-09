@@ -527,7 +527,6 @@ class TypeSerializer(serializers.ModelSerializer):
 class HotAdvsSerializer(serializers.ModelSerializer):
 
     image = serializers.ImageField(required=False, allow_empty_file=True)
-    sub_url_register = serializers.CharField(required=False,allow_null=True, allow_blank=True)
     sub_url_view_detail = serializers.CharField(required=False, allow_null=True, allow_blank=True)
     
     name = serializers.CharField(required=True, max_length=255,validators=[

@@ -486,7 +486,6 @@ class Hot_Advs(DateTimeModel):
     is_view_detail = models.BooleanField(_('Is view detail'), default=False)
     is_draft = models.BooleanField(_('Is draft'), default=False)
     content = models.TextField(_('Content'))
-    sub_url_register = models.CharField(_('Sub url register'), max_length=1000)
     sub_url_view_detail = models.CharField(_('Sub url view detail'), max_length=1000)
     is_draft = models.BooleanField(default=False)
 

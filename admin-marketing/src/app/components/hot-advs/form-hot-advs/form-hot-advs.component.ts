@@ -71,7 +71,6 @@ export class FormHotAdvsComponent implements OnInit {
             image: [this.hot_ads.image],
             is_register: [this.hot_ads.is_register === true ? true : false],
             is_view_detail: [this.hot_ads.is_view_detail === true ? true : false],
-            sub_url_register: [this.hot_ads.sub_url_register],
             sub_url_view_detail: [this.hot_ads.sub_url_view_detail],
             is_draft: [this.hot_ads.is_draft === true ? true : false],
             is_clear_image: [false]

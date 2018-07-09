@@ -218,4 +218,4 @@ class HotAdvsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Hot_Advs
-        fields = ('id', 'name', 'image', 'is_register', 'is_view_detail', 'content', 'sub_url_register', 'sub_url_view_detail')
+        fields = ('id', 'name', 'image', 'is_register', 'is_view_detail', 'content', 'sub_url_view_detail')
