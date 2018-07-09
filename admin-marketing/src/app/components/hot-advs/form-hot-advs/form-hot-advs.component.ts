@@ -5,7 +5,6 @@ import { HotAdvs } from '../../../shared/class/hot-advs';
 import { ValidateSubmit } from './../../../shared/validators/validate-submit';
 import { HotAdvsService } from '../../../shared/services/hot-advs.service';
 import { ToastrService } from 'ngx-toastr';
-import * as ckeditor_config from './../../../shared/commons/ckeditor_config';
 import { ScrollTop } from './../../../shared/commons/scroll-top';
 import { HandleError } from '../../../shared/commons/handle_error';
 import { Router, ActivatedRoute } from "@angular/router";
@@ -27,7 +26,6 @@ export class FormHotAdvsComponent implements OnInit {
 
     errorMessage: string = '';
 
-    ckEditorConfig: any;
     title: string = "";
     msg_clear_image: string = '';
     api_domain: string = "";
@@ -53,8 +51,6 @@ export class FormHotAdvsComponent implements OnInit {
             }
         });
 
-        this.ckEditorConfig = ckeditor_config.config;
-
         if (this.route.snapshot.paramMap.get('id')) {
             // Update Init Form
             this.title = "Chỉnh Sửa Hot Ads";
@@ -71,11 +67,10 @@ export class FormHotAdvsComponent implements OnInit {
     creatForm(): void {
         this.formHotAds = this.fb.group({
             name: [this.hot_ads.name, [Validators.required, Validators.maxLength(255)]],
-            content: [this.hot_ads.content, [Validators.required]],
+            content: [this.hot_ads.content],
             image: [this.hot_ads.image],
             is_register: [this.hot_ads.is_register === true ? true : false],
             is_view_detail: [this.hot_ads.is_view_detail === true ? true : false],
-            sub_url_register: [this.hot_ads.sub_url_register],
             sub_url_view_detail: [this.hot_ads.sub_url_view_detail],
             is_draft: [this.hot_ads.is_draft === true ? true : false],
             is_clear_image: [false]

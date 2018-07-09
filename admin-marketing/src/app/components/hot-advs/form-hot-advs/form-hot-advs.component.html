@@ -58,7 +58,8 @@
 			<label class="center-block"> Nội Dung</label>
 		</div>
     	<div class="col-sm-8">	
-			<ckeditor formControlName="content" [config]="ckEditorConfig"> </ckeditor>
+			<!-- <ckeditor formControlName="content" [config]="ckEditorConfig"> </ckeditor> -->
+			<textarea class="form-control" rows="5" formControlName="content"></textarea>
 			<div *ngIf="errorMessage">
 				<p class='errors'> {{ errorMessage.content }} </p>
 			</div>
@@ -90,20 +91,6 @@
 					</label>
 				</div>
 			</div>
-    	</div>
-    </div>
-    <div class="form-group row">
-		<div class="col-sm-3">
-			<label class="center-block"> Sub_url Button Đăng Ký</label>
-		</div>
-    	<div class="col-sm-8">	
-			<input class='form-control' name="sub_url_register" 
-			formControlName="sub_url_register"
-			>
-			<div *ngIf="errorMessage">
-				<p class='errors'> {{ errorMessage.sub_url_register }} </p>
-			</div>
-			<show-error-valid [control]="formHotAds.get('sub_url_register')"></show-error-valid>
     	</div>
     </div>
     <div class="form-group row">
