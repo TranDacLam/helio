@@ -111,6 +111,7 @@ class EventsSerializer(serializers.Serializer):
     start_date = serializers.DateField()
     end_date = serializers.DateField()
     url_share = serializers.SerializerMethodField()
+    image_thumbnail = serializers.ImageField(max_length=1000)
 
     def get_url_share(self, obj):
         url = reverse("get-events-detail", args=[obj.id])
@@ -146,6 +147,7 @@ class PromotionsSerializer(serializers.Serializer):
     short_description = serializers.CharField(max_length=350)
     content = serializers.CharField()
     image = serializers.ImageField(max_length=1000)
+    image_thumbnail = serializers.ImageField(max_length=1000)
     promotion_category = CategorySerializer(many=False)
     url_share = serializers.SerializerMethodField()
 
