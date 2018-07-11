@@ -92,7 +92,7 @@ def call_api_vefiry_card_barcode(barcode):
         # handle decoding json
         try:
             # convert response text to json
-            json_data = json.loads(response.text)
+            json_data = response.json()
         except ValueError as e:
             print "Error convert json : %s" % e
             return {"code": 500, "message": _("Handle data error."), "fields": ""}
@@ -162,7 +162,7 @@ def call_api_reload_to_card_barcode(reload_order):
         # handle decoding json
         try:
             # convert response text to json
-            json_data = json.loads(response.text)
+            json_data = response.json()
         except ValueError as e:
             print "Error convert json : %s" % e
             return {"code": 500, "message": _("Handle data error."), "fields": ""}
