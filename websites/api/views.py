@@ -1488,6 +1488,7 @@ def ticket_transfer(request):
 
 
 @api_view(['GET'])
+@permission_classes((AllowAny,))
 def fees_apply_by_type(request):
     try:
         position = request.GET.get('position', '')
