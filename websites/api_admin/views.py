@@ -1222,6 +1222,11 @@ class UserEmbedDetail(APIView):
             response = requests.put(card_information_api_url, data=json.dumps(
                 request.data), headers=headers)
 
+            # translate message when update success
+            if response.status_code == 200:
+                result = response.json()
+                result["message"] = _(result["message"])
+                return Response(result, status=response.status_code)
             # Process DMZ reponse 
             return helper.dmz_response_process(response)
 
