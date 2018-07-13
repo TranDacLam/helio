@@ -23,6 +23,7 @@ def payment(request):
     try:
         # Process input data and build url payment
         form = ReloadPaymentForm(request.data)
+        print "request.data:::", request.data
         if form.is_valid():
             # Get time unique to set for order id
             unique_time = time.mktime(datetime.now().timetuple())*1e3 + datetime.now().microsecond/1e3
