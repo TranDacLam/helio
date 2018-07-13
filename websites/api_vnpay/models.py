@@ -1,11 +1,11 @@
 from __future__ import unicode_literals
-
+from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
 from core.models import DateTimeModel
 from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
-
+@python_2_unicode_compatible
 class ReloadInfomation(DateTimeModel):
     TYPE = (
         ('cancel', 'Cancel'),
@@ -28,3 +28,6 @@ class ReloadInfomation(DateTimeModel):
     transaction_no = models.CharField(_('Transaction No'), max_length=100, null=True, blank=True)
     fee = models.IntegerField(_('Fee'))
     payment_amount = models.IntegerField(_('Payment Amount'), default=0)
+
+    def __str__(self):
+        return '%s' % (self.order_id)
