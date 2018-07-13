@@ -40,7 +40,7 @@ RECAPTCHA_PRIVATE_KEY = '6LfMmSYUAAAAAI8a3MHrDW07gjr9kddPAMd2nOTL'
 PUSH_NOTIFICATIONS_SETTINGS = {
     "FCM_API_KEY": "AAAAARPFyW4:APA91bGqrXAbmz2YmtXdLZImLNPESNEHe4_uDucmwtHdHUfyxkx4xs542TRxWXusV9xvO4ozI23PpRi-c3APYX1WHgxQ8XwYYhtH8PxwCsATk9ZjIBwyf3wa3HK2sy4C8GekvmS1zjC0",
     "FCM_ERROR_TIMEOUT": 3600,
-    "APNS_CERTIFICATE": os.path.join(BASE_DIR, "key_apns/pem_tester/apns-dis-cert.pem"),
+    "APNS_CERTIFICATE": os.path.join(BASE_DIR, "key_apns/pem_prod/pushDis.pem"),
     "APNS_USE_SANDBOX": False,
     "APNS_TOPIC": "vn.vooc.helio.mobile",
 }
