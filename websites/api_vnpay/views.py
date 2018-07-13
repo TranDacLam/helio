@@ -152,11 +152,11 @@ def payment_ipn(request):
                     result = JsonResponse(
                         {'RspCode': '00', 'Message': 'Confirm Success'})
                 else:
-                    print('Payment Error. Processing Payment Error')
+                    print('Payment Error. Processing Payment Error', vnp_ResponseCode)
 
                     reload_order.order_status = 'payment_error'
                     reload_order.save()
-
+                    # RspCode == 00 or 02 then cancel recall IPN
                     result = JsonResponse(
                         {'RspCode': '00', 'Message': 'Confirm Error'})
 
@@ -166,6 +166,7 @@ def payment_ipn(request):
                     {'RspCode': '01', 'Message': 'Order_id Not Found'})
 
         else:
+            print "Translation OrderId: %s Invalid Signature with response code: %s" % (order_id, vnp_ResponseCode)
             # Invalid Signature
             result = JsonResponse({'RspCode': '97', 'Message': 'Invalid Signature'})
     else:
