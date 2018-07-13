@@ -10,7 +10,10 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': 3306,
         'USER': 'helio',
-        'PASSWORD': 'admin@helio.vn'
+        'PASSWORD': 'admin@helio.vn',
+        'OPTIONS': {
+            'charset': 'utf8mb4' # Fix store icon error 
+        }
     },
     # 'sql_db': {
     #     'NAME': 'ECS7',

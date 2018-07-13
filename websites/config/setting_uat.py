@@ -10,6 +10,9 @@ DATABASES = {
         'PORT': 3306,
         'USER': 'helio_uat',
         'PASSWORD': 'hel1o@uat'
+        'OPTIONS': {
+            'charset': 'utf8mb4' # Fix store icon error 
+        }
     }
 
 }

@@ -9,7 +9,10 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': 3306,
         'USER': 'root',
-        'PASSWORD': 'root'
+        'PASSWORD': 'root',
+        'OPTIONS': {
+            'charset': 'utf8mb4' # Fix store icon error 
+        }
     }
 }
 

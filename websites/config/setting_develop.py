@@ -9,7 +9,10 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': 3306,
         'USER': 'root',
-        'PASSWORD': 'Admin@v00c.vn'
+        'PASSWORD': 'Admin@v00c.vn',
+        'OPTIONS': {
+            'charset': 'utf8mb4' # Fix store icon error 
+        }
     }
 }
 gettext = lambda s: s
