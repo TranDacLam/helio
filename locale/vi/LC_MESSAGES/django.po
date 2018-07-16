@@ -840,7 +840,7 @@ msgstr "Cập nhật mã máy thiết bị thành công."
 #: websites/api/views.py:1486 websites/api/views.py:1560
 #: websites/api/views.py:1598 websites/api_vnpay/views.py:97
 msgid "Internal Server Error. Please contact administrator."
-msgstr "Lỗi Máy chủ Nội bộ. Xin vui lòng liên hệ với Quản trị viên."
+msgstr "Lỗi máy chủ nội bộ. Xin vui lòng liên hệ với quản trị viên."
 
 #: websites/api/views.py:286
 msgid "Please check required fields : [old_password, new_password]"
@@ -918,7 +918,7 @@ msgstr "Người dùng chưa chưa đăng ký. Không thể gọi hành động 
 #: websites/api/views.py:981 websites/api/views.py:1002
 #: websites/api/views.py:1168 websites/api/views.py:1210
 msgid "Internal Server Error. Please Contact Administrator."
-msgstr "Lỗi Máy chủ Nội bộ. Xin vui lòng liên hệ với Quản trị viên."
+msgstr "Lỗi máy chủ nội bộ. Xin vui lòng liên hệ với quản trị viên."
 
 #: websites/api/views.py:996
 msgid "Turn on notification successful."
