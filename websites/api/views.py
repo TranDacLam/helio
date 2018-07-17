@@ -1475,7 +1475,7 @@ def ticket_transfer(request):
         else:
             error = {"code": 402, "message": _(
                 "Source barcode not link to any user"), "fields": ""}
-            return Response(error, status=400)
+            return Response(error, status=402)
 
     except requests.Timeout:
         print "Request DMZ time out "
