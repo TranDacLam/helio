@@ -1473,8 +1473,8 @@ def ticket_transfer(request):
             # Process DMZ reponse 
             return helper.dmz_response_process(response)
         else:
-            error = {"code": 400, "message": _(
-                "You don't have permission to access."), "fields": ""}
+            error = {"code": 402, "message": _(
+                "Source barcode not link to any user"), "fields": ""}
             return Response(error, status=400)
 
     except requests.Timeout:

@@ -1004,7 +1004,7 @@ msgstr ""
 
 #: websites/api/views.py:1430
 msgid "Can not transfer to itseft"
-msgstr ""
+msgstr "Không thể chuyển ticket cho chính mình."
 
 #: websites/api/views.py:1435
 msgid "Please update full name of user"
