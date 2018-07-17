@@ -196,7 +196,7 @@ def reload_sucess_handle(request, reload_order, email, phone, cash_balance):
 
     if phone:
         cash_balance = '{:,.0f}'.format(cash_balance)
-        content_sms = """Ban vua duoc nap %s VND vao the %s. Ma giao dich: %s. So du hien tai: %s. Noi dung nap tien: """  % (reload_order.amount, 
+        content_sms = """Ban vua duoc nap %s VND vao the %s. Ma hoa don: %s. So du hien tai: %s. Noi dung nap tien: """  % (reload_order.amount, 
                                 reload_order.barcode, reload_order.order_id, cash_balance)
 
         content_sms += str(reload_order.order_desc.replace("\r\n", ""))
