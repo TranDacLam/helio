@@ -109,7 +109,7 @@ def call_api_vefiry_card_barcode(barcode):
                 "Card barcode not found."), "fields": ""}
 
         # Only accept reload for guest member gold
-        if result['card_status_code'] not in constants.CARD_TYPE_ACCEPT_RELOAD:
+        if result['card_status_code'] not in constants.CARD_TYPE_ACCEPT_TRANSACTION:
             return {"code": 400, "message": _("Card can not reload."), "fields": ""}
 
         # Only accept reload for current card ( carrd active)
