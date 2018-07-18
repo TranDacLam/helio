@@ -11,7 +11,7 @@ SERVERS = {
 BRANCH = {
     'development': 'develop',
     'uat': 'api',
-    'production': 'production'
+    'production': 'v2'
 }
 
 USERS = {
@@ -23,7 +23,7 @@ USERS = {
 PASSWORDS = {
     'development': 'Abc@123',
     'uat': 'AdminV00c@Hel10.vn',
-    'production': 'Admin@Hel10.vn'
+    'production': 'AdminV00c@Hel10.vn'
 }
 
 VIRTUAL_ENVS = {
@@ -35,7 +35,7 @@ VIRTUAL_ENVS = {
 PATHS = {
     'development': '/home/adminvn/sites/helio_web',
     'uat': '/home/thangv/projects/api_source/helio_web',
-    'production': '/home/thangv/projects/helio_web/'
+    'production': '/home/thangv/projects/helio_web_v2/helio_web'
 }
 
 PROCESS_ID = {
@@ -47,7 +47,7 @@ PROCESS_ID = {
 OUTPUT_ANGULAR = {
     'development': '/home/adminvn/sites/build_angular',
     'uat': '/home/thangv/projects/api_source/build_angular',
-    'production': None
+    'production': '/home/thangv/projects/helio_web_v2/build_angular'
 }
 
 ANGULAR_ENV = {

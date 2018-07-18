@@ -617,7 +617,7 @@ msgstr "Thẻ chuyển không tồn tại."
 
 #: websites/api/dmz_message.py:2
 msgid "Source Card is suspended."
-msgstr "Thẻ chuyển tạm ngưng."
+msgstr "Thẻ chuyển tạm khóa."
 
 #: websites/api/dmz_message.py:3
 msgid "Source Card is replaced."
@@ -633,7 +633,7 @@ msgstr "Thẻ nhận đã thay thế."
 
 #: websites/api/dmz_message.py:6
 msgid "Received Card is suspended."
-msgstr "Thẻ nhận tạm ngưng."
+msgstr "Thẻ nhận tạm khóa."
 
 #: websites/api/dmz_message.py:7
 msgid "Source barcode not link to any user"
