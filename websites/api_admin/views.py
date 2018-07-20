@@ -219,6 +219,14 @@ class PromotionUser(APIView):
             promotion.is_save = True
             promotion.save()
 
+            notification = None
+            try:
+                # Get notification by promotion_id
+                notification = Notification.objects.get(
+                    promotion=promotion)
+            except Notification.DoesNotExist:
+                notification = None
+
             list_user_id = self.request.data.get('list_user_id', '')
 
             # Get list user by promotion_id
@@ -235,15 +243,18 @@ class PromotionUser(APIView):
             # Check list add is not empty then add to database
             if list_add:
                 for user_id in list_add:
-                    item = Gift()
-                    item.promotion_id = id
-                    item.user_id = user_id
-                    item.save()
+                    Gift.objects.create( promotion_id = id, user_id = user_id )
+                    if notification:
+                        User_Notification.objects.create( notification_id = notification.id, user_id = user_id )
 
             # Check list_delete is not empty then delete from database
             if list_delete:
                 Gift.objects.filter(
                     promotion_id=id, user_id__in=list_delete).delete()
+
+                if notification:
+                    User_Notification.objects.filter(
+                    notification_id=notification.id, user_id__in=list_delete).delete()
 
             return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -883,6 +894,7 @@ class NotificationDetail(APIView):
             print request.data
             serializer = admin_serializers.NotificationSerializer(
                 data=request.data)
+            
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
@@ -933,25 +945,12 @@ class NotificationUser(APIView):
             user_all_list = []
             user_notification_list = []
 
-            # If exist promotion id, get list user from promotion, later set
-            # list user for notification
-            if notification_detail.promotion:
-                promotion_id = notification_detail.promotion.id
-                # Get list user ID by promition id
-                notification_user_id_list = Gift.objects.filter(
-                    promotion_id=promotion_id).values_list('user_id', flat=True)
-                # Get all list user ID not exist in promotion user list
-                user_notification_list = User.objects.filter(
-                    pk__in=notification_user_id_list)
-                user_all_list = User.objects.filter(
-                    ~Q(pk__in=notification_user_id_list))
-            else:
-                notification_user_id_list = User_Notification.objects.filter(
-                    notification_id=id).values_list('user_id', flat=True)
-                user_notification_list = User.objects.filter(
-                    pk__in=notification_user_id_list)
-                user_all_list = User.objects.filter(
-                    ~Q(pk__in=notification_user_id_list))
+            notification_user_id_list = User_Notification.objects.filter(
+                notification_id=id).values_list('user_id', flat=True)
+            user_notification_list = User.objects.filter(
+                pk__in=notification_user_id_list)
+            user_all_list = User.objects.filter(
+                ~Q(pk__in=notification_user_id_list))
 
             result = {}
             result['notification_detail'] = admin_serializers.NotificationSerializer(

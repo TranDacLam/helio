@@ -1065,13 +1065,13 @@ def send_notification(request):
             user_of_notification = []
 
             promotion_obj = notify_obj.promotion
+            
+            # Update User_Notification is read when send notification again 
+            User_Notification.objects.filter(
+                notification_id=notify_obj.id).update(is_read=False)
 
-            if promotion_obj:
-                user_of_notification = Gift.objects.filter(
-                    promotion=promotion_obj).values_list('user_id', flat=True)
-            else:
-                user_of_notification = User_Notification.objects.filter(
-                    notification_id=notify_obj.id).values_list('user_id', flat=True)
+            user_of_notification = User_Notification.objects.filter(
+                notification_id=notify_obj.id).values_list('user_id', flat=True)
 
             data_notify = {"title": notify_obj.subject, "body": notify_obj.message,
                            "sub_url": notify_obj.sub_url, "image": notify_obj.image.url if notify_obj.image else "",
