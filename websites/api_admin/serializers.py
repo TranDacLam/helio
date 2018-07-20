@@ -155,6 +155,18 @@ class NotificationSerializer(serializers.ModelSerializer):
         model = Notification
         fields= '__all__'
 
+    def create(self, validated_data):
+        notification = Notification.objects.create( **validated_data )
+
+        """If create notification for promotion then get lisst notifiction init = list user promotion"""
+        if notification.promotion:
+            list_user = Gift.objects.filter(promotion=notification.promotion)
+            if list_user:
+                for item in list_user:
+                    User_Notification.objects.create(notification = notification, user = item.user)
+
+        return notification
+
     def update(self, instance, validated_data):
         if self.context['request']:
             is_clear_image = self.context['request'].data.get('is_clear_image')
