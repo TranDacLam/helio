@@ -220,7 +220,7 @@ def reload_error_handle(request, reload_order, amount, reason):
     reload_order.order_status = "reload_error"
     reload_order.save()
 
-    content_sms = """Nop tien khong thanh cong. Vui long lien he: %s neu ban van chua duoc hoan tien. Ma giao dich: %s. Noi dung nap tien: """ % (settings.HOT_LINE, reload_order.order_id)
+    content_sms = """Nop tien khong thanh cong. Vui long lien he: %s neu ban van chua duoc hoan tien. Ma hoa don: %s. Noi dung nap tien: """ % (settings.HOT_LINE, reload_order.order_id)
     content_sms += str(reload_order.order_desc.replace("\r\n", ""))
     # Send SMS for user
     helio_sms.send_sms(reload_order.phone, content_sms)
