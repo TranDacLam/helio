@@ -1211,16 +1211,27 @@ def disconnect_device(request):
 
         
 """
-    Update user have get a gift
+    Check prompton to receiving gift
+    Step 1: Check user is authentication
+    Step 2: Get promotion by id and check promotion is exist
+    Step 3: Check promotion apply date is valid
+    Step 4: Check promotion valid by promotion type
+        Case 1: ID = 11 then apply forr install new app
+        Case 2: Promotion type = PROMOTION_TYPE_PUBLIC then return error ( This promotion can not Scan QR code)
+        Case 3: Promotion TYpe = PROMOTION_TYPE_USER then check current user in list receiving promotion user
+        Case 4: Promotion Type = PROMOTION_TYPE_USER_DEVICE then 
+                current user in list receiving promotion user and device id not reviced this gift
+        If promotion valid then return promotion name
 """
 
 
-@api_view(['PUT'])
-def gift_user(request):
+@api_view(['POST'])
+def gift_user_check(request):
     try:
         if not request.user.anonymously:
             user = request.user
             print "## Current User ", user
+            print "## Current User 2222", request.data
             promotion_id = request.data.get('promotion_id', '')
 
             if not promotion_id:
@@ -1230,19 +1241,69 @@ def gift_user(request):
 
             obj_promotion = Promotion.objects.get(pk=promotion_id)
 
+            current_time = datetime.datetime.now()
+
+            apply_time = obj_promotion.apply_time if obj_promotion.apply_time else datetime.time.min
+            if obj_promotion.apply_date:
+                start_datetime = datetime.datetime.combine(
+                    obj_promotion.apply_date, apply_time)
+                if start_datetime > current_time:
+                    error = {
+                        "code": 400, "message": _("Error. Promotion Is Not Start."), "fields": ""}
+                    return Response(error, status=400)
+
+            end_time = obj_promotion.end_time if obj_promotion.end_time else datetime.time.max
+
+            if obj_promotion.end_date:
+                end_datetime = datetime.datetime.combine(
+                    obj_promotion.end_date, end_time)
+                if end_datetime < current_time:
+                    error = {
+                        "code": 400, "message": _("Error. Promotion expired."), "fields": ""}
+                    return Response(error, status=400)
+
             # CHECK Promotion Category is new user install app helio
             if obj_promotion.id == core_constants.PROMOTION_ID_SETUP_DEVICE:
-                return gift_install_app(user, promotion_id)
+                error = {
+                    "code": 400, "message": _("admin_promotion.message_promotion_install"), "fields": ""}
+                return Response(error, status=400)
 
-            gift = Gift.objects.get(user=user, promotion_id=promotion_id)
+            promotion_type = obj_promotion.promotion_type
+
+            # Promotion must be have type.
+            if not promotion_type or promotion_type.id == core_constants.PROMOTION_TYPE_PUBLIC:
+                error = {
+                    "code": 400, "message": _("Error. Promotion Invalid."), "fields": ""}
+                return Response(error, status=400)
 
             message = _("Error. User or Deivce Have get gift from promotion.")
             status_code = 501
-            if not gift.is_used:
-                message = "Success"
-                status_code = 200
-                gift.is_used = True
-                gift.save()
+            # With promotion by user. Check user in list admin select
+            if promotion_type.id == core_constants.PROMOTION_TYPE_USER:
+                gift = Gift.objects.get(user=user, promotion_id=promotion_id)
+                if not gift.is_used:
+                    result = {
+                        "name": obj_promotion.name
+                    }
+                    return Response(result, status=200)
+            # With promotion by user and device id then check user and device
+            elif promotion_type.id == core_constants.PROMOTION_TYPE_USER_DEVICE:
+                device_id = request.data.get('device_id', '')
+                if not device_id:
+                    error = {
+                        "code": 400, "message": _("The device_id is required."), "fields": "device_id"}
+                    return Response(error, status=400)
+
+                gift_user = Gift.objects.filter(
+                    user=user, promotion_id=promotion_id)
+                gift_device = Gift.objects.filter(
+                    device_id=device_id, promotion_id=promotion_id)
+
+                if not gift_user and not gift_device:
+                    result = {
+                        "name": obj_promotion.name
+                    }
+                    return Response(result, status=200)
 
             return Response({'message': message}, status=status_code)
         else:
@@ -1264,6 +1325,15 @@ def gift_user(request):
 
 """
     Update user have get a gift
+    Step 1: Check user is authentication
+    Step 2: Get promotion by id and check promotion is exist
+    Step 3: Check promotion apply date is valid
+    Step 4: Check promotion valid by promotion type
+        Case 1: ID = 11 then apply forr install new app
+        Case 2: Promotion type = PROMOTION_TYPE_PUBLIC then return error ( This promotion can not Scan QR code)
+        Case 3: Promotion TYpe = PROMOTION_TYPE_USER then check current user in list receiving promotion user
+        Case 4: Promotion Type = PROMOTION_TYPE_USER_DEVICE then 
+                current user in list receiving promotion user and device id not reviced this gift
 """
 
 
@@ -1284,20 +1354,22 @@ def gift_user_v2(request):
 
             current_time = datetime.datetime.now()
 
-            if(obj_promotion.apply_date and obj_promotion.apply_time):
+            apply_time = obj_promotion.apply_time if obj_promotion.apply_time else "00:00"
+            if obj_promotion.apply_date:
                 start_datetime = datetime.datetime.combine(
-                    obj_promotion.apply_date, obj_promotion.apply_time)
+                    obj_promotion.apply_date, apply_time)
                 if start_datetime > current_time:
                     error = {
-                        "code": 400, "message": _("Error. Promotion Is Not Start."), "fields": "promotion_id"}
+                        "code": 400, "message": _("Error. Promotion Is Not Start."), "fields": ""}
                     return Response(error, status=400)
 
-            if(obj_promotion.end_date and obj_promotion.end_time):
+            end_time = obj_promotion.end_time if obj_promotion.end_time else "23:59"
+            if obj_promotion.end_date:
                 end_datetime = datetime.datetime.combine(
-                    obj_promotion.end_date, obj_promotion.end_time)
+                    obj_promotion.end_date, end_time)
                 if end_datetime < current_time:
                     error = {
-                        "code": 400, "message": _("Error. Promotion expired."), "fields": "promotion_id"}
+                        "code": 400, "message": _("Error. Promotion expired."), "fields": ""}
                     return Response(error, status=400)
 
             # CHECK Promotion Category is new user install app helio
@@ -1309,7 +1381,7 @@ def gift_user_v2(request):
             # Promotion must be have type.
             if not promotion_type or promotion_type.id == core_constants.PROMOTION_TYPE_PUBLIC:
                 error = {
-                    "code": 400, "message": _("Error. Promotion Invalid."), "fields": "promotion_id"}
+                    "code": 400, "message": _("Error. Promotion Invalid."), "fields": ""}
                 return Response(error, status=400)
 
             message = _("Error. User or Deivce Have get gift from promotion.")

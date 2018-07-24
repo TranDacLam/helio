@@ -42,7 +42,7 @@ urlpatterns = [
     url(r'^transactions/card/$', views.card_transactions, name="card-transactions"),
     url(r'^reissue/history/$', views.reissue_history, name="reissue-history"),
     url(r'^open/time/$', views.open_time, name="open-time"),
-    url(r'^promotion/gift/$', views.gift_user, name="gift-user"),
+    url(r'^promotion/gift/check/$', views.gift_user_check, name="gift-user-check"),
     url(r'^promotion/gift/v2/$', views.gift_user_v2, name="gift-user-v2"),
     # url(r'^promotion/gift/install/app/$', views.gift_install_app, name="gift-install-app"),
     
