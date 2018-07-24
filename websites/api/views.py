@@ -1243,17 +1243,19 @@ def gift_user_check(request):
 
             current_time = datetime.datetime.now()
 
-            if(obj_promotion.apply_date and obj_promotion.apply_time):
+            apply_time = obj_promotion.apply_time if obj_promotion.apply_time else "00:00"
+            if obj_promotion.apply_date:
                 start_datetime = datetime.datetime.combine(
-                    obj_promotion.apply_date, obj_promotion.apply_time)
+                    obj_promotion.apply_date, apply_time)
                 if start_datetime > current_time:
                     error = {
                         "code": 400, "message": _("Error. Promotion Is Not Start."), "fields": ""}
                     return Response(error, status=400)
 
-            if(obj_promotion.end_date and obj_promotion.end_time):
+            end_time = obj_promotion.end_time if obj_promotion.end_time else "23:59"
+            if obj_promotion.end_date:
                 end_datetime = datetime.datetime.combine(
-                    obj_promotion.end_date, obj_promotion.end_time)
+                    obj_promotion.end_date, end_time)
                 if end_datetime < current_time:
                     error = {
                         "code": 400, "message": _("Error. Promotion expired."), "fields": ""}
@@ -1351,17 +1353,19 @@ def gift_user_v2(request):
 
             current_time = datetime.datetime.now()
 
-            if(obj_promotion.apply_date and obj_promotion.apply_time):
+            apply_time = obj_promotion.apply_time if obj_promotion.apply_time else "00:00"
+            if obj_promotion.apply_date:
                 start_datetime = datetime.datetime.combine(
-                    obj_promotion.apply_date, obj_promotion.apply_time)
+                    obj_promotion.apply_date, apply_time)
                 if start_datetime > current_time:
                     error = {
                         "code": 400, "message": _("Error. Promotion Is Not Start."), "fields": ""}
                     return Response(error, status=400)
 
-            if(obj_promotion.end_date and obj_promotion.end_time):
+            end_time = obj_promotion.end_time if obj_promotion.end_time else "23:59"
+            if obj_promotion.end_date:
                 end_datetime = datetime.datetime.combine(
-                    obj_promotion.end_date, obj_promotion.end_time)
+                    obj_promotion.end_date, end_time)
                 if end_datetime < current_time:
                     error = {
                         "code": 400, "message": _("Error. Promotion expired."), "fields": ""}
