@@ -1225,7 +1225,7 @@ def disconnect_device(request):
 """
 
 
-@api_view(['PUT'])
+@api_view(['POST'])
 def gift_user_check(request):
     try:
         if not request.user.anonymously:
