@@ -1354,7 +1354,7 @@ def gift_user_v2(request):
 
             current_time = datetime.datetime.now()
 
-            apply_time = obj_promotion.apply_time if obj_promotion.apply_time else "00:00"
+            apply_time = obj_promotion.apply_time if obj_promotion.apply_time else datetime.time.min
             if obj_promotion.apply_date:
                 start_datetime = datetime.datetime.combine(
                     obj_promotion.apply_date, apply_time)
@@ -1363,7 +1363,7 @@ def gift_user_v2(request):
                         "code": 400, "message": _("Error. Promotion Is Not Start."), "fields": ""}
                     return Response(error, status=400)
 
-            end_time = obj_promotion.end_time if obj_promotion.end_time else "23:59"
+            end_time = obj_promotion.end_time if obj_promotion.end_time else datetime.time.max
             if obj_promotion.end_date:
                 end_datetime = datetime.datetime.combine(
                     obj_promotion.end_date, end_time)
