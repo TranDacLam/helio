@@ -93,7 +93,8 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
             role: [this.user.role ? this.user.role['id'] : ''],
             is_active: [this.user.is_active],
             is_staff: [this.user.is_staff],
-            is_clear_image: [false]
+            is_clear_image: [false],
+            flag_notification: [this.user.flag_notification],
         })
     }
 
