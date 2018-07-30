@@ -43,8 +43,6 @@ export class UserDetailComponent implements OnInit, AfterViewChecked {
 
     SYSTEM_ADMIN: number;
 
-    disabled_flag_notification: boolean = true;
-
     constructor(
         private fb: FormBuilder,
         private route: ActivatedRoute,
