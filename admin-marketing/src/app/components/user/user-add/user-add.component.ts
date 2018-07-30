@@ -69,6 +69,7 @@ export class UserAddComponent implements OnInit {
             is_staff: [this.user_form.is_staff],
             role: [this.user_form.role, [UserValidators.validateSelectRole]],
             birth_date: [this.user_form.birth_date ? moment(this.user_form.birth_date, "DD/MM/YYYY").toDate() : '', [UserValidators.birtdateValidators, UserValidators.formatBirtday]],
+            flag_notification: [this.user_form.flag_notification],
         });
     }
 

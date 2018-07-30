@@ -20,4 +20,5 @@ export class User {
     is_staff: boolean;
 
     isChecked: boolean;
+    flag_notification: boolean;
 }
